@@ -49,20 +49,17 @@ stablecoins:
       gecko_id: "ethena-usde"
 
 dune:
+  # NOTE: Free-tier API keys cannot create queries or run custom SQL.
+  # Only pre-existing public queries can be executed.
+  # Query IDs 2589262, 1914532, 2013703 are 404 (deleted/private).
+  # Query 2416880 returns limited data (10 rows, April 2023 only).
+  # To add on-chain volume data, replace with valid public query IDs
+  # or upgrade to a paid Dune plan for custom SQL execution.
   base_url: "https://api.dune.com/api/v1"
   queries:
-    stablecoin_transfer_volume:
-      query_id: 2589262
-      name: "Stablecoin Transfer Volume (Weekly)"
     stablecoin_supply_by_chain:
       query_id: 2416880
       name: "Stablecoin Supply by Chain"
-    usdc_mint_burn:
-      query_id: 1914532
-      name: "USDC Mint/Burn Events"
-    stablecoin_dex_volume:
-      query_id: 2013703
-      name: "Stablecoin DEX Volume"
 
 output:
   exhibits_dir: "output/exhibits"
