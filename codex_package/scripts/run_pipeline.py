@@ -53,6 +53,9 @@ COLORS = {
     "total": "#1a1a2e",
     "fed_rate": "#D62828",
     "rrp": "#457B9D",
+    "dex_volume": "#E76F51",
+    "curve_volume": "#2A9D8F",
+    "bridge": "#9B5DE5",
 }
 
 
@@ -76,13 +79,13 @@ def load_data():
     else:
         print("  WARNING: No stablecoin data found.")
 
-    dune_path = PROC_DIR / "dune_stablecoin_volumes.csv"
-    if dune_path.exists():
-        df = pd.read_csv(dune_path)
-        if "date" in df.columns:
-            df["date"] = pd.to_datetime(df["date"])
-        data["dune"] = df
-        print(f"  Loaded Dune data: {len(df)} rows")
+    vol_path = PROC_DIR / "defillama_volumes.csv"
+    if vol_path.exists():
+        df = pd.read_csv(vol_path, parse_dates=["date"])
+        data["volumes"] = df
+        print(f"  Loaded DefiLlama volume data: {len(df)} rows, columns: {list(df.columns)}")
+    else:
+        print("  WARNING: No volume data found (run fetch_defillama_volumes.py)")
 
     return data
 
@@ -412,6 +415,113 @@ def exhibit6_correlation_heatmap(data: dict):
     print(f"  ✓ {out.name}")
 
 
+def exhibit7_dex_volumes(data: dict):
+    """Exhibit 7: DEX Trading Volume (Total and Curve Stablecoin DEX)."""
+    vol = data.get("volumes")
+    if vol is None:
+        print("  SKIP exhibit 7: no volume data")
+        return
+
+    if "dex_volume_usd" not in vol.columns:
+        print("  SKIP exhibit 7: no dex_volume_usd column")
+        return
+
+    df = vol.dropna(subset=["dex_volume_usd"]).copy()
+
+    # Resample to weekly for smoother visualization
+    df.set_index("date", inplace=True)
+    weekly = df.resample("W").mean().reset_index()
+
+    fig, ax = plt.subplots()
+
+    # Plot total DEX volume
+    weekly["dex_B"] = weekly["dex_volume_usd"] / 1e9
+    ax.plot(weekly["date"], weekly["dex_B"], color=COLORS["dex_volume"],
+            linewidth=2, label="All DEX Volume", alpha=0.8)
+
+    # Plot Curve volume if available
+    if "curve_volume_usd" in weekly.columns:
+        weekly["curve_B"] = weekly["curve_volume_usd"] / 1e9
+        ax.plot(weekly["date"], weekly["curve_B"], color=COLORS["curve_volume"],
+                linewidth=2, label="Curve DEX (Stablecoins)", alpha=0.8)
+
+    ax.set_title("Exhibit 7: DEX Trading Volume (Weekly Average)")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Daily Volume ($ Billions)")
+    ax.legend(loc="upper left")
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    fig.autofmt_xdate()
+
+    out = EXHIBITS_DIR / "exhibit_7_dex_volumes.png"
+    fig.tight_layout()
+    fig.savefig(out)
+    plt.close(fig)
+    print(f"  ✓ {out.name}")
+
+
+def exhibit8_volume_vs_supply(data: dict):
+    """Exhibit 8: DEX Volume vs Stablecoin Supply — Activity Ratio."""
+    vol = data.get("volumes")
+    sc = data.get("stablecoins")
+    if vol is None or sc is None:
+        print("  SKIP exhibit 8: missing data")
+        return
+
+    if "dex_volume_usd" not in vol.columns or "total_stablecoin_mcap" not in sc.columns:
+        print("  SKIP exhibit 8: missing required columns")
+        return
+
+    # Merge on date
+    vol_daily = vol[["date", "dex_volume_usd"]].dropna().copy()
+    vol_daily["date"] = pd.to_datetime(vol_daily["date"]).dt.normalize()
+    sc_daily = sc[["date", "total_stablecoin_mcap"]].dropna().copy()
+    sc_daily["date"] = pd.to_datetime(sc_daily["date"]).dt.normalize()
+
+    merged = pd.merge_asof(
+        vol_daily.sort_values("date"),
+        sc_daily.sort_values("date"),
+        on="date",
+        direction="nearest",
+    )
+
+    # Resample to weekly
+    merged.set_index("date", inplace=True)
+    weekly = merged.resample("W").mean().reset_index()
+
+    fig, ax1 = plt.subplots()
+    ax2 = ax1.twinx()
+
+    weekly["dex_B"] = weekly["dex_volume_usd"] / 1e9
+    weekly["supply_B"] = weekly["total_stablecoin_mcap"] / 1e9
+
+    ax1.fill_between(weekly["date"], weekly["dex_B"], alpha=0.3, color=COLORS["dex_volume"])
+    ax1.plot(weekly["date"], weekly["dex_B"], color=COLORS["dex_volume"],
+             linewidth=2, label="DEX Volume")
+    ax2.plot(weekly["date"], weekly["supply_B"], color=COLORS["total"],
+             linewidth=2, linestyle="--", label="Stablecoin Supply")
+
+    ax1.set_xlabel("Date")
+    ax1.set_ylabel("DEX Volume ($ Billions)", color=COLORS["dex_volume"])
+    ax2.set_ylabel("Stablecoin Supply ($ Billions)", color=COLORS["total"])
+    ax2.spines["right"].set_visible(True)
+
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left")
+
+    ax1.set_title("Exhibit 8: DEX Volume vs Stablecoin Supply")
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    ax1.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+    fig.autofmt_xdate()
+
+    out = EXHIBITS_DIR / "exhibit_8_volume_vs_supply.png"
+    fig.tight_layout()
+    fig.savefig(out)
+    plt.close(fig)
+    print(f"  ✓ {out.name}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Generate Fed research exhibits")
     parser.add_argument("--all", action="store_true", help="Generate all exhibits")
@@ -434,6 +544,8 @@ def main():
         4: exhibit4_net_supply_changes,
         5: exhibit5_supply_vs_rrp,
         6: exhibit6_correlation_heatmap,
+        7: exhibit7_dex_volumes,
+        8: exhibit8_volume_vs_supply,
     }
 
     if args.all:
