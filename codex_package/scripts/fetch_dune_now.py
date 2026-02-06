@@ -12,7 +12,7 @@ import csv
 import requests
 from pathlib import Path
 
-API_KEY = "HJYpLlltN8HtJmklFnAaMx8QX24m5P98"
+API_KEY = "WsfJ8jH971X4hiuKfwGZLZo3S70ibX4f"
 BASE_URL = "https://api.dune.com/api/v1"
 HEADERS = {
     "X-Dune-API-Key": API_KEY,
