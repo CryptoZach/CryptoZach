@@ -1,0 +1,68 @@
+fred:
+  base_url: "https://fred.stlouisfed.org/graph/fredgraph.csv"
+  series:
+    - id: DFF
+      name: "Federal Funds Effective Rate"
+    - id: DGS2
+      name: "2-Year Treasury Rate"
+    - id: DGS10
+      name: "10-Year Treasury Rate"
+    - id: SOFR
+      name: "Secured Overnight Financing Rate"
+    - id: RRPONTSYD
+      name: "Overnight Reverse Repo"
+    - id: WSHOMCB
+      name: "Fed Total Assets"
+
+stablecoins:
+  defillama_url: "https://stablecoins.llama.fi"
+  tokens:
+    - id: "1"
+      name: "USDT"
+      gecko_id: "tether"
+    - id: "2"
+      name: "USDC"
+      gecko_id: "usd-coin"
+    - id: "5"
+      name: "DAI"
+      gecko_id: "dai"
+    - id: "6"
+      name: "FRAX"
+      gecko_id: "frax"
+    - id: "7"
+      name: "TUSD"
+      gecko_id: "true-usd"
+    - id: "4"
+      name: "BUSD"
+      gecko_id: "binance-usd"
+    - id: "120"
+      name: "PYUSD"
+      gecko_id: "paypal-usd"
+    - id: "119"
+      name: "FDUSD"
+      gecko_id: "first-digital-usd"
+    - id: "11"
+      name: "USDP"
+      gecko_id: "pax-dollar"
+    - id: "146"
+      name: "USDe"
+      gecko_id: "ethena-usde"
+
+dune:
+  # NOTE: Free-tier API keys cannot create queries or run custom SQL.
+  # Only pre-existing public queries can be executed.
+  # Query IDs 2589262, 1914532, 2013703 are 404 (deleted/private).
+  # Query 2416880 returns limited data (10 rows, April 2023 only).
+  # To add on-chain volume data, replace with valid public query IDs
+  # or upgrade to a paid Dune plan for custom SQL execution.
+  base_url: "https://api.dune.com/api/v1"
+  queries:
+    stablecoin_supply_by_chain:
+      query_id: 2416880
+      name: "Stablecoin Supply by Chain"
+
+output:
+  exhibits_dir: "output/exhibits"
+  data_dir: "data"
+  dpi: 150
+  figsize: [12, 7]
