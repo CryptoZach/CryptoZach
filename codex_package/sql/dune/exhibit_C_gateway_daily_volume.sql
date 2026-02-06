@@ -1,39 +1,75 @@
--- Exhibit C: Gateway Daily Volume for Concentration Metrics
--- Computes HHI and top-N share for gateway routing analysis
+-- Exhibit C: Gateway Daily Volume and Concentration Metrics
+-- Computes HHI (Herfindahl-Hirschman Index) for gateway tier concentration
+-- Platform: Dune Analytics (DuneSQL)
+-- Date range: Feb 2023 - Feb 2026
 
-WITH gateway_volumes AS (
+WITH gateway_addresses AS (
+    SELECT address, name, tier FROM (VALUES
+        -- Tier 1: Regulated US entities
+        (0x55fe002aeff02f77364de339a1292923a15844b8, 'Circle', 'Tier1'),
+        (0x5f65f7b609678448494De4C87521CdF6cEf1e932, 'Paxos', 'Tier1'),
+        (0x71660c4005ba85c37ccec55d0c4493e66fe775d3, 'Coinbase', 'Tier1'),
+        (0x21a31ee1afc51d94c2efccaa2092ad1028285549, 'Gemini', 'Tier1'),
+
+        -- Tier 2: Offshore / less regulated
+        (0x5754284f345afc66a98fbb0a0afe71e0f007b949, 'Tether Treasury', 'Tier2'),
+        (0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503, 'Binance', 'Tier2'),
+        (0xda9dfa130df4de4673b89022ee50ff26f6ea73cf, 'Kraken', 'Tier2'),
+        (0x6262998ced04146fa42253a5c0af90ca02dfd2a3, 'OKX', 'Tier2'),
+
+        -- Tier 3: DeFi protocols (routers)
+        (0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45, 'Uniswap Router', 'Tier3'),
+        (0xdef1c0ded9bec7f1a1670819833240f027b25eff, '0x Exchange', 'Tier3'),
+        (0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7, 'Curve 3pool', 'Tier3'),
+        (0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2, 'Aave V3 Pool', 'Tier3')
+    ) AS t(address, name, tier)
+),
+
+-- Get all stablecoin transfers involving gateway addresses
+stablecoin_transfers AS (
     SELECT
-        date_trunc('day', block_time) as date,
-        CASE
-            WHEN "to" IN (SELECT address FROM gateway_addresses WHERE tier = 'Tier1')
-                OR "from" IN (SELECT address FROM gateway_addresses WHERE tier = 'Tier1')
-            THEN 'Tier1_Regulated'
-            WHEN "to" IN (SELECT address FROM gateway_addresses WHERE tier = 'Tier2')
-                OR "from" IN (SELECT address FROM gateway_addresses WHERE tier = 'Tier2')
-            THEN 'Tier2_Offshore'
-            ELSE 'Tier3_DeFi'
-        END as tier,
+        date_trunc('day', evt_block_time) as date,
+        COALESCE(gw_from.tier, gw_to.tier) as tier,
+        CAST(value AS DOUBLE) / 1e6 as amount_usd
+    FROM erc20_ethereum.evt_Transfer t
+    LEFT JOIN gateway_addresses gw_from ON t."from" = gw_from.address
+    LEFT JOIN gateway_addresses gw_to ON t."to" = gw_to.address
+    WHERE t.contract_address IN (
+        0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,  -- USDC
+        0xdac17f958d2ee523a2206206994597c13d831ec7   -- USDT
+    )
+    AND evt_block_time >= TIMESTAMP '2023-02-01'
+    AND evt_block_time < TIMESTAMP '2026-02-01'
+    AND (gw_from.address IS NOT NULL OR gw_to.address IS NOT NULL)
+),
+
+-- Aggregate by date and tier
+tier_volumes AS (
+    SELECT
+        date,
+        tier,
         SUM(amount_usd) as volume_usd
-    FROM erc20_ethereum.evt_Transfer
-    WHERE symbol IN ('USDC', 'USDT')
-        AND block_time >= DATE '2023-02-01'
-        AND block_time < DATE '2026-02-01'
+    FROM stablecoin_transfers
     GROUP BY 1, 2
 ),
 
+-- Calculate daily totals
 daily_totals AS (
-    SELECT date, SUM(volume_usd) as total_volume
-    FROM gateway_volumes
+    SELECT
+        date,
+        SUM(volume_usd) as total_volume
+    FROM tier_volumes
     GROUP BY 1
 )
 
 SELECT
-    gv.date,
-    gv.tier,
-    gv.volume_usd,
-    gv.volume_usd / dt.total_volume as share_pct,
-    -- HHI component (share squared)
-    POWER(gv.volume_usd / dt.total_volume, 2) as hhi_component
-FROM gateway_volumes gv
-JOIN daily_totals dt ON gv.date = dt.date
-ORDER BY gv.date, gv.tier
+    tv.date,
+    tv.tier,
+    tv.volume_usd,
+    ROUND(100.0 * tv.volume_usd / dt.total_volume, 2) as share_pct,
+    -- HHI component = (share%)^2, summed across all tiers gives HHI
+    ROUND(POWER(100.0 * tv.volume_usd / dt.total_volume, 2), 2) as hhi_component
+FROM tier_volumes tv
+JOIN daily_totals dt ON tv.date = dt.date
+WHERE dt.total_volume > 0
+ORDER BY tv.date, tv.tier
