@@ -84,7 +84,7 @@
     });
   }
 
-  // Copy email — with fallback for browsers without Clipboard API
+  // Copy email - with fallback for browsers without Clipboard API
   var copy = document.getElementById('copyEmail');
   var email = document.getElementById('emailAddr');
   if(copy && email){

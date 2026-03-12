@@ -369,6 +369,43 @@ main{
   pointer-events:none;
 }
 
+.hero-shimmer{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+  opacity:.35;
+  pointer-events:none;
+  animation:shimmer 4s ease-in-out infinite;
+  z-index:2;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-shimmer{animation:none; opacity:.15}
+}
+
+/* Subtle noise grain for editorial depth - pure CSS, no image */
+.hero-grain{
+  position:absolute;
+  inset:0;
+  opacity:.018;
+  pointer-events:none;
+  z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:128px 128px;
+  mix-blend-mode:multiply;
+}
+:root[data-theme="dark"] .hero-grain{
+  opacity:.04;
+  mix-blend-mode:soft-light;
+}
+
 .hero-grid{
   display:grid;
   grid-template-columns:1fr 340px;
@@ -637,6 +674,17 @@ footer{
   margin-bottom:var(--space-lg);
   padding-bottom:var(--space-md);
   border-bottom:1px solid var(--line);
+  position:relative;
+}
+.section-title::after{
+  content:"";
+  position:absolute;
+  bottom:-1px;
+  left:0;
+  width:80px;
+  height:2px;
+  background:var(--accent);
+  border-radius:1px;
 }
 .section-title h2{
   margin:0;
@@ -783,6 +831,11 @@ footer{
 }
 .writing-card:has(a.writing-link):hover .writing-link::before,
 .writing-card--linked:hover .writing-link::before{opacity:1}
+
+.writing-card:has(a.writing-link):hover,
+.writing-card--linked:hover{
+  background:linear-gradient(135deg, var(--panel) 60%, var(--accent-muted));
+}
 
 /* ── Writing thumbnails ── */
 .writing-link:has(.writing-thumb),
@@ -1033,6 +1086,18 @@ footer{
   border:1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
   background:linear-gradient(135deg, var(--accent-muted), color-mix(in srgb, var(--panel) 95%, transparent));
   box-shadow:var(--shadow-sm);
+  position:relative;
+  overflow:hidden;
+}
+.contact-box::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 30%, transparent));
+  border-radius:var(--radius) var(--radius) 0 0;
 }
 .contact-box .left{display:flex; flex-direction:column; gap:var(--space-xs)}
 .contact-box .left strong{
@@ -1238,10 +1303,15 @@ footer{
   outline:2px solid var(--accent);
   outline-offset:2px;
 }
-.theme-toggle .icon{width:18px; height:18px}
+.theme-toggle .icon{width:18px; height:18px; transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.theme-toggle:active .icon{transform:rotate(45deg) scale(.85)}
 .theme-toggle .icon-sun{display:none}
 :root[data-theme="dark"] .theme-toggle .icon-sun{display:block}
 :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+@media (prefers-reduced-motion: reduce){
+  .theme-toggle .icon{transition:none}
+  .theme-toggle:active .icon{transform:none}
+}
 
 /* ── Scroll reveal (respects prefers-reduced-motion) ── */
 .reveal{
@@ -1253,8 +1323,25 @@ footer{
   opacity:1;
   transform:translateY(0);
 }
+
+/* Staggered card reveals */
+.stagger-item{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .45s cubic-bezier(.25,.46,.45,.94), transform .45s cubic-bezier(.25,.46,.45,.94);
+}
+.stagger-item.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce){
   .reveal{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  .stagger-item{
     opacity:1;
     transform:none;
     transition:none;
