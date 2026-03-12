@@ -5,8 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Zach Zukowski (CryptoZach) - Digital money & tokenization research</title>
-  <meta name="description" content="Digital money and tokenization research for real‑world policy and operating constraints. Zach Zukowski (CryptoZach)." />
+  <meta name="description" content="Director-level research on digital money, stablecoins, and tokenization. Turning policy and product decisions into frameworks that regulators, issuers, and market operators can apply. Zach Zukowski." />
 
+  <meta property="og:title" content="Zach Zukowski (CryptoZach) - Digital money & tokenization research" />
+  <meta property="og:description" content="Empirically-backed research on the infrastructure, controls, and institutions that shape digital money. Eight papers across two tracks." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cryptozach.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski - Digital money & tokenization research" />
+  <meta name="twitter:description" content="Empirically-backed research on the infrastructure, controls, and institutions that shape digital money." />
+
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="preconnect" href="https://docsend.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://docsend.com" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
@@ -21,190 +34,437 @@
       </div>
 
       <nav aria-label="Primary">
-        <a class="navlink" href="#focus">Focus</a>
-        <a class="navlink" href="#writing">Writing</a>
-        <a class="navlink" href="#artifacts">Artifacts</a>
-        <a class="navlink" href="#contact">Contact</a>
+        <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
 
-        <a class="action" href="https://docsend.com/view/tecs32mk6ypkvxwi" target="_blank" rel="noopener noreferrer">
-          View Resume
-        </a>
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="#focus">Focus</a>
+          <a class="navlink" href="#writing">Research</a>
+          <a class="navlink" href="#artifacts">What I Build</a>
+          <a class="navlink" href="#contact">Contact</a>
 
-        <button id="themeToggle" class="action" type="button" aria-pressed="false" title="Toggle dark mode">
-          Theme
+          <a class="action" href="https://docsend.com/view/tecs32mk6ypkvxwi" target="_blank" rel="noopener noreferrer">
+            View Resume
+          </a>
+        </div>
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>
+          </svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>
+          </svg>
         </button>
       </nav>
     </div>
   </header>
 
+  <div id="mobileNav" class="nav-links nav-links--mobile">
+    <a class="navlink" href="#focus">Focus</a>
+    <a class="navlink" href="#writing">Research</a>
+    <a class="navlink" href="#artifacts">What I Build</a>
+    <a class="navlink" href="#contact">Contact</a>
+    <a class="action" href="https://docsend.com/view/tecs32mk6ypkvxwi" target="_blank" rel="noopener noreferrer">View Resume</a>
+  </div>
+
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="kicker">Digital money &amp; tokenization - policy-to-implementation</div>
-      <h1 id="hero-title">Digital money and tokenization research for real‑world policy and operating constraints.</h1>
+      <div class="hero-grid">
+        <div class="hero-primary">
+          <div class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Digital money &amp; tokenization · from policy to execution</div>
+          <p class="display-name">Zach Zukowski</p>
+          <h1 id="hero-title">Director-level research on digital money, stablecoins, and tokenization. Turning policy and product decisions into frameworks that regulators, issuers, and market operators can&nbsp;apply.</h1>
 
-      <p class="lede">
-        I’m Zach Zukowski (CryptoZach), a research and strategy leader at the intersection of private digital money and core financial infrastructure:
-        stablecoins, tokenized deposits and cash‑management products, settlement and custody plumbing, and the stability and consumer‑outcome channels
-        that emerge as these systems scale.
-      </p>
+          <div class="hero-actions">
+            <a class="action primary" href="https://docsend.com/view/tecs32mk6ypkvxwi" target="_blank" rel="noopener noreferrer">
+              <span>View Resume</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+            <a class="action" href="#contact">Get in Touch</a>
+          </div>
 
-      <p class="lede">
-        My method is evidence‑first. I translate technical and policy design choices into scenario trees with monitoring thresholds and escalation pathways
-        (what triggers a memo, a data request, supervisory questions, or a policy option set).
-      </p>
+          <div class="meta" aria-label="Profile details">
+            <span class="badge badge--highlight">Open to institutional tokenization leadership role</span>
+            <span class="badge">Orlando, FL · Open to NYC</span>
+            <span class="badge">Independent · non‑advocacy</span>
+          </div>
+        </div>
 
-      <p class="lede">
-        The goal: steward infrastructure that is safe under stress, measurable in operation, and aligned with the public interest, modernizing money and
-        settlement without creating fragile choke points.
-      </p>
-
-      <div class="meta" aria-label="Profile details">
-        <span class="badge">Orlando, FL</span>
-        <span class="badge">Open to institutional research &amp; market‑infrastructure roles</span>
-        <span class="badge">Independence · confidentiality · non‑advocacy</span>
-      </div>
-
-      <div class="hero-actions">
-        <a class="action primary" href="#contact">Contact</a>
-        <a class="action" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">Read my research</a>
-        <a class="action" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a class="action" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer">X</a>
+        <aside class="hero-rail" aria-label="Research approach">
+          <div class="rail-card">
+            <h3 class="rail-label">Method</h3>
+            <p>Empirically-backed research that turns policy and product choices into scenario analysis, control frameworks, and escalation plans, grounded in on-chain data, Monte Carlo simulation, and econometric testing.</p>
+          </div>
+          <div class="rail-card">
+            <h3 class="rail-label">Scope</h3>
+            <p>Stablecoins, tokenized deposits, cash-management products, and the settlement, custody, and risk-control systems that support them.</p>
+          </div>
+          <div class="rail-card">
+            <h3 class="rail-label">Goal</h3>
+            <p>Frameworks with named thresholds, assigned owners, and defined escalation paths that hold up under stress and govern real operations.</p>
+          </div>
+          <div class="rail-thesis">
+            <p>Unifying thesis: regulate and audit the operator and the router, not the token.</p>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="focus" aria-labelledby="focus-title">
+    <section class="positioning reveal" aria-label="Research program at a glance">
+      <div class="positioning-grid">
+        <div class="positioning-card">
+          <span class="positioning-stat">8</span>
+          <span class="positioning-label">Papers across two tracks</span>
+          <p>Four published, four on SSRN or in final draft. Unified thesis: regulate and audit the operator and the router, not the token.</p>
+        </div>
+        <div class="positioning-card">
+          <span class="positioning-stat">FRBNY</span>
+          <span class="positioning-label">Stablecoin &amp; dollar track</span>
+          <p>Gateway infrastructure taxonomy, cointegration evidence, and an institutional diligence framework. Lead paper under review for the FRBNY Fifth Conference on the Dollar's International Roles (June 2026).</p>
+        </div>
+        <div class="positioning-card">
+          <span class="positioning-stat">864</span>
+          <span class="positioning-label">DePIN &amp; tokenomics simulations</span>
+          <p>Governance-concentration cross-sections across 12 protocols, longitudinal infrastructure case studies, and the most comprehensive simulation-backed tokenomics research program publicly available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="focus" class="reveal" aria-labelledby="focus-title">
       <div class="section-title">
         <h2 id="focus-title">Operating model &amp; focus</h2>
-        <p>Evidence-first research → measurable guardrails → decision-ready frameworks.</p>
+        <p>Empirically-backed research that converts digital-money ambiguity into measurable guardrails, operating thresholds, and actionable diligence frameworks.</p>
       </div>
 
       <div class="grid">
         <article class="card">
           <h3>Operating model</h3>
-          <p>
-            Director‑level research leadership bridging private money and financial infrastructure: payments safety/efficiency, bank funding &amp; liquidity
-            channels, operational resilience, and financial stability.
-          </p>
+          <p>Ten years in digital assets, first as the founding hire at Borderless Capital, a Web3-focused RIA, where I built the research operating system from scratch, led a four-analyst team, and supported underwriting across roughly 250 investments (~$500M AUM, ~10 institutional funds). I have evaluated 1,500+ opportunities, advised on 100+ tokenomics engagements, and led diligence on 100+ tokenization products.</p>
+          <p>The work spans payment safety and efficiency, bank funding and liquidity transmission, operational resilience, and financial stability. The analytical commitment across all of it: regulate and audit the operator and the routing layer, not the token or mechanism.</p>
+          <p>That commitment is operationalized in three frameworks. The CLII (Control Layer Intensity Index) scores custody segregation, reconciliation integrity, and concentration risk across gateway models. The MVEP (Minimum Viable Equivalence Pack) defines nine evidence categories as an institutional gate for tokenization proposals. The five-lever credit-migration framework tracks how balances and credit move across bank and nonbank balance sheets as policy changes.</p>
         </article>
 
         <article class="card">
-          <h3>Research OS</h3>
-          <ul>
-            <li><strong>Governance:</strong> agenda-setting, QA standards, publishing cadence, decision logs.</li>
-            <li><strong>Measurement layer:</strong> redemption latency/reliability, settlement exceptions, intraday liquidity constraints.</li>
-            <li><strong>Control-layer metrics:</strong> screening/holds/routing/disclosures/recordkeeping + concentration &amp; dependency.</li>
-            <li><strong>Consumer outcomes:</strong> error-resolution timelines, complaint/appeal throughput, outcomes reporting.</li>
-          </ul>
-          <p class="smallprint"><strong>Prefer:</strong> measurable guardrails + explicit tradeoffs. <strong>Avoid:</strong> hype, advocacy, category errors.</p>
+          <h3>Research system</h3>
+          <p><strong>Governance.</strong> Research agendas are ranked by cost of being wrong. Quality standards are enforced through automated checks: XML validation, cross-reference testing, and claim-to-source tracing. Publication is tied to submission readiness, not calendar dates. Decision logs record what was deferred, why, and what would cause it to be reopened.</p>
+          <p><strong>Measurement.</strong> The focus is on metrics that change decisions: redemption latency and reliability (P99 targets, failure rates under stress), settlement exception rates and resolution times, intraday liquidity constraints at custody and reserve points, and subsidy-to-revenue trajectories that distinguish self-funding networks from inflation-dependent ones.</p>
+          <p><strong>Control-layer metrics.</strong> Screening coverage, hold frequency and duration, routing-default concentration, disclosure speed under stress, recordkeeping integrity, and gateway dependency are tracked continuously. A hold rate crossing 0.5% of transactions signals a regime shift. Volume that doubles while the counterparty base shrinks is the early warning pattern for infrastructure concentration.</p>
+          <p><strong>User and operator outcomes.</strong> Error-resolution performance is measured against defined SLAs. Complaints and appeals are tracked through disposition. Governance participation is measured by stakeholder class. Outcomes reporting distinguishes acknowledgment from remediation.</p>
+          <p>The preference is always measurable guardrails with named thresholds and assigned owners. Tradeoffs documented before decisions, not rationalized afterward. The work avoids advocacy dressed as analysis, category errors that collapse payment stablecoins into tokenized deposits, and hype cycles that outrun operational evidence.</p>
         </article>
 
         <article class="card">
-          <h3>Private money, bank funding, credit migration</h3>
-          <p>
-            Stablecoins, tokenized deposits, and tokenized cash‑management products - liability design, reserve custody/composition, redemption operations,
-            and how balances and credit migrate across bank and nonbank balance sheets under adoption and stress.
-          </p>
+          <h3>Private money, bank funding, and credit migration</h3>
+          <p>Stablecoins, tokenized deposits, and tokenized cash-management products differ in liability design, reserve composition, custody, and redemption operations. The central question is not which product wins but how balances and credit move across bank and nonbank balance sheets during adoption and stress. When balances migrate onto Treasury-backed rails designed as narrow money, credit does not disappear; it reroutes. Banks tend to shorten duration and tighten underwriting while nonbank originators expand where they hold a structural advantage. The five-lever framework in Dollar v3 tracks where that migration concentrates and which policy choices accelerate or restrain it.</p>
         </article>
 
         <article class="card">
-          <h3>Settlement &amp; market plumbing</h3>
-          <p>
-            Settlement finality, intraday liquidity mobilization, custody/segregation and reconciliation, and the short‑term funding market plumbing that
-            becomes binding as tokenized instruments scale.
-          </p>
+          <h3>Settlement and market infrastructure</h3>
+          <p>Settlement finality means different things depending on what is being measured: block confirmation, economic value integrity, or convertibility under stress. The SVB weekend exposed the gap. USDC continued to settle on-chain while the economic value of those settlements diverged by 13 percent. This work covers intraday liquidity mobilization, custody segregation, reconciliation architecture, and the short-term funding infrastructure (reserve eligibility, collateral haircuts, cross-system settlement timing) that becomes binding as tokenized instruments scale. The system-of-record decision is treated as foundational because it constrains everything downstream. The MVEP and CLII frameworks operationalize these issues: nine evidence categories as an entry gate, three scoring dimensions as a continuous drift detector.</p>
         </article>
 
         <article class="card">
           <h3>The control layer</h3>
-          <p>
-            Where policy becomes operational reality: screening, holds, routing defaults, disclosures, and recordkeeping - plus concentration risk,
-            third‑party dependency, failure‑mode testing, and rules‑based due‑process operations with measurable outcomes.
-          </p>
+          <p>The control layer is where policy becomes operating reality. CLARITY Section 302 defines the interface boundary. Section 305 makes holds and case-file obligations routine. Section 404 distinguishes permissible activity-based rewards from prohibited interest on the money object. Section 304 creates offshore reporting duties that can become de facto gateway controls. Each provision maps to a specific infrastructure node (interface operators, routing defaults, sweep engines, hold/freeze mechanisms) and to a specific shift in compliance cost, liability, or value capture. The regime classifier tracks ten signals with quantitative thresholds: wrapper sweep share above 50%, regulated interface share above 70% of flows, hold frequency above 0.5% of transactions. When three or more signals flip within a quarter, the regime label updates. Concentration risk, third-party dependency, and failure-mode testing are monitored continuously, not reviewed on a fixed calendar.</p>
         </article>
 
         <article class="card">
-          <h3>Governance, incentives &amp; stress dynamics</h3>
-          <p>
-            Run dynamics, incentive misalignment, and operational/cyber concentration - translated into scenarios, thresholds, and escalation playbooks that
-            stay current as conditions change.
-          </p>
+          <h3>Governance, incentives, and stress dynamics</h3>
+          <p>Stress in stablecoin markets propagates vertically through code-based dependencies, not just horizontally across gateways. MakerDAO's Peg Stability Module during the SVB episode is the clearest documented case. In DePIN networks, hardware capital requirements concentrate governance power: measured DePIN governance HHI (0.19, range 0.037 to 0.388) materially exceeds DeFi benchmarks (0.09, range 0.028 to 0.174) across a 12-protocol cross-section. Infrastructure failures create a further asymmetry: adaptive emission controllers compress reward variance after shocks, while reputation systems drift toward plutocracy as correlated downtime penalizes smaller operators disproportionately. These findings translate into operating thresholds and escalation rules: CLII score below 0.50 triggers re-diligence, governance HHI above 0.40 triggers concentration review, bear-scenario PID deviation above 40% activates anti-windup safeguards. Monitoring updates when conditions change, not when the reporting cycle comes due.</p>
         </article>
       </div>
     </section>
 
-    <section id="writing" aria-labelledby="writing-title">
+    <section id="writing" class="reveal" aria-labelledby="writing-title">
       <div class="section-title">
-        <h2 id="writing-title">Writing</h2>
-        <p>Long-form research turning market structure into observable decision variables.</p>
+        <h2 id="writing-title">Research &amp; writing</h2>
+        <p>Eight papers across two tracks, unified by a single thesis: regulate and audit the operator and router, not the token.</p>
       </div>
 
+      <h3 class="track-label">Track A · Stablecoin &amp; dollar infrastructure</h3>
+
       <ul class="writing-list">
-        <li class="writing-item">
-          <div>
-            <a href="https://medium.com/@CryptoZach/dollar-v3-how-stablecoin-policy-is-about-to-re-write-the-u-s-dollar-16d20ab92a14" target="_blank" rel="noopener noreferrer">
-              Dollar v3  -  policy map
-            </a>
-            <div class="meta2">Separates payment stablecoins, tokenized deposits, and tokenized cash products; focuses on reserve plumbing, redemption ops, and stress behavior.</div>
-          </div>
-          <small>Dec 2025</small>
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Routing_The_Dollar_CLII.png" alt="" loading="lazy" style="object-position:50% 15%" />
+            <div class="writing-meta">
+              <span class="writing-status status--ssrn">SSRN · FRBNY under review</span>
+              <span class="writing-length">~20,000 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar's International Functions</h3>
+              <p class="writing-excerpt">Stablecoin policy usually focuses on the token. This paper argues that the decisive layer is the gateway infrastructure connecting issuers, custodians, and settlement rails, and introduces a Control Layer Intensity Index (CLII) to score custody segregation, reconciliation integrity, and concentration risk across gateway models. The empirical base includes Johansen cointegration tests on USDC/USDT peg dynamics (with regime-dependent rank concentrated in tightening episodes), the SVB stress event tracing vertical contagion through MakerDAO's Peg Stability Module, a 51-address Ethereum counterparty registry, and a multi-chain settlement-flow decomposition. The concentration finding is stark: total dollar volume doubled between 2023 and 2025 while unique counterparties declined 25%, cross-gateway bridging entities halved, and a single market-making firm's share rose from 1.4% to 19.9% (gateway HHI 7,361). Routing architecture, not token design alone, shapes monetary-policy transmission, stress resilience, and the regulatory leverage points that matter most.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/2031929065549025726" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
         </li>
 
-        <li class="writing-item">
-          <div>
-            <a href="https://medium.com/@CryptoZach/deep-diligence-1-tokenized-equity-220f4ef522c5" target="_blank" rel="noopener noreferrer">
-              Tokenized equity  -  diligence notes
-            </a>
-            <div class="meta2">Rights parity, custody/segregation, settlement dependencies, and market-structure constraints.</div>
-          </div>
-          <small>Jul 2025</small>
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Equivelance_Pack.webp" alt="" loading="lazy" style="object-position:left top" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+              <span class="writing-length">~3,500 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Minimum Viable Equivalence Packs: An Institutional Diligence Framework for Tokenized Products</h3>
+              <p class="writing-excerpt">Before an institution treats a tokenized product as equivalent to its traditional counterpart, that equivalence should be proven under stress. This paper defines nine evidence categories (rights parity, custody segregation, recordkeeping integrity, reconciliation frequency, finality, insolvency posture, reorg/exception handling, governance and change control, and disclosures) and turns them into a versioned diligence pack. The USDC/SVB depeg anchors the framework: Circle's $3.3 billion reserve exposure at SVB broke all three equivalence dimensions simultaneously. Legal equivalence failed when rights parity and claim priority depended on a single custodian's solvency. Operational equivalence failed when monthly attestation cycles could not detect a crisis moving in hours. Economic equivalence failed when USDC traded at $0.87 while on-chain settlement continued at face value. The MVEP gives committees a pass/fail gate to apply before any tokenization proposal moves forward.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/2024998578335482251" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
         </li>
 
-        <li class="writing-item">
-          <div>
-            <a href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">
-              Introduction to Tokenomics
-            </a>
-            <div class="meta2">Incentive design, value capture, and mechanism risks - written for practitioners.</div>
-          </div>
-          <small>2022</small>
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/@CryptoZach/dollar-v3-how-stablecoin-policy-is-about-to-re-write-the-u-s-dollar-16d20ab92a14" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Dollarv3.webp" alt="" loading="lazy" style="object-position:left 20%" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Dollar v3: Policy Map</h3>
+              <p class="writing-excerpt">Much of today's legislation treats distinct digital-dollar products as if they were interchangeable. This paper separates payment stablecoins, tokenized deposits, and tokenized cash products along three operational dimensions: reserve composition and plumbing (narrow safe-asset backing versus fractional deposit funding), redemption mechanics and SLAs (real-time versus gated, P99 latency), and failure propagation under stress (run dynamics traced through the SVB episode, liquidity cascades across custody chains, and offshore gateway freezes). The result is a diagnostic map: given a product, identify its liability structure, the claims supporting it, and the specific failure sequence most likely to trigger a run.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/1998874696893231210" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="#contact" aria-label="Contact Zach about Dollar v3 Follow-Up: The Control Layer War">
+            <img class="writing-thumb" src="Publication Images/Control_Layer.webp" alt="" loading="lazy" style="object-position:50% 25%" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+              <span class="writing-length">~8,000 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Dollar v3 Follow-Up: The Control Layer War</h3>
+              <p class="writing-excerpt">This follow-up maps the Dollar v3 taxonomy onto CLARITY and GENIUS. It argues that the real policy battle is not over labels but over where compliance is embedded and which firms are required to enforce it. By tracing CLARITY's operative provisions (Sec. 302 interface duties, Sec. 305 hold mechanics and case-file obligations, Sec. 404 rewards and yield boundaries, Sec. 304 offshore reporting nexus) to their infrastructure-layer targets, it shows how liability, bargaining power, and value capture concentrate at the control layer: the interfaces, routing defaults, sweep engines, and hold/freeze plumbing that turn policy intent into executable operations. Includes a ten-signal regime classifier with quantitative thresholds (e.g., default sweep share into wrappers exceeding 50%, regulated interface share of flows exceeding 70%, holds becoming routine at 0.5%+ of transactions), a five-lever framework for tracking how policy reshapes deposit structure and credit creation, and a coalition map identifying which industry blocs gain or lose as each lever moves.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Ask <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
         </li>
       </ul>
 
-      <p class="smallprint">Writing sample available on request.</p>
+      <h3 class="track-label">Track B · DePIN &amp; tokenomics</h3>
+
+      <ul class="writing-list">
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">
+            <div class="writing-meta">
+              <span class="writing-status status--ssrn">SSRN</span>
+              <span class="writing-length">~20,900 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Adaptive Tokenomics: A Systems Engineering Approach to Programmable Incentive Design</h3>
+              <p class="writing-excerpt">This paper builds a complete token economy for a fictional DePIN network (MeshNet) using a systems engineering lifecycle, then stress-tests it with a 240-run Monte Carlo ensemble (30 seeds across 8 configurations) under four adversarial scenarios (bull, bear, competitor entry, regulatory shock). Twenty-one exhibits document the results, supported by sensitivity sweeps across 60 PID gain configurations, 40 slashing parameter settings, and 16 evaluation-interval variants. Key findings: slashing, more than emission policy, drives supply dynamics under ordinary shocks; PID-controlled emissions compress reward variance but accumulate integral wind-up under sustained demand contraction (bear scenario: 44.6% deviation from node-count target); and the emission model choice becomes decisive mainly in tail scenarios that single-seed simulations miss entirely. The Ornstein-Uhlenbeck price process is fitted directly to HNT daily returns (May 2023 through February 2026), and MeshNet's parameters are calibrated against observed Helium and Filecoin ranges to operate within the plausible DePIN design space rather than favorable assumptions.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118" target="_blank" rel="noopener noreferrer">
+            <div class="writing-meta">
+              <span class="writing-status status--ssrn">SSRN</span>
+              <span class="writing-length">~6,500 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers and Break Reputation Systems</h3>
+              <p class="writing-excerpt">What happens to token mechanisms when the underlying infrastructure fails? In a 624-run simulation calibrated to observed failure rates from Ethereum, Helium, Geodnet, and Filecoin, this paper finds an asymmetry: PID emission controllers compress reward variance after infrastructure shocks (the adaptive mechanism becomes more stabilizing), while reputation-weighted governance drifts toward plutocracy as correlated downtime disproportionately penalizes smaller operators who cannot absorb extended outages. The implication is direct: emission control and reputation governance require different failure-handling architectures, because the same shock that strengthens one mechanism degrades the other.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="#contact" aria-label="Contact Zach for Tokenomics as Institutional Design: A Normative Framework and Governance Concentration Analysis">
+            <div class="writing-meta">
+              <span class="writing-status status--draft">Final draft</span>
+              <span class="writing-length">~11,500 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Tokenomics as Institutional Design: A Normative Framework and Governance Concentration Analysis</h3>
+              <p class="writing-excerpt">Token design borrows from economics and mechanism design, but it is rarely judged by standards of legitimacy. This paper operationalizes five normative traditions (Kantian publicity through on-chain verifiability, Rawlsian fairness through emission allocation design, republican non-domination through veto rights and power balance, Ostromian polycentricity through tiered committee governance, Hayekian knowledge-use through PID control using local price and coverage signals) into testable hypotheses, then grounds them in a governance concentration cross-section of twelve protocols (seven DeFi, five DePIN) using on-chain holder data from Dune Analytics and Cosmos LCD snapshots. The empirical result: DePIN governance concentration (mean HHI 0.19, range 0.037 to 0.388) materially exceeds DeFi benchmarks (mean HHI 0.09, range 0.028 to 0.174), with token inequality Gini coefficients of 0.67 to 0.98 near-universal across the sample. The gap reflects hardware capital barriers: earning tokens requires deploying physical infrastructure, which concentrates emissions among operators who can scale node fleets. The normative framework and the empirical finding converge on the same design prescription: earned access over purchased access. Journal submission pending.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Request sample <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="#contact" aria-label="Contact Zach for GeoDePIN: Design Patterns for Decentralized Geographic Infrastructure">
+            <div class="writing-meta">
+              <span class="writing-status status--draft">Final draft</span>
+              <span class="writing-length">~13,200 words</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">GeoDePIN: Design Patterns for Decentralized Geographic Infrastructure</h3>
+              <p class="writing-excerpt">Geo-dependent DePIN networks face problems that purely digital systems do not: they must verify physical coverage, respond to locally heterogeneous demand, and support operators whose economics depend on place-specific hardware deployment. This paper develops a taxonomy for those design problems, tracks Helium's subsidy-to-revenue ratio from 0.013 to 2.06 across 34 months of on-chain data, and decomposes the transition from subsidy dependence to net-deflationary operation: fee growth accounts for 58% of the 12-month improvement (weekly Data Credit burns surging 20-fold), HNT price decline for 25%, and the HIP-147 emission halving for 17%. Twelve tables tie each design claim to validated data sources (29 of 29 paper claims verified in the data bundle, 24 exact matches and 5 defensible close matches). Practitioner design tools cover coverage incentives, spatial verification, and geographic governance. Journal submission pending.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Request sample <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+      </ul>
+
+      <h3 class="track-label">Earlier work</h3>
+
+      <ul class="writing-list">
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/@CryptoZach/deep-diligence-1-tokenized-equity-220f4ef522c5" target="_blank" rel="noopener noreferrer">
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Tokenized Equity: Diligence Notes</h3>
+              <p class="writing-excerpt">This note asks when tokenized equity can function as an institutional product rather than a technical demonstration. It tests four constraints: rights parity between token and underlying share (does the token confer the same legal claim?), custody and segregation standards (is customer property treatment explicit and tested under insolvency?), settlement-rail dependency (what breaks when the transfer agent, depository, or chain layer is unavailable?), and market-structure bottlenecks (collateral eligibility, cross-system settlement timing, secondary-market liquidity) that determine whether a tokenized equity product can clear institutional diligence or remains a proof of concept.</p>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Introduction To Tokenomics.webp" alt="" loading="lazy" style="object-fit:contain;background:#f0f0f0" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Introduction to Tokenomics</h3>
+              <p class="writing-excerpt">A practitioner's introduction to incentive design, value capture, and mechanism risk in token economies. Explains how token systems create and distribute value, where incentive failures concentrate (governance power consolidation, mercenary capital rotating between emission pools, reflexive price-to-emission feedback loops), and how to distinguish revenue-backed utility from narrative-driven speculation. Written as an accessible entry point to the wider research program.</p>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/1517236122195316737" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Navigating the New Era of Digital Assets.webp" alt="" loading="lazy" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Navigating the New Era of Digital Assets: How Recent U.S. Initiatives Are Transforming the Crypto Landscape</h3>
+              <p class="writing-excerpt">Maps the coordinated U.S. regulatory shift of July 2025 into a single operational timeline, covering the GENIUS Act (payment-stablecoin licensing, 1:1 reserve mandates, yield prohibition on the money object), the CLARITY Act (digital-commodity jurisdiction split between SEC and CFTC, decentralization maturity pathway, self-custody protections), the White House implementation report operationalizing EO 14178, and SEC Chair Atkins' "Project Crypto" (Innovation Exemption, integrated super-app licensing, updated Howey guidance). Provides sequenced action plans for banks (Q3 2025 governance setup through Q2 2026 licensing submission), investors (compliance-tech and sandbox positioning), and stablecoin issuers (Circle, Tether, MakerDAO, M0), with a regulatory calendar extending through the 2028 grace-period deadline.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/The Future_of_Tokenomics.webp" alt="" loading="lazy" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">The Future of Tokenomics: 7 Game-Changing Innovations Set to Reshape Decentralized Networks</h3>
+              <p class="writing-excerpt">Surveys seven tokenomics sectors under active development: token-economy simulation tools (cadCAD, RadCAD, Machinations, Forgd), fair MEV mechanisms (Dutch/batch auctions, First Swap Auction sequencing rules), value-capture alternatives to buy-and-burn (Helium Data Credits, autonomously provisioned liquidity), reflexive emission algorithms that adjust rewards to real-time network conditions (DIMO baseline rewards, Helium HIP-51, Filecoin network baseline), reputation-weighted governance (OpenRank, Proof of Karma), on-chain credential and attestation infrastructure (Gitcoin Passport, Ethereum Attestation Service, Ceramic), and gamification through points, quests, and NFTs (Layer3, Galxe, Zealy). Each sector is mapped to live implementations with named projects and assessed against its capacity to shift networks from subsidy dependence toward self-sustaining participation and organic value capture.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+
+        <li class="writing-item writing-card">
+          <a class="writing-link" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">
+            <img class="writing-thumb" src="Publication Images/Gamification_In_Crypto.gif" alt="" loading="lazy" />
+            <div class="writing-meta">
+              <span class="writing-status status--published">Published</span>
+            </div>
+            <div class="writing-copy">
+              <h3 class="writing-title">Gamification in Crypto: Habit-Forming Experiences for Decentralized Communities</h3>
+              <p class="writing-excerpt">Examines how decentralized projects use gamification to convert one-time users into recurring participants. Covers four implementation levers: UX/UI designed for sub-five-second trust signals, gamified rewards (mystery boxes, competitive ranking mechanics), structured points systems (milestone rewards for hardware deployment, daily/weekly/monthly activity streaks), and routine-reinforcing incentives that compound engagement over time. These map to proven retention architectures: seasonal campaigns with reset cycles, tiered leaderboards driving competition for protocol rewards, token-earning mechanics tied to ecosystem contribution, and continuous feedback loops for iterating on reward design. Includes case studies of nine live implementations: Layer3, Ether.Fi, Base Onchain Summer, Taiko Trailblazers, Natix Network, Hamster Kombat, Drip, Jumper x Optimism Superfest, and Claimr.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
+            </div>
+            <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="writing-thread" href="https://x.com/CryptoZach/status/1825980270941544867" target="_blank" rel="noopener noreferrer" aria-label="X thread">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Thread</span>
+          </a>
+        </li>
+      </ul>
+
+      <p class="smallprint">Writing sample or pre-print available on request for papers in final draft.</p>
       <p class="smallprint">Note: this site is informational. Views are my own; nothing here is investment advice.</p>
     </section>
 
-    <section id="artifacts" aria-labelledby="artifacts-title">
+    <section id="artifacts" class="reveal" aria-labelledby="artifacts-title">
       <div class="section-title">
-        <h2 id="artifacts-title">Reusable artifacts</h2>
-        <p>Dashboards, decision logs, and concise memos that make assumptions reviewable.</p>
+        <h2 id="artifacts-title">What I Build</h2>
+        <p>Decision frameworks for digital money: clearer questions, stronger evidence, measurable thresholds, and defined escalation paths.</p>
       </div>
 
-      <div class="grid">
+      <div class="grid grid--halves">
         <article class="card">
-          <h3>Research agendas</h3>
-          <p>Clear question hierarchy: what must be true, what can be uncertain, what is worth monitoring.</p>
+          <h3>Research agendas and scenario architecture</h3>
+          <p>Identify the questions that block a decision and rank them by the cost of being wrong. Translate market-entry sequences, liquidity shocks, and infrastructure failures into decision trees with named thresholds and assigned owners. If gateway concentration rises above 0.60, review exposure. If redemption queues exceed 48 hours, reallocate reserves. Leadership gets numeric tripwires and defined responses, not slide decks hedged with qualifiers.</p>
         </article>
 
         <article class="card">
-          <h3>Scenario trees</h3>
-          <p>Thresholds and escalation pathways (memo → data request → supervisory questions → policy options).</p>
+          <h3>Simulation and empirical evidence</h3>
+          <p>Build agent-based models calibrated to observed data (Helium attrition, Filecoin sector faults, Ethereum fee dynamics), not assumptions. Run hundreds of stress paths under adverse scenarios to expose failure modes that single-path analysis cannot reach. Tie every empirical claim to a versioned query, API pull, or replication script. A new analyst should be able to regenerate every table and exhibit without the original author.</p>
         </article>
 
-        <article class="card full">
-          <h3>Want something concrete?</h3>
-          <p>
-            If you share the decision context (policy question, product design, or infrastructure project), I can outline: the scenario tree,
-            minimum viable metric set, escalation workflow, and “what changes the view” triggers.
-          </p>
+        <article class="card">
+          <h3>Taxonomies, scoring, and diligence frameworks</h3>
+          <p>Build classification and scoring systems (gateway-risk taxonomies, tokenization-equivalence checklists, governance concentration indices) that produce repeatable, auditable results. Design pre-committee gate checks specifying required evidence bundles, redemption-stress scenarios, and breach thresholds. Missing evidence sends a proposal back with a defined deficiency list; a declining CLII or HHI score triggers escalation and counterparty review.</p>
+        </article>
+
+        <article class="card">
+          <h3>Policy-to-operations mapping</h3>
+          <p>Trace proposed legislation to the settlement rails, custody workflows, and compliance obligations it reshapes, and to the shifts in liability and value capture it produces. Identify which issuers, custodians, and interface operators gain or lose as each provision takes effect, making the distributional consequences visible before commitments are made. The output is an operational impact grid: build, defer, or stop.</p>
+        </article>
+
+        <article class="card">
+          <h3>Control-layer audit and measurement</h3>
+          <p>Audit frameworks that target the operator and the routing layer instead of the token. Locate where liability, compliance, and value capture concentrate; identify single points of failure; produce key-control inventories, reconciliation-point maps, and escalation protocols that regulators and counterparties can audit. Every metric has a source, update interval, designated owner, and threshold tied to a specific response. If a metric does not trigger action, it does not stay on the dashboard.</p>
+        </article>
+
+        <article class="card">
+          <h3>Escalation workflows and board materials</h3>
+          <p>Assign named owners and defined procedures for when a threshold is breached or evidence deteriorates: memo, data request, supervisory inquiry, policy option set. Decision memos, option sets, and "what would change the view" one-pagers give committees actionable input instead of raw research. Every recommendation ties to the evidence, the conditions that would reverse it, and the owner of the next step.</p>
         </article>
       </div>
+
     </section>
 
-    <section id="contact" aria-labelledby="contact-title">
+    <section id="contact" class="reveal" aria-labelledby="contact-title">
       <div class="section-title">
         <h2 id="contact-title">Contact</h2>
-        <p>For institutional inquiries, the simplest path is email.</p>
+        <p>Bring a policy question, product design decision, or infrastructure problem.</p>
       </div>
 
       <div class="contact-box">
@@ -214,33 +474,63 @@
             <a id="emailAddr" href="mailto:zach@cryptozach.com?subject=Institutional%20inquiry%20%E2%80%94%20CryptoZach">zach@cryptozach.com</a>
           </div>
           <div class="smallprint">
-            Prefer email? Use the address above (resume / writing sample / one‑page agenda available on request).
+            I'll outline the scenario tree, evidence requirements, and decision thresholds that matter.
           </div>
         </div>
 
-        <button id="copyEmail" class="action copy" type="button">
-          Copy email
-        </button>
+        <div class="contact-actions">
+          <button id="copyEmail" class="action copy" type="button">
+            Copy email
+          </button>
+          <div class="contact-links">
+            <a class="contact-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a class="contact-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=7610498" target="_blank" rel="noopener noreferrer" aria-label="SSRN">
+              <svg aria-hidden="true" viewBox="0 6.5 24 10" fill="currentColor" width="16" height="16"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg>
+              <span>SSRN</span>
+            </a>
+            <a class="contact-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>X</span>
+            </a>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-actions" style="margin-top:12px">
-        <a class="action" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a class="action" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">Medium</a>
-        <a class="action" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer">X</a>
-      </div>
     </section>
 
-    <footer>
-      © <span id="year"></span> Zach Zukowski ·
-      <a href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer">X</a> ·
-      <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
-      <a href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">Medium</a>
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
+
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=7610498" target="_blank" rel="noopener noreferrer" aria-label="SSRN">
+            <svg aria-hidden="true" viewBox="0 6.5 24 10" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg>
+          </a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <p class="footer-tagline">Empirically-backed research on the infrastructure, controls, and institutions that shape digital money.</p>
     </footer>
   </main>
 
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
   <script defer src="./script.js"></script>
   <script>
-    // tiny no-dependency year fill (optional)
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
