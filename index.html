@@ -24,6 +24,7 @@
 </head>
 
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
 
   <header>
@@ -77,7 +78,7 @@
       <div class="hero-shimmer" aria-hidden="true"></div>
       <div class="hero-grid">
         <div class="hero-primary">
-          <div class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Digital money &amp; tokenization · from policy to execution</div>
+          <div class="kicker">Digital money &amp; tokenization · from policy to execution</div>
           <p class="display-name" aria-hidden="true">Zach Zukowski</p>
           <h1 id="hero-title">Director-level research on digital money, stablecoins, and tokenization: translating policy and product decisions into operating frameworks regulators, issuers, and market operators can act&nbsp;on.</h1>
 
@@ -147,6 +148,7 @@
 
       <div class="grid">
         <article class="card">
+          <span class="card-number">01</span>
           <h3>Operating model</h3>
           <p>Ten years in digital assets, first as the founding hire at Borderless Capital, a Web3-focused RIA, where I built the research operating system from scratch, led a four-analyst team, and supported underwriting across roughly 250 investments (~$500M AUM, ~10 institutional funds). I have evaluated 1,500+ opportunities, advised on 100+ tokenomics engagements, and led diligence on 100+ tokenization products.</p>
           <p>The work spans payment safety and efficiency, bank funding and liquidity transmission, operational resilience, and financial stability. The analytical commitment across all of it: regulate and audit the operator and the routing layer, not the token or mechanism.</p>
@@ -154,6 +156,7 @@
         </article>
 
         <article class="card">
+          <span class="card-number">02</span>
           <h3>Research system</h3>
           <p><strong>Governance.</strong> Research agendas are ranked by cost of being wrong. Quality standards are enforced through automated checks: XML validation, cross-reference testing, and claim-to-source tracing. Publication is tied to submission readiness, not calendar dates. Decision logs record what was deferred, why, and what would cause it to be reopened.</p>
           <p><strong>Measurement.</strong> The focus is on metrics that change decisions: redemption latency and reliability (P99 targets, failure rates under stress), settlement exception rates and resolution times, intraday liquidity constraints at custody and reserve points, and subsidy-to-revenue trajectories that distinguish self-funding networks from inflation-dependent ones.</p>
@@ -163,21 +166,25 @@
         </article>
 
         <article class="card">
+          <span class="card-number">03</span>
           <h3>Private money, bank funding, and credit migration</h3>
           <p>Stablecoins, tokenized deposits, and tokenized cash-management products differ in liability design, reserve composition, custody, and redemption operations. The central question is not which product wins but how balances and credit move across bank and nonbank balance sheets during adoption and stress. When balances migrate onto Treasury-backed rails designed as narrow money, credit does not disappear; it reroutes. Banks tend to shorten duration and tighten underwriting while nonbank originators expand where they hold a structural advantage. The five-lever framework in Dollar v3 tracks where that migration concentrates and which policy choices accelerate or restrain it.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">04</span>
           <h3>Settlement and market infrastructure</h3>
           <p>Settlement finality means different things depending on what is being measured: block confirmation, economic value integrity, or convertibility under stress. The SVB weekend exposed the gap. USDC continued to settle on-chain while the economic value of those settlements diverged by 13 percent. This work covers intraday liquidity mobilization, custody segregation, reconciliation architecture, and the short-term funding infrastructure (reserve eligibility, collateral haircuts, cross-system settlement timing) that becomes binding as tokenized instruments scale. The system-of-record decision is treated as foundational because it constrains everything downstream. The MVEP and CLII frameworks operationalize these issues: nine evidence categories as an entry gate, three scoring dimensions as a continuous drift detector.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">05</span>
           <h3>The control layer</h3>
           <p>The control layer is where policy becomes operating reality. CLARITY Section 302 defines the interface boundary. Section 305 makes holds and case-file obligations routine. Section 404 distinguishes permissible activity-based rewards from prohibited interest on the money object. Section 304 creates offshore reporting duties that can become de facto gateway controls. Each provision maps to a specific infrastructure node (interface operators, routing defaults, sweep engines, hold/freeze mechanisms) and to a specific shift in compliance cost, liability, or value capture. The regime classifier tracks ten signals with quantitative thresholds: wrapper sweep share above 50%, regulated interface share above 70% of flows, hold frequency above 0.5% of transactions. When three or more signals flip within a quarter, the regime label updates. Concentration risk, third-party dependency, and failure-mode testing are monitored continuously, not reviewed on a fixed calendar.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">06</span>
           <h3>Governance, incentives, and stress dynamics</h3>
           <p>Stress in stablecoin markets propagates vertically through code-based dependencies, not just horizontally across gateways. MakerDAO's Peg Stability Module during the SVB episode is the clearest documented case. In DePIN networks, hardware capital requirements concentrate governance power: measured DePIN governance HHI (0.19, range 0.037 to 0.388) materially exceeds DeFi benchmarks (0.09, range 0.028 to 0.174) across a 12-protocol cross-section. Infrastructure failures create a further asymmetry: adaptive emission controllers compress reward variance after shocks, while reputation systems drift toward plutocracy as correlated downtime penalizes smaller operators disproportionately. These findings translate into operating thresholds and escalation rules: CLII score below 0.50 triggers re-diligence, governance HHI above 0.40 triggers concentration review, bear-scenario PID deviation above 40% activates anti-windup safeguards. Monitoring updates when conditions change, not when the reporting cycle comes due.</p>
         </article>
@@ -425,6 +432,7 @@
             <div class="writing-copy">
               <h3 class="writing-title">Introduction to Tokenomics</h3>
               <p class="writing-excerpt">A practitioner's introduction to incentive design, value capture, and mechanism risk in token economies. Explains how token systems create and distribute value, where incentive failures concentrate (governance power consolidation, mercenary capital rotating between emission pools, reflexive price-to-emission feedback loops), and how to distinguish revenue-backed utility from narrative-driven speculation. Written as an accessible entry point to the wider research program.</p>
+              <button class="writing-expand" type="button"><span class="expand-more">Show more</span><span class="expand-less">Show less</span></button>
             </div>
             <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
           </a>
@@ -447,31 +455,37 @@
 
       <div class="grid grid--halves">
         <article class="card">
+          <span class="card-number">01</span>
           <h3>Research agendas and scenario architecture</h3>
           <p>Identify the questions that block a decision and rank them by the cost of being wrong. Translate market-entry sequences, liquidity shocks, and infrastructure failures into decision trees with named thresholds and assigned owners. If gateway concentration rises above 0.60, review exposure. If redemption queues exceed 48 hours, reallocate reserves. Leadership gets numeric tripwires and defined responses, not slide decks hedged with qualifiers.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">02</span>
           <h3>Simulation and empirical evidence</h3>
           <p>Build agent-based models calibrated to observed data (Helium attrition, Filecoin sector faults, Ethereum fee dynamics), not assumptions. Run hundreds of stress paths under adverse scenarios to expose failure modes that single-path analysis cannot reach. Tie every empirical claim to a versioned query, API pull, or replication script. A new analyst should be able to regenerate every table and exhibit without the original author.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">03</span>
           <h3>Taxonomies, scoring, and diligence frameworks</h3>
           <p>Build classification and scoring systems (gateway-risk taxonomies, tokenization-equivalence checklists, governance concentration indices) that produce repeatable, auditable results. Design pre-committee gate checks specifying required evidence bundles, redemption-stress scenarios, and breach thresholds. Missing evidence sends a proposal back with a defined deficiency list; a declining CLII or HHI score triggers escalation and counterparty&nbsp;review.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">04</span>
           <h3>Policy-to-operations mapping</h3>
           <p>Trace proposed legislation to the settlement rails, custody workflows, and compliance obligations it reshapes, and to the shifts in liability and value capture it produces. Identify which issuers, custodians, and interface operators gain or lose as each provision takes effect, making the distributional consequences visible before commitments are made. The output is an operational impact grid: build, defer, or stop.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">05</span>
           <h3>Control-layer audit and measurement</h3>
           <p>Audit frameworks that target the operator and the routing layer instead of the token. Locate where liability, compliance, and value capture concentrate; identify single points of failure; produce key-control inventories, reconciliation-point maps, and escalation protocols that regulators and counterparties can audit. Every metric has a source, update interval, designated owner, and threshold tied to a specific response. If a metric does not trigger action, it does not stay on the dashboard.</p>
         </article>
 
         <article class="card">
+          <span class="card-number">06</span>
           <h3>Escalation workflows and board materials</h3>
           <p>Assign named owners and defined procedures for when a threshold is breached or evidence deteriorates: memo, data request, supervisory inquiry, policy option set. Decision memos, option sets, and "what would change the view" one-pagers give committees actionable input instead of raw research. Every recommendation ties to the evidence, the conditions that would reverse it, and the owner of the next step.</p>
         </article>
@@ -494,6 +508,7 @@
           <div class="smallprint">
             I'll outline the scenario tree, evidence requirements, and decision thresholds that matter.
           </div>
+          <div class="smallprint">Typical response within 24&nbsp;hours.</div>
         </div>
 
         <div class="contact-actions">

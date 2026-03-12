@@ -124,6 +124,19 @@
     });
   }
 
+  // Scroll progress indicator
+  var progressBar = document.querySelector('.scroll-progress');
+  if (progressBar) {
+    var updateProgress = function() {
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+      progressBar.style.transform = 'scaleX(' + progress + ')';
+    };
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+  }
+
   // Header scroll state
   var header = document.querySelector('header');
   if(header){
