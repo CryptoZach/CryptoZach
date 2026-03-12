@@ -337,14 +337,14 @@ main{
 .hero::before{
   content:"";
   position:absolute;
-  top:-60%;
-  right:-10%;
-  width:70%;
-  height:120%;
+  top:-40%;
+  right:-5%;
+  width:60%;
+  height:100%;
   background:
-    radial-gradient(ellipse at 60% 40%, var(--accent-muted) 0%, transparent 55%);
+    radial-gradient(ellipse at 50% 50%, var(--accent-muted) 0%, transparent 50%);
   pointer-events:none;
-  opacity:.8;
+  opacity:.6;
 }
 
 .hero::after{
@@ -354,13 +354,13 @@ main{
   left:0;
   right:0;
   height:1px;
-  background:linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+  background:linear-gradient(90deg, transparent 5%, var(--accent-soft) 50%, transparent 95%);
   pointer-events:none;
 }
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1fr 320px;
+  grid-template-columns:1fr 340px;
   gap:var(--space-xl);
   align-items:start;
   position:relative;
@@ -380,9 +380,9 @@ main{
   font-size:11px;
   font-weight:600;
   color:var(--accent);
-  letter-spacing:.16em;
+  letter-spacing:.14em;
   text-transform:uppercase;
-  margin-bottom:var(--space-md);
+  margin-bottom:var(--space-sm);
 }
 
 .kicker-dot{
@@ -392,10 +392,18 @@ main{
   border-radius:50%;
   background:var(--accent);
   flex-shrink:0;
+  animation:kicker-pulse 2.5s ease-in-out infinite;
+}
+@keyframes kicker-pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+@media (prefers-reduced-motion: reduce){
+  .kicker-dot{animation:none}
 }
 
 .display-name{
-  font-size:clamp(42px, 6vw, 58px);
+  font-size:clamp(44px, 6vw, 60px);
   font-weight:700;
   letter-spacing:-0.04em;
   line-height:1.0;
@@ -405,11 +413,11 @@ main{
 
 h1{
   margin:0;
-  font-size:clamp(16px, 1.8vw, 18px);
-  line-height:1.6;
+  font-size:clamp(15.5px, 1.6vw, 17.5px);
+  line-height:1.65;
   font-weight:420;
   color:var(--muted);
-  max-width:34rem;
+  max-width:30rem;
 }
 
 .hero-actions{
@@ -423,6 +431,15 @@ h1{
 .hero-actions .action{
   font-size:14px;
   padding:12px 28px;
+}
+.hero-actions .action.secondary{
+  border-color:var(--line-strong);
+  color:var(--text-soft);
+}
+.hero-actions .action.secondary:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--accent-muted);
 }
 
 .hero-actions .action.primary{
@@ -444,22 +461,38 @@ h1{
 }
 
 .badge{
-  padding:5px 12px;
+  padding:5px 14px;
   border:1px solid var(--line);
   border-radius:999px;
   background:color-mix(in srgb, var(--panel) 80%, transparent);
   font-weight:500;
   letter-spacing:.01em;
-  transition:border-color .15s ease;
+  transition:border-color .15s ease, background .15s ease;
 }
 .badge:hover{
   border-color:var(--line-strong);
+  background:color-mix(in srgb, var(--panel) 95%, transparent);
 }
 .badge--highlight{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
   border-color:color-mix(in srgb, var(--accent) 50%, var(--line));
   color:var(--accent);
   background:var(--accent-muted);
   font-weight:600;
+}
+.badge-dot{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  flex-shrink:0;
+  animation:kicker-pulse 2.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .badge-dot{animation:none}
 }
 
 /* ── Hero trust rail ── */
@@ -471,15 +504,19 @@ h1{
   z-index:1;
   border:1px solid var(--line);
   border-radius:var(--radius-sm);
-  background:color-mix(in srgb, var(--panel) 70%, transparent);
+  background:color-mix(in srgb, var(--panel) 60%, transparent);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   overflow:hidden;
+  align-self:start;
+  margin-top:var(--space-xs);
 }
 
 .rail-card{
-  padding:var(--space-md) var(--space-lg);
+  padding:var(--space-md) var(--space-lg) var(--space-md) calc(var(--space-lg) + 1px);
   border-bottom:1px solid var(--line);
   border-left:3px solid var(--accent);
-  transition:background .2s ease;
+  transition:background .2s ease, border-left-color .2s ease;
 }
 .rail-card:last-of-type{
   border-bottom:none;
@@ -489,7 +526,7 @@ h1{
 }
 
 .rail-label{
-  margin:0 0 4px;
+  margin:0 0 3px;
   font-size:10px;
   font-weight:700;
   letter-spacing:.14em;
@@ -500,7 +537,7 @@ h1{
 .rail-card p{
   margin:0;
   font-size:13px;
-  line-height:1.55;
+  line-height:1.5;
   color:var(--text-soft);
 }
 
@@ -512,7 +549,7 @@ h1{
 }
 .rail-thesis p{
   margin:0;
-  font-size:12px;
+  font-size:11.5px;
   font-weight:600;
   line-height:1.45;
   color:var(--accent);
@@ -524,7 +561,7 @@ h1{
 
 /* ── Positioning bar ── */
 .positioning{
-  margin-top:var(--space-xl);
+  margin-top:var(--space-lg);
 }
 .positioning-grid{
   display:grid;
@@ -873,13 +910,12 @@ footer{
 /* ── Writing status badges ── */
 .writing-status{
   display:inline-block;
-  padding:4px 10px;
+  padding:3px 10px;
   border-radius:999px;
   font-size:11px;
   font-weight:600;
   letter-spacing:.04em;
   white-space:nowrap;
-  margin-bottom:var(--space-xs);
 }
 .status--published{
   border:1px solid color-mix(in srgb, #16a34a 30%, var(--line));
@@ -908,18 +944,16 @@ footer{
 }
 
 .writing-date{
-  position:absolute;
-  top:var(--space-md);
-  right:var(--space-lg);
-  padding:4px 10px;
+  display:inline-block;
+  padding:3px 10px;
   border-radius:999px;
-  border:1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
-  background:var(--accent-muted);
-  color:var(--accent);
   font-size:11px;
-  font-weight:600;
-  letter-spacing:.06em;
-  text-transform:uppercase;
+  font-weight:500;
+  letter-spacing:.02em;
+  color:var(--muted);
+  border:1px solid var(--line);
+  background:color-mix(in srgb, var(--panel) 80%, transparent);
+  white-space:nowrap;
 }
 
 .smallprint{color:var(--muted); font-size:12px}
@@ -1201,6 +1235,8 @@ footer{
     flex-wrap:wrap;
     border:none;
     background:none;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
     gap:var(--space-sm);
   }
   .rail-card{
@@ -1239,6 +1275,8 @@ footer{
     flex-direction:column;
     border:none;
     background:none;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
     gap:var(--space-sm);
   }
   .rail-card{
