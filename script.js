@@ -14,6 +14,19 @@
     });
   }
 
+  // Thread badge navigation (spans with data-href inside writing-link)
+  document.querySelectorAll('.writing-thread[data-href]').forEach(function(el) {
+    function openThread(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+    }
+    el.addEventListener('click', openThread);
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') openThread(e);
+    });
+  });
+
   // Theme: respect saved preference, then system preference, then default light
   var toggle = document.getElementById('themeToggle');
   var saved = localStorage.getItem('theme');
