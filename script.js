@@ -279,6 +279,7 @@
   }
 
   setupStagger('.positioning-grid', '.positioning-card');
+  setupStagger('.grid', '.card');
   setupStagger('.writing-list', '.writing-item');
 
   // Animated number counter for positioning stats
