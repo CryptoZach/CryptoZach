@@ -1,4 +1,4 @@
-# CryptoZach — GitHub Pages (Institutional)
+# CryptoZach: GitHub Pages (Institutional)
 
 This repo is a clean, dependency-free GitHub Pages site.
 
