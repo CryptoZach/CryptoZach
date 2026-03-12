@@ -796,6 +796,28 @@ footer{
   margin-bottom:var(--space-sm);
   flex-shrink:0;
 }
+.card-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:var(--accent-muted);
+  border:1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  color:var(--accent);
+  margin-bottom:var(--space-sm);
+  flex-shrink:0;
+  transition:background .2s ease, border-color .2s ease;
+}
+.card-icon svg{
+  width:18px;
+  height:18px;
+}
+.card:hover .card-icon{
+  background:var(--accent-soft);
+  border-color:color-mix(in srgb, var(--accent) 35%, transparent);
+}
 
 :root[data-theme="dark"] .card{
   background:color-mix(in srgb, var(--panel) 90%, transparent);
@@ -1673,6 +1695,8 @@ footer{
   .card h3{font-size:14px}
   .card p{font-size:13px}
   .card-number{width:24px; height:24px; font-size:10px}
+  .card-icon{width:32px; height:32px; border-radius:8px}
+  .card-icon svg{width:16px; height:16px}
 
   .section-title h2{font-size:16px}
   .section-title p{font-size:12px; padding-left:calc(var(--space-md) + 3px)}
