@@ -1437,6 +1437,7 @@ footer{
     border:1px solid var(--line);
     border-left:3px solid var(--accent);
     border-radius:var(--radius-sm);
+    background:var(--panel);
     background:color-mix(in srgb, var(--panel) 85%, transparent);
   }
   .rail-card:last-of-type{border-bottom:1px solid var(--line)}
@@ -1552,18 +1553,24 @@ footer{
     background:none;
     backdrop-filter:none;
     -webkit-backdrop-filter:none;
-    gap:var(--space-sm);
+    gap:var(--space-xs);
   }
   .rail-card{
     border:1px solid var(--line);
     border-left:3px solid var(--accent);
     border-radius:var(--radius-sm);
+    background:var(--panel);
     background:color-mix(in srgb, var(--panel) 85%, transparent);
-    padding:var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) + 1px);
+    padding:var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-sm) + 4px);
   }
   .rail-card:last-of-type{border-bottom:1px solid var(--line)}
-  .rail-thesis{border-radius:var(--radius-sm); padding:var(--space-sm) var(--space-md)}
-  .rail-card p{font-size:13px}
+  .rail-label{font-size:10px; margin-bottom:2px}
+  .rail-card p{font-size:12.5px; line-height:1.45}
+  .rail-thesis{
+    border-radius:var(--radius-sm);
+    padding:var(--space-xs) var(--space-md) var(--space-xs) calc(var(--space-sm) + 4px);
+  }
+  .rail-thesis p{font-size:11px; line-height:1.4}
 
   .card{grid-column:span 12; padding:var(--space-md)}
   .grid--thirds .card{grid-column:span 12}
@@ -1678,6 +1685,17 @@ footer{
   .meta{flex-direction:column; align-items:stretch}
   .badge{text-align:center; justify-content:center; display:flex}
 
+  .hero-rail{gap:6px}
+  .rail-card{
+    padding:var(--space-xs) var(--space-sm) var(--space-xs) calc(var(--space-xs) + 4px);
+  }
+  .rail-card p{font-size:12px; line-height:1.4}
+  .rail-label{font-size:9.5px; margin-bottom:1px}
+  .rail-thesis{
+    padding:var(--space-xs) var(--space-sm) var(--space-xs) calc(var(--space-xs) + 4px);
+  }
+  .rail-thesis p{font-size:10.5px; line-height:1.35}
+
   .positioning-stat{font-size:clamp(22px, 6vw, 28px)}
 
   .writing-link{padding:var(--space-sm)}
@@ -1731,9 +1749,15 @@ footer{
   .hero-actions .action{font-size:13px; padding:10px 16px}
 
   .badge{font-size:10px; padding:3px 8px}
-  .rail-card p{font-size:12px}
-  .rail-label{font-size:9px}
-  .rail-thesis p{font-size:10.5px}
+  .hero-rail{gap:4px}
+  .rail-card{
+    padding:8px 10px 8px 12px;
+    border-left-width:2px;
+  }
+  .rail-card p{font-size:11.5px; line-height:1.38}
+  .rail-label{font-size:8.5px; margin-bottom:1px; letter-spacing:.12em}
+  .rail-thesis{padding:6px 10px 6px 12px; border-left-width:2px}
+  .rail-thesis p{font-size:10px; line-height:1.35}
 
   .writing-title{font-size:13px}
   .writing-thread{font-size:10px; padding:3px 8px}
@@ -1747,6 +1771,17 @@ footer{
   .display-name{font-size:clamp(28px, 5vw, 36px); margin-bottom:var(--space-xs)}
   .hero-actions{margin-top:var(--space-sm)}
   .meta{margin-top:var(--space-sm); padding-top:var(--space-sm)}
+  .hero-rail{
+    flex-direction:row; flex-wrap:wrap; gap:var(--space-xs);
+    border:none; background:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+  }
+  .rail-card{
+    flex:1 1 180px; border:1px solid var(--line); border-left:2px solid var(--accent);
+    border-radius:var(--radius-sm); padding:var(--space-xs) var(--space-sm);
+  }
+  .rail-card:last-of-type{border-bottom:1px solid var(--line)}
+  .rail-card p{font-size:11.5px}
+  .rail-thesis{flex:1 1 100%; border-radius:var(--radius-sm); padding:var(--space-xs) var(--space-sm)}
   .nav-links--mobile{
     flex-direction:row;
     flex-wrap:wrap;
@@ -1761,6 +1796,8 @@ footer{
 @media (hover: none) and (pointer: coarse){
   .action:hover{transform:none; box-shadow:var(--shadow-sm)}
   .card:hover{transform:none}
+  .card:hover::after{opacity:0}
+  .rail-card:hover{background:transparent}
   .writing-card:has(a.writing-link):hover,
   .writing-card--linked:hover{transform:none}
   .action:active{transform:scale(0.98)}
