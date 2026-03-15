@@ -3020,6 +3020,23 @@ footer{
   section + section{padding-top:var(--space-xl)}
 }
 
+/* iPhone / narrow mobile: hero-points stack (METHOD, SCOPE, GOAL) */
+@media (max-width: 640px){
+  .hero-points{
+    display:flex;
+    flex-direction:column;
+    grid-template-columns:unset;
+  }
+  .hero-point{
+    border-right:none;
+    border-bottom:1px solid var(--line);
+    padding:var(--space-sm) var(--space-md);
+  }
+  .hero-point:last-child{
+    border-bottom:none;
+  }
+}
+
 /* Small mobile: <=480px */
 @media (max-width: 480px){
   main{padding:var(--space-sm) var(--space-sm) var(--space-lg)}

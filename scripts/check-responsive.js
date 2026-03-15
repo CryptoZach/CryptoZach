@@ -12,9 +12,12 @@ const VIEWPORTS = [
   { label: 'Desktop', width: 1280, height: 800 },
   { label: 'Tablet', width: 980, height: 800 },
   { label: 'Mobile', width: 768, height: 1024 },
+  { label: 'iPhone', width: 390, height: 844 },
   { label: 'Small', width: 480, height: 800 },
   { label: 'XSmall', width: 360, height: 640 },
 ];
+
+const HERO_STACK_BREAKPOINT = 640;
 
 const PAGES = [
   { path: '/index.html', name: 'index' },
@@ -71,16 +74,20 @@ async function runChecks() {
       if (p.name === 'index') {
         const heroPoints = page.locator('.hero-points').first();
         if (await heroPoints.count() > 0) {
-          const heroPointsHorizontal = await heroPoints.evaluate((el) => {
+          const shouldStack = vp.width <= HERO_STACK_BREAKPOINT;
+          const heroLayoutOk = await heroPoints.evaluate((el, { stack }) => {
             const cs = getComputedStyle(el);
             const display = cs.display;
-            const gridCols = cs.gridTemplateColumns || '';
-            const isGrid = display === 'grid';
-            const threeCols = gridCols.split(' ').filter(Boolean).length >= 3;
-            return isGrid && threeCols;
-          }).catch(() => false);
-          if (!heroPointsHorizontal) {
-            failures.push({ ctx, assertion: 'hero points horizontal (3 columns)', detail: '.hero-points must be display:grid with 3 columns at all screen sizes' });
+            const flexDir = cs.flexDirection;
+            const gridCols = (cs.gridTemplateColumns || '').split(' ').filter(Boolean);
+            if (stack) {
+              return display === 'flex' && flexDir === 'column';
+            }
+            return display === 'grid' && gridCols.length >= 3;
+          }, { stack: shouldStack }).catch(() => false);
+          if (!heroLayoutOk) {
+            const expected = shouldStack ? 'hero points stacked (1 column on mobile/iPhone)' : 'hero points horizontal (3 columns)';
+            failures.push({ ctx, assertion: expected, detail: `viewport ${vp.width}px: .hero-points should ${shouldStack ? 'stack' : 'be 3 columns'}` });
           }
         }
         const hero = page.locator('.hero').first();
