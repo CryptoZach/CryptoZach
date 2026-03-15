@@ -79,7 +79,7 @@ CTA: Explore the operator view → resume.html#resume-payments
 
 **Minimum Viable Equivalence Packs:** Before an institution relies on a tokenized product, it should prove whether the tokenized version really works like the traditional asset under stress. This framework shows what evidence needs to exist before that claim is credible.
 
-**Dollar v3 / The Control Layer War:** This work explains how laws and policy proposals show up in real operations: interfaces, holds, custody, reporting duties, and the firms that end up carrying compliance and control.
+**Dollar v3 / The Control Layer War:** This work explains how laws and policy proposals show up in real operations: interfaces, holds, custody, reporting duties, and the firms that end up carrying compliance and control. A detailed internal unpublished version is available on request, and a public version is available on Medium.
 
 ---
 
@@ -201,7 +201,7 @@ Committee-ready recommendations, monitoring thresholds, and clear triggers to mo
 
 ### Homepage Research-Process Strip
 
-**Heading:** How the research is run
+**Heading:** How the research program is run
 
 **Evidence first:** Every major claim ties to a mechanism, dataset, or stress scenario.
 
