@@ -42,7 +42,24 @@ async function runChecks() {
       }, vp.width);
       if (!noOverflow) {
         const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-        failures.push({ ctx, assertion: 'no horizontal overflow', detail: `scrollWidth ${scrollWidth} > viewport ${vp.width}` });
+        const overflowNodes = await page.evaluate((vw) => {
+          const out = [];
+          const walk = (el) => {
+            if (el.scrollWidth > Math.min(el.clientWidth, vw) + 1) {
+              const tag = el.tagName.toLowerCase();
+              const cls = (el.className && typeof el.className === 'string') ? el.className.split(/\s+/)[0] : '';
+              const text = (el.textContent || '').slice(0, 40).replace(/\s+/g, ' ');
+              out.push({ tag, class: cls, text });
+            }
+            for (let i = 0; i < el.children.length; i++) walk(el.children[i]);
+          };
+          walk(document.body);
+          return out.slice(0, 5);
+        }, vp.width).catch(() => []);
+        const detail = overflowNodes.length
+          ? `scrollWidth ${scrollWidth} > viewport ${vp.width}; sample nodes: ${JSON.stringify(overflowNodes)}`
+          : `scrollWidth ${scrollWidth} > viewport ${vp.width}`;
+        failures.push({ ctx, assertion: 'no horizontal overflow (text wrapping)', detail });
       }
 
       const headerVisible = await page.locator('.header-inner').first().evaluate((el) => el && el.getBoundingClientRect().width > 0).catch(() => false);

@@ -2678,6 +2678,7 @@ footer{
   .track-overview .grid--halves{grid-template-columns:1fr}
   .audience-grid{grid-template-columns:1fr}
   .grid--thirds{grid-template-columns:1fr}
+  .process-strip .process-point p{max-width:none}
   h1{max-width:none}
   .menu-toggle{display:inline-flex}
   .nav-links--desktop{display:none}
@@ -2696,7 +2697,50 @@ footer{
     flex-wrap:nowrap;
   }
   .brand strong{font-size:14px}
-  .brand span{font-size:11px}
+  .brand span{
+    font-size:11px;
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+  }
+  .hero-primary,
+  .hero-points,
+  .hero-point,
+  .hero-point span,
+  .rail-card,
+  .rail-card p,
+  .kicker{
+    min-width:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
+  .section-title h2,
+  .section-title p,
+  .teaser-body p,
+  .teaser-body ul,
+  .card h3,
+  .card p{
+    min-width:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
+  .writing-title,
+  .writing-excerpt,
+  .research-plain,
+  .research-why,
+  .research-audience{
+    min-width:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
+  .meta,
+  .badge{
+    min-width:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
   nav{width:auto; justify-content:flex-end; flex-wrap:nowrap; gap:var(--space-xs)}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
@@ -2735,15 +2779,20 @@ footer{
     font-size:clamp(18px, 4.8vw, 22px);
     max-width:none;
     line-height:1.3;
+    overflow-wrap:break-word;
+    word-break:break-word;
   }
   .hero-name{
     font-size:clamp(28px, 8vw, 36px);
     line-height:1;
     max-width:none;
+    overflow-wrap:break-word;
+    word-break:break-word;
   }
-  .hero-subhead{font-size:14px}
+  .hero-subhead{font-size:14px; overflow-wrap:break-word; word-break:break-word}
   h1{max-width:none}
   .hero-points{margin-top:var(--space-md)}
+  .hero-points .hero-point{min-width:0}
   .hero-point{
     grid-template-columns:1fr;
     gap:4px;
@@ -2954,6 +3003,14 @@ footer{
     padding:var(--space-md) var(--space-sm);
     margin-top:var(--space-xs);
     border-radius:var(--radius-sm);
+  }
+  .hero-primary,
+  .hero-point span,
+  .rail-card p,
+  .writing-excerpt,
+  .card p{
+    overflow-wrap:break-word;
+    word-break:break-word;
   }
   h1{
     font-size:clamp(18px, 5vw, 22px);

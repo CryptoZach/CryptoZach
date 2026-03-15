@@ -27,7 +27,7 @@
   function getPreferredTheme() {
     var savedTheme = getSavedTheme();
     if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme;
-    return prefersDarkMode() ? 'dark' : 'light';
+    return 'dark';
   }
 
   function onMediaChange(query, handler) {
@@ -55,9 +55,8 @@
   applyTheme(getPreferredTheme());
 
   onMediaChange(prefersDark, function(event) {
-    if (!getSavedTheme()) {
-      applyTheme(event.matches ? 'dark' : 'light');
-    }
+    if (getSavedTheme()) return;
+    applyTheme('dark');
   });
 
   if (toggle) {
