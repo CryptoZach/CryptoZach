@@ -301,7 +301,7 @@ Governance concentration, infrastructure failure, simulation-backed incentive de
 ## Contact Page
 
 **Heading:** Get in touch
-**Body:** Exploring a role, weighing a policy question, or stress-testing a product decision? Send me a note. I will point you to the right starting place, whether that is a plain-English overview, a research paper, or the most relevant resume version.
+**Body:** Exploring a role, weighing a policy question, or stress-testing a product decision? I'll outline the scenario tree, evidence requirements, and decision thresholds that matter.
 
 **Contact:** zach@cryptozach.com
 
