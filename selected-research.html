@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0c10" />
 
   <title>Selected Research - Zach Zukowski (CryptoZach)</title>
   <meta name="description" content="Research on stablecoins, tokenized products, and the systems that move digital dollars. Plain-English summaries and full papers." />
@@ -10,33 +11,79 @@
   <meta property="og:title" content="Selected Research - Zach Zukowski (CryptoZach)" />
   <meta property="og:description" content="Research on stablecoins, tokenized products, and the systems that move digital dollars. Plain-English summaries and full papers." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://cryptozach.com/selected-research" />
   <meta property="og:url" content="https://cryptozach.com/selected-research" />
+  <meta property="og:image" content="https://cryptozach.com/assets/brand/og-image.png" />
+  <meta property="og:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <link rel="canonical" href="https://cryptozach.com/selected-research" />
 
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Selected Research - Zach Zukowski (CryptoZach)" />
   <meta name="twitter:description" content="Research on stablecoins, tokenized products, and the systems that move digital dollars. Plain-English summaries and full papers." />
+  <meta name="twitter:image" content="https://cryptozach.com/assets/brand/og-image.png" />
+  <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
+
+  <link rel="icon" href="./assets/brand/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/brand/apple-touch-icon.png" />
 
   <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="stylesheet" href="./styles.css?v=10" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://x.com" />
+  <link rel="dns-prefetch" href="https://www.linkedin.com" />
+  <link rel="dns-prefetch" href="https://medium.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (error) {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="./styles.css?v=14" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Selected Research",
+      "url": "https://cryptozach.com/selected-research",
+      "description": "Research on stablecoins, tokenized products, and the systems that move digital dollars.",
+      "author": {
+        "@type": "Person",
+        "name": "Zach Zukowski",
+        "url": "https://cryptozach.com"
+      },
+      "about": [
+        "Stablecoins",
+        "Tokenization",
+        "Digital money",
+        "Market infrastructure"
+      ]
+    }
+  </script>
 </head>
 
 <body>
   <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
-
   <header>
     <div class="header-inner">
       <div class="brand">
-        <a href="./index.html" style="text-decoration:none;color:inherit">
+        <a href="./index.html">
           <strong>Zach Zukowski · (CryptoZach)</strong>
           <span>Digital Money • Tokenization • Market Infrastructure</span>
         </a>
       </div>
 
       <nav aria-label="Primary">
-        <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-label="Open menu" title="Menu">
+        <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu" title="Menu">
           <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
           <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
@@ -45,7 +92,7 @@
           <a class="navlink" href="./start-here.html">Start Here</a>
           <a class="navlink" href="./focus.html">Focus</a>
           <a class="navlink active" href="./selected-research.html">Research</a>
-          <a class="navlink" href="/resume.html">Resume</a>
+          <a class="navlink" href="./resume.html">Resume</a>
           <a class="navlink" href="./contact.html">Contact</a>
         </div>
 
@@ -64,12 +111,25 @@
     </div>
   </header>
 
-  <div id="mobileNav" class="nav-links nav-links--mobile">
-    <a class="navlink" href="./start-here.html">Start Here</a>
-    <a class="navlink" href="./focus.html">Focus</a>
-    <a class="navlink active" href="./selected-research.html">Research</a>
-    <a class="navlink" href="/resume.html">Resume</a>
-    <a class="navlink" href="./contact.html">Contact</a>
+  <div id="mobileNav" class="nav-links nav-links--mobile" hidden>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="./start-here.html">Start Here</a>
+      <a class="navlink" href="./focus.html">Focus</a>
+      <a class="navlink active" href="./selected-research.html">Research</a>
+      <a class="navlink" href="./resume.html">Resume</a>
+      <a class="navlink" href="./contact.html">Contact</a>
+    </div>
+    <div class="mobile-nav-section">
+      <div class="mobile-nav-label">Quick read</div>
+      <div class="mobile-nav-proof">
+        <strong>Research built for real decisions</strong>
+        <p>Policy, asset management, and stablecoin strategy, anchored in evidence, controls, and stress scenarios.</p>
+      </div>
+      <div class="mobile-nav-actions">
+        <a class="action primary" href="./resume.html">Choose a resume</a>
+        <a class="action secondary" href="./selected-research.html">Read research</a>
+      </div>
+    </div>
   </div>
 
   <main id="main">
@@ -79,8 +139,18 @@
         Research
       </div>
       <div class="section-title">
-        <h1 id="research-title">Selected research</h1>
-        <p>A few starting points for readers who want clear, substantive answers in relatable&nbsp;language.</p>
+        <h1 id="research-title">Research library</h1>
+        <p>Start with the entry point that matches your question, then go deeper by audience, topic, or publication status.</p>
+      </div>
+
+      <div class="page-toc" aria-label="Research jump links">
+        <p class="page-toc-title">Jump to</p>
+        <div class="page-toc-list">
+          <a class="page-toc-link" href="#routing-the-dollar">Routing the Dollar</a>
+          <a class="page-toc-link" href="#mvep">Equivalence framework</a>
+          <a class="page-toc-link" href="#tokenomics-jump">Tokenomics and DePIN</a>
+          <a class="page-toc-link" href="#earlier-work">Earlier work</a>
+        </div>
       </div>
 
       <div class="track-overview reveal">
@@ -98,13 +168,21 @@
         <p class="track-bridge">Need the operating model behind these papers? <a href="./focus.html">Read&nbsp;Focus</a>.</p>
       </div>
 
+      <div class="cta-strip reveal">
+        <div>
+          <strong>Read one paper first</strong>
+          <p><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Routing the Dollar</a> is the clearest entry point into the site's core thesis: the decisive risks usually sit in gateways, routing, reserves, and control surfaces, not just in the token.</p>
+        </div>
+        <a class="action primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read Routing the Dollar</a>
+      </div>
+
       <h3 class="track-label">Stablecoin &amp; dollar infrastructure</h3>
 
       <ul class="writing-list">
 
         <li class="writing-item writing-card" id="routing-the-dollar">
           <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-clii" src="Publication Images/Routing_The_Dollar_CLII.png" alt="Routing the Dollar cover" loading="lazy" />
+            <img class="writing-thumb thumb-clii" src="Publication Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--ssrn">SSRN · Under review</span>
               <span class="writing-length">~20,000 words</span>
@@ -119,14 +197,14 @@
             <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
           </a>
           <div class="research-links">
-            <a class="action secondary" href="https://x.com/CryptoZach/status/2031929065549025726" target="_blank" rel="noopener noreferrer">2-minute <svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Thread</a>
             <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Full paper</a>
+            <a class="action secondary" href="https://x.com/CryptoZach/status/2031929065549025726" target="_blank" rel="noopener noreferrer">Thread summary</a>
           </div>
         </li>
 
         <li class="writing-item writing-card" id="mvep">
           <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-top" src="Publication Images/Equivalence_Pack.webp" alt="Minimum Viable Equivalence Packs cover" loading="lazy" />
+            <img class="writing-thumb thumb-wide" src="Publication Images/Equivalence_Pack.webp" width="1200" height="924" alt="Minimum Viable Equivalence Packs cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
               <span class="writing-length">~3,500 words</span>
@@ -141,16 +219,16 @@
             <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
           </a>
           <div class="research-links">
-            <a class="action secondary" href="https://x.com/CryptoZach/status/2024998578335482251" target="_blank" rel="noopener noreferrer">2-minute <svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Thread</a>
             <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer">Full paper</a>
+            <a class="action secondary" href="https://x.com/CryptoZach/status/2024998578335482251" target="_blank" rel="noopener noreferrer">Thread summary</a>
           </div>
         </li>
 
         <li class="writing-item writing-card" id="control-layer-war">
           <a class="writing-link" href="./contact.html" aria-label="Contact Zach about The Control Layer War">
-            <img class="writing-thumb thumb-focus" src="Publication Images/Control_Layer.webp" alt="The Control Layer War cover" loading="lazy" />
+            <img class="writing-thumb thumb-wide" src="Publication Images/Control_Layer.webp" width="1401" height="933" alt="The Control Layer War cover" loading="lazy" />
             <div class="writing-meta">
-              <span class="writing-status status--draft">Sample on request</span>
+              <span class="writing-status status--draft">Unpublished internal document</span>
               <span class="writing-length">~8,000 words</span>
               <span class="writing-date">Jan 2026</span>
             </div>
@@ -159,22 +237,23 @@
               <p class="research-plain"><strong>What it means:</strong> The real policy battle is not over labels. It is over which interfaces, routers, and application layers must enforce compliance and where that power&nbsp;sits.</p>
               <p class="research-why"><strong>Why it matters:</strong> Liability, bargaining power, and value capture often concentrate where default routing, holds, sweeps, and access controls live. That is where policy becomes day-to-day&nbsp;operations.</p>
               <p class="research-audience"><strong>Who it's for:</strong> Policy, issuers.</p>
+              <p class="research-audience"><strong>Public version:</strong> Available as CLARITY's Real Target: The Control Layer (Defaults, Holds, Routing).</p>
             </div>
             <span class="writing-arrow">Ask <span aria-hidden="true">→</span></span>
           </a>
           <div class="research-links">
-            <a class="action secondary" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer">2-minute <svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Thread</a>
+            <a class="action secondary" href="./contact.html">Request internal sample</a>
             <a class="action secondary" href="https://medium.com/@CryptoZach/claritys-real-target-the-control-layer-defaults-holds-routing-6220ab37995a" target="_blank" rel="noopener noreferrer">Public version</a>
-            <a class="action secondary" href="./contact.html">Request sample</a>
-            <p class="smallprint research-note">Detailed internal unpublished version available on request. Public version: <a href="https://medium.com/@CryptoZach/claritys-real-target-the-control-layer-defaults-holds-routing-6220ab37995a" target="_blank" rel="noopener noreferrer">Clarity's Real Target</a>.</p>
+            <a class="action secondary" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer">Thread summary</a>
           </div>
         </li>
 
         <li class="writing-item writing-card" id="dollar-v3">
           <a class="writing-link" href="https://medium.com/@CryptoZach/dollar-v3-how-stablecoin-policy-is-about-to-re-write-the-u-s-dollar-16d20ab92a14" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-wide" src="Publication Images/Dollarv3.webp" alt="Dollar v3: Policy Map cover" loading="lazy" />
+            <img class="writing-thumb thumb-wide" src="Publication Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3: Policy Map cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
+              <span class="writing-length">~11,000 words</span>
               <span class="writing-date">Dec 10, 2025</span>
             </div>
             <div class="writing-copy">
@@ -186,21 +265,21 @@
             <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
           </a>
           <div class="research-links">
-            <a class="action secondary" href="https://x.com/CryptoZach/status/1998874696893231210" target="_blank" rel="noopener noreferrer">2-minute <svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Thread</a>
             <a class="action secondary" href="https://medium.com/@CryptoZach/dollar-v3-how-stablecoin-policy-is-about-to-re-write-the-u-s-dollar-16d20ab92a14" target="_blank" rel="noopener noreferrer">Full paper</a>
+            <a class="action secondary" href="https://x.com/CryptoZach/status/1998874696893231210" target="_blank" rel="noopener noreferrer">Thread summary</a>
           </div>
         </li>
 
       </ul>
 
-      <h3 class="track-label">Tokenomics &amp; physical network systems (DePIN)</h3>
-      <p style="margin:0 0 var(--space-md);padding-left:var(--space-md);font-size:13px;color:var(--muted)">Three papers exploring token-economic simulation and modeling, physical networks that depend on geography, and what makes those systems credible to users and institutions. <a href="./tokenomics-research.html" style="color:var(--accent)">Read the full tokenomics research overview</a>.</p>
+      <h3 id="tokenomics-jump" class="track-label">Tokenomics &amp; physical network systems (DePIN)</h3>
+      <p class="track-context">Three papers exploring token-economic simulation and modeling, physical networks that depend on geography, and what makes those systems credible to users and institutions. <a href="./tokenomics-research.html">Read the full tokenomics research overview</a>.</p>
 
       <ul class="writing-list">
 
         <li class="writing-item writing-card" id="operational-risk">
           <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-wide" src="Publication Images/Table3_ValOS-NORS.png" alt="Operational Risk in Token Economies: ValOS-NORS table" loading="lazy" />
+            <img class="writing-thumb thumb-wide" src="Publication Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies: ValOS-NORS table" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--ssrn">SSRN</span>
               <span class="writing-length">~6,500 words</span>
@@ -221,7 +300,7 @@
 
         <li class="writing-item writing-card" id="adaptive-tokenomics">
           <a class="writing-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-wide thumb-exhibit-center" src="Publication Images/exhibit_01_discipline_map.png" alt="Adaptive Tokenomics discipline map exhibit" loading="lazy" />
+            <img class="writing-thumb thumb-wide thumb-exhibit-center thumb-discipline-map" src="Publication Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics discipline map exhibit" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--ssrn">SSRN</span>
               <span class="writing-length">~20,900 words</span>
@@ -255,9 +334,6 @@
             </div>
             <span class="writing-arrow">Request sample <span aria-hidden="true">→</span></span>
           </a>
-          <div class="research-links">
-            <a class="action secondary" href="./contact.html">Request sample</a>
-          </div>
         </li>
 
         <li class="writing-item writing-card" id="umbrella-thesis">
@@ -275,19 +351,16 @@
             </div>
             <span class="writing-arrow">Request sample <span aria-hidden="true">→</span></span>
           </a>
-          <div class="research-links">
-            <a class="action secondary" href="./contact.html">Request sample</a>
-          </div>
         </li>
 
       </ul>
 
-      <h3 class="track-label track-label--secondary">Earlier work</h3>
+      <h3 id="earlier-work" class="track-label track-label--secondary">Earlier work</h3>
 
       <ul class="writing-list">
         <li class="writing-item writing-card" id="navigating-era">
           <a class="writing-link" href="https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb" src="Publication Images/Navigating the New Era of Digital Assets.webp" alt="Navigating the New Era of Digital Assets cover" loading="lazy" />
+            <img class="writing-thumb" src="Publication Images/Navigating the New Era of Digital Assets.webp" width="1400" height="1012" alt="Navigating the New Era of Digital Assets cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
               <span class="writing-date">Aug 2025</span>
@@ -320,7 +393,7 @@
 
         <li class="writing-item writing-card" id="future-tokenomics">
           <a class="writing-link" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb" src="Publication Images/The Future_of_Tokenomics.webp" alt="The Future of Tokenomics cover" loading="lazy" />
+            <img class="writing-thumb" src="Publication Images/The Future_of_Tokenomics.webp" width="548" height="498" alt="The Future of Tokenomics cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
               <span class="writing-date">Aug 2024</span>
@@ -337,7 +410,7 @@
 
         <li class="writing-item writing-card" id="gamification">
           <a class="writing-link" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb" src="Publication Images/Gamification_In_Crypto.gif" alt="Gamification in Crypto cover" loading="lazy" />
+            <img class="writing-thumb" src="Publication Images/Gamification_In_Crypto.gif" width="2000" height="1125" alt="Gamification in Crypto cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
               <span class="writing-date">Aug 2024</span>
@@ -354,7 +427,7 @@
 
         <li class="writing-item writing-card" id="intro-tokenomics">
           <a class="writing-link" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">
-            <img class="writing-thumb thumb-wide" src="Publication Images/Introduction To Tokenomics.webp" alt="Introduction to Tokenomics cover" loading="lazy" />
+            <img class="writing-thumb thumb-wide" src="Publication Images/Introduction To Tokenomics.webp" width="1257" height="608" alt="Introduction to Tokenomics cover" loading="lazy" />
             <div class="writing-meta">
               <span class="writing-status status--published">Published</span>
               <span class="writing-date">Apr 2022</span>
@@ -363,7 +436,7 @@
               <h3 class="writing-title">Introduction to Tokenomics</h3>
               <p class="research-plain"><strong>What it means:</strong> A practitioner's guide to incentive design, value capture, and mechanism risk in token&nbsp;economies.</p>
               <p class="research-why"><strong>Why it matters:</strong> Addresses the problems early-stage founders encounter most: misaligned emissions, governance capture, and value&nbsp;leakage.</p>
-              <p class="research-audience"><strong>Who it's for:</strong> Issuers, network operators.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Issuers, network operators, founders.</p>
             </div>
             <span class="writing-arrow">Read <span aria-hidden="true">→</span></span>
           </a>
@@ -380,12 +453,11 @@
         <h2 id="research-cta-title">Need the version tied to a role?</h2>
         <p>Choose the resume version that matches the kind of decisions your team&nbsp;makes.</p>
       </div>
-      <div class="hero-actions" style="justify-content:center">
-        <a class="action primary" href="/resume.html">Choose a resume</a>
+      <div class="hero-actions hero-actions--center">
+        <a class="action primary" href="./resume.html">Choose a resume</a>
         <a class="action secondary" href="./contact.html">Get in touch</a>
       </div>
     </section>
-
     <footer class="reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
@@ -393,17 +465,17 @@
           <a href="./start-here.html">Start Here</a>
           <a href="./focus.html">Focus</a>
           <a href="./selected-research.html">Research</a>
-          <a href="/resume.html">Resume</a>
+          <a href="./resume.html">Resume</a>
           <a href="./contact.html">Contact</a>
         </nav>
         <div class="footer-links">
-          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=7610498" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 6.5 24 10" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=7610498" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 6.5 24 10" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.932.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital&nbsp;money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
