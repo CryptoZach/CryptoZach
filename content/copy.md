@@ -24,7 +24,7 @@ I help institutions evaluate stablecoins and tokenized products.
 **Secondary CTA:** Choose a resume → resume.html
 **Tertiary CTA:** See selected research → selected-research.html
 
-**Proof strip:** Built the research function at Borderless Capital · Led a four-analyst team · Supported diligence across about 250 investments and about $500M in assets under management · Advised on 100+ tokenization engagements
+**Proof strip:** Built the research function at Borderless Capital · Led a four-analyst team · Supported diligence across ~250 investments and ~500M in assets under management · Advised on 100+ tokenization engagements
 
 **Availability:** Open to roles in policy, asset management, and stablecoin/tokenization strategy.
 
@@ -123,7 +123,7 @@ Highlights:
 This version is for asset managers, product strategy teams, and institutional investors evaluating tokenized products and digital-asset infrastructure. It emphasizes underwriting, liquidity, custody, settlement, operational diligence, and monitoring.
 
 Highlights:
-- Supported diligence across about 250 investments and about $500M in assets under management
+- Supported diligence across ~250 investments and ~500M in assets under management
 - Built research and monitoring workflows for institutional decision-making
 - Experience evaluating tokenized-product structures, liquidity, and operating risk
 
@@ -168,7 +168,7 @@ Independent, empirically backed research on the infrastructure, controls, and in
 
 **Placement:** Directly below the thesis strip.
 
-**Copy:** Built the research function at Borderless Capital. Led a four-analyst team. Supported diligence across about 250 investments and about $500M in assets under management. Advised on 100+ tokenization engagements.
+**Copy:** Built the research function at Borderless Capital. Led a four-analyst team. Supported diligence across ~250 investments and ~500M in assets under management. Advised on 100+ tokenization engagements.
 
 ### Homepage Hero CTA Update
 
@@ -227,7 +227,7 @@ Committee-ready recommendations, monitoring thresholds, and clear triggers to mo
 
 ### Background
 
-Ten years in digital assets. Founding hire at Borderless Capital. Built the research function, led a four-analyst team, and supported diligence across about 250 investments, about $500M in assets under management, and 100+ tokenization engagements.
+Ten years in digital assets. Founding hire at Borderless Capital. Built the research function, led a four-analyst team, and supported diligence across ~250 investments, ~500M in assets under management, and 100+ tokenization engagements.
 
 ### Unifying Thesis
 
