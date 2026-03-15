@@ -7,25 +7,11 @@
   if (!hasSupport) {
     document.querySelectorAll('.writing-card').forEach(function(card) {
       if (card.querySelector('a.writing-link')) card.classList.add('writing-card--linked');
-      if (card.querySelector('.writing-thread')) card.classList.add('writing-card--threaded');
     });
     document.querySelectorAll('.writing-link').forEach(function(link) {
       if (link.querySelector('.writing-thumb')) link.classList.add('writing-link--thumb');
     });
   }
-
-  // Thread badge navigation (spans with data-href inside writing-link)
-  document.querySelectorAll('.writing-thread[data-href]').forEach(function(el) {
-    function openThread(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
-    }
-    el.addEventListener('click', openThread);
-    el.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') openThread(e);
-    });
-  });
 
   // Theme: respect saved preference, then system preference, then default light
   var toggle = document.getElementById('themeToggle');
@@ -44,7 +30,7 @@
 
   if (saved) {
     applyTheme(saved);
-  } else if (prefersDark.matches) {
+  } else {
     applyTheme('dark');
   }
 
@@ -182,8 +168,10 @@
     if(hero){
       var staggerItems = [
         hero.querySelector('.kicker'),
-        hero.querySelector('.display-name'),
+        hero.querySelector('.hero-name'),
         hero.querySelector('h1'),
+        hero.querySelector('.hero-subhead'),
+        hero.querySelector('.hero-points'),
         hero.querySelector('.hero-actions'),
         hero.querySelector('.meta'),
         hero.querySelector('.hero-rail')
@@ -278,48 +266,7 @@
     });
   }
 
-  setupStagger('.positioning-grid', '.positioning-card');
   setupStagger('.grid', '.card');
   setupStagger('.writing-list', '.writing-item');
 
-  // Animated number counter for positioning stats
-  function animateCounter(el, target, suffix) {
-    suffix = suffix || '';
-    var isNumber = !isNaN(parseFloat(target));
-    if (!isNumber) { el.textContent = target; return; }
-
-    var num = parseFloat(target);
-    var isFloat = target.indexOf('.') !== -1;
-    var duration = 1200;
-    var startTime = null;
-
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var progress = Math.min((timestamp - startTime) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = eased * num;
-      el.textContent = (isFloat ? current.toFixed(target.split('.')[1].length) : Math.floor(current).toLocaleString()) + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  if (!prefersReducedMotion && typeof IntersectionObserver !== 'undefined') {
-    var stats = document.querySelectorAll('.positioning-stat');
-    var statObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var el = entry.target;
-          var text = el.textContent.trim();
-          var numMatch = text.match(/^([\d,.]+)(.*)/);
-          if (numMatch) {
-            var numStr = numMatch[1].replace(/,/g, '');
-            animateCounter(el, numStr, numMatch[2] || '');
-          }
-          statObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-    stats.forEach(function(s) { statObserver.observe(s); });
-  }
 })();
