@@ -1,4 +1,4 @@
-# Unified Fed Paper Data Pipeline — Claude Code Task Brief
+# Unified Fed Paper Data Pipeline: Claude Code Task Brief
 
 ## Target Publication
 **Paper:** "Regulating Routers: The Control Layer of Internet-Native Dollars"
@@ -18,7 +18,7 @@ This unified pipeline combines two complementary analyses:
 - **Status:** ✅ Validated and committed to branch
 
 ### Package 2: Control-Layer Analysis (TO INTEGRATE)
-- **Core Finding:** Gateway routing—not token taxonomy—determines dollar network effects
+- **Core Finding:** Gateway routing, not token taxonomy, determines dollar network effects
 - **Exhibits A, B, C, E:** Corridor flows, funding stress, gateway concentration, tokenized assets
 - **Data:** Dune SQL on-chain queries + CLII scoring methodology
 - **Status:** 🔄 SQL queries ready, needs execution and integration
@@ -72,7 +72,7 @@ Target: data/raw/dune/*.csv
 
 ## Exhibit Inventory
 
-### Existing Exhibits (Package 1) — COMPLETE
+### Existing Exhibits (Package 1): COMPLETE
 
 | # | Name | File | Key Insight |
 |---|------|------|-------------|
@@ -85,7 +85,7 @@ Target: data/raw/dune/*.csv
 | 7 | DEX Trading Volume | exhibit_7_dex_volumes.png | $3B → $25B daily |
 | 8 | DEX Volume vs Supply | exhibit_8_volume_vs_supply.png | Activity vs market cap |
 
-### New Exhibits (Package 2) — TO BUILD
+### New Exhibits (Package 2): TO BUILD
 
 | # | Name | Target File | Data Source | Key Insight |
 |---|------|-------------|-------------|-------------|
@@ -206,7 +206,7 @@ python scripts/validate_pack.py
 ### IV. Data & Methodology
 - **Exhibits 1-8:** Monetary policy transmission (existing)
 - **Exhibits A, C:** Gateway-level flows (new)
-- Date range: Feb 2023 – Jan 2026
+- Date range: Feb 2023 to Jan 2026
 
 ### V. Findings
 
@@ -328,13 +328,13 @@ fc2864f Add stablecoin flows pipeline for Fed research exhibits
 
 ## Next Steps for Fed Paper Writer Agent
 
-1. **Review existing exhibits** (1-8) — all validated and committed
-2. **Execute Dune queries** — gateway flows for exhibits A, C, E
-3. **Build control-layer exhibits** — A, B, C, E scripts
-4. **Integrate CLII scoring** — gateway intensity analysis
-5. **Generate publication charts** — Fed aesthetic styling
-6. **Write paper sections** — map exhibits to findings
-7. **Validate all data** — run validation suite
+1. **Review existing exhibits** (1-8): all validated and committed
+2. **Execute Dune queries**: gateway flows for exhibits A, C, E
+3. **Build control-layer exhibits**: A, B, C, E scripts
+4. **Integrate CLII scoring**: gateway intensity analysis
+5. **Generate publication charts**: Fed aesthetic styling
+6. **Write paper sections**: map exhibits to findings
+7. **Validate all data**: run validation suite
 
 ---
 

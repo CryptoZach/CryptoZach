@@ -4,7 +4,7 @@ Build and audit Regulating_Routers_Fed_Paper_Phase5.docx
 
 Creates the Word document with all exhibits, then audits and aligns
 three parallel numbering systems:
-  1. PNG chart titles (baked into images — authoritative / immutable)
+  1. PNG chart titles (baked into images: authoritative / immutable)
   2. <w:t> labels & captions in document.xml
   3. Appendix A inventory table
 

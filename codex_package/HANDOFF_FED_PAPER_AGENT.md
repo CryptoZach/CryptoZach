@@ -30,7 +30,7 @@ A complete data pipeline has been built to support a Federal Reserve research pa
 | RRPONTSYD | Overnight Reverse Repo Outstanding | 783 |
 | WSHOMCB | Federal Reserve Total Assets | 157 |
 
-**Date Range:** Feb 2023 – Jan 2026
+**Date Range:** Feb 2023 to Jan 2026
 
 ### 2. Stablecoin Market Caps (`data/processed/stablecoins.csv`)
 | Token | Feb 2023 | Jan 2025 | Jan 2026 |
@@ -40,8 +40,8 @@ A complete data pipeline has been built to support a Federal Reserve research pa
 | USDC | $41.9B | $43.9B | $75.3B |
 | BUSD | $16.1B | $0.07B | $0.06B |
 | DAI | $5.1B | $4.4B | $4.5B |
-| USDe | — | $5.9B | $6.3B |
-| PYUSD | — | $0.5B | $3.6B |
+| USDe | n/a | $5.9B | $6.3B |
+| PYUSD | n/a | $0.5B | $3.6B |
 
 **Source:** DefiLlama Stablecoin API (free, no key required)
 **Rows:** 1,096 daily observations
@@ -90,7 +90,7 @@ A complete data pipeline has been built to support a Federal Reserve research pa
 - SOFR ↔ Total Supply: **-0.87**
 - Fed Funds Rate ↔ Total Supply: **-0.89**
 - ON RRP ↔ Total Supply: **-0.72**
-- 10Y Treasury ↔ Total Supply: **-0.21** (weak — long rates less relevant)
+- 10Y Treasury ↔ Total Supply: **-0.21** (weak: long rates less relevant)
 - USDT ↔ USDC: **+0.92** (move together)
 
 ### Exhibit 7: DEX Trading Volume
@@ -144,7 +144,7 @@ A complete data pipeline has been built to support a Federal Reserve research pa
 - FRED macro data (rates, RRP, balance sheet)
 - DefiLlama stablecoin supply data
 - Correlation and time-series analysis
-- Date range: Feb 2023 – Jan 2026
+- Date range: Feb 2023 to Jan 2026
 
 ### IV. Findings
 - Exhibit 1-2: Supply growth and rate sensitivity
@@ -232,6 +232,6 @@ fc2864f Add stablecoin flows pipeline for Fed research exhibits
 - All data is fetched from free, public APIs (no keys required except optional Dune)
 - Exhibits are 150 DPI, suitable for publication
 - Raw JSON/CSV preserved in `data/raw/` for reproducibility
-- Pipeline is idempotent — re-running will refresh data
+- Pipeline is idempotent: re-running will refresh data
 
 **Ready for paper writing. All exhibits validated and committed.**

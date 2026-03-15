@@ -262,7 +262,7 @@ def exhibit4_net_supply_changes(data: dict):
                label=label, color=color, alpha=0.8)
 
     ax.axhline(y=0, color="black", linewidth=0.5)
-    ax.set_title("Exhibit 4: Monthly Net Supply Changes — Major Stablecoins")
+    ax.set_title("Exhibit 4: Monthly Net Supply Changes (Major Stablecoins)")
     ax.set_xlabel("Date")
     ax.set_ylabel("Net Change ($ Billions)")
     ax.legend(loc="best", fontsize=8)
@@ -339,7 +339,7 @@ def exhibit5_supply_vs_rrp(data: dict):
 
 
 def exhibit6_correlation_heatmap(data: dict):
-    """Exhibit 6: Correlation Heatmap — Macro Indicators vs Stablecoin Supply."""
+    """Exhibit 6: Correlation Heatmap: Macro Indicators vs Stablecoin Supply."""
     sc = data.get("stablecoins")
     fred = data.get("fred")
     if sc is None or fred is None:
@@ -406,7 +406,7 @@ def exhibit6_correlation_heatmap(data: dict):
         ax=ax,
         cbar_kws={"shrink": 0.8},
     )
-    ax.set_title("Exhibit 6: Correlation — Macro Indicators vs Stablecoin Supply")
+    ax.set_title("Exhibit 6: Correlation: Macro Indicators vs Stablecoin Supply")
 
     out = EXHIBITS_DIR / "exhibit_6_correlation_heatmap.png"
     fig.tight_layout()
@@ -461,7 +461,7 @@ def exhibit7_dex_volumes(data: dict):
 
 
 def exhibit8_volume_vs_supply(data: dict):
-    """Exhibit 8: DEX Volume vs Stablecoin Supply — Activity Ratio."""
+    """Exhibit 8: DEX Volume vs Stablecoin Supply (Activity Ratio)."""
     vol = data.get("volumes")
     sc = data.get("stablecoins")
     if vol is None or sc is None:

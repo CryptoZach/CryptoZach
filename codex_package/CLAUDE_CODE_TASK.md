@@ -1,4 +1,4 @@
-# Stablecoin Flows Pipeline — Fed Research Exhibits
+# Stablecoin Flows Pipeline: Fed Research Exhibits
 
 ## Overview
 This pipeline fetches macroeconomic and stablecoin data, then generates
@@ -6,9 +6,9 @@ publication-quality exhibits for a Federal Reserve research paper on
 stablecoin flows and their relationship to monetary policy.
 
 ## Data Sources
-1. **FRED** — Federal Reserve Economic Data (interest rates, RRP, balance sheet)
-2. **DefiLlama** — Stablecoin market caps and chain-level supply
-3. **Dune Analytics** — On-chain stablecoin transfer volumes and flows
+1. **FRED**: Federal Reserve Economic Data (interest rates, RRP, balance sheet)
+2. **DefiLlama**: Stablecoin market caps and chain-level supply
+3. **Dune Analytics**: On-chain stablecoin transfer volumes and flows
 
 ## Pipeline Steps
 
@@ -44,7 +44,7 @@ Merges all data sources and generates the following exhibits:
 - **Exhibit 3**: Individual Stablecoin Market Share
 - **Exhibit 4**: Stablecoin Net Supply Changes (Monthly)
 - **Exhibit 5**: Stablecoin Supply vs Overnight RRP
-- **Exhibit 6**: Correlation Heatmap — Macro vs Stablecoin Metrics
+- **Exhibit 6**: Correlation Heatmap: Macro vs Stablecoin Metrics
 
 ## Output
 Charts are saved to `output/exhibits/` as PNG files.
