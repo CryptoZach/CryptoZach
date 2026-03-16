@@ -1424,6 +1424,8 @@ section:has(.page-toc){
   min-height:0;
   display:flex;
   flex-direction:column;
+  flex-wrap:nowrap;
+  padding:var(--space-lg) var(--space-xl);
 }
 .writing-card:has(> .writing-link:not(.writing-link--thumb):not(.writing-link--dual):has(.writing-arrow)) .writing-arrow{
   margin-top:auto;
@@ -1679,14 +1681,22 @@ section:has(.page-toc){
   background:var(--accent-muted);
   transform:translateX(4px);
 }
+.writing-card:has(a.writing-link):hover .writing-meta .writing-thread{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:var(--accent-muted);
+}
+.writing-card:has(a.writing-link):hover .writing-meta .writing-thread:hover{
+  transform:translateX(4px);
+}
 .writing-card:has(.writing-link--dual):hover .writing-actions .writing-arrow,
-.writing-card:has(.writing-link--dual):hover .writing-actions .writing-thread{
+.writing-card:has(.writing-link--dual):hover .writing-meta .writing-thread{
   color:var(--accent);
   border-color:var(--accent);
   background:var(--accent-muted);
 }
 .writing-card:has(.writing-link--dual):hover .writing-actions .writing-arrow:hover,
-.writing-card:has(.writing-link--dual):hover .writing-actions .writing-thread:hover{
+.writing-card:has(.writing-link--dual):hover .writing-meta .writing-thread:hover{
   transform:translateX(4px);
 }
 /* ── Track labels ── */
@@ -1770,7 +1780,7 @@ section:has(.page-toc){
   background:color-mix(in srgb, var(--panel) 80%, transparent);
   white-space:nowrap;
   text-decoration:none;
-  transition:color .15s ease, border-color .15s ease, background .15s ease;
+  transition:color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
 }
 .writing-thread:hover{
   color:var(--accent);
@@ -1778,6 +1788,7 @@ section:has(.page-toc){
   background:var(--accent-muted);
 }
 .writing-thread .icon-x-inline{width:12px; height:12px}
+.writing-thread[data-href]{cursor:pointer}
 
 .smallprint{color:var(--muted-soft); font-size:12px; line-height:1.5}
 .smallprint + .smallprint{margin-top:2px}
@@ -3385,6 +3396,10 @@ footer{
   .writing-title{font-size:15px}
   .writing-excerpt{font-size:13px}
   .writing-arrow{align-self:flex-start; font-size:12px; padding:5px 12px}
+  .writing-card:has(> .writing-link:not(.writing-link--thumb):not(.writing-link--dual):has(.writing-arrow)) .writing-arrow{
+    align-self:flex-end;
+    margin-top:auto;
+  }
   .writing-meta{gap:6px}
   .writing-status{font-size:10px; padding:2px 8px}
   .writing-date{font-size:10px; padding:2px 8px}

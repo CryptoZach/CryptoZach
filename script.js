@@ -429,4 +429,20 @@
 
   setupStagger('.grid', '.card');
   setupStagger('.writing-list', '.writing-item');
+
+  // Thread links inside card (data-href span): open in new tab and do not trigger card link
+  document.body.addEventListener('click', function(e) {
+    var el = e.target.closest('.writing-thread[data-href]');
+    if (!el) return;
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+  });
+  document.body.addEventListener('keydown', function(e) {
+    var el = e.target.closest('.writing-thread[data-href]');
+    if (!el || (e.key !== 'Enter' && e.key !== ' ')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+  });
 })();
