@@ -44,7 +44,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=14" />
+  <link rel="stylesheet" href="./styles.css?v=22" />
 </head>
 
 <body class="start-here-page">
@@ -104,7 +104,7 @@
       </div>
       <div class="mobile-nav-actions">
         <a class="action primary" href="./resume.html">Choose a resume</a>
-        <a class="action secondary" href="./selected-research.html">Read research</a>
+        <a class="action secondary" href="./selected-research.html">Read selected research</a>
       </div>
     </div>
   </div>
@@ -122,7 +122,7 @@
       </div>
       <div class="hero-actions hero-actions--lg">
         <a class="action secondary" href="./resume.html">Choose a resume</a>
-        <a class="action secondary" href="./selected-research.html">See selected research</a>
+        <a class="action secondary" href="./selected-research.html">Read selected research</a>
       </div>
       <div class="page-toc" aria-label="Start Here jump links">
         <p class="page-toc-title">Jump to</p>
@@ -140,7 +140,7 @@
         <article class="explainer-section">
           <h2 id="what-stablecoin">What is a stablecoin?</h2>
           <p>A stablecoin is a digital token designed to stay close to the value of a reference asset, usually the U.S. dollar. In practice, that means it is a claim that depends on reserves, redemption processes, and the institutions standing behind&nbsp;it.</p>
-          <p>What matters is not only the token. It is also the banking relationships, custody arrangements, interfaces, and routing systems that let people move in and&nbsp;out.</p>
+          <p>What matters is the full operating system: the token, the banking relationships, custody arrangements, interfaces, and routing systems.</p>
         </article>
 
         <article class="explainer-section">
@@ -181,7 +181,7 @@
         </article>
         <article class="card">
           <h3>Tokenized deposits</h3>
-          <p>These are bank deposits in token form. They stay inside the bank perimeter, keep bank liability structure, and matter because they preserve deposit funding rather than replacing it.</p>
+          <p>These are bank deposits in token form. They stay inside the bank perimeter, keep bank liability structure, and matter because they preserve deposit funding while extending its reach through new rails.</p>
         </article>
         <article class="card">
           <h3>Yield wrappers and sweeps</h3>
@@ -199,28 +199,28 @@
 
       <div class="explainer">
         <article class="explainer-section qa-item">
-          <h3>1. Who holds the reserves?</h3>
-          <p>If reserves are concentrated in a small number of banks or custodians, the product may look stable until that concentration is&nbsp;tested.</p>
+          <h3>1. Who holds the reserves, and how concentrated is that exposure?</h3>
+          <p>Circle's $3.3B at SVB looked like a well-managed reserve portfolio until one custodian failed. Reserve quality includes the distribution of custodial relationships, the segregation mechanics at each, and the contingency path when a single counterparty goes&nbsp;down.</p>
         </article>
 
         <article class="explainer-section qa-item">
-          <h3>2. How do redemptions actually work?</h3>
-          <p>A product is only as liquid as its real redemption process under stress, not its marketing language in calm&nbsp;conditions.</p>
+          <h3>2. How do redemptions work at 2am on a Saturday?</h3>
+          <p>Redemption design reveals itself under stress: weekend settlement gaps, queue prioritization, and the operational capacity of each gateway in the chain. Test the process, the timing, and the dependencies, all under adverse&nbsp;conditions.</p>
         </article>
 
         <article class="explainer-section qa-item">
-          <h3>3. What counts as settlement?</h3>
-          <p>Blockchain confirmation is not always the same thing as final economic settlement. Off-chain dependencies still&nbsp;matter.</p>
+          <h3>3. What does "settled" actually mean here?</h3>
+          <p>Blockchain confirmation, economic finality, and legal enforceability can diverge. A margin call that settles on-chain in seconds while the underlying Treasury waits until Monday creates a gap that must be explicitly managed and&nbsp;documented.</p>
         </article>
 
         <article class="explainer-section qa-item">
-          <h3>4. Where is control embedded?</h3>
-          <p>Interfaces, gateway operators, custody arrangements, and routing defaults often shape the real system more than the token&nbsp;itself.</p>
+          <h3>4. Where does control concentrate?</h3>
+          <p>Interfaces, routing defaults, sweep logic, custody arrangements, and hold/freeze operations determine how the system behaves in practice. The actor that owns the compliance primitive becomes the chokepoint; trace the liability chain to find&nbsp;it.</p>
         </article>
 
         <article class="explainer-section qa-item">
-          <h3>5. What breaks first under stress?</h3>
-          <p>The right framework is not "does this work in normal times?" It is "what fails first, who absorbs it, and how quickly can the system&nbsp;recover?"</p>
+          <h3>5. What fails first, who absorbs the loss, and how fast does the system recover?</h3>
+          <p>Every product has a failure sequence. The right framework identifies the weakest layer, the loss-allocation path, and the recovery timeline, then builds monitoring thresholds around&nbsp;each.</p>
         </article>
       </div>
     </section>
@@ -234,17 +234,17 @@
         <article class="card">
           <h3>Policy &amp; Market Infrastructure</h3>
           <p>For readers focused on public-interest questions, systemic concentration, payments, and financial&nbsp;stability.</p>
-          <a class="action primary push-end" href="./resume.html#resume-policy">See the policy resume</a>
+          <a class="action primary push-end" href="./resume.html#resume-policy">See the policy profile</a>
         </article>
         <article class="card">
           <h3>Asset Management &amp; Tokenization</h3>
           <p>For readers focused on product structure, diligence, liquidity, custody, and&nbsp;monitoring.</p>
-          <a class="action primary push-end" href="./resume.html#resume-asset-mgmt">See the investor resume</a>
+          <a class="action primary push-end" href="./resume.html#resume-asset-mgmt">See the investor profile</a>
         </article>
         <article class="card">
           <h3>Stablecoin &amp; Payments Strategy</h3>
           <p>For readers focused on reserves, redemption, routing, controls, and launch&nbsp;readiness.</p>
-          <a class="action primary push-end" href="./resume.html#resume-payments">See the operator resume</a>
+          <a class="action primary push-end" href="./resume.html#resume-payments">See the operator profile</a>
         </article>
       </div>
     </section>

@@ -75,7 +75,7 @@ CTA: Explore the operator view → resume.html#resume-payments
 **Heading:** Selected research
 **Intro:** A few starting points for readers who want clear, substantive answers in relatable language. The broader agenda spans stablecoin infrastructure, tokenized-product diligence, and token-economic simulation and modeling.
 
-**Routing the Dollar:** A plain-English question sits underneath this paper: when digital dollars move, which institutions actually control the route? This research argues that the important unit of analysis is often the gateway, not just the token.
+**Routing the Dollar:** A plain-English question sits underneath this paper: when digital dollars move, which institutions actually control the route? This research argues that the important unit of analysis is often the gateway alongside the token.
 
 **Minimum Viable Equivalence Packs:** Before an institution relies on a tokenized product, it should prove whether the tokenized version really works like the traditional asset under stress. This framework shows what evidence needs to exist before that claim is credible.
 
@@ -231,7 +231,7 @@ Ten years in digital assets. Founding hire at Borderless Capital. Built the rese
 
 ### Unifying Thesis
 
-Regulate and audit the operator and the router, not the token. The decisive risks usually sit in the gateway, custody, routing, reserve, and redemption layers that turn policy into operating reality.
+Who routes the dollar matters more than which dollar is routed: risk, compliance, and monetary transmission all resolve at the gateway layer.
 
 ### Core Frameworks
 
