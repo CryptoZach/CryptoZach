@@ -119,22 +119,70 @@
 
   <main id="main">
 
-    <section class="reveal" aria-labelledby="start-here-title">
-      <div class="kicker kicker--tight">
-        <span class="kicker-dot" aria-hidden="true"></span>
-        Start Here
-      </div>
+    <section class="reveal" aria-labelledby="start-here-page-title">
+      <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Overview</p>
       <div class="section-title">
-        <h1 id="start-here-title">Stablecoins and tokenization, explained for decision&#8209;makers</h1>
-        <p class="hero-subhead">Stablecoins, tokenized deposits, and digital-dollar infrastructure are reshaping how money moves. This page explains what they are, where risk sits, and what institutions need to evaluate before committing capital or setting&nbsp;policy.</p>
+        <h1 id="start-here-page-title">Start here: the shortest path into the site's main thesis.</h1>
+        <p>Digital money and tokenization look different depending on your role, but the same constraints keep reappearing: reserves, settlement, routing, concentration, and accountability.</p>
+        <p>This page gives the common frame first, private money, settlement infrastructure, the control layer, and the questions that matter before you act, so you can move quickly to the right paper, resume, or decision artifact.</p>
       </div>
-      <div class="hero-actions hero-actions--lg">
-        <a class="action secondary" href="./resume.html">Choose a resume</a>
-        <a class="action secondary" href="./selected-research.html">Read selected research</a>
+      <div class="cta-strip start-here-cta-strip">
+        <div>
+          <strong>Use this page to get oriented</strong>
+          <p>Then move to the artifact that matches your role.</p>
+        </div>
+        <div class="contact-cta-actions">
+          <a class="action primary" href="./selected-research.html">Read selected research</a>
+          <a class="action secondary" href="./resume.html">Choose a resume</a>
+          <a class="action secondary" href="#role-routing">Choose the lens that fits your work</a>
+        </div>
       </div>
+      <section class="featured-research reveal" aria-labelledby="start-here-featured-title">
+        <div class="section-title">
+          <h2 id="start-here-featured-title">Best first read</h2>
+          <p>If you only read one paper first, start here.</p>
+        </div>
+        <article class="card featured-paper-card">
+          <div class="badge-row">
+            <span class="badge badge-under-review">Under review</span>
+            <span class="badge badge-best-first-read">Best first read</span>
+          </div>
+          <h3>Routing the Dollar</h3>
+          <p class="featured-thesis">Why gateways often matter more than the token itself.</p>
+          <p>Stablecoins do not inherit their real-world properties only from reserves or token design. They inherit them from the gateway, routing, and control systems that determine who can use them, how they settle, and how they fail.</p>
+          <div class="featured-actions">
+            <a class="action primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read paper</a>
+            <a class="action secondary" href="./selected-research.html#featured-paper">Read summary</a>
+          </div>
+        </article>
+      </section>
+      <section id="role-routing" class="audience-router audience-routing reveal" aria-labelledby="start-here-routing-title">
+        <div class="section-title">
+          <h2 id="start-here-routing-title">Choose the lens that fits your work.</h2>
+          <p>The same infrastructure looks different depending on your role. Each path leads to a tailored resume and the most relevant&nbsp;research.</p>
+        </div>
+        <div class="audience-grid">
+          <div class="audience-panel">
+            <h3>Policy &amp; market infrastructure</h3>
+            <p>Who controls the system, what breaks under stress, and where risk could spread through the broader financial&nbsp;system.</p>
+            <a class="action secondary" href="./resume/policy-market-infrastructure.html">View policy &amp; market infrastructure resume</a>
+          </div>
+          <div class="audience-panel">
+            <h3>Asset management &amp; tokenization</h3>
+            <p>Whether a tokenized product is strong enough for institutional capital, how custody/finality/governance work, and what evidence should exist before commitment.</p>
+            <a class="action secondary" href="./resume/asset-management-tokenization.html">View asset management &amp; tokenization resume</a>
+          </div>
+          <div class="audience-panel">
+            <h3>Stablecoin &amp; payments strategy</h3>
+            <p>How reserves, redemption, routing, and controls must be designed before regulators or market stress expose the weak spots.</p>
+            <a class="action secondary" href="./resume/stablecoin-payments-strategy.html">View stablecoin &amp; payments strategy resume</a>
+          </div>
+        </div>
+      </section>
       <div class="page-toc" aria-label="Start Here jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
+          <a class="page-toc-link" href="#role-routing">Choose the lens</a>
           <a class="page-toc-link" href="#what-stablecoin">What is a stablecoin?</a>
           <a class="page-toc-link" href="#three-objects-title">Three dollar objects</a>
           <a class="page-toc-link" href="#five-questions">Five questions</a>
@@ -144,10 +192,11 @@
     </section>
 
     <section class="reveal explainer-intro" aria-labelledby="what-stablecoin">
+      <p class="track-context">Start here if you need the common frame before choosing a role-specific paper, resume path, or decision artifact.</p>
       <div class="explainer">
         <article class="explainer-section">
           <h2 id="what-stablecoin">What is a stablecoin?</h2>
-          <p>A stablecoin is a digital token designed to stay close to the value of a reference asset, usually the U.S. dollar. In practice, that means it is a claim that depends on reserves, redemption processes, and the institutions standing behind&nbsp;it.</p>
+          <p>A stablecoin is a digital token designed to stay close to the value of a reference asset, the U.S. dollar. In practice, that means it is a claim that depends on reserves, redemption processes, and the institutions standing behind&nbsp;it.</p>
           <p>What matters is the full operating system: the token, the banking relationships, custody arrangements, interfaces, and routing systems.</p>
         </article>
 
@@ -240,33 +289,38 @@
 
       <div class="grid grid--thirds">
         <article class="card">
-          <h3>Policy &amp; Market Infrastructure</h3>
+          <h3>Policy &amp; market infrastructure</h3>
           <p>For readers focused on public-interest questions, systemic concentration, payments, and financial&nbsp;stability.</p>
-          <a class="action primary push-end" href="./resume.html#resume-policy">See the policy profile</a>
+          <a class="action primary push-end" href="./resume.html#resume-policy">View policy &amp; market infrastructure resume</a>
         </article>
         <article class="card">
-          <h3>Asset Management &amp; Tokenization</h3>
+          <h3>Asset management &amp; tokenization</h3>
           <p>For readers focused on product structure, diligence, liquidity, custody, and&nbsp;monitoring.</p>
-          <a class="action primary push-end" href="./resume.html#resume-asset-mgmt">See the investor profile</a>
+          <a class="action primary push-end" href="./resume.html#resume-asset-mgmt">View asset management &amp; tokenization resume</a>
         </article>
         <article class="card">
-          <h3>Stablecoin &amp; Payments Strategy</h3>
+          <h3>Stablecoin &amp; payments strategy</h3>
           <p>For readers focused on reserves, redemption, routing, controls, and launch&nbsp;readiness.</p>
-          <a class="action primary push-end" href="./resume.html#resume-payments">See the operator profile</a>
+          <a class="action primary push-end" href="./resume.html#resume-payments">View stablecoin &amp; payments strategy resume</a>
         </article>
       </div>
     </section>
 
-    <section class="reveal" aria-labelledby="deeper-version">
-      <div class="section-title">
-        <h2 id="deeper-version">Want the less introductory version?</h2>
-        <p>Read Focus for the operating model, core frameworks, and measurement system behind the research, then go to the papers that match your question.</p>
-      </div>
-      <div class="hero-actions">
-        <a class="action primary" href="./focus.html">Read Focus</a>
-        <a class="action secondary" href="./selected-research.html">View all research</a>
+    <section class="utility-box reveal" aria-labelledby="overview-utility-title">
+      <div class="card utility-card">
+        <h2 id="overview-utility-title">What I can send</h2>
+        <p>If this overview maps to a live decision, the next step is one of these.</p>
+        <ul class="utility-links">
+          <li><a href="mailto:zach@cryptozach.com?subject=Request%20a%20writing%20sample">Writing sample abstract</a></li>
+          <li><a href="./resume.html">Resume by role</a></li>
+          <li><a href="mailto:zach@cryptozach.com?subject=Request%20a%201-page%20agenda">1-page research agenda</a></li>
+          <li><a href="mailto:zach@cryptozach.com?subject=Discuss%20a%20policy%20or%20product%20question">Discuss a policy / product question</a></li>
+        </ul>
+        <p class="utility-note">Best for: policy teams, market-infrastructure groups, product/risk leads, and hiring managers.</p>
       </div>
     </section>
+
+    <p class="contact-closing">If you already know your lane, move to the role-specific profile or flagship paper. If you're evaluating fit or framing a decision, request the one that gets you there fastest.</p>
     <footer class="reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>

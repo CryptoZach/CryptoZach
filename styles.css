@@ -4,26 +4,30 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 :root{
-  --bg:#f5f5f7;
+  --bg:#f3f4f6;
   --panel:#ffffff;
-  --panel2:#fafafa;
+  --panel2:#f9fafb;
   --surface:#ffffff;
   --text:#0c0e14;
   --text-soft:#1a1d26;
   --muted:#5c6370;
   --muted-soft:#8b92a0;
-  --line:rgba(12,14,20,.08);
-  --line-strong:rgba(12,14,20,.12);
+  --line:rgba(12,14,20,.12);
+  --line-strong:rgba(12,14,20,.18);
   --accent:#0f4c9e;
   --accent-hover:#0a3a7a;
   --accent-soft:rgba(15,76,158,.12);
   --accent-muted:rgba(15,76,158,.06);
-  --shadow-sm:0 1px 3px rgba(0,0,0,.04);
-  --shadow:0 4px 24px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+  --shadow-sm:0 1px 4px rgba(0,0,0,.08);
+  --shadow:0 4px 24px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
   --shadow-lg:0 12px 48px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
   --radius:16px;
   --radius-sm:10px;
-  --max:1280px;
+  --max:1400px;
+  --page-gutter:clamp(16px, 2.4vw, 32px);
+  --measure:68ch;
+  --measure-wide:78ch;
+  --measure-tight:56ch;
   --header-h:72px;
   --space-xs:6px;
   --space-sm:12px;
@@ -64,8 +68,9 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   -webkit-tap-highlight-color:transparent;
-  overflow-wrap:break-word;
-  word-break:break-word;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
 }
 img,video{max-width:100%; height:auto}
 img{display:block}
@@ -157,7 +162,7 @@ header.scrolled{
 .header-inner{
   max-width:var(--max);
   margin:0 auto;
-  padding:0 max(var(--space-md), env(safe-area-inset-right)) 0 max(var(--space-md), env(safe-area-inset-left));
+  padding:0 max(var(--page-gutter), env(safe-area-inset-right)) 0 max(var(--page-gutter), env(safe-area-inset-left));
   height:var(--header-h);
   display:flex;
   align-items:center;
@@ -409,7 +414,7 @@ main{
   z-index:1;
   max-width:var(--max);
   margin:0 auto;
-  padding:var(--space-xl) max(var(--space-md), env(safe-area-inset-right)) var(--space-2xl) max(var(--space-md), env(safe-area-inset-left));
+  padding:var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
 
 
@@ -440,7 +445,7 @@ main{
   background:
     radial-gradient(ellipse at 50% 40%, var(--accent-muted) 0%, transparent 55%);
   pointer-events:none;
-  opacity:.5;
+  opacity:.25;
 }
 
 .hero::after{
@@ -503,7 +508,7 @@ main{
 .hero-primary{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:var(--space-sm);
   max-width:94ch;
   min-width:0;
 }
@@ -560,11 +565,11 @@ h1{
   text-wrap:pretty;
 }
 .hero h1{
-  font-size:clamp(22px, 2.6vw, 28px);
-  line-height:1.35;
+  font-size:clamp(24px, 2.8vw, 32px);
+  line-height:1.32;
   font-weight:700;
   color:var(--text);
-  max-width:58ch;
+  max-width:none;
   text-wrap:pretty;
 }
 
@@ -572,10 +577,10 @@ h1{
   margin:0;
   font-size:clamp(14.5px, 1.5vw, 16px);
   line-height:1.55;
-  color:var(--muted);
+  color:var(--text-soft);
   font-weight:400;
   text-wrap:balance;
-  max-width:50ch;
+  max-width:none;
 }
 
 .contact-page .hero-primary{
@@ -610,13 +615,13 @@ h1{
   grid-template-columns:1fr;
   grid-template-rows:auto minmax(0, 1fr);
   gap:4px;
-  padding:var(--space-md) var(--space-xl);
+  padding:var(--space-sm) var(--space-md);
   border-bottom:none;
   border-right:1px solid var(--line);
   border-left:3px solid var(--accent);
   font-size:12.5px;
   line-height:1.52;
-  color:var(--text-soft);
+  color:var(--text);
   background:transparent;
   transition:background .15s ease, border-left-color .15s ease;
 }
@@ -763,7 +768,7 @@ h1{
   border-radius:2px;
 }
 
-.process-strip{padding-top:0}
+.process-strip{padding-top:var(--space-xl)}
 .process-strip .grid--thirds{
   border:1px solid var(--line);
   border-radius:var(--radius);
@@ -859,6 +864,51 @@ h1{
   outline:2px solid var(--accent);
   outline-offset:2px;
   border-radius:2px;
+}
+
+/* Operating model stack: METHOD / SCOPE / GOAL / Unifying thesis (vertical container) */
+.operating-model-stack{
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  background:color-mix(in srgb, var(--panel) 90%, transparent);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.operating-model-stack__row{
+  padding:var(--space-md) var(--space-xl);
+  border-bottom:1px solid var(--line);
+}
+.operating-model-stack__row:last-child{
+  border-bottom:none;
+}
+.operating-model-stack__row--thesis{
+  border-top:2px solid var(--accent);
+}
+.operating-model-stack__label{
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:4px;
+  padding-top:1px;
+}
+.operating-model-stack__body{
+  margin:0;
+  font-size:12.5px;
+  line-height:1.52;
+  color:var(--text-soft);
+}
+.operating-model-stack__thesis{
+  font-style:italic;
+  color:var(--accent);
+}
+@media (max-width: 768px){
+  .operating-model-stack__row{
+    padding:var(--space-md) var(--space-md);
+  }
 }
 
 /* Research library page: section rhythm and editorial polish */
@@ -1064,6 +1114,39 @@ main > section.reveal{
 }
 .section-title--center p{
   padding-left:0;
+}
+
+/* Plain section title — no left bar, no underline accent */
+.section-title--plain{
+  border-left:none;
+  padding-left:0;
+}
+.section-title--plain::after{
+  display:none;
+}
+.section-title--plain h2{
+  padding-left:0;
+  border-left:none;
+  font-size:clamp(20px, 2.8vw, 28px);
+}
+.section-title--plain p{
+  padding-left:0;
+}
+
+/* Centered hero-actions variant (closing CTA sections) */
+.hero-actions--center{
+  justify-content:center;
+}
+.hero-actions--center + .research-secondary-link,
+.hero-actions--center + .research-footer-link{
+  text-align:center;
+}
+
+/* Closing CTA sections: tighten the gap before footer */
+section:has(.section-title--center):last-of-type{
+  margin-top:var(--space-md);
+  padding-top:var(--space-lg);
+  border-top:none;
 }
 
 /* ── Page TOC (Jump to links) ── */
@@ -1788,7 +1871,14 @@ section:has(.page-toc){
   background:var(--accent-muted);
 }
 .writing-thread .icon-x-inline{width:12px; height:12px}
-.writing-thread[data-href]{cursor:pointer}
+.writing-thread{cursor:pointer}
+
+/* Keep X Thread chip visible in research meta and homepage badge row */
+.writing-meta .writing-thread,
+.badge-row .writing-thread{
+  display:inline-flex;
+  visibility:visible;
+}
 
 .smallprint{color:var(--muted-soft); font-size:12px; line-height:1.5}
 .smallprint + .smallprint{margin-top:2px}
@@ -1814,6 +1904,11 @@ section:has(.page-toc){
 .writing-more a:focus-visible{
   outline:2px solid var(--accent);
   outline-offset:2px;
+}
+
+.resume-hub-utility{
+  margin-top:var(--space-md);
+  margin-bottom:var(--space-lg);
 }
 
 .writing-cta-row{
@@ -1910,7 +2005,7 @@ section:has(.page-toc){
   flex-wrap:wrap;
   gap:var(--space-lg);
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-start;
   padding:var(--space-xl);
   border-radius:var(--radius);
   border:1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
@@ -2592,6 +2687,8 @@ main.resume-profile .section-title{
 .audience-panel{
   display:flex;
   flex-direction:column;
+  align-items:center;
+  text-align:center;
   padding:var(--space-lg);
   border:1px solid var(--line);
   border-top:3px solid var(--accent);
@@ -2602,7 +2699,6 @@ main.resume-profile .section-title{
 }
 .audience-panel > .action{
   margin-top:auto;
-  align-self:center;
 }
 .audience-panel:hover{
   transform:translateY(-2px);
@@ -2760,6 +2856,9 @@ main.resume-profile .section-title{
 }
 .start-here-page main > section:first-of-type .section-title{
   margin-top:0;
+}
+.start-here-page main > section:first-of-type .section-title p{
+  max-width:none;
 }
 .start-here-page #start-here-title{
   max-width:64rem;
@@ -3073,7 +3172,7 @@ footer{
 
 /* Large desktop: use more width to reduce side margins */
 @media (min-width: 1400px){
-  :root{ --max:1400px }
+  :root{ --max:1480px }
 }
 
 /* Tablet: 981px to 768px */
@@ -3144,8 +3243,6 @@ footer{
   .rail-card p,
   .kicker{
     min-width:0;
-    overflow-wrap:break-word;
-    word-break:break-word;
   }
   .section-title h1,
   .section-title h2,
@@ -3155,8 +3252,6 @@ footer{
   .card h3,
   .card p{
     min-width:0;
-    overflow-wrap:break-word;
-    word-break:break-word;
   }
   .writing-title,
   .writing-excerpt,
@@ -3164,14 +3259,10 @@ footer{
   .research-why,
   .research-audience{
     min-width:0;
-    overflow-wrap:break-word;
-    word-break:break-word;
   }
   .meta,
   .badge{
     min-width:0;
-    overflow-wrap:break-word;
-    word-break:break-word;
   }
   .page-toc{
     padding:var(--space-xs) var(--space-md);
@@ -3221,11 +3312,13 @@ footer{
   .hero-primary{max-width:none}
 
   h1, .hero h1{
-    font-size:clamp(18px, 4.8vw, 22px);
+    font-size:clamp(20px, 5vw, 26px);
     max-width:none;
     line-height:1.3;
-    overflow-wrap:break-word;
-    word-break:break-word;
+    text-wrap:balance;
+    overflow-wrap:normal;
+    word-break:normal;
+    hyphens:none;
   }
   .hero-name{
     font-size:clamp(28px, 8vw, 36px);
@@ -3234,7 +3327,7 @@ footer{
     overflow-wrap:break-word;
     word-break:break-word;
   }
-  .hero-subhead{font-size:14px; overflow-wrap:break-word; word-break:break-word}
+  .hero-subhead{font-size:14px}
   h1{max-width:none}
   .hero-points{margin-top:var(--space-md)}
   .hero-points .hero-point{min-width:0}
@@ -3480,8 +3573,8 @@ footer{
   .rail-card p,
   .writing-excerpt,
   .card p{
-    overflow-wrap:break-word;
-    word-break:break-word;
+    overflow-wrap:normal;
+    word-break:normal;
   }
   h1{
     font-size:clamp(18px, 5vw, 22px);
@@ -3668,7 +3761,7 @@ footer{
   }
   body::before{display:none !important}
   header, .back-to-top, .menu-toggle, .theme-toggle, .nav-links--mobile,
-  .hero-actions, .writing-expand, #copyEmail, .contact-links, .scroll-progress{
+  .hero-actions, .hero-cta-row, .writing-expand, #copyEmail, .contact-links, .contact-actions, .scroll-progress{
     display:none !important;
   }
   main{
@@ -3720,4 +3813,2082 @@ footer{
     word-break:break-all;
   }
   .footer-social, .footer-links, .header-social{display:none}
+}
+
+/* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
+/* Wide: two columns so the right side is used as a trust rail (proof bar + meta). */
+.hero--homepage .hero-grid{
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: var(--space-xl);
+  align-items: start;
+}
+.hero--homepage .hero-primary{
+  max-width: 92ch;
+  min-width: 0;
+}
+.hero--homepage .hero-rail{
+  position: sticky;
+  top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 92%, var(--bg));
+  box-shadow: var(--shadow);
+}
+.hero--homepage .eyebrow{
+  margin: 0 0 var(--space-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.hero--homepage h1{
+  max-width: 70ch;
+}
+.hero--homepage .hero-subhead,
+.hero--homepage .hero-method,
+.hero--homepage .hero-output{
+  max-width: 78ch;
+  margin: 0 0 var(--space-sm);
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.hero-cta-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  margin-top: var(--space-lg);
+}
+.hero-cta-row .action{
+  min-height: 44px;
+}
+/* Proof bar and meta live in hero-rail on homepage; 2x2 in rail to fit narrow column */
+.hero--homepage .hero-rail .proof-bar{
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.hero--homepage .hero-rail .hero-meta{
+  margin: 0;
+}
+.proof-bar{
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+.proof-bar li{
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.hero-meta{
+  margin: var(--space-md) 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+#audience-routing{
+  margin-top: var(--space-xl);
+}
+#audience-routing .section-title{
+  margin-bottom: var(--space-md);
+}
+#audience-routing .audience-panel{
+  min-height: 100%;
+}
+.utility-box{
+  margin-top: var(--space-xl);
+}
+.utility-card{
+  border-top: 3px solid var(--accent);
+}
+.utility-card h2{
+  margin: 0 0 var(--space-sm);
+  font-size: 18px;
+}
+.utility-card p{
+  max-width: none;
+}
+.utility-links{
+  margin: var(--space-md) 0 0;
+  padding-left: 1.1rem;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+.utility-links li{
+  margin: 8px 0;
+}
+.utility-links a{
+  color: var(--accent);
+  text-decoration:none;
+  font-weight:500;
+}
+.utility-links a:hover{
+  text-decoration:underline;
+}
+.utility-note{
+  margin-top: var(--space-md);
+  font-size: 12px;
+  color: var(--muted);
+}
+.featured-research{
+  margin-top: var(--space-xl);
+}
+.featured-paper-card{
+  border-top: 3px solid var(--accent);
+  padding: var(--space-xl);
+}
+.badge-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.badge-under-review{
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+.badge-best-first-read{
+  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  background: color-mix(in srgb, #16a34a 10%, transparent);
+  color: #16a34a;
+}
+:root[data-theme="dark"] .badge-best-first-read{
+  color:#4ade80;
+  border-color: color-mix(in srgb, #4ade80 30%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+.badge-public{
+  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  background: color-mix(in srgb, #16a34a 10%, transparent);
+  color: #16a34a;
+}
+:root[data-theme="dark"] .badge-public{
+  color:#4ade80;
+  border-color: color-mix(in srgb, #4ade80 30%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+.badge-request{
+  border-color: color-mix(in srgb, #d97706 30%, var(--line));
+  background: color-mix(in srgb, #d97706 10%, transparent);
+  color: #d97706;
+}
+:root[data-theme="dark"] .badge-request{
+  color:#fbbf24;
+  border-color: color-mix(in srgb, #fbbf24 30%, var(--line));
+  background: color-mix(in srgb, #fbbf24 10%, transparent);
+}
+.featured-thesis{
+  margin: 0 0 var(--space-sm);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.featured-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap: var(--space-sm) var(--space-md);
+  margin-top: var(--space-lg);
+}
+.featured-note{
+  margin-top: var(--space-sm);
+  font-size: 13px;
+  color: var(--muted);
+}
+.topic-grid{
+  gap: var(--space-lg);
+}
+.topic-card h3{
+  margin-bottom: var(--space-sm);
+}
+.operating-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: var(--space-lg);
+}
+.operating-card{
+  min-height: 100%;
+  padding: var(--space-lg);
+}
+.operating-card h3{
+  margin-bottom: var(--space-sm);
+}
+.operating-callout{
+  margin-top: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--accent-muted);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.research-preview-grid{
+  gap: var(--space-lg);
+}
+.research-preview-grid .research-card{
+  min-height: 100%;
+  padding:var(--space-md);
+}
+.research-preview-grid .research-card h3{
+  margin-top: var(--space-sm);
+}
+.research-date{
+  margin: 0 0 var(--space-sm);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .02em;
+}
+.research-card-action{
+  margin-top: auto;
+  align-self: flex-start;
+}
+.research-footer-link,
+.research-secondary-link{
+  margin-top: var(--space-md);
+  font-size: 13px;
+  color: var(--muted);
+}
+.research-footer-link a,
+.research-secondary-link a{
+  color: var(--accent);
+  text-decoration:none;
+  font-weight:500;
+}
+.research-footer-link a:hover,
+.research-secondary-link a:hover{
+  text-decoration:underline;
+}
+.fit-grid{
+  gap: var(--space-lg);
+}
+.contact-actions{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:var(--space-md);
+}
+.contact-actions .action{
+  min-height: 40px;
+  justify-content:center;
+  text-align:center;
+}
+@media (max-width: 980px){
+  .hero--homepage .hero-grid{
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .hero--homepage .hero-rail{
+    position: static;
+    margin-top: var(--space-md);
+  }
+  .hero--homepage .hero-rail .proof-bar{
+    margin-top: 0;
+  }
+  .proof-bar{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .operating-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px){
+  .hero--homepage .hero-primary{
+    max-width: none;
+  }
+  .proof-bar{
+    grid-template-columns: 1fr;
+  }
+  .operating-grid{
+    grid-template-columns: 1fr;
+  }
+  .hero-cta-row,
+  .featured-actions,
+  .contact-actions{
+    grid-template-columns: 1fr;
+  }
+  .hero-cta-row .action,
+  .featured-actions .action,
+  .contact-actions .action{
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   selected-research.html companion patch
+   Align research shelf with homepage hierarchy
+   ───────────────────────────────────────────────────────────── */
+
+.featured-research{
+  margin-top: var(--space-xl);
+}
+
+.featured-paper-card{
+  border-top: 3px solid var(--accent);
+  padding: var(--space-xl);
+}
+
+.badge-best-first-read{
+  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  background: color-mix(in srgb, #16a34a 10%, transparent);
+  color: #16a34a;
+}
+
+:root[data-theme="dark"] .badge-best-first-read{
+  color:#4ade80;
+  border-color: color-mix(in srgb, #4ade80 30%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+.badge-public{
+  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  background: color-mix(in srgb, #16a34a 10%, transparent);
+  color: #16a34a;
+}
+
+:root[data-theme="dark"] .badge-public{
+  color:#4ade80;
+  border-color: color-mix(in srgb, #4ade80 30%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+.badge-request{
+  border-color: color-mix(in srgb, #d97706 30%, var(--line));
+  background: color-mix(in srgb, #d97706 10%, transparent);
+  color: #d97706;
+}
+
+:root[data-theme="dark"] .badge-request{
+  color:#fbbf24;
+  border-color: color-mix(in srgb, #fbbf24 30%, var(--line));
+  background: color-mix(in srgb, #fbbf24 10%, transparent);
+}
+
+.featured-thesis{
+  margin: 0 0 var(--space-sm);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.featured-note{
+  margin-top: var(--space-sm);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.track-context{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:var(--space-md);
+  padding-left:var(--space-md);
+  border-left:3px solid var(--accent);
+}
+
+.research-plain,
+.research-why,
+.research-audience{
+  margin: var(--space-xs) 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.research-plain strong,
+.research-why strong,
+.research-audience strong{
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.writing-teaser{
+  margin:0 0 var(--space-sm);
+  font-size:14px;
+  line-height:1.5;
+  color:var(--text-soft);
+}
+
+.writing-more{
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
+  border-radius: var(--radius-sm);
+  background: var(--accent-muted);
+}
+
+.writing-more p{
+  margin:0;
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--muted);
+}
+
+.writing-more a{
+  color:var(--accent);
+  font-weight:500;
+  text-decoration:none;
+}
+
+.writing-more a:hover{
+  text-decoration:underline;
+}
+
+.routing-line{
+  margin: var(--space-md) 0 0;
+  padding-left: 1.1rem;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.routing-line li{
+  margin: 6px 0;
+}
+
+.track-heading{
+  margin: var(--space-xl) 0 var(--space-sm);
+  font-size: 1.1rem;
+}
+
+.track-intro{
+  margin: 0 0 var(--space-md);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+/* contact.html + start-here.html companion patch */
+.contact-cta-strip,
+.start-here-cta-strip{
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.contact-cta-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+}
+.contact-quick-links{
+  margin-top: var(--space-xl);
+}
+.contact-quick-links .grid--quick{
+  gap: var(--space-lg);
+}
+
+/* site-wide wording normalization helpers */
+.proof-bar li,
+.badge,
+.action,
+.section-intro,
+.track-context,
+.utility-note,
+.hero-meta,
+.research-footer-link,
+.research-secondary-link {
+  text-wrap: pretty;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Container size + text wrap prevention upgrades
+   ───────────────────────────────────────────────────────────── */
+
+.hero-primary{
+  max-width:none;
+}
+
+.hero h1,
+.section-title h1,
+.section-title h2,
+.start-here-page #start-here-title{
+  text-wrap:balance;
+  hyphens:none;
+}
+
+.hero-method,
+.hero-output,
+.card p,
+.track-card p,
+.resume-summary-card p,
+.resume-preview-card > p,
+.stack-item p,
+.explainer-section p,
+.writing-excerpt,
+.writing-teaser,
+.research-plain,
+.research-why,
+.research-audience,
+.contact-closing,
+.footer-tagline{
+  max-width:var(--measure);
+  text-wrap:pretty;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
+}
+
+.writing-copy{
+  max-width:var(--measure-wide);
+}
+
+.hero h1{
+  max-width:none;
+}
+
+.action,
+.badge,
+.navlink,
+.page-toc-link,
+.contact-social,
+.writing-status,
+.writing-date,
+.writing-length,
+.writing-thread,
+.proof-bar li,
+.hero-meta{
+  white-space:nowrap;
+}
+
+/* Allow wrap in narrow hero-rail so labels and tagline are not clipped */
+.hero-rail .proof-bar li,
+.hero-rail .hero-meta{
+  white-space:normal;
+}
+.hero-rail .proof-bar{
+  min-width:0;
+  overflow:visible;
+}
+
+.email-row a,
+.contact-info-item a,
+.footer-links a,
+.footer-nav a,
+.writing-more a,
+.research-footer-link a,
+.research-secondary-link a{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+@media (max-width: 768px){
+  .action,
+  .badge,
+  .contact-social,
+  .navlink,
+  .page-toc-link,
+  .proof-bar li,
+  .hero-meta{
+    white-space:normal;
+  }
+
+  .hero-primary,
+  .section-title p,
+  .card p,
+  .writing-copy,
+  .writing-excerpt,
+  .contact-closing,
+  .footer-tagline{
+    max-width:none;
+  }
+}
+
+.explainer,
+.explainer-section p{
+  max-width:var(--measure-wide);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Card height consistency + visual emphasis patch
+   Purpose:
+   1) Make cards align more cleanly in mixed-content grids
+   2) Make audience routing and featured paper feel more intentional
+   3) Preserve current animations and dark institutional aesthetic
+   ───────────────────────────────────────────────────────────── */
+
+/* ============================================================
+   1. Card height consistency
+   ============================================================ */
+
+/* All major card grids should stretch to equal height */
+.audience-grid,
+.topic-grid,
+.operating-grid,
+.research-preview-grid,
+.fit-grid,
+.grid--thirds,
+.grid--halves{
+  align-items:stretch;
+}
+
+/* Force cards to behave as equal-height flex containers */
+.audience-panel,
+.topic-card,
+.operating-card,
+.research-card,
+.fit-grid .card--link,
+.utility-card,
+.featured-paper-card,
+.grid--thirds > .card,
+.grid--halves > .card{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:100%;
+}
+
+/* Keep card titles aligned consistently */
+.audience-panel h3,
+.topic-card h3,
+.operating-card h3,
+.research-card h3,
+.fit-grid .card--link h3{
+  min-height:2.6em;
+  display:flex;
+  align-items:flex-start;
+}
+
+/* Let paragraph blocks breathe but still push CTAs down */
+.audience-panel > p,
+.topic-card > p,
+.operating-card > p,
+.research-card > p,
+.utility-card > p{
+  flex:0 0 auto;
+}
+
+/* Bottom-align CTAs inside cards */
+.audience-panel .action,
+.research-card .research-card-action,
+.fit-grid .card--link .card-link-arrow,
+.utility-card .action,
+.utility-links,
+.featured-actions{
+  margin-top:auto;
+}
+
+/* Ensure utility list stays neat */
+.utility-links{
+  margin-bottom:0;
+}
+
+/* Normalize research preview cards so CTA sits at bottom */
+.research-card{
+  justify-content:flex-start;
+}
+.research-card .research-date{
+  margin-bottom:var(--space-sm);
+}
+.research-card .research-card-action{
+  align-self:flex-start;
+}
+
+/* Normalize fit cards */
+.fit-grid .card--link{
+  justify-content:flex-start;
+  align-items:center;
+  text-align:center;
+}
+.fit-grid .card--link p{
+  margin-bottom:0;
+}
+.fit-grid .card--link .card-link-arrow{
+  align-self:center;
+}
+
+/* ============================================================
+   2. Audience routing visual emphasis
+   ============================================================ */
+
+#audience-routing{
+  position:relative;
+}
+
+#audience-routing .section-title{
+  margin-bottom:var(--space-lg);
+}
+
+/* Make the routing strip feel more intentional */
+.audience-grid{
+  gap:var(--space-lg);
+}
+
+/* Upgrade the cards slightly without changing structure */
+.audience-panel{
+  position:relative;
+  overflow:hidden;
+  border-top:2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--panel) 96%, transparent),
+      color-mix(in srgb, var(--panel2) 94%, transparent));
+  box-shadow:var(--shadow-sm);
+}
+
+.audience-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top right, var(--accent-muted), transparent 40%);
+  opacity:.45;
+  pointer-events:none;
+  z-index:0;
+}
+
+.audience-panel > *{
+  position:relative;
+  z-index:1;
+}
+
+/* Slightly stronger hover / focus to make routing feel clickable */
+.audience-panel:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+  border-color:color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-top-color:var(--accent);
+}
+.audience-panel:focus-within{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* Make the icon + title feel more like a routing surface */
+.audience-icon{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:color-mix(in srgb, var(--accent) 12%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.audience-panel h3{
+  font-size:16px;
+  font-weight:650;
+  color:var(--text);
+}
+.audience-panel:hover h3{
+  color:var(--accent);
+}
+.audience-panel > p{
+  max-width:34ch;
+}
+.audience-panel .action{
+  align-self:center;
+}
+
+/* ============================================================
+   3. Featured paper emphasis
+   ============================================================ */
+
+.featured-research{
+  margin-top:var(--space-xl);
+}
+
+.featured-paper-card{
+  position:relative;
+  overflow:hidden;
+  border-top:3px solid var(--accent);
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--accent) 10%, var(--panel)) 0%,
+      color-mix(in srgb, var(--panel) 96%, transparent) 55%,
+      color-mix(in srgb, var(--panel2) 94%, transparent) 100%);
+  box-shadow:var(--shadow-lg);
+}
+
+.featured-paper-card::before{
+  content:"";
+  position:absolute;
+  top:-20%;
+  right:-10%;
+  width:45%;
+  height:140%;
+  background:
+    radial-gradient(circle at center, var(--accent-muted), transparent 60%);
+  opacity:.55;
+  pointer-events:none;
+  z-index:0;
+}
+
+.featured-paper-card > *{
+  position:relative;
+  z-index:1;
+}
+
+/* More premium hierarchy */
+.featured-paper-card h3{
+  margin-top:0;
+  margin-bottom:var(--space-sm);
+  font-size:clamp(22px, 2.2vw, 30px);
+  font-weight:700;
+  letter-spacing:-0.025em;
+  line-height:1.15;
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+.featured-thesis{
+  margin:0 0 var(--space-sm);
+  font-size:17px;
+  line-height:1.45;
+  color:var(--accent);
+  font-weight:600;
+}
+
+.featured-paper-card p:not(.featured-thesis):not(.featured-note){
+  max-width:var(--measure-wide, 78ch);
+}
+
+/* Homepage Best first read: CLII image left, content right */
+.featured-paper-card:has(.card-thumb){
+  display:grid;
+  grid-template-columns: minmax(260px, 400px) 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.featured-paper-card:has(.card-thumb) .card-thumb{
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  max-height: 360px;
+  margin-bottom: 0;
+  object-fit: contain;
+  object-position: center center;
+  border-radius: var(--radius-sm);
+}
+
+.featured-paper-card:has(.card-thumb) .featured-paper-card__body{
+  grid-column: 2;
+  min-width: 0;
+}
+
+@media (max-width: 768px){
+  .featured-paper-card:has(.card-thumb){
+    grid-template-columns: 1fr;
+  }
+
+  .featured-paper-card:has(.card-thumb) .card-thumb{
+    max-height: 200px;
+  }
+}
+
+/* Stronger badge hierarchy */
+.badge-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-sm);
+  margin-bottom:var(--space-md);
+}
+
+.badge-best-first-read{
+  border-color:color-mix(in srgb, #16a34a 35%, var(--line));
+  background:color-mix(in srgb, #16a34a 12%, transparent);
+  color:#16a34a;
+  box-shadow:0 0 0 1px color-mix(in srgb, #16a34a 12%, transparent);
+}
+
+:root[data-theme="dark"] .badge-best-first-read{
+  color:#4ade80;
+  border-color:color-mix(in srgb, #4ade80 35%, var(--line));
+  background:color-mix(in srgb, #4ade80 10%, transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+.featured-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-sm) var(--space-md);
+  margin-top:var(--space-lg);
+}
+
+.featured-actions .action{
+  min-height:44px;
+}
+
+.featured-note{
+  margin-top:var(--space-md);
+  color:var(--muted);
+  font-size:13px;
+  text-wrap:pretty;
+}
+
+/* ============================================================
+   4. Research shelf / preview consistency
+   ============================================================ */
+
+.research-preview-grid{
+  gap:var(--space-lg);
+}
+
+.research-preview-grid .research-card{
+  border-top:2px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--panel) 97%, transparent),
+      color-mix(in srgb, var(--panel2) 96%, transparent));
+}
+
+.research-preview-grid .research-card p,
+.research-preview-grid .research-card .research-card-meta{
+  color:var(--text-soft, #c8ccd4);
+}
+
+/* Slightly cleaner visual weight vs generic cards */
+.research-preview-grid .research-card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+  border-top-color:var(--accent);
+}
+
+/* ============================================================
+   5. Utility box polish
+   ============================================================ */
+
+.utility-card{
+  border-top:3px solid var(--accent);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--panel) 97%, transparent),
+      color-mix(in srgb, var(--panel2) 95%, transparent));
+}
+
+.utility-card h2{
+  margin-top:0;
+}
+
+/* ============================================================
+   6. Responsive handling
+   ============================================================ */
+
+@media (max-width: 980px){
+  .operating-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+  .audience-panel h3,
+  .topic-card h3,
+  .operating-card h3,
+  .research-card h3{
+    min-height:unset;
+  }
+}
+
+@media (max-width: 768px){
+  .audience-grid,
+  .topic-grid,
+  .operating-grid,
+  .research-preview-grid,
+  .fit-grid{
+    gap:var(--space-md);
+  }
+
+  .featured-paper-card{
+    padding:var(--space-lg);
+  }
+
+  .featured-paper-card h3{
+    font-size:clamp(20px, 6vw, 26px);
+  }
+
+  .featured-actions{
+    flex-direction:column;
+  }
+
+  .featured-actions .action{
+    width:100%;
+    justify-content:center;
+  }
+
+  .audience-panel .action{
+    width:100%;
+    justify-content:center;
+    align-self:stretch;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Homepage hero tightening + proof-bar / CTA hierarchy polish
+   Scope: homepage only
+   Assumes homepage hero uses: #hero.hero--homepage
+   ───────────────────────────────────────────────────────────── */
+
+/* ============================================================
+   1. Homepage hero tightening
+   ============================================================ */
+
+#hero.hero--homepage{
+  padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(34px, 4vw, 52px);
+  border-top-width: 3px;
+  background:
+    linear-gradient(160deg,
+      color-mix(in srgb, var(--panel) 96%, transparent),
+      color-mix(in srgb, var(--panel2) 94%, transparent));
+}
+
+#hero.hero--homepage::before{
+  width: 48%;
+  height: 130%;
+  top: -28%;
+  right: -8%;
+  opacity: .58;
+}
+
+#hero.hero--homepage .hero-grid{
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+#hero.hero--homepage .hero-primary{
+  max-width: 78ch;
+  gap: 0;
+}
+
+#hero.hero--homepage .eyebrow{
+  margin: 0 0 var(--space-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+#hero.hero--homepage h1{
+  margin: 0;
+  max-width: 20ch;
+  font-size: clamp(30px, 3.9vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--text);
+}
+
+#hero.hero--homepage .hero-subhead{
+  margin: var(--space-md) 0 0;
+  max-width: 46ch;
+  font-size: clamp(17px, 1.35vw, 19px);
+  line-height: 1.58;
+  color: var(--text-soft);
+  text-wrap: pretty;
+}
+
+#hero.hero--homepage .hero-method,
+#hero.hero--homepage .hero-output{
+  margin: var(--space-md) 0 0;
+  max-width: var(--measure-wide, 78ch);
+  font-size: 15px;
+  line-height: 1.68;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+#hero.hero--homepage .hero-method strong,
+#hero.hero--homepage .hero-output strong{
+  color: var(--text-soft);
+}
+
+/* ============================================================
+   2. CTA hierarchy polish
+   ============================================================ */
+
+#hero.hero--homepage .hero-cta-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: center;
+  margin-top: var(--space-lg);
+}
+
+#hero.hero--homepage .hero-cta-row .action{
+  min-height: 46px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+#hero.hero--homepage .hero-cta-row .action.primary{
+  min-width: 190px;
+  justify-content: center;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+#hero.hero--homepage .hero-cta-row .action.primary:hover{
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+#hero.hero--homepage .hero-cta-row .action.secondary{
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--line));
+  background: color-mix(in srgb, var(--panel) 84%, transparent);
+  color: var(--text-soft);
+}
+
+#hero.hero--homepage .hero-cta-row .action.secondary:hover{
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-muted);
+}
+
+/* ============================================================
+   3. Proof bar polish
+   ============================================================ */
+
+#hero.hero--homepage .proof-bar{
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+  max-width: 920px;
+}
+
+#hero.hero--homepage .proof-bar li{
+  position: relative;
+  overflow: hidden;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-top: 2px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--panel) 92%, transparent),
+      color-mix(in srgb, var(--panel2) 96%, transparent));
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .015em;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+#hero.hero--homepage .proof-bar li::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top right, var(--accent-muted), transparent 42%);
+  opacity:.42;
+  pointer-events:none;
+}
+
+/* ============================================================
+   4. Hero meta line polish
+   ============================================================ */
+
+#hero.hero--homepage .hero-meta{
+  margin: var(--space-md) 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .02em;
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   5. Responsive tuning
+   ============================================================ */
+
+@media (max-width: 980px){
+  #hero.hero--homepage h1{
+    max-width: 22ch;
+    font-size: clamp(28px, 5vw, 40px);
+  }
+
+  #hero.hero--homepage .proof-bar{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 768px){
+  #hero.hero--homepage{
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+  }
+
+  #hero.hero--homepage h1{
+    max-width: none;
+    font-size: clamp(24px, 7vw, 34px);
+    line-height: 1.12;
+  }
+
+  #hero.hero--homepage .hero-subhead{
+    max-width: none;
+    font-size: 16px;
+  }
+
+  #hero.hero--homepage .hero-method,
+  #hero.hero--homepage .hero-output{
+    max-width: none;
+    font-size: 14px;
+  }
+
+  #hero.hero--homepage .hero-cta-row{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #hero.hero--homepage .hero-cta-row .action{
+    width: 100%;
+    justify-content: center;
+  }
+
+  #hero.hero--homepage .proof-bar{
+    grid-template-columns: 1fr 1fr;
+    max-width: none;
+  }
+
+  #hero.hero--homepage .proof-bar li{
+    white-space: normal;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 420px){
+  #hero.hero--homepage .proof-bar{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Section spacing + vertical rhythm + badge standardization
+   Goal:
+   1) make section rhythm feel more deliberate
+   2) normalize badge styling across homepage, research, and resume pages
+   3) preserve current motion / dark institutional aesthetic
+   ───────────────────────────────────────────────────────────── */
+
+/* ============================================================
+   1. Section spacing / vertical rhythm
+   ============================================================ */
+
+:root{
+  --section-gap: clamp(36px, 4.5vw, 56px);
+  --section-gap-tight: clamp(18px, 2.4vw, 28px);
+  --section-gap-loose: clamp(72px, 8vw, 108px);
+}
+
+/* Normalize vertical rhythm between top-level sections */
+main > section{
+  margin-top: 0;
+}
+
+main > section + section{
+  padding-top: var(--section-gap);
+}
+
+/* Keep the hero slightly tighter to the top than other sections */
+main > section:first-of-type{
+  margin-top: var(--space-lg);
+}
+
+/* Tighten relationships between headings and content blocks */
+.section-title{
+  margin-bottom: clamp(18px, 2.5vw, 28px);
+  padding-bottom: clamp(14px, 1.8vw, 20px);
+}
+
+.section-title + .grid,
+.section-title + .audience-grid,
+.section-title + .routing-grid,
+.section-title + .research-preview-grid,
+.section-title + .operating-grid,
+.section-title + .stack-list,
+.section-title + .cta-strip,
+.section-title + .contact-box,
+.section-title + .writing-list,
+.section-title + .featured-paper-card,
+.section-title + .utility-card,
+.section-title + .explainer{
+  margin-top: var(--section-gap-tight);
+}
+
+/* Give standalone section intros a more consistent bottom spacing */
+.section-intro,
+.section-title p,
+.kicker + h1 + p,
+.hero-subhead,
+.hero-method,
+.hero-output,
+.featured-note,
+.utility-note,
+.track-context,
+.contact-closing,
+.footer-tagline{
+  margin-bottom: 0;
+  text-wrap: pretty;
+}
+
+/* Prevent sections from feeling too compressed at the bottom */
+.section-title + p,
+.section-title + .smallprint{
+  margin-top: var(--section-gap-tight);
+}
+
+/* Improve card vertical rhythm */
+.card,
+.audience-panel,
+.topic-card,
+.operating-card,
+.research-card,
+.utility-card,
+.featured-paper-card{
+  gap: 0;
+}
+
+.card h3,
+.audience-panel h3,
+.topic-card h3,
+.operating-card h3,
+.research-card h3,
+.utility-card h2,
+.featured-paper-card h3{
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+}
+
+.card > p,
+.audience-panel > p,
+.topic-card > p,
+.operating-card > p,
+.research-card > p,
+.utility-card > p,
+.featured-paper-card > p{
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+}
+
+.card > :last-child,
+.audience-panel > :last-child,
+.topic-card > :last-child,
+.operating-card > :last-child,
+.research-card > :last-child,
+.utility-card > :last-child,
+.featured-paper-card > :last-child{
+  margin-bottom: 0 !important;
+}
+
+/* Standardize list spacing inside cards */
+.card ul,
+.utility-links,
+.resume-proof-list,
+.teaser-rail-list{
+  margin-top: var(--space-sm);
+  margin-bottom: 0;
+}
+
+.card li,
+.utility-links li,
+.resume-proof-list li,
+.teaser-rail-list li{
+  margin-bottom: var(--space-xs);
+}
+
+.card li:last-child,
+.utility-links li:last-child,
+.resume-proof-list li:last-child,
+.teaser-rail-list li:last-child{
+  margin-bottom: 0;
+}
+
+/* Slightly more consistent spacing around CTA rows */
+.hero-cta-row,
+.featured-actions,
+.contact-actions,
+.resume-actions,
+.writing-cta-row{
+  margin-top: var(--space-lg);
+}
+
+/* Research list cadence */
+.writing-list{
+  margin-top: 0;
+}
+
+.writing-item{
+  margin-bottom: var(--space-xl);
+}
+
+.writing-item:last-child{
+  margin-bottom: 0;
+}
+
+/* Utility / helper strips feel more intentional */
+.cta-strip,
+.writing-more,
+.utility-card,
+.contact-box,
+.featured-paper-card{
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================================
+   2. Badge system standardization
+   ============================================================ */
+
+/* Base badge system for all badge-like UI */
+.badge,
+.writing-status,
+.writing-date,
+.writing-length,
+.writing-target,
+.writing-thread{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .03em;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+/* Make metadata rows consistent */
+.badge-row,
+.writing-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+}
+
+/* Neutral / default chip behavior */
+.writing-date,
+.writing-length,
+.writing-target{
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+
+/* Under review */
+.badge-under-review,
+.status--ssrn{
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* Best first read */
+.badge-best-first-read{
+  border-color: color-mix(in srgb, #16a34a 36%, var(--line));
+  background: color-mix(in srgb, #16a34a 12%, transparent);
+  color: #16a34a;
+}
+
+:root[data-theme="dark"] .badge-best-first-read{
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 36%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+/* Public / published */
+.badge-public,
+.status--published{
+  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  background: color-mix(in srgb, #16a34a 10%, transparent);
+  color: #16a34a;
+}
+
+:root[data-theme="dark"] .badge-public,
+:root[data-theme="dark"] .status--published{
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 30%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+/* Available on request / draft / requestable */
+.badge-request,
+.status--draft{
+  border-color: color-mix(in srgb, #d97706 34%, var(--line));
+  background: color-mix(in srgb, #d97706 10%, transparent);
+  color: #d97706;
+}
+
+:root[data-theme="dark"] .badge-request,
+:root[data-theme="dark"] .status--draft{
+  color: #fbbf24;
+  border-color: color-mix(in srgb, #fbbf24 34%, var(--line));
+  background: color-mix(in srgb, #fbbf24 10%, transparent);
+}
+
+/* Keep badge rows from crowding adjacent titles */
+.writing-meta + .writing-copy,
+.badge-row + h3,
+.badge-row + .featured-thesis{
+  margin-top: var(--space-sm);
+}
+
+/* ============================================================
+   3. Consistent spacing for common "supporting lines"
+   ============================================================ */
+
+.research-footer-link,
+.research-secondary-link,
+.writing-bridge,
+.hero-meta,
+.utility-note,
+.featured-note{
+  margin-top: var(--space-md);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Supporting links stay consistent */
+.research-footer-link a,
+.research-secondary-link a,
+.writing-bridge a,
+.utility-links a,
+.writing-more a{
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.research-footer-link a:hover,
+.research-secondary-link a:hover,
+.writing-bridge a:hover,
+.utility-links a:hover,
+.writing-more a:hover{
+  text-decoration: underline;
+}
+
+/* ============================================================
+   4. Mobile adjustments
+   ============================================================ */
+
+@media (max-width: 768px){
+  main > section{
+    margin-top: clamp(40px, 7vw, 56px);
+  }
+
+  main > section + section{
+    padding-top: clamp(40px, 7vw, 56px);
+  }
+
+  .section-title{
+    margin-bottom: var(--space-md);
+  }
+
+  .writing-item{
+    margin-bottom: var(--space-lg);
+  }
+
+  .badge,
+  .writing-status,
+  .writing-date,
+  .writing-length,
+  .writing-target,
+  .writing-thread{
+    min-height: 24px;
+    padding: 4px 8px;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  .badge-row,
+  .writing-meta{
+    gap: 6px 8px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Final polish patch
+   1) navigation + footer consistency
+   2) research card / resume card visual unification
+   Goal: make the whole site read like one institutional product
+   ───────────────────────────────────────────────────────────── */
+
+/* ============================================================
+   1. Shared interaction language
+   ============================================================ */
+
+:root{
+  --interactive-height: 38px;
+  --interactive-height-sm: 30px;
+  --nav-radius: 10px;
+  --chip-radius: 999px;
+  --surface-elevated: color-mix(in srgb, var(--panel) 94%, transparent);
+  --surface-subtle: color-mix(in srgb, var(--panel) 86%, transparent);
+  --card-border-accent: color-mix(in srgb, var(--accent) 26%, var(--line));
+}
+
+/* Keep all inline "pill / chip / button-like" controls visually related */
+.navlink,
+.page-toc-link,
+.contact-social,
+.footer-social,
+.writing-thread,
+.writing-status,
+.writing-date,
+.writing-length,
+.writing-target,
+.badge{
+  border-radius: var(--chip-radius);
+}
+
+/* Focus ring consistency across nav + footer + cards */
+.navlink:focus-visible,
+.header-social-link:focus-visible,
+.footer-social:focus-visible,
+.footer-nav a:focus-visible,
+.footer-links a:focus-visible,
+.contact-social:focus-visible,
+.writing-thread:focus-visible,
+.research-card-action:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   2. Header / nav consistency
+   ============================================================ */
+
+header{
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner{
+  gap: var(--space-lg);
+}
+
+.brand strong{
+  line-height: 1.1;
+}
+
+.brand span{
+  line-height: 1.35;
+}
+
+/* Make primary nav feel more intentional and uniform */
+.nav-links--desktop .navlink{
+  min-height: var(--interactive-height-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: var(--nav-radius);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.nav-links--desktop .navlink:hover{
+  color: var(--text);
+  border-color: var(--line);
+  background: var(--accent-muted);
+}
+
+.nav-links--desktop .navlink.active{
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: var(--nav-radius);
+  padding-bottom: 6px;
+}
+
+/* Slightly tighten social/icon alignment */
+.header-social{
+  gap: 8px;
+}
+
+.header-social-link,
+.theme-toggle,
+.menu-toggle{
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* Mobile nav should feel like the same design language, not a separate system */
+.nav-links--mobile{
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+}
+
+.nav-links--mobile .navlink{
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.nav-links--mobile .navlink:hover,
+.nav-links--mobile .navlink.active{
+  border-color: var(--line);
+  background: var(--accent-muted);
+  color: var(--text);
+}
+
+.nav-links--mobile .navlink.active{
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+}
+
+/* ============================================================
+   3. Footer consistency
+   ============================================================ */
+
+footer{
+  margin-top: var(--section-gap, 72px);
+}
+
+.footer-top{
+  align-items: center;
+}
+
+.footer-copy{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer-nav{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+}
+
+.footer-nav a{
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--interactive-height-sm);
+  padding: 6px 12px;
+  border-radius: var(--nav-radius);
+  border: 1px solid transparent;
+  color: var(--muted);
+}
+
+.footer-nav a:hover{
+  color: var(--text);
+  border-color: var(--line);
+  background: var(--accent-muted);
+}
+
+.footer-links{
+  gap: 8px;
+}
+
+.footer-social{
+  min-width: 32px;
+  min-height: 32px;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+}
+
+.footer-tagline{
+  max-width: 72ch;
+  margin-top: var(--space-lg);
+}
+
+/* Footer should visually echo the header rather than look like a separate product */
+.footer-nav a,
+.footer-social{
+  transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+}
+
+.footer-social:hover{
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   4. Research + resume card unification
+   ============================================================ */
+
+/* Shared "institutional card" treatment */
+.writing-card,
+.resume-card,
+.resume-summary-card,
+.resume-preview-card,
+.stack-item,
+#supporting-research .resume-section-grid .card,
+.research-card{
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 97%, transparent),
+    color-mix(in srgb, var(--panel2) 95%, transparent)
+  );
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--card-border-accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Dark theme surface consistency */
+:root[data-theme="dark"] .writing-card,
+:root[data-theme="dark"] .resume-card,
+:root[data-theme="dark"] .resume-summary-card,
+:root[data-theme="dark"] .resume-preview-card,
+:root[data-theme="dark"] .stack-item,
+:root[data-theme="dark"] #supporting-research .resume-section-grid .card,
+:root[data-theme="dark"] .research-card{
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface) 97%, transparent),
+    color-mix(in srgb, var(--panel2) 95%, transparent)
+  );
+  border-color: var(--line-strong);
+}
+
+/* Shared hover behavior */
+.writing-card:hover,
+.resume-card:hover,
+.resume-summary-card:hover,
+.resume-preview-card:hover,
+.stack-item:hover,
+#supporting-research .resume-section-grid .card:hover,
+.research-card:hover{
+  box-shadow: var(--shadow);
+  border-color: var(--line-strong);
+  border-top-color: var(--accent);
+}
+
+/* Shared title styling */
+.writing-title,
+.resume-card h3,
+.resume-summary-card h3,
+.resume-preview-card h3,
+.stack-item strong,
+#supporting-research .resume-section-grid .card h3,
+.research-card h3{
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+/* Standardize metadata rhythm above titles */
+.writing-meta{
+  margin-bottom: var(--space-sm);
+}
+
+.resume-preview-card .resume-preview-meta{
+  margin-bottom: var(--space-md);
+}
+
+/* Make supporting cards feel closer to research cards */
+.resume-summary-card,
+.stack-item,
+.resume-preview-card,
+#supporting-research .resume-section-grid .card,
+.research-card{
+  position: relative;
+  overflow: hidden;
+}
+
+.resume-summary-card::before,
+.stack-item::before,
+.resume-preview-card::before,
+#supporting-research .resume-section-grid .card::before,
+.research-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:42%;
+  height:100%;
+  background: radial-gradient(circle at top right, var(--accent-muted), transparent 62%);
+  opacity:.28;
+  pointer-events:none;
+}
+
+.resume-summary-card > *,
+.stack-item > *,
+.resume-preview-card > *,
+#supporting-research .resume-section-grid .card > *,
+.research-card > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Shared CTA alignment inside research/resume cards */
+.resume-actions .action,
+.resume-downloads .action,
+#supporting-research .research-card-action,
+.research-card-action{
+  min-height: var(--interactive-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Standardize arrow/action pill feel */
+.research-card-action,
+#supporting-research .research-card-action,
+.writing-arrow{
+  border-radius: var(--chip-radius);
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  color: var(--muted);
+}
+
+.research-card:hover .research-card-action,
+#supporting-research .card:hover .research-card-action,
+.writing-card:hover .writing-arrow{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-muted);
+}
+
+/* ============================================================
+   5. Metadata / badge system unification
+   ============================================================ */
+
+/* Keep all small metadata chips aligned visually */
+.writing-status,
+.writing-date,
+.writing-length,
+.writing-target,
+.writing-thread,
+.badge{
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* Make dates/targets quieter and statuses slightly stronger */
+.writing-date,
+.writing-length,
+.writing-target{
+  opacity: .92;
+}
+
+.writing-status{
+  font-weight: 650;
+}
+
+/* Prevent metadata rows from feeling crowded */
+.writing-meta{
+  gap: 8px 10px;
+}
+
+/* ============================================================
+   6. Internal rhythm between title, body, and CTA inside cards
+   ============================================================ */
+
+.writing-copy,
+.resume-summary-card,
+.resume-preview-card,
+.stack-item,
+.research-card{
+  min-width: 0;
+}
+
+.writing-title + .writing-teaser,
+.resume-preview-card h3 + p,
+.research-card h3 + .research-date,
+.research-card h3 + p{
+  margin-top: 0;
+}
+
+.writing-teaser{
+  margin-bottom: var(--space-xs);
+}
+
+.writing-excerpt,
+.resume-preview-card > p,
+.resume-summary-card p,
+.stack-item p,
+.research-card p{
+  margin-bottom: var(--space-md);
+}
+
+/* ============================================================
+   7. Mobile refinements
+   ============================================================ */
+
+@media (max-width: 768px){
+  .footer-top{
+    align-items: flex-start;
+  }
+
+  .footer-nav{
+    gap: 8px;
+  }
+
+  .footer-nav a{
+    min-height: 36px;
+    padding: 6px 10px;
+  }
+
+  .footer-social{
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .resume-actions,
+  .resume-downloads{
+    gap: var(--space-sm);
+  }
+
+  .resume-actions .action,
+  .resume-downloads .action,
+  #supporting-research .research-card-action,
+  .research-card-action{
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   Visual storytelling: numbered deliverables, responsive tweaks
+   ============================================================ */
+
+/* Change 5: Numbered cards in "What I build" */
+#what-i-build{ counter-reset: build-card; }
+#what-i-build .card{
+  counter-increment: build-card;
+  border-top:none;
+  position:relative;
+  padding-top:var(--space-lg);
+}
+#what-i-build .card::before{
+  content: counter(build-card, decimal-leading-zero);
+  font-size:clamp(28px, 3vw, 40px);
+  font-weight:700;
+  color:color-mix(in srgb, var(--accent) 35%, transparent);
+  line-height:1;
+  display:block;
+  margin-bottom:var(--space-xs);
+}
+
+/* Ensure all text boxes are wider than tall at tablet widths */
+@media (max-width: 980px){
+  /* Hero-points: stack to full-width horizontal bars */
+  .hero-points{
+    grid-template-columns:1fr;
+  }
+  .hero-point{
+    border-right:none;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-point:last-child{
+    border-bottom:none;
+  }
+
+  /* Cards: full-width single column */
+  .grid--halves .card{
+    grid-column:span 12;
+  }
 }

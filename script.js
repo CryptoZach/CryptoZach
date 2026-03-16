@@ -301,13 +301,19 @@
     if (hero) {
       var staggerItems = [
         hero.querySelector('.kicker'),
+        hero.querySelector('.eyebrow'),
         hero.querySelector('.hero-name'),
         hero.querySelector('h1'),
         hero.querySelector('.hero-subhead'),
+        hero.querySelector('.hero-method'),
+        hero.querySelector('.hero-output'),
         hero.querySelector('.hero-points'),
         hero.querySelector('.hero-actions'),
+        hero.querySelector('.hero-cta-row'),
         hero.querySelector('.hero-pills'),
+        hero.querySelector('.proof-bar'),
         hero.querySelector('.meta'),
+        hero.querySelector('.hero-meta'),
         hero.querySelector('.hero-rail')
       ].filter(Boolean);
 
@@ -430,19 +436,22 @@
   setupStagger('.grid', '.card');
   setupStagger('.writing-list', '.writing-item');
 
-  // Thread links inside card (data-href span): open in new tab and do not trigger card link
+  // Thread links inside card: open thread (data-href) or X profile in new tab and do not trigger card link
+  var threadFallbackUrl = 'https://x.com/CryptoZach';
   document.body.addEventListener('click', function(e) {
-    var el = e.target.closest('.writing-thread[data-href]');
+    var el = e.target.closest('.writing-thread');
     if (!el) return;
     e.preventDefault();
     e.stopPropagation();
-    window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+    var href = el.getAttribute('data-href') || threadFallbackUrl;
+    window.open(href, '_blank', 'noopener,noreferrer');
   });
   document.body.addEventListener('keydown', function(e) {
-    var el = e.target.closest('.writing-thread[data-href]');
+    var el = e.target.closest('.writing-thread');
     if (!el || (e.key !== 'Enter' && e.key !== ' ')) return;
     e.preventDefault();
     e.stopPropagation();
-    window.open(el.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+    var href = el.getAttribute('data-href') || threadFallbackUrl;
+    window.open(href, '_blank', 'noopener,noreferrer');
   });
 })();
