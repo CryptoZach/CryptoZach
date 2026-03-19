@@ -56,9 +56,9 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=14" />
+  <link rel="stylesheet" href="./styles.css?v=24" />
   <style>
-    #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs { scroll-margin-top: 8rem; }
+    #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
   </style>
   <script type="application/ld+json">
     {
@@ -145,6 +145,50 @@
     </div>
   </nav>
 
+  <!-- Structure page section nav — sticky when hero jump links scroll away -->
+  <nav class="structure-nav" id="structureNav" aria-label="Page sections" hidden>
+    <div class="structure-nav__inner">
+      <div class="structure-nav__breadcrumb" aria-label="Breadcrumb">
+        <a href="./index.html">Home</a>
+        <span class="structure-nav__bc-sep" aria-hidden="true">/</span>
+        <span class="structure-nav__bc-current">Structure</span>
+      </div>
+      <ol class="structure-nav__links" role="list">
+        <li>
+          <a href="#three-dollar-objects" class="structure-nav__link" data-section="three-dollar-objects">
+            Three dollar objects
+          </a>
+        </li>
+        <li class="structure-nav__group">
+          <a href="#core-frameworks" class="structure-nav__link" data-section="core-frameworks">
+            Core frameworks
+          </a>
+          <ol class="structure-nav__sub" role="list" aria-label="Frameworks">
+            <li><a href="#clii" class="structure-nav__sublink" data-section="clii">CLII</a></li>
+            <li><a href="#mvep" class="structure-nav__sublink" data-section="mvep">MVEP</a></li>
+            <li><a href="#credit-migration-model" class="structure-nav__sublink" data-section="credit-migration-model">Credit migration</a></li>
+            <li><a href="#regime-dashboard" class="structure-nav__sublink" data-section="regime-dashboard">Regime Dashboard</a></li>
+          </ol>
+        </li>
+        <li>
+          <a href="#current-agenda" class="structure-nav__link" data-section="current-agenda">
+            Current agenda
+          </a>
+        </li>
+        <li>
+          <a href="#how-the-work-runs" class="structure-nav__link" data-section="how-the-work-runs">
+            How the work runs
+          </a>
+        </li>
+        <li>
+          <a href="#go-deeper" class="structure-nav__link" data-section="go-deeper">
+            Go deeper
+          </a>
+        </li>
+      </ol>
+    </div>
+  </nav>
+
   <main id="main">
     <section class="reveal" aria-labelledby="focus-title">
       <div class="kicker kicker--subpage">
@@ -155,7 +199,7 @@
         <h1 id="focus-title">Four frameworks for classifying, measuring, and stress-testing digital-dollar infrastructure.</h1>
         <p class="structure-page-lede">Evidence-led research on stablecoins, tokenized deposits, and cash-management products, covering the settlement, custody, and control infrastructure behind them. Each framework is built to support real decisions: what to monitor, what changes the view, and where responsibility sits when systems scale or fail.</p>
       </div>
-      <div class="page-toc" role="navigation" aria-label="Structure jump links">
+      <div class="page-toc structure-jump-to" role="navigation" aria-label="Structure jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
           <a class="page-toc-link" href="#three-dollar-objects">Three dollar objects</a>
@@ -352,7 +396,7 @@
       <p>A claim that cannot be tied to a source, a threshold, or a tested condition does not ship.</p>
     </section>
 
-    <section class="reveal" aria-labelledby="next-title">
+    <section class="reveal" id="go-deeper" aria-labelledby="next-title">
       <div class="section-title">
         <h2 id="next-title">Go deeper</h2>
         <p>Two research tracks, one thesis. Track A applies the infrastructure-layer principle to stablecoins and tokenized money.<br>Track B applies it to DePIN token economies. Both converge on the same conclusion: the operator layer determines outcomes that asset-level analysis cannot observe.</p>
@@ -390,7 +434,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="./script.js"></script>
+  <script defer src="./script.js?v=24"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

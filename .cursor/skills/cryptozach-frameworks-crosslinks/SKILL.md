@@ -26,7 +26,21 @@ These **`article.card`** elements carry the ids that paper pages and CTAs target
 | `credit-migration-model` | Credit Migration Model |
 | `regime-dashboard` | Regime Dashboard |
 
-Other useful section ids on the same page include **`three-dollar-objects`**, **`core-frameworks`** (section top; jump nav uses this), **`current-agenda`**, **`how-the-work-runs`**. Prefer linking to a **card id** when the goal is "jump to this framework."
+Other useful section ids on the same page include **`three-dollar-objects`**, **`core-frameworks`** (section top; hero jump links and sticky **`#structureNav`** use this), **`current-agenda`**, **`how-the-work-runs`**, **`go-deeper`**. Prefer linking to a **card id** when the goal is "jump to this framework." The hero **Jump to** block uses class **`structure-jump-to`** for scroll behavior tied to the sticky rail.
+
+## 2026 Frameworks page (`2026-frameworks.html`)
+
+Sticky **`#structureNav`** is detected when **`#navDefGroup`** exists. Hero jump links use **`#jumpTo`** (class **`frameworks-jump-to`**).
+
+| Area | Anchor ids (shareable) |
+|------|-------------------------|
+| Definitions (parent **`#definitions`**) | **`#what-stablecoin`**, **`#what-tokenization`**, **`#what-deposit`**, **`#why-care`** |
+| Three dollar objects | **`#dollar-objects`** |
+| Five questions (parent **`#five-questions`**) | **`#q1`** … **`#q5`** |
+| Entry points | **`#entry-points`** |
+| Where to go next | **`#where-to-go`** |
+
+**`script.js`** maps legacy fragments (**`#what-tokenized-deposit`**, **`#why-institutions-care`**, **`#three-objects-title`**, **`#entry-points-audience`**, **`#where-next`**) to the ids above when landing with a hash.
 
 ## Link URL shape
 
