@@ -653,6 +653,9 @@ h1{
   margin-top:var(--space-lg);
 }
 
+.contact-page .hero-grid{
+  grid-template-columns:1fr;
+}
 .contact-page .hero-primary{
   max-width:none;
 }
@@ -7521,9 +7524,9 @@ footer{
   text-align: center;
 }
 
-/* Contact hero: one row of three CTAs, full-width strip */
+/* Contact hero: one row of three CTAs, full-width strip (third column wider for long label) */
 .contact-page .contact-actions{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.35fr);
   column-gap: clamp(1rem, 2.5vw, 2rem);
   row-gap: 0;
   width: 100%;
@@ -7532,6 +7535,11 @@ footer{
   align-items: center;
   justify-items: start;
   box-sizing: border-box;
+}
+@media (min-width: 901px){
+  .contact-page .contact-actions a:last-child{
+    white-space:nowrap;
+  }
 }
 @media (max-width: 900px){
   .contact-page .contact-actions{
