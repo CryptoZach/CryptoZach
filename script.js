@@ -486,4 +486,257 @@
       }, 200);
     });
   }
+
+  // Sticky section rail: Operating-Model.html (Structure), 2026-frameworks.html, speaker.html
+  (function(){
+    var nav = document.getElementById('structureNav');
+    if(!nav){
+      return;
+    }
+
+    var isSpeakerPage = nav.getAttribute('data-page-nav') === 'speaker';
+    var isFrameworks2026 = !!document.getElementById('navDefGroup');
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var jumpTo = document.getElementById('jumpTo') || document.querySelector('.structure-jump-to');
+    var hideTimer = null;
+
+    function headerOffset(){
+      var header = document.querySelector('header');
+      return header ? header.offsetHeight : 0;
+    }
+
+    function scrollOffsetForTarget(){
+      return headerOffset() + (nav.offsetHeight || 48) + 16;
+    }
+
+    function showStructureNav(){
+      window.clearTimeout(hideTimer);
+      nav.removeAttribute('hidden');
+      requestAnimationFrame(function(){
+        nav.classList.add('visible');
+      });
+    }
+
+    function hideStructureNav(){
+      nav.classList.remove('visible');
+      if(reducedMotion){
+        nav.setAttribute('hidden', '');
+        return;
+      }
+      window.clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(function(){
+        if(!nav.classList.contains('visible')){
+          nav.setAttribute('hidden', '');
+        }
+      }, 280);
+    }
+
+    if(jumpTo){
+      var jumpObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            hideStructureNav();
+          } else {
+            showStructureNav();
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+      jumpObserver.observe(jumpTo);
+    } else {
+      window.addEventListener('scroll', function(){
+        var show = window.scrollY > 300;
+        if(show){
+          showStructureNav();
+        } else {
+          hideStructureNav();
+        }
+      }, { passive: true });
+    }
+
+    var sections;
+    var bottomSectionId;
+    if(isFrameworks2026){
+      sections = [
+        'definitions',
+        'what-stablecoin',
+        'what-tokenization',
+        'what-deposit',
+        'why-care',
+        'dollar-objects',
+        'five-questions',
+        'q1',
+        'q2',
+        'q3',
+        'q4',
+        'q5',
+        'entry-points',
+        'where-to-go'
+      ];
+      bottomSectionId = 'where-to-go';
+    } else if(isSpeakerPage){
+      sections = [
+        'speaker-overview',
+        'speaker-in-room',
+        'speaker-formats',
+        'speaker-featured',
+        'speaker-experience',
+        'speaker-boundaries',
+        'speaker-advisory',
+        'speaker-press',
+        'speaker-booking',
+        'about-zach',
+        'about-this-site'
+      ];
+      bottomSectionId = 'about-this-site';
+    } else {
+      sections = [
+        'three-dollar-objects',
+        'core-frameworks',
+        'clii',
+        'mvep',
+        'credit-migration-model',
+        'regime-dashboard',
+        'current-agenda',
+        'how-the-work-runs',
+        'go-deeper'
+      ];
+      bottomSectionId = 'go-deeper';
+    }
+
+    var sectionEls = {};
+    sections.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el){
+        sectionEls[id] = el;
+      }
+    });
+
+    var allLinks = nav.querySelectorAll('[data-section]');
+    var structureFrameworkGroup = isFrameworks2026 ? null : nav.querySelector('.structure-nav__group');
+    var structureFrameworkIds = ['clii', 'mvep', 'credit-migration-model', 'regime-dashboard'];
+    var defGroup = document.getElementById('navDefGroup');
+    var qGroup = document.getElementById('navQGroup');
+    var defSubIds = ['what-stablecoin', 'what-tokenization', 'what-deposit', 'why-care'];
+    var qSubIds = ['q1', 'q2', 'q3', 'q4', 'q5'];
+    function setActive(activeId){
+      allLinks.forEach(function(link){
+        link.classList.toggle('active', link.getAttribute('data-section') === activeId);
+      });
+
+      if(isFrameworks2026){
+        var inDef = defSubIds.indexOf(activeId) !== -1 || activeId === 'definitions';
+        var inQ = qSubIds.indexOf(activeId) !== -1 || activeId === 'five-questions';
+        if(defGroup){
+          defGroup.classList.toggle('expanded', inDef);
+        }
+        if(qGroup){
+          qGroup.classList.toggle('expanded', inQ);
+        }
+      } else if(structureFrameworkGroup){
+        var inFrameworks = structureFrameworkIds.indexOf(activeId) !== -1 || activeId === 'core-frameworks';
+        structureFrameworkGroup.classList.toggle('expanded', inFrameworks);
+      }
+
+      var activeLink = nav.querySelector('[data-section="' + activeId + '"]');
+      if(activeLink){
+        var container = nav.querySelector('.structure-nav__links') || nav.querySelector('.structure-nav__inner');
+        if(container){
+          var linkRect = activeLink.getBoundingClientRect();
+          var containerRect = container.getBoundingClientRect();
+          if(linkRect.left < containerRect.left || linkRect.right > containerRect.right){
+            activeLink.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
+          }
+        }
+      }
+    }
+
+    var activeSection = null;
+    var sectionIdsOrdered = sections.filter(function(id){
+      return sectionEls[id];
+    });
+
+    function pickActiveSectionId(){
+      var markerY = window.innerHeight * 0.28;
+      var docEl = document.documentElement;
+      var maxScroll = Math.max(0, (docEl.scrollHeight || 0) - window.innerHeight);
+      var nearBottom = window.scrollY >= maxScroll - 48;
+      if(nearBottom && sectionEls[bottomSectionId]){
+        return bottomSectionId;
+      }
+      var bestId = sectionIdsOrdered[0] || null;
+      var bestTop = -Infinity;
+      sectionIdsOrdered.forEach(function(id){
+        var el = sectionEls[id];
+        var r = el.getBoundingClientRect();
+        if(r.top <= markerY && r.top >= bestTop){
+          bestTop = r.top;
+          bestId = id;
+        }
+      });
+      return bestId;
+    }
+
+    function syncActiveSection(){
+      var next = pickActiveSectionId();
+      if(next && next !== activeSection){
+        activeSection = next;
+        setActive(next);
+      }
+    }
+
+    var sectionObserver = new IntersectionObserver(function(){
+      syncActiveSection();
+    }, { rootMargin: '-35% 0px -50% 0px', threshold: [0, 0.1, 0.25, 0.5, 1] });
+
+    Object.keys(sectionEls).forEach(function(id){
+      sectionObserver.observe(sectionEls[id]);
+    });
+
+    window.addEventListener('scroll', syncActiveSection, { passive: true });
+    window.addEventListener('resize', syncActiveSection, { passive: true });
+    syncActiveSection();
+
+    allLinks.forEach(function(link){
+      link.addEventListener('click', function(e){
+        var targetId = link.getAttribute('data-section');
+        var target = document.getElementById(targetId);
+        if(!target){
+          return;
+        }
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.scrollY - scrollOffsetForTarget();
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: reducedMotion ? 'auto' : 'smooth'
+        });
+        if(history.replaceState){
+          history.replaceState(null, '', '#' + targetId);
+        }
+      });
+    });
+
+    if(window.location.hash){
+      var hashId = window.location.hash.slice(1);
+      var legacyMap = {
+        'what-tokenized-deposit': 'what-deposit',
+        'why-institutions-care': 'why-care',
+        'three-objects-title': 'dollar-objects',
+        'entry-points-audience': 'entry-points',
+        'where-next': 'where-to-go',
+        'five-questions-title': 'five-questions'
+      };
+      if(legacyMap[hashId]){
+        hashId = legacyMap[hashId];
+      }
+      if(sectionEls[hashId]){
+        requestAnimationFrame(function(){
+          var top = sectionEls[hashId].getBoundingClientRect().top + window.scrollY - scrollOffsetForTarget();
+          window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+          if(history.replaceState){
+            history.replaceState(null, '', '#' + hashId);
+          }
+        });
+      }
+    }
+  })();
 })();

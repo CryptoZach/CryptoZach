@@ -47,7 +47,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=22" />
+  <link rel="stylesheet" href="./styles.css?v=25" />
 </head>
 
 <body class="page-focus">
@@ -109,8 +109,31 @@
     </div>
   </nav>
 
+  <nav class="structure-nav" id="structureNav" aria-label="Page sections" data-page-nav="speaker" hidden>
+    <div class="structure-nav__inner">
+      <div class="structure-nav__breadcrumb" aria-label="Breadcrumb">
+        <a href="./index.html">Home</a>
+        <span class="structure-nav__bc-sep" aria-hidden="true">/</span>
+        <span class="structure-nav__bc-current">Speaker</span>
+      </div>
+      <ol class="structure-nav__links" role="list">
+        <li><a href="#speaker-overview" class="structure-nav__link" data-section="speaker-overview">Overview</a></li>
+        <li><a href="#speaker-in-room" class="structure-nav__link" data-section="speaker-in-room">In the room</a></li>
+        <li><a href="#speaker-formats" class="structure-nav__link" data-section="speaker-formats">Formats</a></li>
+        <li><a href="#speaker-featured" class="structure-nav__link" data-section="speaker-featured">Featured</a></li>
+        <li><a href="#speaker-experience" class="structure-nav__link" data-section="speaker-experience">Experience</a></li>
+        <li><a href="#speaker-boundaries" class="structure-nav__link" data-section="speaker-boundaries">Boundaries</a></li>
+        <li><a href="#speaker-advisory" class="structure-nav__link" data-section="speaker-advisory">Advisory</a></li>
+        <li><a href="#speaker-press" class="structure-nav__link" data-section="speaker-press">Press</a></li>
+        <li><a href="#speaker-booking" class="structure-nav__link" data-section="speaker-booking">Booking</a></li>
+        <li><a href="#about-zach" class="structure-nav__link" data-section="about-zach">About</a></li>
+        <li><a href="#about-this-site" class="structure-nav__link" data-section="about-this-site">This site</a></li>
+      </ol>
+    </div>
+  </nav>
+
   <main id="main">
-    <section class="reveal speaker-hero" aria-labelledby="speaker-hero-title">
+    <section class="reveal speaker-hero" id="speaker-overview" aria-labelledby="speaker-hero-title">
       <div class="speaker-hero-headshot-wrap">
         <img class="speaker-headshot speaker-headshot--hero" src="./Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="187" height="187" loading="eager" decoding="async" />
       </div>
@@ -122,15 +145,25 @@
         <h1 id="speaker-hero-title">Zach Zukowski researches the infrastructure layer beneath digital money: the gateways, custody arrangements, settlement systems, and control infrastructure that determine how stablecoins, tokenized deposits, and token economies actually behave under stress.</h1>
         <p class="structure-page-lede">Seven scholarly papers across two tracks, unified by a single thesis: classify the token, but regulate and audit the operator. Senior Investment Analyst at Borderless Capital since 2019 (founding hire). Research submitted to the Federal Reserve Board / FRBNY Fifth Conference on International Roles of the U.S. Dollar, June 2026.</p>
       </div>
+      <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Speaker page jump links">
+        <p class="page-toc-title">Jump to</p>
+        <div class="page-toc-list">
+          <a class="page-toc-link" href="#speaker-in-room">In the room</a>
+          <a class="page-toc-link" href="#speaker-formats">Talk formats</a>
+          <a class="page-toc-link" href="#speaker-featured">Featured talk</a>
+          <a class="page-toc-link" href="#speaker-advisory">Advisory</a>
+          <a class="page-toc-link" href="#speaker-booking">Booking</a>
+        </div>
+      </div>
     </section>
 
-    <section class="reveal" aria-labelledby="in-room-title">
+    <section class="reveal" id="speaker-in-room" aria-labelledby="in-room-title">
       <h2 id="in-room-title">What I do in the room</h2>
       <p>I help teams stress-test their assumptions. The best conversations happen when we disagree on something, because that's where the data is most useful. The research provides the stress scenarios; you bring the operating context. We don't need to end up in the same place for the session to be worth the time.</p>
       <p>The point is to make your next decision clearer. I'll show you where the evidence is strong, where it's weak, and where reasonable people can disagree. The session works when you leave seeing the tradeoffs clearly enough to make the call.</p>
     </section>
 
-    <section class="reveal" aria-labelledby="formats-title">
+    <section class="reveal" id="speaker-formats" aria-labelledby="formats-title">
       <div class="section-title">
         <h2 id="formats-title">Talk formats</h2>
       </div>
@@ -180,7 +213,7 @@
       </div>
     </section>
 
-    <section class="reveal featured-talk" aria-labelledby="featured-talk-title">
+    <section class="reveal featured-talk" id="speaker-featured" aria-labelledby="featured-talk-title">
       <h2 id="featured-talk-title">Featured talk</h2>
 
       <div class="featured-talk-content">
@@ -216,7 +249,7 @@
       </div>
     </section>
 
-    <section class="reveal" aria-labelledby="experience-title">
+    <section class="reveal" id="speaker-experience" aria-labelledby="experience-title">
       <h2 id="experience-title">Speaking and teaching experience</h2>
       <h3>Workshop lead · 9 accelerator programs · ~75 teams (2021-2025)</h3>
       <p>Structured education on incentive design, emissions architecture, governance attack surfaces, and sustainability constraints. Format: presentations, group workshops, and 1:1 office hours aligning founders, engineering, legal, and liquidity stakeholders on token design decisions.</p>
@@ -229,7 +262,7 @@
       <p>Routing the Dollar submitted to the Fifth Conference on International Roles of the U.S. Dollar, June 2026. Notification pending.</p>
     </section>
 
-    <section class="reveal" aria-labelledby="research-boundaries-title">
+    <section class="reveal" id="speaker-boundaries" aria-labelledby="research-boundaries-title">
       <h2 id="research-boundaries-title">Research boundaries</h2>
       <p>The work is strongest when it is explicit about what it can and cannot show.</p>
       <h3>End-user geography is unobserved.</h3>
@@ -240,7 +273,7 @@
       <p>Two gateways with near-identical compliance scores can produce opposite stress outcomes. The index captures the observable surface a regulator could attach obligations to; it does not capture enforcement quality, operational competence, or the banking relationships that determine crisis behavior. This is a desirable design property, not a limitation to be fixed, but it must be understood by anyone using the scores.</p>
     </section>
 
-    <section class="reveal" aria-labelledby="advisory-title">
+    <section class="reveal" id="speaker-advisory" aria-labelledby="advisory-title">
       <h2 id="advisory-title">Advisory engagements</h2>
       <h3>Tokenization diligence review</h3>
       <p>Nine-category MVEP assessment applied to a specific product or proposal. Tests whether the tokenized version preserves legal rights, operational resilience, and economic behavior under stress.</p>
@@ -259,7 +292,7 @@
       <strong>Core Competencies:</strong> stablecoin issuers, payments platforms, institutional partnerships teams, policy shops.</p>
     </section>
 
-    <section class="reveal" aria-labelledby="press-title">
+    <section class="reveal" id="speaker-press" aria-labelledby="press-title">
       <h2 id="press-title">Press kit</h2>
       <h3>Bio (50 words)</h3>
       <p>Zach Zukowski researches the infrastructure beneath digital money: gateways, custody, settlement, and control systems. Seven scholarly papers across stablecoins, tokenization, and DePIN token economies. Senior Investment Analyst at Borderless Capital since 2019 (founding hire). Research submitted to the Federal Reserve Board / FRBNY conference on the dollar's international roles.</p>
@@ -281,10 +314,10 @@
       <p><strong>Research summary:</strong> <a href="selected-research.html">View Selected Research</a></p>
     </section>
 
-    <section class="reveal" aria-labelledby="booking-title">
+    <section class="reveal" id="speaker-booking" aria-labelledby="booking-title">
       <p><a href="mailto:zach@cryptozach.com?subject=Speaker%20one-pager%20request">Request a speaker one-pager →</a></p>
       <h2 id="booking-title">Booking</h2>
-      <p>For speaking, advisory, or press inquiries, email <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a> with the event, audience, and format. The reply will include the most relevant talk outline, bio version, and supporting materials.</p>
+      <p>For speaking, advisory, or press inquiries, email <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a> with the event, audience, and format. My reply will include the most relevant talk outline, bio version, and supporting materials.</p>
     </section>
 
     <section class="reveal" id="about-zach" aria-labelledby="about-zach-title">
