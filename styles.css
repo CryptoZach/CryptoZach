@@ -439,6 +439,30 @@ nav .action:hover{
   outline-offset:2px;
 }
 
+.cta-primary {
+  background: var(--accent, #2563eb);
+  color: #fff;
+  border-color: var(--accent, #2563eb);
+}
+.cta-primary:hover {
+  background: var(--accent-hover, #1d4ed8);
+  border-color: var(--accent-hover, #1d4ed8);
+}
+
+.flagship-nudge {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #666);
+  margin: 0.75rem 0;
+}
+.flagship-nudge a {
+  color: var(--accent, #2563eb);
+  text-decoration: none;
+  font-weight: 500;
+}
+.flagship-nudge a:hover {
+  text-decoration: underline;
+}
+
 .icon{width:16px; height:16px; opacity:.9}
 
 /* ── Main layout ── */
@@ -657,12 +681,29 @@ h1{
 .contact-page .contact-intake .cta-link:hover{
   color:var(--accent-hover, var(--accent));
 }
-.contact-page .contact-intake .contact-intake-icon{
+.contact-page .contact-intake .contact-intake-icon,
+.contact-page .contact-actions .contact-intake-icon{
   display:inline-block;
   width:1em;
   height:1em;
   vertical-align:middle;
   margin-left:0.2em;
+  flex-shrink:0;
+}
+.contact-page .contact-actions a{
+  display:inline-flex;
+  align-items:center;
+  gap:0.35em;
+  color:var(--accent);
+  font-size:0.9375rem;
+  line-height:1.35;
+  text-underline-offset:0.15em;
+}
+.contact-page .contact-actions a:hover{
+  color:var(--accent-hover, var(--accent));
+}
+.contact-page .contact-actions a .contact-intake-icon{
+  margin-left:0;
 }
 
 /* ── Hero support points (horizontal 3-up at all screen sizes) ── */
@@ -2412,6 +2453,31 @@ section:has(.speaker-jump-to){
   font-size:14px;
   line-height:1.5;
   color:var(--text-soft);
+}
+
+.research-card--compact .writing-teaser{
+  display:none;
+}
+.research-card--compact .card-expand:not([open]){
+  margin-top:0.5rem;
+}
+.research-card--compact .card-expand summary{
+  font-size:0.8125rem;
+  color:var(--text-secondary, #666);
+  cursor:pointer;
+  padding:0.5rem 0;
+}
+.research-card--compact .card-expand[open]{
+  border-top:0.5px solid var(--border-subtle, rgba(0,0,0,0.08));
+  padding-top:0.75rem;
+  margin-top:0.5rem;
+}
+
+.research-card--minimal .writing-teaser,
+.research-card--minimal .writing-thread,
+.research-card--minimal .writing-thread-group,
+.research-card--minimal .card-expand{
+  display:none;
 }
 
 .writing-link:focus-visible{
@@ -6616,6 +6682,7 @@ footer{
   margin: 0;
   padding: 0;
   max-width: 100%;
+  width: fit-content;
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--line);
@@ -6625,14 +6692,16 @@ footer{
   display: block;
   line-height: 0;
 }
+/* Match selected-research Adaptive thumb: scale by max-height so no side letterboxing */
 #signature-frameworks .track-b-card-fig img{
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
   max-height: 280px;
-  object-fit: contain;
-  object-position: center;
-  background: var(--panel);
+  object-fit: unset;
+  object-position: center center;
+  background: transparent;
 }
 #signature-frameworks .track-b-card-body{
   grid-column: 2;
@@ -7427,18 +7496,51 @@ footer{
 .contact-actions{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
-  gap: var(--space-sm);
+  column-gap: var(--space-xl);
+  row-gap: var(--space-lg);
+  margin-top: var(--space-lg);
   margin-bottom: var(--space-lg);
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:var(--space-md);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px 32px;
+  justify-items: start;
+  align-items: start;
+}
+.contact-actions a{
+  color: var(--text);
+  text-decoration: underline;
+  font-weight: 500;
+}
+.contact-actions a:hover{
+  color: var(--accent);
 }
 .contact-actions .action{
   min-height: 40px;
-  justify-content:center;
-  text-align:center;
+  justify-content: center;
+  text-align: center;
 }
+
+/* Contact hero: one row of three CTAs, full-width strip */
+.contact-page .contact-actions{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.5vw, 2rem);
+  row-gap: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 22px clamp(20px, 3vw, 40px);
+  align-items: center;
+  justify-items: start;
+  box-sizing: border-box;
+}
+@media (max-width: 900px){
+  .contact-page .contact-actions{
+    grid-template-columns: 1fr;
+    row-gap: var(--space-md);
+    justify-items: start;
+  }
+}
+
 @media (max-width: 980px){
   .hero--homepage .hero-grid{
     grid-template-columns: 1fr;
@@ -8369,6 +8471,22 @@ footer{
 .research-preview-grid .research-card p,
 .research-preview-grid .research-card .research-card-meta{
   color:var(--text-soft, #c8ccd4);
+}
+
+/* Homepage selected research: same title baseline across columns (badge + meta reserve space) */
+.research-preview-grid .card-badges{
+  min-height: 2.75rem;
+  margin-bottom: var(--space-sm);
+  align-items: flex-start;
+}
+.research-preview-grid .research-date{
+  min-height: 4rem;
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  line-height: 1.45;
+}
+.research-preview-grid .research-card h3{
+  margin-top: 0;
 }
 
 /* Slightly cleaner visual weight vs generic cards */
