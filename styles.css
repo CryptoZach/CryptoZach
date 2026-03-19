@@ -4547,7 +4547,7 @@ footer{
   margin: var(--space-lg) 0 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 .proof-note{
   font-size: 0.75rem;
@@ -4555,13 +4555,14 @@ footer{
   margin-top: 0.5rem;
 }
 .proof-bar li{
-  padding: 10px 12px;
+  padding: 12px 20px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--panel) 88%, transparent);
-  color: var(--text-soft);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  color: var(--text);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 .proof-note{
@@ -5567,6 +5568,32 @@ footer{
 }
 .paper-abstract p:last-child{
   margin-bottom: 0;
+}
+.paper-abstract ul{
+  margin: 0 0 var(--space-md);
+  padding-left: 1.25rem;
+  line-height: 1.65;
+}
+.paper-abstract li{
+  margin-bottom: var(--space-xs);
+}
+.paper-abstract table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--space-lg);
+  font-size: 0.9rem;
+}
+.paper-abstract th,
+.paper-abstract td{
+  border: 1px solid var(--line);
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  vertical-align: top;
+}
+.paper-abstract th{
+  color: var(--text-soft);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
 }
 .paper-related{
   margin: var(--space-2xl) 0;
@@ -6909,7 +6936,7 @@ footer{
 
 #hero.hero--homepage{
   padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(34px, 4vw, 52px);
-  border-top-width: 3px;
+  border-top: 3px solid var(--accent);
   background:
     linear-gradient(160deg,
       color-mix(in srgb, var(--panel) 96%, transparent),
