@@ -86,7 +86,7 @@ Note: title case is acceptable in navigation links and buttons. Body copy and se
 - `What I work on`
 - `How the work runs`
 - `Best for`
-- `Questions this version is built to answer`
+- `What this version answers` (resume profiles: one section with proof bullets then question blocks)
 - `Supporting research`
 
 **Status badges:**
@@ -155,16 +155,10 @@ These checks target unnecessary setup sentences and redundant content that slows
 
 **Setup sentences before question blocks:**
 
-On resume profile pages (`resume/*.html`), the heading "Questions this version is built to answer" should be immediately followed by the question list. No introductory paragraph between heading and list.
+On resume profile pages (`resume/*.html`), the section **What this version answers** uses a single `resume-preview-card`: focus chips, proof bullets, then `stack-list` question blocks, then downloads. No meta heading like "What this version covers" or "Questions this version is built to answer".
 
 ```bash
-# Check for paragraphs between the heading and the list
-for f in resume/*.html; do
-  echo "=== $f ==="
-  # Extract lines around the heading
-  grep -A3 "Questions this version is built to answer" "$f"
-  # The line after the heading should be <ol>, <ul>, or the first <li>, not <p>
-done
+grep -n "What this version answers" resume/*.html
 ```
 
 **Duplicate information within a single page:**

@@ -264,10 +264,16 @@ nav{
   background:var(--bg);
   padding:var(--space-lg) max(var(--space-lg), env(safe-area-inset-right)) calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)) max(var(--space-lg), env(safe-area-inset-left));
   gap:var(--space-sm);
-  z-index:9999;
+  z-index:10000;
   border-top:1px solid var(--line);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+  isolation:isolate;
+  box-sizing:border-box;
+}
+/* Closed menu must not participate in layout or paint (beats any stray display rules). */
+#nav-mobile.nav-links--mobile[hidden]{
+  display:none !important;
 }
 .nav-links--mobile.open{display:flex}
 .nav-links--mobile .navlink{
@@ -1054,6 +1060,16 @@ h1{
   line-height:1.6;
   color:var(--text-soft);
 }
+.page-focus .structure-go-deeper-cta{
+  margin-top:var(--space-xl);
+}
+.page-focus .structure-go-deeper-lede{
+  margin:0 0 var(--space-md);
+  max-width:none;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--text-soft);
+}
 .page-focus .framework-card-action{
   margin:var(--space-sm) 0 0;
 }
@@ -1710,7 +1726,6 @@ footer{
 #talk-builder,
 #featured-talk,
 #experience,
-#boundaries,
 #advisory,
 #adv-diligence,
 #adv-token,
@@ -3677,6 +3692,9 @@ main.resume-profile .section-title{
   gap:var(--space-md);
   margin-top:var(--space-md);
 }
+.resume-summary-grid.resume-summary-grid--single{
+  grid-template-columns:minmax(0, 1fr);
+}
 .resume-summary-card{
   padding:var(--space-md);
   border:1px solid var(--line);
@@ -3697,6 +3715,9 @@ main.resume-profile .section-title{
   font-size:14px;
   line-height:1.58;
   color:var(--muted);
+}
+.resume-summary-card p + p{
+  margin-top:var(--space-sm);
 }
 
 .resume-preview-card{
@@ -3762,7 +3783,11 @@ main.resume-profile .section-title{
   margin-bottom:0;
 }
 .resume-preview-card .resume-downloads{
-  margin-top:0;
+  margin-top:var(--space-lg);
+}
+.resume-preview-card .stack-list--in-preview{
+  margin-top:var(--space-lg);
+  margin-bottom:0;
 }
 
 .stack-list{
@@ -5120,6 +5145,7 @@ footer{
   .teaser-rail{position:static}
   #supporting-research .resume-section-grid{grid-template-columns:1fr}
   .resume-summary-grid{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .resume-summary-grid.resume-summary-grid--single{grid-template-columns:minmax(0, 1fr)}
   .hero-rail{
     flex-direction:row;
     flex-wrap:wrap;
@@ -5218,12 +5244,28 @@ footer{
 
   /* Sheet visible when [hidden] is removed (script toggles hidden / inert; no .open class). */
   .nav-links--mobile:not([hidden]){
-    display:flex;
+    display:flex !important;
   }
 
   .nav-links--mobile{
     top:var(--header-h);
     padding:var(--space-md);
+    /* Opaque overlay: no bleed-through from hero or sections below */
+    background:var(--bg);
+    z-index:10000;
+    min-height:calc(100dvh - var(--header-h));
+    min-height:calc(100vh - var(--header-h));
+    box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
+  }
+  :root[data-theme="dark"] .nav-links--mobile:not([hidden]){
+    background:var(--bg);
+    box-shadow:0 16px 48px color-mix(in srgb, #000 45%, transparent);
+  }
+  .mobile-nav-linkset{
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-xs);
+    width:100%;
   }
   .nav-links--mobile .navlink{
     font-size:17px;
@@ -7627,7 +7669,6 @@ footer{
   .operating-grid{
     grid-template-columns: 1fr;
   }
-  .hero-cta-row,
   .featured-actions,
   .contact-actions{
     grid-template-columns: 1fr;
@@ -8030,7 +8071,6 @@ footer{
 .hero-output,
 .card p,
 .track-card p,
-.resume-summary-card p,
 .resume-preview-card > p,
 .stack-item p,
 .explainer-section p,
@@ -8047,6 +8087,15 @@ footer{
 }
 .resume-card > p{
   max-width:none;
+}
+
+/* Resume profile Decision lens: card is full main width; do not cap line length at --measure */
+.resume-summary-card p{
+  max-width:none;
+  text-wrap:pretty;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
 }
 .utility-card p,
 .utility-card .utility-note{
@@ -8638,10 +8687,16 @@ footer{
   position: relative;
   padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(34px, 4vw, 52px);
   border-top: 3px solid var(--accent);
+  /* Default (no hover on flagship CTA): slower dollar splash; script toggles .hero-home--flagship-hover for faster */
+  --hero-dollar-flight-duration: 6.4s;
   background:
     linear-gradient(160deg,
       color-mix(in srgb, var(--panel) 96%, transparent),
       color-mix(in srgb, var(--panel2) 94%, transparent));
+}
+
+#hero.hero--homepage.hero-home--flagship-hover{
+  --hero-dollar-flight-duration: 2.6s;
 }
 
 #hero.hero--homepage::before{
@@ -8792,7 +8847,7 @@ footer{
     0 0 22px rgba(74, 222, 128, 0.35);
   transform: translate(-50%, -50%) scale(0.5);
   opacity: 0;
-  animation: hero-dollar-flight 4.8s ease-out forwards;
+  animation: hero-dollar-flight var(--hero-dollar-flight-duration, 6.4s) ease-out forwards;
 }
 
 @keyframes hero-dollar-flight{
@@ -8994,6 +9049,7 @@ footer{
 @media (max-width: 768px){
   #hero.hero--homepage{
     padding: var(--space-lg) var(--space-md) var(--space-xl);
+    min-height: auto;
   }
 
   #hero.hero--homepage h1{
@@ -9020,11 +9076,30 @@ footer{
   #hero.hero--homepage .hero-cta-row{
     flex-direction: column;
     align-items: stretch;
+    gap: var(--space-md);
+    row-gap: var(--space-md);
+    max-width: none;
+  }
+
+  /* Avoid display:contents flattening bugs and tighten resume-link stack */
+  #hero.hero--homepage .hero-resume-profile-nav{
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    align-items: stretch;
   }
 
   #hero.hero--homepage .hero-cta-row .action{
     width: 100%;
+    max-width: none;
     justify-content: center;
+    box-sizing: border-box;
+    min-height: 48px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    line-height: 1.35;
+    white-space: normal;
   }
 
   #hero.hero--homepage .proof-bar{
@@ -9510,9 +9585,9 @@ header{
   min-height: 36px;
 }
 
-/* Mobile nav should feel like the same design language, not a separate system */
-.nav-links--mobile{
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
+/* Mobile nav: solid fill when open (opacity overlays read as broken layout on small screens). */
+.nav-links--mobile:not([hidden]){
+  background: var(--bg);
 }
 
 .nav-links--mobile .navlink{
