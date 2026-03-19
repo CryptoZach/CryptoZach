@@ -2,6 +2,8 @@
 
 Agent-based simulation of a five-mechanism DePIN (Decentralized Physical Infrastructure Network) token economy with PID-controlled adaptive emission and an operational risk layer calibrated to empirical failure rates across Ethereum, Helium, Geodnet, and Filecoin.
 
+**Site deployment:** This repo is also the source for www.cryptozach.com. See [docs/SITE_REPO_SAFETY.md](docs/SITE_REPO_SAFETY.md) for remotes, safe push command, and how to avoid overwriting the wrong repo.
+
 ## Papers
 
 This codebase supports two papers:
