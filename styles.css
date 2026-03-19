@@ -1585,15 +1585,20 @@ footer{
 #where-to-go,
 #where-next,
 #entry-points-audience,
-#speaker-overview,
-#speaker-in-room,
-#speaker-formats,
-#speaker-featured,
-#speaker-experience,
-#speaker-boundaries,
-#speaker-advisory,
-#speaker-press,
-#speaker-booking,
+#in-the-room,
+#talk-formats,
+#talk-policy,
+#talk-diligence,
+#talk-builder,
+#featured-talk,
+#experience,
+#boundaries,
+#advisory,
+#adv-diligence,
+#adv-token,
+#adv-policy,
+#press-kit,
+#booking,
 #about-zach,
 #about-this-site{
   scroll-margin-top: 6rem;
@@ -1898,8 +1903,61 @@ section:has(.section-title--center):last-of-type{
 }
 
 /* ── Page TOC (Jump to links) ── */
-section:has(.page-toc){
+section:has(.page-toc),
+section:has(.speaker-jump-to){
   overflow:visible;
+}
+/* Speaker hero: compact jump strip (same chip pattern as .page-toc) */
+.speaker-jump-to{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:var(--space-sm) var(--space-md);
+  padding:var(--space-sm) var(--space-md);
+  margin:0 0 var(--space-lg);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  overflow:visible;
+  min-width:0;
+  width:fit-content;
+  max-width:100%;
+}
+.speaker-jump-to .jump-to-label{
+  margin:0;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  line-height:1.4;
+  flex-shrink:0;
+  padding-right:var(--space-sm);
+}
+.speaker-jump-to__link{
+  text-decoration:none;
+  color:var(--text-soft);
+  font-size:13px;
+  font-weight:500;
+  line-height:1.5;
+  padding:6px 12px;
+  border-radius:var(--radius-sm);
+  min-width:0;
+  white-space:normal;
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
+@media (prefers-reduced-motion: no-preference){
+  .speaker-jump-to__link{transition:color .15s ease, background .15s ease}
+}
+.speaker-jump-to__link:hover{
+  color:var(--accent);
+  background:var(--accent-muted);
+}
+.speaker-jump-to__link:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
 }
 .page-toc{
   display:flex;
@@ -1978,6 +2036,11 @@ section:has(.page-toc){
   gap:var(--space-md);
 }
 .grid--thirds .card{grid-column:span 4}
+.grid--thirds > .talk-format-card{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
 .grid--thirds{gap:var(--space-lg)}
 .grid--halves .card{grid-column:span 6}
 .grid--halves{
@@ -3944,7 +4007,8 @@ main.resume-profile .section-title{
   gap:var(--space-md);
 }
 .grid--thirds > .card,
-.grid--thirds > article{
+.grid--thirds > article,
+.grid--thirds > .talk-format-card{
   grid-column:span 1;
 }
 .grid--start-cards{
