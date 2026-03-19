@@ -14,6 +14,7 @@ description: >-
 - **Thesis-first**: Lead with the claim or mechanism (what is true or what the piece does), not venue boilerplate. Venue or status can follow in the body, a second sentence, or a dedicated line on paper pages.
 - **Institutional, precise**: Prefer concrete nouns (gateway, operator, reserve, finality) over vague labels ("institutional grade" only when quoted or reframed as testable).
 - **Parallel naming**: `<title>`, `h1`, `og:title`, and `twitter:title` should describe the same work. Shorter variants are fine for Twitter, but do not imply a different paper.
+- **Header brand**: The site header uses `<strong>Zach Zukowski</strong>` (no ` · (CryptoZach)` suffix). The subtitle line under it still carries the CryptoZach positioning.
 - **House punctuation**: If the repo has `.cursor/rules/` copy rules, follow them. Otherwise avoid decorative unicode dashes in generated prose; use hyphens or commas for sentence rhythm unless the user specifies otherwise.
 
 ## Meta and social (per page)

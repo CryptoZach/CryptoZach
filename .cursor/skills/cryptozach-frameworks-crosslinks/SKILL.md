@@ -11,7 +11,7 @@ description: >-
 
 ## Canonical source
 
-**`Operating-Model.html`** is the single source of truth for framework **card** anchors. Inbound links use **`#<id>`** on that file.
+**`Operating-Model.html`** is the single source of truth for framework **card** anchors. Inbound links use **`#<id>`** on that file. In the **header nav**, this page is labeled **Structure** (URLs stay `Operating-Model.html`).
 
 **`frameworks.html`** is a **legacy redirect** (preserves query string and hash). Prefer linking to **`Operating-Model.html`** in new content.
 

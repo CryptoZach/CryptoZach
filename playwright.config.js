@@ -23,8 +23,19 @@ module.exports = defineConfig({
   },
   projects: [
     {
-      name: "chromium",
+      name: "desktop",
       use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "tablet",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 834, height: 1112 },
+      },
+    },
+    {
+      name: "mobile",
+      use: { ...devices["Pixel 5"] },
     },
   ],
   webServer: {

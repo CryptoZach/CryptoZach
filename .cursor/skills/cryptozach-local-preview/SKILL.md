@@ -52,7 +52,7 @@ Use **`browser_navigate`** to each URL, then **`browser_snapshot`** (or **`brows
 |-------|-----|
 | Home | `http://127.0.0.1:8080/` |
 | Research library | `http://127.0.0.1:8080/selected-research.html` |
-| Operating model + fragment | `http://127.0.0.1:8080/Operating-Model.html#clii` |
+| Structure (Operating-Model.html) + fragment | `http://127.0.0.1:8080/Operating-Model.html#clii` |
 | Legacy redirect + hash | `http://127.0.0.1:8080/frameworks.html#clii` (final URL should include `Operating-Model.html` and `#clii`) |
 | Reference papers | `http://127.0.0.1:8080/papers/routing-the-dollar.html`, `http://127.0.0.1:8080/papers/minimum-viable-equivalence-packs.html` |
 
@@ -65,6 +65,8 @@ Automated smoke tests live under **`tests/e2e/`**. From repo root:
 3. **`npm run test:e2e`**
 
 The config starts **`python3 -m http.server 8080`** automatically unless a server is already listening (local reuse). **`PLAYWRIGHT_FRESH_SERVER=1`** forces Playwright to spawn a new server (fails if **8080** is already taken). **Python 3** must be on `PATH` for `webServer`.
+
+Playwright runs **`desktop`**, **`tablet`** (834×1112 Chromium), and **`mobile`** (Pixel 5 profile) projects. Use **`npx playwright test --project=mobile`** to narrow runs.
 
 Full detail: **[`docs/PLAYWRIGHT.md`](../../../docs/PLAYWRIGHT.md)**.
 

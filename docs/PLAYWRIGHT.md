@@ -30,6 +30,24 @@ npx playwright install
 npm run test:e2e
 ```
 
+Tests run in **three Chromium viewports** (see `playwright.config.js`):
+
+| Project   | Role   | Viewport (approx.)   |
+|-----------|--------|----------------------|
+| `desktop` | Chrome | Default desktop      |
+| `tablet`  | Chrome | 834×1112             |
+| `mobile`  | Chrome | Pixel 5 profile      |
+
+Run one project only:
+
+```bash
+npx playwright test --project=desktop
+npx playwright test --project=tablet
+npx playwright test --project=mobile
+```
+
+`tests/e2e/responsive.spec.js` checks **no horizontal overflow** on key pages and **navigation** (desktop nav vs hamburger) by width.
+
 Optional UI mode:
 
 ```bash

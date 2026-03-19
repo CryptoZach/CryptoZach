@@ -1,6 +1,6 @@
 ---
 name: Site restoration plan
-overview: "Merge the strongest restoration guidance into one implementation-ready plan: restore thesis, proof, process, and trust signals, create a new Focus page, update shared chrome, and verify the Start Here to Focus to Research journey without regressing the current multi-page IA."
+overview: "Merge the strongest restoration guidance into one implementation-ready plan: restore thesis, proof, process, and trust signals, create a new Focus page, update shared chrome, and verify the 2026 Frameworks to Focus to Research journey without regressing the current multi-page IA."
 todos:
   - id: lock-copy-and-constraints
     content: Update content/copy.md first, lock the navigation decision, and keep the multi-page IA and no-dead-code constraints explicit
@@ -18,7 +18,7 @@ todos:
     content: Add Focus to duplicated header, mobile, and footer navs, decide whether Home stays, and replace the shared footer tagline sitewide
     status: completed
   - id: wire-research-and-explainer
-    content: Rewire start-here, selected-research, and tokenomics-research around the new Focus page and restored two-track framing
+    content: Rewire 2026-frameworks, selected-research, and tokenomics-research around the new Focus page and restored two-track framing
     status: completed
   - id: upgrade-resume-and-contact
     content: Update resume hub, resume detail pages, and contact page with proof lines, Focus bridges, and stronger canonical copy
@@ -38,7 +38,7 @@ Keep the cleaner current site structure, but restore the thesis, proof, methodol
 ## Guardrails
 
 - Treat [content/copy.md](/Users/zach/.cursor/worktrees/CryptoZach/bht/content/copy.md) as the source of truth for restored copy. Extend it before or at the same time as HTML updates so new copy does not drift.
-- Preserve the current multi-page IA across [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html), [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html), [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html), [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html), [resume.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/resume.html), [contact.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/contact.html), and the three role-specific resume pages.
+- Preserve the current multi-page IA across [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html), [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html), [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html), [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html), [resume.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/resume.html), [contact.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/contact.html), and the three role-specific resume pages.
 - Reuse the existing design system in [styles.css](/Users/zach/.cursor/worktrees/CryptoZach/bht/styles.css) wherever possible. New CSS should be minimal, reusable, and actually consumed by markup.
 - Do not reintroduce dead CSS or JS. [script.js](/Users/zach/.cursor/worktrees/CryptoZach/bht/script.js) should stay unchanged unless nav changes require a menu or active-state fix.
 - Keep the homepage concise. Dense methodology belongs on the new [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html), not back on the homepage.
@@ -75,7 +75,7 @@ flowchart LR
 - [styles.css](/Users/zach/.cursor/worktrees/CryptoZach/bht/styles.css)
 - [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html)
 - [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html) (new)
-- [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html)
+- [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html)
 - [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html)
 - [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html)
 - [resume.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/resume.html)
@@ -100,7 +100,7 @@ Update [content/copy.md](/Users/zach/.cursor/worktrees/CryptoZach/bht/content/co
 Decide nav before editing page chrome:
 
 - Preferred: remove `Home` from desktop, mobile, and footer navs, and rely on the brand link for home.
-- Fallback: keep `Home` and insert `Focus` after `Start Here` if the header feels crowded or if active-state clarity degrades.
+- Fallback: keep `Home` and insert `Focus` after `2026 Frameworks` if the header feels crowded or if active-state clarity degrades.
 
 ## Phase 2: Homepage Restoration In [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html)
 
@@ -115,7 +115,7 @@ Use existing structure in `section.hero`, `div.hero-actions`, `div.meta`, `secti
   - `Hiring or evaluating fit? View resume.`
 - Add a third badge inside `div.meta`:
   - `Independent research | Non-advocacy`
-- Insert a thesis strip immediately after `section.hero` and before `section.start-here-teaser`:
+- Insert a thesis strip immediately after `section.hero` and before `section.frameworks-2026-teaser`:
   - `Unifying thesis: regulate and audit the operator and the router, not the token.`
 - Insert a proof strip directly below the thesis strip:
   - `Built the research function at Borderless Capital. Led a four-analyst team. Supported diligence across ~250 investments and ~500M in assets under management. Advised on 100+ tokenization engagements.`
@@ -171,7 +171,7 @@ Implementation guidance:
 
 ## Phase 4: Create [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html)
 
-Create [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html) as the missing mid-depth layer between the primer and the paper lists. Use [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html) as the structural shell: same header, nav, mobile nav, footer, and script pattern.
+Create [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html) as the missing mid-depth layer between the primer and the paper lists. Use [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html) as the structural shell: same header, nav, mobile nav, footer, and script pattern.
 
 Required sections:
 
@@ -207,7 +207,7 @@ Required sections:
 Update duplicated header, mobile nav, and footer nav blocks in:
 
 - [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html)
-- [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html)
+- [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html)
 - [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html)
 - [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html)
 - [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html)
@@ -219,10 +219,10 @@ Update duplicated header, mobile nav, and footer nav blocks in:
 
 Navigation:
 
-- Preferred order: `Start Here | Focus | Research | Resume | Contact`
+- Preferred order: `2026 Frameworks | Focus | Research | Resume | Contact`
 - Ensure the brand links home on every page.
 - If `Home` is removed, confirm the brand-home behavior is obvious and the active-link state still reads cleanly.
-- If `Home` remains, insert `Focus` after `Start Here` in desktop, mobile, and footer navs.
+- If `Home` remains, insert `Focus` after `2026 Frameworks` in desktop, mobile, and footer navs.
 
 Footer:
 
@@ -231,7 +231,7 @@ Footer:
 
 ## Phase 6: Rewire The Explainer And Research Hubs Around Focus
 
-### [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html)
+### [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html)
 
 Use this page as the shallow-to-mid-depth handoff.
 
@@ -317,7 +317,7 @@ Fallback:
 
 Acceptance criteria:
 
-- The site has a clear depth ladder: `Start Here -> Focus -> Research`
+- The site has a clear depth ladder: `2026 Frameworks -> Focus -> Research`
 - The homepage restores thesis, proof, and process without recreating the old wall-of-text layout
 - `Focus` is reachable from homepage, explainer, research hub, tokenomics track, resume hub, resume detail pages, and contact page
 - Two-track framing is visible before deep paper lists
@@ -331,7 +331,7 @@ Verification pass:
 - Check desktop and mobile nav in all updated pages
 - Validate homepage density and hero hierarchy at `1280x800`, `768x1024`, and `430x932`
 - Confirm menu toggle behavior still works if nav items change
-- Confirm link integrity across `Start Here`, `Focus`, `Research`, `Resume`, `Contact`, and the three resume detail pages
+- Confirm link integrity across `2026 Frameworks`, `Focus`, `Research`, `Resume`, `Contact`, and the three resume detail pages
 - Spot-check research-card wrapping and long-copy balance after the new framing blocks land
 - If useful, run [scripts/check-research-card-wrapping.js](/Users/zach/.cursor/worktrees/CryptoZach/bht/scripts/check-research-card-wrapping.js) during QA
 
@@ -341,7 +341,7 @@ Verification pass:
 2. Restore the homepage layer in [index.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/index.html) and add the minimal component styles in [styles.css](/Users/zach/.cursor/worktrees/CryptoZach/bht/styles.css).
 3. Create [focus.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/focus.html).
 4. Apply shared nav and footer updates across all pages.
-5. Rewire [start-here.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/start-here.html), [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html), and [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html) around the new Focus page.
+5. Rewire [2026-frameworks.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/2026-frameworks.html), [selected-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/selected-research.html), and [tokenomics-research.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/tokenomics-research.html) around the new Focus page.
 6. Update [resume.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/resume.html), the three role-specific resume pages, and [contact.html](/Users/zach/.cursor/worktrees/CryptoZach/bht/contact.html).
 7. Run the QA and anti-regression pass.
 
