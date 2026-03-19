@@ -1,10 +1,13 @@
 (function(){
-  // Theme toggle (default = light)
+  // Theme toggle (default = dark for new visitors; light only when explicitly saved)
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
 
   const saved = localStorage.getItem('theme');
-  if(saved === 'dark'){
+  if(saved === 'light'){
+    root.removeAttribute('data-theme');
+    if(toggle) toggle.setAttribute('aria-pressed','false');
+  } else {
     root.setAttribute('data-theme','dark');
     if(toggle) toggle.setAttribute('aria-pressed','true');
   }
@@ -496,6 +499,17 @@
 
     var isSpeakerPage = nav.getAttribute('data-page-nav') === 'speaker';
     var isFrameworks2026 = !!document.getElementById('navDefGroup');
+    var speakerLegacyByOld = {
+      'speaker-overview': 'in-the-room',
+      'speaker-in-room': 'in-the-room',
+      'speaker-formats': 'talk-formats',
+      'speaker-featured': 'featured-talk',
+      'speaker-experience': 'experience',
+      'speaker-boundaries': 'boundaries',
+      'speaker-advisory': 'advisory',
+      'speaker-press': 'press-kit',
+      'speaker-booking': 'booking'
+    };
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var jumpTo = document.getElementById('jumpTo') || document.querySelector('.structure-jump-to');
     var hideTimer = null;
@@ -575,15 +589,20 @@
       bottomSectionId = 'where-to-go';
     } else if(isSpeakerPage){
       sections = [
-        'speaker-overview',
-        'speaker-in-room',
-        'speaker-formats',
-        'speaker-featured',
-        'speaker-experience',
-        'speaker-boundaries',
-        'speaker-advisory',
-        'speaker-press',
-        'speaker-booking',
+        'in-the-room',
+        'talk-formats',
+        'talk-policy',
+        'talk-diligence',
+        'talk-builder',
+        'featured-talk',
+        'experience',
+        'boundaries',
+        'advisory',
+        'adv-diligence',
+        'adv-token',
+        'adv-policy',
+        'press-kit',
+        'booking',
         'about-zach',
         'about-this-site'
       ];
@@ -612,12 +631,16 @@
     });
 
     var allLinks = nav.querySelectorAll('[data-section]');
-    var structureFrameworkGroup = isFrameworks2026 ? null : nav.querySelector('.structure-nav__group');
+    var structureFrameworkGroup = isFrameworks2026 || isSpeakerPage ? null : nav.querySelector('.structure-nav__group');
     var structureFrameworkIds = ['clii', 'mvep', 'credit-migration-model', 'regime-dashboard'];
     var defGroup = document.getElementById('navDefGroup');
     var qGroup = document.getElementById('navQGroup');
     var defSubIds = ['what-stablecoin', 'what-tokenization', 'what-deposit', 'why-care'];
     var qSubIds = ['q1', 'q2', 'q3', 'q4', 'q5'];
+    var navTalkGroup = isSpeakerPage ? document.getElementById('navTalkGroup') : null;
+    var navAdvGroup = isSpeakerPage ? document.getElementById('navAdvGroup') : null;
+    var speakerTalkSubIds = ['talk-policy', 'talk-diligence', 'talk-builder'];
+    var speakerAdvSubIds = ['adv-diligence', 'adv-token', 'adv-policy'];
     function setActive(activeId){
       allLinks.forEach(function(link){
         link.classList.toggle('active', link.getAttribute('data-section') === activeId);
@@ -631,6 +654,15 @@
         }
         if(qGroup){
           qGroup.classList.toggle('expanded', inQ);
+        }
+      } else if(isSpeakerPage){
+        var inTalk = speakerTalkSubIds.indexOf(activeId) !== -1 || activeId === 'talk-formats';
+        var inAdv = speakerAdvSubIds.indexOf(activeId) !== -1 || activeId === 'advisory';
+        if(navTalkGroup){
+          navTalkGroup.classList.toggle('expanded', inTalk);
+        }
+        if(navAdvGroup){
+          navAdvGroup.classList.toggle('expanded', inAdv);
         }
       } else if(structureFrameworkGroup){
         var inFrameworks = structureFrameworkIds.indexOf(activeId) !== -1 || activeId === 'core-frameworks';
@@ -728,15 +760,46 @@
       if(legacyMap[hashId]){
         hashId = legacyMap[hashId];
       }
+      if(isSpeakerPage && speakerLegacyByOld[hashId]){
+        hashId = speakerLegacyByOld[hashId];
+      }
       if(sectionEls[hashId]){
         requestAnimationFrame(function(){
           var top = sectionEls[hashId].getBoundingClientRect().top + window.scrollY - scrollOffsetForTarget();
           window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-          if(history.replaceState){
-            history.replaceState(null, '', '#' + hashId);
-          }
+        if(history.replaceState){
+          history.replaceState(null, '', '#' + hashId);
+        }
         });
       }
+    }
+
+    if(jumpTo){
+      jumpTo.querySelectorAll('a[href^="#"]').forEach(function(jumpLink){
+        jumpLink.addEventListener('click', function(e){
+          var href = jumpLink.getAttribute('href');
+          if(!href || href.charAt(0) !== '#'){
+            return;
+          }
+          var jumpId = href.slice(1);
+          if(isSpeakerPage && speakerLegacyByOld[jumpId]){
+            jumpId = speakerLegacyByOld[jumpId];
+          }
+          var jumpTarget = document.getElementById(jumpId);
+          if(!jumpTarget){
+            return;
+          }
+          e.preventDefault();
+          var jumpTop = jumpTarget.getBoundingClientRect().top + window.scrollY - scrollOffsetForTarget();
+          window.scrollTo({
+            top: Math.max(0, jumpTop),
+            behavior: reducedMotion ? 'auto' : 'smooth'
+          });
+          if(history.replaceState){
+            history.replaceState(null, '', '#' + jumpId);
+          }
+        });
+      });
     }
   })();
 })();
