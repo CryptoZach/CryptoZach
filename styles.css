@@ -351,13 +351,13 @@ nav{
   opacity:1;
 }
 .header-social-link[aria-label="SSRN"]{
-  width:30px;
+  width:28px;
   height:28px;
-  border-radius:4px;
+  border-radius:50%;
 }
 .header-social-link[aria-label="SSRN"] svg{
-  width:22px;
-  height:10px;
+  width:20px;
+  height:20px;
 }
 
 .action{
@@ -2491,8 +2491,11 @@ section:has(.page-toc){
   width:14px;
   height:14px;
 }
+.contact-box .left .contact-social{
+  font-weight:400;
+}
 .contact-social[aria-label="SSRN"] svg{
-  width:20px;
+  width:14px;
   height:14px;
 }
 .contact-social:hover{
@@ -2581,7 +2584,7 @@ section:has(.page-toc){
   flex-wrap:wrap;
   gap:var(--space-md);
   align-items:center;
-  padding:2px 0;
+  padding:2mm 0 2px 0;
 }
 .resume-downloads .action{
   padding:10px 18px;
@@ -3318,8 +3321,13 @@ main.resume-profile .section-title{
   background:color-mix(in srgb, var(--panel) 95%, transparent);
   transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.audience-panel > .action{
+.audience-panel > .audience-panel-actions{
   margin-top:auto;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  gap:var(--space-sm);
+  justify-content:center;
 }
 .audience-panel:hover{
   transform:translateY(-2px);
@@ -3649,12 +3657,12 @@ footer{
   opacity:1;
 }
 .footer-social[aria-label="SSRN"]{
-  width:36px;
-  height:36px;
+  width:32px;
+  height:32px;
 }
 .footer-social[aria-label="SSRN"] svg{
-  width:28px;
-  height:28px;
+  width:24px;
+  height:24px;
 }
 
 .footer-tagline{
