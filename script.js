@@ -490,7 +490,7 @@
     });
   }
 
-  // Sticky section rail: Operating-Model.html (Structure), 2026-frameworks.html, speaker.html
+  // Sticky section rail: Operating-Model.html (Structure), 2026-frameworks.html, speaker-advisory.html
   (function(){
     var nav = document.getElementById('structureNav');
     if(!nav){
