@@ -42,6 +42,19 @@ Sticky **`#structureNav`** is detected when **`#navDefGroup`** exists. Hero jump
 
 **`script.js`** maps legacy fragments (**`#what-tokenized-deposit`**, **`#why-institutions-care`**, **`#three-objects-title`**, **`#entry-points-audience`**, **`#where-next`**) to the ids above when landing with a hash.
 
+## Homepage framework cards (`index.html`)
+
+The **Signature frameworks** section has deep-linkable ids for social promotion when the post is about the framework as a concept rather than a specific paper:
+
+| `id` | Use for |
+|------|---------|
+| **`#clii-home`** | CLII (Control Layer Intensity Index) |
+| **`#mvep-home`** | MVEP (Minimum Viable Equivalence Pack) |
+| **`#credit-migration-home`** | Credit Migration Model |
+| **`#regime-dashboard-home`** | Regime Dashboard |
+
+Example: `https://cryptozach.com/#clii-home`. Prefer paper URLs (e.g. `papers/routing-the-dollar.html`) when the post is about the paper as a document; use these homepage anchors when the post is about the framework concept.
+
 ## Link URL shape
 
 - From **`papers/*.html`**: `../Operating-Model.html#clii` (etc.).
