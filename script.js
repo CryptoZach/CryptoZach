@@ -182,9 +182,29 @@
       }
 
       var dollarFlightMax = 24;
-      var dollarFlightMs = 4800;
-      var dollarSpawnEveryMs = 340;
+      var dollarFlightMsSlow = 6400;
+      var dollarFlightMsFast = 2600;
+      var dollarSpawnEveryMsSlow = 560;
+      var dollarSpawnEveryMsFast = 175;
       var dollarIv = null;
+
+      function dollarFlightMsNow(){
+        return heroHome.classList.contains('hero-home--flagship-hover') ? dollarFlightMsFast : dollarFlightMsSlow;
+      }
+
+      function dollarSpawnEveryMsNow(){
+        return heroHome.classList.contains('hero-home--flagship-hover') ? dollarSpawnEveryMsFast : dollarSpawnEveryMsSlow;
+      }
+
+      function restartDollarIntervalIfRunning(){
+        if(!dollarIv){
+          return;
+        }
+        window.clearInterval(dollarIv);
+        dollarIv = null;
+        spawnDollarFlight();
+        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMsNow());
+      }
 
       function spawnDollarFlight(){
         var cta = flagshipCtaEl();
@@ -196,6 +216,7 @@
         if(c.width <= 0 || c.height <= 0){
           return;
         }
+        var flightMs = dollarFlightMsNow();
         var tcx = c.left - h.left + c.width * 0.5;
         var tcy = c.top - h.top + c.height * 0.5;
         var avoidPb = proofBarAvoidRectHeroLocal(h);
@@ -218,6 +239,7 @@
         el.setAttribute('aria-hidden', 'true');
         el.style.left = startX + 'px';
         el.style.top = startY + 'px';
+        el.style.animationDuration = (flightMs / 1000) + 's';
         el.style.setProperty('--dollar-dx', dollarDx + 'px');
         el.style.setProperty('--dollar-dy', dollarDy + 'px');
         el.textContent = '$';
@@ -230,7 +252,7 @@
           if(node.parentNode === heroHome){
             node.remove();
           }
-        }, dollarFlightMs + 80, el);
+        }, flightMs + 80, el);
       }
 
       function startDollarFlightLoop(){
@@ -238,7 +260,7 @@
           return;
         }
         spawnDollarFlight();
-        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMs);
+        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMsNow());
       }
 
       function stopDollarFlightLoop(){
@@ -246,6 +268,24 @@
           window.clearInterval(dollarIv);
           dollarIv = null;
         }
+      }
+
+      var flagshipDollarSpeed = flagshipCtaEl();
+      if(flagshipDollarSpeed){
+        flagshipDollarSpeed.addEventListener('pointerover', function(e){
+          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)){
+            return;
+          }
+          heroHome.classList.add('hero-home--flagship-hover');
+          restartDollarIntervalIfRunning();
+        });
+        flagshipDollarSpeed.addEventListener('pointerout', function(e){
+          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)){
+            return;
+          }
+          heroHome.classList.remove('hero-home--flagship-hover');
+          restartDollarIntervalIfRunning();
+        });
       }
 
       if(typeof IntersectionObserver === 'function'){
@@ -573,11 +613,26 @@
     }
   }
 
-  // Homepage hero: full-hero matrix on thesis line hover and on flagship brief CTA hover
-  const matrixEyebrow = document.querySelector('#hero.hero--homepage .hero-eyebrow');
+  // Homepage hero: full-hero matrix on hover activators; pointer position warps glyph placement
   const matrixContainer = document.querySelector('#hero.hero--homepage .matrix-container');
   const matrixCanvas = document.querySelector('#hero.hero--homepage .matrix-canvas');
-  if(matrixEyebrow && matrixContainer && matrixCanvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  var matrixActivatorList = Array.prototype.slice.call(document.querySelectorAll('#hero.hero--homepage .matrix-hover-activator'));
+  var heroEyebrowMtx = document.querySelector('#hero.hero--homepage .hero-eyebrow');
+  var heroFlagshipMtx = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar-brief"]')
+    || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
+  function mtxEnsureActivator(el){
+    if(!el || matrixActivatorList.indexOf(el) !== -1){
+      return;
+    }
+    matrixActivatorList.push(el);
+  }
+  /* If nothing was marked with .matrix-hover-activator, fall back to eyebrow + flagship (legacy). */
+  if(matrixActivatorList.length === 0){
+    mtxEnsureActivator(heroEyebrowMtx);
+  }
+  /* Flagship brief CTA must always bind: when eyebrow already has the class, the old code skipped this link. */
+  mtxEnsureActivator(heroFlagshipMtx);
+  if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const mtxCtx = matrixCanvas.getContext('2d');
     const textChars = [
       '$', '$', '$', '$', '$', '$',
@@ -711,6 +766,10 @@
     });
 
     var mtxRaf = null;
+    var mtxWarpTx = null;
+    var mtxWarpTy = null;
+    var mtxWarpX = null;
+    var mtxWarpY = null;
     var mtxDrops = [];
     var mtxColWidth = 18;
     var mtxFontSize = 10;
@@ -785,6 +844,36 @@
       return item;
     }
 
+    function mtxUpdateWarpFromEvent(e){
+      if(!matrixContainer.classList.contains('active')){
+        return;
+      }
+      var r = matrixContainer.getBoundingClientRect();
+      mtxWarpTx = e.clientX - r.left;
+      mtxWarpTy = e.clientY - r.top;
+    }
+
+    function mtxApplyWarp(px, py, cw, ch){
+      if(mtxWarpX == null || mtxWarpY == null){
+        return { x: px, y: py };
+      }
+      var dx = px - mtxWarpX;
+      var dy = py - mtxWarpY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var maxR = Math.max(120, Math.min(cw, ch) * 0.42);
+      var strength = Math.min(cw, ch) * 0.045;
+      if(dist < 0.5 || dist >= maxR){
+        return { x: px, y: py };
+      }
+      var invd = 1 / dist;
+      var t = 1 - dist / maxR;
+      var s = t * t * strength;
+      return {
+        x: px + dx * invd * s,
+        y: py + dy * invd * s
+      };
+    }
+
     function mtxInitCanvas(){
       var rect = matrixContainer.getBoundingClientRect();
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -814,6 +903,17 @@
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
       mtxCtx.textBaseline = 'top';
 
+      if(mtxWarpTx != null && mtxWarpTy != null){
+        if(mtxWarpX == null){
+          mtxWarpX = mtxWarpTx;
+          mtxWarpY = mtxWarpTy;
+        } else {
+          var warpSmooth = 0.24;
+          mtxWarpX += (mtxWarpTx - mtxWarpX) * warpSmooth;
+          mtxWarpY += (mtxWarpTy - mtxWarpY) * warpSmooth;
+        }
+      }
+
       var n = mtxDrops.length;
       var i;
       for(i = 0; i < n; i++){
@@ -822,8 +922,11 @@
           continue;
         }
         var item = pickItem();
-        var x = i * mtxColWidth + 1;
-        var y = mtxDrops[i] * mtxLineStep;
+        var x0 = i * mtxColWidth + 1;
+        var y0 = mtxDrops[i] * mtxLineStep;
+        var warped = mtxApplyWarp(x0, y0, w, h);
+        var x = warped.x;
+        var y = warped.y;
         var opacity = 0.1 + Math.random() * 0.25;
 
         if(item.type === 'text'){
@@ -854,7 +957,7 @@
           }
         }
 
-        if(y > h){
+        if(y0 > h){
           mtxDrops[i] = Math.random() * -5;
         }
         mtxDrops[i] += mtxDropStepMin + Math.random() * mtxDropStepRand;
@@ -871,6 +974,7 @@
     }
 
     function mtxStop(){
+      mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
       matrixContainer.classList.remove('active');
       if(mtxRaf){
         cancelAnimationFrame(mtxRaf);
@@ -887,18 +991,24 @@
 
     homeHeroMtxStop = mtxStop;
 
-    var matrixFlagshipCta = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar-brief"]')
-      || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
+    function mtxIsInsideAnyActivator(node){
+      if(!node || typeof Node === 'undefined' || !(node instanceof Node)){
+        return false;
+      }
+      var k;
+      for(k = 0; k < matrixActivatorList.length; k++){
+        var act = matrixActivatorList[k];
+        if(act === node || act.contains(node)){
+          return true;
+        }
+      }
+      return false;
+    }
 
     function mtxPointerLeaveGuarded(e, fromEl){
       var rel = e.relatedTarget;
-      if(rel && typeof Node !== 'undefined' && rel instanceof Node){
-        if(matrixEyebrow && (matrixEyebrow === rel || matrixEyebrow.contains(rel))){
-          return;
-        }
-        if(matrixFlagshipCta && (matrixFlagshipCta === rel || matrixFlagshipCta.contains(rel))){
-          return;
-        }
+      if(mtxIsInsideAnyActivator(rel)){
+        return;
       }
       if(typeof fromEl.hasPointerCapture === 'function' && fromEl.hasPointerCapture(e.pointerId)){
         return;
@@ -910,25 +1020,41 @@
       mtxStop();
     }
 
-    matrixEyebrow.addEventListener('pointerenter', mtxStart);
-    matrixEyebrow.addEventListener('pointerleave', function(e){
-      mtxPointerLeaveGuarded(e, matrixEyebrow);
-    });
-    matrixEyebrow.addEventListener('pointerdown', function(e){
-      if(e.pointerType === 'mouse') return;
+    /* pointerenter does not bubble: the h1 inside .hero-eyebrow gets the hit, so the parent never saw enter. */
+    function mtxPointerOverActivator(e, act){
+      var rel = e.relatedTarget;
+      if(rel && act.contains(rel)){
+        return;
+      }
       mtxStart();
-    });
-
-    if(matrixFlagshipCta){
-      matrixFlagshipCta.addEventListener('pointerenter', mtxStart);
-      matrixFlagshipCta.addEventListener('pointerleave', function(e){
-        mtxPointerLeaveGuarded(e, matrixFlagshipCta);
-      });
-      matrixFlagshipCta.addEventListener('pointerdown', function(e){
-        if(e.pointerType === 'mouse') return;
-        mtxStart();
-      });
+      mtxUpdateWarpFromEvent(e);
     }
+
+    function mtxPointerOutActivator(e, act){
+      var rel = e.relatedTarget;
+      if(rel && act.contains(rel)){
+        return;
+      }
+      mtxPointerLeaveGuarded(e, act);
+    }
+
+    matrixActivatorList.forEach(function(act){
+      act.addEventListener('pointerover', function(e){
+        mtxPointerOverActivator(e, act);
+      });
+      act.addEventListener('pointerout', function(e){
+        mtxPointerOutActivator(e, act);
+      });
+      act.addEventListener('pointermove', mtxUpdateWarpFromEvent);
+      act.addEventListener('pointerdown', function(e){
+        if(e.pointerType === 'mouse'){
+          mtxUpdateWarpFromEvent(e);
+          return;
+        }
+        mtxStart();
+        mtxUpdateWarpFromEvent(e);
+      });
+    });
 
     var mtxResizeTimer;
     window.addEventListener('resize', function(){
@@ -956,7 +1082,7 @@
       'speaker-formats': 'talk-formats',
       'speaker-featured': 'featured-talk',
       'speaker-experience': 'experience',
-      'speaker-boundaries': 'boundaries',
+      'speaker-boundaries': 'advisory',
       'speaker-advisory': 'advisory',
       'speaker-press': 'press-kit',
       'speaker-booking': 'booking'
@@ -1047,7 +1173,6 @@
         'talk-builder',
         'featured-talk',
         'experience',
-        'boundaries',
         'advisory',
         'adv-diligence',
         'adv-token',
