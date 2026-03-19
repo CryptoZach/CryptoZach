@@ -65,12 +65,16 @@ test.describe("Responsive layout", () => {
     }
   });
 
-  test("hero headline visible after resize", async ({ page }) => {
+  test("home hero H1 and tagline visible", async ({ page }) => {
     await page.goto("/");
     await expect(
       page.getByRole("heading", {
-        name: /Decision frameworks for the people building and regulating digital money infrastructure/i,
+        level: 1,
+        name: /Who routes the dollar matters more than which dollar is routed/i,
       }),
     ).toBeVisible();
+    await expect(page.locator("#hero .hero-tagline")).toHaveText(
+      /Decision frameworks for the people building and regulating digital money infrastructure/i,
+    );
   });
 });
