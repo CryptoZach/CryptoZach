@@ -57,19 +57,50 @@
     document.querySelectorAll('.reveal, .stagger-item').forEach(el => el.classList.add('visible'));
   }
 
-  // Mobile menu
+  // Set by homepage matrix init so hero-wide touch release can call mtxStop (capture target is #hero).
+  var homeHeroMtxStop = null;
+
+  // Mobile menu (toggle, Escape to close, close when viewport is desktop width)
   const menuToggle = document.getElementById('menuToggle');
   const navMobile = document.getElementById('nav-mobile');
+  const MOBILE_NAV_MQ = window.matchMedia('(max-width: 768px)');
+  function setMobileNavOpen(isOpen){
+    if(!menuToggle || !navMobile) return;
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    navMobile.hidden = !isOpen;
+    navMobile.inert = !isOpen;
+    navMobile.setAttribute('aria-hidden', String(!isOpen));
+    navMobile.classList.toggle('open', isOpen);
+  }
+  function closeMobileNavIfNeeded(){
+    if(menuToggle && menuToggle.getAttribute('aria-expanded') === 'true'){
+      setMobileNavOpen(false);
+    }
+  }
   if(menuToggle && navMobile){
     menuToggle.addEventListener('click', () => {
       const open = menuToggle.getAttribute('aria-expanded') === 'true';
-      const nextOpen = !open;
-      menuToggle.setAttribute('aria-expanded', String(nextOpen));
-      navMobile.hidden = open;
-      navMobile.inert = open;
-      navMobile.setAttribute('aria-hidden', String(open));
-      navMobile.classList.toggle('open', nextOpen);
+      setMobileNavOpen(!open);
     });
+    document.addEventListener('keydown', (e) => {
+      if(e.key !== 'Escape') return;
+      if(menuToggle.getAttribute('aria-expanded') === 'true'){
+        setMobileNavOpen(false);
+        menuToggle.focus();
+      }
+    });
+    window.addEventListener('resize', () => {
+      if(!MOBILE_NAV_MQ.matches) closeMobileNavIfNeeded();
+    });
+    if(typeof MOBILE_NAV_MQ.addEventListener === 'function'){
+      MOBILE_NAV_MQ.addEventListener('change', (e) => {
+        if(!e.matches) closeMobileNavIfNeeded();
+      });
+    } else if(typeof MOBILE_NAV_MQ.addListener === 'function'){
+      MOBILE_NAV_MQ.addListener((e) => {
+        if(!e.matches) closeMobileNavIfNeeded();
+      });
+    }
   }
 
   // Back to top
@@ -78,7 +109,10 @@
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 400);
     });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop.addEventListener('click', () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
   }
 
   // Copy email
@@ -101,10 +135,13 @@
   const yearEl = document.getElementById('year');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Homepage hero eyebrow: green glow follows pointer + coral reef branching animation
-  const heroEyebrow = document.querySelector('#hero.hero--homepage .hero-eyebrow');
-  if(heroEyebrow && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  // Homepage hero: eyebrow spotlight, coral reef on full #hero, matrix on eyebrow (see below)
+  const heroHome = document.querySelector('#hero.hero--homepage');
+  const heroEyebrow = heroHome && heroHome.querySelector('.hero-eyebrow');
+  if(heroHome && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const isFinePointer = (e) => e.pointerType === 'mouse';
     const setEyebrowSpot = (clientX, clientY) => {
+      if(!heroEyebrow) return;
       const r = heroEyebrow.getBoundingClientRect();
       const em = parseFloat(getComputedStyle(heroEyebrow).fontSize) || 16;
       const insetX = 0.75 * em;
@@ -113,21 +150,181 @@
       heroEyebrow.style.setProperty('--hero-eyebrow-y', (clientY - r.top + insetY) + 'px');
     };
 
-    heroEyebrow.addEventListener('pointermove', (e) => {
+    (function(){
+      function flagshipCtaEl(){
+        return heroHome.querySelector('a.cta-primary[href*="routing-the-dollar-brief"]')
+          || heroHome.querySelector('a.action.primary.cta-primary');
+      }
+
+      function proofBarAvoidRectHeroLocal(h){
+        var pb = heroHome.querySelector('.proof-bar');
+        if(!pb){
+          return null;
+        }
+        var r = pb.getBoundingClientRect();
+        if(r.width <= 0 || r.height <= 0){
+          return null;
+        }
+        var pad = 18;
+        return {
+          left: r.left - h.left - pad,
+          right: r.right - h.left + pad,
+          top: r.top - h.top - pad,
+          bottom: r.bottom - h.top + pad
+        };
+      }
+
+      function spawnCenterInAvoidRect(x, y, av){
+        if(!av){
+          return false;
+        }
+        return x >= av.left && x <= av.right && y >= av.top && y <= av.bottom;
+      }
+
+      var dollarFlightMax = 24;
+      var dollarFlightMs = 4800;
+      var dollarSpawnEveryMs = 340;
+      var dollarIv = null;
+
+      function spawnDollarFlight(){
+        var cta = flagshipCtaEl();
+        if(!cta || (typeof document.hidden === 'boolean' && document.hidden)){
+          return;
+        }
+        var h = heroHome.getBoundingClientRect();
+        var c = cta.getBoundingClientRect();
+        if(c.width <= 0 || c.height <= 0){
+          return;
+        }
+        var tcx = c.left - h.left + c.width * 0.5;
+        var tcy = c.top - h.top + c.height * 0.5;
+        var avoidPb = proofBarAvoidRectHeroLocal(h);
+        /* Bottom-left wedge: wider X along left edge, Y biased toward lower hero */
+        var bandTop = Math.max(8, h.height * 0.48);
+        var bandBot = Math.min(h.height - 8, h.height * 0.96);
+        var bandH = Math.max(12, bandBot - bandTop);
+        var startX;
+        var startY;
+        var tries = 0;
+        do{
+          startX = 6 + Math.random() * 72;
+          startY = bandTop + Math.random() * bandH;
+          tries++;
+        } while(spawnCenterInAvoidRect(startX, startY, avoidPb) && tries < 18);
+        var dollarDx = tcx - startX + (Math.random() - 0.5) * 12;
+        var dollarDy = tcy - startY + (Math.random() - 0.5) * 16;
+        var el = document.createElement('span');
+        el.className = 'hero-dollar-flight';
+        el.setAttribute('aria-hidden', 'true');
+        el.style.left = startX + 'px';
+        el.style.top = startY + 'px';
+        el.style.setProperty('--dollar-dx', dollarDx + 'px');
+        el.style.setProperty('--dollar-dy', dollarDy + 'px');
+        el.textContent = '$';
+        heroHome.appendChild(el);
+        var live = heroHome.querySelectorAll('.hero-dollar-flight');
+        if(live.length > dollarFlightMax){
+          live[0].remove();
+        }
+        window.setTimeout(function(node){
+          if(node.parentNode === heroHome){
+            node.remove();
+          }
+        }, dollarFlightMs + 80, el);
+      }
+
+      function startDollarFlightLoop(){
+        if(dollarIv){
+          return;
+        }
+        spawnDollarFlight();
+        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMs);
+      }
+
+      function stopDollarFlightLoop(){
+        if(dollarIv){
+          window.clearInterval(dollarIv);
+          dollarIv = null;
+        }
+      }
+
+      if(typeof IntersectionObserver === 'function'){
+        var obs = new IntersectionObserver(function(entries){
+          var vis = entries.some(function(en){ return en.isIntersecting && en.intersectionRatio > 0.05; });
+          if(vis){
+            startDollarFlightLoop();
+          } else {
+            stopDollarFlightLoop();
+          }
+        }, { threshold: [0, 0.08, 0.15] });
+        obs.observe(heroHome);
+      } else {
+        startDollarFlightLoop();
+      }
+    })();
+
+    heroHome.addEventListener('pointermove', (e) => {
+      setEyebrowSpot(e.clientX, e.clientY);
+      if(!isFinePointer(e) && heroEyebrow && typeof heroHome.hasPointerCapture === 'function' && heroHome.hasPointerCapture(e.pointerId)){
+        heroEyebrow.classList.add('hero-eyebrow--pointer-active');
+      }
+    });
+    heroHome.addEventListener('pointerenter', (e) => {
       setEyebrowSpot(e.clientX, e.clientY);
     });
-    heroEyebrow.addEventListener('pointerenter', (e) => {
+    // Bubble phase: matrix eyebrow pointerdown can mtxStart first; then we capture on #hero for coral + spotlight drag.
+    heroHome.addEventListener('pointerdown', (e) => {
+      if(isFinePointer(e) && e.button !== 0) return;
+      if(!isFinePointer(e)){
+        try{
+          heroHome.setPointerCapture(e.pointerId);
+        } catch(_){}
+        if(heroEyebrow) heroEyebrow.classList.add('hero-eyebrow--pointer-active');
+      }
       setEyebrowSpot(e.clientX, e.clientY);
     });
-    heroEyebrow.addEventListener('pointerleave', () => {
-      heroEyebrow.style.removeProperty('--hero-eyebrow-x');
-      heroEyebrow.style.removeProperty('--hero-eyebrow-y');
+    heroHome.addEventListener('pointerup', (e) => {
+      if(isFinePointer(e)) return;
+      if(heroEyebrow){
+        heroEyebrow.classList.remove('hero-eyebrow--pointer-active');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-x');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-y');
+      }
+      try{
+        heroHome.releasePointerCapture(e.pointerId);
+      } catch(_){}
+      if(typeof homeHeroMtxStop === 'function'){
+        homeHeroMtxStop();
+      }
+    });
+    heroHome.addEventListener('pointercancel', (e) => {
+      if(isFinePointer(e)) return;
+      if(heroEyebrow){
+        heroEyebrow.classList.remove('hero-eyebrow--pointer-active');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-x');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-y');
+      }
+      try{
+        heroHome.releasePointerCapture(e.pointerId);
+      } catch(_){}
+      if(typeof homeHeroMtxStop === 'function'){
+        homeHeroMtxStop();
+      }
+    });
+    heroHome.addEventListener('pointerleave', (e) => {
+      if(typeof heroHome.hasPointerCapture === 'function' && heroHome.hasPointerCapture(e.pointerId)) return;
+      if(!isFinePointer(e)) return;
+      if(heroEyebrow){
+        heroEyebrow.classList.remove('hero-eyebrow--pointer-active');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-x');
+        heroEyebrow.style.removeProperty('--hero-eyebrow-y');
+      }
     });
 
-    // Coral reef branching animation (canvas fills whole hero)
-    const heroContainer = heroEyebrow.closest('#hero');
-    const reefCanvas = heroContainer && heroContainer.querySelector('.hero-reef');
-    if (reefCanvas && heroContainer) {
+    // Coral reef branching animation (canvas fills whole hero; pointer tracked across full #hero)
+    const heroContainer = heroHome;
+    const reefCanvas = heroContainer.querySelector('.hero-reef');
+    if (reefCanvas) {
       const rctx = reefCanvas.getContext('2d');
       var reefBranches = [];
       var reefNodes = [];
@@ -332,7 +529,7 @@
         reefActive = false;
       }
 
-      heroEyebrow.addEventListener('pointermove', function(e) {
+      heroHome.addEventListener('pointermove', function(e) {
         var r = heroContainer.getBoundingClientRect();
         reefMx = e.clientX - r.left;
         reefMy = e.clientY - r.top;
@@ -344,11 +541,25 @@
         }
       });
 
-      heroEyebrow.addEventListener('pointerenter', function(e) {
+      heroHome.addEventListener('pointerenter', function(e) {
         reefStart();
       });
 
-      heroEyebrow.addEventListener('pointerleave', function() {
+      heroHome.addEventListener('pointerleave', function(e) {
+        if(typeof heroHome.hasPointerCapture === 'function' && heroHome.hasPointerCapture(e.pointerId)) return;
+        reefStop();
+        reefMx = -1;
+        reefMy = -1;
+      });
+
+      heroHome.addEventListener('pointerup', function(e) {
+        if(isFinePointer(e)) return;
+        reefStop();
+        reefMx = -1;
+        reefMy = -1;
+      });
+      heroHome.addEventListener('pointercancel', function(e) {
+        if(isFinePointer(e)) return;
         reefStop();
         reefMx = -1;
         reefMy = -1;
@@ -362,7 +573,7 @@
     }
   }
 
-  // Homepage hero: full-hero matrix (fiat, tickers, optional PNG icons) on eyebrow hover
+  // Homepage hero: full-hero matrix on thesis line hover and on flagship brief CTA hover
   const matrixEyebrow = document.querySelector('#hero.hero--homepage .hero-eyebrow');
   const matrixContainer = document.querySelector('#hero.hero--homepage .matrix-container');
   const matrixCanvas = document.querySelector('#hero.hero--homepage .matrix-canvas');
@@ -674,8 +885,50 @@
       }, 500);
     }
 
+    homeHeroMtxStop = mtxStop;
+
+    var matrixFlagshipCta = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar-brief"]')
+      || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
+
+    function mtxPointerLeaveGuarded(e, fromEl){
+      var rel = e.relatedTarget;
+      if(rel && typeof Node !== 'undefined' && rel instanceof Node){
+        if(matrixEyebrow && (matrixEyebrow === rel || matrixEyebrow.contains(rel))){
+          return;
+        }
+        if(matrixFlagshipCta && (matrixFlagshipCta === rel || matrixFlagshipCta.contains(rel))){
+          return;
+        }
+      }
+      if(typeof fromEl.hasPointerCapture === 'function' && fromEl.hasPointerCapture(e.pointerId)){
+        return;
+      }
+      var hh = fromEl.closest('#hero.hero--homepage');
+      if(hh && typeof hh.hasPointerCapture === 'function' && hh.hasPointerCapture(e.pointerId)){
+        return;
+      }
+      mtxStop();
+    }
+
     matrixEyebrow.addEventListener('pointerenter', mtxStart);
-    matrixEyebrow.addEventListener('pointerleave', mtxStop);
+    matrixEyebrow.addEventListener('pointerleave', function(e){
+      mtxPointerLeaveGuarded(e, matrixEyebrow);
+    });
+    matrixEyebrow.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse') return;
+      mtxStart();
+    });
+
+    if(matrixFlagshipCta){
+      matrixFlagshipCta.addEventListener('pointerenter', mtxStart);
+      matrixFlagshipCta.addEventListener('pointerleave', function(e){
+        mtxPointerLeaveGuarded(e, matrixFlagshipCta);
+      });
+      matrixFlagshipCta.addEventListener('pointerdown', function(e){
+        if(e.pointerType === 'mouse') return;
+        mtxStart();
+      });
+    }
 
     var mtxResizeTimer;
     window.addEventListener('resize', function(){

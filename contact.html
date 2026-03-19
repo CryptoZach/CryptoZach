@@ -15,8 +15,8 @@
   <meta property="og:site_name" content="CryptoZach" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:url" content="https://cryptozach.com/contact" />
-  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
-  <meta property="og:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <meta property="og:image" content="https://cryptozach.com/Publication-Images/zach-zukowski-headshot.jpeg" />
+  <meta property="og:image:alt" content="Portrait of Zach Zukowski" />
   <link rel="canonical" href="https://cryptozach.com/contact" />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -24,8 +24,8 @@
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="twitter:title" content="Contact | Zach Zukowski" />
   <meta name="twitter:description" content="For institutional inquiries on policy, market infrastructure, or tokenization diligence." />
-  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
-  <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <meta name="twitter:image" content="https://cryptozach.com/Publication-Images/zach-zukowski-headshot.jpeg" />
+  <meta name="twitter:image:alt" content="Portrait of Zach Zukowski" />
 
   <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
@@ -47,7 +47,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=22" />
+  <link rel="stylesheet" href="./styles.css?v=24" />
 </head>
 
 <body class="contact-page">
@@ -140,22 +140,27 @@
         <h2 id="reach-title">How to reach me</h2>
       </div>
       <div class="contact-box">
-        <div class="left">
-          <strong>Email</strong>
-          <div class="email-row">
-            <a id="emailAddr" href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
-            <button id="copyEmail" class="action copy" type="button">Copy email</button>
+        <div class="contact-box__channels">
+          <div class="left">
+            <strong>Email</strong>
+            <div class="email-row">
+              <a id="emailAddr" href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
+              <button id="copyEmail" class="action copy" type="button" aria-label="Copy email address" aria-live="polite">Copy email</button>
+            </div>
+            <div class="response-time">
+              <span class="response-dot" aria-hidden="true"></span>
+              I read every email and typically reply within 24 hours.
+            </div>
           </div>
-          <div class="response-time">
-            <span class="response-dot" aria-hidden="true"></span>
-            I read every email and typically reply within 24 hours.
+          <div class="left">
+            <strong>LinkedIn</strong>
+            <div>
+              <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
+            </div>
           </div>
         </div>
-        <div class="left">
-          <strong>LinkedIn</strong>
-          <div>
-            <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
-          </div>
+        <div class="contact-box__headshot">
+          <img class="contact-reach-headshot" src="./Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="187" height="187" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -219,7 +224,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="./script.js"></script>
+  <script defer src="./script.js?v=25"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
