@@ -154,87 +154,112 @@
     (function(){
       function flagshipCtaEl(){
         return heroHome.querySelector('a.cta-primary[href*="routing-the-dollar-brief"]')
+          || heroHome.querySelector('a.cta-primary')
           || heroHome.querySelector('a.action.primary.cta-primary');
       }
 
-      function proofBarAvoidRectHeroLocal(h){
-        var pb = heroHome.querySelector('.proof-bar');
-        if(!pb){
-          return null;
-        }
-        var r = pb.getBoundingClientRect();
-        if(r.width <= 0 || r.height <= 0){
-          return null;
-        }
-        var pad = 18;
-        return {
-          left: r.left - h.left - pad,
-          right: r.right - h.left + pad,
-          top: r.top - h.top - pad,
-          bottom: r.bottom - h.top + pad
-        };
+      var dollarTarget = { x: 0, y: 0, valid: false };
+      var dollarSpawnTimeoutId = null;
+      var dollarLoopActive = false;
+      var dollarResizeTimer = null;
+
+      function isMobileDollarViewport(){
+        return window.matchMedia('(max-width: 768px)').matches;
       }
 
-      function spawnCenterInAvoidRect(x, y, av){
-        if(!av){
-          return false;
-        }
-        return x >= av.left && x <= av.right && y >= av.top && y <= av.bottom;
+      function dollarFlightMaxNow(){
+        return isMobileDollarViewport() ? 8 : 24;
       }
 
-      var dollarFlightMax = 24;
-      var dollarFlightMsSlow = 6400;
-      var dollarFlightMsFast = 2600;
-      var dollarSpawnEveryMsSlow = 560;
-      var dollarSpawnEveryMsFast = 175;
-      var dollarIv = null;
-
-      function dollarFlightMsNow(){
-        return heroHome.classList.contains('hero-home--flagship-hover') ? dollarFlightMsFast : dollarFlightMsSlow;
-      }
-
-      function dollarSpawnEveryMsNow(){
-        return heroHome.classList.contains('hero-home--flagship-hover') ? dollarSpawnEveryMsFast : dollarSpawnEveryMsSlow;
-      }
-
-      function restartDollarIntervalIfRunning(){
-        if(!dollarIv){
-          return;
-        }
-        window.clearInterval(dollarIv);
-        dollarIv = null;
-        spawnDollarFlight();
-        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMsNow());
-      }
-
-      function spawnDollarFlight(){
+      function refreshDollarTarget(){
         var cta = flagshipCtaEl();
-        if(!cta || (typeof document.hidden === 'boolean' && document.hidden)){
+        if(!cta){
+          dollarTarget.valid = false;
           return;
         }
         var h = heroHome.getBoundingClientRect();
         var c = cta.getBoundingClientRect();
         if(c.width <= 0 || c.height <= 0){
+          dollarTarget.valid = false;
           return;
         }
-        var flightMs = dollarFlightMsNow();
-        var tcx = c.left - h.left + c.width * 0.5;
-        var tcy = c.top - h.top + c.height * 0.5;
-        var avoidPb = proofBarAvoidRectHeroLocal(h);
-        /* Bottom-left wedge: wider X along left edge, Y biased toward lower hero */
-        var bandTop = Math.max(8, h.height * 0.48);
-        var bandBot = Math.min(h.height - 8, h.height * 0.96);
-        var bandH = Math.max(12, bandBot - bandTop);
+        dollarTarget.x = c.left - h.left + c.width * 0.5;
+        dollarTarget.y = c.top - h.top + c.height * 0.5;
+        dollarTarget.valid = true;
+      }
+
+      function scheduleResizeTargetRefresh(){
+        if(dollarResizeTimer){
+          window.clearTimeout(dollarResizeTimer);
+        }
+        dollarResizeTimer = window.setTimeout(function(){
+          dollarResizeTimer = null;
+          refreshDollarTarget();
+        }, 200);
+      }
+
+      function randomSpawnDelayMs(){
+        var hover = heroHome.classList.contains('hero-home--flagship-hover');
+        var lo = hover ? 240 : 400;
+        var hi = hover ? 360 : 600;
+        return Math.round(lo + Math.random() * (hi - lo));
+      }
+
+      function rescheduleDollarSpawnTimer(){
+        if(!dollarLoopActive){
+          return;
+        }
+        if(dollarSpawnTimeoutId){
+          window.clearTimeout(dollarSpawnTimeoutId);
+          dollarSpawnTimeoutId = null;
+        }
+        dollarSpawnTimeoutId = window.setTimeout(function tick(){
+          dollarSpawnTimeoutId = null;
+          spawnDollarFlight();
+          if(dollarLoopActive){
+            dollarSpawnTimeoutId = window.setTimeout(tick, randomSpawnDelayMs());
+          }
+        }, randomSpawnDelayMs());
+      }
+
+      function spawnDollarFlight(){
+        var ctaBtn = flagshipCtaEl();
+        if(!ctaBtn || (typeof document.hidden === 'boolean' && document.hidden)){
+          return;
+        }
+        refreshDollarTarget();
+        if(!dollarTarget.valid){
+          return;
+        }
+        var heroRect = heroHome.getBoundingClientRect();
+        if(heroRect.width <= 0 || heroRect.height <= 0){
+          return;
+        }
+        var targetX = dollarTarget.x;
+        var targetY = dollarTarget.y;
+        var fromLeft = Math.random() < 0.5;
         var startX;
         var startY;
-        var tries = 0;
-        do{
-          startX = 6 + Math.random() * 72;
-          startY = bandTop + Math.random() * bandH;
-          tries++;
-        } while(spawnCenterInAvoidRect(startX, startY, avoidPb) && tries < 18);
-        var dollarDx = tcx - startX + (Math.random() - 0.5) * 12;
-        var dollarDy = tcy - startY + (Math.random() - 0.5) * 16;
+        if(fromLeft){
+          startX = -20;
+          startY = Math.random() * heroRect.height;
+        } else {
+          startX = Math.random() * heroRect.width;
+          startY = -20;
+        }
+        var dollarDx = targetX - startX;
+        var dollarDy = targetY - startY;
+        var curveOffset = (Math.random() - 0.5) * 80;
+        var dist = Math.sqrt(dollarDx * dollarDx + dollarDy * dollarDy);
+        var mobile = isMobileDollarViewport();
+        /* Duration scales with distance; mobile floors at 2s to avoid flicker on short paths */
+        var flightMs = Math.round(Math.min(8200, Math.max(mobile ? 2000 : 2800, dist * 5.2)));
+        if(heroHome.classList.contains('hero-home--flagship-hover')){
+          flightMs = Math.round(flightMs * 0.6);
+        }
+        if(mobile){
+          flightMs = Math.max(2000, flightMs);
+        }
         var el = document.createElement('span');
         el.className = 'hero-dollar-flight';
         el.setAttribute('aria-hidden', 'true');
@@ -243,33 +268,41 @@
         el.style.animationDuration = (flightMs / 1000) + 's';
         el.style.setProperty('--dollar-dx', dollarDx + 'px');
         el.style.setProperty('--dollar-dy', dollarDy + 'px');
+        el.style.setProperty('--dollar-curve', curveOffset + 'px');
         el.textContent = '$';
+        el.addEventListener('animationend', function onEnd(){
+          el.removeEventListener('animationend', onEnd);
+          if(el.parentNode === heroHome){
+            el.remove();
+          }
+        });
         heroHome.appendChild(el);
+        var maxLive = dollarFlightMaxNow();
         var live = heroHome.querySelectorAll('.hero-dollar-flight');
-        if(live.length > dollarFlightMax){
+        if(live.length > maxLive){
           live[0].remove();
         }
-        window.setTimeout(function(node){
-          if(node.parentNode === heroHome){
-            node.remove();
-          }
-        }, flightMs + 80, el);
       }
 
       function startDollarFlightLoop(){
-        if(dollarIv){
+        if(dollarLoopActive){
           return;
         }
+        dollarLoopActive = true;
+        refreshDollarTarget();
         spawnDollarFlight();
-        dollarIv = window.setInterval(spawnDollarFlight, dollarSpawnEveryMsNow());
+        rescheduleDollarSpawnTimer();
       }
 
       function stopDollarFlightLoop(){
-        if(dollarIv){
-          window.clearInterval(dollarIv);
-          dollarIv = null;
+        dollarLoopActive = false;
+        if(dollarSpawnTimeoutId){
+          window.clearTimeout(dollarSpawnTimeoutId);
+          dollarSpawnTimeoutId = null;
         }
       }
+
+      window.addEventListener('resize', scheduleResizeTargetRefresh, { passive: true });
 
       var flagshipDollarSpeed = flagshipCtaEl();
       if(flagshipDollarSpeed){
@@ -278,14 +311,14 @@
             return;
           }
           heroHome.classList.add('hero-home--flagship-hover');
-          restartDollarIntervalIfRunning();
+          rescheduleDollarSpawnTimer();
         });
         flagshipDollarSpeed.addEventListener('pointerout', function(e){
           if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)){
             return;
           }
           heroHome.classList.remove('hero-home--flagship-hover');
-          restartDollarIntervalIfRunning();
+          rescheduleDollarSpawnTimer();
         });
       }
 
