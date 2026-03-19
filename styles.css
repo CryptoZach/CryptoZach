@@ -7346,6 +7346,10 @@ footer{
 .research-preview-grid .research-card .research-card-action{
   align-self: center;
 }
+.research-preview-grid .research-card > p{
+  flex: 1 1 auto;
+  min-height: 0;
+}
 .research-footer-link,
 .research-secondary-link{
   margin-top: var(--space-md);
@@ -9672,18 +9676,33 @@ a.writing-arrow:focus{
 /* Experience blocks: clear separation between roles */
 .speaker-page .speaker-experience .experience-block{
   margin-top:var(--space-lg);
+  padding:var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+  border-left:3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  background:color-mix(in srgb, var(--panel) 60%, transparent);
 }
 .speaker-page .speaker-experience .experience-block:first-child{
   margin-top:0;
 }
 .speaker-page .speaker-experience .experience-block h3{
   margin:0 0 var(--space-sm);
-  font-size:1rem;
-  font-weight:600;
+  font-size:1.05rem;
+  font-weight:650;
+  color:var(--text);
+  line-height:1.45;
+  letter-spacing:-0.01em;
+}
+.speaker-page .speaker-experience .experience-block__meta{
+  font-weight:500;
+  font-size:0.9em;
   color:var(--text-soft);
+  letter-spacing:0.02em;
 }
 .speaker-page .speaker-experience .experience-block p{
   margin:0 0 var(--space-sm);
+  font-size:0.95rem;
+  line-height:1.6;
+  color:var(--text-soft);
 }
 .speaker-page .speaker-experience .experience-block p:last-child{
   margin-bottom:0;
