@@ -4644,10 +4644,15 @@ main.resume-profile .section-title{
 }
 .frameworks-2026-page #entry-points .next-paths--frameworks .next-card > a.action{
   margin-top:auto;
-  padding-top:var(--space-md);
+  padding:var(--space-md) var(--space-md);
   border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
   justify-content:center;
   min-height:44px;
+  width:100%;
+  box-sizing:border-box;
+  text-align:center;
 }
 @media (max-width: 900px){
   .frameworks-2026-page #entry-points .next-paths--frameworks{
@@ -4853,6 +4858,10 @@ footer{
   padding: var(--space-lg) 0 0;
   border-top: 1px solid var(--line);
   max-width: 52ch;
+}
+/* 2026 Frameworks: about-site matches full width of routing table above */
+.frameworks-2026-page .about-site{
+  max-width: none;
 }
 .about-site__text{
   margin: 0;
