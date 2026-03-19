@@ -1019,6 +1019,10 @@ h1{
   border-left:3px solid var(--accent);
 }
 
+.research-library-page .track-context{
+  padding-bottom:2mm;
+}
+
 /* ── Hero trust rail (structured secondary block) ── */
 .hero-rail{
   display:flex;
@@ -5082,10 +5086,10 @@ footer{
   }
 }
 .flagship-thumb-wrap{
-  max-width: 520px;
+  max-width: 702px; /* was 520px; +35% for CLII flagship */
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: var(--space-xl);
+  margin-bottom: 2mm;
   padding: var(--space-sm);
   border: 1px solid color-mix(in srgb, var(--text-soft) 35%, transparent);
   border-radius: 10px;
@@ -5096,7 +5100,7 @@ footer{
 .flagship .flagship-thumb{
   display: block;
   width: 100%;
-  max-height: 260px;
+  max-height: 351px; /* was 260px; +35% */
   margin: 0 auto;
   object-fit: contain;
   object-position: center;
@@ -5126,6 +5130,7 @@ footer{
 }
 .flagship .badge{
   margin-bottom: 0;
+  padding: 2mm;
 }
 .flagship h2{
   margin-bottom: var(--space-sm);
@@ -5561,6 +5566,10 @@ footer{
   letter-spacing: 0.05em;
   color: var(--muted);
   margin: 0 0 var(--space-md);
+}
+/* Extra separation when a section heading follows a data table (e.g. tokenized equity scenario grid). */
+.paper-abstract table + h2{
+  margin-top: var(--space-2xl);
 }
 .paper-abstract p{
   margin: 0 0 var(--space-md);

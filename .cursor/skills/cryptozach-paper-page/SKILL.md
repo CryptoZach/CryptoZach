@@ -43,8 +43,8 @@ Close with the standard **site header/footer** and `script.js` + year script (co
 
 ## Paths and links
 
-- From `papers/`: site nav and assets use `../` (e.g. `../styles.css?v=22`, `../frameworks.html#anchor`).
-- **Framework links**: `../frameworks.html#<id>` must match real `id` values in `frameworks.html` (e.g. `#clii`, `#mvep`, `#credit-migration-model`).
+- From `papers/`: site nav and assets use `../` (e.g. `../styles.css?v=22`, `../Operating-Model.html#anchor`).
+- **Framework links**: `../Operating-Model.html#<id>` must match real `id` values in `Operating-Model.html` (e.g. `#clii`, `#mvep`, `#credit-migration-model`).
 - **Related paper cards**: prefer `./other-paper.html` (not `../papers/...`).
 - **External**: `target="_blank"` and `rel="noopener noreferrer"` on outbound links.
 

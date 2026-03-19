@@ -47,7 +47,7 @@ description: >-
 ## Validate before push
 
 - From repo root: `python3 -m http.server 8080` and open `http://127.0.0.1:8080/` (spot-check changed routes).
-- Confirm internal links and `#anchors` (frameworks, research TOC) resolve.
+- Confirm internal links and `#anchors` (`Operating-Model.html`, research TOC) resolve.
 
 ## Publish and safety
 
