@@ -734,22 +734,19 @@ h1{
 .primer-hero-ctas .action.secondary{
   margin: 0;
 }
-.primer-hero-ctas--resume-profiles .primer-resume-profile-nav{
-  flex: 1 1 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
+/* Nav uses display:contents so four CTAs share one flex row on the parent */
+.primer-hero-ctas--resume-profiles{
   align-items: center;
 }
-.primer-hero-ctas--resume-profiles .primer-resume-profile-nav .action{
-  margin: 0;
+.primer-hero-ctas--resume-profiles .primer-resume-profile-nav{
+  display: contents;
 }
 @media (max-width: 640px){
-  .primer-hero-ctas--resume-profiles .primer-resume-profile-nav{
+  .primer-hero-ctas--resume-profiles{
     flex-direction: column;
     align-items: stretch;
   }
-  .primer-hero-ctas--resume-profiles .primer-resume-profile-nav .action{
+  .primer-hero-ctas--resume-profiles .action{
     width: 100%;
     justify-content: center;
   }
@@ -1254,18 +1251,40 @@ h1{
 .research-library-page #cross-track-convergence .convergence-table-wrap{
   margin-top:var(--space-lg);
   margin-bottom:var(--space-sm);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
+  padding:0;
   max-width:100%;
   border:1px solid var(--line-strong);
   border-radius:var(--radius-sm);
-  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  background:var(--bg);
   box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+/* Scroll lives here so the framed box stays flush to the table; no extra scrollport padding above thead or below tbody */
+.research-library-page #cross-track-convergence .convergence-table-scroll{
+  margin:0;
+  padding:0;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:color-mix(in srgb, var(--muted) 55%, var(--bg)) var(--bg);
+}
+.research-library-page #cross-track-convergence .convergence-table-scroll::-webkit-scrollbar{
+  height:10px;
+}
+.research-library-page #cross-track-convergence .convergence-table-scroll::-webkit-scrollbar-track{
+  background:var(--bg);
+}
+.research-library-page #cross-track-convergence .convergence-table-scroll::-webkit-scrollbar-thumb{
+  background:color-mix(in srgb, var(--muted) 50%, var(--bg));
+  border-radius:5px;
 }
 .research-library-page #cross-track-convergence .convergence-table{
   width:100%;
   min-width:min(100%, 720px);
+  margin:0;
   border-collapse:collapse;
+  border-spacing:0;
   font-size:14px;
   color:var(--text);
   background:transparent;
@@ -1280,7 +1299,7 @@ h1{
   background:color-mix(in srgb, var(--accent) 14%, var(--panel));
   border-bottom:2px solid var(--accent);
   border-right:1px solid color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
-  padding:0.9rem 1.125rem;
+  padding:0.65rem 1.125rem;
   text-align:left;
   vertical-align:bottom;
 }
@@ -1289,7 +1308,7 @@ h1{
 }
 .research-library-page #cross-track-convergence .convergence-table tbody th,
 .research-library-page #cross-track-convergence .convergence-table tbody td{
-  padding:1rem 1.125rem;
+  padding:0.85rem 1.125rem;
   text-align:left;
   vertical-align:top;
   border-bottom:1px solid var(--line);
@@ -2493,9 +2512,9 @@ section:has(.page-toc){
 .card-expand summary::before{ content: "+ "; }
 .card-expand[open] summary::before{ content: "\2212 "; }
 .card-expand[open] summary{ margin-bottom: 0.5rem; }
-/* Inline why/who blocks: flush to top border, room below last line */
+/* Inline why/who blocks: flush to top border, tight space below last line */
 .card-expand--inline{
-  padding: 0 0 var(--space-md);
+  padding: 0 0 var(--space-xs);
 }
 .card-expand .research-why,
 .card-expand .research-audience{
@@ -2510,6 +2529,9 @@ section:has(.page-toc){
 }
 .card-expand--inline .research-why:first-of-type{
   margin-top: 0;
+}
+.card-expand--inline .research-audience:last-child{
+  margin-bottom: 0;
 }
 /* Thumb + details: put expand block full width under image + copy so lines are not squeezed in column 2 */
 .writing-card--has-actions:has(> .writing-link--thumb):has(> .card-expand){
@@ -3724,6 +3746,26 @@ main.resume-profile .section-title{
 }
 .page-focus .card p{
   margin-bottom:0;
+}
+.page-focus .card p.audience{
+  margin-bottom:var(--space-xs);
+}
+.page-focus .card p.core-competencies{
+  margin-bottom:var(--space-sm);
+}
+.page-focus .speaker-headshot{
+  display:block;
+  width:187px;
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius-sm);
+  border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
+}
+.page-focus .speaker-hero-headshot-wrap{
+  margin-bottom:var(--space-lg);
+}
+.page-focus .speaker-headshot--hero{
+  margin-inline:auto;
 }
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
 #core-frameworks .grid.grid--halves > .card > .framework-related-paper{
@@ -4965,6 +5007,7 @@ footer{
   .writing-excerpt{
     display:block !important;
     -webkit-line-clamp:unset !important;
+    line-clamp:unset !important;
     overflow:visible !important;
   }
   .writing-arrow{display:none}
@@ -7250,9 +7293,37 @@ footer{
   box-shadow:var(--shadow-lg);
 }
 
-/* Suppress the left-bar hover effect on the large featured card */
+/* Bottom edge: static glow line + animated flow (matches homepage .hero::after + .hero-shimmer) */
 .featured-paper-card::after{
-  display:none;
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent 5%, var(--accent-soft) 50%, transparent 95%);
+  pointer-events:none;
+  z-index:3;
+  border-radius:0 0 var(--radius) var(--radius);
+}
+.featured-paper-card > .featured-paper-bottom-flow{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+  opacity:.4;
+  pointer-events:none;
+  z-index:4;
+  border-radius:0 0 var(--radius) var(--radius);
+  animation:shimmer 4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .featured-paper-card > .featured-paper-bottom-flow{
+    animation:none;
+    opacity:.15;
+  }
 }
 
 .featured-paper-card::before{
@@ -7284,6 +7355,10 @@ footer{
   line-height:1.15;
   border-bottom:none;
   padding-bottom:0;
+}
+/* Title + teaser: avoid h3 margin-bottom stacking with .writing-copy flex gap */
+.featured-paper-card .writing-copy > h3.writing-title{
+  margin-bottom:0;
 }
 
 .featured-thesis{
@@ -8545,5 +8620,52 @@ a.writing-arrow:focus{
   /* Cards: full-width single column */
   .grid--halves .card{
     grid-column:span 12;
+  }
+}
+
+/* Featured talk (speaker page) */
+.featured-talk{
+  margin:var(--space-xl) 0;
+}
+.featured-talk-content{
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:var(--space-lg);
+  align-items:start;
+}
+.featured-talk-thumbnail{
+  width:100%;
+  border-radius:var(--radius-sm);
+  transition:opacity .2s ease;
+}
+.featured-talk-thumbnail:hover{
+  opacity:.85;
+}
+.featured-talk .talk-meta{
+  font-size:.9rem;
+  opacity:.7;
+  margin-bottom:var(--space-md);
+}
+.featured-talk .talk-bridge{
+  font-style:italic;
+  opacity:.85;
+}
+.featured-talk .talk-pullquote{
+  border-left:3px solid var(--accent);
+  padding-left:var(--space-md);
+  margin:var(--space-lg) 0;
+  font-style:italic;
+  opacity:.9;
+}
+.featured-talk .talk-audience{
+  font-size:.9rem;
+  opacity:.7;
+}
+@media (max-width:768px){
+  .featured-talk-content{
+    grid-template-columns:1fr;
+  }
+  .featured-talk-thumbnail{
+    max-width:100%;
   }
 }
