@@ -38,9 +38,23 @@ This workspace has the fixes: `resume.html`, `contact.html`, `resumes/` (PDFs), 
 4. **Check the live site**  
    Open https://www.cryptozach.com (or https://cryptozach.github.io/CryptoZach/ if no custom domain). It should match what you see at http://localhost:8080 after you run `npm run serve` from this repo.
 
-## Why localhost:8080 and live differed
+## Why localhost:8080 was mostly blank (and what was fixed)
 
-The live site was serving whatever was last pushed to **CryptoZach/CryptoZach**. This workspace had newer commits (resume hub, contact, resumes, paper redirects) that were not yet pushed to **origin**, so localhost showed the restored content and the live site showed the older or broken state. Pushing **main** to **origin** aligns the live site with this workspace.
+This workspace was missing **script.js** and **assets/brand/** (favicons, og-image). Pages loaded but had no theme toggle or other JS behavior and missing icons, so they looked blank or broken. The live site stayed populated because it still had those files from before the force push.
+
+**Restored in this workspace:**
+- **script.js** from the `website-updates` branch (theme toggle, menu, back-to-top, etc.).
+- **assets/brand/** (favicon.ico, favicon-32.png, apple-touch-icon.png, og-image.png) from the live site so localhost:8080 matches.
+
+After pulling or using this commit, run `npm run serve` and open http://localhost:8080: pages should be populated like the live site.
+
+## What differs on the live site vs “original”
+
+On the live site, only these differ from what you originally had:
+- **resume.html** and **contact.html** (recreated versions; live has them).
+- **/papers** (broken: missing or 404s for some paper pages).
+
+This workspace has the same resume and contact pages plus paper redirect pages so /papers links work. Pushing **main** to **origin** will update the live site so it has script.js, assets, resume, contact, and working paper redirects.
 
 ## Remotes in this workspace
 
