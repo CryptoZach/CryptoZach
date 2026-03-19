@@ -28,7 +28,7 @@ When adding or refreshing head content:
 | `link rel="canonical"` | Prefer `https://cryptozach.com/...` with the same path style the live site uses (many paper pages use the `.html` suffix on canonical). |
 | `og:url` | Should match the canonical story: same host and path policy as sibling pages in that directory. |
 | `og:type` | `article` for paper summaries; `website` for hub pages like research index. |
-| `og:image` / `twitter:image` | Absolute URL under `https://cryptozach.com/` (often `Publication-Images/` or `assets/brand/og-image.png`). |
+| `og:image` / `twitter:image` | Absolute URL under `https://cryptozach.com/` (site default `https://cryptozach.com/og-image.png`, or `Publication-Images/` on paper pages). |
 | `og:image:alt` / `twitter:image:alt` | Describe the image for accessibility; align with visible cover `alt` when both exist. |
 | `twitter:card` | `summary_large_image` when a large image is set; otherwise match Cursor/site standard. |
 | `twitter:site` | `@CryptoZach` where used elsewhere on the site. |

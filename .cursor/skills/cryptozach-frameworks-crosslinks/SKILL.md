@@ -4,7 +4,7 @@ description: >-
   Keeps Operating-Model.html anchor ids in sync with inbound links from papers,
   resumes, and the homepage. Use when editing framework cards, renaming slugs,
   adding a new framework section, or fixing broken #fragment links. Legacy
-  frameworks.html redirects here.
+  frameworks.html and start-here.html redirect to 2026-frameworks.html.
 ---
 
 # CryptoZach frameworks cross-links
@@ -13,7 +13,7 @@ description: >-
 
 **`Operating-Model.html`** is the single source of truth for framework **card** anchors. Inbound links use **`#<id>`** on that file. In the **header nav**, this page is labeled **Structure** (URLs stay `Operating-Model.html`).
 
-**`frameworks.html`** is a **legacy redirect** (preserves query string and hash). Prefer linking to **`Operating-Model.html`** in new content.
+**`frameworks.html`** and **`start-here.html`** are **legacy redirects** to **`2026-frameworks.html`** (preserve query string and hash). Prefer linking to **`2026-frameworks.html`** for the frameworks primer and **`Operating-Model.html`** for Structure / framework cards.
 
 ## Core framework card ids (do not break casually)
 
@@ -26,7 +26,7 @@ These **`article.card`** elements carry the ids that paper pages and CTAs target
 | `credit-migration-model` | Credit migration model |
 | `regime-dashboard` | Regime dashboard |
 
-Other useful section ids on the same page include **`three-dollar-objects`**, **`current-agenda`**, **`program-structure`**. Prefer linking to a **card id** when the goal is "jump to this framework."
+Other useful section ids on the same page include **`three-dollar-objects`**, **`core-frameworks`** (section top; jump nav uses this), **`current-agenda`**, **`how-the-work-runs`**. Prefer linking to a **card id** when the goal is "jump to this framework."
 
 ## Link URL shape
 
@@ -60,7 +60,7 @@ See **`cryptozach-paper-page`** for where related-framework blocks live on paper
 
 ## Validation
 
-Open `http://127.0.0.1:8080/Operating-Model.html#clii` (etc.) after edits and confirm the correct card is visible below the header. Optionally confirm `http://127.0.0.1:8080/frameworks.html#clii` still lands on the same fragment via redirect.
+Open `http://127.0.0.1:8080/Operating-Model.html#clii` (etc.) after edits and confirm the correct card is visible below the header. Legacy `frameworks.html` now forwards to `2026-frameworks.html` (hash preserved); deep links to Structure anchors should use **`Operating-Model.html#...`** directly.
 
 ## Publishing
 

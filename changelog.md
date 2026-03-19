@@ -22,7 +22,7 @@ Merged `/research-program.html` and `/tokenomics-research.html` into a single ca
 
 ## Final section structure (selected-research.html)
 
-1. **#program-overview** – Program overview: two-track thesis (Track A = stablecoin/dollar infrastructure, Track B = tokenomics/DePIN), convergence line, and one-line library framing ("Core program papers, public articles, and earlier work, all on one page.").
+1. **#program-overview** – Program overview: two-track thesis (Track A = stablecoin/dollar infrastructure, Track B = tokenomics/DePIN), convergence line, and headline framing ("Seven scholarly papers, two tracks").
 2. **#best-first-read** – Featured paper: Routing the Dollar (Under review, Best first read), with metadata, thesis, blurb, CTAs (paper summary, SSRN, Thread), cover image, and "More on relevance and audience" expandable.
 3. **Filters and jump links** – Audience, Track, Status filters (unchanged). Jump links: #best-first-read, #track-a, #track-b, #earlier-work, #cross-track-convergence.
 4. **#track-a** – Track A: short intro, A1 compact reference only ("A1 — Routing the Dollar — featured above."), then full cards for A2 (Minimum Viable Equivalence Packs), Dollar v3 / The Control Layer War (no A3 label), Tokenized Equity, Navigating the New Era of Digital Assets.

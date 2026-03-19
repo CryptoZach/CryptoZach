@@ -35,7 +35,7 @@ After edits, spot-check routes that interact with global layout and assets:
 | `/` | Hero, nav, theme toggle, flagship block, selected research preview |
 | `/selected-research.html` | Filters (if unhidden), track headings, card list, TOC anchors |
 | `/Operating-Model.html` | Cards, anchor jumps (`#clii`, `#mvep`, etc.) |
-| `/frameworks.html` | Legacy URL: should redirect to Operating-Model (hash preserved) |
+| `/frameworks.html` | Legacy URL: should redirect to `2026-frameworks.html` (hash preserved) |
 | `/papers/routing-the-dollar.html` | Full paper template, cover image, access block |
 | `/papers/minimum-viable-equivalence-packs.html` | Second reference paper layout |
 | Any file you changed | Open it directly by path |
@@ -53,7 +53,7 @@ Use **`browser_navigate`** to each URL, then **`browser_snapshot`** (or **`brows
 | Home | `http://127.0.0.1:8080/` |
 | Research library | `http://127.0.0.1:8080/selected-research.html` |
 | Structure (Operating-Model.html) + fragment | `http://127.0.0.1:8080/Operating-Model.html#clii` |
-| Legacy redirect + hash | `http://127.0.0.1:8080/frameworks.html#clii` (final URL should include `Operating-Model.html` and `#clii`) |
+| Legacy redirect + hash | `http://127.0.0.1:8080/frameworks.html#clii` (final URL should include `2026-frameworks.html` and `#clii`) |
 | Reference papers | `http://127.0.0.1:8080/papers/routing-the-dollar.html`, `http://127.0.0.1:8080/papers/minimum-viable-equivalence-packs.html` |
 
 ## Testing (Playwright)
