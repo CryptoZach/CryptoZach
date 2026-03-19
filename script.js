@@ -1083,7 +1083,7 @@
       'speaker-formats': 'talk-formats',
       'speaker-featured': 'featured-talk',
       'speaker-experience': 'experience',
-      'speaker-boundaries': 'advisory',
+      'speaker-boundaries': 'boundaries',
       'speaker-advisory': 'advisory',
       'speaker-press': 'press-kit',
       'speaker-booking': 'booking'
@@ -1174,6 +1174,7 @@
         'talk-builder',
         'featured-talk',
         'experience',
+        'boundaries',
         'advisory',
         'adv-diligence',
         'adv-token',

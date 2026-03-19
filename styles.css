@@ -4553,7 +4553,6 @@ main.resume-profile .section-title{
 .frameworks-2026-page main > section:first-of-type .primer-hero-ctas{
   flex:0 0 auto;
 }
-.frameworks-2026-page main > section:first-of-type .primer-flagship,
 .frameworks-2026-page main > section:first-of-type .structure-jump-to{
   flex:0 0 auto;
   align-self:stretch;
@@ -4611,46 +4610,29 @@ main.resume-profile .section-title{
 .frameworks-2026-page .primer-hero-ctas--resume-profiles{
   margin-top:var(--space-md);
   margin-bottom:var(--space-xs);
+  flex-direction:column;
+  align-items:stretch;
   gap:var(--space-md);
 }
-.frameworks-2026-page .primer-flagship{
-  margin-top:var(--space-md);
-  margin-bottom:0;
-  padding:var(--space-lg) var(--space-xl);
-  width:100%;
-  max-width:100%;
-  box-sizing:border-box;
-  border:1px solid var(--line);
-  border-left:3px solid var(--accent);
-  border-radius:var(--radius);
-  background:color-mix(in srgb, var(--panel) 90%, var(--bg));
-  box-shadow:var(--shadow-sm);
-}
-.frameworks-2026-page .primer-flagship h2{
-  margin-top:0;
-  font-size:clamp(1.05rem, 2vw, 1.2rem);
-  font-weight:650;
-  letter-spacing:-0.02em;
-  color:var(--text);
-}
-.frameworks-2026-page .primer-flagship p{
-  font-size:0.98rem;
-  line-height:1.62;
-  color:var(--text-soft);
-  margin-bottom:var(--space-sm);
-}
-.frameworks-2026-page .primer-flagship p:last-of-type{
-  margin-bottom:0;
-}
-.frameworks-2026-page .primer-flagship .frameworks-2026-flagship-links{
+/* Own flex row so gaps stay even (avoid display:contents mixing with a full-width flagship wrapper) */
+.frameworks-2026-page .primer-hero-ctas--resume-profiles .primer-resume-profile-nav{
   display:flex;
   flex-wrap:wrap;
-  gap:var(--space-sm);
+  gap:var(--space-md);
   align-items:center;
-  margin-top:var(--space-md);
+  justify-content:flex-start;
+  width:100%;
+  box-sizing:border-box;
 }
-.frameworks-2026-page .primer-flagship .frameworks-2026-flagship-links .action{
-  margin:0;
+.frameworks-2026-page .primer-hero-ctas--resume-profiles .frameworks-2026-flagship-links--hero{
+  width:100%;
+  margin-top:0;
+  margin-bottom:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-md);
+  align-items:center;
+  justify-content:flex-start;
 }
 
 /* 2026 Frameworks: jump-to uses same structure-jump-to pattern as Operating-Model (see .structure-page rules above) */
@@ -4692,6 +4674,9 @@ main.resume-profile .section-title{
 .frameworks-2026-page .frameworks-anchor-block .explainer-section ul{
   font-size:15px;
   line-height:1.68;
+}
+.frameworks-2026-page .frameworks-anchor-block .explainer-section ul + p{
+  margin-top:var(--space-md);
 }
 
 /* Five questions: numbered blocks */
@@ -4810,9 +4795,6 @@ main.resume-profile .section-title{
 @media (max-width:768px){
   .frameworks-2026-page .frameworks-anchor-block,
   .frameworks-2026-page .question-block{
-    padding:var(--space-md) var(--space-md);
-  }
-  .frameworks-2026-page .primer-flagship{
     padding:var(--space-md) var(--space-md);
   }
 }
@@ -6642,16 +6624,6 @@ footer{
   padding: 2px 8px;
   border: 1px solid var(--line);
   border-radius: 4px;
-}
-/* 2026 Frameworks primer flagship */
-.primer-flagship h2{
-  margin-bottom: var(--space-md);
-}
-.primer-flagship p{
-  margin-bottom: var(--space-md);
-}
-.primer-flagship .frameworks-2026-flagship-links{
-  margin-top: var(--space-md);
 }
 .quiet-link{
   color: var(--muted);
@@ -9200,7 +9172,6 @@ main > section:first-of-type{
 .section-title + .featured-paper-card,
 .section-title + .utility-card,
 .section-title + .explainer,
-.section-title + .frameworks-2026-flagship-links,
 .section-title + .convergence-table-wrap{
   margin-top: var(--section-gap-tight);
 }
