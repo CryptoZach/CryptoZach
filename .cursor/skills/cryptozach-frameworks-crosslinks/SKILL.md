@@ -23,8 +23,8 @@ These **`article.card`** elements carry the ids that paper pages and CTAs target
 |------|---------------------|
 | `clii` | CLII |
 | `mvep` | MVEP |
-| `credit-migration-model` | Credit migration model |
-| `regime-dashboard` | Regime dashboard |
+| `credit-migration-model` | Credit Migration Model |
+| `regime-dashboard` | Regime Dashboard |
 
 Other useful section ids on the same page include **`three-dollar-objects`**, **`core-frameworks`** (section top; jump nav uses this), **`current-agenda`**, **`how-the-work-runs`**. Prefer linking to a **card id** when the goal is "jump to this framework."
 
