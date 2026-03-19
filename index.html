@@ -30,7 +30,7 @@
   <meta name="author" content="Zach Zukowski" />
 
   <meta property="og:title" content="Zach Zukowski | Digital Money & Tokenization Research" />
-  <meta property="og:description" content="Decision frameworks for the people building and regulating digital money infrastructure." />
+  <meta property="og:description" content="Who routes the dollar matters more than which dollar is routed. Decision frameworks for the people building and regulating digital money infrastructure." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="CryptoZach" />
   <meta property="og:locale" content="en_US" />
@@ -43,7 +43,7 @@
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="twitter:title" content="Zach Zukowski | Digital Money & Tokenization Research" />
-  <meta name="twitter:description" content="Decision frameworks for the people building and regulating digital money infrastructure." />
+  <meta name="twitter:description" content="Who routes the dollar matters more than which dollar is routed. Decision frameworks for the people building and regulating digital money infrastructure." />
   <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
   <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
   <meta name="theme-color" content="#0a0c10" />
@@ -174,10 +174,13 @@
       <div class="matrix-container" aria-hidden="true">
         <canvas class="matrix-canvas" tabindex="-1" aria-hidden="true"></canvas>
       </div>
+      <canvas class="hero-reef" id="heroReef" aria-hidden="true"></canvas>
       <div class="hero-grid">
         <div class="hero-primary">
-          <p class="eyebrow hero-eyebrow">Who routes the dollar matters more than which dollar is routed.</p>
-          <h1 id="hero-title">Decision frameworks for the people building and regulating digital money infrastructure.</h1>
+          <div class="hero-eyebrow">
+            <h1 id="hero-title">Who routes the dollar matters more than which dollar is routed.</h1>
+          </div>
+          <p class="hero-tagline">Decision frameworks for the people building and regulating digital money infrastructure.</p>
           <p class="hero-subhead">The same dollar token inherits distinct regulatory exposure, interest-rate sensitivity, and crisis behavior depending on which gateway routes it.<br>This research measures those differences at the gateway layer: the issuers, exchanges, and protocols that determine outcomes.</p>
           <ul class="proof-bar" aria-label="At a glance">
             <li>7 Scholarly Papers</li>
@@ -327,10 +330,24 @@
           <span class="track-context">Tokenomics and Physical Network Systems (DePIN)</span>
         </div>
         <article class="card track-b-card">
-          <h3>Tokenomics &amp; DePIN</h3>
-          <p>Who earns the token matters more than who holds it.</p>
-          <p>Four papers examining whether token economies sustain productive contribution or concentrate into extraction. The answer depends on three design choices: how tokens are issued, how underperformance is penalized, and who governs parameter changes. Each paper specifies the mechanism, simulates it under adversarial conditions, and tests whether the design survives contact with agent behavior. Parameters calibrated to Helium, Filecoin, and Geodnet. Simulation ensembles stress-tested across bull, bear, competitor-entry, and regulatory-shock scenarios.</p>
-          <a class="action secondary" href="./selected-research.html#track-b">View Tokenomics &amp; DePIN track</a>
+          <div class="track-b-card-inner">
+            <figure class="track-b-card-fig">
+              <a href="./papers/adaptive-tokenomics.html">
+                <img src="./Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics discipline map" loading="lazy" />
+              </a>
+            </figure>
+            <div class="track-b-card-body">
+              <h3>Tokenomics &amp; DePIN</h3>
+              <p>Who earns the token matters more than who holds it.</p>
+              <p>Four papers examining whether token economies sustain productive contribution or concentrate into extraction. The answer depends on three design choices: how tokens are issued, how underperformance is penalized, and who governs parameter changes. Each paper specifies the mechanism, simulates it under adversarial conditions, and tests whether the design survives contact with agent behavior. Parameters calibrated to Helium, Filecoin, and Geodnet. Simulation ensembles stress-tested across bull, bear, competitor-entry, and regulatory-shock scenarios.</p>
+              <p>The anchor study, <a href="./papers/adaptive-tokenomics.html">Adaptive Tokenomics</a>, is a 240-run Monte Carlo simulation testing whether adaptive emission mechanisms sustain participation under adversarial conditions where static schedules collapse.</p>
+              <div class="track-b-anchor-ctas">
+                <a class="action secondary" href="./papers/adaptive-tokenomics.html">Read the paper summary</a>
+                <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">SSRN</a>
+              </div>
+              <a class="action secondary" href="./selected-research.html#track-b">View the full Tokenomics &amp; DePIN track</a>
+            </div>
+          </div>
         </article>
       </div>
     </section>
