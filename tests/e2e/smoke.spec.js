@@ -7,9 +7,13 @@ test.describe("CryptoZach smoke", () => {
     await expect(page).toHaveTitle(/Zach Zukowski/);
     await expect(
       page.getByRole("heading", {
-        name: /Decision frameworks for the people building and regulating digital money infrastructure/i,
+        level: 1,
+        name: /Who routes the dollar matters more than which dollar is routed/i,
       }),
     ).toBeVisible();
+    await expect(page.locator("#hero .hero-tagline")).toHaveText(
+      /Decision frameworks for the people building and regulating digital money infrastructure/i,
+    );
   });
 
   test("selected research shows Track A and Track B", async ({ page }) => {
