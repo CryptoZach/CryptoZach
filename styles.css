@@ -623,6 +623,10 @@ h1{
   text-wrap:balance;
   max-width:none;
 }
+/* Homepage: extra air between headline and gateway-layer subhead */
+.hero--homepage .hero-subhead{
+  margin-top:var(--space-lg);
+}
 
 .contact-page .hero-primary{
   max-width:none;
@@ -959,6 +963,21 @@ h1{
   -webkit-overflow-scrolling:touch;
   max-width:100%;
 }
+/* Three dollar objects: framed grid, column rules, stronger header */
+.structure-table-wrap--dollar-objects{
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  box-shadow:var(--shadow-sm);
+}
+.page-focus #three-dollar-objects .structure-table-wrap--dollar-objects{
+  margin-bottom:0;
+}
+.page-focus #three-dollar-objects .structure-table-wrap--dollar-objects + .track-bridge{
+  margin-top:0;
+  margin-bottom:0;
+  padding-bottom:2mm;
+}
 .dollar-objects-table,
 .agenda-table{
   width:100%;
@@ -968,12 +987,56 @@ h1{
 }
 .dollar-objects-table{
   min-width:min(100%, 760px);
+  background:transparent;
 }
 .agenda-table{
   min-width:min(100%, 520px);
 }
 .dollar-objects-table th,
-.dollar-objects-table td,
+.dollar-objects-table td{
+  padding:1rem 1.125rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+}
+.dollar-objects-table th:last-child,
+.dollar-objects-table td:last-child{
+  border-right:none;
+}
+.dollar-objects-table thead th{
+  font-weight:700;
+  font-size:0.72rem;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  color:var(--text-soft);
+  background:color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-bottom:2px solid var(--accent);
+  border-right-color:color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
+  padding-top:0.9rem;
+  padding-bottom:0.9rem;
+  line-height:1.35;
+}
+.dollar-objects-table tbody td{
+  font-size:14px;
+  line-height:1.55;
+  color:var(--text-soft);
+}
+.dollar-objects-table tbody tr:nth-child(odd){
+  background:color-mix(in srgb, var(--panel) 55%, transparent);
+}
+.dollar-objects-table tbody tr:nth-child(even){
+  background:color-mix(in srgb, var(--accent) 6%, var(--panel2));
+}
+.dollar-objects-table tbody tr:last-child td{
+  border-bottom:none;
+}
+.dollar-objects-table tbody td:first-child{
+  font-weight:600;
+  color:var(--text);
+  vertical-align:middle;
+}
+/* Current agenda table: compact rows */
 .agenda-table th,
 .agenda-table td{
   padding:0.75rem 1rem;
@@ -981,7 +1044,6 @@ h1{
   border-bottom:1px solid var(--line);
   vertical-align:top;
 }
-.dollar-objects-table thead th,
 .agenda-table thead th{
   font-weight:600;
   font-size:0.85rem;
@@ -990,33 +1052,72 @@ h1{
   color:var(--muted);
   background:color-mix(in srgb, var(--accent) 6%, var(--panel));
 }
-.dollar-objects-table tbody tr:nth-child(even),
 .agenda-table tbody tr:nth-child(even){
   background:color-mix(in srgb, var(--accent) 4%, var(--panel));
 }
-.dollar-objects-table tbody tr:last-child td,
 .agenda-table tbody tr:last-child td{
   border-bottom:none;
 }
-.page-focus #how-the-work-runs .section-title + h3{
+/* How the work runs: two-column principle table (Structure page) */
+.structure-table-wrap--how-work-runs{
   margin-top:var(--space-lg);
-}
-.page-focus #how-the-work-runs h3{
-  margin-top:var(--space-lg);
-  margin-bottom:var(--space-xs);
-  font-size:1.05rem;
-  font-weight:600;
-  color:var(--text-soft);
-}
-.page-focus #how-the-work-runs h3 + p{
-  margin-top:0;
   margin-bottom:var(--space-md);
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  box-shadow:var(--shadow-sm);
+}
+.how-work-runs-table{
+  width:100%;
+  min-width:min(100%, 520px);
+  border-collapse:collapse;
+  font-size:14px;
+  background:transparent;
+}
+.how-work-runs-table th,
+.how-work-runs-table td{
+  padding:1rem 1.125rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+}
+.how-work-runs-table td:last-child,
+.how-work-runs-table th:last-child{
+  border-right:none;
+}
+.how-work-runs-table tbody tr:last-child th,
+.how-work-runs-table tbody tr:last-child td{
+  border-bottom:none;
+}
+.how-work-runs-table th[scope="row"]{
+  width:12rem;
+  min-width:9.5rem;
+  max-width:40%;
+  font-weight:700;
+  font-size:0.72rem;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  line-height:1.4;
+  color:var(--text-soft);
+  background:color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-right-color:color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
+  vertical-align:middle;
+}
+.how-work-runs-table td{
   color:var(--muted-soft);
-  line-height:1.6;
+  line-height:1.55;
   max-width:none;
+  vertical-align:top;
+}
+.how-work-runs-table tbody tr:nth-child(odd) td{
+  background:color-mix(in srgb, var(--panel) 55%, transparent);
+}
+.how-work-runs-table tbody tr:nth-child(even) td{
+  background:color-mix(in srgb, var(--accent) 6%, var(--panel2));
 }
 .page-focus #how-the-work-runs > p:last-of-type{
-  margin-top:var(--space-md);
+  margin-top:var(--space-lg);
   margin-bottom:0;
   font-weight:500;
   color:var(--text-soft);
@@ -1024,6 +1125,42 @@ h1{
 }
 .page-focus #how-the-work-runs .section-title p{
   max-width:none;
+}
+@media (max-width:560px){
+  .how-work-runs-table{
+    min-width:0;
+  }
+  .how-work-runs-table tbody tr{
+    display:block;
+    border-bottom:1px solid var(--line);
+  }
+  .how-work-runs-table tbody tr:last-child{
+    border-bottom:none;
+  }
+  .how-work-runs-table th[scope="row"],
+  .how-work-runs-table td{
+    display:block;
+    width:100%;
+    max-width:none;
+    border-right:none;
+    border-bottom:none;
+    box-sizing:border-box;
+  }
+  .how-work-runs-table th[scope="row"]{
+    padding-bottom:var(--space-xs);
+  }
+  .how-work-runs-table td{
+    padding-top:0;
+    padding-bottom:var(--space-md);
+  }
+  .how-work-runs-table tbody tr:nth-child(odd) td,
+  .how-work-runs-table tbody tr:nth-child(even) td{
+    background:transparent;
+  }
+  .how-work-runs-table tbody tr:nth-child(odd),
+  .how-work-runs-table tbody tr:nth-child(even){
+    background:color-mix(in srgb, var(--panel) 40%, transparent);
+  }
 }
 
 /* Structure stack (Operating-Model.html): METHOD / SCOPE / GOAL / Unifying thesis (vertical container) */
@@ -1110,10 +1247,137 @@ h1{
 .research-library-page .page-toc{
   margin-bottom:var(--space-md);
 }
+.research-library-page .featured-research + .page-toc{
+  margin-top:var(--space-xl);
+}
+/* Cross-track convergence table (selected-research #cross-track-convergence) */
+.research-library-page #cross-track-convergence .convergence-table-wrap{
+  margin-top:var(--space-lg);
+  margin-bottom:var(--space-sm);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  max-width:100%;
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  box-shadow:var(--shadow-sm);
+}
+.research-library-page #cross-track-convergence .convergence-table{
+  width:100%;
+  min-width:min(100%, 720px);
+  border-collapse:collapse;
+  font-size:14px;
+  color:var(--text);
+  background:transparent;
+}
+.research-library-page #cross-track-convergence .convergence-table thead th{
+  font-weight:700;
+  font-size:0.72rem;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  line-height:1.35;
+  color:var(--text-soft);
+  background:color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-bottom:2px solid var(--accent);
+  border-right:1px solid color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
+  padding:0.9rem 1.125rem;
+  text-align:left;
+  vertical-align:bottom;
+}
+.research-library-page #cross-track-convergence .convergence-table thead th:last-child{
+  border-right:none;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody th,
+.research-library-page #cross-track-convergence .convergence-table tbody td{
+  padding:1rem 1.125rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+}
+.research-library-page #cross-track-convergence .convergence-table tbody th:last-child,
+.research-library-page #cross-track-convergence .convergence-table tbody td:last-child{
+  border-right:none;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:last-child th,
+.research-library-page #cross-track-convergence .convergence-table tbody tr:last-child td{
+  border-bottom:none;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody th[scope="row"]{
+  width:11.5rem;
+  min-width:9.5rem;
+  max-width:30%;
+  font-weight:600;
+  font-size:0.8125rem;
+  letter-spacing:0.02em;
+  line-height:1.45;
+  color:var(--text-soft);
+  background:color-mix(in srgb, var(--accent) 11%, var(--panel));
+  white-space:normal;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody td{
+  color:var(--muted-soft);
+  line-height:1.55;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td{
+  background:color-mix(in srgb, var(--panel) 55%, transparent);
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td{
+  background:color-mix(in srgb, var(--accent) 6%, var(--panel2));
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) th[scope="row"]{
+  background:color-mix(in srgb, var(--accent) 9%, var(--panel));
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) th[scope="row"]{
+  background:color-mix(in srgb, var(--accent) 13%, var(--panel));
+}
+@media (max-width:768px){
+  .research-library-page #cross-track-convergence .convergence-table{
+    min-width:0;
+  }
+  .research-library-page #cross-track-convergence .convergence-table tbody th[scope="row"]{
+    display:block;
+    width:100%;
+    max-width:none;
+    box-sizing:border-box;
+    border-right:none;
+  }
+  .research-library-page #cross-track-convergence .convergence-table tbody td{
+    border-right:none;
+  }
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td,
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td{
+    background:transparent;
+  }
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) th[scope="row"],
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) th[scope="row"]{
+    background:color-mix(in srgb, var(--accent) 12%, var(--panel));
+  }
+  .research-library-page #cross-track-convergence .convergence-table:not(.convergence-table--data-labels) td:nth-child(2)::before{
+    content:"Track A (stablecoins)";
+  }
+  .research-library-page #cross-track-convergence .convergence-table:not(.convergence-table--data-labels) td:nth-child(3)::before{
+    content:"Track B (token networks)";
+  }
+}
 /* Deep links: full track heading stays below sticky header */
 .research-library-page h2.track-heading#track-a,
 .research-library-page h2.track-heading#track-b{
   scroll-margin-top:calc(var(--header-h) + var(--space-md));
+}
+/* Track blocks: heading + intro sit outside the card list (same pattern for A and B) */
+.research-library-page .research-track{
+  margin:0;
+  padding:0;
+  border:none;
+  background:transparent;
+  display:block;
+}
+.research-library-page .research-track + .writing-more{
+  margin-top:var(--space-xl);
+}
+.research-library-page .writing-more + .research-track{
+  margin-top:var(--space-xl);
 }
 .research-library-page .page-toc-link--stacked{
   display:inline-flex;
@@ -3461,6 +3725,10 @@ main.resume-profile .section-title{
 .page-focus .card p{
   margin-bottom:0;
 }
+/* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
+#core-frameworks .grid.grid--halves > .card > .framework-related-paper{
+  margin-top:auto;
+}
 
 /* ── 2026 Frameworks page: content cards (Three dollar objects, etc.) ── */
 .frameworks-2026-page .grid--thirds{
@@ -4837,6 +5105,7 @@ footer{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--space-sm) var(--space-md);
+  align-items: stretch;
 }
 @media (min-width: 1024px){
   .what-i-can-send .send-grid{
@@ -4852,7 +5121,11 @@ footer{
   }
 }
 .send-item{
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius);
   border: 1px solid var(--line);
@@ -4860,6 +5133,7 @@ footer{
   color: inherit;
   text-decoration: none;
   font-size: 0.9rem;
+  box-sizing: border-box;
 }
 .send-item:hover{
   border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
@@ -4867,12 +5141,13 @@ footer{
 }
 .send-item strong{
   display: block;
-  margin-bottom: 0.15em;
+  margin-bottom: 0.35em;
   color: var(--text);
 }
 .send-item span{
   color: var(--muted);
   font-size: 0.85em;
+  line-height: 1.45;
 }
 
 .contact-strip-row{
@@ -5458,13 +5733,19 @@ footer{
 #signature-frameworks .card.framework-card{
   padding-bottom: var(--space-lg);
 }
-#signature-frameworks .track-b-card{
+#signature-frameworks .track-b-frameworks{
   margin-top: var(--space-xl);
   width: 100%;
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  grid-column: 1 / -1;
+}
+#signature-frameworks .track-b-frameworks .track-b-card{
+  margin-top: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 #signature-frameworks .track-card-header{
   display: flex;

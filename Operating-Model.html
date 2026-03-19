@@ -193,7 +193,7 @@
           <p>Tokenized money-market fund shares, Treasury wrappers, and automated sweep programs. These are investment products, not payment instruments. A stablecoin that cannot pay yield creates a vacuum that adjacent products fill: whoever controls the default sweep (the wallet, the exchange, the platform) captures the yield margin.</p>
         </article>
       </div>
-      <div class="structure-table-wrap" role="region" aria-label="Comparison of three dollar objects">
+      <div class="structure-table-wrap structure-table-wrap--dollar-objects" role="region" aria-label="Comparison of three dollar objects">
         <table class="dollar-objects-table">
           <thead>
             <tr>
@@ -323,28 +323,42 @@
     <section class="reveal" id="how-the-work-runs" aria-labelledby="process-title">
       <div class="section-title">
         <h2 id="process-title">How the work runs</h2>
-        <p>The goal is turning open questions into clear decisions, usable documents, and defined triggers for action.</p>
+        <p>Open questions become clear decisions, usable documents, and defined triggers for action.</p>
       </div>
-      <h3>Evidence-led</h3>
-      <p>Every claim traces to a primary source, a validated dataset, or a stress test with stated assumptions. Each paper includes the code and data needed to rerun the analysis.</p>
-      <h3>Scenario architecture</h3>
-      <p>Decision trees ranked by priority, stress paths with named thresholds, and explicit criteria for what should change the conclusion. Simulation ensembles calibrated to real costs, real failure rates, and observed market behavior.</p>
-      <h3>Monitoring and control design</h3>
-      <p>Custody scoring, failure-mode testing, and concentration tracking, each linked to a specific decision owner. Drift detection tracks whether controls continue to hold after initial approval.</p>
-      <h3>Published on readiness</h3>
-      <p>Work ships when the evidence supports real operating decisions, with versioned manuscripts and public replication code.</p>
-      <p>If a claim cannot be tied to a source, a threshold, or a tested condition, it does not ship.</p>
+      <div class="structure-table-wrap structure-table-wrap--how-work-runs" role="region" aria-label="How the work runs, four principles">
+        <table class="how-work-runs-table">
+          <tbody>
+            <tr>
+              <th scope="row">Evidence-led</th>
+              <td>Every claim traces to a primary source, a validated dataset, or a stress test with stated assumptions. Replication packages accompany each paper so the work can be rerun and challenged.</td>
+            </tr>
+            <tr>
+              <th scope="row">Scenario architecture</th>
+              <td>Decision trees ranked by priority, stress paths with named thresholds, and explicit criteria for what should change the conclusion. Ensembles calibrated to real costs, observed failure rates, and documented market behavior.</td>
+            </tr>
+            <tr>
+              <th scope="row">Monitoring and control design</th>
+              <td>Custody scoring, failure-mode testing, and concentration tracking, each linked to a named decision owner. Drift detection tracks whether controls hold after initial approval; when they don't, the framework specifies who acts and what triggers escalation.</td>
+            </tr>
+            <tr>
+              <th scope="row">Published on readiness</th>
+              <td>Work ships when the evidence supports real operating decisions, with versioned manuscripts and public replication code.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A claim that cannot be tied to a source, a threshold, or a tested condition does not ship.</p>
     </section>
 
     <section class="reveal" aria-labelledby="next-title">
       <div class="section-title">
         <h2 id="next-title">Go deeper</h2>
-        <p>Read the research track that matches your question, or reach out if you want the version framed for a specific institutional use case. The second track applies the same infrastructure-layer principle to DePIN token economies.</p>
+        <p>Two research tracks, one thesis. Track A applies the infrastructure-layer principle to stablecoins and tokenized money. Track B applies it to DePIN token economies. Both converge on the same conclusion: the operator layer determines outcomes that asset-level analysis cannot observe.</p>
       </div>
       <div class="hero-actions">
+        <a class="action primary" href="./selected-research.html">Research Library</a>
         <a class="action primary" href="./resume.html">View resume</a>
         <a class="action primary" href="./contact.html">Get in touch</a>
-        <a class="action secondary" href="./selected-research.html">Browse research</a>
         <a class="action secondary" href="./selected-research.html#track-b">View Tokenomics &amp; DePIN track</a>
       </div>
     </section>
