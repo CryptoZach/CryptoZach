@@ -24,6 +24,23 @@
     });
   }
 
+  // Scroll progress bar (hidden at top; avoids scaleX(0) subpixel glitches in some engines)
+  const scrollProgress = document.querySelector('.scroll-progress');
+  if(scrollProgress){
+    const updateScrollProgress = () => {
+      const el = document.documentElement;
+      const st = el.scrollTop;
+      const sh = el.scrollHeight - el.clientHeight;
+      const p = sh <= 0 ? 0 : st / sh;
+      const clamped = Math.max(0, Math.min(1, p));
+      scrollProgress.style.transform = 'scaleX(' + clamped + ')';
+      scrollProgress.style.opacity = clamped > 0.002 ? '1' : '0';
+    };
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener('resize', updateScrollProgress);
+    updateScrollProgress();
+  }
+
   // Scroll reveal: add .visible when .reveal / .stagger-item enter viewport
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!prefersReducedMotion){
@@ -43,10 +60,12 @@
   if(menuToggle && navMobile){
     menuToggle.addEventListener('click', () => {
       const open = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !open);
+      const nextOpen = !open;
+      menuToggle.setAttribute('aria-expanded', String(nextOpen));
       navMobile.hidden = open;
       navMobile.inert = open;
-      navMobile.setAttribute('aria-hidden', open);
+      navMobile.setAttribute('aria-hidden', String(open));
+      navMobile.classList.toggle('open', nextOpen);
     });
   }
 

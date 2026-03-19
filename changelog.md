@@ -12,8 +12,8 @@ Merged `/research-program.html` and `/tokenomics-research.html` into a single ca
 | `research-program.html` | Replaced with lightweight redirect: canonical to selected-research.html, JS redirect to `/selected-research.html#program-overview`, noscript fallback. |
 | `tokenomics-research.html` | Replaced with lightweight redirect: canonical to selected-research.html, JS redirect to `/selected-research.html#track-b`, noscript fallback. |
 | `index.html` | Three links updated: Research program send-item and research footer link → `selected-research.html#program-overview`; Tokenomics & DePIN track → `selected-research.html#track-b`. |
-| `start-here.html` | Two links updated: Tokenomics & DePIN track → `selected-research.html#track-b`; View the full research program → `selected-research.html#program-overview`. |
-| `Operating-Model.html` (then `frameworks.html`) | Two links updated: View the full research program → `selected-research.html#program-overview` (parenthetical "eight papers, two tracks" removed); Tokenomics & DePIN track → `selected-research.html#track-b`. Page later renamed to Operating-Model; `frameworks.html` kept as redirect. |
+| `2026-frameworks.html` (formerly `start-here.html`) | Two links updated: Tokenomics & DePIN track → `selected-research.html#track-b`; View the full research program → `selected-research.html#program-overview`. `start-here.html` remains as a redirect stub. |
+| `Operating-Model.html` (then `frameworks.html`) | Two links updated: View the full research program → `selected-research.html#program-overview` (parenthetical "eight papers, two tracks" removed); Tokenomics & DePIN track → `selected-research.html#track-b`. Page later renamed to Operating-Model; `frameworks.html` kept as redirect. Site nav label for this page is **Structure** (file name unchanged). |
 | `resume/stablecoin-payments-strategy.html` | Tokenomics & DePIN track link → `selected-research.html#track-b`. |
 | `resume/asset-management-tokenization.html` | Tokenomics & DePIN track link → `selected-research.html#track-b`. |
 | `resume/policy-market-infrastructure.html` | Tokenomics & DePIN track link → `selected-research.html#track-b`. |

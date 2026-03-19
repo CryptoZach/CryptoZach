@@ -22,14 +22,15 @@ test.describe("CryptoZach smoke", () => {
     ).toBeVisible();
   });
 
-  test("Operating-Model fragment #clii is present", async ({ page }) => {
+  test("Structure page fragment #clii is present", async ({ page }) => {
     await page.goto("/Operating-Model.html#clii");
     const clii = page.locator("#clii");
     await expect(clii).toBeAttached();
+    await clii.scrollIntoViewIfNeeded();
     await expect(clii).toBeVisible();
   });
 
-  test("frameworks.html redirects to Operating-Model with hash", async ({
+  test("frameworks.html redirects to Structure page with hash", async ({
     page,
   }) => {
     await page.goto("/frameworks.html#clii");
