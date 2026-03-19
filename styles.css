@@ -35,6 +35,7 @@
   --space-lg:32px;
   --space-xl:48px;
   --space-2xl:64px;
+  color-scheme:light;
 }
 
 :root[data-theme="dark"]{
@@ -55,6 +56,7 @@
   --shadow-sm:0 1px 3px rgba(0,0,0,.2);
   --shadow:0 4px 24px rgba(0,0,0,.25), 0 1px 3px rgba(0,0,0,.15);
   --shadow-lg:0 12px 48px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.2);
+  color-scheme:dark;
 }
 
 *{box-sizing:border-box}
@@ -659,6 +661,32 @@ h1{
 .contact-page .hero-primary{
   max-width:none;
 }
+.contact-page .contact-box{
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:var(--space-xl);
+}
+.contact-page .contact-box__channels{
+  flex:1 1 16rem;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-md);
+}
+.contact-page .contact-box__headshot{
+  flex:0 0 auto;
+  align-self:flex-start;
+}
+.contact-page .contact-reach-headshot{
+  display:block;
+  width:187px;
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius-sm);
+  border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
+}
 .contact-page .hero h1{
   max-width:none;
   overflow-wrap:break-word;
@@ -701,9 +729,20 @@ h1{
   font-size:0.9375rem;
   line-height:1.35;
   text-underline-offset:0.15em;
+  min-height:44px;
+  padding:0.35em 0;
+  box-sizing:border-box;
+  border-radius:6px;
 }
 .contact-page .contact-actions a:hover{
   color:var(--accent-hover, var(--accent));
+}
+.contact-page .contact-actions a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+.contact-page .contact-actions a:focus:not(:focus-visible){
+  outline:none;
 }
 .contact-page .contact-actions a .contact-intake-icon{
   margin-left:0;
@@ -5042,6 +5081,9 @@ footer{
 }
 
 @media (prefers-reduced-motion: reduce){
+  html{
+    scroll-behavior:auto;
+  }
   .reveal{
     opacity:1;
     transform:none;
@@ -5421,6 +5463,13 @@ footer{
 
   .contact-box{padding:var(--space-md); gap:var(--space-md)}
   .contact-channels{flex-direction:column; gap:var(--space-md)}
+  .contact-page .contact-box{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .contact-page .contact-box__headshot{
+    align-self:center;
+  }
 
   .email-row .action.copy{min-height:44px}
   .contact-box .left a{font-size:16px; word-break:break-all}
@@ -8697,6 +8746,8 @@ footer{
   position: relative;
   isolation: isolate;
   overflow: visible;
+  /* Let drags over the headline drive matrix / coral without the browser taking scroll */
+  touch-action: none;
 }
 
 /* Mouse-following spotlight (position set via --hero-eyebrow-x/y from script.js; script adds inset offset so glow is centered on cursor) */
@@ -8717,8 +8768,58 @@ footer{
   transition: opacity 0.25s ease;
 }
 
-#hero.hero--homepage .hero-eyebrow:hover::after{
+#hero.hero--homepage .hero-eyebrow:hover::after,
+#hero.hero--homepage .hero-eyebrow.hero-eyebrow--pointer-active::after{
   opacity: 1;
+}
+
+/* Dollar symbols: spawn at hero left, fly toward flagship CTA (script.js sets --dollar-dx/dy) */
+#hero.hero--homepage .hero-dollar-flight{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  pointer-events: none;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: rgb(134, 239, 172);
+  text-shadow:
+    0 0 10px rgba(74, 222, 128, 0.65),
+    0 0 22px rgba(74, 222, 128, 0.35);
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
+  animation: hero-dollar-flight 4.8s ease-out forwards;
+}
+
+@keyframes hero-dollar-flight{
+  0%{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.42);
+  }
+  5%{
+    opacity: 0.82;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  75%{
+    opacity: 0.55;
+    transform: translate(
+        calc(-50% + var(--dollar-dx, 0px) * 0.72),
+        calc(-50% + var(--dollar-dy, 0px) * 0.72)
+      )
+      scale(0.88);
+  }
+  100%{
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--dollar-dx, 0px)),
+        calc(-50% + var(--dollar-dy, 0px))
+      )
+      scale(0.7);
+  }
 }
 
 /* Coral reef canvas (branching animation) fills whole hero */
@@ -8734,11 +8835,17 @@ footer{
 #hero.hero--homepage .hero-eyebrow > *{
   position: relative;
   z-index: 2;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 @media (prefers-reduced-motion: reduce){
   #hero.hero--homepage .hero-eyebrow::after{
     display: none;
+  }
+  #hero.hero--homepage .hero-dollar-flight{
+    animation: none;
+    opacity: 0;
   }
 }
 
