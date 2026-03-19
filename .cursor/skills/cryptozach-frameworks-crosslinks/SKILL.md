@@ -30,7 +30,7 @@ Other useful section ids on the same page include **`three-dollar-objects`**, **
 
 ## 2026 Frameworks page (`2026-frameworks.html`)
 
-Sticky **`#structureNav`** is detected when **`#navDefGroup`** exists. Hero jump links use **`#jumpTo`** (class **`frameworks-jump-to`**).
+Sticky **`#structureNav`** is detected when **`#navDefGroup`** exists. Hero jump links use **`#jumpTo`** (class **`structure-jump-to`**, same pattern as Operating-Model).
 
 | Area | Anchor ids (shareable) |
 |------|-------------------------|

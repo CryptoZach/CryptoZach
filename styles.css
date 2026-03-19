@@ -642,6 +642,28 @@ h1{
   overflow-wrap:break-word;
   text-wrap:pretty;
 }
+.contact-page .contact-intake{
+  list-style:none;
+  margin:var(--space-lg) 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-md);
+}
+.contact-page .contact-intake .cta-link{
+  font-weight:500;
+  color:var(--accent);
+}
+.contact-page .contact-intake .cta-link:hover{
+  color:var(--accent-hover, var(--accent));
+}
+.contact-page .contact-intake .contact-intake-icon{
+  display:inline-block;
+  width:1em;
+  height:1em;
+  vertical-align:middle;
+  margin-left:0.2em;
+}
 
 /* ── Hero support points (horizontal 3-up at all screen sizes) ── */
 .hero-points{
@@ -4399,7 +4421,7 @@ main.resume-profile .section-title{
   flex:0 0 auto;
 }
 .frameworks-2026-page main > section:first-of-type .primer-flagship,
-.frameworks-2026-page main > section:first-of-type .frameworks-jump-to{
+.frameworks-2026-page main > section:first-of-type .structure-jump-to{
   flex:0 0 auto;
   align-self:stretch;
 }
@@ -4425,13 +4447,21 @@ main.resume-profile .section-title{
   margin-top:0;
   padding-bottom:var(--space-sm);
 }
-.structure-page .page-toc.structure-jump-to{
+.structure-page .page-toc.structure-jump-to,
+.frameworks-2026-page .page-toc.structure-jump-to{
   padding:var(--space-sm) var(--space-md);
   gap:var(--space-xs) var(--space-md);
   margin:0 0 var(--space-xs);
+  align-items:baseline;
 }
-.structure-page .page-toc .page-toc-title{
-  margin:0 0 var(--space-xs) 0;
+.structure-page .page-toc.structure-jump-to .page-toc-title,
+.frameworks-2026-page .page-toc.structure-jump-to .page-toc-title{
+  margin:0;
+  padding-right:var(--space-md);
+}
+.structure-page .page-toc.structure-jump-to .page-toc-list,
+.frameworks-2026-page .page-toc.structure-jump-to .page-toc-list{
+  align-items:baseline;
 }
 .structure-page .track-overview{
   margin-top:var(--space-sm);
@@ -4490,61 +4520,9 @@ main.resume-profile .section-title{
   margin:0;
 }
 
-/* Jump to: full-width strip, clearer hierarchy */
-.frameworks-2026-page .frameworks-jump-to.page-toc{
-  width:100%;
-  max-width:100%;
-  flex-direction:column;
-  align-items:flex-start;
-  align-content:flex-start;
-  gap:var(--space-xs) var(--space-md);
-  padding:var(--space-sm) var(--space-lg) var(--space-xs) var(--space-lg);
+/* 2026 Frameworks: jump-to uses same structure-jump-to pattern as Operating-Model (see .structure-page rules above) */
+.frameworks-2026-page main > section:first-of-type .structure-jump-to{
   margin-top:var(--space-md);
-  margin-bottom:0;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
-  background:color-mix(in srgb, var(--panel) 94%, var(--bg));
-}
-.frameworks-2026-page .frameworks-jump-to .page-toc-title{
-  padding-right:0;
-  padding-bottom:2px;
-  border-bottom:1px solid var(--line);
-  width:100%;
-  margin:0 0 var(--space-xs) 0;
-}
-.frameworks-2026-page .frameworks-jump-to .page-toc-list{
-  width:100%;
-  gap:var(--space-xs) var(--space-sm);
-}
-.frameworks-2026-page .frameworks-jump-to .page-toc-link{
-  padding:8px 14px;
-  font-size:13px;
-  font-weight:600;
-  border:1px solid transparent;
-  background:color-mix(in srgb, var(--bg) 40%, transparent);
-}
-.frameworks-2026-page .frameworks-jump-to .page-toc-link:hover{
-  border-color:color-mix(in srgb, var(--accent) 35%, var(--line));
-  background:var(--accent-muted);
-}
-
-@media (min-width:640px){
-  .frameworks-2026-page .frameworks-jump-to.page-toc{
-    flex-direction:row;
-    flex-wrap:wrap;
-    align-items:center;
-  }
-  .frameworks-2026-page .frameworks-jump-to .page-toc-title{
-    width:auto;
-    border-bottom:none;
-    margin-bottom:0;
-    padding-bottom:0;
-    align-self:center;
-  }
-  .frameworks-2026-page .frameworks-jump-to .page-toc-list{
-    flex:1 1 auto;
-    min-width:min(100%, 12rem);
-  }
 }
 
 /* Definitions: card-like blocks, no double rules */
@@ -6627,6 +6605,48 @@ footer{
   min-width: 0;
   box-sizing: border-box;
 }
+#signature-frameworks .track-b-card-inner{
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+  min-width: 0;
+}
+#signature-frameworks .track-b-card-fig{
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  grid-column: 1;
+}
+#signature-frameworks .track-b-card-fig a{
+  display: block;
+  line-height: 0;
+}
+#signature-frameworks .track-b-card-fig img{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  object-position: center;
+  background: var(--panel);
+}
+#signature-frameworks .track-b-card-body{
+  grid-column: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+#signature-frameworks .track-b-card-body h3{
+  margin: 0;
+}
+#signature-frameworks .track-b-card-body p{
+  margin: 0;
+}
 #signature-frameworks .track-card-header{
   display: flex;
   align-items: center;
@@ -6668,6 +6688,35 @@ footer{
   text-wrap: pretty;
   box-sizing: border-box;
 }
+.track-b-anchor-ctas{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.track-b-anchor-ctas .action.secondary{
+  margin: 0;
+}
+
+@media (max-width: 768px){
+  #signature-frameworks .track-b-card-inner{
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  #signature-frameworks .track-b-card-fig{
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+  #signature-frameworks .track-b-card-fig img{
+    max-height: 220px;
+  }
+  #signature-frameworks .track-b-card-body{
+    grid-column: 1;
+  }
+}
+
 .related-track{
   margin-top: var(--space-lg);
   padding: var(--space-md) 0;
@@ -8411,6 +8460,7 @@ footer{
    ============================================================ */
 
 #hero.hero--homepage{
+  position: relative;
   padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(34px, 4vw, 52px);
   border-top: 3px solid var(--accent);
   background:
@@ -8523,7 +8573,7 @@ footer{
   overflow: visible;
 }
 
-/* Mouse-following spotlight (position set via --hero-eyebrow-x/y from script.js) */
+/* Mouse-following spotlight (position set via --hero-eyebrow-x/y from script.js; script adds inset offset so glow is centered on cursor) */
 #hero.hero--homepage .hero-eyebrow::after{
   content: '';
   position: absolute;
@@ -8531,10 +8581,10 @@ footer{
   z-index: 1;
   pointer-events: none;
   background: radial-gradient(
-    circle 3.5rem at var(--hero-eyebrow-x, -9999px) var(--hero-eyebrow-y, -9999px),
-    rgba(74, 222, 128, 0.62),
-    rgba(74, 222, 128, 0.16) 44%,
-    transparent 64%
+    circle 4.5rem at var(--hero-eyebrow-x, -9999px) var(--hero-eyebrow-y, -9999px),
+    rgba(74, 222, 128, 0.38),
+    rgba(74, 222, 128, 0.12) 35%,
+    transparent 58%
   );
   mix-blend-mode: screen;
   opacity: 0;
@@ -8545,54 +8595,24 @@ footer{
   opacity: 1;
 }
 
-/* Dollar symbols that splash and fade around the pointer (spawned by script.js) */
-#hero.hero--homepage .hero-eyebrow-dollar{
+/* Coral reef canvas (branching animation) fills whole hero */
+#hero.hero--homepage .hero-reef{
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 3;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  color: rgb(134, 239, 172);
-  text-shadow:
-    0 0 10px rgba(74, 222, 128, 0.65),
-    0 0 22px rgba(74, 222, 128, 0.35);
-  transform: translate(-50%, -50%) scale(0.55);
-  opacity: 0;
-  animation: hero-eyebrow-dollar-splash 1.35s ease-out forwards;
+  z-index: 1;
 }
 
-@keyframes hero-eyebrow-dollar-splash{
-  0%{
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.45);
-  }
-  12%{
-    opacity: 0.88;
-    transform: translate(-50%, -50%) scale(1.02);
-  }
-  100%{
-    opacity: 0;
-    transform: translate(
-        calc(-50% + var(--dollar-dx, 0px)),
-        calc(-50% + var(--dollar-dy, -18px))
-      )
-      scale(0.75);
-  }
+#hero.hero--homepage .hero-eyebrow > *{
+  position: relative;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce){
   #hero.hero--homepage .hero-eyebrow::after{
     display: none;
-  }
-  #hero.hero--homepage .hero-eyebrow-dollar{
-    animation: none;
-    opacity: 0;
   }
 }
 
@@ -8604,6 +8624,16 @@ footer{
   letter-spacing: -0.035em;
   text-wrap: balance;
   color: var(--text);
+}
+
+#hero.hero--homepage .hero-tagline{
+  margin: var(--space-sm) 0 0;
+  max-width: 100%;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.45;
+  color: var(--text-soft);
+  font-weight: 400;
+  text-wrap: balance;
 }
 
 #hero.hero--homepage .hero-subhead{
@@ -8737,6 +8767,10 @@ footer{
     max-width: none;
     font-size: clamp(24px, 7vw, 34px);
     line-height: 1.12;
+  }
+
+  #hero.hero--homepage .hero-tagline{
+    font-size: 15px;
   }
 
   #hero.hero--homepage .hero-subhead{

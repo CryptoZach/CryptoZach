@@ -101,67 +101,265 @@
   const yearEl = document.getElementById('year');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Homepage hero eyebrow: green glow follows pointer + dollar splash around cursor
+  // Homepage hero eyebrow: green glow follows pointer + coral reef branching animation
   const heroEyebrow = document.querySelector('#hero.hero--homepage .hero-eyebrow');
   if(heroEyebrow && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const setEyebrowSpot = (clientX, clientY) => {
       const r = heroEyebrow.getBoundingClientRect();
-      heroEyebrow.style.setProperty('--hero-eyebrow-x', (clientX - r.left) + 'px');
-      heroEyebrow.style.setProperty('--hero-eyebrow-y', (clientY - r.top) + 'px');
+      const em = parseFloat(getComputedStyle(heroEyebrow).fontSize) || 16;
+      const insetX = 0.75 * em;
+      const insetY = 0.4 * em;
+      heroEyebrow.style.setProperty('--hero-eyebrow-x', (clientX - r.left + insetX) + 'px');
+      heroEyebrow.style.setProperty('--hero-eyebrow-y', (clientY - r.top + insetY) + 'px');
     };
-
-    var dollarLastSpawn = 0;
-    var dollarThrottleMs = 140;
-    var dollarMaxLive = 12;
-
-    function spawnEyebrowDollars(clientX, clientY){
-      var now = performance.now();
-      if(now - dollarLastSpawn < dollarThrottleMs){
-        return;
-      }
-      dollarLastSpawn = now;
-      var r = heroEyebrow.getBoundingClientRect();
-      var lx = clientX - r.left;
-      var ly = clientY - r.top;
-      var burst = Math.random() < 0.22 ? 2 : 1;
-      for(var b = 0; b < burst; b++){
-        var el = document.createElement('span');
-        el.className = 'hero-eyebrow-dollar';
-        el.setAttribute('aria-hidden', 'true');
-        var jitterX = (Math.random() - 0.5) * 34;
-        var jitterY = (Math.random() - 0.5) * 18;
-        var driftX = (Math.random() - 0.5) * 36;
-        var driftY = -8 - Math.random() * 26;
-        el.style.left = lx + jitterX + 'px';
-        el.style.top = ly + jitterY + 'px';
-        el.style.setProperty('--dollar-dx', driftX + 'px');
-        el.style.setProperty('--dollar-dy', driftY + 'px');
-        el.textContent = '$';
-        heroEyebrow.appendChild(el);
-        var live = heroEyebrow.querySelectorAll('.hero-eyebrow-dollar');
-        if(live.length > dollarMaxLive){
-          live[0].remove();
-        }
-        window.setTimeout(function(node){
-          if(node.parentNode === heroEyebrow){
-            node.remove();
-          }
-        }, 1450, el);
-      }
-    }
 
     heroEyebrow.addEventListener('pointermove', (e) => {
       setEyebrowSpot(e.clientX, e.clientY);
-      spawnEyebrowDollars(e.clientX, e.clientY);
     });
     heroEyebrow.addEventListener('pointerenter', (e) => {
       setEyebrowSpot(e.clientX, e.clientY);
-      spawnEyebrowDollars(e.clientX, e.clientY);
     });
     heroEyebrow.addEventListener('pointerleave', () => {
       heroEyebrow.style.removeProperty('--hero-eyebrow-x');
       heroEyebrow.style.removeProperty('--hero-eyebrow-y');
     });
+
+    // Coral reef branching animation (canvas fills whole hero)
+    const heroContainer = heroEyebrow.closest('#hero');
+    const reefCanvas = heroContainer && heroContainer.querySelector('.hero-reef');
+    if (reefCanvas && heroContainer) {
+      const rctx = reefCanvas.getContext('2d');
+      var reefBranches = [];
+      var reefNodes = [];
+      var reefMaxBranches = 250;
+      var reefMaxNodes = 350;
+      var reefLastSpawn = 0;
+      var reefRaf = null;
+      var reefActive = false;
+      var reefFade = 0;
+      var reefMx = -1, reefMy = -1;
+
+      function reefResize() {
+        var r = heroContainer.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        reefCanvas.width = Math.floor(r.width * dpr);
+        reefCanvas.height = Math.floor(r.height * dpr);
+        reefCanvas.style.width = r.width + 'px';
+        reefCanvas.style.height = r.height + 'px';
+        rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function reefRand(a, b) { return a + Math.random() * (b - a); }
+
+      function reefSpawnBranch(x, y, angle, gen, speed) {
+        if (reefBranches.length > reefMaxBranches) return;
+        reefBranches.push({
+          x: x, y: y,
+          angle: angle,
+          speed: speed || reefRand(0.4, 1.2),
+          curve: reefRand(-0.04, 0.04),
+          life: 0,
+          maxLife: reefRand(30, 90),
+          gen: gen || 0,
+          forked: false,
+          thickness: Math.max(0.3, 1.8 - gen * 0.3),
+          alpha: reefRand(0.25, 0.7)
+        });
+      }
+
+      function reefAddNode(x, y, gen) {
+        if (reefNodes.length > reefMaxNodes) reefNodes.shift();
+        reefNodes.push({
+          x: x, y: y,
+          r: reefRand(1.2, 3.0 - gen * 0.3),
+          alpha: reefRand(0.3, 0.8),
+          born: performance.now(),
+          maxAge: reefRand(3000, 8000),
+          gen: gen,
+          pulse: reefRand(0, Math.PI * 2)
+        });
+      }
+
+      function reefSpawnCluster(cx, cy) {
+        var count = Math.random() < 0.3 ? 3 : 2;
+        for (var i = 0; i < count; i++) {
+          var a = reefRand(0, Math.PI * 2);
+          var d = reefRand(3, 18);
+          reefSpawnBranch(cx + Math.cos(a) * d, cy + Math.sin(a) * d, a + reefRand(-0.5, 0.5), 0);
+        }
+        reefAddNode(cx, cy, 0);
+      }
+
+      function reefTrailFill() {
+        var raw = getComputedStyle(heroContainer).getPropertyValue('--hero-eyebrow-bg-rgb');
+        if (raw) {
+          var parts = raw.trim().split(/\s+/).map(Number);
+          if (parts.length >= 3 && parts.every(function(n) { return !Number.isNaN(n); })) {
+            return 'rgba(' + parts[0] + ',' + parts[1] + ',' + parts[2] + ',0.06)';
+          }
+        }
+        var bg = getComputedStyle(heroContainer).backgroundColor;
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          var m = bg.match(/[\d.]+/g);
+          if (m && m.length >= 3) {
+            return 'rgba(' + m[0] + ',' + m[1] + ',' + m[2] + ',0.06)';
+          }
+        }
+        bg = getComputedStyle(document.body).backgroundColor;
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          var m = bg.match(/[\d.]+/g);
+          if (m && m.length >= 3) {
+            return 'rgba(' + m[0] + ',' + m[1] + ',' + m[2] + ',0.06)';
+          }
+        }
+        return 'rgba(10, 12, 16, 0.06)';
+      }
+
+      function reefDraw() {
+        reefRaf = requestAnimationFrame(reefDraw);
+
+        var r = heroContainer.getBoundingClientRect();
+        var W = r.width, H = r.height;
+
+        if (reefActive && reefFade < 1) reefFade = Math.min(1, reefFade + 0.03);
+        if (!reefActive && reefFade > 0) reefFade = Math.max(0, reefFade - 0.008);
+
+        rctx.clearRect(0, 0, W, H);
+
+        if (reefFade < 0.001 && reefBranches.length === 0 && reefNodes.length === 0) {
+          cancelAnimationFrame(reefRaf);
+          reefRaf = null;
+          rctx.setTransform(1, 0, 0, 1, 0, 0);
+          rctx.clearRect(0, 0, reefCanvas.width, reefCanvas.height);
+          reefResize();
+          return;
+        }
+
+        var now = performance.now();
+
+        for (var n = 0; n < reefNodes.length; n++) {
+          var nd = reefNodes[n];
+          var age = now - nd.born;
+          if (age > nd.maxAge) { reefNodes.splice(n, 1); n--; continue; }
+          var nAlpha = nd.alpha * reefFade;
+          var fadeOut = age > nd.maxAge * 0.7 ? 1 - (age - nd.maxAge * 0.7) / (nd.maxAge * 0.3) : 1;
+          nAlpha *= fadeOut;
+          var p = Math.sin(now * 0.003 + nd.pulse) * 0.3 + 0.7;
+
+          rctx.beginPath();
+          rctx.arc(nd.x, nd.y, nd.r * p, 0, Math.PI * 2);
+          rctx.fillStyle = 'rgba(74, 222, 128, ' + nAlpha * 0.6 + ')';
+          rctx.fill();
+
+          rctx.beginPath();
+          rctx.arc(nd.x, nd.y, nd.r * p * 1.8, 0, Math.PI * 2);
+          rctx.fillStyle = 'rgba(74, 222, 128, ' + nAlpha * 0.12 + ')';
+          rctx.fill();
+        }
+
+        for (var nn = 0; nn < reefNodes.length; nn++) {
+          for (var mm = nn + 1; mm < reefNodes.length; mm++) {
+            var a2 = reefNodes[nn], b2 = reefNodes[mm];
+            var dx = a2.x - b2.x, dy = a2.y - b2.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 55 && dist > 5) {
+              var la = Math.min(a2.alpha, b2.alpha) * reefFade * (1 - dist / 55) * 0.15;
+              var aAge = now - a2.born, bAge = now - b2.born;
+              var af = aAge > a2.maxAge * 0.7 ? 1 - (aAge - a2.maxAge * 0.7) / (a2.maxAge * 0.3) : 1;
+              var bf = bAge > b2.maxAge * 0.7 ? 1 - (bAge - b2.maxAge * 0.7) / (b2.maxAge * 0.3) : 1;
+              la *= Math.min(af, bf);
+              if (la > 0.005) {
+                rctx.beginPath();
+                rctx.moveTo(a2.x, a2.y);
+                rctx.lineTo(b2.x, b2.y);
+                rctx.strokeStyle = 'rgba(74, 222, 128, ' + la + ')';
+                rctx.lineWidth = 0.5;
+                rctx.stroke();
+              }
+            }
+          }
+        }
+
+        for (var i = 0; i < reefBranches.length; i++) {
+          var br = reefBranches[i];
+          br.life++;
+          if (br.life > br.maxLife) { reefBranches.splice(i, 1); i--; continue; }
+
+          br.angle += br.curve + reefRand(-0.02, 0.02);
+          var prevX = br.x, prevY = br.y;
+          br.x += Math.cos(br.angle) * br.speed;
+          br.y += Math.sin(br.angle) * br.speed;
+
+          var progress = br.life / br.maxLife;
+          var bAlpha = br.alpha * (1 - progress * progress) * reefFade;
+
+          rctx.beginPath();
+          rctx.moveTo(prevX, prevY);
+          rctx.lineTo(br.x, br.y);
+          rctx.strokeStyle = 'rgba(74, 222, 128, ' + bAlpha + ')';
+          rctx.lineWidth = br.thickness * (1 - progress * 0.6);
+          rctx.stroke();
+
+          if (!br.forked && br.life > 12 && br.gen < 4 && Math.random() < 0.04) {
+            br.forked = true;
+            reefAddNode(br.x, br.y, br.gen + 1);
+            var forkCount = Math.random() < 0.35 ? 2 : 1;
+            for (var f = 0; f < forkCount; f++) {
+              var fa = br.angle + reefRand(-1.2, 1.2);
+              reefSpawnBranch(br.x, br.y, fa, br.gen + 1, br.speed * reefRand(0.6, 0.9));
+            }
+          }
+
+          if (br.life > 8 && br.gen < 3 && Math.random() < 0.008) {
+            reefAddNode(br.x, br.y, br.gen);
+          }
+
+          if (br.x < -20 || br.x > W + 20 || br.y < -20 || br.y > H + 20) {
+            reefBranches.splice(i, 1); i--;
+          }
+        }
+      }
+
+      function reefStart() {
+        reefResize();
+        reefActive = true;
+        if (!reefRaf) {
+          reefRaf = requestAnimationFrame(reefDraw);
+        }
+      }
+
+      function reefStop() {
+        reefActive = false;
+      }
+
+      heroEyebrow.addEventListener('pointermove', function(e) {
+        var r = heroContainer.getBoundingClientRect();
+        reefMx = e.clientX - r.left;
+        reefMy = e.clientY - r.top;
+        if (!reefActive) reefStart();
+        var now = performance.now();
+        if (now - reefLastSpawn > 90) {
+          reefLastSpawn = now;
+          reefSpawnCluster(reefMx, reefMy);
+        }
+      });
+
+      heroEyebrow.addEventListener('pointerenter', function(e) {
+        reefStart();
+      });
+
+      heroEyebrow.addEventListener('pointerleave', function() {
+        reefStop();
+        reefMx = -1;
+        reefMy = -1;
+      });
+
+      var reefResizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(reefResizeTimer);
+        reefResizeTimer = setTimeout(reefResize, 200);
+      });
+    }
   }
 
   // Homepage hero: full-hero matrix (fiat, tickers, optional PNG icons) on eyebrow hover
