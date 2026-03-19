@@ -86,7 +86,7 @@ Note: title case is acceptable in navigation links and buttons. Body copy and se
 - `What I work on`
 - `How the work runs`
 - `Best for`
-- `What this version answers` (resume profiles: one section with proof bullets then question blocks)
+- Lens-named answer sections on resume profiles (e.g. `What the policy lens answers`, `What the diligence lens answers`, `What the operator lens answers`): one section with proof bullets then question blocks
 - `Supporting research`
 
 **Status badges:**
@@ -155,10 +155,10 @@ These checks target unnecessary setup sentences and redundant content that slows
 
 **Setup sentences before question blocks:**
 
-On resume profile pages (`resume/*.html`), the section **What this version answers** uses a single `resume-preview-card`: focus chips, proof bullets, then `stack-list` question blocks, then downloads. No meta heading like "What this version covers" or "Questions this version is built to answer".
+On resume profile pages (`resume/*.html`), the lens-named answer section (e.g. **What the policy lens answers**) uses a single `resume-preview-card`: focus chips, proof bullets, then `stack-list` question blocks, then downloads. Avoid anonymous headings like "What this version answers" when the page already states the lens in the H1 and breadcrumb.
 
 ```bash
-grep -n "What this version answers" resume/*.html
+grep -n "lens answers" resume/*.html
 ```
 
 **Duplicate information within a single page:**

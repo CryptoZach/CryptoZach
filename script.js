@@ -71,6 +71,7 @@
     navMobile.inert = !isOpen;
     navMobile.setAttribute('aria-hidden', String(!isOpen));
     navMobile.classList.toggle('open', isOpen);
+    document.documentElement.classList.toggle('nav-mobile-open', isOpen);
   }
   function closeMobileNavIfNeeded(){
     if(menuToggle && menuToggle.getAttribute('aria-expanded') === 'true'){

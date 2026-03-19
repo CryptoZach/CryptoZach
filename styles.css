@@ -264,7 +264,7 @@ nav{
   background:var(--bg);
   padding:var(--space-lg) max(var(--space-lg), env(safe-area-inset-right)) calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)) max(var(--space-lg), env(safe-area-inset-left));
   gap:var(--space-sm);
-  z-index:10000;
+  z-index:11000;
   border-top:1px solid var(--line);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
@@ -5247,19 +5247,47 @@ footer{
     display:flex !important;
   }
 
+  /* Lock scroll behind the sheet; keep the sticky header above the overlay for tap targets. */
+  html.nav-mobile-open,
+  html.nav-mobile-open body{
+    overflow:hidden;
+    touch-action:none;
+  }
+  html.nav-mobile-open header{
+    z-index:12000;
+  }
+
   .nav-links--mobile{
     top:var(--header-h);
     padding:var(--space-md);
     /* Opaque overlay: no bleed-through from hero or sections below */
     background:var(--bg);
-    z-index:10000;
+    background-color:var(--bg);
+    z-index:11000;
     min-height:calc(100dvh - var(--header-h));
     min-height:calc(100vh - var(--header-h));
     box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
   }
+
+  /* Harden stacking and paint (some mobile engines mishandle nested stacking with sticky header). */
+  #nav-mobile.nav-links--mobile:not([hidden]){
+    position:fixed !important;
+    top:var(--header-h) !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    z-index:11000 !important;
+    background-color:var(--bg) !important;
+    background:var(--bg) !important;
+  }
   :root[data-theme="dark"] .nav-links--mobile:not([hidden]){
     background:var(--bg);
+    background-color:var(--bg);
     box-shadow:0 16px 48px color-mix(in srgb, #000 45%, transparent);
+  }
+  :root[data-theme="dark"] #nav-mobile.nav-links--mobile:not([hidden]){
+    background-color:var(--bg) !important;
+    background:var(--bg) !important;
   }
   .mobile-nav-linkset{
     display:flex;
@@ -9076,8 +9104,8 @@ footer{
   #hero.hero--homepage .hero-cta-row{
     flex-direction: column;
     align-items: stretch;
-    gap: var(--space-md);
-    row-gap: var(--space-md);
+    gap: var(--space-lg);
+    row-gap: var(--space-lg);
     max-width: none;
   }
 
@@ -9085,14 +9113,17 @@ footer{
   #hero.hero--homepage .hero-resume-profile-nav{
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
-    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     align-items: stretch;
+    gap: var(--space-md);
+    width: 100%;
   }
 
   #hero.hero--homepage .hero-cta-row .action{
     width: 100%;
     max-width: none;
+    flex-shrink: 0;
     justify-content: center;
     box-sizing: border-box;
     min-height: 48px;
