@@ -81,18 +81,21 @@ ICONIFY_CRYPTO_PATHS = {
 # gs: bundled gs.svg (SI Goldman Sachs is a hairline wordmark at 32px).
 # amd: bundled amd.svg (SI paths mush when whiten()d and scaled to 20px).
 # op: bundled op.svg (Iconify optimism OP mark smears as horizontal bars at matrix size).
-# apt: bundled apt.svg (Iconify aptos is stripe-heavy; whiten() reads as smeared bars at 20px).
+# apt: Iconify token/aptos (coin mark; bundled APT text retired).
 # near: bundled near.svg (SI ribbon whiten() reads as stacked horizontal smears at matrix size).
 # sui: bundled sui.svg (token/sui organic paths mush when whiten()d at 20px).
 # sei: bundled sei.svg (token/sei waves read as stripe smears at 20px).
 # doge: bundled doge.svg (SI coin is a filled disk; 20px + blur reads as a blank green puck).
-# wld: bundled wld.svg (iris ring merges into a solid circle at matrix size).
+# wld: Iconify arcticons/worldcoin (orb mark; bundled WLD text retired).
 # dot: bundled dot.svg (thick Polkadot ring reads as a filled circle when blurred).
-# uni: bundled uni.svg (dotted unicorn clumps into a green blob at 20px).
+# uni: Iconify token/uniswap (unicorn silhouette; bundled UNI text retired).
 # aave: bundled aave.svg (color disk reads as a large blank green circle at 20px).
 # crv: bundled crv.svg (filled squircle reads as a large blank green disk; icon is duplicated in iconDefs).
 ICONIFY_CRYPTO_PREF = {
     "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
+    "uni": ["token/uniswap", "token-branded/uniswap"],
+    "apt": ["token/aptos", "token-branded/aptos"],
+    "wld": ["arcticons/worldcoin"],
     "op": ["token-branded/optimism", "token/optimism"],
     "arb": ["token-branded/arbitrum", "token/arbitrum"],
     "ton": ["token-branded/ton", "token/ton", "simple-icons/ton"],
@@ -103,12 +106,16 @@ ICONIFY_CRYPTO_PREF = {
 ICONIFY_COMPANY_PATHS = {
     "visa": ["simple-icons/visa", "logos/visa"],
     "intc": ["logos/intel", "simple-icons/intel"],
+    "fidelity": ["arcticons/fidelity"],
+    "venmo": ["fa7-brands/venmo-v"],
 }
 
 COMPANIES = {
     "aapl": ("apple",            []),
     "msft": ("microsoft",        []),
     "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),
+    "citi": ("citibank",         []),
+    "fidelity": ("fidelity",     []),
     "gs":   ("goldmansachs",     []),
     "coinbase": ("coinbase",     []),
     "kinexys": ("kinexys",       []),

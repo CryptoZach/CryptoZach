@@ -56,9 +56,8 @@ const ICONS = [
   { name: 'fil', si: ['filecoin'], cc: 'fil', iconifyExtra: ['token/filecoin'] },
   {
     name: 'uni',
-    localSvg: 'icons/matrix/build-sources/uni.svg',
     si: [],
-    iconifyExtra: ['token/uniswap', 'simple-icons/uniswap'],
+    iconifyExtra: ['token/uniswap', 'token-branded/uniswap'],
     cc: 'uni',
   },
   {
@@ -125,9 +124,8 @@ const ICONS = [
   },
   {
     name: 'apt',
-    localSvg: 'icons/matrix/build-sources/apt.svg',
     si: [],
-    iconifyExtra: ['token/aptos'],
+    iconifyExtra: ['token/aptos', 'token-branded/aptos'],
   },
   {
     name: 'sui',
@@ -181,9 +179,8 @@ const ICONS = [
   },
   {
     name: 'wld',
-    localSvg: 'icons/matrix/build-sources/wld.svg',
     si: [],
-    iconifyExtra: ['arcticons/worldcoin', 'simple-icons/worldcoin'],
+    iconifyExtra: ['arcticons/worldcoin'],
     cc: 'wld',
   },
   { name: 'rndr', si: ['render'], cc: 'rndr' },
@@ -211,6 +208,12 @@ const ICONS = [
   { name: 'aapl', si: ['apple'] },
   { name: 'msft', si: ['microsoft'] },
   { name: 'jpm', si: ['jpmorgan', 'jpmorganchase', 'chase'] },
+  {
+    name: 'citi',
+    localSvg: 'icons/matrix/build-sources/citi.svg',
+    si: [],
+  },
+  { name: 'fidelity', si: [], iconifyExtra: ['arcticons/fidelity'] },
   {
     name: 'gs',
     localSvg: 'icons/matrix/build-sources/gs.svg',
@@ -248,7 +251,8 @@ const ICONS = [
   { name: 'schw', si: ['charlesschwab', 'schwab'], iconifyExtra: ['arcticons/schwab'] },
   { name: 'pypl', si: ['paypal'] },
   { name: 'facebook', si: ['facebook'] },
-  { name: 'venmo', si: ['venmo'] },
+  /* SI venmo = full wordmark; fa7 venmo-v = stylized V mark at matrix size */
+  { name: 'venmo', si: [], iconifyExtra: ['fa7-brands/venmo-v'] },
   {
     name: 'cashapp',
     localSvg: 'icons/matrix/build-sources/cashapp.svg',
