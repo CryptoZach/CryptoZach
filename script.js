@@ -668,8 +668,9 @@
   mtxEnsureActivator(heroFlagshipMtx);
   if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const mtxCtx = matrixCanvas.getContext('2d');
+    /* One USD glyph: USDC stablecoin read comes from usdc.png in the crypto pool (duplicated there). */
     const textChars = [
-      '$', '$', '$', '$', '$', '$',
+      '$',
       '€', '£', '¥', '₩', '₹', '₣', '₴', '₱', '\uFDFC',
       '₿', '\u039E',
       'XAU', 'XAG', 'WTI', 'NG', 'CL',
@@ -681,13 +682,18 @@
     var iconDefs = [
       { src: './icons/matrix/btc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sol.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/fil.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
@@ -701,14 +707,18 @@
       { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/op.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/op.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/near.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/apt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sui.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/inj.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/zec.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/stx.png', loaded: false, img: null, tinted: null },
@@ -717,17 +727,24 @@
       { src: './icons/matrix/algo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hbar.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wld.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tao.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/metamask.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/coin.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ma.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/googl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
@@ -740,6 +757,9 @@
       { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/schw.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/csco.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
@@ -747,6 +767,9 @@
       { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ice.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ko.png', loaded: false, img: null, tinted: null }
     ];
 
@@ -773,9 +796,12 @@
     var mtxTradPool = mtxTradTextChars.map(function(v){ return { type: 'text', value: v }; });
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
-      mtxTradPool.push({ type: 'icon', def: def });
-      mtxTradPool.push({ type: 'icon', def: def });
-      mtxTradPool.push({ type: 'icon', def: def });
+      /* Slightly higher weight for Visa so the mark reads next to other payment rails. */
+      var n = def.src.indexOf('visa.png') >= 0 ? 5 : 3;
+      var k;
+      for(k = 0; k < n; k++){
+        mtxTradPool.push({ type: 'icon', def: def });
+      }
     });
 
     /* ~35% of glyphs from crypto icons only (no crypto ASCII tickers); rest from fiat, commodities, macro, stock icons */
@@ -785,6 +811,7 @@
 
     iconDefs.forEach(function(def){
       var img = new Image();
+      img.decoding = 'async';
       img.onload = function(){
         def.loaded = true;
         def.img = img;
@@ -806,11 +833,11 @@
     var mtxColOpacity = [];
     var mtxColStep = [];
     var mtxPrevDrawTs = 0;
-    var mtxColWidth = 20;
-    var mtxFontSize = 12;
-    var mtxDollarFontSize = 16;
-    var mtxLineStep = 20;
-    var mtxIconDrawSize = 16;
+    var mtxColWidth = 22;
+    var mtxFontSize = 13;
+    var mtxDollarFontSize = 17;
+    var mtxLineStep = 22;
+    var mtxIconDrawSize = 20;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -844,20 +871,24 @@
       if(!def.img || !def.loaded){
         return null;
       }
-      var tmp = document.createElement('canvas');
-      var tw = 48;
-      var th = 48;
-      tmp.width = tw;
-      tmp.height = th;
-      var tctx = tmp.getContext('2d');
-      tctx.imageSmoothingEnabled = true;
-      if('imageSmoothingQuality' in tctx){
-        tctx.imageSmoothingQuality = 'high';
+      /* Tint at native bitmap size, then scale once on the hero canvas (avoids upscaling 32px art to 48 then crushing to 16). */
+      var nw = def.img.naturalWidth || 32;
+      var nh = def.img.naturalHeight || 32;
+      if(nw < 1){
+        nw = 32;
       }
-      tctx.drawImage(def.img, 0, 0, tw, th);
+      if(nh < 1){
+        nh = 32;
+      }
+      var tmp = document.createElement('canvas');
+      tmp.width = nw;
+      tmp.height = nh;
+      var tctx = tmp.getContext('2d');
+      tctx.imageSmoothingEnabled = false;
+      tctx.drawImage(def.img, 0, 0, nw, nh);
       tctx.globalCompositeOperation = 'source-atop';
       tctx.fillStyle = 'rgba(94, 234, 168, 1)';
-      tctx.fillRect(0, 0, tw, th);
+      tctx.fillRect(0, 0, nw, nh);
       tctx.globalCompositeOperation = 'source-over';
       def.tinted = tmp;
       return tmp;
@@ -921,7 +952,7 @@
 
     function mtxInitCanvas(){
       var rect = matrixContainer.getBoundingClientRect();
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
       var w = Math.max(1, rect.width);
       var h = Math.max(1, rect.height);
       matrixCanvas.width = Math.floor(w * dpr);
@@ -933,7 +964,12 @@
       if('imageSmoothingQuality' in mtxCtx){
         mtxCtx.imageSmoothingQuality = 'high';
       }
-      var colCount = Math.max(1, Math.floor(w / mtxColWidth));
+      if('textRendering' in mtxCtx){
+        mtxCtx.textRendering = 'geometricPrecision';
+      }
+      /* Match mtxDraw column math to integer layout width (avoids rect vs clientWidth mismatch). */
+      var cw = Math.max(1, matrixCanvas.clientWidth || Math.floor(w));
+      var colCount = Math.max(1, Math.floor(cw / mtxColWidth));
       mtxDrops = new Array(colCount).fill(0).map(function(){
         return -8 - Math.random() * 32;
       });
@@ -949,7 +985,7 @@
       var item = pickItem();
       mtxColItem[i] = item;
       mtxColOpacity[i] = item.type === 'icon'
-        ? 0.24 + Math.random() * 0.18
+        ? 0.32 + Math.random() * 0.16
         : 0.17 + Math.random() * 0.22;
     }
 
@@ -972,9 +1008,15 @@
       if(t > 0){
         mtxPrevDrawTs = t;
       }
-      var rect = matrixContainer.getBoundingClientRect();
-      var w = Math.max(1, rect.width);
-      var h = Math.max(1, rect.height);
+      /* Logical size from the canvas box avoids a layout read on matrixContainer every rAF. */
+      var w = Math.max(1, matrixCanvas.clientWidth);
+      var h = Math.max(1, matrixCanvas.clientHeight);
+      var needCols = Math.max(1, Math.floor(w / mtxColWidth));
+      if(needCols !== mtxDrops.length){
+        mtxInitCanvas();
+        w = Math.max(1, matrixCanvas.clientWidth);
+        h = Math.max(1, matrixCanvas.clientHeight);
+      }
       mtxCtx.fillStyle = mtxTrailFill();
       mtxCtx.fillRect(0, 0, w, h);
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
@@ -985,7 +1027,7 @@
           mtxWarpX = mtxWarpTx;
           mtxWarpY = mtxWarpTy;
         } else {
-          var warpSmooth = 0.18;
+          var warpSmooth = 0.14;
           mtxWarpX += (mtxWarpTx - mtxWarpX) * warpSmooth;
           mtxWarpY += (mtxWarpTy - mtxWarpY) * warpSmooth;
         }
@@ -1036,11 +1078,16 @@
           if(tint){
             mtxCtx.save();
             mtxCtx.globalAlpha = op;
-            mtxCtx.shadowBlur = 5;
-            mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.3)';
+            /* Light edge only: heavy blur reads as mush at 20px. */
+            mtxCtx.shadowBlur = 2;
+            mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.22)';
             mtxCtx.shadowOffsetX = 0;
             mtxCtx.shadowOffsetY = 0;
-            mtxCtx.drawImage(tint, x, y, mtxIconDrawSize, mtxIconDrawSize);
+            mtxCtx.imageSmoothingEnabled = true;
+            if('imageSmoothingQuality' in mtxCtx){
+              mtxCtx.imageSmoothingQuality = 'high';
+            }
+            mtxCtx.drawImage(tint, Math.round(x), Math.round(y), mtxIconDrawSize, mtxIconDrawSize);
             mtxCtx.restore();
           }
         }

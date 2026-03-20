@@ -3,6 +3,7 @@
  * White 32x32 PNGs for homepage matrix (script.js iconDefs).
  * Order per asset: jsDelivr simple-icons SVG, Iconify simple-icons SVG (legacy slugs),
  * optional Iconify paths (token/*, etc.), then spothq cryptocurrency-icons PNG.
+ * localSvg: repo-root-relative path to an SVG file when no CDN slug exists.
  *
  * Run: npm run build:matrix-icons
  * Needs network. Uses Playwright Chromium to rasterize (no system Cairo).
@@ -30,10 +31,28 @@ const ICONS = [
   { name: 'btc', si: ['bitcoin'], cc: 'btc' },
   { name: 'eth', si: ['ethereum'], cc: 'eth' },
   { name: 'sol', si: ['solana'], cc: 'sol' },
-  { name: 'usdc', si: ['circle', 'usdc'], cc: 'usdc' },
+  /* Bundled evenodd path: blue+white Iconify art whiten()s to a solid blob; this keeps $ cutouts. */
+  {
+    name: 'usdc',
+    localSvg: 'icons/matrix/build-sources/usdc.svg',
+    si: [],
+    iconifyExtra: ['token/usdc', 'cryptocurrency-color/usdc'],
+    cc: 'usdc',
+  },
   { name: 'usdt', si: ['tether'], cc: 'usdt' },
-  { name: 'dai', si: ['dai'], cc: 'dai', iconifyExtra: ['cryptocurrency-color/dai'] },
-  { name: 'hnt', si: ['helium'], cc: 'hnt' },
+  {
+    name: 'dai',
+    localSvg: 'icons/matrix/build-sources/dai.svg',
+    si: [],
+    iconifyExtra: ['cryptocurrency-color/dai'],
+    cc: 'dai',
+  },
+  {
+    name: 'hnt',
+    localSvg: 'icons/matrix/build-sources/hnt.svg',
+    si: [],
+    cc: 'hnt',
+  },
   { name: 'fil', si: ['filecoin'], cc: 'fil', iconifyExtra: ['token/filecoin'] },
   { name: 'uni', si: ['uniswap'], cc: 'uni', iconifyExtra: ['token/uniswap'] },
   { name: 'aave', si: ['aave'], cc: 'aave', iconifyExtra: ['cryptocurrency-color/aave'] },
@@ -43,17 +62,42 @@ const ICONS = [
   { name: 'dot', si: ['polkadot'], cc: 'dot' },
   { name: 'atom', si: ['cosmos'], cc: 'atom', iconifyExtra: ['token/atom', 'cryptocurrency-color/atom'] },
   { name: 'ltc', si: ['litecoin'], cc: 'ltc' },
-  { name: 'link', si: ['chainlink'], cc: 'link' },
+  {
+    name: 'link',
+    localSvg: 'icons/matrix/build-sources/link.svg',
+    si: [],
+    iconifyExtra: ['simple-icons/chainlink'],
+    cc: 'link',
+  },
   { name: 'xlm', si: ['stellar'], cc: 'xlm' },
   { name: 'doge', si: ['dogecoin'], cc: 'doge' },
   { name: 'trx', si: ['tron'], cc: 'trx', iconifyExtra: ['token/tron'] },
   { name: 'bnb', si: ['binance'], cc: 'bnb' },
-  { name: 'op', si: ['optimism'], iconifyExtra: ['token/optimism'] },
-  { name: 'arb', si: ['arbitrum'], iconifyExtra: ['token/arbitrum'] },
+  {
+    name: 'op',
+    si: [],
+    iconifyExtra: ['token-branded/optimism', 'token/optimism', 'simple-icons/optimism'],
+  },
+  /* SI has no arbitrum.svg on jsDelivr v16; token-branded is the reliable mark */
+  {
+    name: 'arb',
+    si: [],
+    iconifyExtra: ['token-branded/arbitrum', 'token/arbitrum'],
+  },
   { name: 'near', si: ['near'], cc: 'near' },
   { name: 'apt', si: ['aptos'], iconifyExtra: ['token/aptos'] },
   { name: 'sui', si: ['sui'], iconifyExtra: ['token/sui'] },
-  { name: 'inj', si: ['injective'], iconifyExtra: ['token/injective'] },
+  {
+    name: 'inj',
+    localSvg: 'icons/matrix/build-sources/inj.svg',
+    si: [],
+    iconifyExtra: ['token/injective'],
+  },
+  {
+    name: 'hyperliquid',
+    localSvg: 'icons/matrix/build-sources/hyperliquid.svg',
+    si: [],
+  },
   { name: 'tia', si: ['celestia'], iconifyExtra: ['token/tia'] },
   { name: 'xmr', si: ['monero'], cc: 'xmr' },
   { name: 'zec', si: ['zcash'], cc: 'zec' },
@@ -63,19 +107,54 @@ const ICONS = [
   { name: 'mkr', si: ['maker'], cc: 'mkr', iconifyExtra: ['token/mkr'] },
   { name: 'xtz', si: ['tezos'], cc: 'xtz', iconifyExtra: ['token/xtz'] },
   { name: 'algo', si: ['algorand'], cc: 'algo' },
-  { name: 'hbar', si: ['hedera'], cc: 'hbar' },
-  { name: 'ton', si: ['ton'], iconifyExtra: ['token/ton'] },
+  {
+    name: 'hbar',
+    localSvg: 'icons/matrix/build-sources/hbar.svg',
+    si: [],
+    iconifyExtra: ['simple-icons/hedera'],
+    cc: 'hbar',
+  },
+  {
+    name: 'ton',
+    si: [],
+    iconifyExtra: ['token-branded/ton', 'token/ton', 'simple-icons/ton'],
+  },
   { name: 'sei', si: ['sei'], iconifyExtra: ['token/sei'] },
   { name: 'wld', si: ['worldcoin'], cc: 'wld', iconifyExtra: ['arcticons/worldcoin'] },
   { name: 'rndr', si: ['render'], cc: 'rndr' },
   { name: 'tao', si: ['bittensor'], iconifyExtra: ['token/tao'] },
+  {
+    name: 'kraken',
+    si: [],
+    iconifyExtra: ['logos/kraken', 'token-branded/kraken'],
+  },
+  {
+    name: 'metamask',
+    si: [],
+    iconifyExtra: ['logos/metamask', 'token-branded/metamask'],
+  },
+  {
+    name: 'layerzero',
+    localSvg: 'icons/matrix/build-sources/layerzero.svg',
+    si: [],
+  },
+  {
+    name: 'wormhole',
+    si: [],
+    iconifyExtra: ['arcticons/wormhole', 'arcticons/wormhole-2'],
+  },
   { name: 'aapl', si: ['apple'] },
   { name: 'msft', si: ['microsoft'] },
   { name: 'jpm', si: ['jpmorgan', 'jpmorganchase', 'chase'] },
   { name: 'gs', si: ['goldmansachs'] },
-  { name: 'coin', si: ['coinbase'] },
+  { name: 'coinbase', si: ['coinbase'] },
   { name: 'sq', si: ['square', 'block'] },
-  { name: 'visa', si: ['visa'] },
+  /* Visa: Iconify simple-icons = compact V-style mark; logos/visa = full wordmark fallback */
+  { name: 'visa', si: [], iconifyExtra: ['simple-icons/visa', 'logos/visa'] },
+  {
+    name: 'kinexys',
+    localSvg: 'icons/matrix/build-sources/kinexys.svg',
+  },
   { name: 'ma', si: ['mastercard'] },
   { name: 'googl', si: ['google', 'alphabet'] },
   { name: 'amzn', si: ['amazon'] },
@@ -88,13 +167,34 @@ const ICONS = [
   { name: 'wfc', si: ['wellsfargo'] },
   { name: 'schw', si: ['charlesschwab', 'schwab'], iconifyExtra: ['arcticons/schwab'] },
   { name: 'pypl', si: ['paypal'] },
-  { name: 'intc', si: ['intel'] },
+  { name: 'facebook', si: ['facebook'] },
+  { name: 'venmo', si: ['venmo'] },
+  {
+    name: 'cashapp',
+    localSvg: 'icons/matrix/build-sources/cashapp.svg',
+    si: [],
+    iconifyExtra: ['simple-icons/cashapp'],
+  },
+  /* Intel: logos/intel = classic wordmark; simple-icons fallback */
+  { name: 'intc', si: [], iconifyExtra: ['logos/intel', 'simple-icons/intel'] },
   { name: 'csco', si: ['cisco'] },
   { name: 'orcl', si: ['oracle'] },
   { name: 'dis', si: ['waltdisney', 'disney', 'waltdisneyworld'], iconifyExtra: ['tabler/brand-disney'] },
   { name: 'mstr', si: ['microstrategy', 'strategy'] },
   { name: 'hood', si: ['robinhood'] },
   { name: 'ibm', si: ['ibm'] },
+  {
+    name: 'nasdaq',
+    localSvg: 'icons/matrix/build-sources/nasdaq.svg',
+  },
+  {
+    name: 'nyse',
+    localSvg: 'icons/matrix/build-sources/nyse.svg',
+  },
+  {
+    name: 'ice',
+    localSvg: 'icons/matrix/build-sources/ice.svg',
+  },
   { name: 'ko', si: ['cocacola', 'coca-cola'] },
 ];
 
@@ -112,7 +212,17 @@ async function fetchText(url) {
 }
 
 async function fetchSvgForRow(row) {
-  for (const slug of row.si) {
+  if (row.localSvg) {
+    const p = path.join(process.cwd(), row.localSvg);
+    if (fs.existsSync(p)) {
+      const t = fs.readFileSync(p, 'utf8');
+      if (t && t.trim().startsWith('<')) {
+        return t;
+      }
+    }
+    /* Rows that also list si / iconifyExtra keep trying when local is absent. */
+  }
+  for (const slug of row.si || []) {
     let t = await fetchText(siUrl(slug));
     if (t) {
       return t;

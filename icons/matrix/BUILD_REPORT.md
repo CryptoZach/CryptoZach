@@ -19,7 +19,8 @@
 | `bac.png` | Simple Icons (bankofamerica) (629B) |
 | `bnb.png` | Simple Icons (binance) (491B) |
 | `btc.png` | Simple Icons (bitcoin) (865B) |
-| `coin.png` | Simple Icons (coinbase) (439B) |
+| `coinbase.png` | Simple Icons (coinbase) (439B) |
+| `kinexys.png` | bundled SVG (build-sources/kinexys.svg) |
 | `csco.png` | Simple Icons (cisco) (659B) |
 | `dai.png` | cryptocurrency-icons SVG (dai) (379B) |
 | `doge.png` | Simple Icons (dogecoin) (752B) |
