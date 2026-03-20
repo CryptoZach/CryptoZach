@@ -82,7 +82,7 @@ ICONIFY_CRYPTO_PATHS = {
 # coinbase: Iconify token/coinbase (C arc); SI coinbase is a wordmark at matrix size.
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
 # wfc: bundled wfc.svg (SI wordmark is illegible at matrix size; two-line sans text).
-# gs: bundled gs.svg (SI Goldman Sachs is a hairline wordmark at 32px).
+# gs: bundled gs.svg (Myna UI solid G+S paths; SI Goldman Sachs is a hairline wordmark at 32px).
 # amd: bundled amd.svg (SI wordmark paths; ticker text retired).
 # op: bundled op.svg (Iconify token-branded optimism paths; no OP text ticker).
 # apt: Iconify token/aptos (coin mark; bundled APT text retired).

@@ -23,7 +23,7 @@ These are intentional fallbacks where SI or Iconify art failed matrix constraint
 | **`build-sources/bakkt.svg`** | **B** |
 | **`build-sources/securitize.svg`** | **S** |
 | **`build-sources/citi.svg`** | **CITI** |
-| **`build-sources/gs.svg`** | **GS** |
+| **`build-sources/gs.svg`** | **GS** (Myna UI solid **G** + **S** paths) |
 
 Prefer **path-based logos** where licensing and aspect ratio allow (see **AMD**, **Coinbase**, **JPM** patterns in git history).
 

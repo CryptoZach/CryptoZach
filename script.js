@@ -635,6 +635,9 @@
   /* Flagship brief CTA must always bind: when eyebrow already has the class, the old code skipped this link. */
   mtxEnsureActivator(heroFlagshipMtx);
   if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    /* Mobile layout or touch-first: keep matrix running without hover (hero pointerup otherwise calls mtxStop every lift). */
+    var mtxMobileMatrixAlways = window.matchMedia('(pointer: coarse)').matches
+      || window.matchMedia('(max-width: 768px)').matches;
     const mtxCtx = matrixCanvas.getContext('2d');
     /* One USD glyph: USDC stablecoin read comes from usdc.png in the crypto pool (duplicated there). */
     const textChars = [
@@ -1242,6 +1245,9 @@
       mtxClearFlagshipLpTimer();
       mtxFlagshipLpStripClasses();
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
+      if(mtxMobileMatrixAlways){
+        return;
+      }
       matrixContainer.classList.remove('active');
       if(mtxRaf){
         cancelAnimationFrame(mtxRaf);
@@ -1489,6 +1495,34 @@
         }
       }, 200);
     });
+
+    if(mtxMobileMatrixAlways){
+      mtxStart();
+      document.addEventListener('visibilitychange', function mtxHeroMatrixVis(){
+        if(document.hidden || !mtxMobileMatrixAlways){
+          return;
+        }
+        mtxPrevDrawTs = 0;
+        mtxTrailFillCache = '';
+        mtxTrailFillFrame = 0;
+        if(!matrixContainer.classList.contains('active')){
+          mtxStart();
+          return;
+        }
+        if(mtxRaf){
+          cancelAnimationFrame(mtxRaf);
+          mtxRaf = null;
+        }
+        mtxRaf = requestAnimationFrame(mtxDraw);
+      });
+      window.addEventListener('pageshow', function mtxHeroMatrixPageShow(e){
+        if(!mtxMobileMatrixAlways || !e.persisted){
+          return;
+        }
+        mtxPrevDrawTs = 0;
+        mtxStart();
+      });
+    }
   }
 
   // Sticky section rail: Operating-Model.html (Structure), 2026-frameworks.html, speaker-advisory.html

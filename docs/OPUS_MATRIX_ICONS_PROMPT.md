@@ -88,7 +88,7 @@ Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square m
 | `msft.png` | Microsoft |
 | `jpm.png` | JPMorgan Chase (bundled **`build-sources/jpm.svg`**: Chase octagon; SI has no **jpmorgan** slug) |
 | `citi.png` | Citibank (bundled **`build-sources/citi.svg`**: bold **CITI**; no SI slug in v16) |
-| `gs.png` | Goldman Sachs (bundled **`build-sources/gs.svg`**: bold **GS**; SI wordmark is illegible at 20px) |
+| `gs.png` | Goldman Sachs (bundled **`build-sources/gs.svg`**: Myna UI **letter-g-solid** + **letter-s-solid**; SI wordmark is illegible at 20px) |
 | `coinbase.png` | Coinbase (Iconify **`token/coinbase`** C arc; SI is a wordmark at matrix size) |
 | `sq.png` | Block (Square) |
 | `visa.png` | Visa |
