@@ -4767,6 +4767,7 @@ main.resume-profile .section-title{
   }
   .frameworks-2026-page #entry-points .next-paths--frameworks .next-card p{
     -webkit-line-clamp:unset;
+    line-clamp:unset;
     min-height:0;
   }
 }
@@ -8754,7 +8755,8 @@ footer{
 }
 
 #hero.hero--homepage .matrix-container.active{
-  opacity: 0.43;
+  /* Slightly higher so tinted glyphs read over the panel */
+  opacity: 0.48;
 }
 
 #hero.hero--homepage .matrix-canvas{
@@ -8764,6 +8766,7 @@ footer{
   width: 100%;
   height: 100%;
   display: block;
+  contain: strict;
 }
 
 #hero.hero--homepage .matrix-container::before,

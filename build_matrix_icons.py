@@ -17,7 +17,7 @@ CRYPTO = {
     "btc":  ("bitcoin",     [],                   "btc"),
     "eth":  ("ethereum",    [],                   "eth"),
     "sol":  ("solana",      [],                   "sol"),
-    "usdc": ("circle",      ["usdc"],             "usdc"),
+    "usdc": ("usdc",        [],                   "usdc"),
     "usdt": ("tether",      [],                   "usdt"),
     "dai":  ("dai",         [],                   "dai"),
     "hnt":  ("helium",      [],                   "hnt"),
@@ -41,6 +41,7 @@ CRYPTO = {
     "apt":  ("aptos",       [],                   None),
     "sui":  ("sui",         [],                   None),
     "inj":  ("injective",   [],                   None),
+    "hyperliquid": ("hyperliquid", [],           None),
     "tia":  ("celestia",    [],                   None),
     "xmr":  ("monero",      [],                   "xmr"),
     "zec":  ("zcash",       [],                   "zec"),
@@ -56,6 +57,36 @@ CRYPTO = {
     "wld":  ("worldcoin",   [],                   None),
     "rndr": ("render",      [],                   "rndr"),
     "tao":  ("bittensor",   [],                   None),
+    "kraken": ("kraken",     [],                   None),
+    "metamask": ("metamask", [],                   None),
+    "layerzero": ("layerzero", [],                 None),
+    "wormhole": ("wormhole", [],                   None),
+}
+
+# Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
+ICONIFY_CRYPTO_PATHS = {
+    "kraken": ["logos/kraken", "token-branded/kraken"],
+    "metamask": ["logos/metamask", "token-branded/metamask"],
+}
+
+# Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
+# USDC / DAI: bundled build-sources/usdc.svg and dai.svg (glyph + ring, no filled brand disk) in Phase 0 first; then these.
+# cashapp: bundled cashapp.svg (squircle ring + $ subpath; full SI path is muddy at 32px).
+# link: bundled link.svg (SI hex + center chain hint; hollow SI hex reads blank on green trail).
+# hbar: bundled hbar.svg (SI Hedera is a filled circle + H that whiten() reads as a blank disk at 20px).
+# hyperliquid: bundled hyperliquid.svg (official symbol from project brand kit; no SI slug in v16).
+ICONIFY_CRYPTO_PREF = {
+    "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
+    "op": ["token-branded/optimism", "token/optimism"],
+    "arb": ["token-branded/arbitrum", "token/arbitrum"],
+    "ton": ["token-branded/ton", "token/ton", "simple-icons/ton"],
+    "wormhole": ["arcticons/wormhole", "arcticons/wormhole-2"],
+}
+
+# Prefer these Iconify SVGs before Simple Icons (matrix readability / correct mark).
+ICONIFY_COMPANY_PATHS = {
+    "visa": ["simple-icons/visa", "logos/visa"],
+    "intc": ["logos/intel", "simple-icons/intel"],
 }
 
 COMPANIES = {
@@ -63,7 +94,8 @@ COMPANIES = {
     "msft": ("microsoft",        []),
     "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),
     "gs":   ("goldmansachs",     []),
-    "coin": ("coinbase",         []),
+    "coinbase": ("coinbase",     []),
+    "kinexys": ("kinexys",       []),
     "sq":   ("square",           ["block"]),
     "visa": ("visa",             []),
     "ma":   ("mastercard",       []),
@@ -78,6 +110,9 @@ COMPANIES = {
     "wfc":  ("wellsfargo",       []),
     "schw": ("charlesschwab",    ["schwab"]),
     "pypl": ("paypal",           []),
+    "facebook": ("facebook",     []),
+    "venmo": ("venmo",           []),
+    "cashapp": ("cashapp",       []),
     "intc": ("intel",            []),
     "csco": ("cisco",            []),
     "orcl": ("oracle",           []),
@@ -85,6 +120,9 @@ COMPANIES = {
     "mstr": ("microstrategy",    ["strategy"]),
     "hood": ("robinhood",        []),
     "ibm":  ("ibm",              []),
+    "nasdaq": ("nasdaq",         []),
+    "nyse": ("nyse",             []),
+    "ice": ("ice",               []),
     "ko":   ("cocacola",         ["coca-cola"]),
 }
 
@@ -222,6 +260,69 @@ def main():
         slugs_tried = []
         found = False
 
+        # ── Phase 0: bundled SVG in build-sources/<name>.svg ──
+        bundled_svg = os.path.join(outdir, "build-sources", f"{name}.svg")
+        if os.path.isfile(bundled_svg):
+            slugs_tried.append(f"local:build-sources/{name}.svg")
+            with open(bundled_svg, "rb") as sf:
+                svg_data = sf.read()
+            png_data = svg_to_white_png(svg_data)
+            if png_data:
+                png_data = ensure_rgba(png_data)
+                with open(out_path, "wb") as f:
+                    f.write(png_data)
+                fsize = len(png_data)
+                sourced[name] = (f"bundled SVG (build-sources/{name}.svg)", fsize)
+                found = True
+                print(f"  [{i:2d}/{total}] {name}.png <- local {name}.svg [{fsize}B]")
+
+        if found:
+            continue
+
+        # ── Phase 0.5a: Iconify (crypto marks SI does not ship or would mis-resolve) ──
+        if kind == "crypto" and name in ICONIFY_CRYPTO_PREF:
+            for path in ICONIFY_CRYPTO_PREF[name]:
+                url = f"https://api.iconify.design/{path}.svg"
+                slugs_tried.append(f"IconifyPref:{path}")
+                svg_data = fetch_url(url)
+                if svg_data:
+                    png_data = svg_to_white_png(svg_data)
+                    if png_data:
+                        png_data = ensure_rgba(png_data)
+                        with open(out_path, "wb") as f:
+                            f.write(png_data)
+                        fsize = len(png_data)
+                        sourced[name] = (f"Iconify ({path})", fsize)
+                        found = True
+                        print(f"  [{i:2d}/{total}] {name}.png <- IconifyPref:{path} [{fsize}B]")
+                        break
+                time.sleep(0.1)
+
+        if found:
+            continue
+
+        # ── Phase 0.5: Iconify (preferred marks for some companies) ──
+        if kind == "company" and name in ICONIFY_COMPANY_PATHS:
+            for path in ICONIFY_COMPANY_PATHS[name]:
+                url = f"https://api.iconify.design/{path}.svg"
+                slugs_tried.append(f"Iconify:{path}")
+                svg_data = fetch_url(url)
+                if svg_data:
+                    png_data = svg_to_white_png(svg_data)
+                    if png_data:
+                        png_data = ensure_rgba(png_data)
+                        with open(out_path, "wb") as f:
+                            f.write(png_data)
+                        fsize = len(png_data)
+                        sourced[name] = (f"Iconify ({path})", fsize)
+                        found = True
+                        print(f"  [{i:2d}/{total}] {name}.png <- Iconify:{path} [{fsize}B]")
+                        break
+                time.sleep(0.1)
+
+        if found:
+            continue
+
         # ── Phase 1: Simple Icons ──
         all_slugs = [primary] + alts
         for slug in all_slugs:
@@ -277,6 +378,25 @@ def main():
                     found = True
                     print(f"  [{i:2d}/{total}] {name}.png <- CC-PNG:{ticker.upper()} [{fsize}B]")
                     time.sleep(0.1)
+
+        # ── Phase 2b: Iconify (crypto only, SI/CC miss) ──
+        if not found and kind == "crypto" and name in ICONIFY_CRYPTO_PATHS:
+            for path in ICONIFY_CRYPTO_PATHS[name]:
+                url = f"https://api.iconify.design/{path}.svg"
+                slugs_tried.append(f"Iconify:{path}")
+                svg_data = fetch_url(url)
+                if svg_data:
+                    png_data = svg_to_white_png(svg_data)
+                    if png_data:
+                        png_data = ensure_rgba(png_data)
+                        with open(out_path, "wb") as f:
+                            f.write(png_data)
+                        fsize = len(png_data)
+                        sourced[name] = (f"Iconify ({path})", fsize)
+                        found = True
+                        print(f"  [{i:2d}/{total}] {name}.png <- Iconify:{path} [{fsize}B]")
+                        break
+                time.sleep(0.1)
 
         if not found:
             missed[name] = slugs_tried
