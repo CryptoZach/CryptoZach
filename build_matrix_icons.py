@@ -54,7 +54,6 @@ CRYPTO = {
     "ton":  ("ton",         [],                   None),
     "sei":  ("sei",         [],                   None),
     "wld":  ("worldcoin",   [],                   None),
-    "fet":  ("fetchai",     ["fetch"],            "fet"),
     "rndr": ("render",      [],                   "rndr"),
     "tao":  ("bittensor",   [],                   None),
 }
@@ -64,7 +63,6 @@ COMPANIES = {
     "msft": ("microsoft",        []),
     "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),
     "gs":   ("goldmansachs",     []),
-    "blk":  ("blackrock",        []),
     "coin": ("coinbase",         []),
     "sq":   ("square",           ["block"]),
     "visa": ("visa",             []),
@@ -78,7 +76,6 @@ COMPANIES = {
     "nflx": ("netflix",          []),
     "bac":  ("bankofamerica",    []),
     "wfc":  ("wellsfargo",       []),
-    "ms":   ("morganstanley",    []),
     "schw": ("charlesschwab",    ["schwab"]),
     "pypl": ("paypal",           []),
     "intc": ("intel",            []),
@@ -88,9 +85,6 @@ COMPANIES = {
     "mstr": ("microstrategy",    ["strategy"]),
     "hood": ("robinhood",        []),
     "ibm":  ("ibm",              []),
-    "xom":  ("exxonmobil",       ["exxon"]),
-    "citi": ("citigroup",        ["citi", "citibank"]),
-    "brkb": ("berkshirehathaway",[]),
     "ko":   ("cocacola",         ["coca-cola"]),
 }
 
@@ -331,16 +325,11 @@ def main():
     media_kits = {
         "jpm":  "https://www.jpmorgan.com (Chase octagon mark)",
         "gs":   "https://www.goldmansachs.com/media-relations",
-        "blk":  "https://www.blackrock.com",
         "bac":  "https://about.bankofamerica.com",
         "wfc":  "https://www.wellsfargo.com",
-        "ms":   "https://www.morganstanley.com",
         "schw": "https://www.schwab.com",
         "dis":  "https://thewaltdisneycompany.com/media",
         "mstr": "https://www.microstrategy.com",
-        "xom":  "https://corporate.exxonmobil.com",
-        "citi": "https://www.citigroup.com",
-        "brkb": "https://www.berkshirehathaway.com",
         "ko":   "https://www.coca-colacompany.com/media",
     }
 

@@ -8735,23 +8735,26 @@ footer{
 /* Full-hero matrix behind copy (same motion as strip build). Higher --matrix-trail-fade-alpha = shorter trails. */
 #hero.hero--homepage .matrix-container{
   --matrix-trail-rgb: 255 255 255;
-  --matrix-trail-fade-alpha: 0.13;
+  /* Slightly higher fade now that every rAF frame stamps a head (keeps trails from over-brightening) */
+  --matrix-trail-fade-alpha: 0.168;
   position: absolute;
   inset: 0;
   border-radius: var(--radius);
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 1;
 }
 
 :root[data-theme="dark"] #hero.hero--homepage .matrix-container{
-  --matrix-trail-rgb: 17 19 24;
+  /* Slight green tint so trails harmonize with glyph color on dark panels */
+  --matrix-trail-rgb: 22 32 28;
+  --matrix-trail-fade-alpha: 0.158;
 }
 
 #hero.hero--homepage .matrix-container.active{
-  opacity: 0.4;
+  opacity: 0.43;
 }
 
 #hero.hero--homepage .matrix-canvas{
@@ -8768,7 +8771,7 @@ footer{
   content: '';
   position: absolute;
   top: 0;
-  width: min(120px, 18vw);
+  width: min(140px, 22vw);
   height: 100%;
   z-index: 1;
   pointer-events: none;
