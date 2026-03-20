@@ -72,9 +72,25 @@ ICONIFY_CRYPTO_PATHS = {
 # Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
 # USDC / DAI: bundled build-sources/usdc.svg and dai.svg (glyph + ring, no filled brand disk) in Phase 0 first; then these.
 # cashapp: bundled cashapp.svg (squircle ring + $ subpath; full SI path is muddy at 32px).
-# link: bundled link.svg (SI hex + center chain hint; hollow SI hex reads blank on green trail).
+# link: bundled link.svg (bold LINK; hollow hex + trail read as a blank green hex at 20px).
 # hbar: bundled hbar.svg (SI Hedera is a filled circle + H that whiten() reads as a blank disk at 20px).
 # hyperliquid: bundled hyperliquid.svg (official symbol from project brand kit; no SI slug in v16).
+# arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
+# ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
+# wfc: bundled wfc.svg (SI wordmark is illegible at matrix size; two-line sans text).
+# gs: bundled gs.svg (SI Goldman Sachs is a hairline wordmark at 32px).
+# amd: bundled amd.svg (SI paths mush when whiten()d and scaled to 20px).
+# op: bundled op.svg (Iconify optimism OP mark smears as horizontal bars at matrix size).
+# apt: bundled apt.svg (Iconify aptos is stripe-heavy; whiten() reads as smeared bars at 20px).
+# near: bundled near.svg (SI ribbon whiten() reads as stacked horizontal smears at matrix size).
+# sui: bundled sui.svg (token/sui organic paths mush when whiten()d at 20px).
+# sei: bundled sei.svg (token/sei waves read as stripe smears at 20px).
+# doge: bundled doge.svg (SI coin is a filled disk; 20px + blur reads as a blank green puck).
+# wld: bundled wld.svg (iris ring merges into a solid circle at matrix size).
+# dot: bundled dot.svg (thick Polkadot ring reads as a filled circle when blurred).
+# uni: bundled uni.svg (dotted unicorn clumps into a green blob at 20px).
+# aave: bundled aave.svg (color disk reads as a large blank green circle at 20px).
+# crv: bundled crv.svg (filled squircle reads as a large blank green disk; icon is duplicated in iconDefs).
 ICONIFY_CRYPTO_PREF = {
     "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
     "op": ["token-branded/optimism", "token/optimism"],

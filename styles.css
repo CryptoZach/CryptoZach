@@ -8702,6 +8702,16 @@ footer{
   --df-o-late: 0.28;
 }
 
+:root[data-theme="dark"] #hero.hero--homepage{
+  --df-o-peak: 0.46;
+  --df-o-late: 0.26;
+}
+
+:root[data-theme="dark"] #hero.hero--homepage.hero-home--flagship-hover{
+  --df-o-peak: 0.55;
+  --df-o-late: 0.32;
+}
+
 #hero.hero--homepage::before{
   width: 48%;
   height: 130%;
@@ -8767,6 +8777,27 @@ footer{
   height: 100%;
   display: block;
   contain: strict;
+  /* Above ::before/::after edge fades so glyphs are not visually clipped by the panel blend. */
+  z-index: 2;
+}
+
+/* Flagship brief CTA: hold ~25ms to wake matrix on coarse pointers (see mtxFlagshipLpMs in script.js). */
+#hero.hero--homepage a.cta-primary.matrix-hover-activator{
+  touch-action: manipulation;
+}
+@media (pointer: coarse){
+  #hero.hero--homepage a.cta-primary.matrix-hover-activator.mtx-flagship-lp-arming{
+    transform: scale(0.97);
+    transition: transform 0.15s ease;
+  }
+  #hero.hero--homepage a.cta-primary.matrix-hover-activator.mtx-flagship-lp-done{
+    animation: mtx-flagship-lp-pop 0.38s ease;
+  }
+}
+@keyframes mtx-flagship-lp-pop{
+  0%{ transform: scale(1); }
+  35%{ transform: scale(1.04); }
+  100%{ transform: scale(1); }
 }
 
 #hero.hero--homepage .matrix-container::before,
@@ -8776,7 +8807,8 @@ footer{
   top: 0;
   width: min(140px, 22vw);
   height: 100%;
-  z-index: 1;
+  /* Below canvas: softens panel edge without covering coin stacks (see .matrix-canvas z-index). */
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -8848,8 +8880,8 @@ footer{
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   color: var(--text-secondary, #6b7280);
   transform: translate(0, 0);
@@ -8859,7 +8891,8 @@ footer{
 }
 
 :root[data-theme="dark"] #hero.hero--homepage .hero-dollar-flight{
-  color: var(--text-muted-dark, rgba(255, 255, 255, 0.25));
+  /* Was very low contrast (0.25 white); read as a stray grey smudge beside the matrix. Tint to mint and lift alpha. */
+  color: rgba(110, 231, 183, 0.78);
 }
 
 @media (max-width: 768px){
@@ -8872,7 +8905,7 @@ footer{
     --df-o-late: 0.16;
   }
   #hero.hero--homepage .hero-dollar-flight{
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 }
 
