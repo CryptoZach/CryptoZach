@@ -926,9 +926,18 @@
       if(!matrixContainer.classList.contains('active')){
         return;
       }
+      var cx = e.clientX;
+      var cy = e.clientY;
+      if((typeof cx !== 'number' || typeof cy !== 'number') && e.changedTouches && e.changedTouches[0]){
+        cx = e.changedTouches[0].clientX;
+        cy = e.changedTouches[0].clientY;
+      }
+      if(typeof cx !== 'number' || typeof cy !== 'number'){
+        return;
+      }
       var r = matrixContainer.getBoundingClientRect();
-      mtxWarpTx = e.clientX - r.left;
-      mtxWarpTy = e.clientY - r.top;
+      mtxWarpTx = cx - r.left;
+      mtxWarpTy = cy - r.top;
     }
 
     function mtxApplyWarp(px, py, cw, ch){
@@ -1116,12 +1125,14 @@
       mtxRaf = requestAnimationFrame(mtxDraw);
     }
 
-    var mtxFlagshipLpMs = 25;
-    /* iOS WebKit often defers timers until the touch sequence ends; hero pointerup was mtxStop()ing and clearing this before it ran. */
+    /* Coarse pointers: must exceed typical tap length (iOS ~80 to 200ms) or iOS treats every touch as navigation. */
+    var mtxFlagshipCoarseHoldMs = 220;
+    /* iOS WebKit often defers timers until after the synthetic click; touchend + wall clock below is the real guard. */
     var mtxFlagshipLpDeferTimer = null;
     var mtxFlagshipLpFireTimer = null;
     var mtxFlagshipCoarseDown = false;
     var mtxFlagshipDownTs = 0;
+    var mtxFlagshipTouchWallMs = 0;
     var mtxFlagshipLastDownEv = null;
     var mtxFlagshipConsumeClick = false;
 
@@ -1147,6 +1158,7 @@
       mtxHeroLongPressPin = true;
       mtxFlagshipConsumeClick = true;
       mtxFlagshipCoarseDown = false;
+      mtxFlagshipTouchWallMs = 0;
       if(heroFlagshipMtx && heroFlagshipMtx.classList){
         heroFlagshipMtx.classList.remove('mtx-flagship-lp-arming');
         heroFlagshipMtx.classList.add('mtx-flagship-lp-done');
@@ -1189,6 +1201,7 @@
       mtxFlagshipConsumeClick = false;
       mtxFlagshipCoarseDown = false;
       mtxFlagshipDownTs = 0;
+      mtxFlagshipTouchWallMs = 0;
       mtxFlagshipLastDownEv = null;
       mtxClearFlagshipLpTimer();
       mtxFlagshipLpStripClasses();
@@ -1222,11 +1235,13 @@
         if(!mtxFlagshipCoarseDown){
           return;
         }
-        var elapsed = mtxFlagshipDownTs ? (e.timeStamp - mtxFlagshipDownTs) : 0;
-        if(elapsed >= mtxFlagshipLpMs && !mtxHeroLongPressPin){
+        var wallElapsed = mtxFlagshipTouchWallMs ? (Date.now() - mtxFlagshipTouchWallMs) : 0;
+        var elapsed = wallElapsed > 0 ? wallElapsed : (mtxFlagshipDownTs ? (e.timeStamp - mtxFlagshipDownTs) : 0);
+        if(elapsed >= mtxFlagshipCoarseHoldMs && !mtxHeroLongPressPin){
           mtxClearFlagshipLpTimer();
           mtxFlagshipCoarseDown = false;
           mtxFlagshipDownTs = 0;
+          mtxFlagshipTouchWallMs = 0;
           mtxFlagshipLastDownEv = null;
           mtxCompleteFlagshipLongPress(e);
           mtxFlagshipStripArmingOnly();
@@ -1234,6 +1249,7 @@
         }
         mtxFlagshipCoarseDown = false;
         mtxFlagshipDownTs = 0;
+        mtxFlagshipTouchWallMs = 0;
         mtxFlagshipLastDownEv = null;
         mtxClearFlagshipLpTimer();
         mtxFlagshipStripArmingOnly();
@@ -1247,6 +1263,7 @@
         }
         mtxFlagshipCoarseDown = false;
         mtxFlagshipDownTs = 0;
+        mtxFlagshipTouchWallMs = 0;
         mtxFlagshipLastDownEv = null;
         mtxClearFlagshipLpTimer();
         mtxFlagshipStripArmingOnly();
@@ -1254,10 +1271,36 @@
     }
 
     if(heroFlagshipMtx){
+      heroFlagshipMtx.addEventListener('touchstart', function(){
+        mtxFlagshipTouchWallMs = Date.now();
+      }, { capture: true, passive: true });
+      heroFlagshipMtx.addEventListener('touchcancel', function(){
+        mtxFlagshipTouchWallMs = 0;
+      }, { capture: true, passive: true });
       heroFlagshipMtx.addEventListener('touchend', function(e){
-        if(mtxFlagshipConsumeClick){
+        var wallDt = mtxFlagshipTouchWallMs ? (Date.now() - mtxFlagshipTouchWallMs) : 0;
+        if(mtxHeroLongPressPin || mtxFlagshipConsumeClick){
           e.preventDefault();
+          if(typeof e.stopImmediatePropagation === 'function'){
+            e.stopImmediatePropagation();
+          } else {
+            e.stopPropagation();
+          }
+          mtxFlagshipTouchWallMs = 0;
+          return;
         }
+        if(wallDt >= mtxFlagshipCoarseHoldMs){
+          e.preventDefault();
+          if(typeof e.stopImmediatePropagation === 'function'){
+            e.stopImmediatePropagation();
+          } else {
+            e.stopPropagation();
+          }
+          mtxCompleteFlagshipLongPress(e);
+          mtxFlagshipTouchWallMs = 0;
+          return;
+        }
+        mtxFlagshipTouchWallMs = 0;
       }, { capture: true, passive: false });
     }
 
@@ -1358,6 +1401,7 @@
           }
           mtxFlagshipCoarseDown = true;
           mtxFlagshipDownTs = e.timeStamp;
+          mtxFlagshipTouchWallMs = Date.now();
           mtxFlagshipLastDownEv = e;
           if(act.classList){
             act.classList.add('mtx-flagship-lp-arming');
@@ -1373,7 +1417,7 @@
                 return;
               }
               mtxCompleteFlagshipLongPress(mtxFlagshipLastDownEv || e);
-            }, mtxFlagshipLpMs);
+            }, mtxFlagshipCoarseHoldMs);
           }, 0);
           return;
         }
