@@ -37,9 +37,13 @@ npm run test:e2e
 
 Playwright starts the server automatically. If `npm run test:e2e` fails, fix failing tests or document why they are skipped before pushing.
 
-## 4. Report
+## 4. Matrix hero icons (if you touched them)
 
-Summarize: **Copy (em-dash)** pass/fail, **Responsive** run/skip, **E2E** pass/fail. If all pass (or skipped with reason), proceed to **cryptozach-git-checkpoint** for commit and push.
+If the diff includes **`scripts/build-matrix-icons.mjs`**, **`build_matrix_icons.py`**, **`icons/matrix/build-sources/`**, or **`script.js`** matrix **`iconDefs`**, follow **cryptozach-matrix-icons** so Chainlink does not regress to the hollow hex (**`link`** must stay out of **`CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED`**, and **`link`** must keep **`localSvg`** in the MJS manifest).
+
+## 5. Report
+
+Summarize: **Copy (em-dash)** pass/fail, **Responsive** run/skip, **E2E** pass/fail, **Matrix** follow skill or N/A. If all pass (or skipped with reason), proceed to **cryptozach-git-checkpoint** for commit and push.
 
 ## When to run full site audit
 

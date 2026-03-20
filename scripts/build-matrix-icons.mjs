@@ -62,7 +62,6 @@ const ICONS = [
   },
   {
     name: 'aave',
-    localSvg: 'icons/matrix/build-sources/aave.svg',
     si: [],
     iconifyExtra: ['cryptocurrency-color/aave', 'simple-icons/aave'],
     cc: 'aave',
@@ -72,7 +71,6 @@ const ICONS = [
   { name: 'avax', si: ['avalanche'], cc: 'avax', iconifyExtra: ['token/avax'] },
   {
     name: 'dot',
-    localSvg: 'icons/matrix/build-sources/dot.svg',
     si: [],
     iconifyExtra: ['simple-icons/polkadot'],
     cc: 'dot',
@@ -85,6 +83,7 @@ const ICONS = [
     iconifyExtra: ['simple-icons/litecoin'],
     cc: 'ltc',
   },
+  /* Chainlink: bundled nested hex (flat-top rotation, hollow center). Keep localSvg so Python and Node agree; see cryptozach-matrix-icons skill. */
   {
     name: 'link',
     localSvg: 'icons/matrix/build-sources/link.svg',
@@ -95,7 +94,6 @@ const ICONS = [
   { name: 'xlm', si: ['stellar'], cc: 'xlm' },
   {
     name: 'doge',
-    localSvg: 'icons/matrix/build-sources/doge.svg',
     si: [],
     iconifyExtra: ['simple-icons/dogecoin'],
     cc: 'doge',
@@ -108,17 +106,14 @@ const ICONS = [
     si: [],
     iconifyExtra: ['token-branded/optimism', 'token/optimism', 'simple-icons/optimism'],
   },
-  /* token-branded/arbitrum stacks fills; bundled bold ARB text (pairs with op.svg in matrix row). */
   {
     name: 'arb',
-    localSvg: 'icons/matrix/build-sources/arb.svg',
     si: [],
     iconifyExtra: ['token-branded/arbitrum', 'token/arbitrum'],
   },
   {
     name: 'near',
-    localSvg: 'icons/matrix/build-sources/near.svg',
-    si: [],
+    si: ['near'],
     iconifyExtra: ['simple-icons/near'],
     cc: 'near',
   },
@@ -129,7 +124,6 @@ const ICONS = [
   },
   {
     name: 'sui',
-    localSvg: 'icons/matrix/build-sources/sui.svg',
     si: [],
     iconifyExtra: ['token/sui'],
   },
@@ -147,6 +141,7 @@ const ICONS = [
   { name: 'tia', si: ['celestia'], iconifyExtra: ['token/tia'] },
   { name: 'xmr', si: ['monero'], cc: 'xmr' },
   { name: 'zec', si: ['zcash'], cc: 'zec' },
+  /* Curve: bundled coin glyph (spothq paths, no blue disk); SI curve is a filled squircle at 20px */
   {
     name: 'crv',
     localSvg: 'icons/matrix/build-sources/crv.svg',
@@ -173,8 +168,7 @@ const ICONS = [
   },
   {
     name: 'sei',
-    localSvg: 'icons/matrix/build-sources/sei.svg',
-    si: [],
+    si: ['sei'],
     iconifyExtra: ['token/sei'],
   },
   {
@@ -193,7 +187,8 @@ const ICONS = [
   {
     name: 'metamask',
     si: [],
-    iconifyExtra: ['logos/metamask', 'token-branded/metamask'],
+    /* logos/metamask is a wide wordmark (512x96); 32px raster reads as vertical smears. Fox mark first. */
+    iconifyExtra: ['token-branded/metamask', 'logos/metamask'],
   },
   {
     name: 'layerzero',
@@ -207,7 +202,13 @@ const ICONS = [
   },
   { name: 'aapl', si: ['apple'] },
   { name: 'msft', si: ['microsoft'] },
-  { name: 'jpm', si: ['jpmorgan', 'jpmorganchase', 'chase'] },
+  /* JPM: SI has no jpmorgan slug; Chase octagon is the bundled JPMC mark (Simple Icons chase) */
+  {
+    name: 'jpm',
+    localSvg: 'icons/matrix/build-sources/jpm.svg',
+    si: [],
+    iconifyExtra: ['simple-icons/chase'],
+  },
   {
     name: 'citi',
     localSvg: 'icons/matrix/build-sources/citi.svg',
@@ -220,7 +221,8 @@ const ICONS = [
     si: [],
     iconifyExtra: ['simple-icons/goldmansachs'],
   },
-  { name: 'coinbase', si: ['coinbase'] },
+  /* Coinbase: SI is a wordmark illegible at 20px; token/coinbase is the C arc mark */
+  { name: 'coinbase', si: [], iconifyExtra: ['token/coinbase', 'simple-icons/coinbase'] },
   { name: 'sq', si: ['square', 'block'] },
   /* Visa: Iconify simple-icons = compact V-style mark; logos/visa = full wordmark fallback */
   { name: 'visa', si: [], iconifyExtra: ['simple-icons/visa', 'logos/visa'] },
@@ -244,7 +246,7 @@ const ICONS = [
     name: 'amd',
     localSvg: 'icons/matrix/build-sources/amd.svg',
     si: [],
-    iconifyExtra: ['simple-icons/amd'],
+    iconifyExtra: ['simple-icons/amd', 'lineicons/amd'],
   },
   { name: 'nflx', si: ['netflix'] },
   { name: 'bac', si: ['bankofamerica'] },
@@ -255,7 +257,8 @@ const ICONS = [
     iconifyExtra: ['simple-icons/wellsfargo'],
   },
   { name: 'schw', si: ['charlesschwab', 'schwab'], iconifyExtra: ['arcticons/schwab'] },
-  { name: 'pypl', si: ['paypal'] },
+  /* PayPal: SI mark reads as a lone P at 20px; logos/paypal = full wordmark */
+  { name: 'pypl', si: [], iconifyExtra: ['logos/paypal', 'simple-icons/paypal'] },
   { name: 'facebook', si: ['facebook'] },
   /* SI venmo = full wordmark; fa7 venmo-v = stylized V mark at matrix size */
   { name: 'venmo', si: [], iconifyExtra: ['fa7-brands/venmo-v'] },
@@ -265,12 +268,16 @@ const ICONS = [
     si: [],
     iconifyExtra: ['simple-icons/cashapp'],
   },
-  /* Intel: logos/intel = classic wordmark; simple-icons fallback */
-  { name: 'intc', si: [], iconifyExtra: ['logos/intel', 'simple-icons/intel'] },
+  /* Intel: logos/intel is ~512x216 (wide strip in 32px); SI intel is 24x24 and fills the square */
+  { name: 'intc', si: [], iconifyExtra: ['simple-icons/intel', 'logos/intel'] },
   { name: 'csco', si: ['cisco'] },
   { name: 'orcl', si: ['oracle'] },
   { name: 'dis', si: ['waltdisney', 'disney', 'waltdisneyworld'], iconifyExtra: ['tabler/brand-disney'] },
-  { name: 'mstr', si: ['microstrategy', 'strategy'] },
+  /* Strategy (MSTR): 2025 B mark; bundled (SI still ships old MicroStrategy bars) */
+  {
+    name: 'mstr',
+    localSvg: 'icons/matrix/build-sources/mstr.svg',
+  },
   { name: 'hood', si: ['robinhood'] },
   { name: 'ibm', si: ['ibm'] },
   {
@@ -286,6 +293,31 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/ice.svg',
   },
   { name: 'ko', si: ['cocacola', 'coca-cola'] },
+  { name: 'stripe', si: ['stripe'] },
+  { name: 'revolut', si: ['revolut'] },
+  /* Block Inc: Simple Icons slug is "square" */
+  { name: 'block', si: ['square'] },
+  /* BlackRock: not in SI v16; bundled BR monogram (wordmark is too wide for 32px) */
+  {
+    name: 'blk',
+    localSvg: 'icons/matrix/build-sources/blk.svg',
+  },
+  {
+    name: 'securitize',
+    localSvg: 'icons/matrix/build-sources/securitize.svg',
+  },
+  {
+    name: 'bakkt',
+    localSvg: 'icons/matrix/build-sources/bakkt.svg',
+  },
+  {
+    name: 'fed',
+    localSvg: 'icons/matrix/build-sources/fed.svg',
+  },
+  {
+    name: 'frbny',
+    localSvg: 'icons/matrix/build-sources/frbny.svg',
+  },
 ];
 
 async function fetchText(url) {

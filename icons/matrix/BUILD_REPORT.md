@@ -1,119 +1,205 @@
 # Matrix Icon Build Report
 
-**Date:** 2026-03-19T11:05:53.189648  
-**Total:** 75  
-**Sourced:** 54  
-**Missing:** 21  
+**Date:** 2026-03-20T00:32:04.713354  
+**Total:** 93  
+**Sourced:** 0  
+**Missing:** 93  
 
-## Sourced (54)
+## Sourced (0)
 
-| File | Source |
-|------|--------|
-| `aapl.png` | Simple Icons (apple) (587B) |
-| `aave.png` | cryptocurrency-icons SVG (aave) (358B) |
-| `ada.png` | Simple Icons (cardano) (820B) |
-| `algo.png` | Simple Icons (algorand) (698B) |
-| `amd.png` | Simple Icons (amd) (510B) |
-| `atom.png` | cryptocurrency-icons SVG (atom) (671B) |
-| `avax.png` | cryptocurrency-icons SVG (avax) (326B) |
-| `bac.png` | Simple Icons (bankofamerica) (629B) |
-| `bnb.png` | Simple Icons (binance) (491B) |
-| `btc.png` | Simple Icons (bitcoin) (865B) |
-| `coinbase.png` | Simple Icons (coinbase) (439B) |
-| `kinexys.png` | bundled SVG (build-sources/kinexys.svg) |
-| `csco.png` | Simple Icons (cisco) (659B) |
-| `dai.png` | cryptocurrency-icons SVG (dai) (379B) |
-| `doge.png` | Simple Icons (dogecoin) (752B) |
-| `dot.png` | Simple Icons (polkadot) (720B) |
-| `eth.png` | Simple Icons (ethereum) (538B) |
-| `fil.png` | cryptocurrency-icons SVG (fil) (458B) |
-| `googl.png` | Simple Icons (google) (694B) |
-| `gs.png` | Simple Icons (goldmansachs) (739B) |
-| `hbar.png` | Simple Icons (hedera) (632B) |
-| `hnt.png` | Simple Icons (helium) (932B) |
-| `hood.png` | Simple Icons (robinhood) (605B) |
-| `intc.png` | Simple Icons (intel) (548B) |
-| `jpm.png` | Simple Icons (chase) (466B) |
-| `ko.png` | Simple Icons (cocacola) (707B) |
-| `link.png` | Simple Icons (chainlink) (485B) |
-| `ltc.png` | Simple Icons (litecoin) (746B) |
-| `ma.png` | Simple Icons (mastercard) (585B) |
-| `meta.png` | Simple Icons (meta) (755B) |
-| `mkr.png` | cryptocurrency-icons SVG (mkr) (311B) |
-| `mstr.png` | Simple Icons (microstrategy) (266B) |
-| `near.png` | Simple Icons (near) (656B) |
-| `nflx.png` | Simple Icons (netflix) (502B) |
-| `nvda.png` | Simple Icons (nvidia) (761B) |
-| `op.png` | Simple Icons (optimism) (775B) |
-| `pypl.png` | Simple Icons (paypal) (661B) |
-| `rndr.png` | Simple Icons (render) (390B) |
-| `sol.png` | Simple Icons (solana) (374B) |
-| `sq.png` | Simple Icons (square) (421B) |
-| `stx.png` | cryptocurrency-icons SVG (stx) (393B) |
-| `sui.png` | Simple Icons (sui) (777B) |
-| `ton.png` | Simple Icons (ton) (749B) |
-| `trx.png` | cryptocurrency-icons SVG (trx) (531B) |
-| `tsla.png` | Simple Icons (tesla) (684B) |
-| `uni.png` | cryptocurrency-icons SVG (uni) (688B) |
-| `usdc.png` | Simple Icons (circle) (1242B) |
-| `usdt.png` | Simple Icons (tether) (691B) |
-| `visa.png` | Simple Icons (visa) (582B) |
-| `wfc.png` | Simple Icons (wellsfargo) (734B) |
-| `xlm.png` | Simple Icons (stellar) (921B) |
-| `xmr.png` | Simple Icons (monero) (773B) |
-| `xrp.png` | Simple Icons (xrp) (731B) |
-| `xtz.png` | cryptocurrency-icons SVG (xtz) (441B) |
-| `zec.png` | Simple Icons (zcash) (703B) |
+| File | Source | Size |
+|------|--------|------|
 
-## Missing (21)
+## Missing (93)
 
 | File | Tried |
 |------|-------|
+| `aapl.png` | SI:apple |
+| `aave.png` | local:build-sources/aave.svg, SI:aave, CC-SVG:aave, CC-PNG:AAVE |
+| `ada.png` | SI:cardano, CC-SVG:ada, CC-PNG:ADA |
+| `algo.png` | SI:algorand, CC-SVG:algo, CC-PNG:ALGO |
+| `amd.png` | local:build-sources/amd.svg, SI:amd |
 | `amzn.png` | SI:amazon |
-| `apt.png` | SI:aptos |
-| `arb.png` | SI:arbitrum |
-| `blk.png` | SI:blackrock |
-| `brkb.png` | SI:berkshirehathaway |
-| `citi.png` | SI:citigroup, SI:citi, SI:citibank |
-| `crv.png` | SI:curvedao, SI:curvefi, SI:curve |
+| `apt.png` | IconifyPref:token/aptos, IconifyPref:token-branded/aptos, SI:aptos |
+| `arb.png` | local:build-sources/arb.svg, IconifyPref:token-branded/arbitrum, IconifyPref:token/arbitrum, SI:arbitrum |
+| `atom.png` | SI:cosmos, CC-SVG:atom, CC-PNG:ATOM |
+| `avax.png` | SI:avalanche, CC-SVG:avax, CC-PNG:AVAX |
+| `bac.png` | SI:bankofamerica |
+| `bakkt.png` | local:build-sources/bakkt.svg, SI:bakkt |
+| `blk.png` | local:build-sources/blk.svg, SI:blackrock |
+| `block.png` | SI:square, SI:block |
+| `bnb.png` | SI:binance, CC-SVG:bnb, CC-PNG:BNB |
+| `btc.png` | SI:bitcoin, CC-SVG:btc, CC-PNG:BTC |
+| `cashapp.png` | local:build-sources/cashapp.svg, SI:cashapp |
+| `citi.png` | local:build-sources/citi.svg, SI:citibank |
+| `coinbase.png` | SI:coinbase |
+| `crv.png` | local:build-sources/crv.svg, SI:curvedao, SI:curvefi, SI:curve |
+| `csco.png` | SI:cisco |
+| `dai.png` | local:build-sources/dai.svg, SI:dai, CC-SVG:dai, CC-PNG:DAI |
 | `dis.png` | SI:waltdisney, SI:disney, SI:waltdisneyworld |
-| `fet.png` | SI:fetchai, SI:fetch, CC-SVG:fet, CC-PNG:FET |
+| `doge.png` | local:build-sources/doge.svg, SI:dogecoin, CC-SVG:doge, CC-PNG:DOGE |
+| `dot.png` | local:build-sources/dot.svg, SI:polkadot, CC-SVG:dot, CC-PNG:DOT |
+| `eth.png` | SI:ethereum, CC-SVG:eth, CC-PNG:ETH |
+| `facebook.png` | SI:facebook |
+| `fed.png` | local:build-sources/fed.svg, SI:federalreserve |
+| `fidelity.png` | Iconify:arcticons/fidelity, SI:fidelity |
+| `fil.png` | SI:filecoin, CC-SVG:fil, CC-PNG:FIL |
+| `frbny.png` | local:build-sources/frbny.svg, SI:federalreservebankofnewyork |
+| `googl.png` | SI:google, SI:alphabet |
+| `gs.png` | local:build-sources/gs.svg, SI:goldmansachs |
+| `hbar.png` | local:build-sources/hbar.svg, SI:hedera, CC-SVG:hbar, CC-PNG:HBAR |
+| `hnt.png` | local:build-sources/hnt.svg, SI:helium, CC-SVG:hnt, CC-PNG:HNT |
+| `hood.png` | SI:robinhood |
+| `hyperliquid.png` | local:build-sources/hyperliquid.svg, SI:hyperliquid |
 | `ibm.png` | SI:ibm |
-| `inj.png` | SI:injective |
+| `ice.png` | local:build-sources/ice.svg, SI:ice |
+| `inj.png` | local:build-sources/inj.svg, SI:injective |
+| `intc.png` | Iconify:logos/intel, Iconify:simple-icons/intel, SI:intel |
+| `jpm.png` | SI:jpmorgan, SI:jpmorganchase, SI:chase |
+| `kinexys.png` | local:build-sources/kinexys.svg, SI:kinexys |
+| `ko.png` | SI:cocacola, SI:coca-cola |
+| `kraken.png` | SI:kraken, Iconify:logos/kraken, Iconify:token-branded/kraken |
+| `layerzero.png` | local:build-sources/layerzero.svg, SI:layerzero |
 | `ldo.png` | SI:lido |
-| `ms.png` | SI:morganstanley |
+| `link.png` | local:build-sources/link.svg, SI:chainlink, CC-SVG:link, CC-PNG:LINK |
+| `ltc.png` | local:build-sources/ltc.svg, SI:litecoin, CC-SVG:ltc, CC-PNG:LTC |
+| `ma.png` | SI:mastercard |
+| `meta.png` | SI:meta |
+| `metamask.png` | SI:metamask, Iconify:logos/metamask, Iconify:token-branded/metamask |
+| `mkr.png` | SI:maker, CC-SVG:mkr, CC-PNG:MKR |
 | `msft.png` | SI:microsoft |
+| `mstr.png` | SI:microstrategy, SI:strategy |
+| `nasdaq.png` | local:build-sources/nasdaq.svg, SI:nasdaq |
+| `near.png` | local:build-sources/near.svg, SI:near, CC-SVG:near, CC-PNG:NEAR |
+| `nflx.png` | SI:netflix |
+| `nvda.png` | SI:nvidia |
+| `nyse.png` | local:build-sources/nyse.svg, SI:nyse |
+| `op.png` | local:build-sources/op.svg, IconifyPref:token-branded/optimism, IconifyPref:token/optimism, SI:optimism |
 | `orcl.png` | SI:oracle |
+| `pypl.png` | SI:paypal |
+| `revolut.png` | SI:revolut |
+| `rndr.png` | SI:render, CC-SVG:rndr, CC-PNG:RNDR |
 | `schw.png` | SI:charlesschwab, SI:schwab |
-| `sei.png` | SI:sei |
+| `securitize.png` | local:build-sources/securitize.svg, SI:securitize |
+| `sei.png` | local:build-sources/sei.svg, SI:sei |
+| `sol.png` | SI:solana, CC-SVG:sol, CC-PNG:SOL |
+| `sq.png` | SI:square, SI:block |
+| `stripe.png` | SI:stripe |
+| `stx.png` | SI:stacks, CC-SVG:stx, CC-PNG:STX |
+| `sui.png` | local:build-sources/sui.svg, SI:sui |
 | `tao.png` | SI:bittensor |
 | `tia.png` | SI:celestia |
-| `wld.png` | SI:worldcoin |
-| `xom.png` | SI:exxonmobil, SI:exxon |
+| `ton.png` | IconifyPref:token-branded/ton, IconifyPref:token/ton, IconifyPref:simple-icons/ton, SI:ton |
+| `trx.png` | SI:tron, CC-SVG:trx, CC-PNG:TRX |
+| `tsla.png` | SI:tesla |
+| `uni.png` | IconifyPref:token/uniswap, IconifyPref:token-branded/uniswap, SI:uniswap, CC-SVG:uni, CC-PNG:UNI |
+| `usdc.png` | local:build-sources/usdc.svg, IconifyPref:token/usdc, IconifyPref:cryptocurrency-color/usdc, SI:usdc, CC-SVG:usdc, CC-PNG:USDC |
+| `usdt.png` | SI:tether, CC-SVG:usdt, CC-PNG:USDT |
+| `venmo.png` | Iconify:fa7-brands/venmo-v, SI:venmo |
+| `visa.png` | Iconify:simple-icons/visa, Iconify:logos/visa, SI:visa |
+| `wfc.png` | local:build-sources/wfc.svg, SI:wellsfargo |
+| `wld.png` | IconifyPref:arcticons/worldcoin, SI:worldcoin |
+| `wmt.png` | Iconify:tabler/brand-walmart, Iconify:arcticons/walmart, SI:walmart |
+| `wormhole.png` | IconifyPref:arcticons/wormhole, IconifyPref:arcticons/wormhole-2, SI:wormhole |
+| `x.png` | SI:x |
+| `xlm.png` | SI:stellar, CC-SVG:xlm, CC-PNG:XLM |
+| `xmr.png` | SI:monero, CC-SVG:xmr, CC-PNG:XMR |
+| `xrp.png` | SI:xrp, CC-SVG:xrp, CC-PNG:XRP |
+| `xtz.png` | SI:tezos, CC-SVG:xtz, CC-PNG:XTZ |
+| `zec.png` | SI:zcash, CC-SVG:zec, CC-PNG:ZEC |
 
 ## Manual Sourcing Needed
 
-These brands are not available on Simple Icons v16 or spothq/cryptocurrency-icons.
-Download logomark SVGs from each brand media kit, convert to 32x32 white-on-transparent PNG.
-
-- **amzn** -> https://press.aboutamazon.com/logos-imagery
-- **apt** -> https://aptosfoundation.org (Aptos mark)
-- **arb** -> https://docs.arbitrum.io/assets (Arbitrum mark)
-- **blk** -> https://www.blackrock.com
-- **brkb** -> https://www.berkshirehathaway.com
-- **citi** -> https://www.citigroup.com
-- **crv** -> https://resources.curve.fi (Curve logo)
-- **dis** -> https://thewaltdisneycompany.com/media
-- **fet** -> https://fetch.ai/brand (ASI Alliance logo)
-- **ibm** -> https://www.ibm.com/brand
-- **inj** -> https://injective.com (Injective mark)
-- **ldo** -> https://lido.fi/press (Lido mark)
-- **ms** -> https://www.morganstanley.com
-- **msft** -> https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks
-- **orcl** -> https://www.oracle.com
-- **schw** -> https://www.schwab.com
-- **sei** -> https://www.sei.io (Sei mark)
-- **tao** -> https://bittensor.com (Bittensor mark)
-- **tia** -> https://celestia.org (Celestia mark)
-- **wld** -> https://worldcoin.org/brand (Worldcoin mark)
-- **xom** -> https://corporate.exxonmobil.com
+- **aapl** → Search brand media kit for logomark SVG
+- **aave** → Search brand media kit for logomark SVG
+- **ada** → Search brand media kit for logomark SVG
+- **algo** → Search brand media kit for logomark SVG
+- **amd** → Search brand media kit for logomark SVG
+- **amzn** → Search brand media kit for logomark SVG
+- **apt** → Search brand media kit for logomark SVG
+- **arb** → Search brand media kit for logomark SVG
+- **atom** → Search brand media kit for logomark SVG
+- **avax** → Search brand media kit for logomark SVG
+- **bac** → https://about.bankofamerica.com
+- **bakkt** → Search brand media kit for logomark SVG
+- **blk** → Search brand media kit for logomark SVG
+- **block** → Search brand media kit for logomark SVG
+- **bnb** → Search brand media kit for logomark SVG
+- **btc** → Search brand media kit for logomark SVG
+- **cashapp** → Search brand media kit for logomark SVG
+- **citi** → Search brand media kit for logomark SVG
+- **coinbase** → Search brand media kit for logomark SVG
+- **crv** → Search brand media kit for logomark SVG
+- **csco** → Search brand media kit for logomark SVG
+- **dai** → Search brand media kit for logomark SVG
+- **dis** → https://thewaltdisneycompany.com/media
+- **doge** → Search brand media kit for logomark SVG
+- **dot** → Search brand media kit for logomark SVG
+- **eth** → Search brand media kit for logomark SVG
+- **facebook** → Search brand media kit for logomark SVG
+- **fed** → Search brand media kit for logomark SVG
+- **fidelity** → Search brand media kit for logomark SVG
+- **fil** → Search brand media kit for logomark SVG
+- **frbny** → Search brand media kit for logomark SVG
+- **googl** → Search brand media kit for logomark SVG
+- **gs** → https://www.goldmansachs.com/media-relations
+- **hbar** → Search brand media kit for logomark SVG
+- **hnt** → Search brand media kit for logomark SVG
+- **hood** → Search brand media kit for logomark SVG
+- **hyperliquid** → Search brand media kit for logomark SVG
+- **ibm** → Search brand media kit for logomark SVG
+- **ice** → Search brand media kit for logomark SVG
+- **inj** → Search brand media kit for logomark SVG
+- **intc** → Search brand media kit for logomark SVG
+- **jpm** → https://www.jpmorgan.com (Chase octagon mark)
+- **kinexys** → Search brand media kit for logomark SVG
+- **ko** → https://www.coca-colacompany.com/media
+- **kraken** → Search brand media kit for logomark SVG
+- **layerzero** → Search brand media kit for logomark SVG
+- **ldo** → Search brand media kit for logomark SVG
+- **link** → Search brand media kit for logomark SVG
+- **ltc** → Search brand media kit for logomark SVG
+- **ma** → Search brand media kit for logomark SVG
+- **meta** → Search brand media kit for logomark SVG
+- **metamask** → Search brand media kit for logomark SVG
+- **mkr** → Search brand media kit for logomark SVG
+- **msft** → Search brand media kit for logomark SVG
+- **mstr** → https://www.microstrategy.com
+- **nasdaq** → Search brand media kit for logomark SVG
+- **near** → Search brand media kit for logomark SVG
+- **nflx** → Search brand media kit for logomark SVG
+- **nvda** → Search brand media kit for logomark SVG
+- **nyse** → Search brand media kit for logomark SVG
+- **op** → Search brand media kit for logomark SVG
+- **orcl** → Search brand media kit for logomark SVG
+- **pypl** → Search brand media kit for logomark SVG
+- **revolut** → Search brand media kit for logomark SVG
+- **rndr** → Search brand media kit for logomark SVG
+- **schw** → https://www.schwab.com
+- **securitize** → Search brand media kit for logomark SVG
+- **sei** → Search brand media kit for logomark SVG
+- **sol** → Search brand media kit for logomark SVG
+- **sq** → Search brand media kit for logomark SVG
+- **stripe** → Search brand media kit for logomark SVG
+- **stx** → Search brand media kit for logomark SVG
+- **sui** → Search brand media kit for logomark SVG
+- **tao** → Search brand media kit for logomark SVG
+- **tia** → Search brand media kit for logomark SVG
+- **ton** → Search brand media kit for logomark SVG
+- **trx** → Search brand media kit for logomark SVG
+- **tsla** → Search brand media kit for logomark SVG
+- **uni** → Search brand media kit for logomark SVG
+- **usdc** → Search brand media kit for logomark SVG
+- **usdt** → Search brand media kit for logomark SVG
+- **venmo** → Search brand media kit for logomark SVG
+- **visa** → Search brand media kit for logomark SVG
+- **wfc** → https://www.wellsfargo.com
+- **wld** → Search brand media kit for logomark SVG
+- **wmt** → Search brand media kit for logomark SVG
+- **wormhole** → Search brand media kit for logomark SVG
+- **x** → Search brand media kit for logomark SVG
+- **xlm** → Search brand media kit for logomark SVG
+- **xmr** → Search brand media kit for logomark SVG
+- **xrp** → Search brand media kit for logomark SVG
+- **xtz** → Search brand media kit for logomark SVG
+- **zec** → Search brand media kit for logomark SVG

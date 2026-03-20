@@ -171,6 +171,10 @@ Flag any page where the same stat, finding, or fact appears in both a card/summa
 
 Body copy should not exceed ~65 characters per line. Check CSS `max-width` on body text containers.
 
+### 5b. Homepage matrix icons (when relevant)
+
+If **`icons/matrix/`**, **`scripts/build-matrix-icons.mjs`**, **`build_matrix_icons.py`**, or matrix **`iconDefs`** in **`script.js`** changed: follow **cryptozach-matrix-icons** so Chainlink does not regress to the hollow hex (**`link`** must keep **`localSvg`** and must not be in **`CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED`** in Python).
+
 ### 6. Navigation consistency
 
 **Sticky nav (if deployed):**

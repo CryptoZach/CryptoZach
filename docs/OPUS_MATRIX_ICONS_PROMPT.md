@@ -24,9 +24,9 @@ You are helping source small raster icons for an open personal research website 
 
 **Manifest: filename → intended asset**
 
-These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols** (`$`, `€`, etc.), **commodity and macro tickers** (e.g. `XAU`, `SOFR`), and legacy **`₿`** / **`Ξ`** (fixed low share in `pickItem`) are drawn as text. **Crypto project tickers** (e.g. `ADA`, `RNDR`) are not text in the matrix; use PNGs only.
+These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols** (`$`, `€`, etc.), **commodity and macro tickers** (e.g. `XAU`, `DXY`, `NDX`), and legacy **`₿`** / **`Ξ`** (fixed low share in `pickItem`) are drawn as text. **Crypto project tickers** (e.g. `ADA`, `RNDR`) are not text in the matrix; use PNGs only.
 
-**Crypto / DeFi / L1 / L2 (47 filenames).** `op.png` = Optimism (bundled **`build-sources/op.svg`**: bold **OP**; Iconify mark **whiten()**s to a smear at 20px). `arb.png` = Arbitrum (bundled **`build-sources/arb.svg`**: bold **ARB**; Iconify mark **whiten()**s to a disk; stroke hex + A was faint next to **OP** at 20px). **`ltc.png`**: bundled **`build-sources/ltc.svg`** (SI Litecoin is a filled coin). **`rndr.png` = Render (RNDR token). **`kraken.png`** / **`metamask.png`**: Iconify `logos/*` (see **`scripts/build-matrix-icons.mjs`**). **`layerzero.png`**: bundled **`build-sources/layerzero.svg`** (no Iconify slug found). **`hyperliquid.png`**: bundled **`build-sources/hyperliquid.svg`**. **`wormhole.png`**: Iconify **`arcticons/wormhole`**. **`script.js`** duplicates **`eth`**, **`uni`**, **`aave`**, **`crv`**, **`arb`**, **`ton`** twice, **`op`** once, and **`usdc`** **three** times for pick weight (same PNG each time). In the company block it duplicates **`jpm`** for the same reason (Chase octagon mark from Simple Icons **`chase`** slug in the build). **`citi.png`** uses bundled **`build-sources/citi.svg`** (bold **CITI**; no SI slug in v16). **`fidelity.png`** uses Iconify **`arcticons/fidelity`**.
+**Crypto / DeFi / L1 / L2 (47 filenames).** `op.png` = Optimism (bundled **`build-sources/op.svg`**: Iconify **token-branded/optimism** paths, not OP text). `arb.png` = Arbitrum (bundled **`build-sources/arb.svg`**: bold **ARB**; Iconify mark **whiten()**s to a disk; stroke hex + A was faint next to **OP** at 20px). **`ltc.png`**: bundled **`build-sources/ltc.svg`** (SI Litecoin is a filled coin). **`rndr.png` = Render (RNDR token). **`kraken.png`**: Iconify **`logos/kraken`**. **`metamask.png`**: Iconify **`token-branded/metamask`** first (fox mark); **`logos/metamask`** is a wide wordmark and **32px** raster reads as vertical smears (see **`scripts/build-matrix-icons.mjs`**). **`layerzero.png`**: bundled **`build-sources/layerzero.svg`** (no Iconify slug found). **`hyperliquid.png`**: bundled **`build-sources/hyperliquid.svg`**. **`wormhole.png`**: Iconify **`arcticons/wormhole`**. **`script.js`** duplicates **`eth`**, **`uni`**, **`aave`**, **`crv`**, **`arb`**, **`ton`** twice, **`op`** once, and **`usdc`** **three** times for pick weight (same PNG each time). In the company block it duplicates **`jpm`** for the same reason (Chase octagon mark from Simple Icons **`chase`** slug in the build). **`citi.png`** uses bundled **`build-sources/citi.svg`** (bold **CITI**; no SI slug in v16). **`fidelity.png`** uses Iconify **`arcticons/fidelity`**.
 
 | File | Asset |
 |------|--------|
@@ -46,7 +46,7 @@ These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols**
 | `dot.png` | Polkadot (bundled **`build-sources/dot.svg`**: bold **DOT**; thick SI ring reads as a filled circle when blurred) |
 | `atom.png` | Cosmos (ATOM) |
 | `ltc.png` | Litecoin (bundled **`build-sources/ltc.svg`**: stroke ring + L; SI coin **whiten()**s to a puck) |
-| `link.png` | Chainlink (bundled **`build-sources/link.svg`**: bold **LINK**; hollow hex art lets the green trail fill the center so the mark read as a blank hex) |
+| `link.png` | Chainlink (bundled **`build-sources/link.svg`**: SI nested hex rotated 30deg for flat-top token orientation, hollow center; see **cryptozach-matrix-icons** skill) |
 | `xlm.png` | Stellar |
 | `doge.png` | Dogecoin (bundled **`build-sources/doge.svg`**: bold **DOGE**; SI coin is a filled disk at matrix size) |
 | `trx.png` | Tron |
@@ -61,7 +61,7 @@ These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols**
 | `tia.png` | Celestia |
 | `xmr.png` | Monero |
 | `zec.png` | Zcash |
-| `crv.png` | Curve (bundled **`build-sources/crv.svg`**: bold **CRV**; filled squircle reads as a large blank green disk; duplicated in **`iconDefs`** for weight) |
+| `crv.png` | Curve CRV (bundled **`build-sources/crv.svg`**: spothq coin glyph without blue disk; duplicated in **`iconDefs`** for weight) |
 | `ldo.png` | Lido (LDO) |
 | `stx.png` | Stacks |
 | `mkr.png` | Maker (MKR) |
@@ -78,7 +78,7 @@ These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols**
 | `layerzero.png` | LayerZero (bundled stepped-layer silhouette in **`build-sources/layerzero.svg`**) |
 | `wormhole.png` | Wormhole (Iconify Arcticons) |
 
-**Not in icon list (text-only in matrix):** fiat symbols, commodity tickers (XAU, XAG, WTI, NG, CL), macro tickers (SOFR, FFR, DXY, VIX, SPX, NDX), plus **`₿`** / **`Ξ`** as controlled in code. Crypto names are **icons only** in the matrix stream. No PNG required for the text-only rows unless you add new text later.
+**Not in icon list (text-only in matrix):** fiat symbols, commodity tickers (XAU, XAG, WTI), macro tickers (DXY, VIX, NDX), plus **`₿`** / **`Ξ`** as controlled in code. Crypto names are **icons only** in the matrix stream. No PNG required for the text-only rows unless you add new text later.
 
 Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square mark), `ma` = Mastercard. **Bundled SVGs** (no Simple Icons slug as of this manifest): `build-sources/usdc.svg`, `layerzero.svg`, `kinexys.svg`, `nasdaq.svg`, `nyse.svg`, `ice.svg`, `citi.svg` (rasterized by **`npm run build:matrix-icons`**; abstract or custom silhouettes where noted, not necessarily official marks).
 
@@ -86,11 +86,10 @@ Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square m
 |------|--------|
 | `aapl.png` | Apple |
 | `msft.png` | Microsoft |
-| `jpm.png` | JPMorgan Chase |
+| `jpm.png` | JPMorgan Chase (bundled **`build-sources/jpm.svg`**: Chase octagon; SI has no **jpmorgan** slug) |
 | `citi.png` | Citibank (bundled **`build-sources/citi.svg`**: bold **CITI**; no SI slug in v16) |
-| `fidelity.png` | Fidelity (Iconify **`arcticons/fidelity`**) |
 | `gs.png` | Goldman Sachs (bundled **`build-sources/gs.svg`**: bold **GS**; SI wordmark is illegible at 20px) |
-| `coinbase.png` | Coinbase |
+| `coinbase.png` | Coinbase (Iconify **`token/coinbase`** C arc; SI is a wordmark at matrix size) |
 | `sq.png` | Block (Square) |
 | `visa.png` | Visa |
 | `kinexys.png` | Kinexys (J.P. Morgan digital payments / DLT) |
@@ -102,20 +101,19 @@ Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square m
 | `wmt.png` | Walmart (Iconify **`tabler/brand-walmart`**; **`arcticons/walmart`** fallback; no Simple Icons slug in v16) |
 | `nvda.png` | NVIDIA |
 | `tsla.png` | Tesla |
-| `amd.png` | AMD (bundled **`build-sources/amd.svg`**: bold **AMD**; SI mark mushes at matrix size) |
+| `amd.png` | AMD (bundled **`build-sources/amd.svg`**: Simple Icons wordmark paths; ticker text retired) |
 | `nflx.png` | Netflix |
 | `bac.png` | Bank of America |
 | `wfc.png` | Wells Fargo (bundled **`build-sources/wfc.svg`**: two-line **Wells** / **Fargo**; SI wordmark is illegible at 20px) |
 | `schw.png` | Charles Schwab |
 | `pypl.png` | PayPal |
-| `facebook.png` | Facebook |
 | `venmo.png` | Venmo (Iconify **`fa7-brands/venmo-v`**: stylized **V**; Simple Icons **`venmo`** is the full wordmark and is too small to read at 20px) |
 | `cashapp.png` | Cash App |
 | `intc.png` | Intel |
 | `csco.png` | Cisco |
 | `orcl.png` | Oracle |
 | `dis.png` | Disney |
-| `mstr.png` | MicroStrategy |
+| `mstr.png` | Strategy (MSTR; 2025 B mark) |
 | `hood.png` | Robinhood |
 | `ibm.png` | IBM |
 | `nasdaq.png` | Nasdaq (bundled abstract chart silhouette) |

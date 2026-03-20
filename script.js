@@ -641,28 +641,21 @@
       '$',
       '€', '£', '¥', '₩', '₹', '₣', '₴', '₱', '\uFDFC',
       '₿', '\u039E',
-      'XAU', 'XAG', 'WTI', 'NG', 'CL',
-      'SOFR', 'FFR', 'DXY', 'VIX', 'SPX', 'NDX'
+      'XAU', 'XAG', 'WTI',
+      'DXY', 'VIX', 'NDX'
     ];
 
     var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '₱': 1, '\uFDFC': 1 };
 
     var iconDefs = [
       { src: './icons/matrix/btc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sol.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fil.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/avax.png', loaded: false, img: null, tinted: null },
@@ -673,14 +666,9 @@
       { src: './icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/doge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/op.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/near.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/apt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sui.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/inj.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
@@ -696,7 +684,6 @@
       { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wld.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tao.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
@@ -707,10 +694,9 @@
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/citi.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
@@ -726,9 +712,9 @@
       { src: './icons/matrix/nflx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bac.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/schw.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
@@ -741,7 +727,15 @@
       { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ice.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ko.png', loaded: false, img: null, tinted: null }
+      { src: './icons/matrix/ko.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/revolut.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/block.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/fed.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/frbny.png', loaded: false, img: null, tinted: null }
     ];
 
     var mtxCryptoTextList = [];
@@ -767,8 +761,7 @@
     var mtxTradPool = mtxTradTextChars.map(function(v){ return { type: 'text', value: v }; });
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
-      /* Slightly higher weight for Visa so the mark reads next to other payment rails. */
-      var n = def.src.indexOf('visa.png') >= 0 ? 5 : 3;
+      var n = def.src.indexOf('visa.png') >= 0 ? 2 : 1;
       var k;
       for(k = 0; k < n; k++){
         mtxTradPool.push({ type: 'icon', def: def });
@@ -808,7 +801,9 @@
     var mtxFontSize = 13;
     var mtxDollarFontSize = 17;
     var mtxLineStep = 22;
-    var mtxIconDrawSize = 20;
+    var mtxIconDrawSize = 24;
+    var mtxIconDrawSizeMin = 17;
+    var mtxIconDrawSizeMax = 32;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -833,6 +828,17 @@
         mtxTrailFillCache = 'rgba(255, 255, 255, ' + fadeAlpha + ')';
       }
       return mtxTrailFillCache;
+    }
+
+    /* Opaque base color from --matrix-trail-rgb (same channel values as the fade layer, alpha 1). */
+    function mtxPanelMatteRgb(){
+      var cs = getComputedStyle(matrixContainer);
+      var raw = cs.getPropertyValue('--matrix-trail-rgb').trim();
+      var parts = raw.split(/\s+/).map(Number);
+      if(parts.length >= 3 && parts.every(function(n){ return !Number.isNaN(n); })){
+        return 'rgb(' + parts[0] + ',' + parts[1] + ',' + parts[2] + ')';
+      }
+      return 'rgb(22,32,28)';
     }
 
     function buildTinted(def){
@@ -889,6 +895,26 @@
         return { type: 'text', value: fb[Math.floor(Math.random() * fb.length)] };
       }
       return item;
+    }
+
+    var mtxIconMinColDistance = 3;
+    function mtxIconTooClose(colIndex, def){
+      if(!def || !def.src || !mtxColItem){
+        return false;
+      }
+      var n = mtxColItem.length;
+      var lo = Math.max(0, colIndex - mtxIconMinColDistance);
+      var hi = Math.min(n - 1, colIndex + mtxIconMinColDistance);
+      for(var j = lo; j <= hi; j++){
+        if(j === colIndex){
+          continue;
+        }
+        var other = mtxColItem[j];
+        if(other && other.type === 'icon' && other.def && other.def.src === def.src){
+          return true;
+        }
+      }
+      return false;
     }
 
     function mtxUpdateWarpFromEvent(e){
@@ -962,11 +988,39 @@
     }
 
     function mtxAssignColVisual(i){
-      var item = pickItem();
+      var item;
+      var tries = 0;
+      var maxTries = 20;
+      do {
+        item = pickItem();
+        if(item.type !== 'icon' || !mtxIconTooClose(i, item.def)){
+          break;
+        }
+        tries++;
+      } while(tries < maxTries);
+      if(item.type === 'icon'){
+        var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
+        if(item.def && item.def.src && (item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0)){
+          ds = Math.min(ds + 8, 42);
+        }
+        item = {
+          type: 'icon',
+          def: item.def,
+          drawSize: ds
+        };
+      }
       mtxColItem[i] = item;
-      mtxColOpacity[i] = item.type === 'icon'
-        ? 0.32 + Math.random() * 0.16
-        : 0.17 + Math.random() * 0.22;
+      if(item.type === 'icon'){
+        var sizeRange = mtxIconDrawSizeMax - mtxIconDrawSizeMin;
+        var normalizedSize = Math.min(1, (item.drawSize - mtxIconDrawSizeMin) / sizeRange);
+        /* Larger icons: brighter (add up to 0.12 opacity boost) */
+        mtxColOpacity[i] = 0.32 + Math.random() * 0.16 + normalizedSize * 0.12;
+        /* Larger icons: slower (multiply speed by 0.75 to 1.0) */
+        var baseSpeed = 0.092 + Math.random() * 0.024;
+        mtxColStep[i] = baseSpeed * (0.75 + normalizedSize * 0.25);
+      } else {
+        mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
+      }
     }
 
     function mtxDraw(ts){
@@ -1061,22 +1115,32 @@
         } else if(item.type === 'icon' && item.def.loaded && item.def.img){
           var tint = buildTinted(item.def);
           if(tint){
-            var iw = mtxIconDrawSize;
-            var ih = mtxIconDrawSize;
+            var iw = item.drawSize != null ? item.drawSize : mtxIconDrawSize;
+            var ih = iw;
             var ix = Math.round(x);
             var iy = Math.round(y);
             /* Warp can pull the head past x=0; container overflow clips the left edge of USDC-style coins. */
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
             /* Do not clamp iy: pointer warp pulls many columns upward; Math.max(0, iy) pinned every head to y=0. */
             mtxCtx.save();
+            /* Trail is a full-canvas fade without clear; transparent icon pixels would otherwise show accumulated layers and read as a solid filled shape (hollow hex, ring coins). Matte the bbox to the panel base, then draw the sprite. */
+            mtxCtx.globalAlpha = 1;
+            mtxCtx.fillStyle = mtxPanelMatteRgb();
+            mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
             mtxCtx.globalAlpha = op;
-            /* Light edge only: heavy blur reads as mush at 20px. */
-            mtxCtx.shadowBlur = 2;
-            mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.22)';
+            /* Hollow hex rings (link, Helium stroke hex): shadow + smoothing bleed into the hole or smear strokes. */
+            var mtxHollowHexIcon = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
+            if(mtxHollowHexIcon){
+              mtxCtx.shadowBlur = 0;
+            } else {
+              /* Light edge only: heavy blur reads as mush at 20px. */
+              mtxCtx.shadowBlur = 2;
+              mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.22)';
+            }
             mtxCtx.shadowOffsetX = 0;
             mtxCtx.shadowOffsetY = 0;
-            mtxCtx.imageSmoothingEnabled = true;
-            if('imageSmoothingQuality' in mtxCtx){
+            mtxCtx.imageSmoothingEnabled = !mtxHollowHexIcon;
+            if('imageSmoothingQuality' in mtxCtx && !mtxHollowHexIcon){
               mtxCtx.imageSmoothingQuality = 'high';
             }
             mtxCtx.drawImage(tint, ix, iy, iw, ih);
@@ -1087,7 +1151,10 @@
         if(y0 > h){
           mtxDrops[i] = Math.random() * -5;
           mtxAssignColVisual(i);
-          mtxColStep[i] = 0.092 + Math.random() * 0.024;
+          /* mtxColStep is now set inside mtxAssignColVisual for icons */
+          if(mtxColItem[i].type !== 'icon'){
+            mtxColStep[i] = 0.092 + Math.random() * 0.024;
+          }
         }
         mtxDrops[i] += mtxColStep[i] * dtMul;
       }

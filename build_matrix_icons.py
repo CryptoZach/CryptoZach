@@ -66,21 +66,25 @@ CRYPTO = {
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
 ICONIFY_CRYPTO_PATHS = {
     "kraken": ["logos/kraken", "token-branded/kraken"],
-    "metamask": ["logos/metamask", "token-branded/metamask"],
+    # logos/metamask is a 512x96 wordmark; 32px raster is vertical smears. Fox mark first (matches build-matrix-icons.mjs).
+    "metamask": ["token-branded/metamask", "logos/metamask"],
 }
 
 # Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
 # USDC / DAI: bundled build-sources/usdc.svg and dai.svg (glyph + ring, no filled brand disk) in Phase 0 first; then these.
 # cashapp: bundled cashapp.svg (squircle ring + $ subpath; full SI path is muddy at 32px).
-# link: bundled link.svg (bold LINK; hollow hex + trail read as a blank green hex at 20px).
+# link: bundled link.svg (SI nested hex rotated 30deg flat-top, hollow center). Path only so Phase 0 rasterizes without fonts.
 # hbar: bundled hbar.svg (SI Hedera is a filled circle + H that whiten() reads as a blank disk at 20px).
 # hyperliquid: bundled hyperliquid.svg (official symbol from project brand kit; no SI slug in v16).
+# mstr: bundled mstr.svg (Strategy 2025 B mark; SI microstrategy is legacy vertical bars).
 # arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
+# coinbase: Iconify token/coinbase (C arc); SI coinbase is a wordmark at matrix size.
+# jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
 # wfc: bundled wfc.svg (SI wordmark is illegible at matrix size; two-line sans text).
 # gs: bundled gs.svg (SI Goldman Sachs is a hairline wordmark at 32px).
-# amd: bundled amd.svg (SI paths mush when whiten()d and scaled to 20px).
-# op: bundled op.svg (Iconify optimism OP mark smears as horizontal bars at matrix size).
+# amd: bundled amd.svg (SI wordmark paths; ticker text retired).
+# op: bundled op.svg (Iconify token-branded optimism paths; no OP text ticker).
 # apt: Iconify token/aptos (coin mark; bundled APT text retired).
 # near: bundled near.svg (SI ribbon whiten() reads as stacked horizontal smears at matrix size).
 # sui: bundled sui.svg (token/sui organic paths mush when whiten()d at 20px).
@@ -90,7 +94,7 @@ ICONIFY_CRYPTO_PATHS = {
 # dot: bundled dot.svg (thick Polkadot ring reads as a filled circle when blurred).
 # uni: Iconify token/uniswap (unicorn silhouette; bundled UNI text retired).
 # aave: bundled aave.svg (color disk reads as a large blank green circle at 20px).
-# crv: bundled crv.svg (filled squircle reads as a large blank green disk; icon is duplicated in iconDefs).
+# crv: bundled crv.svg (coin glyph from spothq; circle omitted for matrix whiten).
 ICONIFY_CRYPTO_PREF = {
     "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
     "uni": ["token/uniswap", "token-branded/uniswap"],
@@ -102,10 +106,15 @@ ICONIFY_CRYPTO_PREF = {
     "wormhole": ["arcticons/wormhole", "arcticons/wormhole-2"],
 }
 
+# Crypto names that must use symbol only (no bundled ticker-text SVG). Never add "link" here: skipping bundled link.svg forces SI chainlink (hollow hex), which reads as a broken or blank green hex in the matrix.
+CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED = {"arb", "sei", "aave", "near", "sui", "dot", "doge"}
+
 # Prefer these Iconify SVGs before Simple Icons (matrix readability / correct mark).
 ICONIFY_COMPANY_PATHS = {
+    "coinbase": ["token/coinbase", "simple-icons/coinbase"],
     "visa": ["simple-icons/visa", "logos/visa"],
-    "intc": ["logos/intel", "simple-icons/intel"],
+    "pypl": ["logos/paypal", "simple-icons/paypal"],
+    "intc": ["simple-icons/intel", "logos/intel"],
     "fidelity": ["arcticons/fidelity"],
     "venmo": ["fa7-brands/venmo-v"],
     "wmt": ["tabler/brand-walmart", "arcticons/walmart"],
@@ -114,7 +123,7 @@ ICONIFY_COMPANY_PATHS = {
 COMPANIES = {
     "aapl": ("apple",            []),
     "msft": ("microsoft",        []),
-    "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),
+    "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),  # bundled Chase octagon build-sources/jpm.svg; SI has no jpmorgan
     "citi": ("citibank",         []),
     "fidelity": ("fidelity",     []),
     "gs":   ("goldmansachs",     []),
@@ -143,13 +152,21 @@ COMPANIES = {
     "csco": ("cisco",            []),
     "orcl": ("oracle",           []),
     "dis":  ("waltdisney",       ["disney", "waltdisneyworld"]),
-    "mstr": ("microstrategy",    ["strategy"]),
+    "mstr": ("microstrategy",    ["strategy"]),  # bundled Strategy B mark build-sources/mstr.svg
     "hood": ("robinhood",        []),
     "ibm":  ("ibm",              []),
     "nasdaq": ("nasdaq",         []),
     "nyse": ("nyse",             []),
     "ice": ("ice",               []),
     "ko":   ("cocacola",         ["coca-cola"]),
+    "stripe": ("stripe",         []),
+    "revolut": ("revolut",       []),
+    "block": ("square",          ["block"]),  # Block Inc: SI slug is square
+    "blk":  ("blackrock",        []),         # bundled BR monogram build-sources/blk.svg (SI has no slug)
+    "securitize": ("securitize", []),         # bundled build-sources/securitize.svg
+    "bakkt": ("bakkt",           []),         # bundled build-sources/bakkt.svg
+    "fed":  ("federalreserve",   []),         # bundled build-sources/fed.svg
+    "frbny": ("federalreservebankofnewyork", []),  # bundled build-sources/frbny.svg
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────
@@ -177,7 +194,7 @@ def svg_to_white_png(svg_bytes: bytes, size: int = 32) -> bytes | None:
             output_height=size,
         )
         return png_data
-    except ImportError:
+    except (ImportError, OSError):
         pass
 
     # Fallback: try rsvg-convert via subprocess
@@ -288,7 +305,8 @@ def main():
 
         # ── Phase 0: bundled SVG in build-sources/<name>.svg ──
         bundled_svg = os.path.join(outdir, "build-sources", f"{name}.svg")
-        if os.path.isfile(bundled_svg):
+        skip_bundled = kind == "crypto" and name in CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED
+        if not skip_bundled and os.path.isfile(bundled_svg):
             slugs_tried.append(f"local:build-sources/{name}.svg")
             with open(bundled_svg, "rb") as sf:
                 svg_data = sf.read()
@@ -475,7 +493,7 @@ def main():
         "wfc":  "https://www.wellsfargo.com",
         "schw": "https://www.schwab.com",
         "dis":  "https://thewaltdisneycompany.com/media",
-        "mstr": "https://www.microstrategy.com",
+        "mstr": "https://www.strategy.com (formerly MicroStrategy)",
         "ko":   "https://www.coca-colacompany.com/media",
     }
 
