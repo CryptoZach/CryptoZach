@@ -80,7 +80,7 @@ These names match **`script.js`** `iconDefs` (homepage matrix). **Fiat symbols**
 
 **Not in icon list (text-only in matrix):** fiat symbols, commodity tickers (XAU, XAG, WTI, NG, CL), macro tickers (SOFR, FFR, DXY, VIX, SPX, NDX), plus **`₿`** / **`Ξ`** as controlled in code. Crypto names are **icons only** in the matrix stream. No PNG required for the text-only rows unless you add new text later.
 
-Companies / payments / banks (36). `coinbase` = Coinbase, `sq` = Block (Square mark), `ma` = Mastercard. **Bundled SVGs** (no Simple Icons slug as of this manifest): `build-sources/usdc.svg`, `layerzero.svg`, `kinexys.svg`, `nasdaq.svg`, `nyse.svg`, `ice.svg`, `citi.svg` (rasterized by **`npm run build:matrix-icons`**; abstract or custom silhouettes where noted, not necessarily official marks).
+Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square mark), `ma` = Mastercard. **Bundled SVGs** (no Simple Icons slug as of this manifest): `build-sources/usdc.svg`, `layerzero.svg`, `kinexys.svg`, `nasdaq.svg`, `nyse.svg`, `ice.svg`, `citi.svg` (rasterized by **`npm run build:matrix-icons`**; abstract or custom silhouettes where noted, not necessarily official marks).
 
 | File | Asset |
 |------|--------|
@@ -98,6 +98,8 @@ Companies / payments / banks (36). `coinbase` = Coinbase, `sq` = Block (Square m
 | `googl.png` | Alphabet (Google) |
 | `amzn.png` | Amazon |
 | `meta.png` | Meta |
+| `x.png` | X (Simple Icons slug **`x`**) |
+| `wmt.png` | Walmart (Iconify **`tabler/brand-walmart`**; **`arcticons/walmart`** fallback; no Simple Icons slug in v16) |
 | `nvda.png` | NVIDIA |
 | `tsla.png` | Tesla |
 | `amd.png` | AMD (bundled **`build-sources/amd.svg`**: bold **AMD**; SI mark mushes at matrix size) |
@@ -127,7 +129,7 @@ Companies / payments / banks (36). `coinbase` = Coinbase, `sq` = Block (Square m
 
 2. Flag any asset as **high trademark risk** or **no clear redistribution license** and suggest a **fallback** (e.g. stylized initial letter in a circle, clearly not the brand logo, or skip).
 
-3. End with a **checklist**: all **83** unique PNG filenames (47 crypto + 36 company), plus note that **`script.js`** may repeat some crypto `iconDefs` for weight, not extra files.
+3. End with a **checklist**: all **85** unique PNG filenames (47 crypto + 38 company), plus note that **`script.js`** may repeat some crypto `iconDefs` for weight, not extra files.
 
 4. Do **not** fabricate download links. If you cannot verify a license, say **unknown** and recommend verification steps.
 

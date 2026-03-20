@@ -108,6 +108,7 @@ ICONIFY_COMPANY_PATHS = {
     "intc": ["logos/intel", "simple-icons/intel"],
     "fidelity": ["arcticons/fidelity"],
     "venmo": ["fa7-brands/venmo-v"],
+    "wmt": ["tabler/brand-walmart", "arcticons/walmart"],
 }
 
 COMPANIES = {
@@ -125,6 +126,8 @@ COMPANIES = {
     "googl":("google",           ["alphabet"]),
     "amzn": ("amazon",           []),
     "meta": ("meta",             []),
+    "x":    ("x",                []),
+    "wmt":  ("walmart",          []),
     "nvda": ("nvidia",           []),
     "tsla": ("tesla",            []),
     "amd":  ("amd",              []),
