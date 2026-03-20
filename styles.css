@@ -261,6 +261,9 @@ nav{
   right:0;
   bottom:0;
   flex-direction:column;
+  /* Global `nav` sets justify-content:flex-end; with column flex that pins links to the bottom. */
+  justify-content:flex-start;
+  align-items:stretch;
   background:var(--bg);
   padding:var(--space-lg) max(var(--space-lg), env(safe-area-inset-right)) calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)) max(var(--space-lg), env(safe-area-inset-left));
   gap:var(--space-sm);
@@ -5220,6 +5223,15 @@ footer{
     padding:4px 10px;
   }
   nav{width:auto; justify-content:flex-end; flex-wrap:nowrap; gap:var(--space-xs)}
+  /* Pull menu + theme into one right cluster (otherwise space-between leaves the X mid-bar). */
+  .header-inner .menu-toggle{
+    margin-left:auto;
+    flex-shrink:0;
+  }
+  .header-inner > nav.nav-desktop,
+  .header-inner > .nav-desktop{
+    flex-shrink:0;
+  }
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
@@ -5277,6 +5289,8 @@ footer{
     flex-direction:column;
     gap:var(--space-xs);
     width:100%;
+    align-items:flex-start;
+    text-align:left;
   }
   .nav-links--mobile .navlink{
     font-size:17px;
@@ -5726,8 +5740,8 @@ footer{
   .nav-links--mobile{
     flex-direction:row;
     flex-wrap:wrap;
-    align-items:center;
-    justify-content:center;
+    align-items:flex-start;
+    justify-content:flex-start;
     padding:var(--space-sm);
   }
   .nav-links--mobile .navlink{font-size:14px; padding:var(--space-xs) var(--space-sm); min-height:40px}
