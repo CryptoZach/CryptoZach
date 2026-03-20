@@ -232,6 +232,12 @@ const ICONS = [
   { name: 'googl', si: ['google', 'alphabet'] },
   { name: 'amzn', si: ['amazon'] },
   { name: 'meta', si: ['meta'] },
+  { name: 'x', si: ['x'] },
+  {
+    name: 'wmt',
+    si: [],
+    iconifyExtra: ['tabler/brand-walmart', 'arcticons/walmart'],
+  },
   { name: 'nvda', si: ['nvidia'] },
   { name: 'tsla', si: ['tesla'] },
   {

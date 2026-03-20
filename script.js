@@ -752,6 +752,8 @@
       { src: './icons/matrix/googl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/meta.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/x.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wmt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/amd.png', loaded: false, img: null, tinted: null },

@@ -1227,7 +1227,8 @@ h1{
   vertical-align:middle;
 }
 .how-work-runs-table td{
-  color:var(--muted-soft);
+  /* Was --muted-soft: too low contrast on striped panel rows for low vision / color-deficient readers */
+  color:var(--text-soft);
   line-height:1.55;
   max-width:none;
   vertical-align:top;
@@ -1366,6 +1367,9 @@ h1{
 .research-library-page .section-title{
   margin-bottom:var(--space-lg);
 }
+.research-library-page .section-title p{
+  color:var(--text-soft);
+}
 /* Research library (selected-research.html): less top padding, tighter jump-to */
 main:has(> .research-library-page){
   padding-top:var(--space-md);
@@ -1472,7 +1476,7 @@ main > section.research-library-page:first-of-type{
   white-space:normal;
 }
 .research-library-page #cross-track-convergence .convergence-table tbody td{
-  color:var(--muted-soft);
+  color:var(--text-soft);
   line-height:1.55;
 }
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td{
@@ -1521,6 +1525,11 @@ main > section.research-library-page:first-of-type{
 .research-library-page h2.track-heading#track-b{
   scroll-margin-top:calc(var(--header-h) + var(--space-md));
 }
+/* Track A/B headings: stronger than --muted for WCAG-style body contrast on library panel */
+.research-library-page .track-heading-prefix,
+.research-library-page .track-heading-desc{
+  color:var(--text-soft);
+}
 /* Track blocks: heading + intro sit outside the card list (same pattern for A and B) */
 .research-library-page .research-track{
   margin:0;
@@ -1549,7 +1558,7 @@ main > section.research-library-page:first-of-type{
 .research-library-page .page-toc-link-stack-sub{
   font-size:11px;
   font-weight:400;
-  color:var(--muted);
+  color:var(--text-soft);
   max-width:18rem;
 }
 .research-library-page .track-overview{
@@ -1587,6 +1596,7 @@ main > section.research-library-page:first-of-type{
 }
 
 .research-library-page .track-context{
+  color:var(--text-soft);
   padding-bottom:2mm;
 }
 
@@ -2168,7 +2178,7 @@ section:has(.speaker-jump-to){
   outline-offset:2px;
 }
 .research-library-page .page-toc-link--stacked:hover .page-toc-link-stack-sub{
-  color:var(--text-soft);
+  color:inherit;
 }
 
 /* ── Grid & cards ── */
