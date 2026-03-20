@@ -1117,7 +1117,12 @@
     }
 
     var mtxFlagshipLpMs = 25;
-    var mtxFlagshipLpTimer = null;
+    /* iOS WebKit often defers timers until the touch sequence ends; hero pointerup was mtxStop()ing and clearing this before it ran. */
+    var mtxFlagshipLpDeferTimer = null;
+    var mtxFlagshipLpFireTimer = null;
+    var mtxFlagshipCoarseDown = false;
+    var mtxFlagshipDownTs = 0;
+    var mtxFlagshipLastDownEv = null;
     var mtxFlagshipConsumeClick = false;
 
     function mtxIsFlagshipActivator(act){
@@ -1125,10 +1130,39 @@
     }
 
     function mtxClearFlagshipLpTimer(){
-      if(mtxFlagshipLpTimer){
-        window.clearTimeout(mtxFlagshipLpTimer);
-        mtxFlagshipLpTimer = null;
+      if(mtxFlagshipLpDeferTimer){
+        window.clearTimeout(mtxFlagshipLpDeferTimer);
+        mtxFlagshipLpDeferTimer = null;
       }
+      if(mtxFlagshipLpFireTimer){
+        window.clearTimeout(mtxFlagshipLpFireTimer);
+        mtxFlagshipLpFireTimer = null;
+      }
+    }
+
+    function mtxCompleteFlagshipLongPress(ev){
+      if(mtxHeroLongPressPin){
+        return;
+      }
+      mtxHeroLongPressPin = true;
+      mtxFlagshipConsumeClick = true;
+      mtxFlagshipCoarseDown = false;
+      if(heroFlagshipMtx && heroFlagshipMtx.classList){
+        heroFlagshipMtx.classList.remove('mtx-flagship-lp-arming');
+        heroFlagshipMtx.classList.add('mtx-flagship-lp-done');
+        window.setTimeout(function(){
+          if(heroFlagshipMtx && heroFlagshipMtx.classList){
+            heroFlagshipMtx.classList.remove('mtx-flagship-lp-done');
+          }
+        }, 380);
+      }
+      mtxStart();
+      mtxUpdateWarpFromEvent(ev);
+      try{
+        if(navigator.vibrate){
+          navigator.vibrate(12);
+        }
+      } catch(_){}
     }
 
     function mtxFlagshipLpStripClasses(){
@@ -1153,6 +1187,9 @@
       }
       mtxHeroLongPressPin = false;
       mtxFlagshipConsumeClick = false;
+      mtxFlagshipCoarseDown = false;
+      mtxFlagshipDownTs = 0;
+      mtxFlagshipLastDownEv = null;
       mtxClearFlagshipLpTimer();
       mtxFlagshipLpStripClasses();
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
@@ -1171,6 +1208,58 @@
     }
 
     homeHeroMtxStop = mtxStop;
+
+    if(heroHome){
+      function mtxFlagshipStripArmingOnly(){
+        if(heroFlagshipMtx && heroFlagshipMtx.classList){
+          heroFlagshipMtx.classList.remove('mtx-flagship-lp-arming');
+        }
+      }
+      heroHome.addEventListener('pointerup', function mtxFlagshipCoarseUpCapture(e){
+        if(e.pointerType === 'mouse'){
+          return;
+        }
+        if(!mtxFlagshipCoarseDown){
+          return;
+        }
+        var elapsed = mtxFlagshipDownTs ? (e.timeStamp - mtxFlagshipDownTs) : 0;
+        if(elapsed >= mtxFlagshipLpMs && !mtxHeroLongPressPin){
+          mtxClearFlagshipLpTimer();
+          mtxFlagshipCoarseDown = false;
+          mtxFlagshipDownTs = 0;
+          mtxFlagshipLastDownEv = null;
+          mtxCompleteFlagshipLongPress(e);
+          mtxFlagshipStripArmingOnly();
+          return;
+        }
+        mtxFlagshipCoarseDown = false;
+        mtxFlagshipDownTs = 0;
+        mtxFlagshipLastDownEv = null;
+        mtxClearFlagshipLpTimer();
+        mtxFlagshipStripArmingOnly();
+      }, true);
+      heroHome.addEventListener('pointercancel', function mtxFlagshipCoarseCancelCapture(e){
+        if(e.pointerType === 'mouse'){
+          return;
+        }
+        if(!mtxFlagshipCoarseDown){
+          return;
+        }
+        mtxFlagshipCoarseDown = false;
+        mtxFlagshipDownTs = 0;
+        mtxFlagshipLastDownEv = null;
+        mtxClearFlagshipLpTimer();
+        mtxFlagshipStripArmingOnly();
+      }, true);
+    }
+
+    if(heroFlagshipMtx){
+      heroFlagshipMtx.addEventListener('touchend', function(e){
+        if(mtxFlagshipConsumeClick){
+          e.preventDefault();
+        }
+      }, { capture: true, passive: false });
+    }
 
     function mtxIsInsideAnyActivator(node){
       if(!node || typeof Node === 'undefined' || !(node instanceof Node)){
@@ -1267,30 +1356,25 @@
             mtxStop(true);
             return;
           }
+          mtxFlagshipCoarseDown = true;
+          mtxFlagshipDownTs = e.timeStamp;
+          mtxFlagshipLastDownEv = e;
           if(act.classList){
             act.classList.add('mtx-flagship-lp-arming');
           }
-          mtxFlagshipLpTimer = window.setTimeout(function(){
-            mtxFlagshipLpTimer = null;
-            mtxHeroLongPressPin = true;
-            mtxFlagshipConsumeClick = true;
-            if(act.classList){
-              act.classList.remove('mtx-flagship-lp-arming');
-              act.classList.add('mtx-flagship-lp-done');
-              window.setTimeout(function(){
-                if(act.classList){
-                  act.classList.remove('mtx-flagship-lp-done');
-                }
-              }, 380);
-            }
-            mtxStart();
-            mtxUpdateWarpFromEvent(e);
-            try{
-              if(navigator.vibrate){
-                navigator.vibrate(12);
+          mtxFlagshipLpDeferTimer = window.setTimeout(function(){
+            mtxFlagshipLpDeferTimer = null;
+            mtxFlagshipLpFireTimer = window.setTimeout(function(){
+              mtxFlagshipLpFireTimer = null;
+              if(mtxHeroLongPressPin){
+                return;
               }
-            } catch(_){}
-          }, mtxFlagshipLpMs);
+              if(!mtxFlagshipCoarseDown){
+                return;
+              }
+              mtxCompleteFlagshipLongPress(mtxFlagshipLastDownEv || e);
+            }, mtxFlagshipLpMs);
+          }, 0);
           return;
         }
         mtxStart();
