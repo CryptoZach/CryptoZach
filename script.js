@@ -160,178 +160,144 @@
           || heroHome.querySelector('a.action.primary.cta-primary');
       }
 
-      var dollarTarget = { x: 0, y: 0, valid: false };
-      var dollarSpawnTimeoutId = null;
+      var ctaBtn = flagshipCtaEl();
+      if(!ctaBtn) return;
+
+      var activeDollars = 0;
+      var dollarSpawnIntervalId = null;
       var dollarLoopActive = false;
-      var dollarResizeTimer = null;
+      var resizeTimer = null;
 
-      function isMobileDollarViewport(){
-        return window.matchMedia('(max-width: 768px)').matches;
+      function getDollarConfig(){
+        var mobile = window.innerWidth <= 768;
+        return {
+          isMobile: mobile,
+          maxDollars: mobile ? 8 : 20,
+          spawnInterval: mobile ? 600 : 350
+        };
       }
 
-      function dollarFlightMaxNow(){
-        return isMobileDollarViewport() ? 8 : 24;
-      }
-
-      function refreshDollarTarget(){
-        var cta = flagshipCtaEl();
-        if(!cta){
-          dollarTarget.valid = false;
-          return;
-        }
-        var h = heroHome.getBoundingClientRect();
-        var c = cta.getBoundingClientRect();
-        if(c.width <= 0 || c.height <= 0){
-          dollarTarget.valid = false;
-          return;
-        }
-        dollarTarget.x = c.left - h.left + c.width * 0.5;
-        dollarTarget.y = c.top - h.top + c.height * 0.5;
-        dollarTarget.valid = true;
-      }
-
-      function scheduleResizeTargetRefresh(){
-        if(dollarResizeTimer){
-          window.clearTimeout(dollarResizeTimer);
-        }
-        dollarResizeTimer = window.setTimeout(function(){
-          dollarResizeTimer = null;
-          refreshDollarTarget();
-        }, 200);
-      }
-
-      function randomSpawnDelayMs(){
-        var hover = heroHome.classList.contains('hero-home--flagship-hover');
-        var lo = hover ? 240 : 400;
-        var hi = hover ? 360 : 600;
-        return Math.round(lo + Math.random() * (hi - lo));
-      }
-
-      function rescheduleDollarSpawnTimer(){
-        if(!dollarLoopActive){
-          return;
-        }
-        if(dollarSpawnTimeoutId){
-          window.clearTimeout(dollarSpawnTimeoutId);
-          dollarSpawnTimeoutId = null;
-        }
-        dollarSpawnTimeoutId = window.setTimeout(function tick(){
-          dollarSpawnTimeoutId = null;
-          spawnDollarFlight();
-          if(dollarLoopActive){
-            dollarSpawnTimeoutId = window.setTimeout(tick, randomSpawnDelayMs());
-          }
-        }, randomSpawnDelayMs());
-      }
-
-      function spawnDollarFlight(){
-        var ctaBtn = flagshipCtaEl();
-        if(!ctaBtn || (typeof document.hidden === 'boolean' && document.hidden)){
-          return;
-        }
-        refreshDollarTarget();
-        if(!dollarTarget.valid){
-          return;
-        }
+      var targetX = 0;
+      var targetY = 0;
+      function updateTarget(){
+        var ctaRect = ctaBtn.getBoundingClientRect();
         var heroRect = heroHome.getBoundingClientRect();
-        if(heroRect.width <= 0 || heroRect.height <= 0){
-          return;
-        }
-        var targetX = dollarTarget.x;
-        var targetY = dollarTarget.y;
-        var fromLeft = Math.random() < 0.5;
-        var startX;
-        var startY;
-        if(fromLeft){
-          startX = -20;
-          startY = Math.random() * heroRect.height;
+        targetX = (ctaRect.left + ctaRect.width / 2) - heroRect.left;
+        targetY = (ctaRect.top + ctaRect.height / 2) - heroRect.top;
+      }
+      updateTarget();
+
+      window.addEventListener('resize', function(){
+        if(resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function(){
+          resizeTimer = null;
+          updateTarget();
+          if(dollarLoopActive && dollarSpawnIntervalId){
+            clearInterval(dollarSpawnIntervalId);
+            var config = getDollarConfig();
+            dollarSpawnIntervalId = setInterval(spawnDollar, config.spawnInterval);
+          }
+        }, 200);
+      }, { passive: true });
+
+      function spawnDollar(){
+        if(!dollarLoopActive || (typeof document.hidden === 'boolean' && document.hidden)) return;
+
+        var config = getDollarConfig();
+        if(activeDollars >= config.maxDollars) return;
+
+        var heroRect = heroHome.getBoundingClientRect();
+        var w = heroRect.width;
+        var h = heroRect.height;
+        if(w <= 0 || h <= 0) return;
+
+        var perimeter = 2 * (w + h);
+        var p = Math.random() * perimeter;
+        var startX, startY;
+
+        if(p < w){
+          startX = p;
+          startY = -10;
+        } else if(p < w + h){
+          startX = w + 10;
+          startY = p - w;
+        } else if(p < 2 * w + h){
+          startX = 2 * w + h - p;
+          startY = h + 10;
         } else {
-          startX = Math.random() * heroRect.width;
-          startY = -20;
+          startX = -10;
+          startY = perimeter - p;
         }
-        var dollarDx = targetX - startX;
-        var dollarDy = targetY - startY;
-        var curveOffset = (Math.random() - 0.5) * 80;
-        var dist = Math.sqrt(dollarDx * dollarDx + dollarDy * dollarDy);
-        var mobile = isMobileDollarViewport();
-        /* Duration scales with distance; mobile floors at 2s to avoid flicker on short paths */
-        var flightMs = Math.round(Math.min(8200, Math.max(mobile ? 2000 : 2800, dist * 5.2)));
-        if(heroHome.classList.contains('hero-home--flagship-hover')){
-          flightMs = Math.round(flightMs * 0.6);
-        }
-        if(mobile){
-          flightMs = Math.max(2000, flightMs);
-        }
+
+        var dx = targetX - startX;
+        var dy = targetY - startY;
+        var curveOffset = (Math.random() - 0.5) * 100;
+
+        var isHovering = heroHome.classList.contains('hero-home--flagship-hover');
+        var baseDuration = config.isMobile ? 3.5 : 2.5;
+        var variance = 0.8 + Math.random() * 0.8;
+        var duration = baseDuration * variance;
+        if(isHovering) duration *= 0.6;
+
+        var maxOpacity = config.isMobile
+          ? (0.1 + Math.random() * 0.15)
+          : (0.15 + Math.random() * 0.25);
+        if(isHovering) maxOpacity = Math.min(maxOpacity + 0.15, 0.55);
+
         var el = document.createElement('span');
         el.className = 'hero-dollar-flight';
         el.setAttribute('aria-hidden', 'true');
+        el.textContent = '$';
         el.style.left = startX + 'px';
         el.style.top = startY + 'px';
-        el.style.animationDuration = (flightMs / 1000) + 's';
-        el.style.setProperty('--dollar-dx', dollarDx + 'px');
-        el.style.setProperty('--dollar-dy', dollarDy + 'px');
+        el.style.animationDuration = duration + 's';
+        el.style.setProperty('--dollar-dx', dx + 'px');
+        el.style.setProperty('--dollar-dy', dy + 'px');
         el.style.setProperty('--dollar-curve', curveOffset + 'px');
-        el.textContent = '$';
-        el.addEventListener('animationend', function onEnd(){
-          el.removeEventListener('animationend', onEnd);
-          if(el.parentNode === heroHome){
-            el.remove();
-          }
-        });
+        el.style.setProperty('--dollar-opacity', String(maxOpacity));
+
         heroHome.appendChild(el);
-        var maxLive = dollarFlightMaxNow();
-        var live = heroHome.querySelectorAll('.hero-dollar-flight');
-        if(live.length > maxLive){
-          live[0].remove();
-        }
+        activeDollars++;
+
+        el.addEventListener('animationend', function(){
+          if(el.parentNode === heroHome) el.remove();
+          activeDollars--;
+        });
       }
 
       function startDollarFlightLoop(){
-        if(dollarLoopActive){
-          return;
-        }
+        if(dollarLoopActive) return;
         dollarLoopActive = true;
-        refreshDollarTarget();
-        spawnDollarFlight();
-        rescheduleDollarSpawnTimer();
+        spawnDollar();
+        var config = getDollarConfig();
+        dollarSpawnIntervalId = setInterval(spawnDollar, config.spawnInterval);
       }
 
       function stopDollarFlightLoop(){
         dollarLoopActive = false;
-        if(dollarSpawnTimeoutId){
-          window.clearTimeout(dollarSpawnTimeoutId);
-          dollarSpawnTimeoutId = null;
+        if(dollarSpawnIntervalId){
+          clearInterval(dollarSpawnIntervalId);
+          dollarSpawnIntervalId = null;
         }
       }
-
-      window.addEventListener('resize', scheduleResizeTargetRefresh, { passive: true });
 
       var flagshipDollarSpeed = flagshipCtaEl();
       if(flagshipDollarSpeed){
         flagshipDollarSpeed.addEventListener('pointerover', function(e){
-          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)){
-            return;
-          }
+          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)) return;
           heroHome.classList.add('hero-home--flagship-hover');
-          rescheduleDollarSpawnTimer();
         });
         flagshipDollarSpeed.addEventListener('pointerout', function(e){
-          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)){
-            return;
-          }
+          if(e.relatedTarget && flagshipDollarSpeed.contains(e.relatedTarget)) return;
           heroHome.classList.remove('hero-home--flagship-hover');
-          rescheduleDollarSpawnTimer();
         });
       }
 
       if(typeof IntersectionObserver === 'function'){
         var obs = new IntersectionObserver(function(entries){
           var vis = entries.some(function(en){ return en.isIntersecting && en.intersectionRatio > 0.05; });
-          if(vis){
-            startDollarFlightLoop();
-          } else {
-            stopDollarFlightLoop();
-          }
+          if(vis) startDollarFlightLoop();
+          else stopDollarFlightLoop();
         }, { threshold: [0, 0.08, 0.15] });
         obs.observe(heroHome);
       } else {
