@@ -1995,10 +1995,14 @@
 
     function mtxMeshLaneAlpha(ax, w, ay, h) {
       var t = Math.abs((ax / w) - 0.5) * 2;
-      var lane = 0.48 + 0.52 * Math.min(1, Math.pow(t, 1.1));
-      /* Dim only behind the upper headline block, not the pad-mesh band (keeps lower lattice readable). */
+      var lane = 0.42 + 0.58 * Math.min(1, Math.pow(t, 1.1));
+      /* Dim behind the headline block */
       if (ay < h * 0.72 && t < 0.38) {
-        lane *= 0.74;
+        lane *= 0.68;
+      }
+      /* Also dim behind the CTA lane (lower center) */
+      if (ay > h * 0.62 && ay < h * 0.88 && t < 0.32) {
+        lane *= 0.72;
       }
       return lane;
     }
@@ -2130,8 +2134,8 @@
       function drawPadShape(nd, ox, oy, nFade, drawAlpha, pulse, isDollarFamily, boost) {
         var px = nd.x + (nd.partOx || 0) + ox;
         var py = nd.y + (nd.partOy || 0) + oy;
-        var prx = (nd.padRx != null ? nd.padRx : 7) * (mtxIsMobile ? 0.92 : 1);
-        var pry = (nd.padRy != null ? nd.padRy : 2.8) * (mtxIsMobile ? 0.92 : 1);
+        var prx = (nd.padRx != null ? nd.padRx : 10) * (mtxIsMobile ? 0.88 : 1.25);
+        var pry = (nd.padRy != null ? nd.padRy : 4.0) * (mtxIsMobile ? 0.88 : 1.25);
         var rot = nd.padRotation || 0;
         var drift = mtxReducedMotion ? 0 : Math.sin(now * 0.00055 + nd.padPhase) * nd.padDrift * 0.45;
         var lane = mtxMeshLaneAlpha(px, w, py, h);
@@ -2146,12 +2150,12 @@
         mtxCtx.globalAlpha = Math.min(1, a0 * 0.55);
         mtxCtx.beginPath();
         mtxCtx.ellipse(0, 0, prx * pulse, pry * pulse, 0, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.07 + (boost ? 0.06 : 0)) + ')';
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.10 + (boost ? 0.07 : 0)) + ')';
         mtxCtx.fill();
-        mtxCtx.globalAlpha = Math.min(1, a0 * 0.65);
+        mtxCtx.globalAlpha = Math.min(1, a0 * 0.70);
         mtxCtx.beginPath();
-        mtxCtx.ellipse(0, 0, prx * pulse * 0.50, pry * pulse * 0.50, 0, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.10 + (boost ? 0.08 : 0)) + ')';
+        mtxCtx.ellipse(0, 0, prx * pulse * 0.45, pry * pulse * 0.45, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.14 + (boost ? 0.09 : 0)) + ')';
         mtxCtx.fill();
         mtxCtx.strokeStyle = 'rgba(' + col + ', ' + (a0 * 0.20) + ')';
         mtxCtx.lineWidth = 0.45;
@@ -2179,7 +2183,7 @@
           var ndB = mtxMeshNodes[bi];
           var fadeB = meshNodeFade(ndB);
           var dist = neighbors[nb].dist;
-          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.11;
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.06;
           var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.26;
           lineAlpha += reactBoost;
           if (now < (ndA.reactUntil || 0) || now < (ndB.reactUntil || 0)) {
@@ -2261,16 +2265,42 @@
       }
     }
 
-    function mtxDrawSubmersionBand(w, h) {
+    function mtxDrawSubmersionBand(w, h, now) {
+      /* Localized density pockets instead of a uniform wash.
+         Several small radial glows around mesh node clusters,
+         plus a very faint global gradient to tie them together. */
       var zTop = h * mtxSubmersionZoneTop;
+
+      /* Extremely faint global gradient — barely there */
       var grd = mtxCtx.createLinearGradient(0, zTop, 0, h);
       grd.addColorStop(0, 'rgba(74, 222, 128, 0)');
-      grd.addColorStop(0.5, 'rgba(74, 222, 128, 0.010)');
-      grd.addColorStop(1, 'rgba(74, 222, 128, 0.028)');
+      grd.addColorStop(0.6, 'rgba(74, 222, 128, 0.005)');
+      grd.addColorStop(1, 'rgba(74, 222, 128, 0.012)');
       mtxCtx.save();
       mtxCtx.fillStyle = grd;
       mtxCtx.fillRect(0, zTop, w, h - zTop);
       mtxCtx.restore();
+
+      /* Localized pocket glows around dense mesh clusters */
+      if (!mtxReducedMotion && mtxMeshNodes.length > 4) {
+        mtxCtx.save();
+        for (var pi = 0; pi < mtxMeshNodes.length; pi += 3) {
+          var nd = mtxMeshNodes[pi];
+          if (!nd || nd.y < zTop) continue;
+          var age = now - nd.born;
+          var life = nd.lifeMs || nd.life || 10000;
+          var fade = Math.min(1, age / 1200) * (age > life * 0.7 ? 1 - (age - life * 0.7) / (life * 0.3) : 1);
+          var pocketAlpha = fade * 0.018 * mtxMeshLaneAlpha(nd.x, w, nd.y, h);
+          if (pocketAlpha < 0.002) continue;
+          var pocketR = 22 + Math.sin(now * 0.0008 + nd.pulse) * 6;
+          var grad = mtxCtx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, pocketR);
+          grad.addColorStop(0, 'rgba(74, 222, 128, ' + pocketAlpha + ')');
+          grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
+          mtxCtx.fillStyle = grad;
+          mtxCtx.fillRect(nd.x - pocketR, nd.y - pocketR, pocketR * 2, pocketR * 2);
+        }
+        mtxCtx.restore();
+      }
     }
 
     function mtxReactMeshNear(px, py, now, isDollar, colIndex, w, h) {
@@ -2362,134 +2392,180 @@
       ensureGlowSprites();
       var isDollar = item.type === 'text' && item.value === '$';
       var submerge = mtxGetSubmerge(headBaseY, h);
-      var steps = mtxAfterburnStepCount();
-      /* Tight, head-attached wake — not full-column aurora */
-      var trailAlphaBase = (mtxIsMobile ? 0.06 : 0.08) * op * (1 - 0.30 * submerge);
-      var stepShorten = 1 - 0.25 * submerge;
       var driftX = mtxColDriftX[colIndex] || 0;
-      var effSteps = Math.max(1, Math.round(steps * stepShorten));
+      /* Very tight wake — only 3 steps desktop, 2 mobile, fading fast */
+      var effSteps = mtxIsMobile ? 2 : 3;
+      if (mtxReducedMotion) effSteps = 1;
+      var trailAlpha = (mtxIsMobile ? 0.04 : 0.055) * op * (1 - 0.4 * submerge);
 
-      /* A. Head bloom — offset ABOVE the head so it doesn't blur the glyph */
+      /* A. Tiny head bloom — just above the glyph, small and faint */
       var bloom = mtxGlowSpriteFor(isDollar, 0, submerge);
-      var bloomSize = bloom.width * 0.5;
-      var bh = bloomSize / 2;
+      var bloomSize = bloom.width * 0.28;
       mtxCtx.save();
-      mtxCtx.globalAlpha = Math.min(0.18, trailAlphaBase * 2.0);
-      /* Draw above the head, not on top of it */
-      mtxCtx.drawImage(bloom, warpedHead.x - bh, warpedHead.y - bloomSize * 1.1, bloomSize, bloomSize);
+      mtxCtx.globalAlpha = Math.min(0.10, trailAlpha * 1.5);
+      mtxCtx.drawImage(bloom,
+        warpedHead.x - bloomSize * 0.5,
+        warpedHead.y - bloomSize * 1.3,
+        bloomSize, bloomSize);
       mtxCtx.restore();
 
-      /* B. Segmented tapered wake — each step warped individually */
+      /* B. Short segmented wake — each step warped, fades steeply */
       var pts = [];
-      var ti;
-      for (ti = 1; ti <= effSteps; ti++) {
+      for (var ti = 1; ti <= effSteps; ti++) {
         var rawY = headBaseY - ti * mtxLineStep;
         if (rawY < 0) break;
         var rawX = colIndex * mtxColWidth + 1 + driftX;
-        /* Minimal turbulence — just enough to prevent rigid straightness */
-        rawX += Math.sin(now * 0.003 + colIndex * 1.5 + ti * 2.0) * 0.8;
         var wpt = mtxWarpPoint(rawX, rawY, w, h);
-        /* Submersion shimmer on older points only */
-        if (submerge > 0.05 && ti > 1) {
-          wpt.x += Math.sin(now * 0.006 + ti * 1.4) * submerge * 0.7;
-        }
-        pts.push({
-          wx: wpt.x,
-          wy: wpt.y,
-          t: ti,
-          alpha: trailAlphaBase * (1 - ti / (effSteps + 1))
-        });
+        var stepFade = 1 - ti / (effSteps + 0.5);
+        pts.push({ wx: wpt.x, wy: wpt.y, alpha: trailAlpha * stepFade * stepFade });
       }
 
-      /* Draw glow dots — tiny, fading quickly, well above the head */
-      for (ti = 0; ti < pts.length; ti++) {
-        var p = pts[ti];
+      /* Tiny glow dots — barely visible, quick taper */
+      for (var di = 0; di < pts.length; di++) {
+        var p = pts[di];
+        if (p.alpha < 0.003) break;
         var spr = mtxGlowSpriteFor(isDollar, 0, 0);
-        var sprSize = spr.width * (0.35 + ti * 0.03);
-        var sh = sprSize / 2;
-        var dotAlpha = p.alpha * 0.7 * (1 - 0.3 * submerge * ((ti + 1) / Math.max(1, pts.length)));
-        if (dotAlpha < 0.003) break;
+        var dotSize = spr.width * (0.22 + di * 0.02);
         mtxCtx.save();
-        mtxCtx.globalAlpha = dotAlpha;
-        mtxCtx.drawImage(spr, p.wx - sh, p.wy - sh, sprSize, sprSize);
+        mtxCtx.globalAlpha = p.alpha * 0.5;
+        mtxCtx.drawImage(spr, p.wx - dotSize * 0.5, p.wy - dotSize * 0.5, dotSize, dotSize);
         mtxCtx.restore();
       }
 
-      /* C. Thin connective filament — faint stroked line between wake points */
-      if (pts.length > 1) {
-        mtxCtx.save();
-        mtxCtx.lineCap = 'round';
-        var prevFx = warpedHead.x;
-        var prevFy = warpedHead.y + mtxLineStep * 0.2;
-        for (ti = 0; ti < pts.length; ti++) {
-          var fp = pts[ti];
-          var fAlpha = fp.alpha * 0.22 * (1 - 0.3 * submerge);
-          if (fAlpha < 0.003) break;
-          mtxCtx.strokeStyle = isDollar
-            ? 'rgba(204, 251, 229, ' + fAlpha + ')'
-            : 'rgba(74, 222, 128, ' + fAlpha + ')';
-          mtxCtx.lineWidth = 0.5;
-          mtxCtx.globalAlpha = 1;
+      /* C. Thin filament — single faint line connecting wake points */
+      if (pts.length > 0) {
+        var fCol = isDollar ? '204, 251, 229' : '74, 222, 128';
+        var fAlpha = trailAlpha * 0.15;
+        if (fAlpha > 0.003) {
+          mtxCtx.save();
+          mtxCtx.strokeStyle = 'rgba(' + fCol + ', ' + fAlpha + ')';
+          mtxCtx.lineWidth = 0.4;
+          mtxCtx.lineCap = 'round';
           mtxCtx.beginPath();
-          mtxCtx.moveTo(prevFx, prevFy);
-          mtxCtx.lineTo(fp.wx, fp.wy + mtxLineStep * 0.3);
+          mtxCtx.moveTo(warpedHead.x, warpedHead.y);
+          for (di = 0; di < pts.length; di++) {
+            mtxCtx.lineTo(pts[di].wx, pts[di].wy + mtxLineStep * 0.3);
+          }
           mtxCtx.stroke();
-          prevFx = fp.wx;
-          prevFy = fp.wy + mtxLineStep * 0.3;
+          mtxCtx.restore();
         }
-        mtxCtx.restore();
       }
     }
 
-    function mtxDrawSyntheticWadePads(bounds, footY, submerge, now, isDollar) {
+    /* Per-glyph wade overlay: redraw nearby mesh pads OVER the lower
+       portion of submerged glyphs so they look like they're wading through
+       the mesh, not floating above it. This is the key occlusion effect. */
+    function mtxDrawGlyphWadeOverlay(cx, cy, glyphW, glyphH, submerge, now, w, h, isDollar) {
+      if (submerge < 0.08 || mtxMeshNodes.length < 3) return;
+
+      /* Only occlude the lower 35% of the glyph */
+      var clipTop = cy + glyphH * 0.35;
+      var clipBot = cy + glyphH + 4;
+      var clipLeft = cx - 4;
+      var clipRight = cx + glyphW + 4;
+      var footCx = cx + glyphW * 0.5;
+      var footCy = cy + glyphH * 0.7;
+      var searchR = mtxIsMobile ? 40 : 60;
       var col = isDollar ? '204, 251, 229' : '74, 222, 128';
-      var cx = bounds.x + bounds.w * 0.5;
-      var occlude = Math.min(0.6, submerge * 0.7);
-      var n = mtxIsMobile ? 4 : 6;
-      var k;
-      for (k = 0; k < n; k++) {
-        var seed = bounds.x * 0.13 + footY * 0.041 + k * 19.17 + bounds.w * 0.02;
-        var ox = cx + (k - n * 0.5) * (mtxIsMobile ? 9 : 12) + Math.sin(seed + k) * 4;
-        var oy = footY - 2 + Math.sin(seed * 1.3 + now * 0.0007) * 3 + submerge * 3;
-        var prx = (mtxIsMobile ? 6 : 8.5) + (k % 3) * 2.0 + submerge * 3;
-        var pry = (mtxIsMobile ? 2.5 : 3.5) + (k % 3) * 0.6;
-        var rot = (seed % 1.2) - 0.6 + Math.sin(now * 0.0008 + k) * 0.08;
-        var push = (ox < cx ? -1 : 1) * submerge * 3;
+
+      /* Find nearby mesh nodes */
+      var nearby = [];
+      for (var ni = 0; ni < mtxMeshNodes.length; ni++) {
+        var nd = mtxMeshNodes[ni];
+        var dx = nd.x - footCx;
+        var dy = nd.y - footCy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < searchR) {
+          nearby.push({ nd: nd, dist: dist });
+        }
+      }
+      if (nearby.length === 0) return;
+
+      mtxCtx.save();
+      /* Clip to the lower portion of the glyph */
+      mtxCtx.beginPath();
+      mtxCtx.rect(clipLeft, clipTop, clipRight - clipLeft, clipBot - clipTop);
+      mtxCtx.clip();
+
+      var occAlpha = submerge * 0.45;
+
+      /* Draw pad ellipses and filaments OVER the glyph bottom */
+      for (var pi = 0; pi < nearby.length; pi++) {
+        var nd = nearby[pi].nd;
+        var dist = nearby[pi].dist;
+        var proximity = 1 - dist / searchR;
+        var padA = occAlpha * proximity * 0.55;
+        if (padA < 0.005) continue;
+
+        /* Push pad slightly away from glyph center (parting effect) */
+        var pushDir = nd.x < footCx ? -1 : 1;
+        var pushAmt = submerge * proximity * 3.5;
+        var padX = nd.x + pushDir * pushAmt + (nd.partOx || 0);
+        var padY = nd.y + (nd.partOy || 0);
+        var prx = (nd.padRx || 7) * (mtxIsMobile ? 0.8 : 1);
+        var pry = (nd.padRy || 2.8) * (mtxIsMobile ? 0.8 : 1);
+        var rot = nd.padRotation || 0;
+        var pulse = Math.sin(now * mtxMeshPulseSpeed + nd.pulse) * 0.15 + 0.85;
+
+        /* Foreground pad: slightly brighter than underlay to create depth */
         mtxCtx.save();
-        mtxCtx.translate(ox + push, oy);
+        mtxCtx.translate(padX, padY);
         mtxCtx.rotate(rot);
-        /* Dark halo — erases the glyph behind this pad */
-        mtxCtx.globalAlpha = occlude * 0.45;
+        mtxCtx.globalAlpha = padA;
         mtxCtx.beginPath();
-        mtxCtx.ellipse(0, 0, prx * 1.2, pry * 1.8, 0, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(22, 32, 28, 0.5)';
+        mtxCtx.ellipse(0, 0, prx * pulse, pry * pulse, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', 0.12)';
         mtxCtx.fill();
-        /* Green pad surface */
-        mtxCtx.globalAlpha = Math.min(0.9, 0.6 * submerge);
+        /* Inner core */
         mtxCtx.beginPath();
-        mtxCtx.ellipse(0, 0, prx, pry, 0, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(' + col + ', ' + Math.min(0.38, 0.15 + 0.23 * submerge) + ')';
+        mtxCtx.ellipse(0, 0, prx * pulse * 0.4, pry * pulse * 0.4, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', 0.18)';
         mtxCtx.fill();
-        /* Bright core */
-        mtxCtx.globalAlpha = Math.min(0.8, 0.55 * submerge);
-        mtxCtx.beginPath();
-        mtxCtx.ellipse(0, 0, prx * 0.38, pry * 0.38, 0, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(' + col + ', ' + Math.min(0.32, 0.12 + 0.20 * submerge) + ')';
-        mtxCtx.fill();
-        /* Vein line */
-        mtxCtx.strokeStyle = 'rgba(' + col + ', ' + Math.min(0.28, 0.10 + 0.18 * submerge) + ')';
-        mtxCtx.lineWidth = 0.5;
-        mtxCtx.beginPath();
-        mtxCtx.moveTo(-prx * 0.65, 0);
-        mtxCtx.lineTo(prx * 0.65, 0);
-        mtxCtx.stroke();
         mtxCtx.restore();
       }
+
+      /* Draw 1-2 filaments across the clipped zone for extra depth */
+      if (nearby.length >= 2) {
+        var a = nearby[0].nd;
+        var b = nearby[Math.min(1, nearby.length - 1)].nd;
+        mtxCtx.beginPath();
+        mtxCtx.moveTo(a.x + (a.partOx || 0), a.y + (a.partOy || 0));
+        mtxCtx.lineTo(b.x + (b.partOx || 0), b.y + (b.partOy || 0));
+        mtxCtx.strokeStyle = 'rgba(' + col + ', ' + (occAlpha * 0.12) + ')';
+        mtxCtx.lineWidth = 0.5;
+        mtxCtx.stroke();
+      }
+
+      mtxCtx.restore();
     }
 
-    /* Per-glyph wade overlay removed: tendrils now only appear between
-       nearby icons via the inter-glyph coral web pass in mtxDraw(). */
-    function mtxDrawGlyphWadeOverlay() { /* no-op */ }
+    /* Footline bow-wake: a subtle crescent/meniscus where the glyph
+       contacts the mesh surface. Signals weight and displacement. */
+    function mtxDrawFootlineWake(cx, cy, glyphW, glyphH, submerge, now, isDollar) {
+      if (submerge < 0.12) return;
+      var footX = cx + glyphW * 0.5;
+      var footY = cy + glyphH * 0.75;
+      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var wakeAlpha = submerge * 0.08;
+      var wakeW = glyphW * (0.6 + submerge * 0.4);
+      var wobble = Math.sin(now * 0.004 + cx * 0.1) * 1.2;
+
+      mtxCtx.save();
+      mtxCtx.globalAlpha = wakeAlpha;
+      /* Soft bow crescent */
+      mtxCtx.beginPath();
+      mtxCtx.ellipse(footX + wobble, footY, wakeW, 1.5 + submerge * 1.5, 0, 0, Math.PI);
+      mtxCtx.strokeStyle = 'rgba(' + col + ', 0.3)';
+      mtxCtx.lineWidth = 0.6;
+      mtxCtx.stroke();
+      /* Tiny lateral ripple */
+      mtxCtx.beginPath();
+      mtxCtx.ellipse(footX + wobble, footY + 2, wakeW * 1.3, 1.0, 0, 0, Math.PI);
+      mtxCtx.strokeStyle = 'rgba(' + col + ', 0.12)';
+      mtxCtx.lineWidth = 0.35;
+      mtxCtx.stroke();
+      mtxCtx.restore();
+    }
 
     function mtxDraw(ts){
       if(!matrixContainer.classList.contains('active')){
@@ -2525,7 +2601,7 @@
       mtxStepControlLayer(meshNow, w, h, dtMul);
       mtxBootstrapMeshIfEmpty(w, h, meshNow);
       mtxDrawMeshUnderlay(meshNow, w, h);
-      mtxDrawSubmersionBand(w, h);
+      mtxDrawSubmersionBand(w, h, meshNow);
 
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
       mtxCtx.textBaseline = 'top';
@@ -2622,6 +2698,12 @@
               isDollar: isDollarHead,
               colIdx: i
             });
+            /* Foreground wade overlay + footline for text glyphs in submersion zone */
+            var textSubmerge = mtxGetSubmerge(y0, h);
+            if (textSubmerge > 0.08) {
+              mtxDrawGlyphWadeOverlay(tx, ty, glyphW, glyphH, textSubmerge, meshNow, w, h, isDollarHead);
+              mtxDrawFootlineWake(tx, ty, glyphW, glyphH, textSubmerge, meshNow, isDollarHead);
+            }
           }
         } else if(item.type === 'icon' && item.def.loaded && item.def.img){
           var tint = buildTinted(item.def);
@@ -2703,17 +2785,11 @@
             colIdx: q.colIdx
           });
         }
-        /* Per-glyph coral activation — uses normalized Y so it works everywhere */
-        var iconNormY = Math.max(0, Math.min(1, q.iy / h));
-        mtxDrawGlyphWadeOverlay(
-          q.item,
-          { x: q.ix, y: q.iy, w: q.iw, h: q.ih },
-          iconNormY,
-          meshNow,
-          w,
-          h,
-          q.iconDollarTint
-        );
+        /* Foreground wade overlay + footline: redraw nearby pads OVER icon bottom */
+        if (q.submerge > 0.08) {
+          mtxDrawGlyphWadeOverlay(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, w, h, q.iconDollarTint);
+          mtxDrawFootlineWake(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, q.iconDollarTint);
+        }
       }
 
       /* ══════════════════════════════════════════════
@@ -2755,31 +2831,68 @@
 
             var closeness = 1 - dist / coralThreshold;
 
-            /* ── Magnetism: pull connected icons toward each other ── */
+            /* ── Magnetism + Repulsion: attract at range, repel on overlap ── */
             var cnCol = cn.colIdx;
             var nbCol = nb.colIdx;
             if (cnCol != null && nbCol != null && cnCol !== nbCol) {
               coralLinkCount[cnCol] = (coralLinkCount[cnCol] || 0) + 1;
               coralLinkCount[nbCol] = (coralLinkCount[nbCol] || 0) + 1;
 
-              /* Direct position nudge — move driftX toward each other immediately */
-              var hPull = closeness * (mtxIsMobile ? 0.25 : 0.45) * dtMul;
-              if (cn.cx < nb.cx) {
-                mtxColDriftX[cnCol] += hPull;
-                mtxColDriftX[nbCol] -= hPull;
-              } else {
-                mtxColDriftX[cnCol] -= hPull;
-                mtxColDriftX[nbCol] += hPull;
-              }
+              /* Compute bounding overlap: icons should stay at least this far apart */
+              var halfWa = (cn.bw || 14) * 0.5;
+              var halfWb = (nb.bw || 14) * 0.5;
+              var halfHa = (cn.bh || 18) * 0.5;
+              var halfHb = (nb.bh || 18) * 0.5;
+              var minSepX = halfWa + halfWb + 4; /* 4px buffer */
+              var minSepY = halfHa + halfHb + 2;
 
-              /* Vertical: nudge drop positions toward each other */
-              var vPull = closeness * 0.012 * dtMul;
-              if (cn.cy < nb.cy) {
-                mtxDrops[cnCol] += vPull;
-                mtxDrops[nbCol] -= vPull * 0.6;
+              var absDx = Math.abs(cn.cx - nb.cx);
+              var absDy = Math.abs(cn.cy - nb.cy);
+
+              /* Check if bounding boxes overlap or are very close */
+              var overlapX = absDx < minSepX;
+              var overlapY = absDy < minSepY;
+              var tooClose = overlapX && overlapY;
+
+              if (tooClose) {
+                /* REPULSION: push apart firmly */
+                var repelStrength = mtxIsMobile ? 0.6 : 0.9;
+                var hRepel = repelStrength * (1 - absDx / minSepX) * dtMul;
+                var vRepel = repelStrength * 0.4 * (1 - absDy / minSepY) * dtMul;
+                /* Push horizontally */
+                if (cn.cx < nb.cx) {
+                  mtxColDriftX[cnCol] -= hRepel;
+                  mtxColDriftX[nbCol] += hRepel;
+                } else {
+                  mtxColDriftX[cnCol] += hRepel;
+                  mtxColDriftX[nbCol] -= hRepel;
+                }
+                /* Push vertically — slow down the leading icon, speed up trailing */
+                if (cn.cy < nb.cy) {
+                  mtxDrops[cnCol] -= vRepel;
+                  mtxDrops[nbCol] += vRepel * 0.5;
+                } else {
+                  mtxDrops[cnCol] += vRepel * 0.5;
+                  mtxDrops[nbCol] -= vRepel;
+                }
               } else {
-                mtxDrops[cnCol] -= vPull * 0.6;
-                mtxDrops[nbCol] += vPull;
+                /* ATTRACTION: gentle pull when separated but within tendril range */
+                var hPull = closeness * (mtxIsMobile ? 0.18 : 0.32) * dtMul;
+                if (cn.cx < nb.cx) {
+                  mtxColDriftX[cnCol] += hPull;
+                  mtxColDriftX[nbCol] -= hPull;
+                } else {
+                  mtxColDriftX[cnCol] -= hPull;
+                  mtxColDriftX[nbCol] += hPull;
+                }
+                var vPull = closeness * 0.008 * dtMul;
+                if (cn.cy < nb.cy) {
+                  mtxDrops[cnCol] += vPull;
+                  mtxDrops[nbCol] -= vPull * 0.5;
+                } else {
+                  mtxDrops[cnCol] -= vPull * 0.5;
+                  mtxDrops[nbCol] += vPull;
+                }
               }
             }
 
