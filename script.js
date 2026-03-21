@@ -1119,6 +1119,8 @@
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/avax.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dot.png', loaded: false, img: null, tinted: null },
@@ -1168,8 +1170,24 @@
       { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/stripe.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/1inch.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/gemini.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/bitgo.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/compound.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/okx.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/chainalysis.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/fireblocks.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
@@ -1195,7 +1213,7 @@
       { src: './icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/amd.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/nflx.png', loaded: false, img: null, tinted: null },
+      /* nflx removed: file not present */
       { src: './icons/matrix/bac.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
@@ -1230,6 +1248,13 @@
       { src: './icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/dtcc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/hsbc.png', loaded: false, img: null, tinted: null },
       /* Fed removed: seal reads as ambiguous blob at matrix size. */
     ];
 
@@ -1250,11 +1275,15 @@
 
     var mtxCryptoPool = mtxCryptoTextList.map(function(v){ return { type: 'text', value: v }; });
     var mtxCoreStableSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png'];
-    var mtxStablecoinSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png', 'mkr.png', 'm0.png'];
+    var mtxStablecoinSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png', 'mkr.png', 'm0.png', 'circle.png'];
+    var mtxTopL1Slugs = ['btc.png', 'eth.png', 'sol.png'];
+    var mtxMajorL1Slugs = ['xrp.png', 'ada.png', 'avax.png', 'dot.png', 'bnb.png'];
     mtxCryptoIconDefs.forEach(function(def){
       var isCoreStable = mtxCoreStableSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isStable = mtxStablecoinSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
-      var n = isCoreStable ? 8 : (isStable ? 5 : 2);
+      var isTopL1 = mtxTopL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
+      var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
+      var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 4 : (isMajorL1 ? 3 : 2)));
       for(var k = 0; k < n; k++){
         mtxCryptoPool.push({ type: 'icon', def: def });
       }
@@ -1263,7 +1292,8 @@
     var mtxTradPool = mtxTradTextChars.map(function(v){ return { type: 'text', value: v }; });
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
-      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 5 : 3;
+      var isAapl = def.src.indexOf('aapl.png') >= 0;
+      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 5 : (isAapl ? 4 : 3);
       var k;
       for(k = 0; k < n; k++){
         mtxTradPool.push({ type: 'icon', def: def });
@@ -1281,7 +1311,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '114';
+    var mtxIconAssetVer = '117';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -1332,25 +1362,38 @@
 
     /* ── Control-layer mesh state ── */
     var mtxIsMobile = window.matchMedia('(max-width: 768px)').matches;
-    var meshNodes = [];
-    var meshMaxNodes = mtxIsMobile ? 12 : 30;
-    var meshZoneTop = 0.88; /* mesh lives in bottom 12% */
+    var mtxReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var mtxMeshNodes = [];
+    var mtxMeshRipples = [];
+    var mtxMeshEdgeFlashes = [];
+    var mtxMeshReactCooldown = [];
+    var mtxNextMeshNodeId = 1;
+
+    var mtxMeshZoneTop = 0.82; /* bottom ~18%: persistent pad-mesh underlay */
+    var mtxSubmersionZoneTop = 0.76; /* lower ~24%: glyphs feel like they enter the mesh */
+    var mtxMeshMaxNodes = mtxReducedMotion ? 12 : (mtxIsMobile ? 25 : 60);
+    var mtxMeshConnectionDist = mtxReducedMotion ? 28 : (mtxIsMobile ? 35 : 50);
+    var mtxMeshReactRadius = mtxReducedMotion ? 22 : (mtxIsMobile ? 36 : 52);
+    var mtxMeshPulseSpeed = 0.00135; /* calmer than reef */
     var meshNodeLifeMin = 9000;
     var meshNodeLifeMax = 14000;
-    var meshConnectionDist = mtxIsMobile ? 35 : 48;
-    var meshMaxLinksPerNode = 3;
-    var meshPulseSpeed = 0.0012; /* slower than reef: infrastructure, not bioluminescence */
-    var meshRipples = [];
-    var meshRippleMaxAge = 600;
+    var mtxMeshMaxLinksPerNode = 3;
+    var mtxMeshRippleMaxAge = mtxReducedMotion ? 0 : 300;
+    var mtxMeshDidBootstrap = false;
 
-    /* ── Afterburn config ── */
-    var trailSteps = mtxIsMobile ? 2 : 4;
-    var trailBaseAlphaFactor = 0.10; /* intentionally soft */
+    /* ── Afterburn: steps set per frame from mobile / reduced-motion ── */
+    function mtxAfterburnStepCount() {
+      if (mtxReducedMotion) return 2;
+      return mtxIsMobile ? 4 : 7;
+    }
+    function mtxTrailBaseAlpha() {
+      return mtxIsMobile ? 0.175 : 0.215;
+    }
 
-    /* ── Pre-rendered glow sprite (built once, reused every frame) ── */
-    var trailGlowSprite = null;
-    var trailGlowSpriteSize = 0;
-    var trailGlowSpriteDollar = null;
+    /* ── Pre-rendered glow sprites (reuse via drawImage) ── */
+    var trailGlowSprites = { def: [], mint: [] }; /* sizes 10,14,18,22 */
+    var trailGlowSpriteSizes = [10, 14, 18, 22];
 
     function buildGlowSprite(size, r, g, b) {
       var c = document.createElement('canvas');
@@ -1360,30 +1403,40 @@
       var half = size / 2;
       var grad = cx.createRadialGradient(half, half, 0, half, half, half);
       grad.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ', 1)');
+      grad.addColorStop(0.55, 'rgba(' + r + ',' + g + ',' + b + ', 0.35)');
       grad.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ', 0)');
       cx.fillStyle = grad;
       cx.fillRect(0, 0, size, size);
       return c;
     }
 
-    /* Build sprites once after first frame (need canvas context ready) */
     function ensureGlowSprites() {
-      if (trailGlowSprite) return;
-      trailGlowSpriteSize = 12;
-      trailGlowSprite = buildGlowSprite(trailGlowSpriteSize, 74, 222, 128);
-      trailGlowSpriteDollar = buildGlowSprite(trailGlowSpriteSize, 204, 251, 229);
+      if (trailGlowSprites.def.length) return;
+      for (var gi = 0; gi < trailGlowSpriteSizes.length; gi++) {
+        var sz = trailGlowSpriteSizes[gi];
+        trailGlowSprites.def.push(buildGlowSprite(sz, 74, 222, 128));
+        trailGlowSprites.mint.push(buildGlowSprite(sz, 204, 251, 229));
+      }
     }
 
-    /* Find the k nearest mesh neighbors for a node */
-    function meshNearestK(nodeIndex, k) {
-      var nd = meshNodes[nodeIndex];
+    function mtxGlowSpriteFor(isDollar, stepIndex, submerge) {
+      ensureGlowSprites();
+      var arr = isDollar ? trailGlowSprites.mint : trailGlowSprites.def;
+      var idx = Math.min(arr.length - 1, Math.max(0, stepIndex + Math.round(submerge)));
+      return arr[idx];
+    }
+
+    /* Find the k nearest mesh neighbors for a node (deduped edges upstream) */
+    function mtxMeshNearestK(nodeIndex, k) {
+      var nd = mtxMeshNodes[nodeIndex];
       var neighbors = [];
-      for (var j = 0; j < meshNodes.length; j++) {
+      for (var j = 0; j < mtxMeshNodes.length; j++) {
         if (j === nodeIndex) continue;
-        var other = meshNodes[j];
-        var dx = nd.x - other.x, dy = nd.y - other.y;
+        var other = mtxMeshNodes[j];
+        var dx = nd.x - other.x;
+        var dy = nd.y - other.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < meshConnectionDist && dist > 3) {
+        if (dist < mtxMeshConnectionDist && dist > 3) {
           neighbors.push({ idx: j, dist: dist });
         }
       }
@@ -1567,6 +1620,14 @@
       };
     }
 
+    function mtxWarpPoint(px, py, cw, ch) {
+      return mtxApplyWarp(px, py, cw, ch);
+    }
+
+    function mtxGetSubmerge(y, h) {
+      return Math.max(0, Math.min(1, (y - h * mtxSubmersionZoneTop) / (h * (1 - mtxSubmersionZoneTop))));
+    }
+
     function mtxInitCanvas(forceResetDrops){
       var rect = matrixContainer.getBoundingClientRect();
       var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
@@ -1602,8 +1663,12 @@
         mtxColDriftRate = new Array(colCount).fill(0);
       }
       mtxPrevDrawTs = 0;
-      meshNodes = [];
-      meshRipples = [];
+      mtxMeshNodes = [];
+      mtxMeshRipples = [];
+      mtxMeshEdgeFlashes = [];
+      mtxMeshReactCooldown = new Array(Math.max(1, mtxDrops.length)).fill(0);
+      mtxNextMeshNodeId = 1;
+      mtxMeshDidBootstrap = false;
     }
 
     function mtxIsBitcoinItem(item) {
@@ -1678,10 +1743,11 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('franklin.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
-          if(item.def.src.indexOf('fednow.png') >= 0) ds = 44 + Math.random() * 20;
+          /* All wide wordmarks need a minimum ds so they're readable */
+          if(ds < 44) ds = 44 + Math.random() * 16;
           drawHeight = Math.round(ds * 0.25);
         }
         item = {
@@ -1913,6 +1979,518 @@
       ctx.restore();
     }
 
+    function mtxGetNearbyMeshNodes(px, py, radius) {
+      var out = [];
+      var r2 = radius * radius;
+      for (var i = 0; i < mtxMeshNodes.length; i++) {
+        var nd = mtxMeshNodes[i];
+        var dx = nd.x - px;
+        var dy = nd.y - py;
+        if (dx * dx + dy * dy <= r2) {
+          out.push(nd);
+        }
+      }
+      return out;
+    }
+
+    function mtxMeshLaneAlpha(ax, w, ay, h) {
+      var t = Math.abs((ax / w) - 0.5) * 2;
+      var lane = 0.48 + 0.52 * Math.min(1, Math.pow(t, 1.1));
+      /* Dim only behind the upper headline block, not the pad-mesh band (keeps lower lattice readable). */
+      if (ay < h * 0.72 && t < 0.38) {
+        lane *= 0.74;
+      }
+      return lane;
+    }
+
+    function mtxBootstrapMeshIfEmpty(w, h, now) {
+      if (mtxReducedMotion || mtxMeshNodes.length > 0 || mtxMeshDidBootstrap) {
+        return;
+      }
+      mtxMeshDidBootstrap = true;
+      var zoneY = h * mtxMeshZoneTop;
+      var zoneH = h * (1 - mtxMeshZoneTop);
+      var cols = mtxIsMobile ? 7 : 10;
+      var rows = 2;
+      var r;
+      var c;
+      for (r = 0; r < rows; r++) {
+        for (c = 0; c < cols; c++) {
+          var gx = ((c + 0.5) / cols) * w + (Math.random() - 0.5) * 32;
+          var gy = zoneY + ((r + 0.5) / rows) * zoneH + (Math.random() - 0.5) * 14;
+          gx = Math.max(6, Math.min(w - 6, gx));
+          gy = Math.max(zoneY + 2, Math.min(h - 4, gy));
+          mtxMeshNodes.push({
+            id: mtxNextMeshNodeId++,
+            x: gx,
+            y: gy,
+            targetX: gx,
+            targetY: gy,
+            born: now,
+            lifeMs: meshNodeLifeMin + Math.random() * (meshNodeLifeMax - meshNodeLifeMin),
+            r: 1.1 + Math.random() * 1.1,
+            alpha: 0.16 + Math.random() * 0.18,
+            pulse: Math.random() * Math.PI * 2,
+            isDollar: false,
+            settleStart: now,
+            settleMs: 400,
+            reactUntil: 0,
+            padRx: (mtxIsMobile ? 5.2 : 7.5) + Math.random() * 4,
+            padRy: (mtxIsMobile ? 1.9 : 2.8) + Math.random() * 1.6,
+            padRotation: (Math.random() - 0.5) * 0.5,
+            padPhase: Math.random() * Math.PI * 2,
+            padDrift: mtxReducedMotion ? 0.12 : (0.5 + Math.random() * 0.75),
+            pairOffsetX: (Math.random() - 0.5) * 8,
+            pairOffsetY: (Math.random() - 0.5) * 5,
+            settling: false,
+            reactBright: 0,
+            partOx: 0,
+            partOy: 0
+          });
+        }
+      }
+    }
+
+    function mtxStepControlLayer(now, w, h, dtMul) {
+      var mi;
+      for (mi = mtxMeshNodes.length - 1; mi >= 0; mi--) {
+        var nd0 = mtxMeshNodes[mi];
+        var lifeMs0 = nd0.lifeMs != null ? nd0.lifeMs : nd0.life;
+        if (now - nd0.born > lifeMs0) {
+          mtxMeshNodes.splice(mi, 1);
+        }
+      }
+      for (mi = mtxMeshRipples.length - 1; mi >= 0; mi--) {
+        if (now - mtxMeshRipples[mi].born > mtxMeshRippleMaxAge) {
+          mtxMeshRipples.splice(mi, 1);
+        }
+      }
+      for (mi = mtxMeshEdgeFlashes.length - 1; mi >= 0; mi--) {
+        if (now > mtxMeshEdgeFlashes[mi].until) {
+          mtxMeshEdgeFlashes.splice(mi, 1);
+        }
+      }
+      for (mi = 0; mi < mtxMeshNodes.length; mi++) {
+        var nd = mtxMeshNodes[mi];
+        if (nd.partOx) {
+          nd.partOx *= 0.89;
+          if (Math.abs(nd.partOx) < 0.04) {
+            nd.partOx = 0;
+          }
+        }
+        if (nd.partOy) {
+          nd.partOy *= 0.89;
+          if (Math.abs(nd.partOy) < 0.04) {
+            nd.partOy = 0;
+          }
+        }
+        if (nd.settling) {
+          nd.x += (nd.targetX - nd.x) * (mtxReducedMotion ? 0.15 : 0.092) * dtMul;
+          nd.y += (nd.targetY - nd.y) * (mtxReducedMotion ? 0.15 : 0.092) * dtMul;
+          if (Math.abs(nd.x - nd.targetX) < 0.45 && Math.abs(nd.y - nd.targetY) < 0.45) {
+            nd.x = nd.targetX;
+            nd.y = nd.targetY;
+            nd.settling = false;
+          }
+        }
+        if (!mtxReducedMotion) {
+          nd.padPhase += mtxMeshPulseSpeed * 38 * dtMul;
+        }
+        if (nd.reactBright > 0) {
+          nd.reactBright *= 0.925;
+          if (nd.reactBright < 0.008) {
+            nd.reactBright = 0;
+          }
+        }
+      }
+    }
+
+    function mtxDrawMeshUnderlay(now, w, h) {
+      var meshMaskTop = h * mtxMeshZoneTop;
+      var meshMaskFadeH = h * 0.08;
+
+      function meshZoneAlpha(nodeY) {
+        if (nodeY < meshMaskTop) {
+          return 0;
+        }
+        if (nodeY < meshMaskTop + meshMaskFadeH) {
+          return (nodeY - meshMaskTop) / meshMaskFadeH;
+        }
+        return 1;
+      }
+
+      function meshNodeFade(nd) {
+        var lifeMs = nd.lifeMs != null ? nd.lifeMs : nd.life;
+        var age = now - nd.born;
+        var fadeIn = Math.min(1, age / 800);
+        var fadeOut = age > lifeMs * 0.7 ? 1 - (age - lifeMs * 0.7) / (lifeMs * 0.3) : 1;
+        return fadeIn * fadeOut * meshZoneAlpha(nd.y);
+      }
+
+      function drawPadShape(nd, ox, oy, nFade, drawAlpha, pulse, isDollarFamily, boost) {
+        var px = nd.x + (nd.partOx || 0) + ox;
+        var py = nd.y + (nd.partOy || 0) + oy;
+        var prx = (nd.padRx != null ? nd.padRx : 7) * (mtxIsMobile ? 0.92 : 1);
+        var pry = (nd.padRy != null ? nd.padRy : 2.8) * (mtxIsMobile ? 0.92 : 1);
+        var rot = nd.padRotation || 0;
+        var drift = mtxReducedMotion ? 0 : Math.sin(now * 0.00055 + nd.padPhase) * nd.padDrift * 0.45;
+        var lane = mtxMeshLaneAlpha(px, w, py, h);
+        var a0 = drawAlpha * nFade * lane * (boost || 1);
+        if (a0 < 0.002) {
+          return;
+        }
+        var col = isDollarFamily ? '204, 251, 229' : '74, 222, 128';
+        mtxCtx.save();
+        mtxCtx.translate(px + drift, py);
+        mtxCtx.rotate(rot + Math.sin(nd.padPhase * 0.7) * 0.04);
+        mtxCtx.globalAlpha = Math.min(1, a0 * 0.55);
+        mtxCtx.beginPath();
+        mtxCtx.ellipse(0, 0, prx * pulse, pry * pulse, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.07 + (boost ? 0.06 : 0)) + ')';
+        mtxCtx.fill();
+        mtxCtx.globalAlpha = Math.min(1, a0 * 0.65);
+        mtxCtx.beginPath();
+        mtxCtx.ellipse(0, 0, prx * pulse * 0.50, pry * pulse * 0.50, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + (0.10 + (boost ? 0.08 : 0)) + ')';
+        mtxCtx.fill();
+        mtxCtx.strokeStyle = 'rgba(' + col + ', ' + (a0 * 0.20) + ')';
+        mtxCtx.lineWidth = 0.45;
+        mtxCtx.beginPath();
+        mtxCtx.moveTo(-prx * pulse * 0.65, 0);
+        mtxCtx.lineTo(prx * pulse * 0.65, 0);
+        mtxCtx.stroke();
+        mtxCtx.restore();
+      }
+
+      var drawnEdges = {};
+      var ma;
+      for (ma = 0; ma < mtxMeshNodes.length; ma++) {
+        var neighbors = mtxMeshNearestK(ma, mtxMeshMaxLinksPerNode);
+        var ndA = mtxMeshNodes[ma];
+        var fadeA = meshNodeFade(ndA);
+        var nb;
+        for (nb = 0; nb < neighbors.length; nb++) {
+          var bi = neighbors[nb].idx;
+          var edgeKey = ma < bi ? (ma + ':' + bi) : (bi + ':' + ma);
+          if (drawnEdges[edgeKey]) {
+            continue;
+          }
+          drawnEdges[edgeKey] = true;
+          var ndB = mtxMeshNodes[bi];
+          var fadeB = meshNodeFade(ndB);
+          var dist = neighbors[nb].dist;
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.11;
+          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.26;
+          lineAlpha += reactBoost;
+          if (now < (ndA.reactUntil || 0) || now < (ndB.reactUntil || 0)) {
+            lineAlpha += 0.034;
+          }
+          lineAlpha *= mtxMeshLaneAlpha((ndA.x + ndB.x) * 0.5, w, (ndA.y + ndB.y) * 0.5, h);
+          if (lineAlpha > 0.003) {
+            mtxCtx.beginPath();
+            mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
+            mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
+            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
+            mtxCtx.lineWidth = 0.55;
+            mtxCtx.stroke();
+          }
+        }
+      }
+
+      for (ma = 0; ma < mtxMeshNodes.length; ma++) {
+        var nd = mtxMeshNodes[ma];
+        var nFade = meshNodeFade(nd);
+        if (nFade < 0.003) {
+          continue;
+        }
+        var pulse = Math.sin(now * mtxMeshPulseSpeed + nd.pulse) * (mtxReducedMotion ? 0.08 : 0.22) + 0.78;
+        var drawAlpha = nd.alpha * nFade;
+        var rBoost = nd.reactBright || 0;
+        if (now < (nd.reactUntil || 0)) {
+          drawAlpha += 0.12;
+        }
+        drawAlpha = Math.min(1, drawAlpha + rBoost * 0.38);
+        var isDollarFamily = nd.isDollar;
+        drawPadShape(nd, 0, 0, nFade, drawAlpha, pulse, isDollarFamily, false);
+        var pox = nd.pairOffsetX != null ? nd.pairOffsetX : 0;
+        var poy = nd.pairOffsetY != null ? nd.pairOffsetY : 0;
+        drawPadShape(nd, pox, poy, nFade, drawAlpha * 0.55, pulse * 0.92, isDollarFamily, false);
+        mtxCtx.beginPath();
+        var cx = nd.x + (nd.partOx || 0);
+        var cy = nd.y + (nd.partOy || 0);
+        mtxCtx.arc(cx, cy, nd.r * pulse, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + (drawAlpha * 0.3 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
+        mtxCtx.fill();
+        mtxCtx.beginPath();
+        mtxCtx.arc(cx, cy, nd.r * pulse * 1.75, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + (drawAlpha * 0.048 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
+        mtxCtx.fill();
+      }
+
+      var ri;
+      if (mtxMeshRippleMaxAge > 0) {
+        for (ri = 0; ri < mtxMeshRipples.length; ri++) {
+          var rp = mtxMeshRipples[ri];
+          var rAge = now - rp.born;
+          var rProgress = rAge / mtxMeshRippleMaxAge;
+          var rRadius = rp.maxR * rProgress;
+          var rAlpha = rp.alpha * (1 - rProgress) * (1 - rProgress) * meshZoneAlpha(rp.y);
+          rAlpha *= mtxMeshLaneAlpha(rp.x, w, rp.y, h);
+          if (rAlpha > 0.003) {
+            mtxCtx.beginPath();
+            mtxCtx.arc(rp.x, rp.y, rRadius, 0, Math.PI * 2);
+            var rc = rp.isDollar ? '204, 251, 229' : '74, 222, 128';
+            mtxCtx.strokeStyle = 'rgba(' + rc + ', ' + rAlpha + ')';
+            mtxCtx.lineWidth = 0.65;
+            mtxCtx.stroke();
+          }
+        }
+      }
+
+      for (ri = 0; ri < mtxMeshEdgeFlashes.length; ri++) {
+        var fl = mtxMeshEdgeFlashes[ri];
+        var fp = Math.min(1, (now - fl.born) / Math.max(1, fl.until - fl.born));
+        var fa = (1 - fp) * fl.strength;
+        if (fa > 0.002) {
+          mtxCtx.beginPath();
+          mtxCtx.arc(fl.x, fl.y, 16 + fp * 22, 0, Math.PI * 2);
+          mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + fa + ')';
+          mtxCtx.lineWidth = 0.5;
+          mtxCtx.stroke();
+        }
+      }
+    }
+
+    function mtxDrawSubmersionBand(w, h) {
+      var zTop = h * mtxSubmersionZoneTop;
+      var grd = mtxCtx.createLinearGradient(0, zTop, 0, h);
+      grd.addColorStop(0, 'rgba(74, 222, 128, 0)');
+      grd.addColorStop(0.5, 'rgba(74, 222, 128, 0.010)');
+      grd.addColorStop(1, 'rgba(74, 222, 128, 0.028)');
+      mtxCtx.save();
+      mtxCtx.fillStyle = grd;
+      mtxCtx.fillRect(0, zTop, w, h - zTop);
+      mtxCtx.restore();
+    }
+
+    function mtxReactMeshNear(px, py, now, isDollar, colIndex, w, h) {
+      if (py < h * mtxSubmersionZoneTop) {
+        return;
+      }
+      var last = mtxMeshReactCooldown[colIndex] || 0;
+      if (now - last < 120) {
+        return;
+      }
+      mtxMeshReactCooldown[colIndex] = now;
+      var r = mtxMeshReactRadius;
+      var r2 = r * r;
+      var boost = isDollar ? 1.22 : 1;
+      var i;
+      for (i = 0; i < mtxMeshNodes.length; i++) {
+        var nd = mtxMeshNodes[i];
+        var dx = nd.x - px;
+        var dy = nd.y - py;
+        if (dx * dx + dy * dy < r2) {
+          nd.reactUntil = now + 160 + Math.random() * 140;
+          nd.reactBright = Math.min(1, (nd.reactBright || 0) + 0.32 * boost);
+          if (!mtxReducedMotion) {
+            nd.partOx = (nd.partOx || 0) + (nd.x < px ? -2.1 : 2.1) * boost * 0.35;
+            nd.partOy = (nd.partOy || 0) - 0.9 * boost * 0.25;
+          }
+        }
+      }
+      if (!mtxReducedMotion && Math.random() < 0.38) {
+        mtxMeshEdgeFlashes.push({ x: px, y: py, born: now, until: now + 220, strength: 0.075 * boost });
+      }
+    }
+
+    function mtxDepositMeshNode(colIndex, item, headBaseX, w, h, now) {
+      var occupancy = mtxMeshNodes.length / mtxMeshMaxNodes;
+      var depositChance = mtxReducedMotion ? 0.10 : (0.10 + 0.30 * (1 - occupancy * occupancy));
+      if (mtxMeshNodes.length >= mtxMeshMaxNodes || Math.random() >= depositChance) {
+        return;
+      }
+      var zoneY = h * mtxMeshZoneTop;
+      var zoneHeight = h * (1 - mtxMeshZoneTop);
+      var colX = colIndex * mtxColWidth + mtxColWidth * 0.5;
+      var spawnX = colX + (Math.random() - 0.5) * 18;
+      var targetX = spawnX + (Math.random() - 0.5) * 14;
+      var targetY = zoneY + Math.random() * zoneHeight;
+      spawnX = Math.max(4, Math.min(w - 4, spawnX));
+      targetX = Math.max(4, Math.min(w - 4, targetX));
+      var isDollarDeposit = item.type === 'text' && item.value === '$';
+      mtxMeshNodes.push({
+        id: mtxNextMeshNodeId++,
+        x: spawnX,
+        y: zoneY - 5 + Math.random() * 4,
+        targetX: targetX,
+        targetY: targetY,
+        born: now,
+        lifeMs: meshNodeLifeMin + Math.random() * (meshNodeLifeMax - meshNodeLifeMin),
+        r: 1.0 + Math.random() * 1.35,
+        alpha: isDollarDeposit ? (0.24 + Math.random() * 0.22) : (0.13 + Math.random() * 0.24),
+        pulse: Math.random() * Math.PI * 2,
+        isDollar: !!isDollarDeposit,
+        settleStart: now,
+        settleMs: 350 + Math.random() * 150,
+        reactUntil: 0,
+        padRx: (mtxIsMobile ? 4.5 : 6.8) + Math.random() * 4.5,
+        padRy: (mtxIsMobile ? 1.7 : 2.5) + Math.random() * 1.7,
+        padRotation: (Math.random() - 0.5) * 0.55,
+        padPhase: Math.random() * Math.PI * 2,
+        padDrift: mtxReducedMotion ? 0.12 : (0.52 + Math.random() * 0.88),
+        pairOffsetX: (Math.random() - 0.5) * 9,
+        pairOffsetY: (Math.random() - 0.5) * 5,
+        settling: true,
+        reactBright: 0,
+        partOx: 0,
+        partOy: 0
+      });
+      if (mtxMeshRippleMaxAge > 0) {
+        mtxMeshRipples.push({
+          x: targetX,
+          y: targetY,
+          born: now,
+          maxR: (mtxIsMobile ? 9 : 13) + Math.random() * 9,
+          alpha: isDollarDeposit ? 0.088 : 0.062,
+          isDollar: isDollarDeposit
+        });
+      }
+    }
+
+    function mtxDrawAfterburnTrail(item, headBaseX, headBaseY, warpedHead, op, now, w, h, colIndex) {
+      ensureGlowSprites();
+      var isDollar = item.type === 'text' && item.value === '$';
+      var submerge = mtxGetSubmerge(headBaseY, h);
+      var steps = mtxAfterburnStepCount();
+      /* Tight, head-attached wake — not full-column aurora */
+      var trailAlphaBase = (mtxIsMobile ? 0.06 : 0.08) * op * (1 - 0.30 * submerge);
+      var stepShorten = 1 - 0.25 * submerge;
+      var driftX = mtxColDriftX[colIndex] || 0;
+      var effSteps = Math.max(1, Math.round(steps * stepShorten));
+
+      /* A. Head bloom — offset ABOVE the head so it doesn't blur the glyph */
+      var bloom = mtxGlowSpriteFor(isDollar, 0, submerge);
+      var bloomSize = bloom.width * 0.5;
+      var bh = bloomSize / 2;
+      mtxCtx.save();
+      mtxCtx.globalAlpha = Math.min(0.18, trailAlphaBase * 2.0);
+      /* Draw above the head, not on top of it */
+      mtxCtx.drawImage(bloom, warpedHead.x - bh, warpedHead.y - bloomSize * 1.1, bloomSize, bloomSize);
+      mtxCtx.restore();
+
+      /* B. Segmented tapered wake — each step warped individually */
+      var pts = [];
+      var ti;
+      for (ti = 1; ti <= effSteps; ti++) {
+        var rawY = headBaseY - ti * mtxLineStep;
+        if (rawY < 0) break;
+        var rawX = colIndex * mtxColWidth + 1 + driftX;
+        /* Minimal turbulence — just enough to prevent rigid straightness */
+        rawX += Math.sin(now * 0.003 + colIndex * 1.5 + ti * 2.0) * 0.8;
+        var wpt = mtxWarpPoint(rawX, rawY, w, h);
+        /* Submersion shimmer on older points only */
+        if (submerge > 0.05 && ti > 1) {
+          wpt.x += Math.sin(now * 0.006 + ti * 1.4) * submerge * 0.7;
+        }
+        pts.push({
+          wx: wpt.x,
+          wy: wpt.y,
+          t: ti,
+          alpha: trailAlphaBase * (1 - ti / (effSteps + 1))
+        });
+      }
+
+      /* Draw glow dots — tiny, fading quickly, well above the head */
+      for (ti = 0; ti < pts.length; ti++) {
+        var p = pts[ti];
+        var spr = mtxGlowSpriteFor(isDollar, 0, 0);
+        var sprSize = spr.width * (0.35 + ti * 0.03);
+        var sh = sprSize / 2;
+        var dotAlpha = p.alpha * 0.7 * (1 - 0.3 * submerge * ((ti + 1) / Math.max(1, pts.length)));
+        if (dotAlpha < 0.003) break;
+        mtxCtx.save();
+        mtxCtx.globalAlpha = dotAlpha;
+        mtxCtx.drawImage(spr, p.wx - sh, p.wy - sh, sprSize, sprSize);
+        mtxCtx.restore();
+      }
+
+      /* C. Thin connective filament — faint stroked line between wake points */
+      if (pts.length > 1) {
+        mtxCtx.save();
+        mtxCtx.lineCap = 'round';
+        var prevFx = warpedHead.x;
+        var prevFy = warpedHead.y + mtxLineStep * 0.2;
+        for (ti = 0; ti < pts.length; ti++) {
+          var fp = pts[ti];
+          var fAlpha = fp.alpha * 0.22 * (1 - 0.3 * submerge);
+          if (fAlpha < 0.003) break;
+          mtxCtx.strokeStyle = isDollar
+            ? 'rgba(204, 251, 229, ' + fAlpha + ')'
+            : 'rgba(74, 222, 128, ' + fAlpha + ')';
+          mtxCtx.lineWidth = 0.5;
+          mtxCtx.globalAlpha = 1;
+          mtxCtx.beginPath();
+          mtxCtx.moveTo(prevFx, prevFy);
+          mtxCtx.lineTo(fp.wx, fp.wy + mtxLineStep * 0.3);
+          mtxCtx.stroke();
+          prevFx = fp.wx;
+          prevFy = fp.wy + mtxLineStep * 0.3;
+        }
+        mtxCtx.restore();
+      }
+    }
+
+    function mtxDrawSyntheticWadePads(bounds, footY, submerge, now, isDollar) {
+      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var cx = bounds.x + bounds.w * 0.5;
+      var occlude = Math.min(0.6, submerge * 0.7);
+      var n = mtxIsMobile ? 4 : 6;
+      var k;
+      for (k = 0; k < n; k++) {
+        var seed = bounds.x * 0.13 + footY * 0.041 + k * 19.17 + bounds.w * 0.02;
+        var ox = cx + (k - n * 0.5) * (mtxIsMobile ? 9 : 12) + Math.sin(seed + k) * 4;
+        var oy = footY - 2 + Math.sin(seed * 1.3 + now * 0.0007) * 3 + submerge * 3;
+        var prx = (mtxIsMobile ? 6 : 8.5) + (k % 3) * 2.0 + submerge * 3;
+        var pry = (mtxIsMobile ? 2.5 : 3.5) + (k % 3) * 0.6;
+        var rot = (seed % 1.2) - 0.6 + Math.sin(now * 0.0008 + k) * 0.08;
+        var push = (ox < cx ? -1 : 1) * submerge * 3;
+        mtxCtx.save();
+        mtxCtx.translate(ox + push, oy);
+        mtxCtx.rotate(rot);
+        /* Dark halo — erases the glyph behind this pad */
+        mtxCtx.globalAlpha = occlude * 0.45;
+        mtxCtx.beginPath();
+        mtxCtx.ellipse(0, 0, prx * 1.2, pry * 1.8, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(22, 32, 28, 0.5)';
+        mtxCtx.fill();
+        /* Green pad surface */
+        mtxCtx.globalAlpha = Math.min(0.9, 0.6 * submerge);
+        mtxCtx.beginPath();
+        mtxCtx.ellipse(0, 0, prx, pry, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + Math.min(0.38, 0.15 + 0.23 * submerge) + ')';
+        mtxCtx.fill();
+        /* Bright core */
+        mtxCtx.globalAlpha = Math.min(0.8, 0.55 * submerge);
+        mtxCtx.beginPath();
+        mtxCtx.ellipse(0, 0, prx * 0.38, pry * 0.38, 0, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(' + col + ', ' + Math.min(0.32, 0.12 + 0.20 * submerge) + ')';
+        mtxCtx.fill();
+        /* Vein line */
+        mtxCtx.strokeStyle = 'rgba(' + col + ', ' + Math.min(0.28, 0.10 + 0.18 * submerge) + ')';
+        mtxCtx.lineWidth = 0.5;
+        mtxCtx.beginPath();
+        mtxCtx.moveTo(-prx * 0.65, 0);
+        mtxCtx.lineTo(prx * 0.65, 0);
+        mtxCtx.stroke();
+        mtxCtx.restore();
+      }
+    }
+
+    /* Per-glyph wade overlay removed: tendrils now only appear between
+       nearby icons via the inter-glyph coral web pass in mtxDraw(). */
+    function mtxDrawGlyphWadeOverlay() { /* no-op */ }
+
     function mtxDraw(ts){
       if(!matrixContainer.classList.contains('active')){
         mtxRaf = null;
@@ -1943,6 +2521,12 @@
       }
       mtxCtx.fillStyle = mtxTrailFill();
       mtxCtx.fillRect(0, 0, w, h);
+      var meshNow = performance.now();
+      mtxStepControlLayer(meshNow, w, h, dtMul);
+      mtxBootstrapMeshIfEmpty(w, h, meshNow);
+      mtxDrawMeshUnderlay(meshNow, w, h);
+      mtxDrawSubmersionBand(w, h);
+
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
       mtxCtx.textBaseline = 'top';
 
@@ -1964,6 +2548,7 @@
          top of every matte. This prevents column i+1's matte from overwriting column i's icon
          when icons are wider than mtxColWidth. */
       var iconQueue = [];
+      var coralNodes = []; /* collect glyph positions for inter-glyph coral web */
       for(i = 0; i < n; i++){
         var x0 = i * mtxColWidth + 1 + mtxColDriftX[i];
         var y0 = mtxDrops[i] * mtxLineStep;
@@ -1972,51 +2557,17 @@
         }
         var item = mtxColItem[i];
         var op = mtxColOpacity[i];
-        var warped = mtxApplyWarp(x0, y0, w, h);
+        var warped = mtxWarpPoint(x0, y0, w, h);
         var x = warped.x;
         var y = warped.y;
 
-        /* ── Afterburn trail (each step warped individually) ── */
-        ensureGlowSprites();
-        var trailAlpha = trailBaseAlphaFactor * op;
-        var isDollar = (item.type === 'text' && item.value === '$');
-        var sprite = isDollar ? trailGlowSpriteDollar : trailGlowSprite;
-        var spriteHalf = trailGlowSpriteSize / 2;
-
-        /* Submersion zone: shorten trail and diffuse glow in bottom 20% */
-        var submersionFactor = 1;
-        var inSubmersion = (y0 * mtxLineStep) > (h * meshZoneTop);
-        if (inSubmersion) {
-          var depth = ((y0 * mtxLineStep) - h * meshZoneTop) / (h * (1 - meshZoneTop));
-          submersionFactor = Math.max(0.2, 1 - depth * 0.7);
+        var isDollarHead = item.type === 'text' && item.value === '$';
+        if (mtxGetSubmerge(y0, h) > 0.04) {
+          var colCenterX = i * mtxColWidth + mtxColWidth * 0.5 + mtxColDriftX[i];
+          mtxReactMeshNear(colCenterX, y0, meshNow, isDollarHead, i, w, h);
         }
 
-        var effectiveSteps = Math.max(1, Math.round(trailSteps * submersionFactor));
-
-        for (var t = 1; t <= effectiveSteps; t++) {
-          /* Compute unwarped trail point, then warp it */
-          var rawTrailY = mtxDrops[i] * mtxLineStep - t * mtxLineStep;
-          if (rawTrailY < 0) break;
-          var rawTrailX = i * mtxColWidth + 1;
-          var warpedTrail = mtxApplyWarp(rawTrailX, rawTrailY, w, h);
-
-          var tAlpha = trailAlpha * (1 - t / (effectiveSteps + 1));
-          if (tAlpha < 0.004) break;
-
-          /* In submersion zone, glow diffuses wider */
-          var glowScale = 1; /* no size increase in submersion zone */
-          var drawSize = trailGlowSpriteSize * glowScale;
-          var drawHalf = drawSize / 2;
-
-          mtxCtx.save();
-          mtxCtx.globalAlpha = tAlpha;
-          mtxCtx.drawImage(sprite,
-            warpedTrail.x + mtxColWidth * 0.4 - drawHalf,
-            warpedTrail.y + mtxLineStep * 0.5 - drawHalf,
-            drawSize, drawSize
-          );
-          mtxCtx.restore();
-        }
+        mtxDrawAfterburnTrail(item, x0, y0, warped, op, meshNow, w, h, i);
 
         if(item.type === 'text'){
           mtxCtx.textAlign = 'left';
@@ -2054,8 +2605,24 @@
           }
           /* Clamp X only: warp can pull columns left; clamping Y to 0 stacked every glyph on one row at the top. */
           tx = Math.max(0, Math.min(tx, Math.max(0, w - twEst)));
+          var twMeasured = mtxCtx.measureText(item.value).width;
           mtxCtx.fillText(item.value, tx, ty);
           mtxCtx.restore();
+          /* Collect position for coral web */
+          if (y0 > 0 && y0 < h) {
+            var glyphW = Math.max(6, twMeasured);
+            var glyphH = fs * 1.18;
+            coralNodes.push({
+              cx: tx + glyphW * 0.5,
+              cy: ty + glyphH * 0.5,
+              footY: ty + glyphH * 0.85,
+              bw: glyphW,
+              bh: glyphH,
+              op: op,
+              isDollar: isDollarHead,
+              colIdx: i
+            });
+          }
         } else if(item.type === 'icon' && item.def.loaded && item.def.img){
           var tint = buildTinted(item.def);
           if(tint){
@@ -2067,72 +2634,30 @@
             var ix = Math.round(x);
             var iy = Math.round(y);
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
-            /* Pass 1: matte only. Full icon bbox so trail clears completely under the sprite. */
-            /* Wide wordmarks skip the matte — their transparent bg doesn't accumulate trails. */
-            if(item.drawHeight == null){
-              mtxCtx.globalAlpha = 1;
-              mtxCtx.fillStyle = mtxPanelMatteRgb();
-              mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
-            }
+            /* Matte removed: was drawing visible gray squares behind icons. */
             /* Queue the sprite draw for pass 2. */
             var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
             var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
-            iconQueue.push({ tint: tint, ix: ix, iy: iy, iw: iw, ih: ih, op: op, hollow: isHollowHex, btcGlow: isBtcGlow });
-          }
-        }
-
-        /* ── Mesh proximity reaction: glyph entering bottom zone ── */
-        var glyphScreenY = y0 * mtxLineStep;
-        if (glyphScreenY > h * meshZoneTop && glyphScreenY < h) {
-          /* Wake nearby mesh nodes: brief brightness pulse */
-          var proximityDepth = (glyphScreenY - h * meshZoneTop) / (h * (1 - meshZoneTop));
-          if (proximityDepth > 0.3 && Math.random() < 0.02) {
-            for (var pm = 0; pm < meshNodes.length; pm++) {
-              var pn = meshNodes[pm];
-              var pdx = (i * mtxColWidth + mtxColWidth * 0.5) - pn.x;
-              var pdy = glyphScreenY - pn.y;
-              var pdist = Math.sqrt(pdx * pdx + pdy * pdy);
-              if (pdist < 30) {
-                pn.reactBright = Math.min(1, (pn.reactBright || 0) + 0.3);
-              }
-            }
+            var iconDollarTint = !!(item.def.src && /\/(usdc|usdt2?|dai|m0)\.png/i.test(item.def.src));
+            iconQueue.push({
+              tint: tint,
+              ix: ix,
+              iy: iy,
+              iw: iw,
+              ih: ih,
+              op: op,
+              hollow: isHollowHex,
+              btcGlow: isBtcGlow,
+              submerge: mtxGetSubmerge(y0, h),
+              item: item,
+              iconDollarTint: iconDollarTint,
+              colIdx: i
+            });
           }
         }
 
         if(y0 > h){
-          /* ── Deposit node into control-layer mesh ── */
-          var occupancy = meshNodes.length / meshMaxNodes;
-          var depositChance = 0.45 * (1 - occupancy * occupancy);
-          if (meshNodes.length < meshMaxNodes && Math.random() < depositChance) {
-            var meshTargetY = h * meshZoneTop + Math.random() * h * (1 - meshZoneTop);
-            /* Drift from column center to avoid vertical banding */
-            var meshTargetX = i * mtxColWidth + mtxColWidth * 0.5
-              + (Math.random() - 0.5) * mtxColWidth * 2.5;
-            meshTargetX = Math.max(4, Math.min(w - 4, meshTargetX));
-
-            var isDollarDeposit = (item.type === 'text' && item.value === '$');
-            meshNodes.push({
-              x: meshTargetX,
-              y: meshTargetY - 8, /* start slightly above resting point */
-              restY: meshTargetY,
-              r: 1.0 + Math.random() * 1.5,
-              alpha: isDollarDeposit ? (0.28 + Math.random() * 0.3) : (0.18 + Math.random() * 0.32),
-              born: performance.now(),
-              life: meshNodeLifeMin + Math.random() * (meshNodeLifeMax - meshNodeLifeMin),
-              pulse: Math.random() * Math.PI * 2,
-              settling: true,
-              reactBright: 0
-            });
-
-            /* Arrival ripple */
-            meshRipples.push({
-              x: meshTargetX,
-              y: meshTargetY,
-              born: performance.now(),
-              maxR: 12 + Math.random() * 8,
-              alpha: 0.08
-            });
-          }
+          mtxDepositMeshNode(i, item, x0, w, h, meshNow);
 
           mtxDrops[i] = Math.random() * -5;
           mtxColDriftX[i] = 0;
@@ -2165,147 +2690,182 @@
         }
         mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
         mtxCtx.restore();
+        /* Collect position for coral web */
+        if (q.iy > 0 && q.iy < h) {
+          coralNodes.push({
+            cx: q.ix + q.iw * 0.5,
+            cy: q.iy + q.ih * 0.5,
+            footY: q.iy + q.ih * 0.85,
+            bw: q.iw,
+            bh: q.ih,
+            op: q.op,
+            isDollar: q.iconDollarTint,
+            colIdx: q.colIdx
+          });
+        }
+        /* Per-glyph coral activation — uses normalized Y so it works everywhere */
+        var iconNormY = Math.max(0, Math.min(1, q.iy / h));
+        mtxDrawGlyphWadeOverlay(
+          q.item,
+          { x: q.ix, y: q.iy, w: q.iw, h: q.ih },
+          iconNormY,
+          meshNow,
+          w,
+          h,
+          q.iconDollarTint
+        );
       }
+
+      /* ══════════════════════════════════════════════
+         Coral web: tendrils ONLY between nearby icons.
+         No constant tendrils — only when icons get close enough.
+         Tendrils connect from all sides (nearest edge to nearest edge).
+         Connected icons are magnetized toward each other.
+         ══════════════════════════════════════════════ */
+      if (coralNodes.length > 1 && !mtxReducedMotion) {
+        var coralThreshold = mtxIsMobile ? 90 : 130;
+        var coralMaxLinks = mtxIsMobile ? 2 : 4;
+        var coralAttractBase = mtxIsMobile ? 0.018 : 0.028;
+        var coralLinkCount = {};
+        var drawnCoralEdges = {};
+
+        for (var ci = 0; ci < coralNodes.length; ci++) {
+          var cn = coralNodes[ci];
+          var neighbors = [];
+          for (var cj = 0; cj < coralNodes.length; cj++) {
+            if (cj === ci) continue;
+            var cdx = cn.cx - coralNodes[cj].cx;
+            var cdy = cn.cy - coralNodes[cj].cy;
+            var cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+            if (cdist < coralThreshold && cdist > 6) {
+              neighbors.push({ idx: cj, dist: cdist });
+            }
+          }
+          neighbors.sort(function(a, b) { return a.dist - b.dist; });
+          if (neighbors.length > coralMaxLinks) neighbors.length = coralMaxLinks;
+
+          for (var ck = 0; ck < neighbors.length; ck++) {
+            var nbIdx = neighbors[ck].idx;
+            var nb = coralNodes[nbIdx];
+            var dist = neighbors[ck].dist;
+            /* Dedupe edges */
+            var edgeKey = ci < nbIdx ? ci + ':' + nbIdx : nbIdx + ':' + ci;
+            if (drawnCoralEdges[edgeKey]) continue;
+            drawnCoralEdges[edgeKey] = true;
+
+            var closeness = 1 - dist / coralThreshold;
+
+            /* ── Magnetism: pull connected icons toward each other ── */
+            var cnCol = cn.colIdx;
+            var nbCol = nb.colIdx;
+            if (cnCol != null && nbCol != null && cnCol !== nbCol) {
+              coralLinkCount[cnCol] = (coralLinkCount[cnCol] || 0) + 1;
+              coralLinkCount[nbCol] = (coralLinkCount[nbCol] || 0) + 1;
+
+              /* Direct position nudge — move driftX toward each other immediately */
+              var hPull = closeness * (mtxIsMobile ? 0.25 : 0.45) * dtMul;
+              if (cn.cx < nb.cx) {
+                mtxColDriftX[cnCol] += hPull;
+                mtxColDriftX[nbCol] -= hPull;
+              } else {
+                mtxColDriftX[cnCol] -= hPull;
+                mtxColDriftX[nbCol] += hPull;
+              }
+
+              /* Vertical: nudge drop positions toward each other */
+              var vPull = closeness * 0.012 * dtMul;
+              if (cn.cy < nb.cy) {
+                mtxDrops[cnCol] += vPull;
+                mtxDrops[nbCol] -= vPull * 0.6;
+              } else {
+                mtxDrops[cnCol] -= vPull * 0.6;
+                mtxDrops[nbCol] += vPull;
+              }
+            }
+
+            /* ── Tendril rendering ── */
+            /* Use a high base alpha — op values are low (0.17-0.5) so we compensate */
+            var brAlpha = closeness * 0.30;
+            if (brAlpha < 0.01) continue;
+
+            var isMint = cn.isDollar || nb.isDollar;
+            var brCol = isMint ? '204, 251, 229' : '74, 222, 128';
+
+            /* Anchor points: connect center to center (simple, reliable) */
+            var startX = cn.cx;
+            var startY = cn.cy;
+            var endX = nb.cx;
+            var endY = nb.cy;
+
+            /* Curved branch with gentle perpendicular sway */
+            var angle = Math.atan2(endY - startY, endX - startX);
+            var perpX = -Math.sin(angle);
+            var perpY = Math.cos(angle);
+            var sway = Math.sin(meshNow * 0.002 + ci * 1.3 + ck * 2.1) * dist * 0.15;
+            var cpX = (startX + endX) * 0.5 + perpX * sway;
+            var cpY = (startY + endY) * 0.5 + perpY * sway;
+
+            /* Single quadratic bezier curve — simple and visible */
+            mtxCtx.beginPath();
+            mtxCtx.moveTo(startX, startY);
+            mtxCtx.quadraticCurveTo(cpX, cpY, endX, endY);
+            mtxCtx.strokeStyle = 'rgba(' + brCol + ', ' + brAlpha + ')';
+            mtxCtx.lineWidth = 0.6 + closeness * 0.5;
+            mtxCtx.lineCap = 'round';
+            mtxCtx.stroke();
+
+            /* Junction node at midpoint */
+            var jPulse = Math.sin(meshNow * 0.003 + ci + ck) * 0.22 + 0.78;
+            var jR = (0.7 + jPulse * 0.5) * closeness;
+            var jAlpha = brAlpha * 0.6;
+            if (jR > 0.3) {
+              mtxCtx.beginPath();
+              mtxCtx.arc(cpX, cpY, jR, 0, Math.PI * 2);
+              mtxCtx.fillStyle = 'rgba(' + brCol + ', ' + jAlpha + ')';
+              mtxCtx.fill();
+              mtxCtx.beginPath();
+              mtxCtx.arc(cpX, cpY, jR * 2.0, 0, Math.PI * 2);
+              mtxCtx.fillStyle = 'rgba(' + brCol + ', ' + (jAlpha * 0.15) + ')';
+              mtxCtx.fill();
+            }
+
+            /* Fork off midpoint on close connections */
+            if (!mtxIsMobile && closeness > 0.45) {
+              var forkAngle = angle + Math.PI * 0.5 * (Math.sin(ci + ck) > 0 ? 1 : -1);
+              var forkLen = dist * 0.2;
+              var forkX = cpX + Math.cos(forkAngle) * forkLen;
+              var forkY = cpY + Math.sin(forkAngle) * forkLen;
+              mtxCtx.beginPath();
+              mtxCtx.moveTo(cpX, cpY);
+              mtxCtx.lineTo(forkX, forkY);
+              mtxCtx.strokeStyle = 'rgba(' + brCol + ', ' + (brAlpha * 0.35) + ')';
+              mtxCtx.lineWidth = 0.35;
+              mtxCtx.stroke();
+              mtxCtx.beginPath();
+              mtxCtx.arc(forkX, forkY, jR * 0.4, 0, Math.PI * 2);
+              mtxCtx.fillStyle = 'rgba(' + brCol + ', ' + (brAlpha * 0.2) + ')';
+              mtxCtx.fill();
+            }
+          }
+        }
+
+        /* Dampen driftX back toward 0 for unconnected columns */
+        for (var di = 0; di < mtxColDriftX.length; di++) {
+          if (!coralLinkCount[di]) {
+            mtxColDriftX[di] *= 0.96;
+            /* Zero out tiny residual drift */
+            if (Math.abs(mtxColDriftX[di]) < 0.1) mtxColDriftX[di] = 0;
+          }
+          /* Cap max drift so columns don't wander too far */
+          var maxDrift = mtxIsMobile ? 8 : 14;
+          if (mtxColDriftX[di] > maxDrift) mtxColDriftX[di] = maxDrift;
+          if (mtxColDriftX[di] < -maxDrift) mtxColDriftX[di] = -maxDrift;
+        }
+      }
+
       /* Pass 3: dollar magnet particles (desktop only). */
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
-
-      /* ══════════════════════════════════════════════
-         Control-layer mesh: infrastructure beneath the rain
-         ══════════════════════════════════════════════ */
-      var meshNow = performance.now();
-
-      /* Top-edge gradient mask: mesh fades in from meshZoneTop, no hard band */
-      var meshMaskTop = h * meshZoneTop;
-      var meshMaskFadeH = h * 0.10;
-
-      /* Expire old nodes */
-      for (var mi = meshNodes.length - 1; mi >= 0; mi--) {
-        if (meshNow - meshNodes[mi].born > meshNodes[mi].life) {
-          meshNodes.splice(mi, 1);
-        }
-      }
-
-      /* Settle newly deposited nodes toward resting Y */
-      for (var ms = 0; ms < meshNodes.length; ms++) {
-        var sn = meshNodes[ms];
-        if (sn.settling) {
-          sn.y += (sn.restY - sn.y) * 0.06;
-          if (Math.abs(sn.y - sn.restY) < 0.3) {
-            sn.y = sn.restY;
-            sn.settling = false;
-          }
-        }
-        /* Decay reactBright */
-        if (sn.reactBright > 0) {
-          sn.reactBright *= 0.94;
-          if (sn.reactBright < 0.01) sn.reactBright = 0;
-        }
-      }
-
-      /* Expire old ripples */
-      for (var mr = meshRipples.length - 1; mr >= 0; mr--) {
-        if (meshNow - meshRipples[mr].born > meshRippleMaxAge) {
-          meshRipples.splice(mr, 1);
-        }
-      }
-
-      /* Zone alpha: applies a vertical fade at the top of the mesh zone */
-      function meshZoneAlpha(nodeY) {
-        if (nodeY < meshMaskTop) return 0;
-        if (nodeY < meshMaskTop + meshMaskFadeH) {
-          return (nodeY - meshMaskTop) / meshMaskFadeH;
-        }
-        return 1;
-      }
-
-      function meshNodeFade(nd) {
-        var age = meshNow - nd.born;
-        var fadeIn = Math.min(1, age / 800);
-        var fadeOut = age > nd.life * 0.7
-          ? 1 - (age - nd.life * 0.7) / (nd.life * 0.3)
-          : 1;
-        return fadeIn * fadeOut * meshZoneAlpha(nd.y);
-      }
-
-      /* Draw connection lines (k-nearest, not all pairs) */
-      var drawnEdges = {};
-      for (var ma = 0; ma < meshNodes.length; ma++) {
-        var neighbors = meshNearestK(ma, meshMaxLinksPerNode);
-        var ndA = meshNodes[ma];
-        var fadeA = meshNodeFade(ndA);
-
-        for (var nb = 0; nb < neighbors.length; nb++) {
-          var bi = neighbors[nb].idx;
-          var edgeKey = ma < bi ? (ma + ':' + bi) : (bi + ':' + ma);
-          if (drawnEdges[edgeKey]) continue;
-          drawnEdges[edgeKey] = true;
-
-          var ndB = meshNodes[bi];
-          var fadeB = meshNodeFade(ndB);
-          var dist = neighbors[nb].dist;
-
-          var lineAlpha = Math.min(ndA.alpha, ndB.alpha)
-            * Math.min(fadeA, fadeB)
-            * (1 - dist / meshConnectionDist)
-            * 0.08;
-
-          /* React brightness: flash nearby links on arrival */
-          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.2;
-          lineAlpha += reactBoost;
-
-          if (lineAlpha > 0.003) {
-            mtxCtx.beginPath();
-            mtxCtx.moveTo(ndA.x, ndA.y);
-            mtxCtx.lineTo(ndB.x, ndB.y);
-            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
-            mtxCtx.lineWidth = 0.5;
-            mtxCtx.stroke();
-          }
-        }
-      }
-
-      /* Draw mesh nodes */
-      for (var mn = 0; mn < meshNodes.length; mn++) {
-        var nd = meshNodes[mn];
-        var nFade = meshNodeFade(nd);
-        if (nFade < 0.003) continue;
-
-        var pulse = Math.sin(meshNow * meshPulseSpeed + nd.pulse) * 0.25 + 0.75;
-        var drawAlpha = nd.alpha * nFade;
-
-        /* React brightness boost */
-        var rBoost = nd.reactBright || 0;
-        drawAlpha = Math.min(1, drawAlpha + rBoost * 0.35);
-
-        /* Core dot */
-        mtxCtx.beginPath();
-        mtxCtx.arc(nd.x, nd.y, nd.r * pulse, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + drawAlpha * 0.25 + ')';
-        mtxCtx.fill();
-
-        /* Soft halo: smaller and dimmer than reef — infrastructure, not bloom */
-        mtxCtx.beginPath();
-        mtxCtx.arc(nd.x, nd.y, nd.r * pulse * 1.8, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + drawAlpha * 0.03 + ')';
-        mtxCtx.fill();
-      }
-
-      /* Draw arrival ripples */
-      for (var ri = 0; ri < meshRipples.length; ri++) {
-        var rp = meshRipples[ri];
-        var rAge = meshNow - rp.born;
-        var rProgress = rAge / meshRippleMaxAge;
-        var rRadius = rp.maxR * rProgress;
-        var rAlpha = rp.alpha * (1 - rProgress) * (1 - rProgress) * meshZoneAlpha(rp.y);
-        if (rAlpha > 0.003) {
-          mtxCtx.beginPath();
-          mtxCtx.arc(rp.x, rp.y, rRadius, 0, Math.PI * 2);
-          mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + rAlpha + ')';
-          mtxCtx.lineWidth = 0.7;
-          mtxCtx.stroke();
-        }
-      }
 
       mtxRaf = requestAnimationFrame(mtxDraw);
     }
@@ -2697,9 +3257,11 @@
       clearTimeout(mtxResizeTimer);
       mtxResizeTimer = window.setTimeout(function(){
         mtxIsMobile = window.matchMedia('(max-width: 768px)').matches;
-        meshMaxNodes = mtxIsMobile ? 12 : 30;
-        meshConnectionDist = mtxIsMobile ? 35 : 48;
-        trailSteps = mtxIsMobile ? 2 : 4;
+        mtxReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        mtxMeshMaxNodes = mtxReducedMotion ? 12 : (mtxIsMobile ? 25 : 60);
+        mtxMeshConnectionDist = mtxReducedMotion ? 28 : (mtxIsMobile ? 35 : 50);
+        mtxMeshReactRadius = mtxReducedMotion ? 22 : (mtxIsMobile ? 36 : 52);
+        mtxMeshRippleMaxAge = mtxReducedMotion ? 0 : 300;
         if(matrixContainer.classList.contains('active')){
           mtxInitCanvas();
         }
