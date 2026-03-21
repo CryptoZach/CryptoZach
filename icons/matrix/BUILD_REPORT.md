@@ -1,27 +1,27 @@
 # Matrix Icon Build Report
 
-**Date:** 2026-03-20T00:32:04.713354  
-**Total:** 93  
+**Date:** 2026-03-20T20:05:05.617407  
+**Total:** 98  
 **Sourced:** 0  
-**Missing:** 93  
+**Missing:** 98  
 
 ## Sourced (0)
 
 | File | Source | Size |
 |------|--------|------|
 
-## Missing (93)
+## Missing (98)
 
 | File | Tried |
 |------|-------|
 | `aapl.png` | SI:apple |
-| `aave.png` | local:build-sources/aave.svg, SI:aave, CC-SVG:aave, CC-PNG:AAVE |
+| `aave.png` | SI:aave, CC-SVG:aave, CC-PNG:AAVE |
 | `ada.png` | SI:cardano, CC-SVG:ada, CC-PNG:ADA |
 | `algo.png` | SI:algorand, CC-SVG:algo, CC-PNG:ALGO |
 | `amd.png` | local:build-sources/amd.svg, SI:amd |
 | `amzn.png` | SI:amazon |
 | `apt.png` | IconifyPref:token/aptos, IconifyPref:token-branded/aptos, SI:aptos |
-| `arb.png` | local:build-sources/arb.svg, IconifyPref:token-branded/arbitrum, IconifyPref:token/arbitrum, SI:arbitrum |
+| `arb.png` | IconifyPref:token-branded/arbitrum, IconifyPref:token/arbitrum, SI:arbitrum |
 | `atom.png` | SI:cosmos, CC-SVG:atom, CC-PNG:ATOM |
 | `avax.png` | SI:avalanche, CC-SVG:avax, CC-PNG:AVAX |
 | `bac.png` | SI:bankofamerica |
@@ -30,15 +30,17 @@
 | `block.png` | SI:square, SI:block |
 | `bnb.png` | SI:binance, CC-SVG:bnb, CC-PNG:BNB |
 | `btc.png` | SI:bitcoin, CC-SVG:btc, CC-PNG:BTC |
+| `cantor.png` | local:build-sources/cantor.svg, SI:cantor |
 | `cashapp.png` | local:build-sources/cashapp.svg, SI:cashapp |
 | `citi.png` | local:build-sources/citi.svg, SI:citibank |
-| `coinbase.png` | SI:coinbase |
+| `clearstreet.png` | local:build-sources/clearstreet.svg, SI:clearstreet |
+| `coinbase.png` | Iconify:token/coinbase, Iconify:simple-icons/coinbase, SI:coinbase |
 | `crv.png` | local:build-sources/crv.svg, SI:curvedao, SI:curvefi, SI:curve |
 | `csco.png` | SI:cisco |
 | `dai.png` | local:build-sources/dai.svg, SI:dai, CC-SVG:dai, CC-PNG:DAI |
 | `dis.png` | SI:waltdisney, SI:disney, SI:waltdisneyworld |
-| `doge.png` | local:build-sources/doge.svg, SI:dogecoin, CC-SVG:doge, CC-PNG:DOGE |
-| `dot.png` | local:build-sources/dot.svg, SI:polkadot, CC-SVG:dot, CC-PNG:DOT |
+| `doge.png` | SI:dogecoin, CC-SVG:doge, CC-PNG:DOGE |
+| `dot.png` | SI:polkadot, CC-SVG:dot, CC-PNG:DOT |
 | `eth.png` | SI:ethereum, CC-SVG:eth, CC-PNG:ETH |
 | `facebook.png` | SI:facebook |
 | `fed.png` | local:build-sources/fed.svg, SI:federalreserve |
@@ -54,39 +56,40 @@
 | `ibm.png` | SI:ibm |
 | `ice.png` | local:build-sources/ice.svg, SI:ice |
 | `inj.png` | local:build-sources/inj.svg, SI:injective |
-| `intc.png` | Iconify:logos/intel, Iconify:simple-icons/intel, SI:intel |
-| `jpm.png` | SI:jpmorgan, SI:jpmorganchase, SI:chase |
+| `intc.png` | Iconify:simple-icons/intel, Iconify:logos/intel, SI:intel |
+| `jpm.png` | local:build-sources/jpm.svg, SI:jpmorgan, SI:jpmorganchase, SI:chase |
 | `kinexys.png` | local:build-sources/kinexys.svg, SI:kinexys |
 | `ko.png` | SI:cocacola, SI:coca-cola |
 | `kraken.png` | SI:kraken, Iconify:logos/kraken, Iconify:token-branded/kraken |
 | `layerzero.png` | local:build-sources/layerzero.svg, SI:layerzero |
 | `ldo.png` | SI:lido |
-| `link.png` | local:build-sources/link.svg, SI:chainlink, CC-SVG:link, CC-PNG:LINK |
+| `link.png` | SI:chainlink, CC-SVG:link, CC-PNG:LINK |
 | `ltc.png` | local:build-sources/ltc.svg, SI:litecoin, CC-SVG:ltc, CC-PNG:LTC |
 | `ma.png` | SI:mastercard |
 | `meta.png` | SI:meta |
-| `metamask.png` | SI:metamask, Iconify:logos/metamask, Iconify:token-branded/metamask |
+| `metamask.png` | SI:metamask, Iconify:token-branded/metamask, Iconify:logos/metamask |
 | `mkr.png` | SI:maker, CC-SVG:mkr, CC-PNG:MKR |
+| `moneygram.png` | SI:moneygram |
 | `msft.png` | SI:microsoft |
-| `mstr.png` | SI:microstrategy, SI:strategy |
+| `mstr.png` | local:build-sources/mstr.svg, SI:microstrategy, SI:strategy |
 | `nasdaq.png` | local:build-sources/nasdaq.svg, SI:nasdaq |
-| `near.png` | local:build-sources/near.svg, SI:near, CC-SVG:near, CC-PNG:NEAR |
+| `near.png` | SI:near, CC-SVG:near, CC-PNG:NEAR |
 | `nflx.png` | SI:netflix |
 | `nvda.png` | SI:nvidia |
 | `nyse.png` | local:build-sources/nyse.svg, SI:nyse |
 | `op.png` | local:build-sources/op.svg, IconifyPref:token-branded/optimism, IconifyPref:token/optimism, SI:optimism |
 | `orcl.png` | SI:oracle |
-| `pypl.png` | SI:paypal |
+| `pypl.png` | Iconify:logos/paypal, Iconify:simple-icons/paypal, SI:paypal |
 | `revolut.png` | SI:revolut |
 | `rndr.png` | SI:render, CC-SVG:rndr, CC-PNG:RNDR |
 | `schw.png` | SI:charlesschwab, SI:schwab |
 | `securitize.png` | local:build-sources/securitize.svg, SI:securitize |
-| `sei.png` | local:build-sources/sei.svg, SI:sei |
+| `sei.png` | SI:sei |
 | `sol.png` | SI:solana, CC-SVG:sol, CC-PNG:SOL |
 | `sq.png` | SI:square, SI:block |
 | `stripe.png` | SI:stripe |
 | `stx.png` | SI:stacks, CC-SVG:stx, CC-PNG:STX |
-| `sui.png` | local:build-sources/sui.svg, SI:sui |
+| `sui.png` | SI:sui |
 | `tao.png` | SI:bittensor |
 | `tia.png` | SI:celestia |
 | `ton.png` | IconifyPref:token-branded/ton, IconifyPref:token/ton, IconifyPref:simple-icons/ton, SI:ton |
@@ -98,9 +101,11 @@
 | `venmo.png` | Iconify:fa7-brands/venmo-v, SI:venmo |
 | `visa.png` | Iconify:simple-icons/visa, Iconify:logos/visa, SI:visa |
 | `wfc.png` | local:build-sources/wfc.svg, SI:wellsfargo |
+| `wise.png` | local:build-sources/wise.svg, SI:wise |
 | `wld.png` | IconifyPref:arcticons/worldcoin, SI:worldcoin |
 | `wmt.png` | Iconify:tabler/brand-walmart, Iconify:arcticons/walmart, SI:walmart |
 | `wormhole.png` | IconifyPref:arcticons/wormhole, IconifyPref:arcticons/wormhole-2, SI:wormhole |
+| `wu.png` | SI:westernunion |
 | `x.png` | SI:x |
 | `xlm.png` | SI:stellar, CC-SVG:xlm, CC-PNG:XLM |
 | `xmr.png` | SI:monero, CC-SVG:xmr, CC-PNG:XMR |
@@ -126,8 +131,10 @@
 - **block** → Search brand media kit for logomark SVG
 - **bnb** → Search brand media kit for logomark SVG
 - **btc** → Search brand media kit for logomark SVG
+- **cantor** → Search brand media kit for logomark SVG
 - **cashapp** → Search brand media kit for logomark SVG
 - **citi** → Search brand media kit for logomark SVG
+- **clearstreet** → Search brand media kit for logomark SVG
 - **coinbase** → Search brand media kit for logomark SVG
 - **crv** → Search brand media kit for logomark SVG
 - **csco** → Search brand media kit for logomark SVG
@@ -163,8 +170,9 @@
 - **meta** → Search brand media kit for logomark SVG
 - **metamask** → Search brand media kit for logomark SVG
 - **mkr** → Search brand media kit for logomark SVG
+- **moneygram** → Search brand media kit for logomark SVG
 - **msft** → Search brand media kit for logomark SVG
-- **mstr** → https://www.microstrategy.com
+- **mstr** → https://www.strategy.com (formerly MicroStrategy)
 - **nasdaq** → Search brand media kit for logomark SVG
 - **near** → Search brand media kit for logomark SVG
 - **nflx** → Search brand media kit for logomark SVG
@@ -194,9 +202,11 @@
 - **venmo** → Search brand media kit for logomark SVG
 - **visa** → Search brand media kit for logomark SVG
 - **wfc** → https://www.wellsfargo.com
+- **wise** → Search brand media kit for logomark SVG
 - **wld** → Search brand media kit for logomark SVG
 - **wmt** → Search brand media kit for logomark SVG
 - **wormhole** → Search brand media kit for logomark SVG
+- **wu** → Search brand media kit for logomark SVG
 - **x** → Search brand media kit for logomark SVG
 - **xlm** → Search brand media kit for logomark SVG
 - **xmr** → Search brand media kit for logomark SVG

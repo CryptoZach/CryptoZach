@@ -642,13 +642,13 @@
     /* One USD glyph: USDC stablecoin read comes from usdc.png in the crypto pool (duplicated there). */
     const textChars = [
       '$',
-      '€', '£', '¥', '₩', '₹', '₣', '₴', '₱', '\uFDFC',
+      '€', '£', '¥', '₩', '₹', '₣', '₴', '\uFDFC',
       '₿', '\u039E',
-      'XAU', 'XAG', 'WTI',
+      'XAU', 'XAG',
       'DXY', 'VIX', 'NDX'
     ];
 
-    var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '₱': 1, '\uFDFC': 1 };
+    var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '\uFDFC': 1 };
 
     var iconDefs = [
       { src: './icons/matrix/btc.png', loaded: false, img: null, tinted: null },
@@ -665,7 +665,7 @@
       { src: './icons/matrix/dot.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/atom.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/link.png', loaded: false, img: null, tinted: null },
+      /* Chainlink (link.png) omitted from hero pool: hollow hex still reads as a faceted smear with trail blur at column foot. */
       { src: './icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/doge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
@@ -693,6 +693,7 @@
       { src: './icons/matrix/metamask.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
@@ -720,6 +721,11 @@
       { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/csco.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
@@ -770,6 +776,11 @@
         mtxTradPool.push({ type: 'icon', def: def });
       }
     });
+    /* Former WTI text ticker: show Wormhole mark in trad stream (same def as crypto pool). */
+    var mtxWormholeTradDef = mtxCryptoIconDefs.find(function(d){ return d.src.indexOf('wormhole.png') >= 0; });
+    if(mtxWormholeTradDef){
+      mtxTradPool.push({ type: 'icon', def: mtxWormholeTradDef });
+    }
 
     /* ~35% of glyphs from crypto icons only (no crypto ASCII tickers); rest from fiat, commodities, macro, stock icons */
     var mtxCryptoPickRate = 0.35;
@@ -866,6 +877,22 @@
       var tctx = tmp.getContext('2d');
       tctx.imageSmoothingEnabled = false;
       tctx.drawImage(def.img, 0, 0, nw, nh);
+      /* Hollow hex PNGs (link, hnt): raster anti-alias leaves low-alpha pixels inside the ring opening; after tint they read as a squiggly line. Drop faint pixels; snap edge AA to solid white before tint. */
+      if(def.src && /\/(link|hnt)\.png(\?|$)/.test(def.src)){
+        var idPre = tctx.getImageData(0, 0, nw, nh);
+        var dPre = idPre.data;
+        var iPre;
+        for(iPre = 0; iPre < dPre.length; iPre += 4){
+          var a0 = dPre[iPre + 3];
+          if(a0 < 128){
+            dPre[iPre] = dPre[iPre + 1] = dPre[iPre + 2] = dPre[iPre + 3] = 0;
+          } else if(a0 < 255){
+            dPre[iPre] = dPre[iPre + 1] = dPre[iPre + 2] = 255;
+            dPre[iPre + 3] = 255;
+          }
+        }
+        tctx.putImageData(idPre, 0, 0);
+      }
       tctx.globalCompositeOperation = 'source-atop';
       tctx.fillStyle = 'rgba(94, 234, 168, 1)';
       tctx.fillRect(0, 0, nw, nh);
@@ -1003,7 +1030,7 @@
       } while(tries < maxTries);
       if(item.type === 'icon'){
         var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
-        if(item.def && item.def.src && (item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0)){
+        if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = Math.min(ds + 8, 42);
         }
         item = {
@@ -1120,6 +1147,11 @@
           if(tint){
             var iw = item.drawSize != null ? item.drawSize : mtxIconDrawSize;
             var ih = iw;
+            /* Hollow hex icons: integer draw size avoids subpixel drawImage scale reintroducing fringe in the ring opening. */
+            if(item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src)){
+              iw = Math.max(1, Math.round(iw));
+              ih = iw;
+            }
             var ix = Math.round(x);
             var iy = Math.round(y);
             /* Warp can pull the head past x=0; container overflow clips the left edge of USDC-style coins. */
