@@ -335,7 +335,7 @@
       try{
         heroHome.releasePointerCapture(e.pointerId);
       } catch(_){}
-      if(typeof homeHeroMtxStop === 'function' && !mtxHeroLongPressPin){
+      if(!mtxMobileMatrixAlways && typeof homeHeroMtxStop === 'function' && !mtxHeroLongPressPin){
         homeHeroMtxStop();
       }
     });
@@ -349,7 +349,7 @@
       try{
         heroHome.releasePointerCapture(e.pointerId);
       } catch(_){}
-      if(typeof homeHeroMtxStop === 'function' && !mtxHeroLongPressPin){
+      if(!mtxMobileMatrixAlways && typeof homeHeroMtxStop === 'function' && !mtxHeroLongPressPin){
         homeHeroMtxStop();
       }
     });
@@ -1254,10 +1254,15 @@
       }
     }
 
-    function mtxStart(){
-      mtxTrailFillCache = '';
-      mtxTrailFillFrame = 0;
-      mtxInitCanvas();
+    function mtxStart(opts){
+      opts = opts || {};
+      var alreadyActive = matrixContainer.classList.contains('active');
+      var shouldReinit = !alreadyActive || opts.forceReset === true;
+      if(shouldReinit){
+        mtxTrailFillCache = '';
+        mtxTrailFillFrame = 0;
+        mtxInitCanvas();
+      }
       matrixContainer.classList.add('active');
       if(!mtxRaf){
         mtxRaf = requestAnimationFrame(mtxDraw);
@@ -1303,6 +1308,9 @@
         }
       }
       heroHome.addEventListener('pointerup', function mtxFlagshipCoarseUpCapture(e){
+        if(mtxMobileMatrixAlways){
+          return;
+        }
         if(e.pointerType === 'mouse'){
           return;
         }
@@ -1329,6 +1337,9 @@
         mtxFlagshipStripArmingOnly();
       }, true);
       heroHome.addEventListener('pointercancel', function mtxFlagshipCoarseCancelCapture(e){
+        if(mtxMobileMatrixAlways){
+          return;
+        }
         if(e.pointerType === 'mouse'){
           return;
         }
@@ -1346,12 +1357,21 @@
 
     if(heroFlagshipMtx){
       heroFlagshipMtx.addEventListener('touchstart', function(){
+        if(mtxMobileMatrixAlways){
+          return;
+        }
         mtxFlagshipTouchWallMs = Date.now();
       }, { capture: true, passive: true });
       heroFlagshipMtx.addEventListener('touchcancel', function(){
+        if(mtxMobileMatrixAlways){
+          return;
+        }
         mtxFlagshipTouchWallMs = 0;
       }, { capture: true, passive: true });
       heroFlagshipMtx.addEventListener('touchend', function(e){
+        if(mtxMobileMatrixAlways){
+          return;
+        }
         var wallDt = mtxFlagshipTouchWallMs ? (Date.now() - mtxFlagshipTouchWallMs) : 0;
         if(mtxHeroLongPressPin || mtxFlagshipConsumeClick){
           e.preventDefault();
@@ -1413,6 +1433,10 @@
       if(rel && act.contains(rel)){
         return;
       }
+      if(mtxMobileMatrixAlways){
+        mtxUpdateWarpFromEvent(e);
+        return;
+      }
       mtxStart();
       mtxUpdateWarpFromEvent(e);
     }
@@ -1435,6 +1459,9 @@
       act.addEventListener('pointermove', mtxUpdateWarpFromEvent);
       if(mtxIsFlagshipActivator(act)){
         act.addEventListener('click', function(e){
+          if(mtxMobileMatrixAlways){
+            return;
+          }
           if(!mtxFlagshipConsumeClick){
             return;
           }
@@ -1447,6 +1474,9 @@
           }
         }, true);
         act.addEventListener('pointerup', function(e){
+          if(mtxMobileMatrixAlways){
+            return;
+          }
           if(e.pointerType === 'mouse'){
             return;
           }
@@ -1456,6 +1486,9 @@
           }
         });
         act.addEventListener('pointercancel', function(){
+          if(mtxMobileMatrixAlways){
+            return;
+          }
           mtxClearFlagshipLpTimer();
           if(act.classList){
             act.classList.remove('mtx-flagship-lp-arming');
@@ -1468,6 +1501,10 @@
           return;
         }
         if(mtxIsFlagshipActivator(act)){
+          if(mtxMobileMatrixAlways){
+            mtxUpdateWarpFromEvent(e);
+            return;
+          }
           mtxClearFlagshipLpTimer();
           if(mtxHeroLongPressPin){
             mtxStop(true);
@@ -1495,12 +1532,19 @@
           }, 0);
           return;
         }
+        if(mtxMobileMatrixAlways){
+          mtxUpdateWarpFromEvent(e);
+          return;
+        }
         mtxStart();
         mtxUpdateWarpFromEvent(e);
       });
     });
 
     document.addEventListener('pointerdown', function mtxHeroMatrixUnpin(e){
+      if(mtxMobileMatrixAlways){
+        return;
+      }
       if(!mtxHeroLongPressPin){
         return;
       }
@@ -1512,6 +1556,9 @@
     }, true);
 
     document.addEventListener('keydown', function mtxHeroMatrixEsc(e){
+      if(mtxMobileMatrixAlways){
+        return;
+      }
       if(e.key !== 'Escape' || !mtxHeroLongPressPin){
         return;
       }
@@ -1538,21 +1585,22 @@
         mtxTrailFillCache = '';
         mtxTrailFillFrame = 0;
         if(!matrixContainer.classList.contains('active')){
-          mtxStart();
+          mtxStart({ forceReset: true });
           return;
         }
         if(mtxRaf){
           cancelAnimationFrame(mtxRaf);
           mtxRaf = null;
         }
-        mtxRaf = requestAnimationFrame(mtxDraw);
+        mtxPrevDrawTs = 0;
+        mtxStart({ forceReset: true });
       });
       window.addEventListener('pageshow', function mtxHeroMatrixPageShow(e){
         if(!mtxMobileMatrixAlways || !e.persisted){
           return;
         }
         mtxPrevDrawTs = 0;
-        mtxStart();
+        mtxStart({ forceReset: true });
       });
     }
   }
