@@ -1109,6 +1109,8 @@
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
@@ -1173,6 +1175,7 @@
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/jpmorgan.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/citi.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
@@ -1201,6 +1204,7 @@
       { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
@@ -1219,7 +1223,6 @@
       { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ice.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ko.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/revolut.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/block.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
@@ -1322,7 +1325,7 @@
     var mtxIconLZUniDrawSizeMin = 26;
     var mtxIconLZUniDrawSizeMax = 42;
     /* LayerZero ZRO: extra-thin mark needs even more size boost. */
-    var mtxIconLZDrawSizeMin = 44;
+    var mtxIconLZDrawSizeMin = 47;
     var mtxIconLZDrawSizeMax = 50;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
@@ -1635,14 +1638,14 @@
         if(srcKey2){ mtxIconCooldowns[srcKey2] = now; }
         var ds;
         if(isBtc){
-          /* Bitcoin icon: same minimum, double maximum */
-          var btcMax = mtxIconDrawSizeMax * 2;
+          /* Bitcoin icon: max 1pt above normal max */
+          var btcMax = mtxIconDrawSizeMax + 1;
           ds = mtxIconDrawSizeMin + Math.random() * (btcMax - mtxIconDrawSizeMin);
         } else {
           ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
         }
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
-          ds = Math.min(ds + 2, 34);
+          ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
           ds = mtxIconLZDrawSizeMin + Math.random() * (mtxIconLZDrawSizeMax - mtxIconLZDrawSizeMin);
         } else if(item.def && item.def.src && item.def.src.indexOf('uni.png') >= 0){
@@ -1653,22 +1656,32 @@
           ds = Math.min(ds + 4, 34);
         } else if(item.def && item.def.src && item.def.src.indexOf('link.png') >= 0){
           ds = Math.max(ds, 24);
-        } else if(item.def && item.def.src && (item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0)){
-          ds = Math.min(ds + 10, 44);
+        } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.png') >= 0){
+          ds = 44 + Math.random() * 16;
+        } else if(item.def && item.def.src && item.def.src.indexOf('mstr.png') >= 0){
+          ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.png') >= 0){
-          ds = Math.min(ds + 4, 30);
+          ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
           ds = Math.min(ds + 6, 32);
+        } else if(item.def && item.def.src && item.def.src.indexOf('cantor.png') >= 0){
+          ds = 47 + Math.random() * 13;
         } else if(item.def && item.def.src && (item.def.src.indexOf('csco.png') >= 0 || item.def.src.indexOf('amd.png') >= 0 || item.def.src.indexOf('ink.png') >= 0 || item.def.src.indexOf('mkr.png') >= 0)){
           ds = Math.max(ds, 26);
-        } else if(item.def && item.def.src && (item.def.src.indexOf('visa.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('jpm.png') >= 0 || item.def.src.indexOf('citi.png') >= 0 || item.def.src.indexOf('bac.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('ma.png') >= 0)){
+        } else if(item.def && item.def.src && item.def.src.indexOf('gs.png') >= 0){
+          ds = 44 + Math.random() * 16;
+        } else if(item.def && item.def.src && item.def.src.indexOf('wfc.png') >= 0){
+          ds = 44 + Math.random() * 16;
+        } else if(item.def && item.def.src && item.def.src.indexOf('jpmorgan.png') >= 0){
+          ds = 44 + Math.random() * 16;
+        } else if(item.def && item.def.src && (item.def.src.indexOf('visa.png') >= 0 || item.def.src.indexOf('jpm.png') >= 0 || item.def.src.indexOf('citi.png') >= 0 || item.def.src.indexOf('bac.png') >= 0 || item.def.src.indexOf('ma.png') >= 0)){
           ds = 16 + Math.random() * 24;
         }
-        /* FedNow wordmark: wide aspect ratio (4:1), needs explicit width + height */
-        var isFedNow = item.def && item.def.src && item.def.src.indexOf('fednow.png') >= 0;
+        /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0);
         var drawHeight = null;
-        if(isFedNow){
-          ds = 44 + Math.random() * 20;
+        if(isWideWordmark){
+          if(item.def.src.indexOf('fednow.png') >= 0) ds = 44 + Math.random() * 20;
           drawHeight = Math.round(ds * 0.25);
         }
         item = {
@@ -2055,9 +2068,12 @@
             var iy = Math.round(y);
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
             /* Pass 1: matte only. Full icon bbox so trail clears completely under the sprite. */
-            mtxCtx.globalAlpha = 1;
-            mtxCtx.fillStyle = mtxPanelMatteRgb();
-            mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
+            /* Wide wordmarks skip the matte — their transparent bg doesn't accumulate trails. */
+            if(item.drawHeight == null){
+              mtxCtx.globalAlpha = 1;
+              mtxCtx.fillStyle = mtxPanelMatteRgb();
+              mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
+            }
             /* Queue the sprite draw for pass 2. */
             var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
             var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
