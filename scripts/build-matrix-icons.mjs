@@ -4,6 +4,7 @@
  * Order per asset: jsDelivr simple-icons SVG, Iconify simple-icons SVG (legacy slugs),
  * optional Iconify paths (token/*, etc.), then spothq cryptocurrency-icons PNG.
  * localSvg: repo-root-relative path to an SVG file when no CDN slug exists.
+ * localRaster: repo-root-relative PNG/JPEG/WebP (rasterized to 32px white silhouette; tried first when set).
  * localPng: repo-root-relative path to a PNG (rasterized to 32px white silhouette; try before SVG).
  *
  * Run: npm run build:matrix-icons
@@ -30,7 +31,8 @@ const ccPng = (t) =>
  */
 const ICONS = [
   { name: 'btc', si: ['bitcoin'], cc: 'btc' },
-  { name: 'eth', si: ['ethereum'], cc: 'eth' },
+  /* Ethereum: bundled eth.svg (filled diamond from ethereum-cryptocurrency-svgrepo-com.svg). */
+  { name: 'eth', localSvg: 'icons/matrix/build-sources/eth.svg', si: ['ethereum'], cc: 'eth' },
   { name: 'sol', si: ['solana'], cc: 'sol' },
   /* Bundled evenodd path: blue+white Iconify art whiten()s to a solid blob; this keeps $ cutouts. */
   {
@@ -48,13 +50,21 @@ const ICONS = [
     iconifyExtra: ['cryptocurrency-color/dai'],
     cc: 'dai',
   },
+  /* Helium: bundled helium-hnt-logo.svg (full mark; legacy stroke-only hnt.svg removed). */
   {
     name: 'hnt',
-    localSvg: 'icons/matrix/build-sources/hnt.svg',
+    localSvg: 'icons/matrix/build-sources/helium-hnt-logo.svg',
     si: [],
     cc: 'hnt',
   },
-  { name: 'fil', si: ['filecoin'], cc: 'fil', iconifyExtra: ['token/filecoin'] },
+  /* Filecoin: bundled fil.svg from filecoin-fil-logo.svg (F in circle). */
+  {
+    name: 'fil',
+    localSvg: 'icons/matrix/build-sources/fil.svg',
+    si: ['filecoin'],
+    iconifyExtra: ['token/filecoin'],
+    cc: 'fil',
+  },
   {
     name: 'uni',
     si: [],
@@ -69,7 +79,13 @@ const ICONS = [
   },
   { name: 'xrp', si: ['xrp'], cc: 'xrp' },
   { name: 'ada', si: ['cardano'], cc: 'ada' },
-  { name: 'avax', si: ['avalanche'], cc: 'avax', iconifyExtra: ['token/avax'] },
+  {
+    name: 'avax',
+    localSvg: 'icons/matrix/build-sources/avax.svg',
+    si: ['avalanche'],
+    cc: 'avax',
+    iconifyExtra: ['token/avax'],
+  },
   {
     name: 'dot',
     si: [],
@@ -84,7 +100,7 @@ const ICONS = [
     iconifyExtra: ['simple-icons/litecoin'],
     cc: 'ltc',
   },
-  /* Chainlink: bundled hollow hex (SI path + evenodd); raw SI raster reads as two filled facets, not a clear ring at 32px. */
+  /* Chainlink: bundled two stroke circles (not SI hex); SI chainlink is evenodd hex + facets and reads as a faceted smear at 32px. */
   {
     name: 'link',
     localSvg: 'icons/matrix/build-sources/link.svg',
@@ -100,7 +116,13 @@ const ICONS = [
     cc: 'doge',
   },
   { name: 'trx', si: ['tron'], cc: 'trx', iconifyExtra: ['token/tron'] },
-  { name: 'bnb', si: ['binance'], cc: 'bnb' },
+  /* BNB: bundled bnb.svg (BNB Chain diamond from bnb-chain-binance-smart-chain-logo.svg). Binance_Logo.svg.png in build-sources is reference only (opaque black bg would whiten() to a solid square). */
+  {
+    name: 'bnb',
+    localSvg: 'icons/matrix/build-sources/bnb.svg',
+    si: ['binance'],
+    cc: 'bnb',
+  },
   {
     name: 'op',
     localSvg: 'icons/matrix/build-sources/op.svg',
@@ -134,6 +156,7 @@ const ICONS = [
     si: [],
     iconifyExtra: ['token/injective'],
   },
+  /* Hyper Foundation mark: clean build-sources/hyperliquid.svg (inline fill, no CSS classes or fill:none rect). */
   {
     name: 'hyperliquid',
     localSvg: 'icons/matrix/build-sources/hyperliquid.svg',
@@ -142,10 +165,10 @@ const ICONS = [
   { name: 'tia', si: ['celestia'], iconifyExtra: ['token/tia'] },
   { name: 'xmr', si: ['monero'], cc: 'xmr' },
   { name: 'zec', si: ['zcash'], cc: 'zec' },
-  /* Curve: bundled coin glyph (spothq paths, no blue disk); SI curve is a filled squircle at 20px */
+  /* Curve: bundled crv.png from repo-root Curve_logo.png (official mark). */
   {
     name: 'crv',
-    localSvg: 'icons/matrix/build-sources/crv.svg',
+    localRaster: 'icons/matrix/build-sources/crv.png',
     si: [],
     iconifyExtra: ['simple-icons/curve', 'simple-icons/curvefi'],
     cc: 'crv',
@@ -178,10 +201,22 @@ const ICONS = [
     iconifyExtra: ['arcticons/worldcoin'],
     cc: 'wld',
   },
-  { name: 'rndr', si: ['render'], cc: 'rndr' },
-  { name: 'tao', si: ['bittensor'], iconifyExtra: ['token/tao'] },
+  /* Render: bundled rndr.svg (center dot + C-arc + corner dot from render-token-logo.svg; red circle background omitted). */
+  {
+    name: 'rndr',
+    localSvg: 'icons/matrix/build-sources/rndr.svg',
+    si: ['render'],
+    cc: 'rndr',
+  },
+  {
+    name: 'tao',
+    localSvg: 'icons/matrix/build-sources/tao.svg',
+    si: ['bittensor'],
+    iconifyExtra: ['token/tao'],
+  },
   {
     name: 'kraken',
+    localSvg: 'icons/matrix/build-sources/kraken.svg',
     si: [],
     iconifyExtra: ['logos/kraken', 'token-branded/kraken'],
   },
@@ -196,8 +231,10 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/layerzero.svg',
     si: [],
   },
+  /* Wormhole: bundled wormhole.svg from wormhole-w-logo.svg (concentric rings; replaces arcticons stroke W). */
   {
     name: 'wormhole',
+    localSvg: 'icons/matrix/build-sources/wormhole.svg',
     si: [],
     iconifyExtra: ['arcticons/wormhole', 'arcticons/wormhole-2'],
   },
@@ -205,6 +242,35 @@ const ICONS = [
   {
     name: 'ondo',
     localPng: 'icons/matrix/build-sources/ondo.png',
+    si: [],
+  },
+  {
+    name: 'zrx',
+    localSvg: 'icons/matrix/build-sources/zrx.svg',
+    si: [],
+    iconifyExtra: ['token/zrx'],
+  },
+  {
+    name: 'base',
+    localSvg: 'icons/matrix/build-sources/base.svg',
+    si: [],
+    iconifyExtra: ['token/base', 'token-branded/base'],
+  },
+  {
+    name: 'ink',
+    localSvg: 'icons/matrix/build-sources/ink.svg',
+    si: [],
+    iconifyExtra: ['token/ink', 'token-branded/ink'],
+  },
+  {
+    name: 'arc',
+    localSvg: 'icons/matrix/build-sources/arc.svg',
+    si: [],
+    iconifyExtra: ['token/arc', 'token-branded/arc', 'arcticons/arc'],
+  },
+  {
+    name: 'm0',
+    localSvg: 'icons/matrix/build-sources/m0.svg',
     si: [],
   },
   { name: 'aapl', si: ['apple'] },
@@ -221,7 +287,7 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/citi.svg',
     si: [],
   },
-  { name: 'fidelity', si: [], iconifyExtra: ['arcticons/fidelity'] },
+  /* Fidelity removed: arcticons/fidelity is a plain capital F; no distinctive mark at matrix size. */
   /* Goldman Sachs: bundled Wikimedia Commons wordmark paths (see gs.svg); SI fallback is hairline at 32px */
   {
     name: 'gs',
@@ -229,8 +295,13 @@ const ICONS = [
     si: [],
     iconifyExtra: ['simple-icons/goldmansachs'],
   },
-  /* Coinbase: SI is a wordmark illegible at 20px; token/coinbase is the C arc mark */
-  { name: 'coinbase', si: [], iconifyExtra: ['token/coinbase', 'simple-icons/coinbase'] },
+  /* Coinbase: C path only in coinbase.svg (full coinbase-logo-icon plate whiten()s to solid square at 32px). */
+  {
+    name: 'coinbase',
+    localSvg: 'icons/matrix/build-sources/coinbase.svg',
+    si: [],
+    iconifyExtra: ['token/coinbase', 'simple-icons/coinbase'],
+  },
   { name: 'sq', si: ['square', 'block'] },
   /* Visa: Iconify simple-icons = compact V-style mark; logos/visa = full wordmark fallback */
   { name: 'visa', si: [], iconifyExtra: ['simple-icons/visa', 'logos/visa'] },
@@ -257,7 +328,11 @@ const ICONS = [
     iconifyExtra: ['simple-icons/amd', 'lineicons/amd'],
   },
   { name: 'nflx', si: ['netflix'] },
-  { name: 'bac', si: ['bankofamerica'] },
+  {
+    name: 'bac',
+    localSvg: 'icons/matrix/build-sources/bac.svg',
+    si: ['bankofamerica'],
+  },
   {
     name: 'wfc',
     localSvg: 'icons/matrix/build-sources/wfc.svg',
@@ -459,6 +534,8 @@ async function rasterizeWhite32(page, input) {
             { once: true },
           );
           img.src = u;
+        } else if (payload.kind === 'raster') {
+          img.src = `data:${payload.mime};base64,${payload.b64}`;
         } else {
           img.src = `data:image/png;base64,${payload.b64}`;
         }
@@ -484,12 +561,35 @@ async function main() {
     const outPath = path.join(OUT_DIR, `${row.name}.png`);
     let buf = null;
 
+    if (row.localRaster) {
+      const lr = path.join(process.cwd(), row.localRaster);
+      if (fs.existsSync(lr)) {
+        const ext = path.extname(lr).toLowerCase();
+        const mime =
+          ext === '.webp'
+            ? 'image/webp'
+            : ext === '.jpg' || ext === '.jpeg'
+              ? 'image/jpeg'
+              : 'image/png';
+        try {
+          buf = await rasterizeWhite32(page, {
+            kind: 'raster',
+            mime,
+            b64: fs.readFileSync(lr).toString('base64'),
+          });
+        } catch {
+          buf = null;
+        }
+      }
+    }
+
     if (row.localPng) {
       const lp = path.join(process.cwd(), row.localPng);
       if (fs.existsSync(lp)) {
         try {
           buf = await rasterizeWhite32(page, {
-            kind: 'png',
+            kind: 'raster',
+            mime: 'image/png',
             b64: fs.readFileSync(lp).toString('base64'),
           });
         } catch {
@@ -512,7 +612,8 @@ async function main() {
       if (png) {
         try {
           buf = await rasterizeWhite32(page, {
-            kind: 'png',
+            kind: 'raster',
+            mime: 'image/png',
             b64: png.toString('base64'),
           });
         } catch {

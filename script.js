@@ -656,19 +656,20 @@
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
+      /* Helium (hnt.png) omitted: stroke hex ring reads like Chainlink-style hex smears in the trail at ~20px. File remains in icons/matrix for builds. */
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/avax.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dot.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/atom.png', loaded: false, img: null, tinted: null },
+      /* Cosmos (atom.png) omitted: SI mark is a faint dot-hex lattice; at 32px + green tint it reads as a blank hex. File remains in icons/matrix for builds. */
       { src: './icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
-      /* Chainlink (link.png) omitted from hero pool: hollow hex still reads as a faceted smear with trail blur at column foot. */
+      /* Chainlink (link.png) omitted from hero pool: two-ring mark still smears with trail blur at column foot. */
       { src: './icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/doge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/near.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/apt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sui.png', loaded: false, img: null, tinted: null },
@@ -694,6 +695,11 @@
       { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/base.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ink.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/arc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
@@ -701,6 +707,7 @@
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/citi.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
@@ -787,6 +794,12 @@
     /* ₿ and Ξ only via this branch so they are not diluted by pools */
     var mtxLegacyMarkRate = 0.15;
 
+    /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
+    var mtxIconAssetVer = '95';
+    function mtxIconUrl(src){
+      return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
+    }
+
     iconDefs.forEach(function(def){
       var img = new Image();
       img.decoding = 'async';
@@ -798,7 +811,7 @@
         def.loaded = false;
         def.img = null;
       };
-      img.src = def.src;
+      img.src = mtxIconUrl(def.src);
     });
 
     var mtxRaf = null;
@@ -813,13 +826,26 @@
     var mtxPrevDrawTs = 0;
     var mtxColWidth = 22;
     var mtxFontSize = 13;
-    var mtxDollarFontSize = 17;
+    var mtxDollarFontSize = 20;
+    /* € £ ¥ etc.: larger than commodity/macro tickers so fiat reads in the trail. */
+    var mtxFiatNonUsdFontSize = 18;
     var mtxLineStep = 22;
     var mtxIconDrawSize = 24;
     var mtxIconDrawSizeMin = 17;
     var mtxIconDrawSizeMax = 32;
+    /* LayerZero + Uniswap: thin marks read small at trail scale; wider range than global min/max. */
+    var mtxIconLZUniDrawSizeMin = 26;
+    var mtxIconLZUniDrawSizeMax = 48;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
+
+    /* ── Dollar magnet: canvas $ particles follow cursor, pile on flagship CTA, bounce on approach (desktop only) ── */
+    var mtxDollarMag = [];
+    var mtxDollarMagMax = 30;
+    var mtxDollarMagBtnCache = null;
+    var mtxDollarMagBtnTick = 0;
+    var mtxDollarMagPrevMx = null;
+    var mtxDollarMagPrevMy = null;
 
     function mtxTrailFill(){
       mtxTrailFillFrame++;
@@ -1036,6 +1062,10 @@
         var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = Math.min(ds + 8, 42);
+        } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
+          ds = Math.min(ds + 7, 41);
+        } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.png') >= 0){
+          ds = Math.min(ds + 6, 38);
         }
         item = {
           type: 'icon',
@@ -1055,6 +1085,172 @@
       } else {
         mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
       }
+    }
+
+    function mtxDollarMagBtnRect(){
+      mtxDollarMagBtnTick++;
+      if(mtxDollarMagBtnCache && mtxDollarMagBtnTick % 90 !== 0) return mtxDollarMagBtnCache;
+      if(!heroFlagshipMtx) return null;
+      var b = heroFlagshipMtx.getBoundingClientRect();
+      var c = matrixContainer.getBoundingClientRect();
+      mtxDollarMagBtnCache = {
+        x: b.left - c.left, y: b.top - c.top, w: b.width, h: b.height,
+        cx: b.left - c.left + b.width / 2, top: b.top - c.top
+      };
+      return mtxDollarMagBtnCache;
+    }
+
+    function mtxDollarMagSpawn(w, h){
+      var side = Math.floor(Math.random() * 4);
+      var x, y;
+      if(side === 0){ x = Math.random() * w; y = -14; }
+      else if(side === 1){ x = w + 14; y = Math.random() * h; }
+      else if(side === 2){ x = Math.random() * w; y = h + 14; }
+      else { x = -14; y = Math.random() * h; }
+      return { x: x, y: y, vx: 0, vy: 0, alpha: 0.35 + Math.random() * 0.3, settled: false, sz: 17 + Math.random() * 5 };
+    }
+
+    function mtxDollarMagUpdate(w, h, dtMul){
+      var br = mtxDollarMagBtnRect();
+      if(!br) return;
+      if(mtxDollarMag.length < mtxDollarMagMax && Math.random() < 0.06 * dtMul){
+        mtxDollarMag.push(mtxDollarMagSpawn(w, h));
+      }
+      var hasCursor = mtxWarpX != null && mtxWarpY != null;
+      var mx = hasCursor ? mtxWarpX : br.cx;
+      var my = hasCursor ? mtxWarpY : br.top;
+      var dmx = mtxDollarMagPrevMx != null ? mx - mtxDollarMagPrevMx : 0;
+      var dmy = mtxDollarMagPrevMy != null ? my - mtxDollarMagPrevMy : 0;
+      mtxDollarMagPrevMx = mx;
+      mtxDollarMagPrevMy = my;
+      var mbdx = mx - br.cx, mbdy = my - br.top;
+      var mbDist = Math.sqrt(mbdx * mbdx + mbdy * mbdy);
+      var mSpd = Math.sqrt(dmx * dmx + dmy * dmy);
+      var towardBtn = 0;
+      if(mSpd > 0.5 && mbDist > 5){
+        towardBtn = (-mbdx * dmx + -mbdy * dmy) / (mbDist * mSpd);
+      }
+      var bounceF = 0;
+      if(hasCursor && mbDist < 180 && towardBtn > 0.1){
+        bounceF = (1 - mbDist / 180) * Math.min(mSpd, 14) * 0.8;
+      }
+      var btnCeil = br.top - 14;
+      var btnFloor = br.top + br.h;
+      for(var i = mtxDollarMag.length - 1; i >= 0; i--){
+        var p = mtxDollarMag[i];
+        if(!p.settled){
+          var dx = mx - p.x, dy = my - p.y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if(d > 1){
+            p.vx += (dx / d) * 0.2 * dtMul;
+            p.vy += (dy / d) * 0.2 * dtMul;
+          }
+          /* Repel free-flying particles that get too close to cursor near button. */
+          if(hasCursor && d < 50 && d > 1 && mbDist < 200){
+            var repF = (1 - d / 50) * 1.2;
+            p.vx -= (dx / d) * repF;
+            p.vy -= (dy / d) * repF;
+          }
+          var inBtnX = p.x > br.x - 20 && p.x < br.x + br.w + 20;
+          var nearTop = p.y > btnCeil - 18 && p.y < btnCeil + 6;
+          var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if(inBtnX && nearTop && spd < 1.8 && (!hasCursor || mbDist < 200)){
+            p.settled = true;
+            p.vx *= 0.3;
+            p.vy *= 0.3;
+          }
+          p.vx *= 0.965;
+          p.vy *= 0.965;
+        } else {
+          var overBtn = p.x > br.x - 6 && p.x < br.x + br.w + 6;
+          if(overBtn){
+            p.vy += 0.025 * dtMul;
+            if(p.y > btnCeil){ p.y = btnCeil; p.vy = 0; }
+          } else {
+            p.settled = false;
+            p.vy += 0.15 * dtMul;
+          }
+          if(hasCursor){
+            var rx = p.x - mx, ry = p.y - my;
+            var rd = Math.sqrt(rx * rx + ry * ry);
+            if(rd < 1) rd = 1;
+            /* Proximity repulsion: always active when cursor is near a settled particle. */
+            if(rd < 90){
+              var proxF = (1 - rd / 90) * 1.6;
+              var latBiasP = (p.x < br.cx) ? -1 : 1;
+              p.vx += (rx / rd) * proxF * 2.0 + latBiasP * proxF * 1.0;
+              p.vy += (ry / rd) * proxF * 0.8 - proxF * 0.6;
+              p.settled = false;
+            }
+            /* Velocity-based bounce: triggers when mouse moves toward the button. */
+            if(bounceF > 0 && rd < 200){
+              var f = bounceF * (1 - rd / 200);
+              var lateralBias = (p.x < br.cx) ? -1 : 1;
+              p.vx += (rx / rd) * f * 4.2 + lateralBias * f * 2.4;
+              p.vy += (ry / rd) * f * 1.2 - f * 1.0;
+              p.settled = false;
+            }
+          }
+          p.vx *= 0.94;
+          p.vy *= 0.94;
+        }
+        /* Hard boundary: deflect any particle that enters the button rect. */
+        var insideX = p.x > br.x - 6 && p.x < br.x + br.w + 6;
+        var insideY = p.y > btnCeil && p.y < btnFloor;
+        if(insideX && insideY){
+          p.y = btnCeil;
+          if(p.vy > 0) p.vy = -p.vy * 0.5;
+          var pushDir = (p.x < br.cx) ? -1 : 1;
+          p.vx += pushDir * 1.5;
+          p.settled = false;
+        }
+        var sp = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if(sp > 20){ p.vx = (p.vx / sp) * 20; p.vy = (p.vy / sp) * 20; }
+        p.x += p.vx * dtMul;
+        p.y += p.vy * dtMul;
+        if(p.x < -60 || p.x > w + 60 || p.y < -60 || p.y > h + 60){
+          mtxDollarMag.splice(i, 1);
+        }
+      }
+    }
+
+    function mtxDollarMagBurst(){
+      var br = mtxDollarMagBtnRect();
+      if(!br) return;
+      var count = 18 + Math.floor(Math.random() * 8);
+      for(var k = 0; k < count; k++){
+        var angle = (Math.PI * 2 * k / count) + (Math.random() - 0.5) * 0.4;
+        var speed = 4 + Math.random() * 5;
+        var p = {
+          x: br.cx + (Math.random() - 0.5) * br.w * 0.6,
+          y: br.top + (Math.random() - 0.5) * 8,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2,
+          alpha: 0.5 + Math.random() * 0.35,
+          settled: false,
+          sz: 18 + Math.random() * 7
+        };
+        mtxDollarMag.push(p);
+      }
+    }
+
+    function mtxDollarMagDraw(ctx, fontFamily){
+      if(!mtxDollarMag.length) return;
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 7;
+      ctx.shadowColor = 'rgba(167, 243, 208, 0.45)';
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      for(var i = 0; i < mtxDollarMag.length; i++){
+        var p = mtxDollarMag[i];
+        ctx.font = '700 ' + Math.round(p.sz) + 'px ' + fontFamily;
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(0.99, p.alpha + 0.1) + ')';
+        ctx.fillText('$', Math.round(p.x), Math.round(p.y));
+      }
+      ctx.restore();
     }
 
     function mtxDraw(ts){
@@ -1103,6 +1299,11 @@
 
       var n = mtxDrops.length;
       var i;
+      /* Two-pass rendering: pass 1 draws text glyphs and icon mattes (panel-base rectangles that
+         prevent trail accumulation through transparent icon pixels). Pass 2 draws icon sprites on
+         top of every matte. This prevents column i+1's matte from overwriting column i's icon
+         when icons are wider than mtxColWidth. */
+      var iconQueue = [];
       for(i = 0; i < n; i++){
         var x0 = i * mtxColWidth + 1;
         var y0 = mtxDrops[i] * mtxLineStep;
@@ -1119,6 +1320,8 @@
           mtxCtx.textAlign = 'left';
           if(item.value === '$'){
             mtxCtx.font = '700 ' + mtxDollarFontSize + 'px ' + mtxFontFamily;
+          } else if(mtxFiatNonUsd[item.value]){
+            mtxCtx.font = '700 ' + mtxFiatNonUsdFontSize + 'px ' + mtxFontFamily;
           } else {
             mtxCtx.font = '700 ' + mtxFontSize + 'px ' + mtxFontFamily;
           }
@@ -1141,7 +1344,16 @@
           mtxCtx.shadowOffsetY = 0;
           var tx = Math.round(x);
           var ty = Math.round(y);
-          var twEst = item.value === '$' ? 14 : (item.value.length > 2 ? mtxColWidth : 13);
+          var twEst;
+          if(item.value === '$'){
+            twEst = 17;
+          } else if(mtxFiatNonUsd[item.value]){
+            twEst = 17;
+          } else if(item.value.length > 2){
+            twEst = mtxColWidth;
+          } else {
+            twEst = 13;
+          }
           /* Clamp X only: warp can pull columns left; clamping Y to 0 stacked every glyph on one row at the top. */
           tx = Math.max(0, Math.min(tx, Math.max(0, w - twEst)));
           mtxCtx.fillText(item.value, tx, ty);
@@ -1151,52 +1363,50 @@
           if(tint){
             var iw = item.drawSize != null ? item.drawSize : mtxIconDrawSize;
             var ih = iw;
-            /* Hollow hex icons: integer draw size avoids subpixel drawImage scale reintroducing fringe in the ring opening. */
-            if(item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src)){
-              iw = Math.max(1, Math.round(iw));
-              ih = iw;
-            }
+            /* Integer draw size for all icons: avoids subpixel drawImage scaling artifacts. */
+            iw = Math.max(1, Math.round(iw));
+            ih = iw;
             var ix = Math.round(x);
             var iy = Math.round(y);
-            /* Warp can pull the head past x=0; container overflow clips the left edge of USDC-style coins. */
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
-            /* Do not clamp iy: pointer warp pulls many columns upward; Math.max(0, iy) pinned every head to y=0. */
-            mtxCtx.save();
-            /* Trail is a full-canvas fade without clear; transparent icon pixels would otherwise show accumulated layers and read as a solid filled shape (hollow hex, ring coins). Matte the bbox to the panel base, then draw the sprite. */
+            /* Pass 1: matte only. Full icon bbox so trail clears completely under the sprite. */
             mtxCtx.globalAlpha = 1;
             mtxCtx.fillStyle = mtxPanelMatteRgb();
             mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
-            mtxCtx.globalAlpha = op;
-            /* Hollow hex rings (link, Helium stroke hex): shadow + smoothing bleed into the hole or smear strokes. */
-            var mtxHollowHexIcon = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
-            if(mtxHollowHexIcon){
-              mtxCtx.shadowBlur = 0;
-            } else {
-              /* Light edge only: heavy blur reads as mush at 20px. */
-              mtxCtx.shadowBlur = 2;
-              mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.22)';
-            }
-            mtxCtx.shadowOffsetX = 0;
-            mtxCtx.shadowOffsetY = 0;
-            mtxCtx.imageSmoothingEnabled = !mtxHollowHexIcon;
-            if('imageSmoothingQuality' in mtxCtx && !mtxHollowHexIcon){
-              mtxCtx.imageSmoothingQuality = 'high';
-            }
-            mtxCtx.drawImage(tint, ix, iy, iw, ih);
-            mtxCtx.restore();
+            /* Queue the sprite draw for pass 2. */
+            var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
+            iconQueue.push({ tint: tint, ix: ix, iy: iy, iw: iw, ih: ih, op: op, hollow: isHollowHex });
           }
         }
 
         if(y0 > h){
           mtxDrops[i] = Math.random() * -5;
           mtxAssignColVisual(i);
-          /* mtxColStep is now set inside mtxAssignColVisual for icons */
           if(mtxColItem[i].type !== 'icon'){
             mtxColStep[i] = 0.092 + Math.random() * 0.024;
           }
         }
         mtxDrops[i] += mtxColStep[i] * dtMul;
       }
+      /* Pass 2: draw all icon sprites on top of every matte. */
+      for(i = 0; i < iconQueue.length; i++){
+        var q = iconQueue[i];
+        mtxCtx.save();
+        mtxCtx.globalAlpha = q.op;
+        mtxCtx.shadowBlur = 0;
+        mtxCtx.shadowColor = 'transparent';
+        mtxCtx.shadowOffsetX = 0;
+        mtxCtx.shadowOffsetY = 0;
+        mtxCtx.imageSmoothingEnabled = !q.hollow;
+        if('imageSmoothingQuality' in mtxCtx && !q.hollow){
+          mtxCtx.imageSmoothingQuality = 'high';
+        }
+        mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
+        mtxCtx.restore();
+      }
+      /* Pass 3: dollar magnet particles (desktop only). */
+      mtxDollarMagUpdate(w, h, dtMul);
+      mtxDollarMagDraw(mtxCtx, mtxFontFamily);
       mtxRaf = requestAnimationFrame(mtxDraw);
     }
 
@@ -1293,6 +1503,9 @@
       mtxClearFlagshipLpTimer();
       mtxFlagshipLpStripClasses();
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
+      mtxDollarMag.length = 0;
+      mtxDollarMagPrevMx = mtxDollarMagPrevMy = null;
+      mtxDollarMagBtnCache = null;
       if(mtxMobileMatrixAlways){
         return;
       }
@@ -1484,6 +1697,9 @@
             e.stopPropagation();
           }
         }, true);
+        act.addEventListener('click', function(){
+          mtxDollarMagBurst();
+        });
         act.addEventListener('pointerup', function(e){
           if(mtxMobileMatrixAlways){
             return;

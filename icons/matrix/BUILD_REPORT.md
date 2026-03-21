@@ -1,14 +1,16 @@
 # Matrix Icon Build Report
 
-**Date:** 2026-03-20T20:05:05.617407  
-**Total:** 98  
-**Sourced:** 0  
+**Date:** 2026-03-20T23:21:50.416421  
+**Total:** 100  
+**Sourced:** 2  
 **Missing:** 98  
 
-## Sourced (0)
+## Sourced (2)
 
 | File | Source | Size |
 |------|--------|------|
+| `ondo.png` | bundled PNG (build-sources/ondo.png) | 1159B |
+| `zrx.png` | bundled PNG (build-sources/zrx.png) | 687B |
 
 ## Missing (98)
 
@@ -28,7 +30,7 @@
 | `bakkt.png` | local:build-sources/bakkt.svg, SI:bakkt |
 | `blk.png` | local:build-sources/blk.svg, SI:blackrock |
 | `block.png` | SI:square, SI:block |
-| `bnb.png` | SI:binance, CC-SVG:bnb, CC-PNG:BNB |
+| `bnb.png` | local:build-sources/bnb.svg, SI:binance, CC:bnb |
 | `btc.png` | SI:bitcoin, CC-SVG:btc, CC-PNG:BTC |
 | `cantor.png` | local:build-sources/cantor.svg, SI:cantor |
 | `cashapp.png` | local:build-sources/cashapp.svg, SI:cashapp |
@@ -50,7 +52,7 @@
 | `googl.png` | SI:google, SI:alphabet |
 | `gs.png` | local:build-sources/gs.svg, SI:goldmansachs |
 | `hbar.png` | local:build-sources/hbar.svg, SI:hedera, CC-SVG:hbar, CC-PNG:HBAR |
-| `hnt.png` | local:build-sources/hnt.svg, SI:helium, CC-SVG:hnt, CC-PNG:HNT |
+| `hnt.png` | local:build-sources/helium-hnt-logo.svg, SI:helium, CC:hnt |
 | `hood.png` | SI:robinhood |
 | `hyperliquid.png` | local:build-sources/hyperliquid.svg, SI:hyperliquid |
 | `ibm.png` | SI:ibm |
@@ -63,7 +65,7 @@
 | `kraken.png` | SI:kraken, Iconify:logos/kraken, Iconify:token-branded/kraken |
 | `layerzero.png` | local:build-sources/layerzero.svg, SI:layerzero |
 | `ldo.png` | SI:lido |
-| `link.png` | SI:chainlink, CC-SVG:link, CC-PNG:LINK |
+| `link.png` | local:build-sources/link.svg, SI:chainlink, CC-SVG:link, CC-PNG:LINK |
 | `ltc.png` | local:build-sources/ltc.svg, SI:litecoin, CC-SVG:ltc, CC-PNG:LTC |
 | `ma.png` | SI:mastercard |
 | `meta.png` | SI:meta |
@@ -81,7 +83,7 @@
 | `orcl.png` | SI:oracle |
 | `pypl.png` | Iconify:logos/paypal, Iconify:simple-icons/paypal, SI:paypal |
 | `revolut.png` | SI:revolut |
-| `rndr.png` | SI:render, CC-SVG:rndr, CC-PNG:RNDR |
+| `rndr.png` | local:build-sources/rndr.svg, SI:render, CC:rndr |
 | `schw.png` | SI:charlesschwab, SI:schwab |
 | `securitize.png` | local:build-sources/securitize.svg, SI:securitize |
 | `sei.png` | SI:sei |
@@ -129,7 +131,7 @@
 - **bakkt** → Search brand media kit for logomark SVG
 - **blk** → Search brand media kit for logomark SVG
 - **block** → Search brand media kit for logomark SVG
-- **bnb** → Search brand media kit for logomark SVG
+- **bnb** → Bundled **`build-sources/bnb.svg`** (BNB Chain); **`Binance_Logo.svg.png`** in **`build-sources`** is reference raster
 - **btc** → Search brand media kit for logomark SVG
 - **cantor** → Search brand media kit for logomark SVG
 - **cashapp** → Search brand media kit for logomark SVG
@@ -151,7 +153,7 @@
 - **googl** → Search brand media kit for logomark SVG
 - **gs** → https://www.goldmansachs.com/media-relations
 - **hbar** → Search brand media kit for logomark SVG
-- **hnt** → Search brand media kit for logomark SVG
+- **hnt** → Bundled **`build-sources/helium-hnt-logo.svg`** (repo root copy **`helium-hnt-logo.svg`**)
 - **hood** → Search brand media kit for logomark SVG
 - **hyperliquid** → Search brand media kit for logomark SVG
 - **ibm** → Search brand media kit for logomark SVG
