@@ -4,9 +4,16 @@
 import os
 import re
 import struct
+import subprocess
+import sys
 import time
 from datetime import datetime
 from io import BytesIO
+
+# Ensure Homebrew cairo is discoverable by cairocffi (macOS arm64).
+_brew_lib = "/opt/homebrew/lib"
+if os.path.isdir(_brew_lib):
+    os.environ.setdefault("DYLD_LIBRARY_PATH", _brew_lib)
 
 import requests
 from PIL import Image
@@ -42,18 +49,18 @@ CRYPTO = {
     "sui":  ("sui",         [],                   None),
     "inj":  ("injective",   [],                   None),
     "hyperliquid": ("hyperliquid", [],           None),
-    "tia":  ("celestia",    [],                   None),
+    "tia":  ("celestia",    [],                   None),  # bundled build-sources/tia.png in npm manifest
     "xmr":  ("monero",      [],                   "xmr"),
     "zec":  ("zcash",       [],                   "zec"),
     "crv":  ("curvedao",    ["curvefi", "curve"], None),
-    "ldo":  ("lido",        [],                   None),
+    "ldo":  ("lido",        [],                   None),  # bundled build-sources/ldo.png in npm manifest
     "stx":  ("stacks",      [],                   "stx"),
     "mkr":  ("maker",       [],                   "mkr"),
     "xtz":  ("tezos",       [],                   "xtz"),
     "algo": ("algorand",    [],                   "algo"),
     "hbar": ("hedera",      [],                   "hbar"),
     "ton":  ("ton",         [],                   None),
-    "sei":  ("sei",         [],                   None),
+    "sei":  ("sei",         [],                   None),  # bundled build-sources/sei.png in npm manifest
     "wld":  ("worldcoin",   [],                   None),
     "rndr": ("render",      [],                   "rndr"),
     "tao":  ("bittensor",   [],                   None),
@@ -66,13 +73,14 @@ CRYPTO = {
     "base": ("base", [],                         None),
     "ink": ("ink", [],                           None),
     "arc": ("arc", [],                           None),
+    "circle": ("circle", [],                     None),  # bundled Circle-logo.svg -> build-sources/circle.svg
     "m0": ("m0", [],                            None),
 }
 
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
 ICONIFY_CRYPTO_PATHS = {
     "kraken": ["logos/kraken", "token-branded/kraken"],
-    # logos/metamask is a 512x96 wordmark; 32px raster is vertical smears. Fox mark first (matches build-matrix-icons.mjs).
+    # Bundled build-sources/metamask.png in npm manifest; Iconify paths are fallback (wordmark is wide at 32px).
     "metamask": ["token-branded/metamask", "logos/metamask"],
     "base": ["token/base", "token-branded/base"],
     "ink": ["token/ink", "token-branded/ink"],
@@ -89,10 +97,10 @@ ICONIFY_CRYPTO_PATHS = {
 # bnb: bundled build-sources/bnb.svg (BNB Chain mark from bnb-chain-binance-smart-chain-logo.svg); Binance_Logo.svg.png in build-sources is reference only.
 # ondo: bundled build-sources/ondo.png (CoinGecko ONDO token image; https://www.coingecko.com/en/coins/ondo-finance ; no SI slug).
 # zrx: bundled build-sources/zrx.svg (Iconify token/zrx).
-# mstr: bundled mstr.svg (Strategy 2025 B mark; SI microstrategy is legacy vertical bars).
+# mstr: bundled strategy-logo-2025.png from Strategy_logo_(2025).svg.png (SI microstrategy is legacy vertical bars).
 # rndr: bundled build-sources/rndr.svg (center dot + C-arc + corner dot from render-token-logo.svg; red circle background omitted).
 # arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
-# avax: bundled avax.svg (monospace AVAX; Iconify token/avax facets read as a broken hex in the trail).
+# avax: bundled WebP avalanche-avax-fill-3ll8qiqg376l2e5i4vv6ti.webp in build-sources (replaces AVAX text SVG).
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
 # coinbase: bundled build-sources/coinbase.svg (Iconify token/coinbase C arc).
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
@@ -112,8 +120,9 @@ ICONIFY_CRYPTO_PATHS = {
 # crv: bundled build-sources/crv.png (from repo-root Curve_logo.png; Phase 0b raster; old crv.svg removed).
 # tao: bundled tao.svg (Iconify token/tao path mark; no TAO text ticker).
 # bac: bundled bac.svg (BoA monospace label; SI bankofamerica mark is a tiny flag blob at 32px).
-# m0: bundled m0.svg (M0 monospace label; no Iconify slug for M0 Labs in common matrix sets).
-# base / ink / arc: bundled base.svg, ink.svg, arc.svg (monospace tickers; Iconify token/base is a plain square silhouette).
+# m0: bundled build-sources/m0.png in npm manifest (no Iconify slug for M0 Labs in common matrix sets).
+# base / ink: bundled base.svg, ink.svg (BASE/INK tickers; Iconify token/base is a plain square silhouette).
+# arc: bundled arc.svg from Arc-logo.svg (not monospace ARC text). circle: Circle-logo.svg -> build-sources/circle.svg.
 ICONIFY_CRYPTO_PREF = {
     "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
     "uni": ["token/uniswap", "token-branded/uniswap"],
@@ -126,7 +135,7 @@ ICONIFY_CRYPTO_PREF = {
 }
 
 # Crypto names that must use symbol only (no bundled ticker-text SVG).
-CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED = {"arb", "sei", "aave", "near", "sui", "dot", "doge"}
+CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED = {"arb", "sei", "near", "sui", "dot", "doge"}
 
 # Prefer these Iconify SVGs before Simple Icons (matrix readability / correct mark).
 ICONIFY_COMPANY_PATHS = {
@@ -139,6 +148,7 @@ ICONIFY_COMPANY_PATHS = {
     "wmt": ["tabler/brand-walmart", "arcticons/walmart"],
 }
 
+# msft/amzn/orcl/dis/ibm: Node build uses prefersIconify + logos/* before SI (see scripts/build-matrix-icons.mjs).
 COMPANIES = {
     "aapl": ("apple",            []),
     "msft": ("microsoft",        []),
@@ -169,9 +179,9 @@ COMPANIES = {
     "cashapp": ("cashapp",       []),
     "intc": ("intel",            []),
     "csco": ("cisco",            []),
-    "orcl": ("oracle",           []),
+    "orcl": ("oracle",           []),  # bundled build-sources/orcl.svg (oracle.svg) in npm manifest
     "dis":  ("waltdisney",       ["disney", "waltdisneyworld"]),
-    "mstr": ("microstrategy",    ["strategy"]),  # bundled Strategy B mark build-sources/mstr.svg
+    "mstr": ("microstrategy",    ["strategy"]),  # bundled strategy-logo-2025.png (Strategy 2025 wordmark raster)
     "hood": ("robinhood",        []),
     "ibm":  ("ibm",              []),
     "nasdaq": ("nasdaq",         []),
@@ -183,14 +193,17 @@ COMPANIES = {
     "block": ("square",          ["block"]),  # Block Inc: SI slug is square
     "blk":  ("blackrock",        []),         # bundled BR monogram build-sources/blk.svg (SI has no slug)
     "securitize": ("securitize", []),         # bundled build-sources/securitize.svg
-    "bakkt": ("bakkt",           []),         # bundled build-sources/bakkt.svg
-    "fed":  ("federalreserve",   []),         # bundled build-sources/fed.svg
-    "frbny": ("federalreservebankofnewyork", []),  # bundled build-sources/frbny.svg
+    "bakkt": ("bakkt",           []),         # bundled build-sources/bakkt.svg (repo BKKT.svg)
+    # "fed" removed: seal reads as ambiguous blob at matrix size.
+    # "fed":  ("federalreserve",   []),
+    # "frbny" removed: building pattern reads as ambiguous "F" at matrix size.
+    # "frbny": ("federalreservebankofnewyork", []),
+    "fidelity": ("fidelity", []),  # bundled build-sources/fidelity.svg (starburst mark)
     "cantor": ("cantor", []),  # bundled build-sources/cantor.svg (no SI slug)
     "clearstreet": ("clearstreet", []),  # bundled build-sources/clearstreet.svg (no SI slug)
     "wu": ("westernunion", []),
     "moneygram": ("moneygram", []),
-    "wise": ("wise", []),  # bundled build-sources/wise.svg (Lineicons mark)
+    "wise": ("wise", []),  # bundled build-sources/wise.svg (Lineicons path; MIT)
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────
@@ -199,16 +212,19 @@ def svg_to_white_png(svg_bytes: bytes, size: int = 32) -> bytes | None:
     """Convert SVG to white-on-transparent PNG."""
     svg_text = svg_bytes.decode("utf-8")
 
-    # Force all fills to white
-    svg_text = re.sub(r'fill="[^"]*"', 'fill="#FFFFFF"', svg_text)
-    # Add fill="white" to <svg> if no fill on paths
-    if 'fill=' not in svg_text.split('</svg>')[0].split('<path')[0]:
-        svg_text = svg_text.replace('<svg ', '<svg fill="#FFFFFF" ', 1)
-    # Also handle style-based fills
+    # Force all fills to white, but preserve fill="none" (transparent areas).
+    svg_text = re.sub(r'fill="(?!none)[^"]*"', 'fill="#FFFFFF"', svg_text)
+    # Handle currentColor (used by some Iconify SVGs)
+    svg_text = svg_text.replace('currentColor', '#FFFFFF')
+    # Handle style-based fills (inline CSS)
     svg_text = re.sub(r'fill:\s*#[0-9a-fA-F]{3,8}', 'fill:#FFFFFF', svg_text)
     svg_text = re.sub(r'fill:\s*rgb[^;)]+[;)]', 'fill:#FFFFFF;', svg_text)
-    # Handle currentColor
-    svg_text = svg_text.replace('currentColor', '#FFFFFF')
+    # If no fill attribute exists on any element, set a default on <svg> so
+    # paths that rely on the SVG default (black) render white instead.
+    # But only when there are NO existing fill attributes at all — otherwise
+    # a root fill="#FFFFFF" floods the entire canvas as a white rectangle.
+    if 'fill=' not in svg_text:
+        svg_text = svg_text.replace('<svg ', '<svg fill="#FFFFFF" ', 1)
 
     try:
         import cairosvg
@@ -222,7 +238,6 @@ def svg_to_white_png(svg_bytes: bytes, size: int = 32) -> bytes | None:
         pass
 
     # Fallback: try rsvg-convert via subprocess
-    import subprocess
     import tempfile
     with tempfile.NamedTemporaryFile(suffix=".svg", delete=False, mode="w") as f:
         f.write(svg_text)

@@ -21,7 +21,7 @@ These are intentional fallbacks where SI or Iconify art failed matrix constraint
 | File | Content |
 |------|---------|
 | **`build-sources/blk.svg`** | **BR** monogram |
-| **`build-sources/bakkt.svg`** | **B** |
+| **`build-sources/bakkt.svg`** | Bakkt mark (matches repo `BKKT.svg`) |
 | **`build-sources/securitize.svg`** | **S** |
 | **`build-sources/citi.svg`** | **CITI** |
 | **`build-sources/gs.svg`** | Goldman Sachs wordmark paths from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Goldman_Sachs.svg) (blue plate removed) |
