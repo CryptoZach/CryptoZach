@@ -4,6 +4,7 @@
  * Order per asset: jsDelivr simple-icons SVG, Iconify simple-icons SVG (legacy slugs),
  * optional Iconify paths (token/*, etc.), then spothq cryptocurrency-icons PNG.
  * localSvg: repo-root-relative path to an SVG file when no CDN slug exists.
+ * localPng: repo-root-relative path to a PNG (rasterized to 32px white silhouette; try before SVG).
  *
  * Run: npm run build:matrix-icons
  * Needs network. Uses Playwright Chromium to rasterize (no system Cairo).
@@ -83,11 +84,11 @@ const ICONS = [
     iconifyExtra: ['simple-icons/litecoin'],
     cc: 'ltc',
   },
-  /* Chainlink: bundled nested hex (flat-top rotation, hollow center). Keep localSvg so Python and Node agree; see cryptozach-matrix-icons skill. */
+  /* Chainlink: bundled hollow hex (SI path + evenodd); raw SI raster reads as two filled facets, not a clear ring at 32px. */
   {
     name: 'link',
     localSvg: 'icons/matrix/build-sources/link.svg',
-    si: [],
+    si: ['chainlink'],
     iconifyExtra: ['simple-icons/chainlink'],
     cc: 'link',
   },
@@ -200,6 +201,12 @@ const ICONS = [
     si: [],
     iconifyExtra: ['arcticons/wormhole', 'arcticons/wormhole-2'],
   },
+  /* Ondo: no Simple Icons slug; CoinGecko token image (see build-sources/ondo.png comment in build_matrix_icons.py). */
+  {
+    name: 'ondo',
+    localPng: 'icons/matrix/build-sources/ondo.png',
+    si: [],
+  },
   { name: 'aapl', si: ['apple'] },
   { name: 'msft', si: ['microsoft'] },
   /* JPM: SI has no jpmorgan slug; Chase octagon is the bundled JPMC mark (Simple Icons chase) */
@@ -215,6 +222,7 @@ const ICONS = [
     si: [],
   },
   { name: 'fidelity', si: [], iconifyExtra: ['arcticons/fidelity'] },
+  /* Goldman Sachs: bundled Wikimedia Commons wordmark paths (see gs.svg); SI fallback is hairline at 32px */
   {
     name: 'gs',
     localSvg: 'icons/matrix/build-sources/gs.svg',
@@ -317,6 +325,25 @@ const ICONS = [
   {
     name: 'frbny',
     localSvg: 'icons/matrix/build-sources/frbny.svg',
+  },
+  {
+    name: 'cantor',
+    localSvg: 'icons/matrix/build-sources/cantor.svg',
+    si: [],
+  },
+  {
+    name: 'clearstreet',
+    localSvg: 'icons/matrix/build-sources/clearstreet.svg',
+    si: [],
+  },
+  { name: 'wu', si: ['westernunion'] },
+  { name: 'moneygram', si: ['moneygram'] },
+  /* Bundled Lineicons path reads bolder at 32px than some SI strokes */
+  {
+    name: 'wise',
+    localSvg: 'icons/matrix/build-sources/wise.svg',
+    si: ['wise'],
+    iconifyExtra: ['lineicons/wise'],
   },
 ];
 
@@ -457,7 +484,21 @@ async function main() {
     const outPath = path.join(OUT_DIR, `${row.name}.png`);
     let buf = null;
 
-    const svg = await fetchSvgForRow(row);
+    if (row.localPng) {
+      const lp = path.join(process.cwd(), row.localPng);
+      if (fs.existsSync(lp)) {
+        try {
+          buf = await rasterizeWhite32(page, {
+            kind: 'png',
+            b64: fs.readFileSync(lp).toString('base64'),
+          });
+        } catch {
+          buf = null;
+        }
+      }
+    }
+
+    const svg = buf ? null : await fetchSvgForRow(row);
     if (svg) {
       try {
         buf = await rasterizeWhite32(page, { kind: 'svg', svg });

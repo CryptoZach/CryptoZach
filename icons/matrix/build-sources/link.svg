@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
-  <!-- SI chainlink nested hex, rotated 30deg so the top reads as a flat edge (common token orientation). Unrotated SI art is pointy-top and reads oddly at 20px. Scale inset keeps rotation inside the viewBox. -->
-  <g transform="translate(12 12) scale(0.92) translate(-12 -12)">
-    <g transform="rotate(30 12 12)">
-      <path fill="#FFFFFF" fill-rule="nonzero" d="M12 0L9.798 1.266l-6 3.468L1.596 6v12l2.202 1.266l6.055 3.468L12.055 24l2.202-1.266l5.945-3.468L22.404 18V6l-2.202-1.266l-6-3.468zM6 15.468V8.532l6-3.468l6 3.468v6.936l-6 3.468z"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+  <!-- Geometry from Simple Icons chainlink (CC0). SI uses one path with two subpaths; default winding fills both as separate plates so 32px reads as a hex full of stray lines. evenodd + same subpaths yields one hollow ring. rotate(30) for flat-top token read. -->
+  <g transform="rotate(30 12 12)">
+    <path fill="#FFFFFF" fill-rule="evenodd" d="M12 0L9.798 1.266l-6 3.468L1.596 6v12l2.202 1.266 6.055 3.468L12.055 24l2.202-1.266 5.945-3.468L22.404 18V6l-2.202-1.266-6-3.468z M6 15.468V8.532l6-3.468 6 3.468v6.936l-6 3.468z"/>
   </g>
 </svg>

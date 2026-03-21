@@ -61,6 +61,7 @@ CRYPTO = {
     "metamask": ("metamask", [],                   None),
     "layerzero": ("layerzero", [],                 None),
     "wormhole": ("wormhole", [],                   None),
+    "ondo": ("ondo", [],                           None),
 }
 
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
@@ -73,16 +74,17 @@ ICONIFY_CRYPTO_PATHS = {
 # Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
 # USDC / DAI: bundled build-sources/usdc.svg and dai.svg (glyph + ring, no filled brand disk) in Phase 0 first; then these.
 # cashapp: bundled cashapp.svg (squircle ring + $ subpath; full SI path is muddy at 32px).
-# link: bundled link.svg (SI nested hex rotated 30deg flat-top, hollow center). Path only so Phase 0 rasterizes without fonts.
+# link: bundled build-sources/link.svg (SI outer/inner paths, fill-rule evenodd = hollow ring; raw SI is muddy at 32px).
 # hbar: bundled hbar.svg (SI Hedera is a filled circle + H that whiten() reads as a blank disk at 20px).
-# hyperliquid: bundled hyperliquid.svg (official symbol from project brand kit; no SI slug in v16).
+# hyperliquid: bundled hyperliquid.svg (brand kit path; large viewBox + centered scale so bezier overshoot is not clipped at 32px).
+# ondo: bundled build-sources/ondo.png (CoinGecko ONDO token image; https://www.coingecko.com/en/coins/ondo-finance ; no SI slug).
 # mstr: bundled mstr.svg (Strategy 2025 B mark; SI microstrategy is legacy vertical bars).
 # arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
 # coinbase: Iconify token/coinbase (C arc); SI coinbase is a wordmark at matrix size.
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
-# wfc: bundled wfc.svg (SI wordmark is illegible at matrix size; two-line sans text).
-# gs: bundled gs.svg (Myna UI solid G+S paths; SI Goldman Sachs is a hairline wordmark at 32px).
+# wfc: bundled wfc.svg (Simple Icons wellsfargo wordmark path; path-only for Cairo).
+# gs: bundled gs.svg (Wikimedia Commons Goldman Sachs.svg wordmark paths; blue plate stripped for matrix).
 # amd: bundled amd.svg (SI wordmark paths; ticker text retired).
 # op: bundled op.svg (Iconify token-branded optimism paths; no OP text ticker).
 # apt: Iconify token/aptos (coin mark; bundled APT text retired).
@@ -106,7 +108,7 @@ ICONIFY_CRYPTO_PREF = {
     "wormhole": ["arcticons/wormhole", "arcticons/wormhole-2"],
 }
 
-# Crypto names that must use symbol only (no bundled ticker-text SVG). Never add "link" here: skipping bundled link.svg forces SI chainlink (hollow hex), which reads as a broken or blank green hex in the matrix.
+# Crypto names that must use symbol only (no bundled ticker-text SVG).
 CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED = {"arb", "sei", "aave", "near", "sui", "dot", "doge"}
 
 # Prefer these Iconify SVGs before Simple Icons (matrix readability / correct mark).
@@ -167,6 +169,11 @@ COMPANIES = {
     "bakkt": ("bakkt",           []),         # bundled build-sources/bakkt.svg
     "fed":  ("federalreserve",   []),         # bundled build-sources/fed.svg
     "frbny": ("federalreservebankofnewyork", []),  # bundled build-sources/frbny.svg
+    "cantor": ("cantor", []),  # bundled build-sources/cantor.svg (no SI slug)
+    "clearstreet": ("clearstreet", []),  # bundled build-sources/clearstreet.svg (no SI slug)
+    "wu": ("westernunion", []),
+    "moneygram": ("moneygram", []),
+    "wise": ("wise", []),  # bundled build-sources/wise.svg (Lineicons mark)
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────
@@ -319,6 +326,24 @@ def main():
                 sourced[name] = (f"bundled SVG (build-sources/{name}.svg)", fsize)
                 found = True
                 print(f"  [{i:2d}/{total}] {name}.png <- local {name}.svg [{fsize}B]")
+
+        if found:
+            continue
+
+        # ── Phase 0b: bundled PNG in build-sources/<name>.png (same whiten as CC-PNG path) ──
+        bundled_png = os.path.join(outdir, "build-sources", f"{name}.png")
+        if not found and os.path.isfile(bundled_png):
+            slugs_tried.append(f"local:build-sources/{name}.png")
+            with open(bundled_png, "rb") as pf:
+                raw = pf.read()
+            white_data = color_png_to_white(raw, 32)
+            white_data = ensure_rgba(white_data)
+            with open(out_path, "wb") as f:
+                f.write(white_data)
+            fsize = len(white_data)
+            sourced[name] = (f"bundled PNG (build-sources/{name}.png)", fsize)
+            found = True
+            print(f"  [{i:2d}/{total}] {name}.png <- local {name}.png [{fsize}B]")
 
         if found:
             continue

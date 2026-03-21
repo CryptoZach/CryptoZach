@@ -8,9 +8,10 @@ Use this with **`.cursor/skills/cryptozach-matrix-icons`** when changing **`icon
 
 ## P-like glyphs (often confused with PayPal or a "P ticker")
 
+**`₱`** (`U+20B1`, Philippine peso) was **removed** from **`textChars`** because it reads as a **P** with double bar in the rain.
+
 | Source | What it is | Risk |
 |--------|------------|------|
-| **`textChars` `₱`** (`U+20B1`) | Philippine peso sign | Reads as a **P** with double bar; if an icon fails to load, **`pickItem`** falls back to **random text** from **`mtxTradTextChars`**, which includes **`₱`**. |
 | **`pypl.png`** | PayPal | Must be a **wordmark or solid mark**, not Simple Icons **`paypal`** alone (stylized **P**). Build prefers **`logos/paypal`** in **`scripts/build-matrix-icons.mjs`**. |
 
 ## Single-letter or ultra-short bundled SVG text (ticker style)
@@ -23,7 +24,7 @@ These are intentional fallbacks where SI or Iconify art failed matrix constraint
 | **`build-sources/bakkt.svg`** | **B** |
 | **`build-sources/securitize.svg`** | **S** |
 | **`build-sources/citi.svg`** | **CITI** |
-| **`build-sources/gs.svg`** | **GS** (Myna UI solid **G** + **S** paths) |
+| **`build-sources/gs.svg`** | Goldman Sachs wordmark paths from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Goldman_Sachs.svg) (blue plate removed) |
 
 Prefer **path-based logos** where licensing and aspect ratio allow (see **AMD**, **Coinbase**, **JPM** patterns in git history).
 
@@ -31,7 +32,7 @@ Prefer **path-based logos** where licensing and aspect ratio allow (see **AMD**,
 
 | Topic | Rule |
 |-------|------|
-| **Chainlink** | **`link.svg`** is the **nested hex** token mark (hollow center). Keep **`localSvg`** in **`build-matrix-icons.mjs`**. **`link`** must **not** be in **`CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED`**. **`script.js`** **`iconDefs`** must include **`link.png`** or the hero never draws the asset. |
+| **Chainlink** | **`link.png`** comes from **Simple Icons** **`chainlink`** (no bundled **`link.svg`**). **`script.js`** **`iconDefs`** must include **`link.png`** or the hero never draws the asset. |
 | **Wide wordmarks** | **`logos/intel`** is very wide; prefer **`simple-icons/intel`** first. Full horizontal wordmarks in a square PNG collapse to a thin line. |
 
 ## Runtime note: trail fade and transparent icons
@@ -40,7 +41,7 @@ Each **`mtxDraw`** frame applies a **full-canvas** semi-transparent fade (`--mat
 
 ## Runtime note: icon load failure
 
-In **`script.js`**, if **`pickItem`** selects an icon whose **`Image`** did not load, it returns **random text** from **`mtxTradTextChars`**. Missing **`icons/matrix/*.png`** files or wrong paths increase odd glyphs (including **₱**).
+In **`script.js`**, if **`pickItem`** selects an icon whose **`Image`** did not load, it returns **random text** from **`mtxTradTextChars`**. Missing **`icons/matrix/*.png`** files or wrong paths increase odd glyphs from the remaining fiat and macro tickers.
 
 ## Font stack for bundled `<text>` SVGs
 

@@ -14,22 +14,20 @@ The hero draws **white silhouettes** on transparent PNGs, then tints them **gree
 
 ## Chainlink (`link`): token hollow hex
 
-**Intent:** **`LINK`** in the rain should read as the **Chainlink token mark**: a **hex ring** with a **transparent inner hex** (nested paths, nonzero fill), not a solid **LINK** wordmark.
+**Intent:** **`LINK`** in the rain should read as the **Chainlink token mark**: a **hex ring** with a **clear center**, not a hex filled with **crisscross facets** (what raw Simple Icons `chainlink` looks like at 32px when both subpaths fill).
 
 **Invariants:**
 
 1. **`scripts/build-matrix-icons.mjs`**  
    The `link` row must keep **`localSvg: 'icons/matrix/build-sources/link.svg'`** as the **first** successful source (`fetchSvgForRow` reads local SVG before Iconify).  
-   Bundled **`link.svg`** should stay aligned with **Simple Icons `chainlink`** geometry (nested hex paths) unless you **explicitly** change brand intent.
+   Bundled **`link.svg`** uses **Simple Icons `chainlink` geometry** (outer + inner subpaths) with **`fill-rule="evenodd"`** and **`rotate(30 12 12)`** for a **flat-top** hollow ring.
 
 2. **`icons/matrix/build-sources/link.svg`**  
-   Use **path-only** SVG (no `<text>`) so **`build_matrix_icons.py`** Phase 0 can rasterize without Cairo font rendering.  
-   Keep **nested** SI **hex** geometry **rotated** **30deg** around the center so the mark reads **flat-top** (token-style) rather than **pointy-top** raw SI orientation at small size.  
-   Do **not** replace the **hollow hex** with a **solid** glyph without an explicit product review.
+   Use **path-only** SVG (no `<text>`) so **`build_matrix_icons.py`** Phase 0 can rasterize without Cairo font rendering.
 
 3. **`build_matrix_icons.py`**  
    **`link` must not appear in `CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED`.**  
-   If `link` is listed there, Phase 0 **skips** `build-sources/link.svg` and the builder may fall through to **SI chainlink** in a different order than the Node script.
+   If `link` is listed there, Phase 0 **skips** `build-sources/link.svg` and the builder falls through to **SI chainlink** without evenodd, which **reads wrong** in the matrix.
 
 4. After changes, run **`npm run build:matrix-icons`** from repo root and confirm **`icons/matrix/link.png`** shows a **hex ring** with a **clear center** at 32px.
 
