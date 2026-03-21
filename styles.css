@@ -189,6 +189,7 @@ header{
   -webkit-backdrop-filter:blur(12px) saturate(180%);
   border-bottom:1px solid var(--line);
   transition:box-shadow .2s ease;
+  padding-top:env(safe-area-inset-top, 0px);
 }
 
 header.scrolled{
@@ -257,7 +258,7 @@ nav{
 .nav-links--mobile{
   display:none;
   position:fixed;
-  top:var(--header-h);
+  top:calc(var(--header-h) + env(safe-area-inset-top, 0px));
   left:0;
   right:0;
   bottom:0;
@@ -1545,7 +1546,7 @@ main > section.research-library-page:first-of-type{
 /* Deep links: full track heading stays below sticky header */
 .research-library-page h2.track-heading#track-a,
 .research-library-page h2.track-heading#track-b{
-  scroll-margin-top:calc(var(--header-h) + var(--space-md));
+  scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + var(--space-md));
 }
 /* Track A/B headings: stronger than --muted for WCAG-style body contrast on library panel */
 .research-library-page .track-heading-prefix,
@@ -1718,14 +1719,14 @@ main > section.research-library-page:first-of-type{
 /* ── Sections ── */
 section{
   margin-top:var(--space-xl);
-  scroll-margin-top:calc(var(--header-h) + var(--space-md));
+  scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + var(--space-md));
 }
 section + section{
   padding-top:var(--space-xl);
   border-top:1px solid var(--line);
 }
 footer{
-  scroll-margin-top:calc(var(--header-h) + var(--space-md));
+  scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + var(--space-md));
 }
 
 /* Framework anchor targets: avoid heading under sticky header */
@@ -1775,7 +1776,7 @@ footer{
 /* ── Structure page (Operating-Model.html): sticky section rail ── */
 .structure-nav{
   position:sticky;
-  top:var(--header-h);
+  top:calc(var(--header-h) + env(safe-area-inset-top, 0px));
   z-index:990;
   background:color-mix(in srgb, var(--bg) 94%, transparent);
   backdrop-filter:blur(10px) saturate(180%);
@@ -4183,7 +4184,7 @@ main.resume-profile .section-title{
   flex-direction:column;
   gap:0;
   position:sticky;
-  top:calc(var(--header-h) + var(--space-md));
+  top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + var(--space-md));
 }
 .teaser-rail-card{
   padding:var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) + 3px);
@@ -5320,21 +5321,21 @@ footer{
   }
 
   .nav-links--mobile{
-    top:var(--header-h);
+    top:calc(var(--header-h) + env(safe-area-inset-top, 0px));
     padding:var(--space-md);
     /* Opaque overlay: no bleed-through from hero or sections below */
     background:var(--bg);
     background-color:var(--bg);
     z-index:11000;
-    min-height:calc(100dvh - var(--header-h));
-    min-height:calc(100vh - var(--header-h));
+    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
+    min-height:calc(100vh - var(--header-h) - env(safe-area-inset-top, 0px));
     box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
   }
 
   /* Harden stacking and paint (some mobile engines mishandle nested stacking with sticky header). */
   #nav-mobile.nav-links--mobile:not([hidden]){
     position:fixed !important;
-    top:var(--header-h) !important;
+    top:calc(var(--header-h) + env(safe-area-inset-top, 0px)) !important;
     left:0 !important;
     right:0 !important;
     bottom:0 !important;
