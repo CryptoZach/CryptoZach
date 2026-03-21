@@ -986,7 +986,7 @@
       };
     }
 
-    function mtxInitCanvas(){
+    function mtxInitCanvas(forceResetDrops){
       var rect = matrixContainer.getBoundingClientRect();
       var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
       var w = Math.max(1, rect.width);
@@ -1006,14 +1006,18 @@
       /* Match mtxDraw column math to integer layout width (avoids rect vs clientWidth mismatch). */
       var cw = Math.max(1, matrixCanvas.clientWidth || Math.floor(w));
       var colCount = Math.max(1, Math.floor(cw / mtxColWidth));
-      mtxDrops = new Array(colCount).fill(0).map(function(){
-        return -8 - Math.random() * 32;
-      });
-      mtxColItem = new Array(colCount).fill(null);
-      mtxColOpacity = new Array(colCount).fill(null);
-      mtxColStep = new Array(colCount).fill(0).map(function(){
-        return 0.092 + Math.random() * 0.024;
-      });
+      var prevColCount = mtxDrops.length;
+      /* Only reset drop positions if column count changed or explicitly requested. */
+      if(forceResetDrops || colCount !== prevColCount){
+        mtxDrops = new Array(colCount).fill(0).map(function(){
+          return -8 - Math.random() * 32;
+        });
+        mtxColItem = new Array(colCount).fill(null);
+        mtxColOpacity = new Array(colCount).fill(null);
+        mtxColStep = new Array(colCount).fill(0).map(function(){
+          return 0.092 + Math.random() * 0.024;
+        });
+      }
       mtxPrevDrawTs = 0;
     }
 
@@ -1256,12 +1260,19 @@
 
     function mtxStart(opts){
       opts = opts || {};
-      var alreadyActive = matrixContainer.classList.contains('active');
-      var shouldReinit = !alreadyActive || opts.forceReset === true;
-      if(shouldReinit){
-        mtxTrailFillCache = '';
-        mtxTrailFillFrame = 0;
-        mtxInitCanvas();
+      mtxTrailFillCache = '';
+      mtxTrailFillFrame = 0;
+      if(opts.forceReset === true){
+        mtxInitCanvas(true);
+      } else {
+        var alreadyRunning = matrixContainer.classList.contains('active') && mtxRaf;
+        if(alreadyRunning){
+          /* Animation is live: resize the canvas buffer but do not reset column positions. */
+          mtxInitCanvas(false);
+        } else {
+          /* Fresh start: reset everything. */
+          mtxInitCanvas(true);
+        }
       }
       matrixContainer.classList.add('active');
       if(!mtxRaf){
