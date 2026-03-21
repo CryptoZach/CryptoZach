@@ -62,6 +62,11 @@ CRYPTO = {
     "layerzero": ("layerzero", [],                 None),
     "wormhole": ("wormhole", [],                   None),
     "ondo": ("ondo", [],                           None),
+    "zrx": ("0x", [],                             "zrx"),
+    "base": ("base", [],                         None),
+    "ink": ("ink", [],                           None),
+    "arc": ("arc", [],                           None),
+    "m0": ("m0", [],                            None),
 }
 
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
@@ -69,21 +74,29 @@ ICONIFY_CRYPTO_PATHS = {
     "kraken": ["logos/kraken", "token-branded/kraken"],
     # logos/metamask is a 512x96 wordmark; 32px raster is vertical smears. Fox mark first (matches build-matrix-icons.mjs).
     "metamask": ["token-branded/metamask", "logos/metamask"],
+    "base": ["token/base", "token-branded/base"],
+    "ink": ["token/ink", "token-branded/ink"],
+    "arc": ["token/arc", "token-branded/arc", "arcticons/arc"],
 }
 
 # Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
 # USDC / DAI: bundled build-sources/usdc.svg and dai.svg (glyph + ring, no filled brand disk) in Phase 0 first; then these.
 # cashapp: bundled cashapp.svg (squircle ring + $ subpath; full SI path is muddy at 32px).
-# link: bundled build-sources/link.svg (SI outer/inner paths, fill-rule evenodd = hollow ring; raw SI is muddy at 32px).
+# link: bundled build-sources/link.svg (two overlapping rings; SI chainlink hex reads as faceted smear in matrix trail at ~20px).
 # hbar: bundled hbar.svg (SI Hedera is a filled circle + H that whiten() reads as a blank disk at 20px).
-# hyperliquid: bundled hyperliquid.svg (brand kit path; large viewBox + centered scale so bezier overshoot is not clipped at 32px).
+# hnt: bundled build-sources/helium-hnt-logo.svg (full Helium mark; legacy stroke-only hnt.svg removed).
+# hyperliquid: bundled build-sources/hyperliquid.svg (clean inline-fill version of hyper-foundation.svg); Phase 0 rasterizes to hyperliquid.png.
+# bnb: bundled build-sources/bnb.svg (BNB Chain mark from bnb-chain-binance-smart-chain-logo.svg); Binance_Logo.svg.png in build-sources is reference only.
 # ondo: bundled build-sources/ondo.png (CoinGecko ONDO token image; https://www.coingecko.com/en/coins/ondo-finance ; no SI slug).
+# zrx: bundled build-sources/zrx.svg (Iconify token/zrx).
 # mstr: bundled mstr.svg (Strategy 2025 B mark; SI microstrategy is legacy vertical bars).
+# rndr: bundled build-sources/rndr.svg (center dot + C-arc + corner dot from render-token-logo.svg; red circle background omitted).
 # arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
+# avax: bundled avax.svg (monospace AVAX; Iconify token/avax facets read as a broken hex in the trail).
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
-# coinbase: Iconify token/coinbase (C arc); SI coinbase is a wordmark at matrix size.
+# coinbase: bundled build-sources/coinbase.svg (Iconify token/coinbase C arc).
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
-# wfc: bundled wfc.svg (Simple Icons wellsfargo wordmark path; path-only for Cairo).
+# wfc: bundled wfc.svg (Simple Icons wellsfargo wordmark only; outer frame path stripped).
 # gs: bundled gs.svg (Wikimedia Commons Goldman Sachs.svg wordmark paths; blue plate stripped for matrix).
 # amd: bundled amd.svg (SI wordmark paths; ticker text retired).
 # op: bundled op.svg (Iconify token-branded optimism paths; no OP text ticker).
@@ -96,7 +109,11 @@ ICONIFY_CRYPTO_PATHS = {
 # dot: bundled dot.svg (thick Polkadot ring reads as a filled circle when blurred).
 # uni: Iconify token/uniswap (unicorn silhouette; bundled UNI text retired).
 # aave: bundled aave.svg (color disk reads as a large blank green circle at 20px).
-# crv: bundled crv.svg (coin glyph from spothq; circle omitted for matrix whiten).
+# crv: bundled build-sources/crv.png (from repo-root Curve_logo.png; Phase 0b raster; old crv.svg removed).
+# tao: bundled tao.svg (bold TAO ticker; Iconify token/tao reads as a filled hex at matrix size).
+# bac: bundled bac.svg (BoA monospace label; SI bankofamerica mark is a tiny flag blob at 32px).
+# m0: bundled m0.svg (M0 monospace label; no Iconify slug for M0 Labs in common matrix sets).
+# base / ink / arc: bundled base.svg, ink.svg, arc.svg (monospace tickers; Iconify token/base is a plain square silhouette).
 ICONIFY_CRYPTO_PREF = {
     "usdc": ["token/usdc", "cryptocurrency-color/usdc"],
     "uni": ["token/uniswap", "token-branded/uniswap"],
@@ -117,7 +134,7 @@ ICONIFY_COMPANY_PATHS = {
     "visa": ["simple-icons/visa", "logos/visa"],
     "pypl": ["logos/paypal", "simple-icons/paypal"],
     "intc": ["simple-icons/intel", "logos/intel"],
-    "fidelity": ["arcticons/fidelity"],
+    # "fidelity" removed: arcticons/fidelity is a plain capital F, no distinctive mark.
     "venmo": ["fa7-brands/venmo-v"],
     "wmt": ["tabler/brand-walmart", "arcticons/walmart"],
 }
@@ -127,7 +144,7 @@ COMPANIES = {
     "msft": ("microsoft",        []),
     "jpm":  ("jpmorgan",         ["jpmorganchase", "chase"]),  # bundled Chase octagon build-sources/jpm.svg; SI has no jpmorgan
     "citi": ("citibank",         []),
-    "fidelity": ("fidelity",     []),
+    # "fidelity" removed: plain F glyph, not a distinctive mark.
     "gs":   ("goldmansachs",     []),
     "coinbase": ("coinbase",     []),
     "kinexys": ("kinexys",       []),
