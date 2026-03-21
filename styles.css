@@ -8786,7 +8786,7 @@ footer{
 
 #hero.hero--homepage{
   position: relative;
-  padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(34px, 4vw, 52px);
+  padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(12px, 1.5vw, 18px);
   border-top: 3px solid var(--accent);
   /* Hero dollar stream: peak / late opacity (keyframes read these; hover + mobile override) */
   --df-o-peak: 0.35;
@@ -8879,6 +8879,17 @@ footer{
   /* No contain: strict / paint: strict clips composited 2D output (shadows, scaled sprites) at edges and caused Hyperliquid and similar marks to look cut off on the left. */
   /* Above ::before/::after edge fades so glyphs are not visually clipped by the panel blend. */
   z-index: 2;
+}
+
+/* CTA bounce on dollar arrival */
+@keyframes cta-dollar-bounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+#hero.hero--homepage a.cta-primary.cta-dollar-bounce {
+  animation: cta-dollar-bounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* Flagship brief CTA: hold ~220ms on coarse pointers to wake matrix (see mtxFlagshipCoarseHoldMs in script.js). */
@@ -9035,6 +9046,17 @@ footer{
   z-index: 1;
 }
 
+#hero.hero--homepage .hero-btc-flight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  contain: strict;
+}
+
 #hero.hero--homepage .hero-eyebrow > *{
   position: relative;
   z-index: 2;
@@ -9106,7 +9128,7 @@ footer{
   gap: var(--space-sm) var(--space-md);
   align-items: center;
   justify-content: center;
-  margin-top: 0.75rem;
+  margin-top: 1.95rem;
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
@@ -9225,7 +9247,7 @@ footer{
 
 @media (max-width: 768px){
   #hero.hero--homepage{
-    padding: var(--space-lg) var(--space-md) var(--space-xl);
+    padding: var(--space-lg) var(--space-md) 15px;
     min-height: auto;
   }
 

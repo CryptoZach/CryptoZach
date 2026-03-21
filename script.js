@@ -167,12 +167,18 @@
       var dollarSpawnIntervalId = null;
       var dollarLoopActive = false;
       var resizeTimer = null;
+      var dollarArrivalCooldown = false;
+      var dollarArrivalCooldownTimer = null;
+      var dollarBounceClass = 'cta-dollar-bounce';
+      var dollarDisrupted = false;
+      var dollarDisruptTimer = null;
+      var dollarDisruptProximity = 80; /* px from CTA center to trigger */
 
       function getDollarConfig(){
         var mobile = window.innerWidth <= 768;
         return {
           isMobile: mobile,
-          maxDollars: mobile ? 8 : 20,
+          maxDollars: mobile ? 6 : 14,
           spawnInterval: mobile ? 600 : 350
         };
       }
@@ -186,6 +192,70 @@
         targetY = (ctaRect.top + ctaRect.height / 2) - heroRect.top;
       }
       updateTarget();
+
+      var lastBounceTs = 0;
+      var bounceCooldownMs = 800; /* minimum ms between bounces */
+
+      function triggerArrivalBounce() {
+        var now = Date.now();
+        if (now - lastBounceTs < bounceCooldownMs) return;
+        lastBounceTs = now;
+
+        /* Bounce the CTA button */
+        if (ctaBtn && !ctaBtn.classList.contains(dollarBounceClass)) {
+          ctaBtn.classList.add(dollarBounceClass);
+          setTimeout(function() {
+            ctaBtn.classList.remove(dollarBounceClass);
+          }, 300);
+        }
+
+        /* Start attraction cooldown */
+        dollarArrivalCooldown = true;
+        if (dollarArrivalCooldownTimer) {
+          clearTimeout(dollarArrivalCooldownTimer);
+        }
+        dollarArrivalCooldownTimer = setTimeout(function() {
+          dollarArrivalCooldown = false;
+          dollarArrivalCooldownTimer = null;
+        }, 250);
+      }
+
+      function disruptDollars() {
+        /* Clear any pending recovery so the timer resets on repeated calls */
+        if (dollarDisruptTimer) {
+          clearTimeout(dollarDisruptTimer);
+        }
+
+        if (!dollarDisrupted) {
+          dollarDisrupted = true;
+
+          /* Pause and fade all active dollar spans */
+          var spans = heroHome.querySelectorAll('.hero-dollar-flight');
+          for (var s = 0; s < spans.length; s++) {
+            spans[s].style.animationPlayState = 'paused';
+            spans[s].style.transition = 'opacity 0.15s ease';
+            spans[s].style.opacity = '0';
+          }
+        }
+
+        /* Schedule recovery after 500ms */
+        dollarDisruptTimer = setTimeout(function() {
+          recoverDollars();
+        }, 500);
+      }
+
+      function recoverDollars() {
+        dollarDisrupted = false;
+        dollarDisruptTimer = null;
+
+        /* Resume all active dollar spans */
+        var spans = heroHome.querySelectorAll('.hero-dollar-flight');
+        for (var s = 0; s < spans.length; s++) {
+          spans[s].style.animationPlayState = 'running';
+          spans[s].style.transition = 'opacity 0.3s ease';
+          spans[s].style.opacity = '';  /* restore to animation-controlled value */
+        }
+      }
 
       window.addEventListener('resize', function(){
         if(resizeTimer) clearTimeout(resizeTimer);
@@ -202,6 +272,7 @@
 
       function spawnDollar(){
         if(!dollarLoopActive || (typeof document.hidden === 'boolean' && document.hidden)) return;
+        if(dollarDisrupted) return;
 
         var config = getDollarConfig();
         if(activeDollars >= config.maxDollars) return;
@@ -229,8 +300,17 @@
           startY = perimeter - p;
         }
 
-        var dx = targetX - startX;
-        var dy = targetY - startY;
+        var dx, dy;
+        if (dollarArrivalCooldown) {
+          /* During cooldown: drift in a random direction instead of toward CTA */
+          var driftAngle = Math.random() * Math.PI * 2;
+          var driftDist = 160 + Math.random() * 240;
+          dx = Math.cos(driftAngle) * driftDist;
+          dy = Math.sin(driftAngle) * driftDist;
+        } else {
+          dx = targetX - startX;
+          dy = targetY - startY;
+        }
         var curveOffset = (Math.random() - 0.5) * 100;
 
         var isHovering = heroHome.classList.contains('hero-home--flagship-hover');
@@ -260,9 +340,16 @@
         activeDollars++;
 
         el.addEventListener('animationend', function(){
+          /* Trigger CTA bounce on arrival */
+          triggerArrivalBounce();
           if(el.parentNode === heroHome) el.remove();
           activeDollars--;
         });
+
+        /* Occasionally spawn a Bitcoin orbit particle */
+        if(btcFlightActive && Math.random() < 0.04){
+          spawnBtcParticle();
+        }
       }
 
       function startDollarFlightLoop(){
@@ -271,6 +358,7 @@
         spawnDollar();
         var config = getDollarConfig();
         dollarSpawnIntervalId = setInterval(spawnDollar, config.spawnInterval);
+        startBtcFlight();
       }
 
       function stopDollarFlightLoop(){
@@ -279,6 +367,222 @@
           clearInterval(dollarSpawnIntervalId);
           dollarSpawnIntervalId = null;
         }
+        stopBtcFlight();
+      }
+
+      /* ══════════════════════════════════════════════
+         Bitcoin ₿ orbit particles (JS-driven canvas)
+         ══════════════════════════════════════════════ */
+
+      var btcCanvas = document.getElementById('heroBtcFlight');
+      var btcCtx = btcCanvas ? btcCanvas.getContext('2d') : null;
+      var btcParticles = [];
+      var btcFlightActive = false;
+      var btcRaf = null;
+      var btcCursorX = -1, btcCursorY = -1;
+
+      var btcConfig = {
+        maxParticles: getDollarConfig().isMobile ? 3 : 6,
+        ctaGravity: 0.00035,
+        cursorGravity: 0.00012,
+        tangentialFactor: 0.7,
+        damping: 0.992,
+        orbitMinDist: 30,
+        fadeInFrames: 20,
+        maxLifeFrames: 600,
+        spiralInDist: 18,
+        maxSpeed: 3.5,
+        cursorRange: 250
+      };
+
+      function btcResize(){
+        if(!btcCanvas) return;
+        var r = heroHome.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        btcCanvas.width = Math.floor(r.width * dpr);
+        btcCanvas.height = Math.floor(r.height * dpr);
+        btcCanvas.style.width = r.width + 'px';
+        btcCanvas.style.height = r.height + 'px';
+        btcCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      if(btcCanvas){
+        btcResize();
+        window.addEventListener('resize', function(){ setTimeout(btcResize, 220); }, { passive: true });
+
+        heroHome.addEventListener('pointermove', function btcCursorTrack(e){
+          if(e.pointerType !== 'mouse') return;
+          var r = heroHome.getBoundingClientRect();
+          btcCursorX = e.clientX - r.left;
+          btcCursorY = e.clientY - r.top;
+        }, { passive: true });
+
+        heroHome.addEventListener('pointerleave', function btcCursorReset(){
+          btcCursorX = -1;
+          btcCursorY = -1;
+        }, { passive: true });
+      }
+
+      function spawnBtcParticle(){
+        if(!btcCanvas || btcParticles.length >= btcConfig.maxParticles) return;
+
+        var heroRect = heroHome.getBoundingClientRect();
+        var w = heroRect.width, h = heroRect.height;
+        if(w <= 0 || h <= 0) return;
+
+        /* Spawn from random edge */
+        var perimeter = 2 * (w + h);
+        var p = Math.random() * perimeter;
+        var sx, sy;
+        if(p < w){ sx = p; sy = -10; }
+        else if(p < w + h){ sx = w + 10; sy = p - w; }
+        else if(p < 2 * w + h){ sx = 2 * w + h - p; sy = h + 10; }
+        else { sx = -10; sy = perimeter - p; }
+
+        /* Initial velocity toward hero center */
+        var centerX = w / 2, centerY = h / 2;
+        var ddx = centerX - sx, ddy = centerY - sy;
+        var dist = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
+        var speed = 0.4 + Math.random() * 0.3;
+
+        var willOrbit = Math.random() < 0.85;
+        var orbitBudget = willOrbit ? (2 + Math.floor(Math.random() * 3)) : 0;
+
+        btcParticles.push({
+          x: sx, y: sy,
+          vx: (ddx / dist) * speed,
+          vy: (ddy / dist) * speed,
+          life: 0,
+          maxLife: btcConfig.maxLifeFrames,
+          fontSize: 14 + Math.floor(Math.random() * 10),
+          willOrbit: willOrbit,
+          orbitBudget: orbitBudget,
+          crossings: 0,
+          prevAngleToCta: null
+        });
+      }
+
+      function btcDraw(){
+        if(!btcFlightActive){ btcRaf = null; return; }
+        btcRaf = requestAnimationFrame(btcDraw);
+
+        var r = heroHome.getBoundingClientRect();
+        var w = r.width, h = r.height;
+        btcCtx.clearRect(0, 0, w, h);
+
+        if(btcParticles.length === 0) return;
+
+        var tx = targetX, ty = targetY;
+
+        for(var i = btcParticles.length - 1; i >= 0; i--){
+          var bp = btcParticles[i];
+          bp.life++;
+
+          if(bp.life > bp.maxLife){
+            btcParticles.splice(i, 1);
+            continue;
+          }
+
+          /* CTA attraction */
+          var dxCta = tx - bp.x, dyCta = ty - bp.y;
+          var distCta = Math.sqrt(dxCta * dxCta + dyCta * dyCta) || 1;
+
+          if(distCta < btcConfig.spiralInDist){
+            btcParticles.splice(i, 1);
+            continue;
+          }
+
+          var ctaForce = btcConfig.ctaGravity;
+          if(bp.willOrbit && bp.crossings >= bp.orbitBudget * 2){
+            ctaForce *= 2.5;
+            bp.willOrbit = false;
+          }
+
+          var ctaFx = (dxCta / distCta) * ctaForce * distCta;
+          var ctaFy = (dyCta / distCta) * ctaForce * distCta;
+
+          /* Tangential deflection for orbiting */
+          if(bp.willOrbit && distCta > btcConfig.orbitMinDist){
+            var tangX = -dyCta / distCta;
+            var tangY = dxCta / distCta;
+            var tangSign = (bp.vx * tangX + bp.vy * tangY) >= 0 ? 1 : -1;
+            var tangStr = btcConfig.tangentialFactor * ctaForce * distCta;
+            ctaFx += tangX * tangSign * tangStr;
+            ctaFy += tangY * tangSign * tangStr;
+          }
+
+          /* Cursor attraction (weaker, range-limited) */
+          if(btcCursorX >= 0 && btcCursorY >= 0){
+            var dxCur = btcCursorX - bp.x;
+            var dyCur = btcCursorY - bp.y;
+            var distCur = Math.sqrt(dxCur * dxCur + dyCur * dyCur) || 1;
+            if(distCur < btcConfig.cursorRange){
+              var cursorStr = btcConfig.cursorGravity * (1 - distCur / btcConfig.cursorRange);
+              bp.vx += (dxCur / distCur) * cursorStr * distCur;
+              bp.vy += (dyCur / distCur) * cursorStr * distCur;
+            }
+          }
+
+          /* Apply CTA forces */
+          bp.vx += ctaFx;
+          bp.vy += ctaFy;
+
+          /* Damping */
+          bp.vx *= btcConfig.damping;
+          bp.vy *= btcConfig.damping;
+
+          /* Speed cap */
+          var spd = Math.sqrt(bp.vx * bp.vx + bp.vy * bp.vy);
+          if(spd > btcConfig.maxSpeed){
+            bp.vx = (bp.vx / spd) * btcConfig.maxSpeed;
+            bp.vy = (bp.vy / spd) * btcConfig.maxSpeed;
+          }
+
+          /* Move */
+          bp.x += bp.vx;
+          bp.y += bp.vy;
+
+          /* Track orbit completion via angle sign crossings */
+          var angleToCta = Math.atan2(dyCta, dxCta);
+          if(bp.prevAngleToCta !== null){
+            if(bp.prevAngleToCta > 2.5 && angleToCta < -2.5) bp.crossings++;
+            else if(bp.prevAngleToCta < -2.5 && angleToCta > 2.5) bp.crossings++;
+          }
+          bp.prevAngleToCta = angleToCta;
+
+          /* Render */
+          var fadeIn = Math.min(1, bp.life / btcConfig.fadeInFrames);
+          var fadeOut = bp.life > bp.maxLife * 0.85
+            ? 1 - (bp.life - bp.maxLife * 0.85) / (bp.maxLife * 0.15)
+            : 1;
+          var distFade = distCta < 50 ? distCta / 50 : 1;
+          var alpha = fadeIn * fadeOut * distFade;
+          if(alpha < 0.01) continue;
+
+          btcCtx.save();
+          btcCtx.font = '700 ' + bp.fontSize + 'px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+          btcCtx.textAlign = 'center';
+          btcCtx.textBaseline = 'middle';
+          btcCtx.fillStyle = 'rgba(247, 147, 26, ' + (alpha * 0.9) + ')';
+          btcCtx.shadowColor = 'rgba(251, 191, 36, ' + (alpha * 0.4) + ')';
+          btcCtx.shadowBlur = 8;
+          btcCtx.shadowOffsetX = 0;
+          btcCtx.shadowOffsetY = 0;
+          btcCtx.fillText('₿', bp.x, bp.y);
+          btcCtx.restore();
+        }
+      }
+
+      function startBtcFlight(){
+        if(!btcCanvas) return;
+        btcFlightActive = true;
+        btcResize();
+        if(!btcRaf) btcRaf = requestAnimationFrame(btcDraw);
+      }
+
+      function stopBtcFlight(){
+        btcFlightActive = false;
+        btcParticles = [];
       }
 
       var flagshipDollarSpeed = flagshipCtaEl();
@@ -292,6 +596,37 @@
           heroHome.classList.remove('hero-home--flagship-hover');
         });
       }
+
+      /* Disrupt dollar flow when cursor approaches the CTA convergence point */
+      heroHome.addEventListener('pointermove', function(e) {
+        if (e.pointerType !== 'mouse') return; /* touch doesn't have a persistent cursor */
+
+        var heroRect = heroHome.getBoundingClientRect();
+        var cursorX = e.clientX - heroRect.left;
+        var cursorY = e.clientY - heroRect.top;
+
+        var dx = cursorX - targetX;
+        var dy = cursorY - targetY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < dollarDisruptProximity) {
+          disruptDollars();
+        }
+        /* Recovery is timer-based (500ms after last disruption trigger), not distance-based.
+           If the cursor stays near the CTA, disruptDollars() re-fires on each move
+           and resets the 500ms timer, keeping the disruption active. */
+      });
+
+      heroHome.addEventListener('pointerleave', function dollarDisruptLeave(e) {
+        if (dollarDisrupted) {
+          if (dollarDisruptTimer) {
+            clearTimeout(dollarDisruptTimer);
+            dollarDisruptTimer = null;
+          }
+          /* Recover slightly faster on leave */
+          setTimeout(recoverDollars, 200);
+        }
+      });
 
       if(typeof IntersectionObserver === 'function'){
         var obs = new IntersectionObserver(function(entries){
@@ -370,13 +705,16 @@
       const rctx = reefCanvas.getContext('2d');
       var reefBranches = [];
       var reefNodes = [];
-      var reefMaxBranches = 250;
-      var reefMaxNodes = 350;
+      var reefMaxBranches = 180;
+      var reefMaxNodes = 200;
       var reefLastSpawn = 0;
       var reefRaf = null;
       var reefActive = false;
       var reefFade = 0;
       var reefMx = -1, reefMy = -1;
+      var reefPrevMx = -1, reefPrevMy = -1;
+      var reefVelocity = 0;
+      var reefPrevMoveTs = 0;
 
       function reefResize() {
         var r = heroContainer.getBoundingClientRect();
@@ -390,19 +728,33 @@
 
       function reefRand(a, b) { return a + Math.random() * (b - a); }
 
+      /* Dead zone: no reef growth within 100px of the CTA button center */
+      var reefDeadZoneRadius = 100;
+      function reefInDeadZone(px, py) {
+        var btn = heroHome.querySelector('a.cta-primary');
+        if (!btn) return false;
+        var br = btn.getBoundingClientRect();
+        var hr = heroHome.getBoundingClientRect();
+        var cx = (br.left + br.width / 2) - hr.left;
+        var cy = (br.top + br.height / 2) - hr.top;
+        var rdx = px - cx;
+        var rdy = py - cy;
+        return (rdx * rdx + rdy * rdy) < (reefDeadZoneRadius * reefDeadZoneRadius);
+      }
+
       function reefSpawnBranch(x, y, angle, gen, speed) {
         if (reefBranches.length > reefMaxBranches) return;
         reefBranches.push({
           x: x, y: y,
           angle: angle,
-          speed: speed || reefRand(0.4, 1.2),
+          speed: speed || reefRand(0.6, 1.6),
           curve: reefRand(-0.04, 0.04),
           life: 0,
           maxLife: reefRand(30, 90),
           gen: gen || 0,
           forked: false,
           thickness: Math.max(0.3, 1.8 - gen * 0.3),
-          alpha: reefRand(0.25, 0.7)
+          alpha: reefRand(0.35, 0.8)
         });
       }
 
@@ -419,12 +771,26 @@
         });
       }
 
-      function reefSpawnCluster(cx, cy) {
-        var count = Math.random() < 0.3 ? 3 : 2;
+      function reefSpawnCluster(cx, cy, velocity) {
+        var vel = velocity || 0;
+        /* More branches at higher velocity */
+        var baseCount = Math.random() < 0.3 ? 3 : 2;
+        var bonusBranches = vel > 0.8 ? 1 : 0;
+        var count = baseCount + bonusBranches;
+        /* Faster pointer = longer, faster branches that spread wider */
+        var speedMul = 1 + Math.min(0.6, vel * 0.3);
+        var spreadMul = 1 + Math.min(0.8, vel * 0.4);
+
         for (var i = 0; i < count; i++) {
           var a = reefRand(0, Math.PI * 2);
-          var d = reefRand(3, 18);
-          reefSpawnBranch(cx + Math.cos(a) * d, cy + Math.sin(a) * d, a + reefRand(-0.5, 0.5), 0);
+          var d = reefRand(3, 18) * spreadMul;
+          reefSpawnBranch(
+            cx + Math.cos(a) * d,
+            cy + Math.sin(a) * d,
+            a + reefRand(-0.5, 0.5),
+            0,
+            reefRand(0.6, 1.6) * speedMul
+          );
         }
         reefAddNode(cx, cy, 0);
       }
@@ -460,7 +826,7 @@
         var r = heroContainer.getBoundingClientRect();
         var W = r.width, H = r.height;
 
-        if (reefActive && reefFade < 1) reefFade = Math.min(1, reefFade + 0.03);
+        if (reefActive && reefFade < 1) reefFade = Math.min(1, reefFade + 0.08);
         if (!reefActive && reefFade > 0) reefFade = Math.max(0, reefFade - 0.008);
 
         rctx.clearRect(0, 0, W, H);
@@ -496,24 +862,52 @@
           rctx.fill();
         }
 
+        /* Spatial grid for O(n) neighbor lookup instead of O(n²) */
+        var reefGridCell = 55;
+        var reefGrid = {};
+        for (var gn = 0; gn < reefNodes.length; gn++) {
+          var gx = Math.floor(reefNodes[gn].x / reefGridCell);
+          var gy = Math.floor(reefNodes[gn].y / reefGridCell);
+          var gk = gx + ',' + gy;
+          if (!reefGrid[gk]) reefGrid[gk] = [];
+          reefGrid[gk].push(gn);
+        }
+
+        var reefDrawnEdges = {};
         for (var nn = 0; nn < reefNodes.length; nn++) {
-          for (var mm = nn + 1; mm < reefNodes.length; mm++) {
-            var a2 = reefNodes[nn], b2 = reefNodes[mm];
-            var dx = a2.x - b2.x, dy = a2.y - b2.y;
-            var dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 55 && dist > 5) {
-              var la = Math.min(a2.alpha, b2.alpha) * reefFade * (1 - dist / 55) * 0.15;
-              var aAge = now - a2.born, bAge = now - b2.born;
-              var af = aAge > a2.maxAge * 0.7 ? 1 - (aAge - a2.maxAge * 0.7) / (a2.maxAge * 0.3) : 1;
-              var bf = bAge > b2.maxAge * 0.7 ? 1 - (bAge - b2.maxAge * 0.7) / (b2.maxAge * 0.3) : 1;
-              la *= Math.min(af, bf);
-              if (la > 0.005) {
-                rctx.beginPath();
-                rctx.moveTo(a2.x, a2.y);
-                rctx.lineTo(b2.x, b2.y);
-                rctx.strokeStyle = 'rgba(74, 222, 128, ' + la + ')';
-                rctx.lineWidth = 0.5;
-                rctx.stroke();
+          var a2 = reefNodes[nn];
+          var cgx = Math.floor(a2.x / reefGridCell);
+          var cgy = Math.floor(a2.y / reefGridCell);
+          for (var ox = -1; ox <= 1; ox++) {
+            for (var oy = -1; oy <= 1; oy++) {
+              var nk = (cgx + ox) + ',' + (cgy + oy);
+              var cell = reefGrid[nk];
+              if (!cell) continue;
+              for (var ci = 0; ci < cell.length; ci++) {
+                var mm = cell[ci];
+                if (mm <= nn) continue;
+                var edgeKey = nn + ':' + mm;
+                if (reefDrawnEdges[edgeKey]) continue;
+                reefDrawnEdges[edgeKey] = true;
+
+                var b2 = reefNodes[mm];
+                var dx = a2.x - b2.x, dy = a2.y - b2.y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 55 && dist > 5) {
+                  var la = Math.min(a2.alpha, b2.alpha) * reefFade * (1 - dist / 55) * 0.15;
+                  var aAge = now - a2.born, bAge = now - b2.born;
+                  var af = aAge > a2.maxAge * 0.7 ? 1 - (aAge - a2.maxAge * 0.7) / (a2.maxAge * 0.3) : 1;
+                  var bf = bAge > b2.maxAge * 0.7 ? 1 - (bAge - b2.maxAge * 0.7) / (b2.maxAge * 0.3) : 1;
+                  la *= Math.min(af, bf);
+                  if (la > 0.005) {
+                    rctx.beginPath();
+                    rctx.moveTo(a2.x, a2.y);
+                    rctx.lineTo(b2.x, b2.y);
+                    rctx.strokeStyle = 'rgba(74, 222, 128, ' + la + ')';
+                    rctx.lineWidth = 0.5;
+                    rctx.stroke();
+                  }
+                }
               }
             }
           }
@@ -539,7 +933,7 @@
           rctx.lineWidth = br.thickness * (1 - progress * 0.6);
           rctx.stroke();
 
-          if (!br.forked && br.life > 12 && br.gen < 4 && Math.random() < 0.04) {
+          if (!br.forked && br.life > 8 && br.gen < 5 && Math.random() < 0.07) {
             br.forked = true;
             reefAddNode(br.x, br.y, br.gen + 1);
             var forkCount = Math.random() < 0.35 ? 2 : 1;
@@ -549,7 +943,7 @@
             }
           }
 
-          if (br.life > 8 && br.gen < 3 && Math.random() < 0.008) {
+          if (br.life > 6 && br.gen < 4 && Math.random() < 0.014) {
             reefAddNode(br.x, br.y, br.gen);
           }
 
@@ -573,13 +967,58 @@
 
       heroHome.addEventListener('pointermove', function(e) {
         var r = heroContainer.getBoundingClientRect();
-        reefMx = e.clientX - r.left;
-        reefMy = e.clientY - r.top;
-        if (!reefActive) reefStart();
+        var mx = e.clientX - r.left;
+        var my = e.clientY - r.top;
         var now = performance.now();
-        if (now - reefLastSpawn > 90) {
+
+        /* Compute pointer velocity (px per ms) */
+        if (reefPrevMx >= 0 && reefPrevMoveTs > 0) {
+          var dt = now - reefPrevMoveTs;
+          if (dt > 0 && dt < 200) {
+            var dx = mx - reefPrevMx;
+            var dy = my - reefPrevMy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            /* Smooth velocity to avoid jitter */
+            reefVelocity = reefVelocity * 0.6 + (dist / dt) * 0.4;
+          }
+        }
+
+        reefPrevMx = reefMx;
+        reefPrevMy = reefMy;
+        reefMx = mx;
+        reefMy = my;
+        reefPrevMoveTs = now;
+
+        if (!reefActive) reefStart();
+
+        /* Adaptive spawn interval: faster movement = more frequent clusters */
+        var baseInterval = 55;
+        var velocityBoost = Math.min(40, reefVelocity * 25);
+        var spawnInterval = Math.max(15, baseInterval - velocityBoost);
+
+        if (now - reefLastSpawn > spawnInterval) {
           reefLastSpawn = now;
-          reefSpawnCluster(reefMx, reefMy);
+
+          /* Interpolate spawns along the movement vector for fast sweeps */
+          var interpDist = 0;
+          if (reefPrevMx >= 0) {
+            var idx = mx - reefPrevMx;
+            var idy = my - reefPrevMy;
+            interpDist = Math.sqrt(idx * idx + idy * idy);
+          }
+
+          if (interpDist > 30 && reefPrevMx >= 0) {
+            /* Fast movement: spawn intermediate clusters along the path */
+            var interpSteps = Math.min(4, Math.floor(interpDist / 25));
+            for (var si = 0; si <= interpSteps; si++) {
+              var t = si / (interpSteps + 1);
+              var ix = reefPrevMx + (mx - reefPrevMx) * t;
+              var iy = reefPrevMy + (my - reefPrevMy) * t;
+              if (!reefInDeadZone(ix, iy)) reefSpawnCluster(ix, iy, reefVelocity);
+            }
+          } else {
+            if (!reefInDeadZone(mx, my)) reefSpawnCluster(mx, my, reefVelocity);
+          }
         }
       });
 
@@ -592,6 +1031,10 @@
         reefStop();
         reefMx = -1;
         reefMy = -1;
+        reefPrevMx = -1;
+        reefPrevMy = -1;
+        reefVelocity = 0;
+        reefPrevMoveTs = 0;
       });
 
       heroHome.addEventListener('pointerup', function(e) {
@@ -599,12 +1042,20 @@
         reefStop();
         reefMx = -1;
         reefMy = -1;
+        reefPrevMx = -1;
+        reefPrevMy = -1;
+        reefVelocity = 0;
+        reefPrevMoveTs = 0;
       });
       heroHome.addEventListener('pointercancel', function(e) {
         if(isFinePointer(e)) return;
         reefStop();
         reefMx = -1;
         reefMy = -1;
+        reefPrevMx = -1;
+        reefPrevMy = -1;
+        reefVelocity = 0;
+        reefPrevMoveTs = 0;
       });
 
       var reefResizeTimer;
@@ -731,6 +1182,7 @@
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/fednow.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ma.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/googl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
@@ -854,6 +1306,8 @@
     var mtxColItem = [];
     var mtxColOpacity = [];
     var mtxColStep = [];
+    var mtxColDriftX = [];
+    var mtxColDriftRate = [];
     var mtxPrevDrawTs = 0;
     var mtxColWidth = 22;
     var mtxFontSize = 13;
@@ -872,6 +1326,67 @@
     var mtxIconLZDrawSizeMax = 50;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
+
+    /* ── Control-layer mesh state ── */
+    var mtxIsMobile = window.matchMedia('(max-width: 768px)').matches;
+    var meshNodes = [];
+    var meshMaxNodes = mtxIsMobile ? 12 : 30;
+    var meshZoneTop = 0.88; /* mesh lives in bottom 12% */
+    var meshNodeLifeMin = 9000;
+    var meshNodeLifeMax = 14000;
+    var meshConnectionDist = mtxIsMobile ? 35 : 48;
+    var meshMaxLinksPerNode = 3;
+    var meshPulseSpeed = 0.0012; /* slower than reef: infrastructure, not bioluminescence */
+    var meshRipples = [];
+    var meshRippleMaxAge = 600;
+
+    /* ── Afterburn config ── */
+    var trailSteps = mtxIsMobile ? 2 : 4;
+    var trailBaseAlphaFactor = 0.10; /* intentionally soft */
+
+    /* ── Pre-rendered glow sprite (built once, reused every frame) ── */
+    var trailGlowSprite = null;
+    var trailGlowSpriteSize = 0;
+    var trailGlowSpriteDollar = null;
+
+    function buildGlowSprite(size, r, g, b) {
+      var c = document.createElement('canvas');
+      c.width = size;
+      c.height = size;
+      var cx = c.getContext('2d');
+      var half = size / 2;
+      var grad = cx.createRadialGradient(half, half, 0, half, half, half);
+      grad.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ', 1)');
+      grad.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ', 0)');
+      cx.fillStyle = grad;
+      cx.fillRect(0, 0, size, size);
+      return c;
+    }
+
+    /* Build sprites once after first frame (need canvas context ready) */
+    function ensureGlowSprites() {
+      if (trailGlowSprite) return;
+      trailGlowSpriteSize = 12;
+      trailGlowSprite = buildGlowSprite(trailGlowSpriteSize, 74, 222, 128);
+      trailGlowSpriteDollar = buildGlowSprite(trailGlowSpriteSize, 204, 251, 229);
+    }
+
+    /* Find the k nearest mesh neighbors for a node */
+    function meshNearestK(nodeIndex, k) {
+      var nd = meshNodes[nodeIndex];
+      var neighbors = [];
+      for (var j = 0; j < meshNodes.length; j++) {
+        if (j === nodeIndex) continue;
+        var other = meshNodes[j];
+        var dx = nd.x - other.x, dy = nd.y - other.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < meshConnectionDist && dist > 3) {
+          neighbors.push({ idx: j, dist: dist });
+        }
+      }
+      neighbors.sort(function(a, b) { return a.dist - b.dist; });
+      return neighbors.slice(0, k);
+    }
 
     /* ── Dollar magnet: canvas $ particles follow cursor, pile on flagship CTA, bounce on approach (desktop only) ── */
     var mtxDollarMag = [];
@@ -1080,8 +1595,18 @@
         mtxColStep = new Array(colCount).fill(0).map(function(){
           return 0.15 + Math.random() * 0.04;
         });
+        mtxColDriftX = new Array(colCount).fill(0);
+        mtxColDriftRate = new Array(colCount).fill(0);
       }
       mtxPrevDrawTs = 0;
+      meshNodes = [];
+      meshRipples = [];
+    }
+
+    function mtxIsBitcoinItem(item) {
+      if (item.type === 'icon' && item.def && item.def.src && item.def.src.indexOf('btc.png') >= 0) return true;
+      if (item.type === 'text' && item.value === '₿') return true;
+      return false;
     }
 
     function mtxAssignColVisual(i){
@@ -1102,10 +1627,20 @@
         }
         tries++;
       } while(tries < maxTries);
+
+      var isBtc = mtxIsBitcoinItem(item);
+
       if(item.type === 'icon'){
         var srcKey2 = item.def && item.def.src ? item.def.src : '';
         if(srcKey2){ mtxIconCooldowns[srcKey2] = now; }
-        var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
+        var ds;
+        if(isBtc){
+          /* Bitcoin icon: same minimum, double maximum */
+          var btcMax = mtxIconDrawSizeMax * 2;
+          ds = mtxIconDrawSizeMin + Math.random() * (btcMax - mtxIconDrawSizeMin);
+        } else {
+          ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
+        }
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = Math.min(ds + 2, 34);
         } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
@@ -1129,10 +1664,18 @@
         } else if(item.def && item.def.src && (item.def.src.indexOf('visa.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('jpm.png') >= 0 || item.def.src.indexOf('citi.png') >= 0 || item.def.src.indexOf('bac.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('ma.png') >= 0)){
           ds = 16 + Math.random() * 24;
         }
+        /* FedNow wordmark: wide aspect ratio (4:1), needs explicit width + height */
+        var isFedNow = item.def && item.def.src && item.def.src.indexOf('fednow.png') >= 0;
+        var drawHeight = null;
+        if(isFedNow){
+          ds = 44 + Math.random() * 20;
+          drawHeight = Math.round(ds * 0.25);
+        }
         item = {
           type: 'icon',
           def: item.def,
-          drawSize: ds
+          drawSize: ds,
+          drawHeight: drawHeight
         };
       }
       /* Randomize text font size at spawn (+/- 30% variation). */
@@ -1140,25 +1683,54 @@
         var baseFs;
         if(item.value === '$'){
           baseFs = mtxDollarFontSize;
+        } else if(item.value === '₿'){
+          /* Bitcoin text: variable size up to 2x */
+          baseFs = mtxFontSize;
+          var fsVariation = 0.7 + Math.random() * 1.3;
+          item = { type: 'text', value: '₿', fontSize: Math.round(baseFs * fsVariation), btcLarge: fsVariation > 1.0 };
         } else if(mtxFiatNonUsd[item.value]){
           baseFs = mtxFiatNonUsdFontSize;
         } else {
           baseFs = mtxFontSize;
         }
-        var fsVariation = 0.7 + Math.random() * 0.6;
-        item = { type: 'text', value: item.value, fontSize: Math.round(baseFs * fsVariation) };
+        if(item.value !== '₿'){
+          var fsVariation2 = 0.7 + Math.random() * 0.6;
+          item = { type: 'text', value: item.value, fontSize: Math.round(baseFs * fsVariation2) };
+        }
       }
       mtxColItem[i] = item;
+
+      /* Reset drift */
+      mtxColDriftX[i] = 0;
+      mtxColDriftRate[i] = 0;
+
       if(item.type === 'icon'){
-        var sizeRange = mtxIconDrawSizeMax - mtxIconDrawSizeMin;
+        var effectiveMax = isBtc ? (mtxIconDrawSizeMax * 2) : mtxIconDrawSizeMax;
+        var sizeRange = effectiveMax - mtxIconDrawSizeMin;
         var normalizedSize = Math.min(1, (item.drawSize - mtxIconDrawSizeMin) / sizeRange);
-        /* Larger icons: brighter (add up to 0.12 opacity boost) */
         mtxColOpacity[i] = 0.32 + Math.random() * 0.16 + normalizedSize * 0.12;
-        /* Larger icons: slower (multiply speed by 0.75 to 1.0) */
+        if(isBtc && item.drawSize > mtxIconDrawSizeMax){
+          mtxColOpacity[i] = Math.min(0.85, mtxColOpacity[i] + 0.1);
+        }
         var baseSpeed = 0.15 + Math.random() * 0.04;
         mtxColStep[i] = baseSpeed * (0.75 + normalizedSize * 0.25);
+        if(isBtc && item.drawSize > mtxIconDrawSizeMax){
+          mtxColStep[i] *= 0.75;
+        }
       } else {
         mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
+        if(isBtc){
+          mtxColOpacity[i] = Math.min(0.8, mtxColOpacity[i] + 0.15);
+        }
+      }
+
+      /* Bitcoin: 50% chance of diagonal movement */
+      if(isBtc){
+        if(Math.random() < 0.5){
+          var direction = Math.random() < 0.5 ? -1 : 1;
+          var driftMagnitude = 0.3 + Math.random() * 0.4;
+          mtxColDriftRate[i] = direction * driftMagnitude;
+        }
       }
     }
 
@@ -1380,7 +1952,7 @@
          when icons are wider than mtxColWidth. */
       var iconQueue = [];
       for(i = 0; i < n; i++){
-        var x0 = i * mtxColWidth + 1;
+        var x0 = i * mtxColWidth + 1 + mtxColDriftX[i];
         var y0 = mtxDrops[i] * mtxLineStep;
         if(mtxColItem[i] == null){
           mtxAssignColVisual(i);
@@ -1390,6 +1962,48 @@
         var warped = mtxApplyWarp(x0, y0, w, h);
         var x = warped.x;
         var y = warped.y;
+
+        /* ── Afterburn trail (each step warped individually) ── */
+        ensureGlowSprites();
+        var trailAlpha = trailBaseAlphaFactor * op;
+        var isDollar = (item.type === 'text' && item.value === '$');
+        var sprite = isDollar ? trailGlowSpriteDollar : trailGlowSprite;
+        var spriteHalf = trailGlowSpriteSize / 2;
+
+        /* Submersion zone: shorten trail and diffuse glow in bottom 20% */
+        var submersionFactor = 1;
+        var inSubmersion = (y0 * mtxLineStep) > (h * meshZoneTop);
+        if (inSubmersion) {
+          var depth = ((y0 * mtxLineStep) - h * meshZoneTop) / (h * (1 - meshZoneTop));
+          submersionFactor = Math.max(0.2, 1 - depth * 0.7);
+        }
+
+        var effectiveSteps = Math.max(1, Math.round(trailSteps * submersionFactor));
+
+        for (var t = 1; t <= effectiveSteps; t++) {
+          /* Compute unwarped trail point, then warp it */
+          var rawTrailY = mtxDrops[i] * mtxLineStep - t * mtxLineStep;
+          if (rawTrailY < 0) break;
+          var rawTrailX = i * mtxColWidth + 1;
+          var warpedTrail = mtxApplyWarp(rawTrailX, rawTrailY, w, h);
+
+          var tAlpha = trailAlpha * (1 - t / (effectiveSteps + 1));
+          if (tAlpha < 0.004) break;
+
+          /* In submersion zone, glow diffuses wider */
+          var glowScale = 1; /* no size increase in submersion zone */
+          var drawSize = trailGlowSpriteSize * glowScale;
+          var drawHalf = drawSize / 2;
+
+          mtxCtx.save();
+          mtxCtx.globalAlpha = tAlpha;
+          mtxCtx.drawImage(sprite,
+            warpedTrail.x + mtxColWidth * 0.4 - drawHalf,
+            warpedTrail.y + mtxLineStep * 0.5 - drawHalf,
+            drawSize, drawSize
+          );
+          mtxCtx.restore();
+        }
 
         if(item.type === 'text'){
           mtxCtx.textAlign = 'left';
@@ -1409,7 +2023,8 @@
             mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.28)';
           }
           mtxCtx.save();
-          mtxCtx.shadowBlur = item.value.length > 2 ? 5 : 6;
+          var isLargeBtc = (item.value === '₿' && item.btcLarge && item.fontSize > mtxFontSize * 1.3);
+          mtxCtx.shadowBlur = isLargeBtc ? 10 : (item.value.length > 2 ? 5 : 6);
           mtxCtx.shadowOffsetX = 0;
           mtxCtx.shadowOffsetY = 0;
           var tx = Math.round(x);
@@ -1432,10 +2047,10 @@
           var tint = buildTinted(item.def);
           if(tint){
             var iw = item.drawSize != null ? item.drawSize : mtxIconDrawSize;
-            var ih = iw;
+            var ih = item.drawHeight != null ? item.drawHeight : iw;
             /* Integer draw size for all icons: avoids subpixel drawImage scaling artifacts. */
             iw = Math.max(1, Math.round(iw));
-            ih = iw;
+            ih = Math.max(1, Math.round(ih));
             var ix = Math.round(x);
             var iy = Math.round(y);
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
@@ -1445,26 +2060,87 @@
             mtxCtx.fillRect(ix, iy, Math.ceil(iw), Math.ceil(ih));
             /* Queue the sprite draw for pass 2. */
             var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
-            iconQueue.push({ tint: tint, ix: ix, iy: iy, iw: iw, ih: ih, op: op, hollow: isHollowHex });
+            var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
+            iconQueue.push({ tint: tint, ix: ix, iy: iy, iw: iw, ih: ih, op: op, hollow: isHollowHex, btcGlow: isBtcGlow });
+          }
+        }
+
+        /* ── Mesh proximity reaction: glyph entering bottom zone ── */
+        var glyphScreenY = y0 * mtxLineStep;
+        if (glyphScreenY > h * meshZoneTop && glyphScreenY < h) {
+          /* Wake nearby mesh nodes: brief brightness pulse */
+          var proximityDepth = (glyphScreenY - h * meshZoneTop) / (h * (1 - meshZoneTop));
+          if (proximityDepth > 0.3 && Math.random() < 0.02) {
+            for (var pm = 0; pm < meshNodes.length; pm++) {
+              var pn = meshNodes[pm];
+              var pdx = (i * mtxColWidth + mtxColWidth * 0.5) - pn.x;
+              var pdy = glyphScreenY - pn.y;
+              var pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+              if (pdist < 30) {
+                pn.reactBright = Math.min(1, (pn.reactBright || 0) + 0.3);
+              }
+            }
           }
         }
 
         if(y0 > h){
+          /* ── Deposit node into control-layer mesh ── */
+          var occupancy = meshNodes.length / meshMaxNodes;
+          var depositChance = 0.45 * (1 - occupancy * occupancy);
+          if (meshNodes.length < meshMaxNodes && Math.random() < depositChance) {
+            var meshTargetY = h * meshZoneTop + Math.random() * h * (1 - meshZoneTop);
+            /* Drift from column center to avoid vertical banding */
+            var meshTargetX = i * mtxColWidth + mtxColWidth * 0.5
+              + (Math.random() - 0.5) * mtxColWidth * 2.5;
+            meshTargetX = Math.max(4, Math.min(w - 4, meshTargetX));
+
+            var isDollarDeposit = (item.type === 'text' && item.value === '$');
+            meshNodes.push({
+              x: meshTargetX,
+              y: meshTargetY - 8, /* start slightly above resting point */
+              restY: meshTargetY,
+              r: 1.0 + Math.random() * 1.5,
+              alpha: isDollarDeposit ? (0.28 + Math.random() * 0.3) : (0.18 + Math.random() * 0.32),
+              born: performance.now(),
+              life: meshNodeLifeMin + Math.random() * (meshNodeLifeMax - meshNodeLifeMin),
+              pulse: Math.random() * Math.PI * 2,
+              settling: true,
+              reactBright: 0
+            });
+
+            /* Arrival ripple */
+            meshRipples.push({
+              x: meshTargetX,
+              y: meshTargetY,
+              born: performance.now(),
+              maxR: 12 + Math.random() * 8,
+              alpha: 0.08
+            });
+          }
+
           mtxDrops[i] = Math.random() * -5;
+          mtxColDriftX[i] = 0;
+          mtxColDriftRate[i] = 0;
           mtxAssignColVisual(i);
           if(mtxColItem[i].type !== 'icon'){
             mtxColStep[i] = 0.15 + Math.random() * 0.04;
           }
         }
         mtxDrops[i] += mtxColStep[i] * dtMul;
+        mtxColDriftX[i] += mtxColDriftRate[i] * dtMul;
       }
       /* Pass 2: draw all icon sprites on top of every matte. */
       for(i = 0; i < iconQueue.length; i++){
         var q = iconQueue[i];
         mtxCtx.save();
         mtxCtx.globalAlpha = q.op;
-        mtxCtx.shadowBlur = 0;
-        mtxCtx.shadowColor = 'transparent';
+        if(q.btcGlow){
+          mtxCtx.shadowBlur = 5;
+          mtxCtx.shadowColor = 'rgba(247, 147, 26, 0.35)';
+        } else {
+          mtxCtx.shadowBlur = 0;
+          mtxCtx.shadowColor = 'transparent';
+        }
         mtxCtx.shadowOffsetX = 0;
         mtxCtx.shadowOffsetY = 0;
         mtxCtx.imageSmoothingEnabled = !q.hollow;
@@ -1477,6 +2153,144 @@
       /* Pass 3: dollar magnet particles (desktop only). */
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
+
+      /* ══════════════════════════════════════════════
+         Control-layer mesh: infrastructure beneath the rain
+         ══════════════════════════════════════════════ */
+      var meshNow = performance.now();
+
+      /* Top-edge gradient mask: mesh fades in from meshZoneTop, no hard band */
+      var meshMaskTop = h * meshZoneTop;
+      var meshMaskFadeH = h * 0.10;
+
+      /* Expire old nodes */
+      for (var mi = meshNodes.length - 1; mi >= 0; mi--) {
+        if (meshNow - meshNodes[mi].born > meshNodes[mi].life) {
+          meshNodes.splice(mi, 1);
+        }
+      }
+
+      /* Settle newly deposited nodes toward resting Y */
+      for (var ms = 0; ms < meshNodes.length; ms++) {
+        var sn = meshNodes[ms];
+        if (sn.settling) {
+          sn.y += (sn.restY - sn.y) * 0.06;
+          if (Math.abs(sn.y - sn.restY) < 0.3) {
+            sn.y = sn.restY;
+            sn.settling = false;
+          }
+        }
+        /* Decay reactBright */
+        if (sn.reactBright > 0) {
+          sn.reactBright *= 0.94;
+          if (sn.reactBright < 0.01) sn.reactBright = 0;
+        }
+      }
+
+      /* Expire old ripples */
+      for (var mr = meshRipples.length - 1; mr >= 0; mr--) {
+        if (meshNow - meshRipples[mr].born > meshRippleMaxAge) {
+          meshRipples.splice(mr, 1);
+        }
+      }
+
+      /* Zone alpha: applies a vertical fade at the top of the mesh zone */
+      function meshZoneAlpha(nodeY) {
+        if (nodeY < meshMaskTop) return 0;
+        if (nodeY < meshMaskTop + meshMaskFadeH) {
+          return (nodeY - meshMaskTop) / meshMaskFadeH;
+        }
+        return 1;
+      }
+
+      function meshNodeFade(nd) {
+        var age = meshNow - nd.born;
+        var fadeIn = Math.min(1, age / 800);
+        var fadeOut = age > nd.life * 0.7
+          ? 1 - (age - nd.life * 0.7) / (nd.life * 0.3)
+          : 1;
+        return fadeIn * fadeOut * meshZoneAlpha(nd.y);
+      }
+
+      /* Draw connection lines (k-nearest, not all pairs) */
+      var drawnEdges = {};
+      for (var ma = 0; ma < meshNodes.length; ma++) {
+        var neighbors = meshNearestK(ma, meshMaxLinksPerNode);
+        var ndA = meshNodes[ma];
+        var fadeA = meshNodeFade(ndA);
+
+        for (var nb = 0; nb < neighbors.length; nb++) {
+          var bi = neighbors[nb].idx;
+          var edgeKey = ma < bi ? (ma + ':' + bi) : (bi + ':' + ma);
+          if (drawnEdges[edgeKey]) continue;
+          drawnEdges[edgeKey] = true;
+
+          var ndB = meshNodes[bi];
+          var fadeB = meshNodeFade(ndB);
+          var dist = neighbors[nb].dist;
+
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha)
+            * Math.min(fadeA, fadeB)
+            * (1 - dist / meshConnectionDist)
+            * 0.08;
+
+          /* React brightness: flash nearby links on arrival */
+          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.2;
+          lineAlpha += reactBoost;
+
+          if (lineAlpha > 0.003) {
+            mtxCtx.beginPath();
+            mtxCtx.moveTo(ndA.x, ndA.y);
+            mtxCtx.lineTo(ndB.x, ndB.y);
+            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
+            mtxCtx.lineWidth = 0.5;
+            mtxCtx.stroke();
+          }
+        }
+      }
+
+      /* Draw mesh nodes */
+      for (var mn = 0; mn < meshNodes.length; mn++) {
+        var nd = meshNodes[mn];
+        var nFade = meshNodeFade(nd);
+        if (nFade < 0.003) continue;
+
+        var pulse = Math.sin(meshNow * meshPulseSpeed + nd.pulse) * 0.25 + 0.75;
+        var drawAlpha = nd.alpha * nFade;
+
+        /* React brightness boost */
+        var rBoost = nd.reactBright || 0;
+        drawAlpha = Math.min(1, drawAlpha + rBoost * 0.35);
+
+        /* Core dot */
+        mtxCtx.beginPath();
+        mtxCtx.arc(nd.x, nd.y, nd.r * pulse, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + drawAlpha * 0.25 + ')';
+        mtxCtx.fill();
+
+        /* Soft halo: smaller and dimmer than reef — infrastructure, not bloom */
+        mtxCtx.beginPath();
+        mtxCtx.arc(nd.x, nd.y, nd.r * pulse * 1.8, 0, Math.PI * 2);
+        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + drawAlpha * 0.03 + ')';
+        mtxCtx.fill();
+      }
+
+      /* Draw arrival ripples */
+      for (var ri = 0; ri < meshRipples.length; ri++) {
+        var rp = meshRipples[ri];
+        var rAge = meshNow - rp.born;
+        var rProgress = rAge / meshRippleMaxAge;
+        var rRadius = rp.maxR * rProgress;
+        var rAlpha = rp.alpha * (1 - rProgress) * (1 - rProgress) * meshZoneAlpha(rp.y);
+        if (rAlpha > 0.003) {
+          mtxCtx.beginPath();
+          mtxCtx.arc(rp.x, rp.y, rRadius, 0, Math.PI * 2);
+          mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + rAlpha + ')';
+          mtxCtx.lineWidth = 0.7;
+          mtxCtx.stroke();
+        }
+      }
+
       mtxRaf = requestAnimationFrame(mtxDraw);
     }
 
@@ -1866,6 +2680,10 @@
     window.addEventListener('resize', function(){
       clearTimeout(mtxResizeTimer);
       mtxResizeTimer = window.setTimeout(function(){
+        mtxIsMobile = window.matchMedia('(max-width: 768px)').matches;
+        meshMaxNodes = mtxIsMobile ? 12 : 30;
+        meshConnectionDist = mtxIsMobile ? 35 : 48;
+        trailSteps = mtxIsMobile ? 2 : 4;
         if(matrixContainer.classList.contains('active')){
           mtxInitCanvas();
         }
