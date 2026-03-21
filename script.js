@@ -696,7 +696,7 @@
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/base.png', loaded: false, img: null, tinted: null },
+      /* Base (base.png) omitted: filled circle mark reads as a solid green square at matrix size. */
       { src: './icons/matrix/ink.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/arc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
@@ -730,7 +730,7 @@
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
+      /* Western Union (wu.png) omitted: Simple Icons westernunion mark is a stylized W that reads as a plain letter at matrix size. */
       { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
@@ -795,7 +795,7 @@
     var mtxLegacyMarkRate = 0.15;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '95';
+    var mtxIconAssetVer = '101';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -1062,8 +1062,10 @@
         var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = Math.min(ds + 8, 42);
-        } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
-          ds = Math.min(ds + 7, 41);
+        } else if(item.def && item.def.src && (item.def.src.indexOf('layerzero.png') >= 0 || item.def.src.indexOf('uni.png') >= 0)){
+          ds = mtxIconLZUniDrawSizeMin + Math.random() * (mtxIconLZUniDrawSizeMax - mtxIconLZUniDrawSizeMin);
+        } else if(item.def && item.def.src && item.def.src.indexOf('crv.png') >= 0){
+          ds = Math.min(ds + 10, 44);
         } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.png') >= 0){
           ds = Math.min(ds + 6, 38);
         }

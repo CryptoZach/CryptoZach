@@ -38,7 +38,7 @@ These are already documented in code comments; this skill exists so agents **do 
 
 - **Wide wordmarks** (BlackRock, Intel `logos/intel`, PayPal SI mark): at **32x32** they can collapse to a **few pixels tall**. Prefer **square marks**, **Iconify `logos/*`**, or **bundled** crops.
 
-- **Bittensor (`tao`)**: Iconify **`token/tao`** is a **hex tensor-node** mark that reads as a **filled hex** in the trail. **`build-sources/tao.svg`** is a **bold `TAO`** monospace ticker (same idea as **`avax.svg`**). **`build-matrix-icons.mjs`** must list **`localSvg`** for **`tao`** first.
+- **Bittensor (`tao`)**: **`build-sources/tao.svg`** embeds Iconify **`token/tao`** path geometry (no **`TAO`** text ticker). At matrix size the mark reads as a filled hex in the trail. **`build-matrix-icons.mjs`** lists **`localSvg`** for **`tao`** first.
 
 - **Python vs Node:** Keep **`build_matrix_icons.py`** and **`scripts/build-matrix-icons.mjs`** **aligned** on which assets are **bundled**, **skipped**, and **Iconify order** for the same `name` key.
 
