@@ -2393,26 +2393,15 @@
       var isDollar = item.type === 'text' && item.value === '$';
       var submerge = mtxGetSubmerge(headBaseY, h);
       var driftX = mtxColDriftX[colIndex] || 0;
-      /* Very tight wake — only 3 steps desktop, 2 mobile, fading fast */
-      var effSteps = mtxIsMobile ? 2 : 3;
+      /* Very tight wake — 2 steps desktop, 1 mobile. No bloom sprite at all. */
+      var effSteps = mtxIsMobile ? 1 : 2;
       if (mtxReducedMotion) effSteps = 1;
-      var trailAlpha = (mtxIsMobile ? 0.04 : 0.055) * op * (1 - 0.4 * submerge);
+      var trailAlpha = (mtxIsMobile ? 0.025 : 0.035) * op * (1 - 0.4 * submerge);
 
-      /* A. Tiny head bloom — just above the glyph, small and faint */
-      var bloom = mtxGlowSpriteFor(isDollar, 0, submerge);
-      var bloomSize = bloom.width * 0.28;
-      mtxCtx.save();
-      mtxCtx.globalAlpha = Math.min(0.10, trailAlpha * 1.5);
-      mtxCtx.drawImage(bloom,
-        warpedHead.x - bloomSize * 0.5,
-        warpedHead.y - bloomSize * 1.3,
-        bloomSize, bloomSize);
-      mtxCtx.restore();
-
-      /* B. Short segmented wake — each step warped, fades steeply */
+      /* Wake steps start 2 line-heights above the head — well clear of the glyph */
       var pts = [];
       for (var ti = 1; ti <= effSteps; ti++) {
-        var rawY = headBaseY - ti * mtxLineStep;
+        var rawY = headBaseY - (ti + 1) * mtxLineStep;
         if (rawY < 0) break;
         var rawX = colIndex * mtxColWidth + 1 + driftX;
         var wpt = mtxWarpPoint(rawX, rawY, w, h);
@@ -2420,31 +2409,31 @@
         pts.push({ wx: wpt.x, wy: wpt.y, alpha: trailAlpha * stepFade * stepFade });
       }
 
-      /* Tiny glow dots — barely visible, quick taper */
+      /* Tiny glow dots — well above the head, very faint */
       for (var di = 0; di < pts.length; di++) {
         var p = pts[di];
         if (p.alpha < 0.003) break;
         var spr = mtxGlowSpriteFor(isDollar, 0, 0);
-        var dotSize = spr.width * (0.22 + di * 0.02);
+        var dotSize = spr.width * 0.18;
         mtxCtx.save();
-        mtxCtx.globalAlpha = p.alpha * 0.5;
+        mtxCtx.globalAlpha = p.alpha * 0.4;
         mtxCtx.drawImage(spr, p.wx - dotSize * 0.5, p.wy - dotSize * 0.5, dotSize, dotSize);
         mtxCtx.restore();
       }
 
-      /* C. Thin filament — single faint line connecting wake points */
+      /* Thin filament — faint line from head upward through wake points */
       if (pts.length > 0) {
         var fCol = isDollar ? '204, 251, 229' : '74, 222, 128';
-        var fAlpha = trailAlpha * 0.15;
+        var fAlpha = trailAlpha * 0.12;
         if (fAlpha > 0.003) {
           mtxCtx.save();
           mtxCtx.strokeStyle = 'rgba(' + fCol + ', ' + fAlpha + ')';
-          mtxCtx.lineWidth = 0.4;
+          mtxCtx.lineWidth = 0.35;
           mtxCtx.lineCap = 'round';
           mtxCtx.beginPath();
-          mtxCtx.moveTo(warpedHead.x, warpedHead.y);
+          mtxCtx.moveTo(warpedHead.x, warpedHead.y - mtxLineStep);
           for (di = 0; di < pts.length; di++) {
-            mtxCtx.lineTo(pts[di].wx, pts[di].wy + mtxLineStep * 0.3);
+            mtxCtx.lineTo(pts[di].wx, pts[di].wy);
           }
           mtxCtx.stroke();
           mtxCtx.restore();
