@@ -645,40 +645,51 @@
       '€', '£', '¥', '₩', '₹', '₣', '₴', '\uFDFC',
       '₿', '\u039E',
       'XAU', 'XAG',
-      'DXY', 'VIX', 'NDX'
+      'DXY', 'VIX'
     ];
 
     var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '\uFDFC': 1 };
 
     var iconDefs = [
       { src: './icons/matrix/btc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sol.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      /* Helium (hnt.png) omitted: stroke hex ring reads like Chainlink-style hex smears in the trail at ~20px. File remains in icons/matrix for builds. */
+      { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/fil.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/avax.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dot.png', loaded: false, img: null, tinted: null },
-      /* Cosmos (atom.png) omitted: SI mark is a faint dot-hex lattice; at 32px + green tint it reads as a blank hex. File remains in icons/matrix for builds. */
+      { src: './icons/matrix/atom.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
-      /* Chainlink (link.png) omitted from hero pool: two-ring mark still smears with trail blur at column foot. */
+      { src: './icons/matrix/link.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/doge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/op.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/near.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/apt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sui.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/inj.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/zec.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/stx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/mkr.png', loaded: false, img: null, tinted: null },
@@ -688,6 +699,8 @@
       { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wld.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tao.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
@@ -696,10 +709,14 @@
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
-      /* Base (base.png) omitted: filled circle mark reads as a solid green square at matrix size. */
+      { src: './icons/matrix/base.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ink.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/arc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/stripe.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
@@ -710,6 +727,9 @@
       { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ma.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/googl.png', loaded: false, img: null, tinted: null },
@@ -730,16 +750,20 @@
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
-      /* Western Union (wu.png) omitted: Simple Icons westernunion mark is a stylized W that reads as a plain letter at matrix size. */
+      { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/csco.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dis.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
+      /* Second Nasdaq slot: former NDX text ticker (macro index) now uses Nasdaq logo PNG only. */
       { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ice.png', loaded: false, img: null, tinted: null },
@@ -750,8 +774,8 @@
       { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fed.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/frbny.png', loaded: false, img: null, tinted: null }
+      { src: './icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
+      /* Fed removed: seal reads as ambiguous blob at matrix size. */
     ];
 
     var mtxCryptoTextList = [];
@@ -770,14 +794,21 @@
     var mtxStockIconDefs = iconDefs.slice(mtxStockIconIdx);
 
     var mtxCryptoPool = mtxCryptoTextList.map(function(v){ return { type: 'text', value: v }; });
+    var mtxCoreStableSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png'];
+    var mtxStablecoinSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png', 'mkr.png', 'm0.png'];
     mtxCryptoIconDefs.forEach(function(def){
-      mtxCryptoPool.push({ type: 'icon', def: def });
+      var isCoreStable = mtxCoreStableSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
+      var isStable = mtxStablecoinSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
+      var n = isCoreStable ? 8 : (isStable ? 5 : 2);
+      for(var k = 0; k < n; k++){
+        mtxCryptoPool.push({ type: 'icon', def: def });
+      }
     });
 
     var mtxTradPool = mtxTradTextChars.map(function(v){ return { type: 'text', value: v }; });
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
-      var n = def.src.indexOf('visa.png') >= 0 ? 2 : 1;
+      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 5 : 3;
       var k;
       for(k = 0; k < n; k++){
         mtxTradPool.push({ type: 'icon', def: def });
@@ -792,10 +823,10 @@
     /* ~35% of glyphs from crypto icons only (no crypto ASCII tickers); rest from fiat, commodities, macro, stock icons */
     var mtxCryptoPickRate = 0.35;
     /* ₿ and Ξ only via this branch so they are not diluted by pools */
-    var mtxLegacyMarkRate = 0.15;
+    var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '101';
+    var mtxIconAssetVer = '114';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -829,13 +860,16 @@
     var mtxDollarFontSize = 20;
     /* € £ ¥ etc.: larger than commodity/macro tickers so fiat reads in the trail. */
     var mtxFiatNonUsdFontSize = 18;
-    var mtxLineStep = 22;
+    var mtxLineStep = 16;
     var mtxIconDrawSize = 24;
-    var mtxIconDrawSizeMin = 17;
-    var mtxIconDrawSizeMax = 32;
+    var mtxIconDrawSizeMin = 18;
+    var mtxIconDrawSizeMax = 34;
     /* LayerZero + Uniswap: thin marks read small at trail scale; wider range than global min/max. */
     var mtxIconLZUniDrawSizeMin = 26;
-    var mtxIconLZUniDrawSizeMax = 48;
+    var mtxIconLZUniDrawSizeMax = 42;
+    /* LayerZero ZRO: extra-thin mark needs even more size boost. */
+    var mtxIconLZDrawSizeMin = 44;
+    var mtxIconLZDrawSizeMax = 50;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -953,7 +987,10 @@
       return item;
     }
 
-    var mtxIconMinColDistance = 3;
+    var mtxIconCooldowns = {};
+    var mtxIconCooldownMs = 1000;
+
+    var mtxIconMinColDistance = 2;
     function mtxIconTooClose(colIndex, def){
       if(!def || !def.src || !mtxColItem){
         return false;
@@ -1041,7 +1078,7 @@
         mtxColItem = new Array(colCount).fill(null);
         mtxColOpacity = new Array(colCount).fill(null);
         mtxColStep = new Array(colCount).fill(0).map(function(){
-          return 0.092 + Math.random() * 0.024;
+          return 0.15 + Math.random() * 0.04;
         });
       }
       mtxPrevDrawTs = 0;
@@ -1051,29 +1088,65 @@
       var item;
       var tries = 0;
       var maxTries = 20;
+      var now = performance.now();
       do {
         item = pickItem();
-        if(item.type !== 'icon' || !mtxIconTooClose(i, item.def)){
+        if(item.type !== 'icon'){
+          break;
+        }
+        var srcKey = item.def && item.def.src ? item.def.src : '';
+        var isStableSrc = mtxCoreStableSlugs.some(function(s){ return srcKey.indexOf(s) >= 0; });
+        var onCooldown = !isStableSrc && srcKey && mtxIconCooldowns[srcKey] && (now - mtxIconCooldowns[srcKey]) < mtxIconCooldownMs;
+        if(!onCooldown && !mtxIconTooClose(i, item.def)){
           break;
         }
         tries++;
       } while(tries < maxTries);
       if(item.type === 'icon'){
+        var srcKey2 = item.def && item.def.src ? item.def.src : '';
+        if(srcKey2){ mtxIconCooldowns[srcKey2] = now; }
         var ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
-          ds = Math.min(ds + 8, 42);
-        } else if(item.def && item.def.src && (item.def.src.indexOf('layerzero.png') >= 0 || item.def.src.indexOf('uni.png') >= 0)){
+          ds = Math.min(ds + 2, 34);
+        } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
+          ds = mtxIconLZDrawSizeMin + Math.random() * (mtxIconLZDrawSizeMax - mtxIconLZDrawSizeMin);
+        } else if(item.def && item.def.src && item.def.src.indexOf('uni.png') >= 0){
           ds = mtxIconLZUniDrawSizeMin + Math.random() * (mtxIconLZUniDrawSizeMax - mtxIconLZUniDrawSizeMin);
         } else if(item.def && item.def.src && item.def.src.indexOf('crv.png') >= 0){
-          ds = Math.min(ds + 10, 44);
-        } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.png') >= 0){
           ds = Math.min(ds + 6, 38);
+        } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.png') >= 0){
+          ds = Math.min(ds + 4, 34);
+        } else if(item.def && item.def.src && item.def.src.indexOf('link.png') >= 0){
+          ds = Math.max(ds, 24);
+        } else if(item.def && item.def.src && (item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0)){
+          ds = Math.min(ds + 10, 44);
+        } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.png') >= 0){
+          ds = Math.min(ds + 4, 30);
+        } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
+          ds = Math.min(ds + 6, 32);
+        } else if(item.def && item.def.src && (item.def.src.indexOf('csco.png') >= 0 || item.def.src.indexOf('amd.png') >= 0 || item.def.src.indexOf('ink.png') >= 0 || item.def.src.indexOf('mkr.png') >= 0)){
+          ds = Math.max(ds, 26);
+        } else if(item.def && item.def.src && (item.def.src.indexOf('visa.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('jpm.png') >= 0 || item.def.src.indexOf('citi.png') >= 0 || item.def.src.indexOf('bac.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('ma.png') >= 0)){
+          ds = 16 + Math.random() * 24;
         }
         item = {
           type: 'icon',
           def: item.def,
           drawSize: ds
         };
+      }
+      /* Randomize text font size at spawn (+/- 30% variation). */
+      if(item.type === 'text'){
+        var baseFs;
+        if(item.value === '$'){
+          baseFs = mtxDollarFontSize;
+        } else if(mtxFiatNonUsd[item.value]){
+          baseFs = mtxFiatNonUsdFontSize;
+        } else {
+          baseFs = mtxFontSize;
+        }
+        var fsVariation = 0.7 + Math.random() * 0.6;
+        item = { type: 'text', value: item.value, fontSize: Math.round(baseFs * fsVariation) };
       }
       mtxColItem[i] = item;
       if(item.type === 'icon'){
@@ -1082,7 +1155,7 @@
         /* Larger icons: brighter (add up to 0.12 opacity boost) */
         mtxColOpacity[i] = 0.32 + Math.random() * 0.16 + normalizedSize * 0.12;
         /* Larger icons: slower (multiply speed by 0.75 to 1.0) */
-        var baseSpeed = 0.092 + Math.random() * 0.024;
+        var baseSpeed = 0.15 + Math.random() * 0.04;
         mtxColStep[i] = baseSpeed * (0.75 + normalizedSize * 0.25);
       } else {
         mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
@@ -1320,13 +1393,8 @@
 
         if(item.type === 'text'){
           mtxCtx.textAlign = 'left';
-          if(item.value === '$'){
-            mtxCtx.font = '700 ' + mtxDollarFontSize + 'px ' + mtxFontFamily;
-          } else if(mtxFiatNonUsd[item.value]){
-            mtxCtx.font = '700 ' + mtxFiatNonUsdFontSize + 'px ' + mtxFontFamily;
-          } else {
-            mtxCtx.font = '700 ' + mtxFontSize + 'px ' + mtxFontFamily;
-          }
+          var fs = item.fontSize || mtxFontSize;
+          mtxCtx.font = '700 ' + fs + 'px ' + mtxFontFamily;
           if(item.value === '₿'){
             mtxCtx.fillStyle = 'rgba(247, 147, 26, ' + Math.min(1, op + 0.22) + ')';
             mtxCtx.shadowColor = 'rgba(251, 191, 36, 0.35)';
@@ -1385,7 +1453,7 @@
           mtxDrops[i] = Math.random() * -5;
           mtxAssignColVisual(i);
           if(mtxColItem[i].type !== 'icon'){
-            mtxColStep[i] = 0.092 + Math.random() * 0.024;
+            mtxColStep[i] = 0.15 + Math.random() * 0.04;
           }
         }
         mtxDrops[i] += mtxColStep[i] * dtMul;

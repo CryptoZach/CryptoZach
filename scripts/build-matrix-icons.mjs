@@ -6,6 +6,7 @@
  * localSvg: repo-root-relative path to an SVG file when no CDN slug exists.
  * localRaster: repo-root-relative PNG/JPEG/WebP (rasterized to 32px white silhouette; tried first when set).
  * localPng: repo-root-relative path to a PNG (rasterized to 32px white silhouette; try before SVG).
+ * prefersIconify: when true, try iconifyExtra (e.g. logos/*) before jsDelivr Simple Icons for that row.
  *
  * Run: npm run build:matrix-icons
  * Needs network. Uses Playwright Chromium to rasterize (no system Cairo).
@@ -71,17 +72,20 @@ const ICONS = [
     iconifyExtra: ['token/uniswap', 'token-branded/uniswap'],
     cc: 'uni',
   },
+  /* Aave: bundled aave.svg from repo aave-aave-logo.svg (masked so face stays cut out at 32px whiten) */
   {
     name: 'aave',
+    localSvg: 'icons/matrix/build-sources/aave.svg',
     si: [],
     iconifyExtra: ['cryptocurrency-color/aave', 'simple-icons/aave'],
     cc: 'aave',
   },
   { name: 'xrp', si: ['xrp'], cc: 'xrp' },
   { name: 'ada', si: ['cardano'], cc: 'ada' },
+  /* Avalanche: bundled WebP from avalanche-avax-fill-3ll8qiqg376l2e5i4vv6ti.webp (replaces monospace AVAX.svg) */
   {
     name: 'avax',
-    localSvg: 'icons/matrix/build-sources/avax.svg',
+    localRaster: 'icons/matrix/build-sources/avalanche-avax-fill-3ll8qiqg376l2e5i4vv6ti.webp',
     si: ['avalanche'],
     cc: 'avax',
     iconifyExtra: ['token/avax'],
@@ -162,7 +166,13 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/hyperliquid.svg',
     si: [],
   },
-  { name: 'tia', si: ['celestia'], iconifyExtra: ['token/tia'] },
+  /* Celestia: bundled build-sources/tia.png (raster); SI/Iconify fallbacks if file missing */
+  {
+    name: 'tia',
+    localRaster: 'icons/matrix/build-sources/tia.png',
+    si: ['celestia'],
+    iconifyExtra: ['token/tia'],
+  },
   { name: 'xmr', si: ['monero'], cc: 'xmr' },
   { name: 'zec', si: ['zcash'], cc: 'zec' },
   /* Curve: bundled crv.png from repo-root Curve_logo.png (official mark). */
@@ -190,8 +200,10 @@ const ICONS = [
     si: [],
     iconifyExtra: ['token-branded/ton', 'token/ton', 'simple-icons/ton'],
   },
+  /* Sei: bundled build-sources/sei.png (raster); SI/Iconify fallbacks if file missing */
   {
     name: 'sei',
+    localRaster: 'icons/matrix/build-sources/sei.png',
     si: ['sei'],
     iconifyExtra: ['token/sei'],
   },
@@ -220,10 +232,11 @@ const ICONS = [
     si: [],
     iconifyExtra: ['logos/kraken', 'token-branded/kraken'],
   },
+  /* MetaMask: bundled build-sources/metamask.png (user fox mark; Iconify wordmark still listed as fallback). */
   {
     name: 'metamask',
+    localRaster: 'icons/matrix/build-sources/metamask.png',
     si: [],
-    /* logos/metamask is a wide wordmark (512x96); 32px raster reads as vertical smears. Fox mark first. */
     iconifyExtra: ['token-branded/metamask', 'logos/metamask'],
   },
   {
@@ -262,19 +275,33 @@ const ICONS = [
     si: [],
     iconifyExtra: ['token/ink', 'token-branded/ink'],
   },
+  /* Arc (Circle Arc network): bundled arc.svg from repo Arc-logo.svg (ellipse + masked raster; not monospace ARC text) */
   {
     name: 'arc',
     localSvg: 'icons/matrix/build-sources/arc.svg',
     si: [],
     iconifyExtra: ['token/arc', 'token-branded/arc', 'arcticons/arc'],
   },
+  /* Circle (issuer): bundled circle.svg from repo Circle-logo.svg */
+  {
+    name: 'circle',
+    localSvg: 'icons/matrix/build-sources/circle.svg',
+    si: [],
+  },
+  /* M0 Labs: bundled build-sources/m0.png (no stable Iconify slug in common matrix sets). */
   {
     name: 'm0',
-    localSvg: 'icons/matrix/build-sources/m0.svg',
+    localRaster: 'icons/matrix/build-sources/m0.png',
     si: [],
   },
   { name: 'aapl', si: ['apple'] },
-  { name: 'msft', si: ['microsoft'] },
+  /* Microsoft / Amazon / Oracle / Disney / IBM: prefersIconify tries logos/* and brand icons before jsDelivr SI */
+  {
+    name: 'msft',
+    prefersIconify: true,
+    si: ['microsoft'],
+    iconifyExtra: ['logos/microsoft', 'simple-icons/microsoft'],
+  },
   /* JPM: SI has no jpmorgan slug; Chase octagon is the bundled JPMC mark (Simple Icons chase) */
   {
     name: 'jpm',
@@ -311,7 +338,12 @@ const ICONS = [
   },
   { name: 'ma', si: ['mastercard'] },
   { name: 'googl', si: ['google', 'alphabet'] },
-  { name: 'amzn', si: ['amazon'] },
+  {
+    name: 'amzn',
+    prefersIconify: true,
+    si: ['amazon'],
+    iconifyExtra: ['mdi/amazon', 'fa6-brands/amazon', 'simple-icons/amazon'],
+  },
   { name: 'meta', si: ['meta'] },
   { name: 'x', si: ['x'] },
   {
@@ -354,15 +386,34 @@ const ICONS = [
   /* Intel: logos/intel is ~512x216 (wide strip in 32px); SI intel is 24x24 and fills the square */
   { name: 'intc', si: [], iconifyExtra: ['simple-icons/intel', 'logos/intel'] },
   { name: 'csco', si: ['cisco'] },
-  { name: 'orcl', si: ['oracle'] },
-  { name: 'dis', si: ['waltdisney', 'disney', 'waltdisneyworld'], iconifyExtra: ['tabler/brand-disney'] },
-  /* Strategy (MSTR): 2025 B mark; bundled (SI still ships old MicroStrategy bars) */
+  /* Oracle: bundled orcl.svg from repo oracle.svg; Iconify logos/* if file missing */
+  {
+    name: 'orcl',
+    localSvg: 'icons/matrix/build-sources/orcl.svg',
+    prefersIconify: true,
+    si: ['oracle'],
+    iconifyExtra: ['logos/oracle', 'simple-icons/oracle'],
+  },
+  {
+    name: 'dis',
+    prefersIconify: true,
+    si: ['waltdisney', 'disney', 'waltdisneyworld'],
+    iconifyExtra: ['tabler/brand-disney', 'arcticons/disney'],
+  },
+  /* Strategy (MSTR): bundled raster from Strategy_logo_(2025).svg.png (wordmark + BTC mark); SI microstrategy is legacy bars */
   {
     name: 'mstr',
-    localSvg: 'icons/matrix/build-sources/mstr.svg',
+    localRaster: 'icons/matrix/build-sources/strategy-logo-2025.png',
+    si: ['microstrategy'],
   },
   { name: 'hood', si: ['robinhood'] },
-  { name: 'ibm', si: ['ibm'] },
+  {
+    name: 'ibm',
+    prefersIconify: true,
+    si: ['ibm'],
+    iconifyExtra: ['logos/ibm', 'simple-icons/ibm'],
+  },
+  /* Nasdaq: bundled nasdaq.svg from repo Nasdaq_logo.svg (replaces abstract bars; NDX text retired in script.js) */
   {
     name: 'nasdaq',
     localSvg: 'icons/matrix/build-sources/nasdaq.svg',
@@ -389,6 +440,7 @@ const ICONS = [
     name: 'securitize',
     localSvg: 'icons/matrix/build-sources/securitize.svg',
   },
+  /* Bakkt: bundled build-sources/bakkt.svg (source: repo BKKT.svg); no Simple Icons slug in v16 */
   {
     name: 'bakkt',
     localSvg: 'icons/matrix/build-sources/bakkt.svg',
@@ -411,7 +463,12 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/clearstreet.svg',
     si: [],
   },
-  { name: 'wu', si: ['westernunion'] },
+  /* Western Union: bundled build-sources/wu.png (hero pool; SI-only W retired for matrix legibility) */
+  {
+    name: 'wu',
+    localRaster: 'icons/matrix/build-sources/wu.png',
+    si: ['westernunion'],
+  },
   { name: 'moneygram', si: ['moneygram'] },
   /* Bundled Lineicons path reads bolder at 32px than some SI strokes */
   {
@@ -446,6 +503,24 @@ async function fetchSvgForRow(row) {
     }
     /* Rows that also list si / iconifyExtra keep trying when local is absent. */
   }
+
+  const tryIconifyExtra = async () => {
+    for (const p of row.iconifyExtra || []) {
+      const t = await fetchText(iconifyPath(p));
+      if (t) {
+        return t;
+      }
+    }
+    return null;
+  };
+
+  if (row.prefersIconify) {
+    const t = await tryIconifyExtra();
+    if (t) {
+      return t;
+    }
+  }
+
   for (const slug of row.si || []) {
     let t = await fetchText(siUrl(slug));
     if (t) {
@@ -456,8 +531,9 @@ async function fetchSvgForRow(row) {
       return t;
     }
   }
-  for (const p of row.iconifyExtra || []) {
-    const t = await fetchText(iconifyPath(p));
+
+  if (!row.prefersIconify) {
+    const t = await tryIconifyExtra();
     if (t) {
       return t;
     }
