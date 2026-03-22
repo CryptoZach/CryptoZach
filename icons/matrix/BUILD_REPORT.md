@@ -1,14 +1,15 @@
 # Matrix Icon Build Report
 
-**Date:** 2026-03-21T06:16:12.001730  
-**Total:** 103  
-**Sourced:** 101  
+**Date:** 2026-03-22T18:55:15.294900  
+**Total:** 104  
+**Sourced:** 102  
 **Missing:** 2  
 
-## Sourced (101)
+## Sourced (102)
 
 | File | Source | Size |
 |------|--------|------|
+| `1inch.png` | bundled WebP (build-sources/1inch.webp) | 1059B |
 | `aapl.png` | Simple Icons (apple) | 587B |
 | `aave.png` | bundled PNG (build-sources/aave.png) | 671B |
 | `ada.png` | Simple Icons (cardano) | 820B |
@@ -38,7 +39,7 @@
 | `doge.png` | Simple Icons (dogecoin) | 752B |
 | `dot.png` | Simple Icons (polkadot) | 720B |
 | `eth.png` | bundled SVG (build-sources/eth.svg) | 1257B |
-| `facebook.png` | Simple Icons (facebook) | 690B |
+| `facebook.png` | bundled PNG (icons/matrix/facebook.png) | 665B |
 | `fidelity.png` | bundled PNG (build-sources/fidelity.png) | 471B |
 | `fil.png` | bundled SVG (build-sources/fil.svg) | 478B |
 | `googl.png` | Simple Icons (google) | 694B |
@@ -97,7 +98,7 @@
 | `usdt.png` | bundled PNG (build-sources/usdt.png) | 590B |
 | `venmo.png` | Iconify (fa7-brands/venmo-v) | 523B |
 | `visa.png` | Iconify (simple-icons/visa) | 582B |
-| `wfc.png` | bundled PNG (build-sources/wfc.png) | 765B |
+| `wfc.png` | bundled PNG (icons/matrix/wfc.png) | 683B |
 | `wise.png` | bundled PNG (build-sources/wise.png) | 855B |
 | `wld.png` | bundled SVG (build-sources/wld.svg) | 779B |
 | `wmt.png` | Iconify (tabler/brand-walmart) | 453B |

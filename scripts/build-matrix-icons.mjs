@@ -251,6 +251,14 @@ const ICONS = [
     si: [],
     iconifyExtra: ['arcticons/wormhole', 'arcticons/wormhole-2'],
   },
+  /* 1inch: bundled WebP (unicorn outline); npm manifest matches build_matrix_icons.py Phase 0b WebP */
+  {
+    name: '1inch',
+    localRaster: 'icons/matrix/build-sources/1inch.webp',
+    si: [],
+    iconifyExtra: ['token/1inch', 'simple-icons/1inch'],
+    cc: '1inch',
+  },
   /* Ondo: no Simple Icons slug; CoinGecko token image (see build-sources/ondo.png comment in build_matrix_icons.py). */
   {
     name: 'ondo',
@@ -367,14 +375,18 @@ const ICONS = [
   },
   {
     name: 'wfc',
-    localSvg: 'icons/matrix/build-sources/wfc.svg',
+    localPng: 'icons/matrix/wfc.png',
     si: [],
     iconifyExtra: ['simple-icons/wellsfargo'],
   },
   { name: 'schw', si: ['charlesschwab', 'schwab'], iconifyExtra: ['arcticons/schwab'] },
   /* PayPal: SI mark reads as a lone P at 20px; logos/paypal = full wordmark */
   { name: 'pypl', si: [], iconifyExtra: ['logos/paypal', 'simple-icons/paypal'] },
-  { name: 'facebook', si: ['facebook'] },
+  {
+    name: 'facebook',
+    localPng: 'icons/matrix/facebook.png',
+    si: ['facebook'],
+  },
   /* SI venmo = full wordmark; fa7 venmo-v = stylized V mark at matrix size */
   { name: 'venmo', si: [], iconifyExtra: ['fa7-brands/venmo-v'] },
   {
@@ -445,10 +457,8 @@ const ICONS = [
     name: 'bakkt',
     localSvg: 'icons/matrix/build-sources/bakkt.svg',
   },
-  {
-    name: 'fed',
-    localSvg: 'icons/matrix/build-sources/fed.svg',
-  },
+  /* Fed: Simple Icons federalreserve (bundled fed.svg removed; seal read poorly at matrix size) */
+  { name: 'fed', si: ['federalreserve'] },
   {
     name: 'frbny',
     localSvg: 'icons/matrix/build-sources/frbny.svg',
