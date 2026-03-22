@@ -1185,6 +1185,7 @@
       { src: './icons/matrix/okx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/chainalysis.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/fireblocks.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wintermute.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
@@ -1209,6 +1210,7 @@
       { src: './icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/meta.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/x.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wmt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
@@ -1284,6 +1286,12 @@
       var isTopL1 = mtxTopL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 4 : (isMajorL1 ? 3 : 2)));
+      if(def.src.indexOf('wintermute.png') >= 0){
+        n = 6;
+      }
+      if(def.src.indexOf('okx.png') >= 0){
+        n = 6;
+      }
       for(var k = 0; k < n; k++){
         mtxCryptoPool.push({ type: 'icon', def: def });
       }
@@ -1311,7 +1319,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '117';
+    var mtxIconAssetVer = '121';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -1707,7 +1715,14 @@
           var btcMax = mtxIconDrawSizeMax + 1;
           ds = mtxIconDrawSizeMin + Math.random() * (btcMax - mtxIconDrawSizeMin);
         } else {
-          ds = mtxIconDrawSizeMin + Math.random() * (mtxIconDrawSizeMax - mtxIconDrawSizeMin);
+          var dMin = mtxIconDrawSizeMin;
+          var dMax = mtxIconDrawSizeMax;
+          /* USDT + Coinbase: +2pt min/max so these marks read slightly larger in the trail */
+          if(srcKey2.indexOf('usdt2.png') >= 0 || srcKey2.indexOf('usdt.png') >= 0 || srcKey2.indexOf('coinbase.png') >= 0){
+            dMin += 2;
+            dMax += 2;
+          }
+          ds = dMin + Math.random() * (dMax - dMin);
         }
         if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = 44 + Math.random() * 16;
@@ -1721,6 +1736,12 @@
           ds = Math.min(ds + 4, 34);
         } else if(item.def && item.def.src && item.def.src.indexOf('link.png') >= 0){
           ds = Math.max(ds, 24);
+        } else if(item.def && item.def.src && item.def.src.indexOf('wintermute.png') >= 0){
+          /* Wireframe mark: keep above default min so strokes stay visible in the trail */
+          ds = Math.max(ds, 26);
+        } else if(item.def && item.def.src && item.def.src.indexOf('okx.png') >= 0){
+          /* Wide thin-stroke wordmark: needs enough px when drawn square */
+          ds = Math.max(ds, 28);
         } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('mstr.png') >= 0){
@@ -1743,7 +1764,8 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('franklin.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
+        /* OKX is not in this list: wide strip (ds * 0.25 height) crushed thin strokes; draw square like other icons. */
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('franklin.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */

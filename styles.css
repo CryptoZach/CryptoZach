@@ -9195,12 +9195,36 @@ footer{
 }
 
 /* ============================================================
-   3. Proof bar (homepage uses base pill style from .proof-bar)
+   3. Proof bar (layout from .proof-bar; chips use .hero-proof-chip credentials)
    ============================================================ */
 
 #hero.hero--homepage .proof-bar{
   margin: var(--space-lg) auto 0;
   max-width: 56rem;
+}
+
+/* Homepage hero: proof chips are informational credentials, not controls (no hover affordance; text selectable) */
+#hero.hero--homepage .proof-bar.hero-proof-row li.hero-proof-chip{
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+  box-shadow: none;
+  cursor: default;
+  transition: none;
+}
+#hero.hero--homepage .proof-bar.hero-proof-row li.hero-proof-chip:hover,
+#hero.hero--homepage .proof-bar.hero-proof-row li.hero-proof-chip:focus-visible{
+  transform: none;
+  box-shadow: none;
+  border-color: color-mix(in srgb, var(--accent) 15%, transparent);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
 }
 
 @media (min-width: 981px){

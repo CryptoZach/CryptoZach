@@ -75,6 +75,7 @@ CRYPTO = {
     "arc": ("arc", [],                           None),
     "circle": ("circle", [],                     None),  # bundled Circle-logo.svg -> build-sources/circle.svg
     "m0": ("m0", [],                            None),
+    "1inch": ("1inch", [],                     None),  # bundled build-sources/1inch.webp in npm manifest
 }
 
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
@@ -85,6 +86,7 @@ ICONIFY_CRYPTO_PATHS = {
     "base": ["token/base", "token-branded/base"],
     "ink": ["token/ink", "token-branded/ink"],
     "arc": ["token/arc", "token-branded/arc", "arcticons/arc"],
+    "1inch": ["token/1inch", "simple-icons/1inch"],
 }
 
 # Before Simple Icons: correct mark (SI has no usdc slug; "circle" is the wrong brand).
@@ -101,10 +103,12 @@ ICONIFY_CRYPTO_PATHS = {
 # rndr: bundled build-sources/rndr.svg (center dot + C-arc + corner dot from render-token-logo.svg; red circle background omitted).
 # arb: bundled arb.svg (bold ARB text; Iconify mark stacks fills and stroke hex + A was faint at 20px).
 # avax: bundled WebP avalanche-avax-fill-3ll8qiqg376l2e5i4vv6ti.webp in build-sources (replaces AVAX text SVG).
+# 1inch: bundled build-sources/1inch.webp (1-inch-network WebP; dashed unicorn outline).
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
 # coinbase: bundled build-sources/coinbase.svg (Iconify token/coinbase C arc).
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
-# wfc: bundled wfc.svg (Simple Icons wellsfargo wordmark only; outer frame path stripped).
+# wfc: authoritative PNG only at icons/matrix/wfc.png (matrix-maintained; no build-sources SVG or PNG).
+# facebook: authoritative PNG only at icons/matrix/facebook.png (matrix-maintained; custom f mark).
 # gs: bundled gs.svg (Wikimedia Commons Goldman Sachs.svg wordmark paths; blue plate stripped for matrix).
 # amd: bundled amd.svg (SI wordmark paths; ticker text retired).
 # op: bundled op.svg (Iconify token-branded optimism paths; no OP text ticker).
@@ -132,10 +136,14 @@ ICONIFY_CRYPTO_PREF = {
     "arb": ["token-branded/arbitrum", "token/arbitrum"],
     "ton": ["token-branded/ton", "token/ton", "simple-icons/ton"],
     "wormhole": ["arcticons/wormhole", "arcticons/wormhole-2"],
+    "1inch": ["token/1inch", "simple-icons/1inch"],
 }
 
 # Crypto names that must use symbol only (no bundled ticker-text SVG).
 CRYPTO_SYMBOL_ONLY_SKIP_BUNDLED = {"arb", "sei", "near", "sui", "dot", "doge"}
+
+# Company marks shipped only as icons/matrix/<name>.png (no build-sources/<name>.svg or .png).
+MATRIX_MAINTAINED_PNG = frozenset({"wfc", "facebook"})
 
 # Prefer these Iconify SVGs before Simple Icons (matrix readability / correct mark).
 ICONIFY_COMPANY_PATHS = {
@@ -376,6 +384,43 @@ def main():
             sourced[name] = (f"bundled PNG (build-sources/{name}.png)", fsize)
             found = True
             print(f"  [{i:2d}/{total}] {name}.png <- local {name}.png [{fsize}B]")
+
+        if found:
+            continue
+
+        # ── Phase 0b WebP: bundled WebP in build-sources/<name>.webp (same whiten as PNG) ──
+        bundled_webp = os.path.join(outdir, "build-sources", f"{name}.webp")
+        if not found and os.path.isfile(bundled_webp):
+            slugs_tried.append(f"local:build-sources/{name}.webp")
+            with open(bundled_webp, "rb") as pf:
+                raw = pf.read()
+            white_data = color_png_to_white(raw, 32)
+            white_data = ensure_rgba(white_data)
+            with open(out_path, "wb") as f:
+                f.write(white_data)
+            fsize = len(white_data)
+            sourced[name] = (f"bundled WebP (build-sources/{name}.webp)", fsize)
+            found = True
+            print(f"  [{i:2d}/{total}] {name}.png <- local {name}.webp [{fsize}B]")
+
+        if found:
+            continue
+
+        # ── Phase 0c: matrix-maintained PNG at icons/matrix/<name>.png only (no build-sources copy) ──
+        if not found and name in MATRIX_MAINTAINED_PNG:
+            maintained_png = os.path.join(outdir, f"{name}.png")
+            if os.path.isfile(maintained_png):
+                slugs_tried.append(f"local:icons/matrix/{name}.png")
+                with open(maintained_png, "rb") as pf:
+                    raw = pf.read()
+                white_data = color_png_to_white(raw, 32)
+                white_data = ensure_rgba(white_data)
+                with open(out_path, "wb") as f:
+                    f.write(white_data)
+                fsize = len(white_data)
+                sourced[name] = (f"bundled PNG (icons/matrix/{name}.png)", fsize)
+                found = True
+                print(f"  [{i:2d}/{total}] {name}.png <- local icons/matrix/{name}.png [{fsize}B]")
 
         if found:
             continue
