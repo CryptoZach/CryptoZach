@@ -2230,7 +2230,9 @@
           continue;
         }
         var pulse = Math.sin(now * mtxMeshPulseSpeed + nd.pulse) * (mtxReducedMotion ? 0.08 : 0.22) + 0.78;
-        var drawAlpha = nd.alpha * nFade;
+        /* T3.4 Per-node alpha variation for density pockets */
+        var nodeVariation = 0.15 + (Math.sin(nd.x * 7.3 + nd.y * 11.1) * 0.5 + 0.5) * 0.25;
+        var drawAlpha = nd.alpha * nFade * nodeVariation;
         var rBoost = nd.reactBright || 0;
         if (now < (nd.reactUntil || 0)) {
           drawAlpha += 0.12;
@@ -2296,8 +2298,8 @@
       /* Extremely faint global gradient — barely there */
       var grd = mtxCtx.createLinearGradient(0, zTop, 0, h);
       grd.addColorStop(0, 'rgba(74, 222, 128, 0)');
-      grd.addColorStop(0.6, 'rgba(74, 222, 128, 0.005)');
-      grd.addColorStop(1, 'rgba(74, 222, 128, 0.012)');
+      grd.addColorStop(0.6, 'rgba(74, 222, 128, 0.002)');
+      grd.addColorStop(1, 'rgba(74, 222, 128, 0.005)');
       mtxCtx.save();
       mtxCtx.fillStyle = grd;
       mtxCtx.fillRect(0, zTop, w, h - zTop);
@@ -2647,6 +2649,25 @@
         var warped = mtxWarpPoint(x0, y0, w, h);
         var x = warped.x;
         var y = warped.y;
+
+        /* T3.3 Submersion fade: glyphs fade as they enter the lower 35% */
+        var subStart = h * 0.65;
+        var subEnd = h * 0.95;
+        if (y > subStart) {
+          var subProgress = Math.min((y - subStart) / (subEnd - subStart), 1.0);
+          op *= (1.0 - subProgress * 0.85);
+        }
+
+        /* T3.5 Center-safe zone: dim glyph draws behind headline/CTA area */
+        var safeL = w * (mtxIsMobile ? 0.08 : 0.15);
+        var safeR = w * (mtxIsMobile ? 0.92 : 0.85);
+        var safeT = h * 0.18;
+        var safeB = h * (mtxIsMobile ? 0.80 : 0.72);
+        if (x > safeL && x < safeR && y > safeT && y < safeB) {
+          var sdx = 1 - Math.abs(x - (safeL + safeR) * 0.5) / ((safeR - safeL) * 0.5);
+          var sdy = 1 - Math.abs(y - (safeT + safeB) * 0.5) / ((safeB - safeT) * 0.5);
+          op *= (1.0 - sdx * sdy * 0.4);
+        }
 
         var isDollarHead = item.type === 'text' && item.value === '$';
         if (mtxGetSubmerge(y0, h) > 0.04) {
