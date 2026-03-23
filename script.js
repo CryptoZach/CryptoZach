@@ -1761,8 +1761,7 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        /* OKX is not in this list: wide strip (ds * 0.25 height) crushed thin strokes; draw square like other icons. */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('franklin.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('franklin.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */
