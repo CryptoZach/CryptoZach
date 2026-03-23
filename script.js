@@ -1253,6 +1253,7 @@
       { src: './icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
