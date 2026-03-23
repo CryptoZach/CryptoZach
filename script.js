@@ -2677,10 +2677,10 @@
           mtxReactMeshNear(colCenterX, y0, meshNow, isDollarHead, i, w, h);
         }
 
-        /* Skip afterburn trail for wide wordmark icons — trail glow accumulates
-           behind the wide sprite and creates a visible ghost block. */
-        var skipTrail = item.type === 'icon' && item.drawHeight != null;
-        if (!skipTrail) {
+        /* Skip afterburn trail for all icons — trail glow accumulates behind
+           sprites and creates visible ghost blocks (curved top, square bottom).
+           Trail only benefits text glyphs where it reads as a comet tail. */
+        if (item.type !== 'icon') {
           mtxDrawAfterburnTrail(item, x0, y0, warped, op, meshNow, w, h, i);
         }
 
