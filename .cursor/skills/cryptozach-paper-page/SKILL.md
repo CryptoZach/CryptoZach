@@ -8,14 +8,14 @@ description: >-
 
 # CryptoZach paper page (`papers/*.html`)
 
-Full **reference implementation**: `papers/routing-the-dollar.html`. For a shorter **flagship brief** layout (problem, findings, CTAs), use `papers/routing-the-dollar-brief.html` and classes such as `brief-page`, `brief-header`, `brief-problem`, `brief-findings`, `brief-ctas` (see `styles.css`).
+Full **reference implementation**: `papers/routing-the-dollar.html` (combined brief plus full technical summary). `papers/routing-the-dollar-brief.html` redirects to that URL. Use classes such as `brief-page`, `brief-problem`, `brief-findings`, `brief-ctas` (see `styles.css`).
 
 ## Shell every long-form paper should follow
 
 Use this order inside `<main class="paper-detail-page">` → `<article class="reveal paper-page paper-detail" aria-labelledby="paper-title">`:
 
 1. **`nav.paper-breadcrumb`**: `Home` → `Research` → paper name (link the research hub; last crumb may be plain text to match existing pages).
-2. **Optional** `p.paper-description-note`: e.g. link to `./routing-the-dollar-brief.html` or “description current as of …”.
+2. **Optional** `p.paper-description-note`: e.g. “description current as of …”.
 3. **`figure.paper-cover`**: `img` with `../Publication-Images/...`, meaningful `alt`, and `width`/`height` when known.
 4. **`span.paper-track-badge`**: Track line (encode `&` as `&amp;`).
 5. **`div.paper-badges`**: `span.badge` or `span.badge badge-status-published` (and similar) for status.

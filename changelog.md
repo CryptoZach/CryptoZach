@@ -25,7 +25,7 @@ Merged `/research-program.html` and `/tokenomics-research.html` into a single ca
 1. **#program-overview** – Program overview: two-track thesis (Track A = stablecoin/dollar infrastructure, Track B = tokenomics/DePIN), convergence line, and headline framing ("Seven scholarly papers, two tracks").
 2. **#best-first-read** – Featured paper: Routing the Dollar (Under review, Best first read), with metadata, thesis, blurb, CTAs (paper summary, SSRN, Thread), cover image, and "More on relevance and audience" expandable.
 3. **Filters and jump links** – Audience, Track, Status filters (unchanged). Jump links: #best-first-read, #track-a, #track-b, #earlier-work, #cross-track-convergence.
-4. **#track-a** – Track A: short intro, A1 compact reference only ("A1 — Routing the Dollar — featured above."), then full cards for A2 (Minimum Viable Equivalence Packs), Dollar v3 / The Control Layer War (no A3 label), Tokenized Equity, Navigating the New Era of Digital Assets.
+4. **#track-a** – Track A: short intro, A1 compact reference only ("A1 — Routing the Dollar — featured above."), then full cards for A2 (Minimum Viable Equivalence Pack), Dollar v3 / The Control Layer War (no A3 label), Tokenized Equity, Navigating the New Era of Digital Assets.
 5. **#track-b** – Track B: short intro, then full cards for B1 (Adaptive Tokenomics, Public + Code available), B2 (Tokenomics as Institutional Design, Available on request), B3 (GeoDePIN, Available on request), B4 (Operational Risk in Token Economies, Public + Code available); then muted thesis note (Draft BSc thesis wrapping B2 and B3).
 6. **#earlier-work** – Three cards: The Future of Tokenomics (Medium, Aug 2024), Gamification in Crypto (Medium, Aug 2024), Introduction to Tokenomics (Medium, Apr 2022).
 7. **#cross-track-convergence** – Tightened three-row table (Dimension: Infrastructure concentration, Stress transmission, Subsidy-to-revenue transition) with one-sentence cells per track, plus synthesis line: "Both tracks find that infrastructure-layer analysis reveals failure modes invisible to asset-level monitoring."
@@ -35,7 +35,7 @@ Merged `/research-program.html` and `/tokenomics-research.html` into a single ca
 | Item | Location | Badges / notes |
 |------|----------|----------------|
 | Routing the Dollar | Featured (#best-first-read) + A1 ref in Track A | Under review, Best first read |
-| Minimum Viable Equivalence Packs (A2) | Track A | Public |
+| Minimum Viable Equivalence Pack (A2) | Track A | Public |
 | Dollar v3 / The Control Layer War | Track A | Public / requestable |
 | Tokenized Equity | Track A | Public, Medium |
 | Navigating the New Era of Digital Assets | Track A | Public, Medium |

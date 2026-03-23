@@ -110,7 +110,7 @@ Companies / payments / banks (38). `coinbase` = Coinbase, `sq` = Block (Square m
 | `amd.png` | AMD (bundled **`build-sources/amd.svg`**: Simple Icons wordmark paths; ticker text retired) |
 | `nflx.png` | Netflix |
 | `bac.png` | Bank of America (bundled **`build-sources/bac.svg`**: **BoA** monospace label) |
-| `wfc.png` | Wells Fargo (bundled only at **`icons/matrix/wfc.png`**; **`localPng`** in **`build-matrix-icons.mjs`**; Phase 0c in **`build_matrix_icons.py`**; Simple Icons **`wellsfargo`** fallback if the PNG is missing) |
+| `wfc.png` | Wells Fargo (bundled only at **`icons/matrix/wordmark-option-1/wfc.png`**; **`localPng`** in **`build-matrix-icons.mjs`**; Phase 0c in **`build_matrix_icons.py`**; Simple Icons **`wellsfargo`** fallback if the PNG is missing) |
 | `schw.png` | Charles Schwab |
 | `pypl.png` | PayPal |
 | `venmo.png` | Venmo (Iconify **`fa7-brands/venmo-v`**: stylized **V**; Simple Icons **`venmo`** is the full wordmark and is too small to read at 20px) |

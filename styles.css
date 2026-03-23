@@ -6512,7 +6512,7 @@ footer{
 .brief-problem,
 .brief-findings,
 .brief-so-what{
-  margin-bottom: var(--space-xl);
+  margin-bottom: 2.5rem;
 }
 .brief-problem h2,
 .brief-findings h2,
@@ -6522,13 +6522,57 @@ footer{
   color: var(--text);
 }
 /* Flagship brief: body width, evidence base, what-this-means accent */
-.brief-page article{ max-width: 68ch; margin-inline: auto; }
+.brief-page article{ max-width: 70ch; margin-inline: auto; }
+/* Default .paper-access-block uses 2xl vertical margin; on combined brief pages that reads as a hole between the date line and "If you only read one thing". */
+.brief-page .paper-access-block{
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.brief-one-thing-section{
+  padding: 1rem 1rem 1rem 1.25rem;
+  border-left: 3px solid rgba(96, 165, 250, 0.28);
+  background: color-mix(in srgb, var(--panel2) 65%, transparent);
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-bottom: 2.5rem;
+}
 .brief-evidence-base{ font-size: 0.9em; opacity: 0.7; margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 0.5rem; }
 .brief-what-this-means{ border-left: 3px solid rgba(96, 165, 250, 0.3); padding-left: 1rem; margin-top: 0.75rem; font-style: italic; opacity: 0.85; }
-.brief-findings h2{ font-size: 1.15em; font-weight: 700; }
+.brief-findings h2,
+.brief-so-what h2,
+.brief-problem h2{ font-size: 1.2em; font-weight: 800; letter-spacing: -0.01em; }
+.brief-finding-summary-line{ font-weight: 600; }
+.brief-figure{
+  margin: 0 0 2.5rem;
+}
+.brief-figure figcaption{
+  font-size: 0.85em;
+  opacity: 0.55;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.brief-closing{
+  text-align: center;
+  font-size: 1.12em;
+  line-height: 1.45;
+  margin: 2.75rem 0 1.5rem;
+  padding: 1.25rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--panel2) 50%, transparent);
+}
 /* Combined page: depth divider between brief and technical sections */
-.depth-divider{ border: none; border-top: 1px solid rgba(148, 163, 184, 0.15); margin: 3rem 0 1.5rem; }
-.depth-label{ font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.4; margin-bottom: 2rem; }
+.depth-divider{
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  margin: 3rem 0 1rem;
+}
+.depth-label{
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.4;
+  margin-bottom: 2rem;
+}
 .paper-key-numbers{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.85em; opacity: 0.7; line-height: 1.8; margin-bottom: var(--space-xl); }
 .paper-subtitle-line{ font-size: 0.65em; font-weight: 400; opacity: 0.7; display: block; margin-top: 0.3rem; }
 .brief-finding{
@@ -7058,6 +7102,80 @@ footer{
   font-size: var(--font-size-min);
   color: var(--muted);
   margin: calc(-1 * var(--space-md)) 0 var(--space-lg);
+}
+.brief-page .paper-metadata-strip{
+  margin-bottom: 0.25rem;
+}
+.date-note{
+  font-size: 0.75rem;
+  opacity: 0.4;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+.methodology-summary{
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+.methodology-summary h2{
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+.methodology-summary ul{
+  list-style: none;
+  padding-left: 0;
+}
+.methodology-summary li{
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.methodology-summary li::before{
+  content: '· ';
+  opacity: 0.4;
+}
+.brief-page ul.audience-chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.75rem;
+  margin-bottom: var(--space-xl);
+}
+.brief-page .audience-chip{
+  background: rgba(2, 6, 23, 0.34);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  cursor: default;
+  transition: none;
+  color: var(--text);
+}
+.brief-page .audience-chip:hover{
+  transform: none;
+  box-shadow: none;
+}
+:root[data-theme="light"] .brief-page .audience-chip{
+  background: rgba(15, 23, 42, 0.06);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+.resource-rail{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.15rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+.resource-rail a{
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.resource-rail span{
+  margin: 0 0.4rem;
+  opacity: 0.3;
 }
 .paper-page h1{
   margin-bottom: var(--space-md);
@@ -8804,9 +8922,15 @@ footer{
    1. Homepage hero tightening
    ============================================================ */
 
+/* Homepage: less vertical cushion around the matrix-backed hero */
+#main:has(> #hero.hero--homepage:first-child){
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-xl);
+}
+
 #hero.hero--homepage{
   position: relative;
-  padding: clamp(32px, 4vw, 56px) clamp(22px, 3.5vw, 44px) clamp(12px, 1.5vw, 18px);
+  padding: clamp(18px, 2.5vw, 36px) clamp(22px, 3.5vw, 44px) clamp(8px, 1.1vw, 14px);
   border-top: 3px solid var(--accent);
   /* Hero dollar stream: peak / late opacity (keyframes read these; hover + mobile override) */
   --df-o-peak: 0.35;

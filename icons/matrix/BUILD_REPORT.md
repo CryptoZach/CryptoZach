@@ -98,7 +98,7 @@
 | `usdt.png` | bundled PNG (build-sources/usdt.png) | 590B |
 | `venmo.png` | Iconify (fa7-brands/venmo-v) | 523B |
 | `visa.png` | Iconify (simple-icons/visa) | 582B |
-| `wfc.png` | bundled PNG (icons/matrix/wfc.png) | 683B |
+| `wfc.png` | bundled PNG (icons/matrix/wordmark-option-1/wfc.png) | 683B |
 | `wise.png` | bundled PNG (build-sources/wise.png) | 855B |
 | `wld.png` | bundled SVG (build-sources/wld.svg) | 779B |
 | `wmt.png` | Iconify (tabler/brand-walmart) | 453B |

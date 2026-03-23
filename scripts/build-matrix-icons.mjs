@@ -375,7 +375,7 @@ const ICONS = [
   },
   {
     name: 'wfc',
-    localPng: 'icons/matrix/wfc.png',
+    localPng: 'icons/matrix/wordmark-option-1/wfc.png',
     si: [],
     iconifyExtra: ['simple-icons/wellsfargo'],
   },
@@ -486,6 +486,24 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/wise.svg',
     si: ['wise'],
     iconifyExtra: ['lineicons/wise'],
+  },
+  /* BUSD: bundled busd.svg from repo binance-usd-busd-logo.svg (gold diamond; whiten() in rasterize). */
+  {
+    name: 'busd',
+    localSvg: 'icons/matrix/build-sources/busd.svg',
+    si: [],
+  },
+  /* World Liberty Financial: bundled wlfi.svg (square viewBox centered on wide World_Liberty_Logo.svg). */
+  {
+    name: 'wlfi',
+    localSvg: 'icons/matrix/build-sources/wlfi.svg',
+    si: [],
+  },
+  /* Pax Dollar (USDP): bundled usdp.png (paper-white flood fill from USDP.jpeg, then opaque mask for matrix whiten). */
+  {
+    name: 'usdp',
+    localRaster: 'icons/matrix/build-sources/usdp.png',
+    si: [],
   },
 ];
 

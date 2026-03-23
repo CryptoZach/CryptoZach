@@ -76,6 +76,9 @@ CRYPTO = {
     "circle": ("circle", [],                     None),  # bundled Circle-logo.svg -> build-sources/circle.svg
     "m0": ("m0", [],                            None),
     "1inch": ("1inch", [],                     None),  # bundled build-sources/1inch.webp in npm manifest
+    "busd": ("binanceusd", [],                 None),  # bundled build-sources/busd.svg (repo binance-usd-busd-logo.svg)
+    "wlfi": ("worldlibertyfinancial", [],      None),  # bundled build-sources/wlfi.svg (square crop from World_Liberty_Logo.svg)
+    "usdp": ("paxdollar", [],                  None),  # bundled build-sources/usdp.png (from repo USDP.jpeg; bg removed for matrix)
 }
 
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
@@ -107,7 +110,7 @@ ICONIFY_CRYPTO_PATHS = {
 # ltc: bundled ltc.svg (SI litecoin is a filled coin; whiten() reads as a blank puck at 20px).
 # coinbase: bundled build-sources/coinbase.svg (Iconify token/coinbase C arc).
 # jpm: bundled jpm.svg (Chase octagon; SI has no jpmorgan slug in v16).
-# wfc: authoritative PNG only at icons/matrix/wfc.png (matrix-maintained; no build-sources SVG or PNG).
+# wfc: authoritative PNG at icons/matrix/wordmark-option-1/wfc.png (matrix-maintained; no build-sources SVG or PNG).
 # facebook: authoritative PNG only at icons/matrix/facebook.png (matrix-maintained; custom f mark).
 # gs: bundled gs.svg (Wikimedia Commons Goldman Sachs.svg wordmark paths; blue plate stripped for matrix).
 # amd: bundled amd.svg (SI wordmark paths; ticker text retired).
@@ -408,9 +411,14 @@ def main():
 
         # ── Phase 0c: matrix-maintained PNG at icons/matrix/<name>.png only (no build-sources copy) ──
         if not found and name in MATRIX_MAINTAINED_PNG:
-            maintained_png = os.path.join(outdir, f"{name}.png")
+            if name == "wfc":
+                maintained_png = os.path.join(outdir, "wordmark-option-1", "wfc.png")
+                maintained_label = "icons/matrix/wordmark-option-1/wfc.png"
+            else:
+                maintained_png = os.path.join(outdir, f"{name}.png")
+                maintained_label = f"icons/matrix/{name}.png"
             if os.path.isfile(maintained_png):
-                slugs_tried.append(f"local:icons/matrix/{name}.png")
+                slugs_tried.append(f"local:{maintained_label}")
                 with open(maintained_png, "rb") as pf:
                     raw = pf.read()
                 white_data = color_png_to_white(raw, 32)
@@ -418,9 +426,9 @@ def main():
                 with open(out_path, "wb") as f:
                     f.write(white_data)
                 fsize = len(white_data)
-                sourced[name] = (f"bundled PNG (icons/matrix/{name}.png)", fsize)
+                sourced[name] = (f"bundled PNG ({maintained_label})", fsize)
                 found = True
-                print(f"  [{i:2d}/{total}] {name}.png <- local icons/matrix/{name}.png [{fsize}B]")
+                print(f"  [{i:2d}/{total}] {name}.png <- local {maintained_label} [{fsize}B]")
 
         if found:
             continue
