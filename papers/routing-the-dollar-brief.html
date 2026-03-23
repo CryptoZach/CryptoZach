@@ -136,21 +136,43 @@
         </div>
         <h1 id="brief-title">Routing the Dollar</h1>
         <p class="brief-subtitle">The same dollar token can take on different regulatory exposure, interest-rate sensitivity, and crisis behavior depending on which gateway routes it.</p>
-        <p class="brief-subtitle">This brief explains why the gateway, not the token, is the policy-relevant unit.</p>
+        <p class="brief-subtitle">This brief explains why the gateway (the issuer, exchange, or protocol that routes the token) matters more for regulation and supervision than the token itself.</p>
       </header>
-
-      <figure class="paper-cover" aria-hidden="true">
-        <img src="../Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram" loading="eager" />
-      </figure>
 
       <section class="brief-findings" aria-labelledby="brief-one-thing-heading">
         <h2 id="brief-one-thing-heading">If you only read one thing</h2>
         <ul>
-          <li>Stablecoin supply co-moves with Federal Reserve balance-sheet variables in a pattern consistent with dollar-specific monetary transmission.</li>
-          <li>The same dollar token produces materially different regulatory outcomes depending on which gateway routes it.</li>
-          <li>During SVB, capital rotated across dollar gateways rather than exiting dollar-pegged instruments.</li>
+          <li>The gateway (the issuer, exchange, or protocol that routes the token) matters more for regulation and supervision than the token itself.</li>
+          <li>Stablecoin supply co-moves with Federal Reserve balance-sheet variables in a pattern consistent with dollar-specific monetary transmission: the relationship strengthens during tightening and weakens during easing.</li>
+          <li>Stress behavior differs by gateway: three gateways with near-identical compliance profiles produced opposite outcomes during SVB based on their specific banking relationships.</li>
         </ul>
+        <p class="brief-evidence-base"><strong>Evidence base:</strong> Three years of on-chain gateway data (19 entities, 51 addresses), a long-run statistical relationship between stablecoin supply and Federal Reserve balance-sheet variables that strengthens during tightening and weakens during easing, and stress-episode analysis of the SVB crisis and BUSD regulatory action.</p>
       </section>
+
+      <figure class="paper-cover brief-figure" aria-labelledby="brief-clii-caption">
+        <img src="../Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="CLII scoring 19 gateway entities across five regulatory dimensions" loading="lazy" />
+        <figcaption id="brief-clii-caption">The Control Layer Intensity Index scores 19 gateway entities across five dimensions of regulatory intensity. Tier classification determines where compliance obligations, freeze authority, and supervisory visibility attach.</figcaption>
+      </figure>
+
+      <section class="brief-findings" aria-labelledby="brief-finding1-heading">
+        <h2 id="brief-finding1-heading">1. Stablecoin supply moves through a dollar-specific policy channel</h2>
+        <p>Stablecoin supply moves with Federal Reserve balance-sheet mechanics in a pattern that strengthens during tightening and weakens during easing. The same relationship does not appear for Bitcoin or Ethereum, which points to a dollar-specific channel rather than a general crypto effect.</p>
+        <p>A yield-spread mechanism provides supporting evidence: when the gap between Treasury bill yields and on-chain lending rates widens, holding dollars in Treasury-backed reserves becomes more attractive than deploying them on-chain, pulling capital into stablecoin reserve structures.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> stablecoin supply co-moves with Fed variables in a pattern consistent with dollar-specific monetary transmission. The channel runs through how reserves are held and where they sit, not headline announcements alone.</p>
+      </section>
+
+      <section class="brief-findings" aria-labelledby="brief-finding2-heading">
+        <h2 id="brief-finding2-heading">2. Gateway choice produces materially different regulatory and concentration outcomes</h2>
+        <p>The Control Layer Intensity Index scores 19 gateway entities across licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Over three years, transfer volume doubled while unique counterparties declined 25% and cross-gateway connections fell from 5.8% to 2.6%.</p>
+        <p>Usage expanded. The routing network concentrated.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> transfer data measured at the gateway level (the specific issuer, exchange, or protocol that processes each transaction) are more informative than aggregate supply for assessing where regulatory obligations attach, how concentration risk is distributed, and how stress routes through the system.</p>
+      </section>
+
+      <section class="brief-findings" aria-labelledby="brief-finding3-heading">
+        <h2 id="brief-finding3-heading">3. SVB stress rotated capital across gateways rather than out of dollar instruments</h2>
+        <p>During the SVB episode, capital rotated across dollar gateways rather than exiting dollar-pegged instruments. Tier 1 (the most heavily regulated) gateway share dropped from 63% to 13%, then recovered to 57% after banking-sector interventions. Three gateways with zero direct SVB exposure (MakerDAO, Paxos, Gemini) saw their instruments depeg because their reserves included USDC, which had direct exposure to SVB.</p>
+        <p>Stress transmitted through the gateway layer, not through token properties.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> regulatory posture and stress resilience are distinct properties. Three Tier 1 gateways with near-identical CLII scores (0.82 to 0.92) produced opposite outcomes based on entity-specific banking exposure. A compliance index that predicted stress outcomes would conflate two questions that should be asked independently: who is regulated, and who is fragile.</p>
 
       <section class="brief-so-what" aria-labelledby="brief-changes-heading">
         <h2 id="brief-changes-heading">What this paper changes</h2>
@@ -159,9 +181,9 @@
 
       <section class="brief-problem" aria-labelledby="brief-who-heading">
         <h2 id="brief-who-heading">Who should care</h2>
-        <p><strong>Policymakers.</strong> Aggregate stablecoin supply is the wrong monitoring surface. Gateway-level flow data reveal the routing detail that aggregate numbers miss: which institutions are gaining share, which banking relationships create correlated exposure, and where settlement capacity fails under stress.</p>
-        <p><strong>Issuers and operators.</strong> The CLII provides a five-dimension scoring framework for regulatory intensity at the gateway layer. It measures who is regulated, not who is fragile; two gateways with near-identical compliance scores can produce opposite stress outcomes depending on entity-specific exposures beneath the compliance surface.</p>
-        <p><strong>Investors and market-structure teams.</strong> The SVB evidence is consistent with a broader pattern: fragmentation in the digital-dollar system manifests as competition and concentration within the dollar's own gateway infrastructure, with limited substitution into non-dollar instruments.</p>
+        <p><strong>For policymakers.</strong> If the objective is monitoring how Fed policy transmits through stablecoin markets, transfer data measured at the gateway level provide the relevant visibility, not merely aggregate supply. The CLII provides a classification heuristic for mapping where regulatory obligations attach across the gateway layer. The preset rules that determine where money flows when no one actively chooses (routing defaults, sweep behavior, hold mechanics) are where correlated exposure becomes visible.</p>
+        <p><strong>For issuers and operators.</strong> How reserves are held and where they sit, which banking relationships back the product, and what the preset routing rules do under stress shape behavior at the entity level, not the token level. The monetary impact of stablecoin growth depends on which issuer absorbs it, because different issuers hold reserves at different banks, and those reserve deposits re-enter the banking system with different lending and funding effects.</p>
+        <p><strong>For investors and market-structure teams.</strong> Regulatory intensity and stress resilience are distinct properties that should be assessed independently. Measuring both requires transfer data at the gateway level; token-level aggregates do not distinguish between gateways that share the same compliance profiles but face different banking exposures.</p>
       </section>
 
       <p class="brief-closing"><strong>Who routes the dollar matters more than which dollar is routed.</strong></p>
