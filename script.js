@@ -2724,7 +2724,22 @@
             var ix = Math.round(x);
             var iy = Math.round(y);
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
-            /* Matte removed: was drawing visible gray squares behind icons. */
+            /* Narrow matte: clear trail residue within the column width only.
+               Wide wordmarks extend beyond the column, but the trail only
+               exists within the column — so a column-width matte is enough. */
+            var matteW = Math.min(iw, mtxColWidth);
+            var matteH = ih + 4;
+            mtxCtx.save();
+            mtxCtx.globalCompositeOperation = 'destination-out';
+            mtxCtx.globalAlpha = 0.85;
+            mtxCtx.fillStyle = 'rgba(0,0,0,1)';
+            mtxCtx.fillRect(
+              ix + (iw - matteW) * 0.5,
+              iy - 2,
+              matteW,
+              matteH
+            );
+            mtxCtx.restore();
             /* Queue the sprite draw for pass 2. */
             var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
             var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
