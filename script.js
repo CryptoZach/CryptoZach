@@ -346,10 +346,7 @@
           activeDollars--;
         });
 
-        /* Occasionally spawn a Bitcoin orbit particle */
-        if(btcFlightActive && Math.random() < 0.04){
-          spawnBtcParticle();
-        }
+        /* BTC orbit particles now self-spawn in Track B section */
       }
 
       function startDollarFlightLoop(){
@@ -358,7 +355,6 @@
         spawnDollar();
         var config = getDollarConfig();
         dollarSpawnIntervalId = setInterval(spawnDollar, config.spawnInterval);
-        startBtcFlight();
       }
 
       function stopDollarFlightLoop(){
@@ -367,37 +363,50 @@
           clearInterval(dollarSpawnIntervalId);
           dollarSpawnIntervalId = null;
         }
-        stopBtcFlight();
+        /* BTC flight now managed by its own IntersectionObserver */
       }
 
       /* ══════════════════════════════════════════════
-         Bitcoin ₿ orbit particles (JS-driven canvas)
+         Bitcoin ₿ rain — particles fall, pile on top
+         of Track B card, and respond to cursor magnet
          ══════════════════════════════════════════════ */
 
+      var btcContainer = document.querySelector('.track-b-frameworks');
       var btcCanvas = document.getElementById('heroBtcFlight');
       var btcCtx = btcCanvas ? btcCanvas.getContext('2d') : null;
       var btcParticles = [];
       var btcFlightActive = false;
       var btcRaf = null;
+      var btcSpawnInterval = null;
       var btcCursorX = -1, btcCursorY = -1;
 
       var btcConfig = {
-        maxParticles: getDollarConfig().isMobile ? 3 : 6,
-        ctaGravity: 0.00035,
-        cursorGravity: 0.00012,
-        tangentialFactor: 0.7,
-        damping: 0.992,
-        orbitMinDist: 30,
-        fadeInFrames: 20,
-        maxLifeFrames: 600,
-        spiralInDist: 18,
-        maxSpeed: 3.5,
-        cursorRange: 250
+        maxParticles: getDollarConfig().isMobile ? 25 : 60,
+        gravity: 0.12,
+        friction: 0.4,
+        bounceDamping: 0.3,
+        xDamping: 0.98,
+        cursorRadius: 120,
+        cursorStrength: 8,
+        particleRadius: 10,
+        fadeInFrames: 15,
+        spawnMs: getDollarConfig().isMobile ? 300 : 150,
+        fontSize: 16
       };
 
+      /* Ground line = top edge of the .track-b-card element */
+      var btcCardEl = btcContainer ? btcContainer.querySelector('.track-b-card') : null;
+
+      function btcGetGround(){
+        if(!btcContainer || !btcCardEl) return 9999;
+        var cr = btcContainer.getBoundingClientRect();
+        var cardR = btcCardEl.getBoundingClientRect();
+        return cardR.top - cr.top - 2; /* pile sits just above the card */
+      }
+
       function btcResize(){
-        if(!btcCanvas) return;
-        var r = heroHome.getBoundingClientRect();
+        if(!btcCanvas || !btcContainer) return;
+        var r = btcContainer.getBoundingClientRect();
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         btcCanvas.width = Math.floor(r.width * dpr);
         btcCanvas.height = Math.floor(r.height * dpr);
@@ -406,59 +415,47 @@
         btcCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
-      if(btcCanvas){
+      if(btcCanvas && btcContainer){
         btcResize();
         window.addEventListener('resize', function(){ setTimeout(btcResize, 220); }, { passive: true });
 
-        heroHome.addEventListener('pointermove', function btcCursorTrack(e){
-          if(e.pointerType !== 'mouse') return;
-          var r = heroHome.getBoundingClientRect();
+        /* Track cursor relative to container */
+        btcContainer.addEventListener('pointermove', function(e){
+          var r = btcContainer.getBoundingClientRect();
           btcCursorX = e.clientX - r.left;
           btcCursorY = e.clientY - r.top;
         }, { passive: true });
 
-        heroHome.addEventListener('pointerleave', function btcCursorReset(){
+        btcContainer.addEventListener('pointerleave', function(){
           btcCursorX = -1;
           btcCursorY = -1;
         }, { passive: true });
+
+        /* Start/stop when Track B scrolls into view */
+        var btcObserver = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting) startBtcFlight();
+            else stopBtcFlight();
+          });
+        }, { threshold: 0.05 });
+        btcObserver.observe(btcContainer);
       }
 
       function spawnBtcParticle(){
-        if(!btcCanvas || btcParticles.length >= btcConfig.maxParticles) return;
+        if(!btcCanvas || !btcContainer || btcParticles.length >= btcConfig.maxParticles) return;
+        var cr = btcContainer.getBoundingClientRect();
+        var w = cr.width;
+        if(w <= 0) return;
 
-        var heroRect = heroHome.getBoundingClientRect();
-        var w = heroRect.width, h = heroRect.height;
-        if(w <= 0 || h <= 0) return;
-
-        /* Spawn from random edge */
-        var perimeter = 2 * (w + h);
-        var p = Math.random() * perimeter;
-        var sx, sy;
-        if(p < w){ sx = p; sy = -10; }
-        else if(p < w + h){ sx = w + 10; sy = p - w; }
-        else if(p < 2 * w + h){ sx = 2 * w + h - p; sy = h + 10; }
-        else { sx = -10; sy = perimeter - p; }
-
-        /* Initial velocity toward hero center */
-        var centerX = w / 2, centerY = h / 2;
-        var ddx = centerX - sx, ddy = centerY - sy;
-        var dist = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
-        var speed = 0.4 + Math.random() * 0.3;
-
-        var willOrbit = Math.random() < 0.85;
-        var orbitBudget = willOrbit ? (2 + Math.floor(Math.random() * 3)) : 0;
-
+        var rad = btcConfig.particleRadius;
         btcParticles.push({
-          x: sx, y: sy,
-          vx: (ddx / dist) * speed,
-          vy: (ddy / dist) * speed,
+          x: rad + Math.random() * (w - rad * 2),
+          y: -20 - Math.random() * 40,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: 0.5 + Math.random() * 1.0,
+          radius: rad,
           life: 0,
-          maxLife: btcConfig.maxLifeFrames,
-          fontSize: 14 + Math.floor(Math.random() * 10),
-          willOrbit: willOrbit,
-          orbitBudget: orbitBudget,
-          crossings: 0,
-          prevAngleToCta: null
+          settled: false
         });
       }
 
@@ -466,108 +463,112 @@
         if(!btcFlightActive){ btcRaf = null; return; }
         btcRaf = requestAnimationFrame(btcDraw);
 
-        var r = heroHome.getBoundingClientRect();
-        var w = r.width, h = r.height;
+        var cr = btcContainer.getBoundingClientRect();
+        var w = cr.width, h = cr.height;
         btcCtx.clearRect(0, 0, w, h);
-
         if(btcParticles.length === 0) return;
 
-        var tx = targetX, ty = targetY;
+        var ground = btcGetGround();
+        var rad = btcConfig.particleRadius;
+        var curActive = btcCursorX >= 0 && btcCursorY >= 0;
 
-        for(var i = btcParticles.length - 1; i >= 0; i--){
+        /* Sort by y so lower particles are processed first (stable pile) */
+        btcParticles.sort(function(a, b){ return b.y - a.y; });
+
+        for(var i = 0; i < btcParticles.length; i++){
           var bp = btcParticles[i];
           bp.life++;
 
-          if(bp.life > bp.maxLife){
-            btcParticles.splice(i, 1);
-            continue;
-          }
+          /* Gravity */
+          bp.vy += btcConfig.gravity;
 
-          /* CTA attraction */
-          var dxCta = tx - bp.x, dyCta = ty - bp.y;
-          var distCta = Math.sqrt(dxCta * dxCta + dyCta * dyCta) || 1;
-
-          if(distCta < btcConfig.spiralInDist){
-            btcParticles.splice(i, 1);
-            continue;
-          }
-
-          var ctaForce = btcConfig.ctaGravity;
-          if(bp.willOrbit && bp.crossings >= bp.orbitBudget * 2){
-            ctaForce *= 2.5;
-            bp.willOrbit = false;
-          }
-
-          var ctaFx = (dxCta / distCta) * ctaForce * distCta;
-          var ctaFy = (dyCta / distCta) * ctaForce * distCta;
-
-          /* Tangential deflection for orbiting */
-          if(bp.willOrbit && distCta > btcConfig.orbitMinDist){
-            var tangX = -dyCta / distCta;
-            var tangY = dxCta / distCta;
-            var tangSign = (bp.vx * tangX + bp.vy * tangY) >= 0 ? 1 : -1;
-            var tangStr = btcConfig.tangentialFactor * ctaForce * distCta;
-            ctaFx += tangX * tangSign * tangStr;
-            ctaFy += tangY * tangSign * tangStr;
-          }
-
-          /* Cursor attraction (weaker, range-limited) */
-          if(btcCursorX >= 0 && btcCursorY >= 0){
-            var dxCur = btcCursorX - bp.x;
-            var dyCur = btcCursorY - bp.y;
-            var distCur = Math.sqrt(dxCur * dxCur + dyCur * dyCur) || 1;
-            if(distCur < btcConfig.cursorRange){
-              var cursorStr = btcConfig.cursorGravity * (1 - distCur / btcConfig.cursorRange);
-              bp.vx += (dxCur / distCur) * cursorStr * distCur;
-              bp.vy += (dyCur / distCur) * cursorStr * distCur;
+          /* Cursor magnet — pushes particles away */
+          if(curActive){
+            var dxM = bp.x - btcCursorX;
+            var dyM = bp.y - btcCursorY;
+            var distM = Math.sqrt(dxM * dxM + dyM * dyM) || 1;
+            if(distM < btcConfig.cursorRadius){
+              var force = btcConfig.cursorStrength * (1 - distM / btcConfig.cursorRadius);
+              bp.vx += (dxM / distM) * force;
+              bp.vy += (dyM / distM) * force;
+              bp.settled = false;
             }
-          }
-
-          /* Apply CTA forces */
-          bp.vx += ctaFx;
-          bp.vy += ctaFy;
-
-          /* Damping */
-          bp.vx *= btcConfig.damping;
-          bp.vy *= btcConfig.damping;
-
-          /* Speed cap */
-          var spd = Math.sqrt(bp.vx * bp.vx + bp.vy * bp.vy);
-          if(spd > btcConfig.maxSpeed){
-            bp.vx = (bp.vx / spd) * btcConfig.maxSpeed;
-            bp.vy = (bp.vy / spd) * btcConfig.maxSpeed;
           }
 
           /* Move */
           bp.x += bp.vx;
           bp.y += bp.vy;
 
-          /* Track orbit completion via angle sign crossings */
-          var angleToCta = Math.atan2(dyCta, dxCta);
-          if(bp.prevAngleToCta !== null){
-            if(bp.prevAngleToCta > 2.5 && angleToCta < -2.5) bp.crossings++;
-            else if(bp.prevAngleToCta < -2.5 && angleToCta > 2.5) bp.crossings++;
+          /* X damping (air friction) */
+          bp.vx *= btcConfig.xDamping;
+
+          /* Ground collision — pile on top of the card */
+          var effectiveGround = ground - rad;
+          if(bp.y >= effectiveGround){
+            bp.y = effectiveGround;
+            if(Math.abs(bp.vy) < 0.5){
+              bp.vy = 0;
+              bp.settled = true;
+            } else {
+              bp.vy *= -btcConfig.bounceDamping;
+            }
+            bp.vx *= btcConfig.friction;
           }
-          bp.prevAngleToCta = angleToCta;
+
+          /* Particle-particle collision (simple push apart) */
+          for(var j = i + 1; j < btcParticles.length; j++){
+            var other = btcParticles[j];
+            var dx = bp.x - other.x;
+            var dy = bp.y - other.y;
+            var dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
+            var minDist = rad * 2;
+            if(dist < minDist){
+              var overlap = (minDist - dist) * 0.5;
+              var nx = dx / dist, ny = dy / dist;
+              bp.x += nx * overlap;
+              bp.y += ny * overlap;
+              other.x -= nx * overlap;
+              other.y -= ny * overlap;
+              /* Transfer some velocity */
+              var relVx = bp.vx - other.vx;
+              var relVy = bp.vy - other.vy;
+              var relDot = relVx * nx + relVy * ny;
+              if(relDot > 0){
+                bp.vx -= nx * relDot * 0.5;
+                bp.vy -= ny * relDot * 0.5;
+                other.vx += nx * relDot * 0.5;
+                other.vy += ny * relDot * 0.5;
+              }
+              bp.settled = false;
+              other.settled = false;
+            }
+          }
+
+          /* Re-clamp to ground after collision pushes */
+          if(bp.y > effectiveGround) bp.y = effectiveGround;
+
+          /* Wall constraints */
+          if(bp.x < rad){ bp.x = rad; bp.vx = Math.abs(bp.vx) * 0.3; }
+          if(bp.x > w - rad){ bp.x = w - rad; bp.vx = -Math.abs(bp.vx) * 0.3; }
+
+          /* Remove if way above screen (shouldn't happen, safety) */
+          if(bp.y > h + 50){
+            btcParticles.splice(i, 1);
+            i--;
+            continue;
+          }
 
           /* Render */
           var fadeIn = Math.min(1, bp.life / btcConfig.fadeInFrames);
-          var fadeOut = bp.life > bp.maxLife * 0.85
-            ? 1 - (bp.life - bp.maxLife * 0.85) / (bp.maxLife * 0.15)
-            : 1;
-          var distFade = distCta < 50 ? distCta / 50 : 1;
-          var alpha = fadeIn * fadeOut * distFade;
-          if(alpha < 0.01) continue;
+          var alpha = fadeIn * 0.9;
 
           btcCtx.save();
-          btcCtx.font = '700 ' + bp.fontSize + 'px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+          btcCtx.font = '700 ' + btcConfig.fontSize + 'px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
           btcCtx.textAlign = 'center';
           btcCtx.textBaseline = 'middle';
-          btcCtx.fillStyle = 'rgba(247, 147, 26, ' + (alpha * 0.9) + ')';
+          btcCtx.fillStyle = 'rgba(247, 147, 26, ' + alpha + ')';
           btcCtx.shadowColor = 'rgba(251, 191, 36, ' + (alpha * 0.4) + ')';
-          btcCtx.shadowBlur = 8;
-          btcCtx.shadowOffsetX = 0;
-          btcCtx.shadowOffsetY = 0;
+          btcCtx.shadowBlur = 6;
           btcCtx.fillText('₿', bp.x, bp.y);
           btcCtx.restore();
         }
@@ -578,11 +579,15 @@
         btcFlightActive = true;
         btcResize();
         if(!btcRaf) btcRaf = requestAnimationFrame(btcDraw);
+        if(!btcSpawnInterval){
+          btcSpawnInterval = setInterval(spawnBtcParticle, btcConfig.spawnMs);
+        }
       }
 
       function stopBtcFlight(){
         btcFlightActive = false;
         btcParticles = [];
+        if(btcSpawnInterval){ clearInterval(btcSpawnInterval); btcSpawnInterval = null; }
       }
 
       var flagshipDollarSpeed = flagshipCtaEl();
@@ -1069,22 +1074,12 @@
   // Homepage hero: full-hero matrix on hover activators; pointer position warps glyph placement
   const matrixContainer = document.querySelector('#hero.hero--homepage .matrix-container');
   const matrixCanvas = document.querySelector('#hero.hero--homepage .matrix-canvas');
-  var matrixActivatorList = Array.prototype.slice.call(document.querySelectorAll('#hero.hero--homepage .matrix-hover-activator'));
+  /* Activate matrix on hover anywhere in the hero container */
+  var heroContainerMtx = document.querySelector('#hero.hero--homepage');
+  var matrixActivatorList = heroContainerMtx ? [heroContainerMtx] : [];
   var heroEyebrowMtx = document.querySelector('#hero.hero--homepage .hero-eyebrow');
   var heroFlagshipMtx = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar"]')
     || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
-  function mtxEnsureActivator(el){
-    if(!el || matrixActivatorList.indexOf(el) !== -1){
-      return;
-    }
-    matrixActivatorList.push(el);
-  }
-  /* If nothing was marked with .matrix-hover-activator, fall back to eyebrow + flagship (legacy). */
-  if(matrixActivatorList.length === 0){
-    mtxEnsureActivator(heroEyebrowMtx);
-  }
-  /* Flagship brief CTA must always bind: when eyebrow already has the class, the old code skipped this link. */
-  mtxEnsureActivator(heroFlagshipMtx);
   if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     /* Mobile layout or touch-first: keep matrix running without hover (hero pointerup otherwise calls mtxStop every lift). */
     var mtxMobileMatrixAlways = window.matchMedia('(pointer: coarse)').matches
