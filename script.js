@@ -1322,7 +1322,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '130';
+    var mtxIconAssetVer = '131';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
