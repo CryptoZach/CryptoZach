@@ -6519,7 +6519,7 @@ footer{
 .brief-so-what h2{
   font-size: 1.1em;
   margin-bottom: var(--space-md);
-  color: var(--text-soft);
+  color: var(--text);
 }
 /* Flagship brief: body width, evidence base, what-this-means accent */
 .brief-page article{ max-width: 68ch; margin-inline: auto; }
@@ -9779,6 +9779,10 @@ header{
 
 .header-inner{
   gap: var(--space-lg);
+  height: auto;
+  min-height: var(--header-h);
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
 }
 
 .brand strong{
@@ -9787,6 +9791,9 @@ header{
 
 .brand span{
   line-height: 1.35;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 /* Make primary nav feel more intentional and uniform */
