@@ -1165,6 +1165,7 @@
       { src: './icons/matrix/metamask.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/base.png', loaded: false, img: null, tinted: null },
@@ -1246,6 +1247,7 @@
       { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
       /* Second Nasdaq slot: former NDX text ticker (macro index) now uses Nasdaq logo PNG only. */
@@ -1267,6 +1269,9 @@
       { src: './icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dtcc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hsbc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/stt.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/plaid.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/bybit.png', loaded: false, img: null, tinted: null },
       /* Fed removed: seal reads as ambiguous blob at matrix size. */
     ];
 
@@ -1369,8 +1374,8 @@
     var mtxIconLZUniDrawSizeMin = 26;
     var mtxIconLZUniDrawSizeMax = 42;
     /* LayerZero ZRO: extra-thin mark needs even more size boost. */
-    var mtxIconLZDrawSizeMin = 34;
-    var mtxIconLZDrawSizeMax = 42;
+    var mtxIconLZDrawSizeMin = 22;
+    var mtxIconLZDrawSizeMax = 30;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -1522,22 +1527,7 @@
       var tctx = tmp.getContext('2d');
       tctx.imageSmoothingEnabled = false;
       tctx.drawImage(def.img, 0, 0, nw, nh);
-      /* Hollow hex PNGs (link, hnt): raster anti-alias leaves low-alpha pixels inside the ring opening; after tint they read as a squiggly line. Drop faint pixels; snap edge AA to solid white before tint. */
-      if(def.src && /\/(link|hnt)\.png(\?|$)/.test(def.src)){
-        var idPre = tctx.getImageData(0, 0, nw, nh);
-        var dPre = idPre.data;
-        var iPre;
-        for(iPre = 0; iPre < dPre.length; iPre += 4){
-          var a0 = dPre[iPre + 3];
-          if(a0 < 128){
-            dPre[iPre] = dPre[iPre + 1] = dPre[iPre + 2] = dPre[iPre + 3] = 0;
-          } else if(a0 < 255){
-            dPre[iPre] = dPre[iPre + 1] = dPre[iPre + 2] = 255;
-            dPre[iPre + 3] = 255;
-          }
-        }
-        tctx.putImageData(idPre, 0, 0);
-      }
+      /* Hollow hex pre-processing removed: link/hnt now use clean SVG-rendered PNGs. */
       tctx.globalCompositeOperation = 'source-atop';
       tctx.fillStyle = 'rgba(94, 234, 168, 1)';
       tctx.fillRect(0, 0, nw, nh);
@@ -1751,7 +1741,7 @@
         } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('mstr.png') >= 0){
-          ds = 44 + Math.random() * 16;
+          ds = 32 + Math.random() * 12;
         } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
@@ -1770,7 +1760,7 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0 || item.def.src.indexOf('bybit.png') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */
