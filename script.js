@@ -1264,6 +1264,8 @@
       { src: './icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
@@ -1302,7 +1304,7 @@
       var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var mtxInfraSlugs = ['chainalysis.png', 'fireblocks.png', 'wintermute.png', 'bitgo.png', 'compound.png', 'gemini.png', '1inch.png', 'okx.png', 'securitize.png', 'layerzero.png', 'metamask.png', 'coinbase.png', 'kraken.png', 'aave.png', 'crv.png', 'grayscale.png', 'binance.png', 'paxos.png'];
       var isInfra = mtxInfraSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
-      var n = isCoreStable ? 6 : (isStable ? 4 : (isTopL1 ? 4 : (isMajorL1 ? 3 : (isInfra ? 3 : 2))));
+      var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 5 : (isMajorL1 ? 4 : (isInfra ? 4 : 3))));
       for(var k = 0; k < n; k++){
         mtxCryptoPool.push({ type: 'icon', def: def });
       }
@@ -1312,7 +1314,7 @@
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
       var isAapl = def.src.indexOf('aapl.png') >= 0;
-      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 5 : (isAapl ? 4 : 3);
+      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 7 : (isAapl ? 5 : 4);
       var k;
       for(k = 0; k < n; k++){
         mtxTradPool.push({ type: 'icon', def: def });
@@ -1374,8 +1376,8 @@
     var mtxIconLZUniDrawSizeMin = 26;
     var mtxIconLZUniDrawSizeMax = 42;
     /* LayerZero ZRO: extra-thin mark needs even more size boost. */
-    var mtxIconLZDrawSizeMin = 22;
-    var mtxIconLZDrawSizeMax = 30;
+    var mtxIconLZDrawSizeMin = 34;
+    var mtxIconLZDrawSizeMax = 42;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -1720,7 +1722,9 @@
           }
           ds = dMin + Math.random() * (dMax - dMin);
         }
-        if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
+        if(item.def && item.def.src && item.def.src.indexOf('franklin.png') >= 0){
+          ds = 44 + Math.random() * 20;
+        } else if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
           ds = mtxIconLZDrawSizeMin + Math.random() * (mtxIconLZDrawSizeMax - mtxIconLZDrawSizeMin);
@@ -1741,7 +1745,7 @@
         } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('mstr.png') >= 0){
-          ds = 32 + Math.random() * 12;
+          ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.png') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
