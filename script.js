@@ -1188,6 +1188,7 @@
       { src: './icons/matrix/wintermute.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/grayscale.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/binance.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/binance.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
@@ -1199,6 +1200,7 @@
       { src: './icons/matrix/jpmorgan.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/citi.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
@@ -1318,7 +1320,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '128';
+    var mtxIconAssetVer = '129';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
