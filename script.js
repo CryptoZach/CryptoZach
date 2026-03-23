@@ -155,7 +155,7 @@
 
     (function(){
       function flagshipCtaEl(){
-        return heroHome.querySelector('a.cta-primary[href*="routing-the-dollar-brief"]')
+        return heroHome.querySelector('a.cta-primary[href*="routing-the-dollar"]')
           || heroHome.querySelector('a.cta-primary')
           || heroHome.querySelector('a.action.primary.cta-primary');
       }
@@ -1071,7 +1071,7 @@
   const matrixCanvas = document.querySelector('#hero.hero--homepage .matrix-canvas');
   var matrixActivatorList = Array.prototype.slice.call(document.querySelectorAll('#hero.hero--homepage .matrix-hover-activator'));
   var heroEyebrowMtx = document.querySelector('#hero.hero--homepage .hero-eyebrow');
-  var heroFlagshipMtx = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar-brief"]')
+  var heroFlagshipMtx = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar"]')
     || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
   function mtxEnsureActivator(el){
     if(!el || matrixActivatorList.indexOf(el) !== -1){
@@ -1113,11 +1113,14 @@
       { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/busd.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wlfi.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/usdp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/fil.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aave.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/build-sources/aave.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
@@ -1223,8 +1226,8 @@
       { src: './icons/matrix/amd.png', loaded: false, img: null, tinted: null },
       /* nflx removed: file not present */
       { src: './icons/matrix/bac.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wfc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
+      { src: './icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/schw.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
@@ -1322,7 +1325,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '131';
+    var mtxIconAssetVer = '136';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -1366,8 +1369,8 @@
     var mtxIconLZUniDrawSizeMin = 26;
     var mtxIconLZUniDrawSizeMax = 42;
     /* LayerZero ZRO: extra-thin mark needs even more size boost. */
-    var mtxIconLZDrawSizeMin = 47;
-    var mtxIconLZDrawSizeMax = 50;
+    var mtxIconLZDrawSizeMin = 34;
+    var mtxIconLZDrawSizeMax = 42;
     var mtxTrailFillCache = '';
     var mtxTrailFillFrame = 0;
 
@@ -2758,6 +2761,7 @@
             /* Matte removed: destination-out caused visible dark rectangles. */
             /* Queue the sprite draw for pass 2. */
             var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
+            var isCrispLine = item.def.src && item.def.src.indexOf('franklin.png') >= 0;
             var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
             var iconDollarTint = !!(item.def.src && /\/(usdc|usdt2?|dai|m0)\.png/i.test(item.def.src));
             iconQueue.push({
@@ -2768,6 +2772,7 @@
               ih: ih,
               op: op,
               hollow: isHollowHex,
+              noSmooth: isCrispLine,
               btcGlow: isBtcGlow,
               submerge: mtxGetSubmerge(y0, h),
               item: item,
@@ -2805,8 +2810,8 @@
         }
         mtxCtx.shadowOffsetX = 0;
         mtxCtx.shadowOffsetY = 0;
-        mtxCtx.imageSmoothingEnabled = !q.hollow;
-        if('imageSmoothingQuality' in mtxCtx && !q.hollow){
+        mtxCtx.imageSmoothingEnabled = !(q.hollow || q.noSmooth);
+        if('imageSmoothingQuality' in mtxCtx && !q.hollow && !q.noSmooth){
           mtxCtx.imageSmoothingQuality = 'high';
         }
         mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);

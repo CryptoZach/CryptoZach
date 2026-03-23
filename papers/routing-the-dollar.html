@@ -20,7 +20,7 @@
   <meta property="og:title" content="Routing the Dollar: Gateway Infrastructure and Monetary Policy Transmission | Zach Zukowski" />
   <meta property="og:description" content="The same dollar token produces different regulatory, monetary, and stress outcomes depending on which gateway routes it. Three findings from 19 entities, 51 addresses, and three years of on-chain data." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://cryptozach.com/papers/routing-the-dollar" />
+  <meta property="og:url" content="https://cryptozach.com/papers/routing-the-dollar.html" />
   <meta property="og:site_name" content="Zach Zukowski" />
   <meta property="og:image" content="https://cryptozach.com/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta property="og:image:alt" content="Routing the Dollar: CLII diagram" />
@@ -43,7 +43,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=36" />
+  <link rel="stylesheet" href="../styles.css?v=40" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,7 +51,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://cryptozach.com/selected-research" },
-        { "@type": "ListItem", "position": 3, "name": "Routing the Dollar", "item": "https://cryptozach.com/papers/routing-the-dollar" }
+        { "@type": "ListItem", "position": 3, "name": "Routing the Dollar", "item": "https://cryptozach.com/papers/routing-the-dollar.html" }
       ]
     }
   </script>
@@ -61,8 +61,8 @@
       "@type": "ScholarlyArticle",
       "name": "Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar's International Functions",
       "description": "Whether stablecoins strengthen or weaken the dollar's international functions depends on the gateways that route them. Introduces the Control Layer Intensity Index (CLII). Submitted (FRBNY Fifth Conference, June 2026).",
-      "url": "https://cryptozach.com/papers/routing-the-dollar",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/routing-the-dollar" },
+      "url": "https://cryptozach.com/papers/routing-the-dollar.html",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/routing-the-dollar.html" },
       "image": "https://cryptozach.com/Publication-Images/Routing_The_Dollar_CLII.png",
       "datePublished": "2026",
       "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://cryptozach.com" },
@@ -139,10 +139,8 @@
 
       <h1 id="paper-title">Routing the Dollar<br><span class="paper-subtitle-line">Gateway Infrastructure, Monetary Policy Transmission, and the Dollar's International Functions</span></h1>
 
-      <p class="paper-metadata-strip">~3 min brief · ~25 min full read · March 2026 · SSRN · FRBNY Conference</p>
-      <p class="paper-description-note">Description current as of March 2026.</p>
-
-      <p class="paper-thesis">Whether stablecoins strengthen or weaken the dollar's international functions depends not on the tokens but on the gateways that route them.</p>
+      <p class="paper-metadata-strip">~3 min brief · ~25 min full read · March 2026 · SSRN · Submitted to FRBNY Fifth Conference on International Roles of the U.S. Dollar, June 2026</p>
+      <p class="date-note">Description current as of March 2026.</p>
 
       <div class="paper-access-block access-block">
         <div class="access-primary">
@@ -152,61 +150,80 @@
         <div class="access-secondary">
           <a href="mailto:zach@cryptozach.com?subject=Routing%20the%20Dollar%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
           <span class="access-sep" aria-hidden="true">·</span>
-          <a href="https://x.com/CryptoZach/status/2031929065549025726?s=20" class="access-link" target="_blank" rel="noopener noreferrer">Thread</a>
+          <a href="https://x.com/CryptoZach/status/2031929065549025726?s=20" class="access-link" target="_blank" rel="noopener noreferrer" aria-label="Read thread on X"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
         </div>
       </div>
 
       <!-- ═══ THE BRIEF ═══ -->
-      <section class="brief-findings" aria-labelledby="brief-one-thing-heading">
+      <section id="brief-top" class="brief-findings brief-one-thing-section brief-highlights" aria-labelledby="brief-one-thing-heading">
         <h2 id="brief-one-thing-heading">If you only read one thing</h2>
         <ul>
           <li>The gateway (the issuer, exchange, or protocol that routes the token) matters more for regulation and supervision than the token itself.</li>
-          <li>Stablecoin supply and Federal Reserve balance-sheet variables move in opposite directions, with supply nearly doubling after the September 2024 rate cut while the Fed continued shrinking its balance sheet. This pattern appears only for dollar stablecoins, not for Bitcoin or Ethereum, which means the relationship is tied to the dollar system specifically, not to crypto markets in general.</li>
-          <li>During the SVB crisis, Circle and Coinbase had near-identical regulatory scores but produced opposite results: Circle, which held reserves at SVB, gained the least volume of any major gateway, while Coinbase nearly tripled. Separately, three gateways with no direct SVB exposure (MakerDAO, Paxos, Gemini) saw their stablecoins depeg anyway because those stablecoins held USDC in their reserves, and USDC had direct SVB exposure. Stress traveled through reserve composition, not through token labels.</li>
+          <li>Stablecoin supply and Federal Reserve balance-sheet variables move in opposite directions, and only for dollar stablecoins. Supply nearly doubled after the September 2024 rate cut while the Fed continued shrinking its balance sheet. The same pattern does not appear for Bitcoin or Ethereum.</li>
+          <li>During the SVB crisis, Circle and Coinbase had near-identical regulatory scores but produced opposite results because they used different banks to hold their reserves. Three other gateways with no SVB exposure (MakerDAO, Paxos, Gemini) still depegged because their stablecoins held USDC in their reserves, and USDC's issuer had $3.3 billion at SVB. Stress followed the reserve chain, not the token label: if your reserves held USDC, you inherited Circle's banking risk.</li>
         </ul>
         <p class="brief-evidence-base"><strong>Evidence base:</strong> Three years of on-chain gateway data (19 entities, 51 addresses), regime-dependent cointegration with Federal Reserve balance-sheet variables, and stress-episode analysis of the SVB crisis and BUSD regulatory action.</p>
       </section>
 
-      <figure class="paper-cover brief-figure">
-        <img src="../Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Control Layer Intensity Index (CLII) diagram" loading="eager" />
+      <figure class="paper-cover brief-figure" aria-labelledby="brief-clii-caption">
+        <img src="../Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="" loading="eager" />
+        <figcaption id="brief-clii-caption">The Control Layer Intensity Index scores 19 gateway entities across five dimensions of regulatory intensity. Tier classification determines where compliance obligations, freeze authority, and supervisory visibility attach.</figcaption>
       </figure>
 
       <section class="brief-so-what" aria-labelledby="brief-changes-heading">
         <h2 id="brief-changes-heading">What this paper changes</h2>
         <p>Most stablecoin analysis focuses on the token: classification, reserve composition, market capitalization. This paper shifts the unit of analysis to the gateway: the issuer, exchange, or protocol that actually routes the token.</p>
         <p>Once you measure at that layer, the same dollar token produces different regulatory exposure, different monetary-policy transmission, and different stress behavior.</p>
+        <p>These are descriptive findings. None should be read as causal estimates.</p>
       </section>
 
       <section class="brief-findings" aria-labelledby="brief-finding1-heading">
         <h2 id="brief-finding1-heading">1. Stablecoin supply moves in the opposite direction from the Federal Reserve's balance sheet, and only for dollar stablecoins</h2>
         <p>Stablecoin supply and Federal Reserve balance-sheet variables move in opposite directions. During tightening, supply grew 123% even as the Fed drained reserves. After the September 2024 rate cut, supply nearly doubled from $162 billion to $305 billion while the Fed continued shrinking its balance sheet. The same relationship does not appear for Bitcoin or Ethereum, which means the connection is tied to the dollar system specifically, not to crypto markets in general.</p>
-        <p>Issuers keep the spread between what their reserves earn and what they pay holders (nothing, under current U.S. stablecoin law). When the Fed tightens, that spread widens and every dollar of stablecoin issued becomes more profitable. When the Fed eases, the issuer's margin shrinks, but rate cuts compress the gap between Treasury bill yields and on-chain lending rates, making stablecoin-denominated lending more competitive and drawing new capital into the system. Supply responds to both regimes, through different channels.</p>
+        <p>Issuers hold reserves in Treasury bills and keep the spread between what those reserves earn and what they pay holders (nothing, under current U.S. stablecoin law). When the Fed tightens, that spread widens and every dollar of stablecoin issued becomes more profitable. When the Fed eases, the issuer's margin shrinks, but rate cuts compress the gap between Treasury bill yields and on-chain lending rates, making stablecoin-denominated lending more competitive and drawing new capital into the system. Supply responds to both regimes, through different channels.</p>
+        <p>This inverse relationship distributes unevenly across gateway types. Regulated and offshore institutional gateways share the aggregate pattern: their volumes rise as the Fed's balance sheet contracts. Permissionless protocol volumes trend in the opposite direction, rising alongside DeFi usage growth rather than tracking Fed policy. The aggregate number masks a structural split: institutional infrastructure carries the Fed-stablecoin relationship, while permissionless protocols absorb activity that shifts away from institutional channels during stress.</p>
         <p class="brief-what-this-means"><strong>What this means:</strong> the connection between Fed policy and stablecoin supply runs through issuer reserve economics and banking relationships, not through markets reacting to rate announcements. The connection works differently in each regime but persists through both.</p>
       </section>
 
       <section class="brief-findings" aria-labelledby="brief-finding2-heading">
         <h2 id="brief-finding2-heading">2. The same dollar token produces different regulatory outcomes depending on which gateway routes it, and the routing network is concentrating</h2>
-        <p>The Control Layer Intensity Index scores 19 gateway entities across licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Over three years, the total volume moving through gateways doubled, but the number of distinct entities transacting with each other dropped by 25%, and the share of transactions crossing between different gateways fell from 5.8% to 2.6%. More money, fewer participants, less interconnection.</p>
-        <p>Usage expanded. The routing network concentrated.</p>
+        <p>The Control Layer Intensity Index scores 19 gateway entities across licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Over three years, the total volume moving through gateways doubled, but the number of distinct entities transacting with each other dropped by 25%, and the share of transactions crossing between different gateways fell from 5.8% to 2.6%. <strong class="brief-finding-summary-line">More money, fewer participants, less interconnection.</strong></p>
+        <p>Underneath the gateway layer, a small number of market-making firms provide the cross-gateway connectivity the entire network depends on. One firm's share of identified counterparty volume rose from 1.4% to 19.9% over three years while all other major intermediaries declined. The concentration is not just at the gateway level; it extends to the intermediary layer that connects them.</p>
         <p class="brief-what-this-means"><strong>What this means:</strong> watching total stablecoin supply misses the concentration happening underneath. Gateway-level transfer data reveal which entities are gaining share, which connections are disappearing, and where exposure is building.</p>
       </section>
 
       <section class="brief-findings" aria-labelledby="brief-finding3-heading">
-        <h2 id="brief-finding3-heading">3. During the SVB crisis, capital rotated across dollar gateways rather than exiting dollar-pegged stablecoins</h2>
+        <h2 id="brief-finding3-heading">3. During the SVB crisis, capital rotated across dollar gateways rather than exiting dollar-pegged instruments</h2>
         <p>During the SVB episode, capital rotated across dollar gateways rather than exiting dollar-pegged instruments. Tier 1 (the most heavily regulated) gateway share dropped from 63% to 13%, then recovered to 57% after banking-sector interventions.</p>
-        <p>The sharpest result comes from within Tier 1. Circle (CLII 0.92) and Coinbase (CLII 0.85), both U.S.-regulated, both highly rated on compliance, showed very different volume retention during the crisis. Circle, which held reserves at SVB, gained the least volume of any major gateway (1.39× its baseline). Coinbase, without SVB exposure, nearly tripled (2.63×). The divergence was not between tiers but between entities within the same tier, determined by which banks held their reserves.</p>
-        <p>Separately, three gateways with no direct SVB exposure (MakerDAO, Paxos, Gemini) saw their issued stablecoins (DAI, USDP, GUSD) depeg because those stablecoins held USDC in their reserves, and USDC had direct SVB exposure. Stress traveled through reserve composition, not through token labels.</p>
-        <p class="brief-what-this-means"><strong>What this means:</strong> how heavily a gateway is regulated does not predict how it performs under stress. An index that measures compliance should not be expected to predict which gateways fail under stress; those are separate questions that require separate monitoring.</p>
+        <p>The sharpest result comes from within Tier 1. Circle (CLII 0.92) and Coinbase (CLII 0.85), both U.S.-regulated, both highly rated on compliance, showed very different volume retention during the crisis. Circle, which held reserves at SVB, gained the least volume of any major gateway (1.39x its baseline). Coinbase, without SVB exposure, nearly tripled (2.63x). The divergence was not between tiers but between entities within the same tier, determined by which banks held their reserves.</p>
+        <p>Separately, three gateways with no direct SVB exposure (MakerDAO, Paxos, Gemini) saw their issued stablecoins (DAI, USDP, GUSD) depeg because those stablecoins held USDC in their reserves, and USDC had direct SVB exposure. Stress followed the reserve chain, not the token label: if your reserves held USDC, you inherited Circle's banking risk.</p>
+        <p>A second stress episode illustrates the pattern from a different direction. When the NYDFS ordered Paxos to stop minting BUSD, $16 billion in stablecoin value needed a new home. Paxos guaranteed that every holder could redeem at exactly one dollar throughout the wind-down, so no one was forced to sell at a loss. Despite that guarantee, users did not migrate to more heavily regulated stablecoins like USDC. Instead, they moved to USDT and stayed within the Binance ecosystem, choosing uninterrupted trading access over stronger regulatory protections. A single market maker (Wintermute) mediated the bulk of the migration, its counterparty volume surging fivefold.</p>
+        <p>In both the SVB crisis and the BUSD wind-down, capital moved based on entity-level factors (which bank held the reserves, which exchange offered continuity) rather than on the token's name or regulatory tier.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> how heavily a gateway is regulated does not predict how it performs under stress. An index that measures compliance should not be expected to predict which gateways fail under stress; those are separate questions that require separate monitoring. One caveat: the SVB episode alone cannot cleanly separate whether users fled Circle's banking exposure or USDC's 12% peg deviation. The BUSD wind-down provides the cleaner test because there was no peg pressure, and users still chose lower-CLII routing. The two episodes together provide stronger evidence than either alone.</p>
       </section>
 
       <section class="brief-problem" aria-labelledby="brief-who-heading">
         <h2 id="brief-who-heading">Who should care</h2>
-        <p><strong>Policymakers:</strong> If the goal is understanding how Fed policy affects stablecoin markets, measuring transfers at the gateway level (which issuer, exchange, or protocol processed each transaction) provides better visibility than watching total stablecoin supply alone. The CLII classifies where regulatory obligations attach across 19 gateways. The automatic rules that move money when no one actively chooses, such as default sweep destinations, routing preferences, and hold triggers, are where concentrated exposure builds up unnoticed.</p>
-        <p><strong>Issuers and operators:</strong> Where reserves are held, which banks hold them, and how the automatic routing rules behave under stress determine how a product performs, not the token's label or brand. The broader monetary impact of stablecoin growth depends on which issuer absorbs it: different issuers hold reserves at different banks, and those deposits re-enter the banking system as funds that each bank lends and manages differently.</p>
+        <p><strong>Policymakers:</strong> If the goal is understanding how Fed policy affects stablecoin markets, measuring transfers at the gateway level (which issuer, exchange, or protocol processed each transaction) provides better visibility than watching total stablecoin supply alone. The CLII classifies where regulatory obligations attach across 19 gateways. Three types of automatic rules deserve particular attention: default sweep destinations (where idle balances go), routing preferences (which gateway processes a transaction when the user does not choose), and hold triggers (when and why funds are frozen). These are where concentrated exposure builds up unnoticed.</p>
+        <p><strong>Issuers and operators:</strong> Where reserves are held, which banks hold them, and how the automatic routing rules behave under stress determine how a product performs, not the token's label or brand. The broader monetary impact of stablecoin growth depends on which issuer absorbs it. Each issuer holds reserves at different banks, and those reserve deposits become funding that each bank lends and manages on its own terms.</p>
         <p><strong>Investors and market-structure teams:</strong> How heavily a gateway is regulated does not predict how it performs under stress. Assessing both requires measuring transfers at the gateway level. Looking only at token-level totals cannot distinguish between gateways that meet the same compliance standards but use different banks, different custody arrangements, and different reserve structures.</p>
       </section>
 
+      <p>Fragmentation in stablecoin markets shows up as competition and concentration within the dollar's own gateway infrastructure, not as substitution into non-dollar instruments. The Tier 1 gateway layer is simultaneously the most controllable part of that infrastructure and the most fragile: during the SVB weekend, Tier 1 share collapsed to 13% in 48 hours because institutional gateways operate on banking hours while permissionless protocols run continuously. The dollar's digital position is a property of the control layer, not the tokens.</p>
       <p class="brief-closing"><strong>Who routes the dollar matters more than which dollar is routed.</strong></p>
+
+      <section class="methodology-summary" aria-labelledby="methodology-summary-heading">
+        <h2 id="methodology-summary-heading">How the paper is built</h2>
+        <ul>
+          <li>157-week panel across nine blockchains</li>
+          <li>51-address Ethereum counterparty registry (19 entities, 27.7% of USDC/USDT volume)</li>
+          <li>Monthly counterparty networks (15 gateways, 3,804 unique dyads)</li>
+          <li>Johansen cointegration on a three-variable system (Fed total assets, ON RRP, stablecoin supply)</li>
+          <li>Application-level flow decomposition: Ethereum, Solana, and Base (64% of volume)</li>
+          <li>Five selection-bias robustness checks including Nansen cross-validation (Spearman &#961; = 0.94)</li>
+          <li>Two stress-episode windows: SVB crisis and BUSD regulatory action</li>
+        </ul>
+      </section>
 
       <!-- ═══ FULL TECHNICAL DEPTH ═══ -->
       <hr class="depth-divider">
@@ -214,29 +231,44 @@
 
       <div class="paper-abstract">
         <h2>Abstract</h2>
-        <p>This paper introduces a gateway-level analytical framework for understanding how dollar-denominated stablecoins interact with Federal Reserve monetary policy and the dollar's international functions. Using a 157-week panel across nine blockchains, a 51-address Ethereum counterparty registry, and Johansen cointegration on a three-variable system (Fed total assets, ON RRP, stablecoin supply), the analysis identifies regime-dependent cointegration consistent with money-market transmission. Cointegration is strongest during quantitative tightening (trace = 48.18) and weaker during easing (trace = 17.71), while level correlations are strongest during easing (r = -0.98). Direct policy-rate channels play a weaker role; no FOMC event study result survives Bonferroni correction.</p>
-        <p>The Control Layer Intensity Index (CLII) scores regulatory intensity at the gateway layer across five dimensions: Regulatory License 25%, Reserve Transparency 20%, Freeze/Blacklist Capability 20%, Compliance Infrastructure 20%, Geographic Restrictions/Sanctions 15%. Tier 1 above 0.75; Tier 2 from 0.30 to 0.75; Tier 3 below 0.30. The CLII measures who is regulated, not who is fragile: three Tier 1 gateways with near-identical scores (0.82 to 0.92) produced opposite outcomes during SVB based on entity-specific banking exposure. Regulatory posture and stress resilience are distinct properties; conflating them misframes both the compliance question and the stability question.</p>
-        <p>The SVB stress episode traces vertical contagion through MakerDAO's Peg Stability Module; three gateways with zero direct SVB exposure (MakerDAO, Paxos, Gemini) saw their issued instruments (DAI, USDP, GUSD) depeg through code-level reserve dependencies. Application-level flow decomposition covers Ethereum, Solana, and Base (64% of volume), with selection-bias robustness across five checks including Nansen cross-validation (Spearman rho = 0.94).</p>
+        <p>Dollar stablecoins extend the dollar's exchange, store-of-value, and funding functions into blockchain markets, largely outside the Federal Reserve's standard supervisory perimeter. This paper argues the policy-relevant unit is not the token but the gateway (the issuer, exchange, or protocol that routes stablecoin value), because the same dollar token inherits different compliance, monetary, and stress properties depending on which gateway processes it. These are descriptive findings; none should be read as causal estimates.</p>
+        <p><strong>Data.</strong> Daily Ethereum gateway transfers (19 entities, 51 addresses, 27.7% of USDC/USDT volume), monthly counterparty networks (15 gateways, 35 months, 3,804 unique dyads), multi-chain flow decomposition across 9 blockchains ($60.6T total volume), and stress-episode windows around the SVB crisis and the BUSD regulatory action.</p>
+        <p><strong>Monetary transmission.</strong> Stablecoin supply is cointegrated with Fed balance-sheet variables (Fed total assets, ON RRP, stablecoin supply) in a regime-dependent pattern consistent with money-market transmission. Cointegration is strongest during quantitative tightening (trace = 48.18) and weaker during easing (trace = 17.71), while level correlations are strongest during easing (r = -0.98). A yield-spread channel provides mechanism-consistent evidence; no FOMC announcement effect survives Bonferroni correction. The co-movement distributes unevenly across the gateway layer: institutional gateways share the aggregate negative correlation (Tier 1 r = -0.56, Tier 2 r = -0.45), while permissionless protocol volumes trend in the opposite direction (Tier 3 r = +0.37).</p>
+        <p><strong>Gateway classification.</strong> The Control Layer Intensity Index (CLII) scores regulatory intensity across five weighted dimensions: Regulatory License 25%, Reserve Transparency 20%, Freeze/Blacklist Capability 20%, Compliance Infrastructure 20%, Geographic Restrictions/Sanctions 15%. Tier 1 above 0.75; Tier 2 from 0.30 to 0.75; Tier 3 below 0.30. The CLII measures regulatory posture, not resilience: Circle (0.92) and Coinbase (0.85) produced opposite flow retention during SVB (1.39× vs 2.63×) based on entity-specific banking exposure. Concentration increased as volume grew: unique counterparties declined 25% and cross-gateway connections fell from 5.8% to 2.6% over three years.</p>
+        <p><strong>Stress transmission.</strong> Two stress episodes bracket the range of gateway-level reallocation. During SVB, capital rotated across dollar gateways rather than exiting dollar-pegged instruments; Tier 1 share collapsed from 63% to 13% and recovered to 57% after banking-sector interventions. Three gateways with zero SVB exposure (MakerDAO, Paxos, Gemini) saw their instruments depeg through reserve-chain contagion: each held USDC, connecting them to Circle's $3.3 billion SVB exposure. During the BUSD wind-down (a pure regulatory action with no peg pressure), displaced capital migrated to USDT and Binance-adjacent routing rather than to higher-CLII alternatives, consistent with users prioritizing exchange continuity over regulatory protection. In both episodes, the salient variation was entity-level rather than tier-level, and capital moved in directions that token-level frameworks would not have predicted.</p>
+        <p><strong>Deposit displacement.</strong> The wide variation in bank deposit recycling across issuers means the monetary impact of stablecoin growth depends on which issuer absorbs it. Each issuer holds reserves at different banks, and those reserve deposits become funding that each bank lends and manages on its own terms.</p>
+        <p>Fragmentation in this market manifests as competition and concentration within the dollar's own gateway infrastructure, rather than as substitution into non-dollar instruments. Application-level flow decomposition covers Ethereum, Solana, and Base (64% of volume), with selection-bias robustness across five checks including Nansen cross-validation (Spearman rho = 0.94).</p>
       </div>
 
       <div class="paper-key-numbers">
         <h2>Key numbers</h2>
-        <p>19 entities · 51 addresses · 27.7% ETH coverage<br>
-        T = 157 weeks · 15 gateways · 35 months · 3,804 dyads<br>
-        $60.6T across 9 chains<br>
-        QT trace 48.18 · easing trace 17.71 · r = -0.98<br>
-        Counterparties declined 25% · cross-gateway 5.8% to 2.6%<br>
+        <p><strong>Sample</strong><br>
+        19 gateway entities · 51 tracked addresses · 9 blockchains · $60.6T total volume<br>
+        157 weeks (Feb 2023 to Jan 2026) · Ethereum: 27.7% of USDC + USDT volume<br>
+        <strong>Fed-stablecoin relationship</strong><br>
+        Level correlation r = -0.98, strongest during easing<br>
+        Cointegration trace: 48.18 (tightening) · 17.71 (easing)<br>
+        No FOMC announcement effect survives Bonferroni correction<br>
+        <strong>Concentration</strong><br>
+        Counterparties declined 25% · cross-gateway share 5.8% → 2.6%<br>
         Tier HHI 5,021 · entity HHI 2,742 / 2,583<br>
-        SVB Tier 1 share: 63% → 13% → 57%</p>
+        3,804 monthly gateway-pair observations<br>
+        <strong>SVB stress episode</strong><br>
+        Tier 1 share: 63% → 13% → 57%<br>
+        Circle 1.39× baseline · Coinbase 2.63× baseline<br>
+        <strong>BUSD wind-down</strong><br>
+        $16.1B → $0.04B (regulatory action, no peg pressure)<br>
+        Migration: Paxos (CLII 0.88) → Tether (CLII 0.45)<br>
+        Wintermute counterparty volume: $4.7B → $24.4B</p>
       </div>
 
-      <div class="paper-audience-tags" aria-label="Audience">
-        <span class="paper-audience-tag">Central banks</span>
-        <span class="paper-audience-tag">Policy designers</span>
-        <span class="paper-audience-tag">Stablecoin issuers</span>
-        <span class="paper-audience-tag">Macro researchers</span>
-        <span class="paper-audience-tag">Market infrastructure teams</span>
-      </div>
+      <ul class="audience-chips" aria-label="Target audience">
+        <li class="audience-chip">Central banks</li>
+        <li class="audience-chip">Policy designers</li>
+        <li class="audience-chip">Stablecoin issuers</li>
+        <li class="audience-chip">Macro researchers</li>
+        <li class="audience-chip">Market infrastructure teams</li>
+      </ul>
 
       <div class="paper-abstract">
         <h2>Related frameworks</h2>
@@ -250,7 +282,7 @@
         <div class="paper-related-grid">
           <div class="paper-related-card-wrap">
             <a class="paper-related-card" href="./minimum-viable-equivalence-packs.html">
-              <strong>Minimum Viable Equivalence Packs</strong>
+              <strong>Minimum Viable Equivalence Pack</strong>
               <span class="paper-related-teaser">Institutional diligence framework for tokenized products.</span>
             </a>
             <a class="paper-related-cta" href="./minimum-viable-equivalence-packs.html">Open paper summary</a>
@@ -258,13 +290,20 @@
           <div class="paper-related-card-wrap">
             <a class="paper-related-card" href="./dollar-v3-control-layer-war.html">
               <strong>Dollar v3 / The Control Layer War</strong>
-              <span class="paper-related-teaser">Where GENIUS and CLARITY attach compliance obligations at the gateway level.</span>
+              <span class="paper-related-teaser">How stablecoin policy maps compliance obligations at the control layer.</span>
             </a>
             <a class="paper-related-cta" href="./dollar-v3-control-layer-war.html">Open paper summary</a>
           </div>
         </div>
       </div>
 
+      <nav class="resource-rail" aria-label="Paper resources">
+        <a href="#brief-top">Back to the 3-minute brief</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/CryptoZach/CryptoZach" target="_blank" rel="noopener noreferrer">GitHub replication</a>
+      </nav>
       <div class="brief-meta">
         <p>Submitted to the Fifth Conference on International Roles of the U.S. Dollar, Federal Reserve Board and FRBNY, June 22-23, 2026.</p>
       </div>
