@@ -1285,13 +1285,9 @@
       var isStable = mtxStablecoinSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isTopL1 = mtxTopL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
-      var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 4 : (isMajorL1 ? 3 : 2)));
-      if(def.src.indexOf('wintermute.png') >= 0){
-        n = 6;
-      }
-      if(def.src.indexOf('okx.png') >= 0){
-        n = 6;
-      }
+      var mtxInfraSlugs = ['chainalysis.png', 'fireblocks.png', 'wintermute.png', 'bitgo.png', 'compound.png', 'gemini.png', '1inch.png', 'okx.png', 'securitize.png', 'layerzero.png', 'metamask.png', 'coinbase.png', 'kraken.png'];
+      var isInfra = mtxInfraSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
+      var n = isCoreStable ? 6 : (isStable ? 4 : (isTopL1 ? 4 : (isMajorL1 ? 3 : (isInfra ? 3 : 2))));
       for(var k = 0; k < n; k++){
         mtxCryptoPool.push({ type: 'icon', def: def });
       }
@@ -1319,7 +1315,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '121';
+    var mtxIconAssetVer = '122';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
