@@ -14,12 +14,12 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Frameworks | Zach Zukowski</title>
-  <meta name="description" content="Independent, empirically backed research on digital money. How the site is organized: three dollar objects, CLII, MVEP, Credit Migration Model, and Regime Dashboard." />
+  <title>Frameworks | Zach Zukowski (CryptoZach)</title>
+  <meta name="description" content="Overview explains the objects. This page explains the decision tools: CLII, MVEP, Credit Migration Model, and Regime Dashboard. What to test, what to monitor, what changes the view, and who acts." />
   <meta name="author" content="Zach Zukowski" />
 
-  <meta property="og:title" content="Structure | Zach Zukowski" />
-  <meta property="og:description" content="How the research is organized: three dollar objects, CLII, MVEP, Credit Migration Model, and Regime Dashboard." />
+  <meta property="og:title" content="Frameworks | Zach Zukowski (CryptoZach)" />
+  <meta property="og:description" content="Overview explains the objects. Frameworks explains the decision tools: CLII, MVEP, Credit Migration Model, Regime Dashboard." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="CryptoZach" />
   <meta property="og:locale" content="en_US" />
@@ -31,8 +31,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
-  <meta name="twitter:title" content="Structure | Zach Zukowski" />
-  <meta name="twitter:description" content="How the research is organized: three dollar objects, CLII, MVEP, Credit Migration Model, and Regime Dashboard." />
+  <meta name="twitter:title" content="Frameworks | Zach Zukowski (CryptoZach)" />
+  <meta name="twitter:description" content="Four frameworks for classifying, testing, and monitoring digital-dollar infrastructure." />
   <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
   <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
 
@@ -56,9 +56,9 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=35" />
+  <link rel="stylesheet" href="./styles.css?v=66" />
   <style>
-    #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
+    #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
   </style>
   <script type="application/ld+json">
     {
@@ -66,7 +66,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
-        { "@type": "ListItem", "position": 2, "name": "Structure", "item": "https://cryptozach.com/Operating-Model.html" }
+        { "@type": "ListItem", "position": 2, "name": "Frameworks", "item": "https://cryptozach.com/Operating-Model.html" }
       ]
     }
   </script>
@@ -74,9 +74,9 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Structure: How the research is organized",
+      "name": "Frameworks: decision tools for digital-dollar infrastructure",
       "url": "https://cryptozach.com/Operating-Model.html",
-      "description": "Three dollar objects, core frameworks, and how Zach Zukowski's work on digital money and tokenization is structured.",
+      "description": "CLII, MVEP, Credit Migration Model, and Regime Dashboard: what each measures, what changes the view, and who acts on the result.",
       "isPartOf": { "@id": "https://cryptozach.com/#website" },
       "author": { "@id": "https://cryptozach.com/#person" },
       "speakable": {
@@ -105,7 +105,7 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="./2026-frameworks.html">Overview</a>
+          <a class="navlink" href="./start-here.html">Overview</a>
           <a class="navlink active" href="./Operating-Model.html" aria-current="page">Frameworks</a>
           <a class="navlink" href="./selected-research.html">Research</a>
           <a class="navlink" href="./resume.html">Resume</a>
@@ -130,7 +130,7 @@
 
   <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
     <div class="mobile-nav-linkset">
-      <a class="navlink" href="./2026-frameworks.html">Overview</a>
+      <a class="navlink" href="./start-here.html">Overview</a>
       <a class="navlink active" href="./Operating-Model.html" aria-current="page">Frameworks</a>
       <a class="navlink" href="./selected-research.html">Research</a>
       <a class="navlink" href="./resume.html">Resume</a>
@@ -159,6 +159,11 @@
             Three dollar objects
           </a>
         </li>
+        <li>
+          <a href="#framework-stack" class="structure-nav__link" data-section="framework-stack">
+            Framework stack
+          </a>
+        </li>
         <li class="structure-nav__group">
           <a href="#core-frameworks" class="structure-nav__link" data-section="core-frameworks">
             Core frameworks
@@ -171,8 +176,8 @@
           </ol>
         </li>
         <li>
-          <a href="#current-agenda" class="structure-nav__link" data-section="current-agenda">
-            Current agenda
+          <a href="#framework-lives" class="structure-nav__link" data-section="framework-lives">
+            Where each framework lives
           </a>
         </li>
         <li>
@@ -193,18 +198,24 @@
     <section class="reveal" aria-labelledby="focus-title">
       <div class="kicker kicker--subpage">
         <span class="kicker-dot" aria-hidden="true"></span>
-        Frameworks
+        FRAMEWORKS
       </div>
       <div class="section-title">
-        <h1 id="focus-title">Four frameworks for classifying, measuring, and stress-testing digital-dollar infrastructure.</h1>
-        <p class="structure-page-lede">Each framework is built to support real decisions: what to monitor, what changes the view, and where responsibility sits when systems scale or fail.</p>
+        <h1 id="focus-title">Four frameworks for classifying, testing, and monitoring digital-dollar infrastructure.</h1>
+        <p class="structure-page-lede">Overview explains the objects. This page explains the decision tools.</p>
+        <p class="structure-page-lede">If the Overview page answers what these products are, this page answers what to test, what to monitor, what should change the view, and who acts when conditions deteriorate.</p>
       </div>
-      <div class="page-toc structure-jump-to" role="navigation" aria-label="Structure jump links">
+      <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Frameworks jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
           <a class="page-toc-link" href="#three-dollar-objects">Three dollar objects</a>
+          <a class="page-toc-link" href="#framework-stack">Framework stack</a>
           <a class="page-toc-link" href="#core-frameworks">Core frameworks</a>
-          <a class="page-toc-link" href="#current-agenda">Current agenda</a>
+          <a class="page-toc-link" href="#clii">CLII</a>
+          <a class="page-toc-link" href="#mvep">MVEP</a>
+          <a class="page-toc-link" href="#credit-migration-model">Credit Migration Model</a>
+          <a class="page-toc-link" href="#regime-dashboard">Regime Dashboard</a>
+          <a class="page-toc-link" href="#framework-lives">Where each framework lives</a>
           <a class="page-toc-link" href="#how-the-work-runs">How the work runs</a>
           <a class="page-toc-link" href="#go-deeper">Go deeper</a>
         </div>
@@ -218,65 +229,59 @@
           <p class="operating-model-stack__body"><em class="operating-model-stack__thesis">Who routes the dollar matters more than which dollar is routed. Who earns the token matters more than who holds it. Classify the token, but regulate and audit the operator.</em></p>
         </div>
       </div>
-      <p class="track-bridge"><a href="./selected-research.html">Research library</a></p>
+      <p class="track-bridge"><a href="./selected-research.html">View research library <span aria-hidden="true">→</span></a></p>
     </div>
 
     <section class="reveal" id="three-dollar-objects" aria-labelledby="objects-title">
       <div class="section-title">
         <h2 id="objects-title">Three dollar objects, one wallet</h2>
-        <p>Payment stablecoins, tokenized deposits, and tokenized yield products look identical in a wallet but diverge by reserve structure, redemption mechanics, and stress behavior.</p>
+        <p>Payment stablecoins, tokenized deposits, and yield wrappers look similar in a wallet but diverge in reserve structure, legal treatment, and crisis behavior. The frameworks below exist because each object needs different tests, different monitoring, and different escalation paths.</p>
+        <p>Full definitions: <a href="./start-here.html">Overview</a>.</p>
       </div>
       <div class="grid grid--thirds">
         <article class="card">
           <h3>Payment stablecoins</h3>
-          <p>Reserve-backed tokens designed for par redemption. Narrow reserve requirements, no yield to the holder, money-like supervisory treatment under GENIUS. The operating constraint: reserves must be liquid enough to honor redemptions during a stress run without selling assets at a loss.</p>
+          <p>Settlement objects designed for par redemption. Under GENIUS, the federal rulebook is built around the payment-stablecoin perimeter, with liquid reserve backing, public disclosures, and redemption obligations.</p>
         </article>
         <article class="card">
           <h3>Tokenized deposits</h3>
-          <p>Bank liabilities in token form. They inherit deposit insurance, bank supervision, and the credit-creation mechanics of bank balance sheets. They are a fundamentally different object from reserve-backed stablecoins because the issuing bank lends against the deposits, creating credit that stablecoin reserves do not.</p>
+          <p>Bank liabilities in token form. They stay inside the banking perimeter and keep the balance-sheet and supervisory logic of deposits.</p>
         </article>
         <article class="card">
           <h3>Yield wrappers and sweeps</h3>
-          <p>Tokenized money-market fund shares, Treasury wrappers, and automated sweep programs. These are investment products, not payment instruments. A stablecoin that cannot pay yield creates a vacuum that adjacent products fill: whoever controls the default sweep (the wallet, the exchange, the platform) captures the yield margin.</p>
+          <p>Tokenized money funds, Treasury wrappers, and sweep programs. These are investment or cash-management products. When the payment object stays clean, yield migrates here.</p>
         </article>
       </div>
-      <div class="structure-table-wrap structure-table-wrap--dollar-objects" role="region" aria-label="Comparison of three dollar objects">
-        <table class="dollar-objects-table">
-          <thead>
-            <tr>
-              <th scope="col">Object</th>
-              <th scope="col">What it does</th>
-              <th scope="col">What backs it</th>
-              <th scope="col">What breaks under stress</th>
-              <th scope="col">The question that matters</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Payment stablecoin</strong></td>
-              <td>Settlement cash with narrow reserves</td>
-              <td>Reserve pool; issuer redemption</td>
-              <td>Reserve concentration; redemption bottleneck</td>
-              <td>Can the gateway honor par redemption when a single custodian fails?</td>
-            </tr>
-            <tr>
-              <td><strong>Tokenized deposit</strong></td>
-              <td>Bank deposit on token rails</td>
-              <td>Bank balance sheet; deposit insurance</td>
-              <td>Balance-sheet capacity; settlement freeze risk</td>
-              <td>Can the issuing bank absorb losses without halting token-rail settlement?</td>
-            </tr>
-            <tr>
-              <td><strong>Yield wrapper</strong></td>
-              <td>Investment or cash-management product</td>
-              <td>Fund NAV; liquidation value</td>
-              <td>NAV deviation; liquidity mismatch</td>
-              <td>Does the wrapper hold value when the underlying reprices or liquidity dries up?</td>
-            </tr>
-          </tbody>
-        </table>
+      <p class="track-bridge"><strong>Same wallet surface, different rights, backstops, and failure sequences.</strong></p>
+    </section>
+
+    <section class="reveal" id="framework-stack" aria-labelledby="framework-stack-title">
+      <div class="section-title">
+        <h2 id="framework-stack-title">Framework stack</h2>
+        <p>The frameworks work in sequence.</p>
       </div>
-      <p class="track-bridge">Same wallet UX. Different rights, backstops, and failure sequences.</p>
+      <div class="explainer">
+        <article class="explainer-section">
+          <h3>1. Define the object</h3>
+          <p>Is this a payment stablecoin, a tokenized deposit, or a yield wrapper? The answer determines the starting rulebook.</p>
+        </article>
+        <article class="explainer-section">
+          <h3>2. Test the product at launch</h3>
+          <p>MVEP asks whether legal, operational, and economic equivalence are actually proven now. Nine diligence categories, each with a named artifact and a pass/fail test.</p>
+        </article>
+        <article class="explainer-section">
+          <h3>3. Monitor the control surface after approval</h3>
+          <p>CLII tracks whether the gateway layer&apos;s compliance posture is degrading over time. Approval starts the monitoring cycle; CLII is the drift detector.</p>
+        </article>
+        <article class="explainer-section">
+          <h3>4. Map balance-sheet and system-level consequences</h3>
+          <p>The Credit Migration Model asks where deposits move, how reserve growth changes funding quality, and which bank balance sheets absorb the shift. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of the Federal Reserve&apos;s December 2025 argument that stablecoins can reduce, recycle, or restructure deposits, including by shifting bank funding toward more concentrated, uninsured, wholesale balances.</p>
+        </article>
+        <article class="explainer-section">
+          <h3>5. Identify who controls the operating layer right now</h3>
+          <p>The Regime Dashboard tracks routing defaults, sweep ownership, hold authority, disclosure burden, and where compliance has actually attached. CLARITY-style provisions (House-passed form analyzed here) are the current policy input.</p>
+        </article>
+      </div>
     </section>
 
     <section class="reveal" id="core-frameworks" aria-labelledby="frameworks-title">
@@ -286,79 +291,79 @@
       <div class="grid grid--halves">
         <article class="card" id="clii">
           <h3>CLII (Control Layer Intensity Index)</h3>
-          <p>A five-dimension scoring framework measuring regulatory intensity at the gateway layer across licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. The CLII measures who is regulated, not who is fragile: three Tier 1 gateways with near-identical scores (0.82 to 0.92) produced opposite outcomes during SVB based on entity-specific banking exposure, not token properties.</p>
+          <p><strong>What it does.</strong> Measures how heavily regulated each gateway is across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Each gateway receives a weighted score from 0 to 1.</p>
+          <p><strong>What it is for.</strong> Ongoing monitoring after a product is approved. Tracks whether a gateway&apos;s custody arrangements, transaction screening, reconciliation practices, or volume concentration are changing in ways that should trigger review.</p>
+          <p><strong>Stress performance is a separate question.</strong> A high CLII score means a gateway faces more regulatory obligations. Stress performance depends on reserve-bank exposure, counterparty concentration, and other entity-specific conditions that sit outside what the CLII measures. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A gateway crossing from one tier to another (for example Tier 1 to Tier 2), a significant drop in any single dimension score, a jump in volume concentration through one gateway, or a new dependency where traffic that previously spread across multiple gateways now routes through one.</p>
+          <p><strong>Re-evaluation outcomes.</strong> Reaffirmation (no change needed), conditional continuation (with a defined remediation timeline), or suspension of new issuance until the issue is resolved.</p>
           <p class="framework-related-paper"><a href="./papers/routing-the-dollar.html">Related paper: Routing the Dollar</a></p>
           <p class="framework-card-action"><a class="action secondary" href="./papers/routing-the-dollar.html">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card" id="mvep">
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
-          <p>A nine-category diligence framework for testing whether a tokenized product preserves the legal rights, operational resilience, and economic behavior of the traditional asset under stress, covering rights parity, recordkeeping, auditability, and settlement finality.</p>
+          <p><strong>What it does.</strong> Tests whether a tokenized product preserves three equivalence claims: legal (does the holder have the same rights?), operational (does the infrastructure perform the same functions?), and economic (does the product behave the same way under stress?).</p>
+          <p><strong>What it is for.</strong> Entry-gate diligence before launch or committee approval. A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption.</p>
+          <p><strong>How it works.</strong> Nine diligence categories, each with a named artifact and a pass/fail test: rights parity, system of record, records and reconciliation, custody and customer property, insolvency posture, settlement finality, reorg and exception handling, governance and change control, and disclosures.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or a situation where it is unclear who absorbs losses if the product fails.</p>
+          <p><strong>Relationship to CLII.</strong> MVEP is the entry gate (is equivalence proven now?). CLII is the drift detector (is the control surface degrading over time?). A product can pass MVEP at launch and subsequently fail one of its categories; CLII flags that drift.</p>
           <p class="framework-related-paper"><a href="./papers/minimum-viable-equivalence-packs.html">Related paper: Minimum Viable Equivalence Pack</a></p>
           <p class="framework-card-action"><a class="action secondary" href="./papers/minimum-viable-equivalence-packs.html">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card" id="credit-migration-model">
           <h3>Credit Migration Model</h3>
-          <p>Measures where deposit balances sit and how they move. Tracks which bank balance sheets grow, which shrink, and how stablecoin reserve growth changes aggregate credit creation capacity. The policy question: does migration from deposits into stablecoin reserves shrink the lending base that monetary policy operates through?</p>
-          <p class="framework-related-paper"><a href="./papers/dollar-v3-control-layer-war.html">Related paper: Dollar v3 / The Control Layer War</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="./papers/dollar-v3-control-layer-war.html">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales.</p>
+          <p><strong>What it is for.</strong> Understanding whether reserve growth reduces, recycles, or restructures deposits; which banks gain or lose funding; and how funding quality changes even when aggregate deposits hold steady.</p>
+          <p><strong>Why it matters.</strong> The policy question is whether bank funding becomes more concentrated (fewer banks hold larger shares), more dependent on institutional rather than retail depositors, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserve balances. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of that argument; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
+          <p class="framework-related-paper"><a href="./papers/dollar-v3.html">Related paper: Dollar v3</a></p>
+          <p class="framework-card-action"><a class="action secondary" href="./papers/dollar-v3.html">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card" id="regime-dashboard">
           <h3>Regime Dashboard</h3>
-          <p>Classifies who controls the operating layer right now. Ten signals across routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations reveal who captures economics, who owns liability, and where the regulator can actually attach obligations in the current regime.</p>
-          <p class="framework-related-paper"><a href="./papers/dollar-v3-control-layer-war.html">Related paper: Dollar v3 / The Control Layer War</a></p>
+          <p><strong>What it does.</strong> Classifies who controls the operating layer right now: who owns the interface, who sets the default routing, who holds the authority to freeze or delay transactions, and who bears the compliance obligations.</p>
+          <p><strong>What it is for.</strong> Tracking where value capture, liability, and compliance actually sit in a live product: routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
+          <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in the routing defaults, in the hold and release workflows, and in the audit logs. The question is which entity becomes the one that regulators hold accountable for compliance, and whether that entity also captures the economics (fees, float, data) or whether compliance obligations and economic benefits end up at different points in the stack.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A shift in who owns the front-end interface, who controls default routing, where yield is allowed to live, or where hold and reporting obligations attach.</p>
+          <p class="framework-related-paper"><a href="./papers/control-layer-war.html">Related paper: The Control Layer War</a></p>
+          <p class="framework-card-action"><a class="action secondary" href="./papers/control-layer-war.html">Open paper summary <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="./contact.html">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
 
-    <section class="reveal" id="current-agenda" aria-labelledby="agenda-title">
+    <section class="reveal" id="framework-lives" aria-labelledby="framework-lives-title">
       <div class="section-title">
-        <h2 id="agenda-title">Current agenda</h2>
+        <h2 id="framework-lives-title">Where each framework lives</h2>
       </div>
-      <div class="structure-table-wrap" role="region" aria-label="Paper status as of March 2026">
+      <div class="structure-table-wrap" role="region" aria-label="Framework primary paper home">
         <table class="agenda-table">
           <thead>
             <tr>
-              <th scope="col">Paper</th>
-              <th scope="col">Track</th>
-              <th scope="col">Status</th>
+              <th scope="col">Framework</th>
+              <th scope="col">Primary use</th>
+              <th scope="col">Current home</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><a href="./papers/routing-the-dollar.html">Routing the Dollar</a></td>
-              <td>A</td>
-              <td>Under Fed conference review; notification pending</td>
+              <td>CLII</td>
+              <td>Gateway monitoring after approval</td>
+              <td><em>Routing the Dollar</em></td>
             </tr>
             <tr>
-              <td><a href="./papers/minimum-viable-equivalence-packs.html">Minimum Viable Equivalence Pack</a></td>
-              <td>A</td>
-              <td>Public on SSRN</td>
+              <td>MVEP</td>
+              <td>Entry-gate diligence before launch</td>
+              <td><em>Minimum Viable Equivalence Pack</em></td>
             </tr>
             <tr>
-              <td><a href="./papers/dollar-v3-control-layer-war.html">Dollar v3 / The Control Layer War</a></td>
-              <td>A</td>
-              <td>Dollar v3 public; full Control Layer War memo available on request</td>
+              <td>Credit Migration Model</td>
+              <td>Deposit and funding-structure analysis</td>
+              <td><em>Dollar v3</em></td>
             </tr>
             <tr>
-              <td><a href="./papers/adaptive-tokenomics.html">Adaptive Tokenomics</a></td>
-              <td>B</td>
-              <td>Public on SSRN</td>
-            </tr>
-            <tr>
-              <td><a href="./papers/operational-risk-token-economies.html">Operational Risk in Token Economies</a></td>
-              <td>B</td>
-              <td>Public on SSRN</td>
-            </tr>
-            <tr>
-              <td><a href="./selected-research.html#institutional-design">Tokenomics as Institutional Design</a></td>
-              <td>B</td>
-              <td>Final draft; targeting Frontiers in Blockchain</td>
-            </tr>
-            <tr>
-              <td><a href="./selected-research.html#geodepin">GeoDePIN</a></td>
-              <td>B</td>
-              <td>Final draft; targeting Blockchain: Research and Applications</td>
+              <td>Regime Dashboard</td>
+              <td>Control-layer and operating-regime analysis</td>
+              <td><em>The Control Layer War</em></td>
             </tr>
           </tbody>
         </table>
@@ -374,47 +379,44 @@
           <tbody>
             <tr>
               <th scope="row">Evidence-led</th>
-              <td>Every claim ties to a source, a threshold, or a tested condition before it ships. Replication packages accompany each paper so the work can be rerun and challenged.</td>
+              <td>Claims tie to a source, a threshold, or a tested condition before they ship.</td>
             </tr>
             <tr>
               <th scope="row">Scenario architecture</th>
-              <td>Decision trees ranked by priority, stress paths with named thresholds, and explicit criteria for what should change the conclusion. Ensembles calibrated to real costs, observed failure rates, and documented market behavior.</td>
+              <td>The work names what should change the view, where stress enters first, and which thresholds force re-evaluation.</td>
             </tr>
             <tr>
               <th scope="row">Monitoring and control design</th>
-              <td>Custody scoring, failure-mode testing, and concentration tracking, each linked to a named decision owner. Drift detection tracks whether controls hold after initial approval; when they don't, the framework specifies who acts and what triggers escalation.</td>
+              <td>Every framework points to a named decision owner: who approves, who monitors, who escalates, and what event forces action.</td>
             </tr>
             <tr>
-              <th scope="row">Published on readiness</th>
-              <td>Work ships when the evidence supports real operating decisions, with versioned manuscripts and public replication code.</td>
+              <th scope="row">Versioned publication</th>
+              <td>Frameworks are public when the evidence is strong enough to support real operating decisions, with manuscripts and code published when possible.</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="track-bridge">Two research tracks, one thesis. Both converge on the same conclusion: the operator layer determines outcomes that asset-level analysis alone cannot observe.</p>
     </section>
 
-    <section class="reveal structure-go-deeper-cta" id="go-deeper" aria-label="Go deeper">
-      <p class="structure-go-deeper-lede">Two research tracks, one thesis. Both converge on the same conclusion: the operator layer determines outcomes that asset-level analysis cannot observe.</p>
-      <div class="hero-actions">
-        <a class="action primary" href="./selected-research.html">Research Library</a>
-        <a class="action primary" href="./resume.html">View resume</a>
-        <a class="action primary" href="./contact.html">Get in touch</a>
-        <a class="action secondary" href="./selected-research.html#track-b">View Tokenomics &amp; DePIN track</a>
-      </div>
-    </section>
-
-    <section id="about-this-site" class="reveal" aria-labelledby="about-this-site-title">
+    <section class="reveal structure-go-deeper-cta" id="go-deeper" aria-labelledby="go-deeper-title">
       <div class="section-title">
-        <h2 id="about-this-site-title">About this site</h2>
+        <h2 id="go-deeper-title">Go deeper</h2>
       </div>
-      <p>My research program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. The site works the same way: transparent structure, named authorship, and evidence the reader can check.</p>
+      <ul class="structure-go-deeper-list">
+        <li>Start with <a href="./start-here.html">Overview</a> for definitions and entry points</li>
+        <li>Go to <a href="./selected-research.html">Research Library</a> for papers and summaries</li>
+        <li>View <a href="./resume.html">Resume</a> for decision-context versions</li>
+        <li><a href="./contact.html">Get in touch</a> for the requestable dashboard and memo set</li>
+        <li>View <a href="./tokenomics-research.html">Tokenomics &amp; DePIN track</a> for mechanism design and operational failure research</li>
+      </ul>
     </section>
 
     <footer class="reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="./2026-frameworks.html">Overview</a>
+          <a href="./start-here.html">Overview</a>
           <a href="./Operating-Model.html">Frameworks</a>
           <a href="./selected-research.html">Research</a>
           <a href="./resume.html">Resume</a>
@@ -436,7 +438,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="./script.js?v=25"></script>
+  <script defer src="./script.js?v=26"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

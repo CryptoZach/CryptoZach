@@ -35,8 +35,8 @@ test.describe("Responsive layout", () => {
     await assertNoHorizontalOverflow(page, "/Operating-Model.html");
   });
 
-  test("2026 Frameworks page: no horizontal overflow", async ({ page }) => {
-    await assertNoHorizontalOverflow(page, "/2026-frameworks.html");
+  test("Start Here (Overview): no horizontal overflow", async ({ page }) => {
+    await assertNoHorizontalOverflow(page, "/start-here.html");
   });
 
   test("routing-the-dollar paper: no horizontal overflow", async ({
