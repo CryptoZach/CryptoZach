@@ -154,6 +154,8 @@
     };
 
     (function(){
+      /* Flying $ symbols and pile canvas on the homepage hero (disabled). */
+      var enableHeroDollarFlight = false;
       function flagshipCtaEl(){
         return heroHome.querySelector('a.cta-primary[href*="routing-the-dollar"]')
           || heroHome.querySelector('a.cta-primary')
@@ -161,7 +163,7 @@
       }
 
       var ctaBtn = flagshipCtaEl();
-      if(!ctaBtn) return;
+      if(!enableHeroDollarFlight || !ctaBtn) return;
 
       var activeDollars = 0;
       var dollarSpawnIntervalId = null;
@@ -173,6 +175,17 @@
       var dollarDisrupted = false;
       var dollarDisruptTimer = null;
       var dollarDisruptProximity = 80; /* px from CTA center to trigger */
+
+      /* Piled dollars that have landed on the CTA */
+      var piledDollars = [];
+      var maxPiled = getDollarConfig().isMobile ? 8 : 15;
+      var pileGravity = 0.15;
+      var pileCursorRadius = 80;
+      var pileCursorStrength = 5;
+      var pileDamping = 0.3;
+      var pileFriction = 0.4;
+      var pileRadius = 7;
+      var pileRaf = null;
 
       function getDollarConfig(){
         var mobile = window.innerWidth <= 768;
@@ -344,6 +357,24 @@
           triggerArrivalBounce();
           if(el.parentNode === heroHome) el.remove();
           activeDollars--;
+
+          /* Add to pile — spawn above hero and let it rain down onto CTA */
+          if(piledDollars.length < maxPiled){
+            updateTarget();
+            var cr2 = ctaBtn.getBoundingClientRect();
+            var hr2 = heroHome.getBoundingClientRect();
+            var pl2 = cr2.left - hr2.left + pileRadius + 4;
+            var pr2 = cr2.right - hr2.left - pileRadius - 4;
+            var pw2 = Math.max(1, pr2 - pl2);
+            piledDollars.push({
+              x: pl2 + Math.random() * pw2,
+              y: -10 - Math.random() * 30,
+              vx: 0,
+              vy: 1 + Math.random() * 1.5,
+              settled: false
+            });
+            if(!pileRaf) pileRaf = requestAnimationFrame(pileStep);
+          }
         });
 
         /* BTC orbit particles now self-spawn in Track B section */
@@ -355,6 +386,36 @@
         spawnDollar();
         var config = getDollarConfig();
         dollarSpawnIntervalId = setInterval(spawnDollar, config.spawnInterval);
+
+        /* Pre-spawn all piled dollars in a tight cluster above the hero
+           so they all land within ~1 second */
+        if(piledDollars.length === 0){
+          updateTarget();
+          var ctaR = ctaBtn.getBoundingClientRect();
+          var heroR = heroHome.getBoundingClientRect();
+          var pileLeft = ctaR.left - heroR.left + pileRadius + 4;
+          var pileRight = ctaR.right - heroR.left - pileRadius - 4;
+          var pileW = Math.max(1, pileRight - pileLeft);
+          /* Ground is ~70% down the hero; all must arrive within 60 frames */
+          var heroH = heroR.height || 700;
+          var groundApprox = heroH * 0.72;
+          for(var ps = 0; ps < maxPiled; ps++){
+            /* Stagger spawn over first ~15 frames worth of y offset */
+            var startY = -8 - Math.random() * 12;
+            /* Calculate velocity needed to reach ground in ~45-60 frames:
+               y = startY + vy*t + 0.5*g*t^2  =>  vy = (ground - startY - 0.5*g*t^2) / t */
+            var tFrames = 40 + Math.random() * 18;
+            var needVy = (groundApprox - startY - 0.5 * pileGravity * tFrames * tFrames) / tFrames;
+            piledDollars.push({
+              x: pileLeft + Math.random() * pileW,
+              y: startY,
+              vx: 0,
+              vy: Math.max(3, needVy),
+              settled: false
+            });
+          }
+          if(!pileRaf) pileRaf = requestAnimationFrame(pileStep);
+        }
       }
 
       function stopDollarFlightLoop(){
@@ -364,6 +425,170 @@
           dollarSpawnIntervalId = null;
         }
         /* BTC flight now managed by its own IntersectionObserver */
+      }
+
+      /* ══════════════════════════════════════════════
+         Dollar pile — canvas overlay on hero for
+         $ signs that have arrived at the CTA
+         ══════════════════════════════════════════════ */
+
+      var pileCanvas = document.createElement('canvas');
+      pileCanvas.className = 'hero-dollar-pile';
+      pileCanvas.setAttribute('aria-hidden', 'true');
+      pileCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+      heroHome.appendChild(pileCanvas);
+      var pileCtx = pileCanvas.getContext('2d');
+      var pileCursorX = -1, pileCursorY = -1;
+
+      heroHome.addEventListener('pointermove', function(e){
+        var r = heroHome.getBoundingClientRect();
+        pileCursorX = e.clientX - r.left;
+        pileCursorY = e.clientY - r.top;
+      }, { passive: true });
+      heroHome.addEventListener('pointerleave', function(){
+        pileCursorX = -1;
+        pileCursorY = -1;
+      }, { passive: true });
+
+      /* Click on CTA: explode all piled dollars outward */
+      ctaBtn.addEventListener('click', function pileFlyoff(){
+        for(var i = 0; i < piledDollars.length; i++){
+          var p = piledDollars[i];
+          p.vx = (Math.random() - 0.5) * 12;
+          p.vy = -(4 + Math.random() * 8);
+          p.settled = false;
+        }
+        if(piledDollars.length > 0 && !pileRaf){
+          pileRaf = requestAnimationFrame(pileStep);
+        }
+      });
+
+      function pileResize(){
+        var r = heroHome.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        pileCanvas.width = Math.floor(r.width * dpr);
+        pileCanvas.height = Math.floor(r.height * dpr);
+        pileCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      pileResize();
+      window.addEventListener('resize', function(){ setTimeout(pileResize, 220); }, { passive: true });
+
+      function pileStep(){
+        pileRaf = null;
+        if(piledDollars.length === 0) return;
+        pileRaf = requestAnimationFrame(pileStep);
+
+        var r = heroHome.getBoundingClientRect();
+        var w = r.width, h = r.height;
+        pileCtx.clearRect(0, 0, w, h);
+
+        updateTarget();
+        /* Ground = top edge of CTA button */
+        var ctaRect = ctaBtn.getBoundingClientRect();
+        var heroRect = heroHome.getBoundingClientRect();
+        var ground = (ctaRect.top - heroRect.top) - 2;
+        var ctaLeft = ctaRect.left - heroRect.left;
+        var ctaRight = ctaLeft + ctaRect.width;
+        var rad = pileRadius;
+
+        /* Sort by y descending so lower particles process first */
+        piledDollars.sort(function(a, b){ return b.y - a.y; });
+
+        for(var i = 0; i < piledDollars.length; i++){
+          var p = piledDollars[i];
+
+          /* Gravity */
+          p.vy += pileGravity;
+
+          /* Cursor anti-magnet — push piled dollars away */
+          var cursorPushing = false;
+          if(pileCursorX >= 0 && pileCursorY >= 0){
+            var dxM = p.x - pileCursorX;
+            var dyM = p.y - pileCursorY;
+            var distM = Math.sqrt(dxM * dxM + dyM * dyM) || 1;
+            if(distM < pileCursorRadius){
+              var force = pileCursorStrength * (1 - distM / pileCursorRadius);
+              p.vx += (dxM / distM) * force;
+              p.vy += (dyM / distM) * force;
+              p.settled = false;
+              cursorPushing = true;
+            }
+          }
+
+          /* No centering force — cursor-pushed dollars fly free and fall */
+
+          /* Move */
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.98;
+
+          /* Ground collision — only within CTA button bounds */
+          var effectiveGround = ground - rad;
+          var onPlatform = p.x >= ctaLeft && p.x <= ctaRight;
+          if(onPlatform && p.y >= effectiveGround){
+            p.y = effectiveGround;
+            if(Math.abs(p.vy) < 0.5){
+              p.vy = 0;
+              p.settled = true;
+            } else {
+              p.vy *= -pileDamping;
+            }
+            p.vx *= pileFriction;
+          }
+
+          /* Particle collision — only when one is moving fast (cursor-kicked).
+             Settled dollars don't disturb each other. */
+          for(var j = i + 1; j < piledDollars.length; j++){
+            var o = piledDollars[j];
+            var pSpeed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+            var oSpeed = Math.sqrt(o.vx * o.vx + o.vy * o.vy);
+            if(pSpeed < 1.0 && oSpeed < 1.0) continue; /* both idle, skip */
+
+            var dx = p.x - o.x;
+            var dy = p.y - o.y;
+            var dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
+            var minDist = rad * 2;
+            if(dist < minDist){
+              var overlap = (minDist - dist) * 0.5;
+              var nx = dx / dist, ny = dy / dist;
+              p.x += nx * overlap;
+              p.y += ny * overlap;
+              o.x -= nx * overlap;
+              o.y -= ny * overlap;
+              var relDot = (p.vx - o.vx) * nx + (p.vy - o.vy) * ny;
+              if(relDot > 0){
+                p.vx -= nx * relDot * 0.5;
+                p.vy -= ny * relDot * 0.5;
+                o.vx += nx * relDot * 0.5;
+                o.vy += ny * relDot * 0.5;
+              }
+              p.settled = false;
+              o.settled = false;
+            }
+          }
+
+          /* Re-clamp after collisions — only if still on the button */
+          onPlatform = p.x >= ctaLeft && p.x <= ctaRight;
+          if(onPlatform && p.y > effectiveGround) p.y = effectiveGround;
+
+          /* Remove if fell below hero */
+          if(p.y > h + 30){
+            piledDollars.splice(i, 1);
+            i--;
+            continue;
+          }
+
+          /* Render */
+          pileCtx.save();
+          pileCtx.font = '600 13px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+          pileCtx.textAlign = 'center';
+          pileCtx.textBaseline = 'middle';
+          pileCtx.fillStyle = 'rgba(74, 222, 128, 0.7)';
+          pileCtx.shadowColor = 'rgba(74, 222, 128, 0.3)';
+          pileCtx.shadowBlur = 4;
+          pileCtx.fillText('$', p.x, p.y);
+          pileCtx.restore();
+        }
       }
 
       /* ══════════════════════════════════════════════
@@ -602,36 +827,7 @@
         });
       }
 
-      /* Disrupt dollar flow when cursor approaches the CTA convergence point */
-      heroHome.addEventListener('pointermove', function(e) {
-        if (e.pointerType !== 'mouse') return; /* touch doesn't have a persistent cursor */
-
-        var heroRect = heroHome.getBoundingClientRect();
-        var cursorX = e.clientX - heroRect.left;
-        var cursorY = e.clientY - heroRect.top;
-
-        var dx = cursorX - targetX;
-        var dy = cursorY - targetY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < dollarDisruptProximity) {
-          disruptDollars();
-        }
-        /* Recovery is timer-based (500ms after last disruption trigger), not distance-based.
-           If the cursor stays near the CTA, disruptDollars() re-fires on each move
-           and resets the 500ms timer, keeping the disruption active. */
-      });
-
-      heroHome.addEventListener('pointerleave', function dollarDisruptLeave(e) {
-        if (dollarDisrupted) {
-          if (dollarDisruptTimer) {
-            clearTimeout(dollarDisruptTimer);
-            dollarDisruptTimer = null;
-          }
-          /* Recover slightly faster on leave */
-          setTimeout(recoverDollars, 200);
-        }
-      });
+      /* Dollar cursor disruption removed — dollars always fly to CTA */
 
       if(typeof IntersectionObserver === 'function'){
         var obs = new IntersectionObserver(function(entries){
@@ -1351,6 +1547,39 @@
     var mtxWarpTy = null;
     var mtxWarpX = null;
     var mtxWarpY = null;
+
+    /* CTA position in matrix-local coords for $ attraction */
+    var mtxCtaX = null, mtxCtaY = null;
+    function mtxUpdateCtaPos(){
+      var btn = heroHome.querySelector('a.cta-primary[href*="routing-the-dollar"]')
+        || heroHome.querySelector('a.cta-primary');
+      if(!btn || !matrixContainer) return;
+      var br = btn.getBoundingClientRect();
+      var cr = matrixContainer.getBoundingClientRect();
+      mtxCtaX = (br.left + br.width / 2) - cr.left;
+      mtxCtaY = (br.top + br.height / 2) - cr.top;
+    }
+
+    /* Dollar-specific warp: attract to CTA only, no cursor interaction */
+    function mtxDollarWarp(px, py, cw, ch){
+      var ox = px, oy = py;
+      /* Attract toward CTA button */
+      if(mtxCtaX != null && mtxCtaY != null){
+        var dxC = px - mtxCtaX;
+        var dyC = py - mtxCtaY;
+        var distC = Math.sqrt(dxC * dxC + dyC * dyC);
+        var maxR = Math.max(128, Math.min(cw, ch) * 0.5);
+        var strength = Math.min(cw, ch) * 0.05;
+        if(distC > 0.5 && distC < maxR){
+          var invd = 1 / distC;
+          var t = 1 - distC / maxR;
+          var s = t * t * strength;
+          ox = px - dxC * invd * s;
+          oy = py - dyC * invd * s;
+        }
+      }
+      return { x: ox, y: oy };
+    }
     var mtxDrops = [];
     var mtxColItem = [];
     var mtxColOpacity = [];
@@ -2624,6 +2853,8 @@
         }
       }
 
+      mtxUpdateCtaPos();
+
       var n = mtxDrops.length;
       var i;
       /* Two-pass rendering: pass 1 draws text glyphs and icon mattes (panel-base rectangles that
@@ -2640,7 +2871,8 @@
         }
         var item = mtxColItem[i];
         var op = mtxColOpacity[i];
-        var warped = mtxWarpPoint(x0, y0, w, h);
+        var itemIsDollar = item && item.type === 'text' && item.value === '$';
+        var warped = itemIsDollar ? mtxDollarWarp(x0, y0, w, h) : mtxWarpPoint(x0, y0, w, h);
         var x = warped.x;
         var y = warped.y;
 
@@ -3444,7 +3676,7 @@
     }
   }
 
-  // Sticky section rail: Operating-Model.html (Structure), 2026-frameworks.html, speaker-advisory.html
+  // Sticky section rail: Operating-Model.html (Frameworks), start-here.html (Overview), speaker-advisory.html
   (function(){
     var nav = document.getElementById('structureNav');
     if(!nav){
@@ -3529,18 +3761,22 @@
         'what-stablecoin',
         'what-tokenization',
         'what-deposit',
-        'why-care',
+        'what-gateway',
+        'what-control-layer',
         'dollar-objects',
+        'why-institutions-care',
         'five-questions',
         'q1',
         'q2',
         'q3',
         'q4',
         'q5',
-        'entry-points',
-        'where-to-go'
+        'start-by-context',
+        'seven-papers',
+        'what-tools',
+        'overview-contact'
       ];
-      bottomSectionId = 'where-to-go';
+      bottomSectionId = 'overview-contact';
     } else if(isSpeakerPage){
       sections = [
         'in-the-room',
@@ -3564,12 +3800,13 @@
     } else {
       sections = [
         'three-dollar-objects',
+        'framework-stack',
         'core-frameworks',
         'clii',
         'mvep',
         'credit-migration-model',
         'regime-dashboard',
-        'current-agenda',
+        'framework-lives',
         'how-the-work-runs',
         'go-deeper'
       ];
@@ -3589,7 +3826,7 @@
     var structureFrameworkIds = ['clii', 'mvep', 'credit-migration-model', 'regime-dashboard'];
     var defGroup = document.getElementById('navDefGroup');
     var qGroup = document.getElementById('navQGroup');
-    var defSubIds = ['what-stablecoin', 'what-tokenization', 'what-deposit', 'why-care'];
+    var defSubIds = ['what-stablecoin', 'what-tokenization', 'what-deposit', 'what-gateway', 'what-control-layer'];
     var qSubIds = ['q1', 'q2', 'q3', 'q4', 'q5'];
     var navTalkGroup = isSpeakerPage ? document.getElementById('navTalkGroup') : null;
     var navAdvGroup = isSpeakerPage ? document.getElementById('navAdvGroup') : null;
@@ -3705,11 +3942,14 @@
       var hashId = window.location.hash.slice(1);
       var legacyMap = {
         'what-tokenized-deposit': 'what-deposit',
-        'why-institutions-care': 'why-care',
+        'why-care': 'why-institutions-care',
         'three-objects-title': 'dollar-objects',
-        'entry-points-audience': 'entry-points',
-        'where-next': 'where-to-go',
-        'five-questions-title': 'five-questions'
+        'entry-points-audience': 'start-by-context',
+        'entry-points': 'start-by-context',
+        'where-next': 'start-by-context',
+        'where-to-go': 'start-by-context',
+        'five-questions-title': 'five-questions',
+        'current-agenda': 'framework-lives'
       };
       if(legacyMap[hashId]){
         hashId = legacyMap[hashId];

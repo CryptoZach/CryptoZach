@@ -32,7 +32,7 @@ Check every page exists and loads:
 | `start-here.html` | Orientation page |
 | `focus.html` | Method and scope detail |
 | `structure.html` (or equivalent) | Frameworks and agenda |
-| `2026-frameworks.html` (or equivalent) | First-tab overview |
+| `start-here.html` (Overview) | First-tab overview |
 | `speaker-advisory.html` (or equivalent) | Speaker and advisory |
 | `tokenomics-research.html` | Track B detail (if exists) |
 | `404.html` | Error page |

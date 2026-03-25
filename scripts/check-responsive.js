@@ -9,11 +9,10 @@
 const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8080";
 
 const VIEWPORTS = [
-  { label: "Desktop", width: 1280, height: 800 },
-  { label: "Tablet", width: 980, height: 900 },
-  { label: "Mobile", width: 768, height: 1024 },
-  { label: "Small", width: 480, height: 800 },
-  { label: "XSmall", width: 360, height: 640 },
+  { label: "1280", width: 1280, height: 800 },
+  { label: "1024", width: 1024, height: 800 },
+  { label: "768", width: 768, height: 1024 },
+  { label: "375", width: 375, height: 812 },
 ];
 
 const PAGES = [

@@ -8,7 +8,7 @@ description: >-
 
 # CryptoZach paper page (`papers/*.html`)
 
-Full **reference implementation**: `papers/routing-the-dollar.html` (combined brief plus full technical summary). `papers/routing-the-dollar-brief.html` redirects to that URL. Use classes such as `brief-page`, `brief-problem`, `brief-findings`, `brief-ctas` (see `styles.css`).
+Full **reference implementation**: `papers/routing-the-dollar.html` (merged ~5 min brief on top: kicker, H1, reading line, thesis, inline CTAs, at-a-glance, figure, problem, three finding cards, who should care, closing line, **resource rail**, **how the paper is built**, then fold; `Full technical summary` divider, what this paper changes, deep sections, key numbers, full technical abstract, audience tags, related blocks, submission + contact). `papers/routing-the-dollar-brief.html` redirects to `routing-the-dollar.html` (query and hash preserved; Netlify `_redirects` 301 as well). Use classes such as `brief-page`, `brief-at-a-glance`, `brief-problem`, `brief-findings`, `paper-inline-ctas`, `paper-flagship-kicker` (see `styles.css`).
 
 ## Shell every long-form paper should follow
 

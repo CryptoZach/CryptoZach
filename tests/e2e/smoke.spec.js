@@ -34,16 +34,17 @@ test.describe("CryptoZach smoke", () => {
     await expect(clii).toBeVisible();
   });
 
-  test("frameworks.html redirects to 2026 Frameworks with hash preserved", async ({
+  test("frameworks.html redirects to Operating-Model with hash preserved", async ({
     page,
   }) => {
     await page.goto("/frameworks.html#clii");
-    await expect(page).toHaveURL(/2026-frameworks\.html#clii/);
+    await expect(page).toHaveURL(/Operating-Model\.html#clii/);
   });
 
-  test("start-here.html redirects to 2026 Frameworks", async ({ page }) => {
+  test("start-here.html loads Overview (Start Here)", async ({ page }) => {
     await page.goto("/start-here.html");
-    await expect(page).toHaveURL(/2026-frameworks\.html/);
+    await expect(page).toHaveURL(/start-here\.html/);
+    await expect(page).toHaveTitle(/Start Here/i);
   });
 
   test("routing-the-dollar paper layout", async ({ page }) => {

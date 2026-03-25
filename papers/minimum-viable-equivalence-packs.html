@@ -14,11 +14,11 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products | Zach Zukowski</title>
-  <meta name="description" content="Nine-category diligence framework testing whether tokenized products maintain legal, operational, and economic equivalence under stress. Anchored on the USDC/SVB depeg." />
+  <meta name="description" content="MVEP: three equivalence claims (legal, operational, economic) tested through nine diligence categories, anchored on USDC/SVB. Paired with CLII for drift detection after launch." />
   <meta name="author" content="Zach Zukowski" />
 
   <meta property="og:title" content="Minimum Viable Equivalence Pack: Institutional Diligence for Tokenized Products | Zach Zukowski" />
-  <meta property="og:description" content="Nine-category diligence framework testing whether tokenized products maintain legal, operational, and economic equivalence under stress." />
+  <meta property="og:description" content="MVEP: three equivalence claims tested through nine diligence categories. Five committee questions, settlement finality redefined, governance minimums, CLII as drift detector." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://cryptozach.com/papers/minimum-viable-equivalence-packs" />
   <meta property="og:site_name" content="Zach Zukowski" />
@@ -31,7 +31,7 @@
   <meta name="twitter:image:alt" content="Minimum Viable Equivalence Pack cover" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Minimum Viable Equivalence Pack: Institutional Diligence | Zach Zukowski (CryptoZach)" />
-  <meta name="twitter:description" content="Nine gates for tokenized-product diligence: rights parity, custody, finality, insolvency, anchored on USDC/SVB." />
+  <meta name="twitter:description" content="Three equivalence claims, nine diligence categories, five committee questions. MVEP as entry gate; CLII as drift detector." />
 
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
@@ -62,7 +62,7 @@
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
       "name": "Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products",
-      "description": "A nine-category diligence framework for testing whether tokenized products work like the traditional asset under stress. Rights parity, custody, finality, insolvency posture.",
+      "description": "Institutional diligence framework: legal, operational, and economic equivalence tested through nine categories with required artifacts and pass/fail tests. Anchored on USDC/SVB. MVEP for approval; CLII for ongoing drift detection.",
       "url": "https://cryptozach.com/papers/minimum-viable-equivalence-packs",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/minimum-viable-equivalence-packs" },
       "image": "https://cryptozach.com/Publication-Images/Equivalence_Pack.webp",
@@ -89,7 +89,7 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="../2026-frameworks.html">Overview</a>
+          <a class="navlink" href="../start-here.html">Overview</a>
           <a class="navlink" href="../Operating-Model.html">Frameworks</a>
           <a class="navlink active" href="../selected-research.html" aria-current="page">Research</a>
           <a class="navlink" href="../resume.html">Resume</a>
@@ -112,7 +112,7 @@
 
   <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
     <div class="mobile-nav-linkset">
-      <a class="navlink" href="../2026-frameworks.html">Overview</a>
+      <a class="navlink" href="../start-here.html">Overview</a>
       <a class="navlink" href="../Operating-Model.html">Frameworks</a>
       <a class="navlink active" href="../selected-research.html" aria-current="page">Research</a>
       <a class="navlink" href="../resume.html">Resume</a>
@@ -147,20 +147,20 @@
       <p class="paper-metadata-strip">~12 min read · ~3,500 words · 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <p class="paper-thesis">Institutional tokenization diligence fails when it evaluates tokens as standalone assets; the MVEP framework forces evaluation of the nine operational categories where equivalence actually breaks, anchored on the USDC/SVB depeg as the canonical failure case.</p>
+      <p class="paper-thesis">Institutional tokenization diligence fails when it treats the token wrapper as the product. MVEP is a minimum artifact pack for proving that a tokenized product preserves equivalence under stress, built from the USDC/SVB failure and structured around the questions risk committees actually ask before approval. Equivalence is three separate claims (legal, operational, economic), each of which must hold independently; a product can pass one while failing another.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Circle's $3.3B reserve exposure at SVB broke legal, operational, and economic equivalence simultaneously, demonstrating that reserve composition risk is a gateway-infrastructure problem.</p>
+          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, system-of-record operability broke operational equivalence, and the 13% peg deviation broke economic equivalence. The failure was broader than reserve exposure; the legal and operational stack had not been documented for crisis conditions.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The nine-category framework (rights parity, custody segregation, settlement finality, insolvency posture, recordkeeping, operational resilience, governance controls, change management, disclosures) replaces ad hoc vendor-pitch diligence with a versioned, comparable checklist.</p>
+          <p class="paper-takeaway-text">The framework tests equivalence through nine diligence categories, each tied to a required artifact and an explicit pass/fail test: rights parity, system of record, records and reconciliation, custody and customer property, insolvency posture, settlement finality, reorg and exception handling, governance and change control, and disclosures. This replaces ad hoc vendor-pitch diligence with a versioned, comparable checklist.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Continuous monitoring catches equivalence degradation that point-in-time assessments miss.</p>
+          <p class="paper-takeaway-text">MVEP is the entry gate; CLII is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation: a tier-boundary crossing or dimension-level deterioration triggers review, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance.</p>
         </div>
       </div>
 
@@ -185,13 +185,80 @@
 
       <div class="paper-abstract">
         <h2>What problem it solves</h2>
-        <p>Before an institution relies on a tokenized product, it should prove whether the tokenized version preserves equivalence under stress. MVEP is a practical entry gate for tokenized-product diligence, structured around what risk committees actually ask.</p>
-        <h2>Methods / Data</h2>
-        <p>Nine-category framework derived from the USDC/SVB depeg. Anchored on Circle's $3.3B reserve exposure at Silicon Valley Bank.</p>
+        <p>Before an institution relies on a tokenized product, it should prove that the tokenized version preserves legal, operational, and economic equivalence under stress. MVEP is the practical entry gate for doing that, framed the way risk committees actually review proposals: what artifacts must exist, what tests must pass, and what monitoring must be in place before approval and after launch.</p>
+
+        <h2>What this paper changes</h2>
+        <p>Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and "we'll figure out custody later" as an implicit operating model. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
+        <ol>
+          <li>What is the authoritative record, and what happens when it disagrees with the chain?</li>
+          <li>Who can freeze, rollback, or override, and what is the audit trail?</li>
+          <li>What does "settled" mean here, both technically and economically?</li>
+          <li>In insolvency, what exactly is the holder's claim, and in which jurisdiction?</li>
+          <li>What are the top three dependencies that can break equivalence (custodian, oracle, gateway), and what are the triggers?</li>
+        </ol>
+        <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream.</p>
+        <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation. USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity (does the settled amount hold its intended value?), convertibility conditions (can the holder actually redeem?), halt triggers (when does settlement pause?), reversal authority (who can unwind?), and explicit loss allocation (who bears the residual risk when finality is breached?).</p>
+
+        <h2>Where the framework does its heaviest work</h2>
+        <h3>Tokenized Treasury bills and money market fund shares</h3>
+        <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, Ondo's OUSG. The primary use case is collateral mobility, posting a tokenized T-bill as margin without liquidating the underlying position.</p>
+        <p>The dominant risks are records integrity, settlement finality, and operational resilience across mismatched rails. That is why the framework emphasizes transfer-agent integration with defined reconciliation cadence, collateral eligibility policies with haircut schedules accounting for both settlement cycles, failover procedures for asymmetric rail availability, and oracle and pricing data dependencies with maximum acceptable latency and fallback procedures.</p>
+        <p>The stress test: a margin call triggers a tokenized collateral transfer at 2am Saturday. The token settles in seconds. The underlying Treasury will not settle until Monday. The MVEP must document how this gap is managed.</p>
+
+        <h3>Tokenized private credit and receivables</h3>
+        <p>Earlier-stage but growing: Centrifuge, Maple, Goldfinch, Figure Technologies. Unlike T-bills, private credit has ongoing servicing obligations, covenant monitoring, and complex payment waterfalls.</p>
+        <p>The dominant risk is enforceability. A token can be freely tradeable even when the underlying claim requires borrower notice, lender consent, or specific assignment steps. Under stress, the gap between what the token implies the holder can do and what the holder can actually enforce becomes the central dispute.</p>
+        <p>The framework therefore emphasizes servicing agreement mapping (does token transfer change servicing relationships?), waterfall computation controls with dispute paths, enforceable assignment mechanics (can the tokenholder actually enforce the claim against the borrower?), workout and collection playbooks, and authority over credit-event declarations.</p>
+
+        <h3>Composed products: equivalence in layers</h3>
+        <p>Each layer of a composed product requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" is not sufficient. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
+
+        <h2>Governance and monitoring</h2>
+        <h3>Governance and change control</h3>
+        <p>The paper sets a higher bar than most tokenization proposals meet. Single-signer admin keys are disqualifying. Minimum controls for any admin operation affecting token economics or holder rights: 3-of-5 multisig (multiple required signers). For core logic changes: 4-of-7 or equivalent. Signers must be identified individuals with named roles.</p>
+        <p>Timelock minimums (an enforced delay before a change takes effect): 48 hours for parameter changes, 7 days for logic upgrades, 30 days for migrations. Emergency overrides require a higher signer threshold, independent audit within 72 hours, and immediate holder notification.</p>
+        <p>The most important governance evidence is the audit log showing the policy has been followed: every admin key operation since launch, evidence that each was approved through the documented process, and records of any governance changes with their own approval trails. A governance policy that has never been tested is an untested control.</p>
+
+        <h3>Continuous monitoring: CLII as the drift detector</h3>
+        <p>MVEP is the entry gate; CLII is the drift detector. MVEP answers "is equivalence proven now?" CLII answers "is the control surface degrading over time?"</p>
+        <p>A product can pass MVEP at launch and subsequently fail one of its categories: a custodian receives an enforcement action, reconciliation breaks exceed the service-level agreement for three consecutive weeks, or admin keys get rotated outside documented change control. The CLII tracks custody segregation, reconciliation integrity, and concentration risk across the gateway layer, flagging when posture shifts.</p>
+        <p>Three outcomes from re-evaluation: reaffirmation (equivalence confirmed), conditional continuation (subject to specific remediation with a defined timeline), or suspension (product suspended from new issuance until remediation is complete). Counterparties must be notified within 24 hours of initiating review.</p>
+
+        <h2>Anchor case / applications</h2>
+        <p><strong>Anchor case:</strong> The USDC/SVB depeg (March 10 to 12, 2023), where Circle's $3.3B reserve exposure at Silicon Valley Bank broke legal, operational, and economic equivalence simultaneously. The nine MVEP categories are reverse-engineered from the six failure modes that weekend exposed.</p>
+        <p><strong>Applications:</strong> Tokenized T-bills and money market fund shares (records integrity, settlement-cycle mismatch, collateral eligibility), tokenized private credit (enforceability, servicing continuity, waterfall controls), composed products (layer-by-layer equivalence assessment), settlement-finality models (value integrity, convertibility, halt triggers, loss allocation), governance and change-control evidence (multisig thresholds, timelocks, audit logs), and continuous monitoring through CLII (drift detection, trigger-based re-evaluation).</p>
+        <p>This is better described as a framework paper anchored on a failure case than as a conventional methods-and-data paper.</p>
+
+        <h2>Limitations</h2>
+        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Five predictable failure modes:</p>
+        <ul>
+          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use, not documentation alone.</li>
+          <li><strong>Stale equivalence:</strong> Products pass at launch but drift. The framework requires mandatory periodic re-certification.</li>
+          <li><strong>Category blindness:</strong> Nine categories are comprehensive for current structures, but novel products may introduce risks that do not fit. The framework requires a "residual risk" disclosure.</li>
+          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met; it does not guarantee equivalence.</li>
+          <li><strong>Jurisdictional scope:</strong> Three categories (rights parity, insolvency posture, system of record) require jurisdiction-specific analysis for cross-border distribution.</li>
+        </ul>
+        <p>The framework's value is in making the standard explicit, the gaps visible, and the failure modes predictable.</p>
+
+        <div class="paper-key-numbers">
+          <h2>Key numbers</h2>
+          <p><strong>SVB anchor case</strong><br>
+          Circle $3.3B reserve exposure at SVB · USDC traded at $0.87 · Three dimensions of equivalence broken simultaneously</p>
+          <p><strong>Framework structure</strong><br>
+          3 equivalence claims (legal, operational, economic) · 9 diligence categories · Each with required artifact and pass/fail test</p>
+          <p><strong>Governance minimums</strong><br>
+          Admin operations: 3-of-5 multisig · Core logic changes: 4-of-7 · Timelocks: 48h (parameters), 7d (upgrades), 30d (migrations)</p>
+          <p><strong>Implementation timeline</strong><br>
+          10 to 14 weeks for a well-resourced team; 16 to 24 weeks for novel structures · Typical bottleneck: legal and custody</p>
+          <p><strong>Monitoring</strong><br>
+          CLII re-evaluation triggers: tier-boundary crossing, dimension-level deterioration · Counterparty notification: within 24 hours of initiating review</p>
+        </div>
+
         <h2>Related frameworks</h2>
-        <p><a href="../Operating-Model.html#mvep">MVEP</a>, <a href="../Operating-Model.html#clii">CLII</a>.</p>
+        <p><a href="../Operating-Model.html#mvep">MVEP</a> (entry-gate diligence) · <a href="../Operating-Model.html#clii">CLII</a> (continuous monitoring and drift detection).</p>
+
         <h2>Related role profiles</h2>
-        <p><a href="../resume/asset-management-tokenization.html">Asset Management &amp; Tokenization</a>.</p>
+        <p><a href="../resume/asset-management-tokenization.html">Asset Management &amp; Tokenization</a> · <a href="../resume/risk-controls-market-infrastructure.html">Risk, Controls &amp; Market Infrastructure</a>.</p>
       </div>
 
       <div class="paper-related">
@@ -205,11 +272,18 @@
             <a class="paper-related-cta" href="./routing-the-dollar.html">Open paper summary</a>
           </div>
           <div class="paper-related-card-wrap">
-            <a class="paper-related-card" href="./dollar-v3-control-layer-war.html">
-              <strong>Dollar v3 / The Control Layer War</strong>
-              <span class="paper-related-teaser">How stablecoin policy maps compliance obligations at the control layer.</span>
+            <a class="paper-related-card" href="./dollar-v3.html">
+              <strong>Dollar v3</strong>
+              <span class="paper-related-teaser">Three digital-dollar objects and the payment-stablecoin perimeter under GENIUS.</span>
             </a>
-            <a class="paper-related-cta" href="./dollar-v3-control-layer-war.html">Open paper summary</a>
+            <a class="paper-related-cta" href="./dollar-v3.html">Open paper summary</a>
+          </div>
+          <div class="paper-related-card-wrap">
+            <a class="paper-related-card" href="./control-layer-war.html">
+              <strong>The Control Layer War</strong>
+              <span class="paper-related-teaser">Control-layer compliance under the CLARITY Act (House-passed form analyzed here).</span>
+            </a>
+            <a class="paper-related-cta" href="./control-layer-war.html">Open paper summary</a>
           </div>
           <div class="paper-related-card-wrap">
             <a class="paper-related-card" href="./tokenized-equity.html">
@@ -228,7 +302,7 @@
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Zach Zukowski. All rights reserved.</div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="../2026-frameworks.html">Overview</a>
+          <a href="../start-here.html">Overview</a>
           <a href="../Operating-Model.html">Frameworks</a>
           <a href="../selected-research.html">Research</a>
           <a href="../resume.html">Resume</a>
