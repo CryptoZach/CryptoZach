@@ -4412,6 +4412,31 @@ section:has(.speaker-jump-to){
   position:relative;
   overflow:hidden;
 }
+.contact-box--email-only::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent 5%, var(--accent-soft) 50%, transparent 95%);
+  pointer-events:none;
+}
+.contact-email-shimmer{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+  opacity:.4;
+  pointer-events:none;
+  animation:shimmer 4s ease-in-out infinite;
+  z-index:2;
+}
+@media (prefers-reduced-motion: reduce){
+  .contact-email-shimmer{animation:none; opacity:.15}
+}
 .contact-box::before{
   content:"";
   position:absolute;
