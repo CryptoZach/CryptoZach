@@ -1237,9 +1237,10 @@
         if (!reefActive) reefStart();
 
         /* Adaptive spawn interval: faster movement = more frequent clusters */
-        var baseInterval = 55;
-        var velocityBoost = Math.min(40, reefVelocity * 25);
-        var spawnInterval = Math.max(15, baseInterval - velocityBoost);
+        var isTouch = e.pointerType === 'touch';
+        var baseInterval = isTouch ? 35 : 55;
+        var velocityBoost = Math.min(40, reefVelocity * (isTouch ? 35 : 25));
+        var spawnInterval = Math.max(10, baseInterval - velocityBoost);
 
         if (now - reefLastSpawn > spawnInterval) {
           reefLastSpawn = now;
@@ -1252,9 +1253,11 @@
             interpDist = Math.sqrt(idx * idx + idy * idy);
           }
 
-          if (interpDist > 30 && reefPrevMx >= 0) {
+          if (interpDist > 20 && reefPrevMx >= 0) {
             /* Fast movement: spawn intermediate clusters along the path */
-            var interpSteps = Math.min(4, Math.floor(interpDist / 25));
+            var maxSteps = isTouch ? 6 : 4;
+            var stepSize = isTouch ? 18 : 25;
+            var interpSteps = Math.min(maxSteps, Math.floor(interpDist / stepSize));
             for (var si = 0; si <= interpSteps; si++) {
               var t = si / (interpSteps + 1);
               var ix = reefPrevMx + (mx - reefPrevMx) * t;
@@ -1265,6 +1268,25 @@
             if (!reefInDeadZone(mx, my)) reefSpawnCluster(mx, my, reefVelocity);
           }
         }
+      });
+
+      /* Spawn reef on tap/press for instant touch feedback */
+      heroHome.addEventListener('pointerdown', function(e) {
+        if (isFinePointer(e)) return;
+        var r = heroContainer.getBoundingClientRect();
+        var mx = e.clientX - r.left;
+        var my = e.clientY - r.top;
+        reefMx = mx;
+        reefMy = my;
+        reefPrevMx = mx;
+        reefPrevMy = my;
+        reefPrevMoveTs = performance.now();
+        reefStart();
+        if (!reefInDeadZone(mx, my)) {
+          reefSpawnCluster(mx, my, 0.5);
+          reefSpawnCluster(mx + reefRand(-15, 15), my + reefRand(-15, 15), 0.3);
+        }
+        reefLastSpawn = performance.now();
       });
 
       heroHome.addEventListener('pointerenter', function(e) {
