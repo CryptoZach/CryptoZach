@@ -3068,8 +3068,11 @@
     }
 
     function mtxDraw(ts){
-      if(!matrixContainer.classList.contains('active')){
+      var mtxIsActive = matrixContainer.classList.contains('active');
+      if(!mtxIsActive && mtxDollarMag.length === 0){
         mtxRaf = null;
+        mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
+        mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
         return;
       }
       var t = typeof ts === 'number' ? ts : 0;
@@ -3506,14 +3509,6 @@
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
 
-      /* If matrix was stopped but kept alive for particle fade, clean up once done */
-      if(!matrixContainer.classList.contains('active') && mtxDollarMag.length === 0 && mtxRaf){
-        cancelAnimationFrame(mtxRaf);
-        mtxRaf = null;
-        mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
-        mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-        return;
-      }
 
       if (t > 0) {
         if (mtxLastDrawT > 0) {
