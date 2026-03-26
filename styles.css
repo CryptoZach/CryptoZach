@@ -10323,15 +10323,21 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 /* Homepage selected research: same title baseline across columns (badge + meta reserve space) */
 .research-preview-grid .card-badges{
-  min-height: 2.75rem;
   margin-bottom: var(--space-sm);
   align-items: flex-start;
 }
 .research-preview-grid .research-date{
-  min-height: 4rem;
   margin-top: 0;
   margin-bottom: var(--space-sm);
   line-height: 1.45;
+}
+@media (min-width: 981px){
+  .research-preview-grid .card-badges{
+    min-height: 2.75rem;
+  }
+  .research-preview-grid .research-date{
+    min-height: 4rem;
+  }
 }
 .research-preview-grid .research-card h3{
   margin-top: 0;
