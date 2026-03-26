@@ -232,13 +232,6 @@ const ICONS = [
     si: [],
     iconifyExtra: ['logos/kraken', 'token-branded/kraken'],
   },
-  /* MetaMask: bundled build-sources/metamask.png (user fox mark; Iconify wordmark still listed as fallback). */
-  {
-    name: 'metamask',
-    localRaster: 'icons/matrix/build-sources/metamask.png',
-    si: [],
-    iconifyExtra: ['token-branded/metamask', 'logos/metamask'],
-  },
   {
     name: 'layerzero',
     localSvg: 'icons/matrix/build-sources/layerzero.svg',

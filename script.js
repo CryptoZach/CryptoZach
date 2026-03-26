@@ -1399,7 +1399,6 @@
       { src: './icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/tao.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/metamask.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
@@ -1539,7 +1538,7 @@
       var isStable = mtxStablecoinSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isTopL1 = mtxTopL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
-      var mtxInfraSlugs = ['chainalysis.png', 'fireblocks.png', 'wintermute.png', 'bitgo.png', 'compound.png', 'gemini.png', '1inch.png', 'okx.png', 'securitize.png', 'layerzero.png', 'metamask.png', 'coinbase.png', 'kraken.png', 'aave.png', 'crv.png', 'grayscale.png', 'binance.png', 'paxos.png'];
+      var mtxInfraSlugs = ['chainalysis.png', 'fireblocks.png', 'wintermute.png', 'bitgo.png', 'compound.png', 'gemini.png', '1inch.png', 'okx.png', 'securitize.png', 'layerzero.png', 'coinbase.png', 'kraken.png', 'aave.png', 'crv.png', 'grayscale.png', 'binance.png', 'paxos.png'];
       var isInfra = mtxInfraSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 5 : (isMajorL1 ? 4 : (isInfra ? 4 : 3))));
       for(var k = 0; k < n; k++){
@@ -1569,7 +1568,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '136';
+    var mtxIconAssetVer = '137';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }

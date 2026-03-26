@@ -1,11 +1,11 @@
 # Matrix Icon Build Report
 
 **Date:** 2026-03-22T18:55:15.294900  
-**Total:** 104  
-**Sourced:** 102  
+**Total:** 103  
+**Sourced:** 101  
 **Missing:** 2  
 
-## Sourced (102)
+## Sourced (101)
 
 | File | Source | Size |
 |------|--------|------|
@@ -64,7 +64,6 @@
 | `m0.png` | bundled PNG (build-sources/m0.png) | 567B |
 | `ma.png` | Simple Icons (mastercard) | 585B |
 | `meta.png` | Simple Icons (meta) | 755B |
-| `metamask.png` | bundled PNG (build-sources/metamask.png) | 1138B |
 | `mkr.png` | bundled SVG (build-sources/mkr.svg) | 327B |
 | `moneygram.png` | Simple Icons (moneygram) | 769B |
 | `msft.png` | bundled SVG (build-sources/msft.svg) | 162B |
