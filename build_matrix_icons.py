@@ -65,7 +65,6 @@ CRYPTO = {
     "rndr": ("render",      [],                   "rndr"),
     "tao":  ("bittensor",   [],                   None),
     "kraken": ("kraken",     [],                   None),
-    "metamask": ("metamask", [],                   None),
     "layerzero": ("layerzero", [],                 None),
     "wormhole": ("wormhole", [],                   None),
     "ondo": ("ondo", [],                           None),
@@ -84,8 +83,6 @@ CRYPTO = {
 # Iconify paths when Simple Icons and cryptocurrency-icons miss (see scripts/build-matrix-icons.mjs).
 ICONIFY_CRYPTO_PATHS = {
     "kraken": ["logos/kraken", "token-branded/kraken"],
-    # Bundled build-sources/metamask.png in npm manifest; Iconify paths are fallback (wordmark is wide at 32px).
-    "metamask": ["token-branded/metamask", "logos/metamask"],
     "base": ["token/base", "token-branded/base"],
     "ink": ["token/ink", "token-branded/ink"],
     "arc": ["token/arc", "token-branded/arc", "arcticons/arc"],
