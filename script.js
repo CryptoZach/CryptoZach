@@ -2282,7 +2282,8 @@
       var br = mtxDollarMagBtnRect();
       if(!br) return;
       var hasCursor = mtxWarpX != null && mtxWarpY != null;
-      if(hasCursor && mtxDollarMag.length < mtxDollarMagMax && Math.random() < 0.06 * dtMul){
+      var spawnRate = hasCursor ? 0.06 : 0.02;
+      if(mtxDollarMag.length < mtxDollarMagMax && Math.random() < spawnRate * dtMul){
         mtxDollarMag.push(mtxDollarMagSpawn(w, h));
       }
       var mx = hasCursor ? mtxWarpX : br.cx;
