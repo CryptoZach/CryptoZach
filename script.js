@@ -2275,7 +2275,9 @@
         x = Math.random() * w;
         y = -14;
       }
-      return { x: x, y: y, vx: 0, vy: 0, alpha: 0.35 + Math.random() * 0.3, settled: false, sz: 17 + Math.random() * 5 };
+      var br = mtxDollarMagBtnRect();
+      var tx = br ? br.x + Math.random() * br.w : w * 0.5;
+      return { x: x, y: y, vx: 0, vy: 0, alpha: 0.35 + Math.random() * 0.3, settled: false, sz: 17 + Math.random() * 5, targetX: tx };
     }
 
     function mtxDollarMagUpdate(w, h, dtMul){
@@ -2316,8 +2318,9 @@
               p.vy += (dy / d) * 0.2 * dtMul;
             }
           } else {
-            /* No cursor: attract toward button, apply gravity */
-            var dx = br.cx - p.x, dy = br.top - p.y;
+            /* No cursor: attract toward particle's target position on button, apply gravity */
+            var tx = p.targetX != null ? p.targetX : br.cx;
+            var dx = tx - p.x, dy = br.top - p.y;
             var d = Math.sqrt(dx * dx + dy * dy);
             if(d > 1){
               p.vx += (dx / d) * 0.12 * dtMul;
