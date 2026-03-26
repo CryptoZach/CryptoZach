@@ -2565,6 +2565,31 @@ section:has(.speaker-jump-to){
   outline-offset:2px;
 }
 
+/* Structure jump-to (start-here, Operating-Model): text links, thin left accent, generous wrap gap */
+.page-toc.structure-jump-to{
+  border-left-width:2px;
+}
+.page-toc.structure-jump-to .page-toc-list{
+  gap:0.4rem 1.25rem;
+}
+.page-toc.structure-jump-to .page-toc-link{
+  padding:0.2rem 0;
+  border-radius:0;
+  background:transparent;
+}
+@media (prefers-reduced-motion: no-preference){
+  .page-toc.structure-jump-to .page-toc-link{
+    transition:color .15s ease, text-decoration-color .15s ease;
+  }
+}
+.page-toc.structure-jump-to .page-toc-link:hover{
+  color:var(--accent);
+  background:transparent;
+  text-decoration:underline;
+  text-decoration-color:color-mix(in srgb, var(--accent) 70%, transparent);
+  text-underline-offset:0.2em;
+}
+
 /* Pill-chip jump bar (selected-research.html; matches Frameworks .page-toc + .page-toc-link scale, theme tokens) */
 .jump-bar{
   display:flex;
@@ -2639,6 +2664,12 @@ section:has(.speaker-jump-to){
   .jump-chip{
     padding:0.25rem 0.5rem;
     font-size:0.6875rem;
+  }
+  .page-toc.structure-jump-to .page-toc-list{
+    gap:0.35rem 1rem;
+  }
+  .page-toc.structure-jump-to .page-toc-link{
+    padding:0.15rem 0;
   }
 }
 
@@ -3367,6 +3398,32 @@ section:has(.speaker-jump-to){
   margin:0;
   white-space:normal;
 }
+/* Same pill scale for summary CTA and SSRN / thread chips in the card action row */
+.writing-card-actions .writing-arrow,
+.writing-card-actions .writing-thread{
+  display:inline-flex;
+  align-items:center;
+  gap:0.35em;
+  box-sizing:border-box;
+  min-height:40px;
+  padding:8px 16px;
+  font-size:var(--font-size-min);
+  font-weight:600;
+  line-height:1.35;
+  letter-spacing:0.02em;
+  color:var(--muted);
+  text-decoration:none;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  background:color-mix(in srgb, var(--panel) 80%, transparent);
+}
+.writing-card-actions .writing-arrow{
+  justify-content:flex-start;
+}
+.writing-card-actions .writing-thread{
+  justify-content:center;
+  white-space:nowrap;
+}
 .writing-card--has-actions:has(> .writing-card-actions) > .writing-link.writing-link--thumb,
 .writing-card--has-actions:has(> .writing-card-actions) > .writing-link--static.writing-link--thumb{
   grid-column:1 / -1;
@@ -3637,8 +3694,8 @@ section:has(.speaker-jump-to){
 }
 .featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-thumb{
   float:left;
-  width:160px;
-  max-width:min(160px, 38vw);
+  width:200px;
+  max-width:min(200px, 48vw);
   height:auto;
   margin:0 1.25rem 0.75rem 0;
   object-fit:cover;
@@ -3705,7 +3762,8 @@ section:has(.speaker-jump-to){
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-thumb,
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-thumb{
   float:left;
-  width:120px;
+  width:160px;
+  max-width:min(160px, 34vw);
   height:auto;
   max-height:none;
   margin:0 1.25rem 0.75rem 0;
@@ -3751,7 +3809,8 @@ section:has(.speaker-jump-to){
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-thumb{
   float:left;
-  width:80px;
+  width:104px;
+  max-width:min(104px, 26vw);
   height:auto;
   margin:0 1rem 0.5rem 0;
   object-fit:cover;
@@ -3792,8 +3851,9 @@ section:has(.speaker-jump-to){
 /* Draft cards: placeholder block matches cover size */
 .research-library-page ul.writing-list > li > article .writing-thumb--placeholder{
   float:left;
-  width:140px;
-  height:140px;
+  width:min(168px, 36vw);
+  aspect-ratio:1;
+  height:auto;
   margin:0 1.25rem 1rem 0;
   box-sizing:border-box;
   display:flex;
@@ -3908,11 +3968,13 @@ section:has(.speaker-jump-to){
 @media (max-width:1023px){
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-thumb,
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-thumb{
-    width:120px;
+    width:160px;
+    max-width:min(160px, 38vw);
   }
   .research-library-page ul.writing-list > li > article .writing-thumb--placeholder{
-    width:120px;
-    height:120px;
+    width:min(160px, 38vw);
+    aspect-ratio:1;
+    height:auto;
   }
 }
 /* ── Track labels ── */
@@ -6328,11 +6390,11 @@ footer{
 @media (min-width: 1400px){
   :root{ --max:1480px }
 }
-/* Homepage: wider main so "What's on this site" and content use more horizontal space */
+/* Homepage: wider main so hero, frameworks, and previews use more horizontal space */
 @media (min-width: 1024px){
   main:has(.what-i-can-send),
   main:has(#featured-research){
-    max-width: 96rem;
+    max-width: 110rem;
   }
 }
 
@@ -6747,13 +6809,14 @@ footer{
     float:none;
     display:block;
     width:100%;
-    max-width:200px;
+    max-width:min(280px, 100%);
     height:auto;
-    max-height:160px;
+    max-height:220px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:1rem;
-    object-fit:cover;
+    object-fit:contain;
+    object-position:center top;
   }
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) .writing-title-stack{
     width:100%;
@@ -6787,9 +6850,10 @@ footer{
     float:none;
     display:block;
     width:100%;
-    max-width:min(100%, 280px);
+    max-width:min(100%, 300px);
+    aspect-ratio:1;
     height:auto;
-    min-height:120px;
+    min-height:140px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:1rem;
@@ -6811,13 +6875,14 @@ footer{
     float:none;
     display:block;
     width:100%;
-    max-width:200px;
+    max-width:min(240px, 100%);
     height:auto;
-    max-height:160px;
+    max-height:200px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:1rem;
-    object-fit:cover;
+    object-fit:contain;
+    object-position:center top;
   }
   .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack{
     width:100%;
@@ -6856,11 +6921,17 @@ footer{
     float:none;
     display:block;
     width:100%;
-    max-width:200px;
-    max-height:160px;
+    max-width:min(300px, 100%);
+    max-height:240px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:1rem;
+    object-fit:contain;
+    object-position:center top;
+  }
+  .featured-research .featured-paper-card .writing-title{
+    font-size:clamp(24px, 6.2vw, 34px);
+    line-height:1.18;
   }
   .featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-copy{
     display:flex;
@@ -6885,11 +6956,20 @@ footer{
     text-align:center;
     justify-content:center;
   }
+  .writing-card-actions .writing-arrow,
+  .writing-card-actions .writing-thread{
+    min-height:44px;
+    padding:10px 18px;
+  }
   .writing-meta{gap:6px}
   .writing-status{font-size:var(--font-size-min); padding:2px 8px}
   .writing-date{font-size:var(--font-size-min); padding:2px 8px}
   .writing-length{font-size:var(--font-size-min); padding:2px 8px}
-  .writing-thread{font-size:var(--font-size-min); padding:2px 8px}
+  .writing-meta .writing-thread{
+    font-size:var(--font-size-min);
+    padding:2px 8px;
+    min-height:0;
+  }
 
   .track-label{font-size:var(--font-size-min); margin:var(--space-lg) 0 var(--space-sm)}
 
@@ -8294,8 +8374,19 @@ footer{
 #signature-frameworks .framework-grid{
   grid-auto-rows: auto;
 }
+@media (min-width: 769px){
+  #signature-frameworks .framework-grid{
+    gap: var(--space-md);
+  }
+}
 #signature-frameworks .card.framework-card{
+  height: 100%;
+  min-height: 0;
   padding-bottom: var(--space-lg);
+}
+#signature-frameworks .card.framework-card > .action.secondary{
+  align-self: flex-end;
+  margin-top: auto;
 }
 #signature-frameworks .track-b-frameworks{
   position: relative;
@@ -11051,24 +11142,14 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
    3. Editorial proof capsules (value + label; no control affordance)
    ============================================================ */
 
-#hero.hero--homepage .hero-proof-label-overline{
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.5;
-  margin: var(--space-lg) 0 0.3rem;
-  width: 100%;
-  text-align: center;
-}
-
 #hero.hero--homepage .hero-proof-row{
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.8rem;
   list-style: none;
   padding: 0;
-  margin: 0 auto;
-  max-width: 56rem;
+  margin: var(--space-lg) auto 0;
+  max-width: min(100%, 72rem);
   width: 100%;
 }
 
@@ -11119,7 +11200,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 @media (min-width: 981px){
   #hero.hero--homepage .hero-proof-row{
-    max-width: 60rem;
+    max-width: min(100%, 80rem);
   }
 }
 
