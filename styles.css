@@ -6568,12 +6568,19 @@ footer{
     cursor:pointer;
     color:var(--text);
     margin:0 0 var(--space-xs);
-    padding:0;
+    padding:10px;
+    overflow:hidden;
+    box-sizing:border-box;
   }
   .mobile-nav-close svg{
     width:20px;
     height:20px;
+    min-width:20px;
+    min-height:20px;
+    max-width:20px;
+    max-height:20px;
     flex-shrink:0;
+    display:block;
   }
   .mobile-nav-close:hover{
     color:var(--accent);
