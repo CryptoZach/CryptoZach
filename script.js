@@ -2379,11 +2379,6 @@
         if(sp > 20){ p.vx = (p.vx / sp) * 20; p.vy = (p.vy / sp) * 20; }
         p.x += p.vx * dtMul;
         p.y += p.vy * dtMul;
-        /* Fade out when no cursor (touch released) */
-        if(!hasCursor){
-          p.alpha -= 0.008 * dtMul;
-          if(p.alpha <= 0){ mtxDollarMag.splice(i, 1); continue; }
-        }
         if(p.x < -60 || p.x > w + 60 || p.y < -60 || p.y > h + 60){
           mtxDollarMag.splice(i, 1);
         }
