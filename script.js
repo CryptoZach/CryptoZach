@@ -2218,9 +2218,9 @@
         var effectiveMax = isBtc ? (mtxIconDrawSizeMax * 2) : mtxIconDrawSizeMax;
         var sizeRange = effectiveMax - mtxIconDrawSizeMin;
         var normalizedSize = Math.min(1, (item.drawSize - mtxIconDrawSizeMin) / sizeRange);
-        mtxColOpacity[i] = 0.32 + Math.random() * 0.16 + normalizedSize * 0.12;
+        mtxColOpacity[i] = 0.42 + Math.random() * 0.18 + normalizedSize * 0.15;
         if(isBtc && item.drawSize > mtxIconDrawSizeMax){
-          mtxColOpacity[i] = Math.min(0.85, mtxColOpacity[i] + 0.1);
+          mtxColOpacity[i] = Math.min(0.92, mtxColOpacity[i] + 0.12);
         }
         var baseSpeed = 0.15 + Math.random() * 0.04;
         mtxColStep[i] = baseSpeed * (0.75 + normalizedSize * 0.25);
@@ -2228,9 +2228,9 @@
           mtxColStep[i] *= 0.75;
         }
       } else {
-        mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
+        mtxColOpacity[i] = 0.25 + Math.random() * 0.25;
         if(isBtc){
-          mtxColOpacity[i] = Math.min(0.8, mtxColOpacity[i] + 0.15);
+          mtxColOpacity[i] = Math.min(0.88, mtxColOpacity[i] + 0.18);
         }
       }
 
