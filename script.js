@@ -2218,9 +2218,9 @@
         var effectiveMax = isBtc ? (mtxIconDrawSizeMax * 2) : mtxIconDrawSizeMax;
         var sizeRange = effectiveMax - mtxIconDrawSizeMin;
         var normalizedSize = Math.min(1, (item.drawSize - mtxIconDrawSizeMin) / sizeRange);
-        mtxColOpacity[i] = 0.42 + Math.random() * 0.18 + normalizedSize * 0.15;
+        mtxColOpacity[i] = 0.55 + Math.random() * 0.2 + normalizedSize * 0.18;
         if(isBtc && item.drawSize > mtxIconDrawSizeMax){
-          mtxColOpacity[i] = Math.min(0.92, mtxColOpacity[i] + 0.12);
+          mtxColOpacity[i] = Math.min(0.95, mtxColOpacity[i] + 0.12);
         }
         var baseSpeed = 0.15 + Math.random() * 0.04;
         mtxColStep[i] = baseSpeed * (0.75 + normalizedSize * 0.25);
@@ -2261,12 +2261,20 @@
       var br = mtxDollarMagBtnRect();
       var maxY = br ? br.top : h * 0.7;
       var x, y;
-      if(Math.random() < 0.5){
-        x = w + 14;
-      } else {
+      var r = Math.random();
+      if(r < 0.4){
+        /* Left edge */
         x = -14;
+        y = Math.random() * maxY;
+      } else if(r < 0.8){
+        /* Right edge */
+        x = w + 14;
+        y = Math.random() * maxY;
+      } else {
+        /* Top edge */
+        x = Math.random() * w;
+        y = -14;
       }
-      y = Math.random() * maxY;
       return { x: x, y: y, vx: 0, vy: 0, alpha: 0.35 + Math.random() * 0.3, settled: false, sz: 17 + Math.random() * 5 };
     }
 
@@ -2654,11 +2662,11 @@
           drawnEdges[edgeKey] = true;
           var fadeB = meshNodeFade(ndB);
           var dist = neighbors[nb].dist;
-          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.06;
-          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.26;
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.12;
+          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.35;
           lineAlpha += reactBoost;
           if (now < (ndA.reactUntil || 0) || now < (ndB.reactUntil || 0)) {
-            lineAlpha += 0.034;
+            lineAlpha += 0.05;
           }
           lineAlpha *= mtxMeshLaneAlpha((ndA.x + ndB.x) * 0.5, w, (ndA.y + ndB.y) * 0.5, h);
           if (lineAlpha > 0.003) {
@@ -2666,7 +2674,7 @@
             mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
             mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
             mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
-            mtxCtx.lineWidth = 0.55;
+            mtxCtx.lineWidth = 0.7;
             mtxCtx.stroke();
           }
         }
