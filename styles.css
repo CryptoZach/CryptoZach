@@ -12060,7 +12060,15 @@ footer{
 }
 a.writing-arrow{
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  white-space: nowrap;
+}
+a.writing-arrow span[aria-hidden]{
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.1em;
+  line-height: 1;
 }
 a.writing-arrow:hover,
 a.writing-arrow:focus{
