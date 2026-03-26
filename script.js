@@ -118,6 +118,50 @@
     });
   }
 
+  // Homepage hero: secondary CTA smooth-scroll to role paths + one-time accent (skipped under reduced motion).
+  (function setupHeroRolePathsScroll(){
+    var hero = document.querySelector('#hero.hero--homepage');
+    if(!hero){
+      return;
+    }
+    var link = hero.querySelector('a.hero-scroll-role-paths');
+    if(!link){
+      return;
+    }
+    var reducedMotionMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function pulseRolePathsOnce(){
+      if(reducedMotionMq.matches){
+        return;
+      }
+      var el = document.getElementById('role-paths');
+      if(!el){
+        return;
+      }
+      el.classList.remove('role-paths-flash');
+      void el.offsetWidth;
+      el.classList.add('role-paths-flash');
+      window.setTimeout(function(){
+        el.classList.remove('role-paths-flash');
+      }, 450);
+    }
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.getElementById('role-paths');
+      if(!target){
+        return;
+      }
+      var header = document.querySelector('header');
+      var offset = header ? header.offsetHeight : 0;
+      var y = target.getBoundingClientRect().top + window.scrollY - offset - 12;
+      var behavior = reducedMotionMq.matches ? 'auto' : 'smooth';
+      window.scrollTo({ top: Math.max(0, y), behavior: behavior });
+      if(reducedMotionMq.matches){
+        return;
+      }
+      window.setTimeout(pulseRolePathsOnce, 700);
+    });
+  })();
+
   // Copy email
   const copy = document.getElementById('copyEmail');
   const email = document.getElementById('emailAddr');
@@ -1276,7 +1320,9 @@
   var heroEyebrowMtx = document.querySelector('#hero.hero--homepage .hero-eyebrow');
   var heroFlagshipMtx = document.querySelector('#hero.hero--homepage a.cta-primary[href*="routing-the-dollar"]')
     || document.querySelector('#hero.hero--homepage a.action.primary.cta-primary');
-  if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0){
+    /* Control-layer canvas: full motion, or static faint mesh when prefers-reduced-motion. */
+    var mtxReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     /* Mobile layout or touch-first: keep matrix running without hover (hero pointerup otherwise calls mtxStop every lift). */
     var mtxMobileMatrixAlways = window.matchMedia('(pointer: coarse)').matches
       || window.matchMedia('(max-width: 768px)').matches;
@@ -1607,7 +1653,6 @@
 
     /* ── Control-layer mesh state ── */
     var mtxIsMobile = window.matchMedia('(max-width: 768px)').matches;
-    var mtxReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var mtxMeshNodes = [];
     var mtxMeshRipples = [];
@@ -1627,13 +1672,113 @@
     var mtxMeshRippleMaxAge = mtxReducedMotion ? 0 : 300;
     var mtxMeshDidBootstrap = false;
 
-    /* ── Afterburn: steps set per frame from mobile / reduced-motion ── */
-    function mtxAfterburnStepCount() {
-      if (mtxReducedMotion) return 2;
-      return mtxIsMobile ? 4 : 7;
+    var mtxHeroSafeZones = [];
+    var mtxHeadWake = [];
+    var mtxWakeMaxAgeMs = 280;
+    var mtxWakePerfTier = 0;
+    var mtxFpsSampleAcc = 0;
+    var mtxFpsSampleN = 0;
+    var mtxLastDrawT = 0;
+
+    function mtxMeasureHeroSafeZones() {
+      mtxHeroSafeZones = [];
+      if (!heroContainerMtx || !matrixContainer) {
+        return;
+      }
+      var cr = matrixContainer.getBoundingClientRect();
+      var nodes = heroContainerMtx.querySelectorAll('[data-hero-safe]');
+      var pad = 12;
+      var zi;
+      for (zi = 0; zi < nodes.length; zi++) {
+        var r = nodes[zi].getBoundingClientRect();
+        mtxHeroSafeZones.push({
+          left: r.left - cr.left - pad,
+          top: r.top - cr.top - pad,
+          right: r.right - cr.left + pad,
+          bottom: r.bottom - cr.top + pad
+        });
+      }
     }
-    function mtxTrailBaseAlpha() {
-      return mtxIsMobile ? 0.175 : 0.215;
+
+    function mtxDistToHeroSafeZones(px, py) {
+      if (!mtxHeroSafeZones.length) {
+        return 120;
+      }
+      var minD = 1e9;
+      var i;
+      for (i = 0; i < mtxHeroSafeZones.length; i++) {
+        var z = mtxHeroSafeZones[i];
+        if (px >= z.left && px <= z.right && py >= z.top && py <= z.bottom) {
+          return 0;
+        }
+        var dx = 0;
+        var dy = 0;
+        if (px < z.left) {
+          dx = z.left - px;
+        } else if (px > z.right) {
+          dx = px - z.right;
+        }
+        if (py < z.top) {
+          dy = z.top - py;
+        } else if (py > z.bottom) {
+          dy = py - z.bottom;
+        }
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < minD) {
+          minD = d;
+        }
+      }
+      return minD;
+    }
+
+    function mtxGetCenterSafeAttenuation(px, py, layer) {
+      var d = mtxDistToHeroSafeZones(px, py);
+      var t = d < 0.5 ? 0 : Math.min(1, d / 110);
+      var lo = 0.45;
+      var hi = 0.7;
+      if (layer === 'wake') {
+        lo = 0.55;
+        hi = 0.78;
+      } else if (layer === 'haze') {
+        lo = 0.65;
+        hi = 0.85;
+      } else if (layer === 'back') {
+        lo = 0.75;
+        hi = 0.92;
+      } else if (layer === 'foreground') {
+        lo = 0.45;
+        hi = 0.7;
+      }
+      return lo + (hi - lo) * t;
+    }
+
+    function mtxEffectiveWakeCap() {
+      var base = mtxIsMobile ? 4 : 7;
+      if (mtxWakePerfTier >= 1) {
+        base = Math.min(base, 4);
+      }
+      if (mtxWakePerfTier >= 2) {
+        base = 2;
+      }
+      return Math.max(2, base);
+    }
+
+    function mtxPushHeadWakeSample(colIndex, wx, wy, now, op, isDollar, isIcon) {
+      if (mtxReducedMotion) {
+        return;
+      }
+      if (!mtxHeadWake[colIndex]) {
+        mtxHeadWake[colIndex] = [];
+      }
+      var arr = mtxHeadWake[colIndex];
+      arr.push({ x: wx, y: wy, t: now, op: op, isDollar: isDollar, isIcon: isIcon });
+      var cap = mtxEffectiveWakeCap();
+      while (arr.length && now - arr[0].t > mtxWakeMaxAgeMs) {
+        arr.shift();
+      }
+      while (arr.length > cap) {
+        arr.shift();
+      }
     }
 
     /* ── Pre-rendered glow sprites (reuse via drawImage) ── */
@@ -1899,6 +2044,11 @@
       mtxMeshReactCooldown = new Array(Math.max(1, mtxDrops.length)).fill(0);
       mtxNextMeshNodeId = 1;
       mtxMeshDidBootstrap = false;
+      var ncolWake = Math.max(1, mtxDrops.length);
+      mtxHeadWake = new Array(ncolWake).fill(null).map(function(){
+        return [];
+      });
+      mtxMeasureHeroSafeZones();
     }
 
     function mtxIsBitcoinItem(item) {
@@ -2252,8 +2402,19 @@
       return lane;
     }
 
+    function mtxPickMeshZLayer() {
+      var r = Math.random();
+      if (r < 0.68) {
+        return 'back';
+      }
+      if (r < 0.93) {
+        return 'mid';
+      }
+      return 'front';
+    }
+
     function mtxBootstrapMeshIfEmpty(w, h, now) {
-      if (mtxReducedMotion || mtxMeshNodes.length > 0 || mtxMeshDidBootstrap) {
+      if (mtxMeshNodes.length > 0 || mtxMeshDidBootstrap) {
         return;
       }
       mtxMeshDidBootstrap = true;
@@ -2294,7 +2455,8 @@
             settling: false,
             reactBright: 0,
             partOx: 0,
-            partOy: 0
+            partOy: 0,
+            zLayer: mtxPickMeshZLayer()
           });
         }
       }
@@ -2354,9 +2516,17 @@
       }
     }
 
-    function mtxDrawMeshUnderlay(now, w, h) {
+    function mtxDrawMeshUnderlay(now, w, h, layerFilter, withRipples) {
       var meshMaskTop = h * mtxMeshZoneTop;
       var meshMaskFadeH = h * 0.08;
+
+      function allowLayer(z) {
+        if (!layerFilter || !layerFilter.length) {
+          return true;
+        }
+        var zz = z || 'mid';
+        return layerFilter.indexOf(zz) >= 0;
+      }
 
       function meshZoneAlpha(nodeY) {
         if (nodeY < meshMaskTop) {
@@ -2383,7 +2553,7 @@
         var pry = (nd.padRy != null ? nd.padRy : 4.0) * (mtxIsMobile ? 0.88 : 1.25);
         var rot = nd.padRotation || 0;
         var drift = mtxReducedMotion ? 0 : Math.sin(now * 0.00055 + nd.padPhase) * nd.padDrift * 0.45;
-        var lane = mtxMeshLaneAlpha(px, w, py, h);
+        var lane = mtxMeshLaneAlpha(px, w, py, h) * mtxGetCenterSafeAttenuation(px, py, nd.zLayer === 'front' ? 'foreground' : 'back');
         var a0 = drawAlpha * nFade * lane * (boost || 1);
         if (a0 < 0.002) {
           return;
@@ -2416,16 +2586,22 @@
       for (ma = 0; ma < mtxMeshNodes.length; ma++) {
         var neighbors = mtxMeshNearestK(ma, mtxMeshMaxLinksPerNode);
         var ndA = mtxMeshNodes[ma];
+        if (!allowLayer(ndA.zLayer)) {
+          continue;
+        }
         var fadeA = meshNodeFade(ndA);
         var nb;
         for (nb = 0; nb < neighbors.length; nb++) {
           var bi = neighbors[nb].idx;
+          var ndB = mtxMeshNodes[bi];
+          if (!allowLayer(ndB.zLayer)) {
+            continue;
+          }
           var edgeKey = ma < bi ? (ma + ':' + bi) : (bi + ':' + ma);
           if (drawnEdges[edgeKey]) {
             continue;
           }
           drawnEdges[edgeKey] = true;
-          var ndB = mtxMeshNodes[bi];
           var fadeB = meshNodeFade(ndB);
           var dist = neighbors[nb].dist;
           var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.06;
@@ -2448,6 +2624,9 @@
 
       for (ma = 0; ma < mtxMeshNodes.length; ma++) {
         var nd = mtxMeshNodes[ma];
+        if (!allowLayer(nd.zLayer)) {
+          continue;
+        }
         var nFade = meshNodeFade(nd);
         if (nFade < 0.003) {
           continue;
@@ -2479,7 +2658,7 @@
       }
 
       var ri;
-      if (mtxMeshRippleMaxAge > 0) {
+      if (withRipples && mtxMeshRippleMaxAge > 0) {
         for (ri = 0; ri < mtxMeshRipples.length; ri++) {
           var rp = mtxMeshRipples[ri];
           var rAge = now - rp.born;
@@ -2498,50 +2677,67 @@
         }
       }
 
-      for (ri = 0; ri < mtxMeshEdgeFlashes.length; ri++) {
-        var fl = mtxMeshEdgeFlashes[ri];
-        var fp = Math.min(1, (now - fl.born) / Math.max(1, fl.until - fl.born));
-        var fa = (1 - fp) * fl.strength;
-        if (fa > 0.002) {
-          mtxCtx.beginPath();
-          mtxCtx.arc(fl.x, fl.y, 16 + fp * 22, 0, Math.PI * 2);
-          mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + fa + ')';
-          mtxCtx.lineWidth = 0.5;
-          mtxCtx.stroke();
+      if (withRipples) {
+        for (ri = 0; ri < mtxMeshEdgeFlashes.length; ri++) {
+          var fl = mtxMeshEdgeFlashes[ri];
+          var fp = Math.min(1, (now - fl.born) / Math.max(1, fl.until - fl.born));
+          var fa = (1 - fp) * fl.strength;
+          if (fa > 0.002) {
+            mtxCtx.beginPath();
+            mtxCtx.arc(fl.x, fl.y, 16 + fp * 22, 0, Math.PI * 2);
+            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + fa + ')';
+            mtxCtx.lineWidth = 0.5;
+            mtxCtx.stroke();
+          }
         }
       }
     }
 
     function mtxDrawSubmersionBand(w, h, now) {
-      /* Localized density pockets instead of a uniform wash.
-         Several small radial glows around mesh node clusters,
-         plus a very faint global gradient to tie them together. */
+      /* Broad bottom blue control-layer band (floor glow) + pocket haze above it (~82% of prior green wash). */
       var zTop = h * mtxSubmersionZoneTop;
+      var pulse = mtxReducedMotion ? 0.84 : (0.82 + Math.sin(now * mtxMeshPulseSpeed * 1.55) * 0.065);
 
-      /* Extremely faint global gradient — barely there */
       var grd = mtxCtx.createLinearGradient(0, zTop, 0, h);
-      grd.addColorStop(0, 'rgba(74, 222, 128, 0)');
-      grd.addColorStop(0.6, 'rgba(74, 222, 128, 0.002)');
-      grd.addColorStop(1, 'rgba(74, 222, 128, 0.005)');
+      grd.addColorStop(0, 'rgba(59, 130, 246, 0)');
+      grd.addColorStop(0.42, 'rgba(37, 99, 235, ' + (0.028 * pulse) + ')');
+      grd.addColorStop(0.78, 'rgba(30, 64, 175, ' + (0.046 * pulse) + ')');
+      grd.addColorStop(1, 'rgba(15, 23, 42, ' + (0.018 * pulse) + ')');
       mtxCtx.save();
       mtxCtx.fillStyle = grd;
       mtxCtx.fillRect(0, zTop, w, h - zTop);
       mtxCtx.restore();
 
-      /* Localized pocket glows around dense mesh clusters */
+      var tie = mtxCtx.createLinearGradient(0, zTop, 0, h);
+      tie.addColorStop(0, 'rgba(74, 222, 128, 0)');
+      tie.addColorStop(0.65, 'rgba(74, 222, 128, ' + (0.0016 * pulse) + ')');
+      tie.addColorStop(1, 'rgba(74, 222, 128, ' + (0.0035 * pulse) + ')');
+      mtxCtx.save();
+      mtxCtx.globalAlpha = 0.82;
+      mtxCtx.fillStyle = tie;
+      mtxCtx.fillRect(0, zTop, w, h - zTop);
+      mtxCtx.restore();
+
       if (!mtxReducedMotion && mtxMeshNodes.length > 4) {
         mtxCtx.save();
-        for (var pi = 0; pi < mtxMeshNodes.length; pi += 3) {
+        mtxCtx.globalAlpha = 0.82;
+        var pi;
+        for (pi = 0; pi < mtxMeshNodes.length; pi += 3) {
           var nd = mtxMeshNodes[pi];
-          if (!nd || nd.y < zTop) continue;
+          if (!nd || nd.y < zTop) {
+            continue;
+          }
           var age = now - nd.born;
           var life = nd.lifeMs || nd.life || 10000;
           var fade = Math.min(1, age / 1200) * (age > life * 0.7 ? 1 - (age - life * 0.7) / (life * 0.3) : 1);
-          var pocketAlpha = fade * 0.018 * mtxMeshLaneAlpha(nd.x, w, nd.y, h);
-          if (pocketAlpha < 0.002) continue;
+          var pocketAlpha = fade * 0.015 * mtxMeshLaneAlpha(nd.x, w, nd.y, h) * mtxGetCenterSafeAttenuation(nd.x, nd.y, 'haze');
+          if (pocketAlpha < 0.002) {
+            continue;
+          }
           var pocketR = 22 + Math.sin(now * 0.0008 + nd.pulse) * 6;
           var grad = mtxCtx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, pocketR);
-          grad.addColorStop(0, 'rgba(74, 222, 128, ' + pocketAlpha + ')');
+          grad.addColorStop(0, 'rgba(96, 165, 250, ' + pocketAlpha + ')');
+          grad.addColorStop(0.55, 'rgba(74, 222, 128, ' + (pocketAlpha * 0.45) + ')');
           grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
           mtxCtx.fillStyle = grad;
           mtxCtx.fillRect(nd.x - pocketR, nd.y - pocketR, pocketR * 2, pocketR * 2);
@@ -2583,7 +2779,7 @@
 
     function mtxDepositMeshNode(colIndex, item, headBaseX, w, h, now) {
       var occupancy = mtxMeshNodes.length / mtxMeshMaxNodes;
-      var depositChance = mtxReducedMotion ? 0.10 : (0.10 + 0.30 * (1 - occupancy * occupancy));
+      var depositChance = mtxReducedMotion ? 0.10 : (0.10 + 0.28 * (1 - occupancy * occupancy));
       if (mtxMeshNodes.length >= mtxMeshMaxNodes || Math.random() >= depositChance) {
         return;
       }
@@ -2621,7 +2817,8 @@
         settling: true,
         reactBright: 0,
         partOx: 0,
-        partOy: 0
+        partOy: 0,
+        zLayer: mtxPickMeshZLayer()
       });
       if (mtxMeshRippleMaxAge > 0) {
         mtxMeshRipples.push({
@@ -2635,68 +2832,77 @@
       }
     }
 
-    function mtxDrawAfterburnTrail(item, headBaseX, headBaseY, warpedHead, op, now, w, h, colIndex) {
+    /* Control-layer motion-history wake: head-attached ring buffer (no vertical column smear). */
+    function mtxDrawHeadWake(item, warpedHead, headBaseY, op, now, w, h, colIndex) {
+      if (mtxReducedMotion) {
+        return;
+      }
       ensureGlowSprites();
       var isDollar = item.type === 'text' && item.value === '$';
       var submerge = mtxGetSubmerge(headBaseY, h);
-      var driftX = mtxColDriftX[colIndex] || 0;
-      /* Very tight wake — 2 steps desktop, 1 mobile. No bloom sprite at all. */
-      var effSteps = mtxIsMobile ? 1 : 2;
-      if (mtxReducedMotion) effSteps = 1;
-      var trailAlpha = (mtxIsMobile ? 0.025 : 0.035) * op * (1 - 0.4 * submerge);
+      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var arr = mtxHeadWake[colIndex] || [];
+      var wakeAtt = mtxGetCenterSafeAttenuation(warpedHead.x, warpedHead.y, 'wake');
 
-      /* Wake steps start 2 line-heights above the head — well clear of the glyph */
-      var pts = [];
-      for (var ti = 1; ti <= effSteps; ti++) {
-        var rawY = headBaseY - (ti + 1) * mtxLineStep;
-        if (rawY < 0) break;
-        var rawX = colIndex * mtxColWidth + 1 + driftX;
-        var wpt = mtxWarpPoint(rawX, rawY, w, h);
-        var stepFade = 1 - ti / (effSteps + 0.5);
-        pts.push({ wx: wpt.x, wy: wpt.y, alpha: trailAlpha * stepFade * stepFade });
-      }
+      mtxCtx.save();
+      mtxCtx.globalCompositeOperation = 'lighter';
+      var sprH = mtxGlowSpriteFor(isDollar, 1, Math.min(2, Math.round(submerge * 2.5)));
+      var bh = sprH.width * (0.5 + submerge * 0.14);
+      mtxCtx.globalAlpha = Math.min(0.55, op * 0.42 * wakeAtt);
+      mtxCtx.drawImage(sprH, warpedHead.x - bh * 0.5, warpedHead.y - bh * 0.5, bh, bh);
 
-      /* Tiny glow dots — well above the head, very faint */
-      for (var di = 0; di < pts.length; di++) {
-        var p = pts[di];
-        if (p.alpha < 0.003) break;
-        var spr = mtxGlowSpriteFor(isDollar, 0, 0);
-        var dotSize = spr.width * 0.18;
-        mtxCtx.save();
-        mtxCtx.globalAlpha = p.alpha * 0.4;
-        mtxCtx.drawImage(spr, p.wx - dotSize * 0.5, p.wy - dotSize * 0.5, dotSize, dotSize);
-        mtxCtx.restore();
-      }
-
-      /* Thin filament — faint line from head upward through wake points */
-      if (pts.length > 0) {
-        var fCol = isDollar ? '204, 251, 229' : '74, 222, 128';
-        var fAlpha = trailAlpha * 0.12;
-        if (fAlpha > 0.003) {
-          mtxCtx.save();
-          mtxCtx.strokeStyle = 'rgba(' + fCol + ', ' + fAlpha + ')';
-          mtxCtx.lineWidth = 0.35;
-          mtxCtx.lineCap = 'round';
-          mtxCtx.beginPath();
-          mtxCtx.moveTo(warpedHead.x, warpedHead.y - mtxLineStep);
-          for (di = 0; di < pts.length; di++) {
-            mtxCtx.lineTo(pts[di].wx, pts[di].wy);
-          }
-          mtxCtx.stroke();
-          mtxCtx.restore();
+      var si;
+      for (si = 0; si < arr.length - 1; si++) {
+        var s = arr[si];
+        var age = now - s.t;
+        var ageF = 1 - age / mtxWakeMaxAgeMs;
+        if (ageF < 0.03) {
+          continue;
         }
+        var widen = 1 + submerge * 0.28;
+        var shimmer = Math.sin(now * 0.014 + s.x * 0.09) * submerge * 2.2;
+        var spr = mtxGlowSpriteFor(!!s.isDollar, 2, 1);
+        var sw = spr.width * (0.2 + ageF * 0.22) * widen;
+        mtxCtx.globalAlpha = Math.min(0.48, s.op * ageF * ageF * 0.2 * (1 - submerge * 0.32) * mtxGetCenterSafeAttenuation(s.x + shimmer, s.y, 'wake'));
+        mtxCtx.drawImage(spr, s.x + shimmer - sw * 0.5, s.y - sw * 0.42, sw, sw);
       }
+      mtxCtx.restore();
+      mtxCtx.globalCompositeOperation = 'source-over';
+
+      if (arr.length < 2) {
+        return;
+      }
+      mtxCtx.save();
+      var filAlpha = op * 0.1 * (1 - submerge * 0.45) * wakeAtt;
+      mtxCtx.strokeStyle = 'rgba(' + col + ', ' + filAlpha + ')';
+      mtxCtx.lineWidth = submerge > 0.35 ? 0.32 : 0.42;
+      mtxCtx.lineCap = 'round';
+      mtxCtx.beginPath();
+      mtxCtx.moveTo(warpedHead.x, warpedHead.y);
+      var fi;
+      for (fi = 0; fi < arr.length - 1; fi++) {
+        var p0 = arr[fi];
+        var p1 = arr[fi + 1];
+        var mpx = (p0.x + p1.x) * 0.5 + Math.sin(now * 0.011 + fi + colIndex) * (2 + submerge * 4);
+        var mpy = (p0.y + p1.y) * 0.5;
+        mtxCtx.quadraticCurveTo(mpx, mpy, p1.x, p1.y);
+      }
+      mtxCtx.stroke();
+      mtxCtx.restore();
     }
 
     /* Per-glyph wade overlay: redraw nearby mesh pads OVER the lower
        portion of submerged glyphs so they look like they're wading through
        the mesh, not floating above it. This is the key occlusion effect. */
     function mtxDrawGlyphWadeOverlay(cx, cy, glyphW, glyphH, submerge, now, w, h, isDollar) {
-      if (submerge < 0.08 || mtxMeshNodes.length < 3) return;
+      if (mtxReducedMotion || submerge < 0.08 || mtxMeshNodes.length < 3) {
+        return;
+      }
 
-      /* Only occlude the lower 35% of the glyph */
-      var clipTop = cy + glyphH * 0.35;
-      var clipBot = cy + glyphH + 4;
+      var clipY = cy + glyphH * 0.58;
+      var clipH = glyphH * 0.48;
+      var clipTop = clipY;
+      var clipBot = Math.min(cy + glyphH + 6, clipY + clipH);
       var clipLeft = cx - 4;
       var clipRight = cx + glyphW + 4;
       var footCx = cx + glyphW * 0.5;
@@ -2712,13 +2918,19 @@
         var dy = nd.y - footCy;
         var dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < searchR) {
+          var zl = nd.zLayer || 'mid';
+          if (zl === 'back') {
+            continue;
+          }
           nearby.push({ nd: nd, dist: dist });
         }
       }
-      if (nearby.length === 0) return;
+      if (nearby.length === 0) {
+        return;
+      }
 
       mtxCtx.save();
-      /* Clip to the lower portion of the glyph */
+      /* Clip to the lower wade band (control-layer submersion read). */
       mtxCtx.beginPath();
       mtxCtx.rect(clipLeft, clipTop, clipRight - clipLeft, clipBot - clipTop);
       mtxCtx.clip();
@@ -2778,7 +2990,9 @@
     /* Footline bow-wake: a subtle crescent/meniscus where the glyph
        contacts the mesh surface. Signals weight and displacement. */
     function mtxDrawFootlineWake(cx, cy, glyphW, glyphH, submerge, now, isDollar) {
-      if (submerge < 0.12) return;
+      if (mtxReducedMotion || submerge < 0.12) {
+        return;
+      }
       var footX = cx + glyphW * 0.5;
       var footY = cy + glyphH * 0.75;
       var col = isDollar ? '204, 251, 229' : '74, 222, 128';
@@ -2836,8 +3050,15 @@
       var meshNow = performance.now();
       mtxStepControlLayer(meshNow, w, h, dtMul);
       mtxBootstrapMeshIfEmpty(w, h, meshNow);
-      mtxDrawMeshUnderlay(meshNow, w, h);
+      if (mtxReducedMotion) {
+        mtxDrawMeshUnderlay(meshNow, w, h, null, true);
+        mtxDrawSubmersionBand(w, h, meshNow);
+        mtxRaf = requestAnimationFrame(mtxDraw);
+        return;
+      }
+      mtxDrawMeshUnderlay(meshNow, w, h, ['back'], false);
       mtxDrawSubmersionBand(w, h, meshNow);
+      mtxDrawMeshUnderlay(meshNow, w, h, ['mid'], true);
 
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
       mtxCtx.textBaseline = 'top';
@@ -2884,16 +3105,7 @@
           op *= (1.0 - subProgress * 0.85);
         }
 
-        /* T3.5 Center-safe zone: dim glyph draws behind headline/CTA area */
-        var safeL = w * (mtxIsMobile ? 0.08 : 0.15);
-        var safeR = w * (mtxIsMobile ? 0.92 : 0.85);
-        var safeT = h * 0.18;
-        var safeB = h * (mtxIsMobile ? 0.80 : 0.72);
-        if (x > safeL && x < safeR && y > safeT && y < safeB) {
-          var sdx = 1 - Math.abs(x - (safeL + safeR) * 0.5) / ((safeR - safeL) * 0.5);
-          var sdy = 1 - Math.abs(y - (safeT + safeB) * 0.5) / ((safeB - safeT) * 0.5);
-          op *= (1.0 - sdx * sdy * 0.4);
-        }
+        op *= mtxGetCenterSafeAttenuation(x, y, 'foreground');
 
         var isDollarHead = item.type === 'text' && item.value === '$';
         if (mtxGetSubmerge(y0, h) > 0.04) {
@@ -2901,12 +3113,9 @@
           mtxReactMeshNear(colCenterX, y0, meshNow, isDollarHead, i, w, h);
         }
 
-        /* Skip afterburn trail for all icons — trail glow accumulates behind
-           sprites and creates visible ghost blocks (curved top, square bottom).
-           Trail only benefits text glyphs where it reads as a comet tail. */
-        if (item.type !== 'icon') {
-          mtxDrawAfterburnTrail(item, x0, y0, warped, op, meshNow, w, h, i);
-        }
+        /* Control-layer head-attached wake (history sampled after draw; lighter pass inside). */
+        mtxDrawHeadWake(item, warped, y0, op, meshNow, w, h, i);
+        mtxPushHeadWakeSample(i, warped.x, warped.y, meshNow, op, isDollarHead, item.type === 'icon');
 
         if(item.type === 'text'){
           mtxCtx.textAlign = 'left';
@@ -3057,6 +3266,8 @@
         }
       }
 
+      mtxDrawMeshUnderlay(meshNow, w, h, ['front'], false);
+
       /* ══════════════════════════════════════════════
          Coral web: tendrils ONLY between nearby icons.
          No constant tendrils — only when icons get close enough.
@@ -3065,7 +3276,7 @@
          ══════════════════════════════════════════════ */
       if (coralNodes.length > 1 && !mtxReducedMotion) {
         var coralThreshold = mtxIsMobile ? 90 : 130;
-        var coralMaxLinks = mtxIsMobile ? 2 : 4;
+        var coralMaxLinks = mtxWakePerfTier >= 1 ? (mtxIsMobile ? 2 : 3) : (mtxIsMobile ? 2 : 4);
         var coralAttractBase = mtxIsMobile ? 0.018 : 0.028;
         var coralLinkCount = {};
         var drawnCoralEdges = {};
@@ -3244,6 +3455,27 @@
       /* Pass 3: dollar magnet particles (desktop only). */
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
+
+      if (t > 0) {
+        if (mtxLastDrawT > 0) {
+          var frameDt = t - mtxLastDrawT;
+          if (frameDt > 0 && frameDt < 200) {
+            mtxFpsSampleAcc += frameDt;
+            mtxFpsSampleN++;
+            if (mtxFpsSampleN >= 42) {
+              var avgF = mtxFpsSampleAcc / mtxFpsSampleN;
+              if (avgF > 34 && mtxWakePerfTier < 2) {
+                mtxWakePerfTier++;
+              } else if (avgF < 22 && mtxWakePerfTier > 0) {
+                mtxWakePerfTier--;
+              }
+              mtxFpsSampleAcc = 0;
+              mtxFpsSampleN = 0;
+            }
+          }
+        }
+        mtxLastDrawT = t;
+      }
 
       mtxRaf = requestAnimationFrame(mtxDraw);
     }
@@ -3643,10 +3875,18 @@
         if(matrixContainer.classList.contains('active')){
           mtxInitCanvas();
         }
+        mtxMeasureHeroSafeZones();
       }, 200);
     });
 
-    if(mtxMobileMatrixAlways){
+    mtxMeasureHeroSafeZones();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function(){
+        mtxMeasureHeroSafeZones();
+      });
+    }
+
+    if(mtxMobileMatrixAlways || mtxReducedMotion){
       mtxStart();
       document.addEventListener('visibilitychange', function mtxHeroMatrixVis(){
         if(document.hidden || !mtxMobileMatrixAlways){

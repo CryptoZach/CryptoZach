@@ -70,11 +70,11 @@ test.describe("Responsive layout", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Who routes the dollar matters more than which dollar is routed/i,
+        name: /Research for real-world policy and operating constraints/i,
       }),
     ).toBeVisible();
-    await expect(page.locator("#hero .hero-tagline")).toHaveText(
-      /Decision frameworks for the people building and regulating digital money infrastructure/i,
+    await expect(page.locator("#hero .hero-subhead")).toHaveText(
+      /Who routes the dollar determines how it is regulated/i,
     );
   });
 });
