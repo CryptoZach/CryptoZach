@@ -300,7 +300,7 @@
       <div class="flagship-thumb-wrap">
         <span class="flagship-thumb-shimmer" aria-hidden="true"></span>
         <img class="flagship-thumb thumb-clii" src="Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram" loading="lazy" />
-        <p class="flagship-thumb-caption">The policy-relevant unit is the gateway, not the token.</p>
+        <p class="flagship-thumb-caption">The policy-relevant unit is the gateway (the issuer, exchange, or protocol that routes stablecoin value), not the token.</p>
       </div>
       <div class="card-badges flagship-badges">
         <span class="badge">Under review</span>
@@ -327,22 +327,22 @@
         <div class="grid grid--halves framework-grid">
           <article id="clii-home" class="card framework-card">
             <h3>CLII (Control Layer Intensity Index)</h3>
-            <p>Measures how heavily regulated each gateway is across five dimensions (licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions). A high CLII score means a gateway faces more regulatory obligations; it does not mean the gateway will perform well under stress. Circle and Coinbase had near-identical CLII scores but showed sharply different stress retention during SVB because their banking exposures differed.</p>
+            <p>Measures how heavily regulated each stablecoin issuer, exchange, or protocol is across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Each entity receives a weighted score from 0 to 1. A high score means more regulatory obligations. Stress performance is a separate question: Circle and Coinbase had near-identical scores but showed sharply different outcomes during SVB because their banking exposures differed.</p>
             <a class="action secondary" href="./papers/routing-the-dollar.html">View CLII framework</a>
           </article>
           <article id="mvep-home" class="card framework-card">
             <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
-            <p>Three equivalence claims (legal, operational, economic) tested through nine diligence categories. Each category specifies a required artifact and a pass/fail test. MVEP is the entry gate; CLII is the drift detector that monitors whether equivalence degrades after approval.</p>
+            <p>Asks three questions about any tokenized product: does the holder have the same legal rights as the traditional version? Does the infrastructure perform the same functions? Does the product behave the same way under stress? Each question is tested through nine categories, each requiring specific evidence (legal opinions, custody attestations, reconciliation logs) and a pass/fail determination. MVEP is the entry gate before launch; CLII monitors whether equivalence holds after approval.</p>
             <a class="action secondary" href="./papers/minimum-viable-equivalence-packs.html">View MVEP framework</a>
           </article>
           <article id="credit-migration-home" class="card framework-card">
             <h3>Credit Migration Model</h3>
-            <p>Tracks what happens to bank deposits when they migrate into stablecoin reserves: which balance sheets grow, which shrink, and how credit creation changes as reserves absorb deposit volume. The core question: as dollars move from bank deposits into stablecoin reserves, does the lending base that monetary policy operates through shrink, and by how much?</p>
+            <p>Tracks where deposit balances move as stablecoin reserves grow: which banks gain funding, which lose it, and whether the deposits that remain become more concentrated and more vulnerable to rapid withdrawal. The core question: as dollars move from bank deposits into stablecoin reserves, does the funding base that monetary policy operates through change in ways that matter for financial stability? The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 finding that stablecoins can reduce, recycle, or restructure deposits.</p>
             <a class="action secondary" href="./papers/dollar-v3.html">View Credit Migration Model</a>
           </article>
           <article id="regime-dashboard-home" class="card framework-card">
             <h3>Regime Dashboard</h3>
-            <p>Ten signals classifying whether issuers or control-layer operators currently capture value and bear liability. Reads routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations as they change. When the classification shifts, it changes who the regulator can reach and who captures the economics.</p>
+            <p>Classifies who controls the operating layer right now: who owns the interface, who sets the default routing, who holds the authority to freeze or delay transactions, and who bears the compliance obligations. Tracks routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations as they change. The central question is whether the entity responsible for compliance is the same one earning the fees, float, and data.</p>
             <a class="action secondary" href="./Operating-Model.html#regime-dashboard">Request Regime Dashboard</a>
           </article>
         </div>
@@ -389,7 +389,7 @@
           </div>
           <p class="research-date">Feb 2026 · SSRN · Asset Management / Tokenization</p>
           <h3>Minimum Viable Equivalence Pack</h3>
-          <p>Circle's $3.3B reserve exposure at SVB broke legal, operational, and economic equivalence simultaneously. Three equivalence claims (legal, operational, economic) tested through nine diligence categories: rights parity, system of record, records and reconciliation, custody and customer property, insolvency posture, settlement finality, reorg and exception handling, governance and change control, and disclosures. Anchored on the SVB weekend's cascading infrastructure failures.</p>
+          <p>A diligence framework that asks three questions about any tokenized product: does the holder have the same legal rights as the traditional version? Does the infrastructure perform the same functions? Does the product behave the same way under stress? Each question is tested through nine categories with specific evidence requirements (legal opinions, custody attestations, reconciliation logs) and a pass/fail determination. During the SVB weekend, Circle's $3.3 billion reserve exposure broke all three claims at the same time, and tier labels, attestation reports, and "institutional grade" designations all failed to surface the risk. This framework replaces pitch-deck review with a repeatable, category-by-category standard.</p>
           <a class="action secondary research-card-action" href="./papers/minimum-viable-equivalence-packs.html">Open paper summary</a>
         </article>
 
@@ -399,7 +399,7 @@
           </div>
           <p class="research-date">Dec 2025 · Medium · Policy / Payments / Stablecoins</p>
           <h3>Dollar v3</h3>
-          <p>Market-structure map: three dollar objects, three rulebooks, Layer 0, deposit mutation, GENIUS payment-stablecoin perimeter, Fed deposit-effects note, and OCC 1188. Policy essay, not an empirical dataset study.</p>
+          <p>Policy essay mapping how three types of digital dollars (payment stablecoins, tokenized deposits, and yield wrappers) diverge in reserve structure, legal treatment, and crisis behavior, even though they look identical in a wallet. Analyzes the GENIUS Act's payment-stablecoin perimeter, the Federal Reserve's December 2025 finding that stablecoins can reduce, recycle, or restructure bank deposits, and OCC Interpretive Letter 1188 permitting national banks to engage in crypto-asset transactions in a safe and sound manner.</p>
           <a class="action secondary research-card-action" href="./papers/dollar-v3.html">Open paper summary</a>
         </article>
 
@@ -409,7 +409,7 @@
           </div>
           <p class="research-date">Jan 2026 · Medium · Policy / Compliance / Market Infrastructure</p>
           <h3>The Control Layer War</h3>
-          <p>Where compliance becomes operational: defaults, holds, routing, and logs under the CLARITY Act (House-passed form analyzed here). Three enforcement equilibria and measurable operating metrics. Companion to Dollar v3.</p>
+          <p>Analyzes how CLARITY-style provisions (House-passed form) assign compliance obligations to the entities that control interfaces, routing defaults, hold and release workflows, and audit logs. The central question is whether the entity responsible for compliance is the same one earning the fees, float, and data. Companion to Dollar v3.</p>
           <a class="action secondary research-card-action" href="./papers/control-layer-war.html">Open paper summary</a>
         </article>
 
@@ -419,7 +419,7 @@
           </div>
           <p class="research-date">2025 · SSRN · Tokenomics / DePIN / Operational Risk</p>
           <h3>Operational Risk in Token Economies</h3>
-          <p>Adaptive controllers become more resilient under infrastructure shocks. Reputation-weighted governance moves in the opposite direction, and the outcome depends on one design parameter: when the designer sets the uptime recovery threshold at 99%, reputation scores collapse to 0.18 on a 5.0 scale by year five; lowering it to 95% stabilizes the system.</p>
+          <p>A 624-configuration simulation using real outage rates from Ethereum, Helium, Geodnet, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks (the counterintuitive result: failures strengthen the controller's advantage over static policy). Reputation-weighted governance moves in the opposite direction, and the outcome traces to one design parameter: the minimum uptime a node must maintain to recover its standing. At 99%, real-world outage rates make recovery nearly impossible and reputation scores collapse to 0.18 on a 5.0 scale by year five. At 95%, the system stabilizes. The paper also translates blockchain-specific failures into established operational risk categories that a traditional risk team already works with.</p>
           <a class="action secondary research-card-action" href="./papers/operational-risk-token-economies.html">Open paper summary</a>
         </article>
       </div>
