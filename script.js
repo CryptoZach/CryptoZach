@@ -2258,12 +2258,15 @@
     }
 
     function mtxDollarMagSpawn(w, h){
-      var side = Math.floor(Math.random() * 4);
+      var br = mtxDollarMagBtnRect();
+      var maxY = br ? br.top : h * 0.7;
       var x, y;
-      if(side === 0){ x = Math.random() * w; y = -14; }
-      else if(side === 1){ x = w + 14; y = Math.random() * h; }
-      else if(side === 2){ x = Math.random() * w; y = h + 14; }
-      else { x = -14; y = Math.random() * h; }
+      if(Math.random() < 0.5){
+        x = w + 14;
+      } else {
+        x = -14;
+      }
+      y = Math.random() * maxY;
       return { x: x, y: y, vx: 0, vy: 0, alpha: 0.35 + Math.random() * 0.3, settled: false, sz: 17 + Math.random() * 5 };
     }
 
