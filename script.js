@@ -2663,11 +2663,11 @@
           drawnEdges[edgeKey] = true;
           var fadeB = meshNodeFade(ndB);
           var dist = neighbors[nb].dist;
-          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.12;
-          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.35;
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.22;
+          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.45;
           lineAlpha += reactBoost;
           if (now < (ndA.reactUntil || 0) || now < (ndB.reactUntil || 0)) {
-            lineAlpha += 0.05;
+            lineAlpha += 0.08;
           }
           lineAlpha *= mtxMeshLaneAlpha((ndA.x + ndB.x) * 0.5, w, (ndA.y + ndB.y) * 0.5, h);
           if (lineAlpha > 0.003) {
@@ -2675,7 +2675,7 @@
             mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
             mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
             mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
-            mtxCtx.lineWidth = 0.7;
+            mtxCtx.lineWidth = 0.85;
             mtxCtx.stroke();
           }
         }
@@ -3642,11 +3642,11 @@
       if(mtxMobileMatrixAlways){
         return;
       }
-      matrixContainer.classList.remove('active');
-      /* Keep draw loop alive until magnetized $ symbols finish fading */
+      /* Keep active + draw loop alive while $ particles remain visible */
       if(mtxDollarMag.length > 0){
         return;
       }
+      matrixContainer.classList.remove('active');
       if(mtxRaf){
         cancelAnimationFrame(mtxRaf);
         mtxRaf = null;
