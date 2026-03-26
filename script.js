@@ -2228,9 +2228,9 @@
           mtxColStep[i] *= 0.75;
         }
       } else {
-        mtxColOpacity[i] = 0.25 + Math.random() * 0.25;
+        mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
         if(isBtc){
-          mtxColOpacity[i] = Math.min(0.88, mtxColOpacity[i] + 0.18);
+          mtxColOpacity[i] = Math.min(0.8, mtxColOpacity[i] + 0.15);
         }
       }
 
