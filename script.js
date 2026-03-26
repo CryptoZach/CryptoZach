@@ -1270,6 +1270,21 @@
         }
       });
 
+      /* Prevent scrolling while touch-dragging in hero so coral reef captures the gesture */
+      var reefTouchActive = false;
+      heroHome.addEventListener('touchstart', function(e) {
+        reefTouchActive = true;
+      }, { passive: true });
+      heroHome.addEventListener('touchmove', function(e) {
+        if (reefTouchActive) e.preventDefault();
+      }, { passive: false });
+      heroHome.addEventListener('touchend', function() {
+        reefTouchActive = false;
+      }, { passive: true });
+      heroHome.addEventListener('touchcancel', function() {
+        reefTouchActive = false;
+      }, { passive: true });
+
       /* Spawn reef on tap/press for instant touch feedback */
       heroHome.addEventListener('pointerdown', function(e) {
         if (isFinePointer(e)) return;
