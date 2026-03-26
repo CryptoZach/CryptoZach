@@ -2228,9 +2228,9 @@
           mtxColStep[i] *= 0.75;
         }
       } else {
-        mtxColOpacity[i] = 0.25 + Math.random() * 0.25;
+        mtxColOpacity[i] = 0.17 + Math.random() * 0.22;
         if(isBtc){
-          mtxColOpacity[i] = Math.min(0.88, mtxColOpacity[i] + 0.18);
+          mtxColOpacity[i] = Math.min(0.8, mtxColOpacity[i] + 0.15);
         }
       }
 
@@ -2379,11 +2379,6 @@
         if(sp > 20){ p.vx = (p.vx / sp) * 20; p.vy = (p.vy / sp) * 20; }
         p.x += p.vx * dtMul;
         p.y += p.vy * dtMul;
-        /* Fade out when no cursor (touch released) */
-        if(!hasCursor){
-          p.alpha -= 0.008 * dtMul;
-          if(p.alpha <= 0){ mtxDollarMag.splice(i, 1); continue; }
-        }
         if(p.x < -60 || p.x > w + 60 || p.y < -60 || p.y > h + 60){
           mtxDollarMag.splice(i, 1);
         }
@@ -3073,8 +3068,11 @@
     }
 
     function mtxDraw(ts){
-      if(!matrixContainer.classList.contains('active')){
+      var mtxIsActive = matrixContainer.classList.contains('active');
+      if(!mtxIsActive && mtxDollarMag.length === 0){
         mtxRaf = null;
+        mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
+        mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
         return;
       }
       var t = typeof ts === 'number' ? ts : 0;
@@ -3511,14 +3509,6 @@
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
 
-      /* If matrix was stopped but kept alive for particle fade, clean up once done */
-      if(!matrixContainer.classList.contains('active') && mtxDollarMag.length === 0 && mtxRaf){
-        cancelAnimationFrame(mtxRaf);
-        mtxRaf = null;
-        mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
-        mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-        return;
-      }
 
       if (t > 0) {
         if (mtxLastDrawT > 0) {
