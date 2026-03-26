@@ -47,7 +47,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=77" />
+  <link rel="stylesheet" href="./styles.css?v=83" />
 </head>
 
 <body class="contact-page">
@@ -111,7 +111,6 @@
 
   <main id="main">
     <div class="contact-page-wrap">
-      <div class="contact-bottom-band" aria-hidden="true"></div>
       <div class="contact-page-foreground">
     <section class="reveal contact-page-intro" aria-labelledby="contact-page-title">
       <div class="kicker kicker--subpage contact-page-kicker">
@@ -122,17 +121,13 @@
         <h1 id="contact-page-title">Tell me what you&rsquo;re building or evaluating.</h1>
       </div>
       <p class="contact-page-deck">For roles, live policy or product questions, speaking, and advisory. I&rsquo;ll point you to the most relevant paper, resume version, or supporting material.</p>
-      <div class="contact-hero-cta-row">
+      <div class="contact-hero-ctas" role="group" aria-label="Contact and quick links">
         <a class="action primary" href="mailto:zach@cryptozach.com">Email Zach</a>
-        <a class="contact-flagship-link" href="./papers/routing-the-dollar-brief.html">Read the flagship brief</a>
+        <a class="action secondary" href="./papers/routing-the-dollar-brief.html">Read the flagship brief</a>
+        <a class="action secondary" href="./resume.html">View resume profiles</a>
+        <a class="action secondary" href="./speaker-advisory.html">Speaker &amp; advisory</a>
+        <a class="action secondary" href="./selected-research.html">Research</a>
       </div>
-      <p class="contact-utility-links">
-        <a href="./resume.html">View resume profiles</a>
-        <span class="contact-utility-sep" aria-hidden="true">·</span>
-        <a href="./speaker-advisory.html">Speaker &amp; advisory</a>
-        <span class="contact-utility-sep" aria-hidden="true">·</span>
-        <a href="./selected-research.html">Research</a>
-      </p>
     </section>
 
     <section class="reveal contact-page-detail" aria-labelledby="contact-paths-title">
@@ -195,7 +190,7 @@
               <li>Any deadline, hiring timeline, or event date.</li>
               <li>Whether you want a paper, resume version, writing sample, or framework overview.</li>
             </ul>
-            <p class="contact-story-spine">If you&rsquo;re choosing where to start: <a href="./2026-frameworks.html">Overview</a> defines the objects. <a href="./Operating-Model.html">Frameworks</a> defines the tools. <a href="./selected-research.html">Research</a> shows the evidence.</p>
+            <p class="contact-story-spine">If you&rsquo;re choosing where to start: <a href="./start-here.html">Overview</a> defines the objects. <a href="./Operating-Model.html">Frameworks</a> defines the tools. <a href="./selected-research.html">Research</a> shows the evidence.</p>
           </div>
 
           <div class="contact-use-case-routing" aria-labelledby="contact-use-case-title">
@@ -203,37 +198,37 @@
             <div class="contact-use-case-rows">
               <div class="contact-use-case-row">
                 <div class="contact-use-case-row__prompt">Need role fit?</div>
-                <ul class="contact-use-case-row__links">
-                  <li><a href="./resume/policy-market-infrastructure.html">Policy &amp; Market Infrastructure</a></li>
-                  <li><a href="./resume/asset-management-tokenization.html">Asset Management &amp; Tokenization</a></li>
-                  <li><a href="./resume/stablecoin-payments-strategy.html">Stablecoin &amp; Payments Strategy</a></li>
-                  <li><a href="./resume/risk-controls-market-infrastructure.html">Risk, Controls &amp; Market Infrastructure</a></li>
+                <ul class="contact-use-case-row__links" role="list">
+                  <li><a class="action secondary" href="./resume/policy-market-infrastructure.html">Policy &amp; Market Infrastructure</a></li>
+                  <li><a class="action secondary" href="./resume/asset-management-tokenization.html">Asset Management &amp; Tokenization</a></li>
+                  <li><a class="action secondary" href="./resume/stablecoin-payments-strategy.html">Stablecoin &amp; Payments Strategy</a></li>
+                  <li><a class="action secondary" href="./resume/risk-controls-market-infrastructure.html">Risk, Controls &amp; Market Infrastructure</a></li>
                 </ul>
               </div>
               <div class="contact-use-case-row">
                 <div class="contact-use-case-row__prompt">Need the shortest way into the work?</div>
-                <ul class="contact-use-case-row__links">
-                  <li><a href="./papers/routing-the-dollar.html">Read the 5-minute flagship brief</a></li>
+                <ul class="contact-use-case-row__links" role="list">
+                  <li><a class="action secondary" href="./papers/routing-the-dollar.html">Read the 5-minute flagship brief</a></li>
                 </ul>
               </div>
               <div class="contact-use-case-row">
                 <div class="contact-use-case-row__prompt">Need the full evidence shelf?</div>
-                <ul class="contact-use-case-row__links">
-                  <li><a href="./selected-research.html">View research</a></li>
+                <ul class="contact-use-case-row__links" role="list">
+                  <li><a class="action secondary" href="./selected-research.html">View research</a></li>
                 </ul>
               </div>
               <div class="contact-use-case-row">
                 <div class="contact-use-case-row__prompt">Need a talk, workshop, or advisory format?</div>
-                <ul class="contact-use-case-row__links">
-                  <li><a href="./speaker-advisory.html">Speaker &amp; Advisory</a></li>
+                <ul class="contact-use-case-row__links" role="list">
+                  <li><a class="action secondary" href="./speaker-advisory.html">Speaker &amp; Advisory</a></li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <div class="contact-linkedin-block">
-            <strong>LinkedIn</strong>
-            <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
+          <div class="contact-linkedin-block" aria-labelledby="contact-linkedin-label">
+            <strong id="contact-linkedin-label">LinkedIn</strong>
+            <a class="action secondary" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
           </div>
         </div>
       </div>
