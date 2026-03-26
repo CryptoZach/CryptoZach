@@ -2270,10 +2270,10 @@
     function mtxDollarMagUpdate(w, h, dtMul){
       var br = mtxDollarMagBtnRect();
       if(!br) return;
-      if(mtxDollarMag.length < mtxDollarMagMax && Math.random() < 0.06 * dtMul){
+      var hasCursor = mtxWarpX != null && mtxWarpY != null;
+      if(hasCursor && mtxDollarMag.length < mtxDollarMagMax && Math.random() < 0.06 * dtMul){
         mtxDollarMag.push(mtxDollarMagSpawn(w, h));
       }
-      var hasCursor = mtxWarpX != null && mtxWarpY != null;
       var mx = hasCursor ? mtxWarpX : br.cx;
       var my = hasCursor ? mtxWarpY : br.top;
       var dmx = mtxDollarMagPrevMx != null ? mx - mtxDollarMagPrevMx : 0;
@@ -2296,11 +2296,22 @@
       for(var i = mtxDollarMag.length - 1; i >= 0; i--){
         var p = mtxDollarMag[i];
         if(!p.settled){
-          var dx = mx - p.x, dy = my - p.y;
-          var d = Math.sqrt(dx * dx + dy * dy);
-          if(d > 1){
-            p.vx += (dx / d) * 0.2 * dtMul;
-            p.vy += (dy / d) * 0.2 * dtMul;
+          if(hasCursor){
+            var dx = mx - p.x, dy = my - p.y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if(d > 1){
+              p.vx += (dx / d) * 0.2 * dtMul;
+              p.vy += (dy / d) * 0.2 * dtMul;
+            }
+          } else {
+            /* No cursor: attract toward button, apply gravity */
+            var dx = br.cx - p.x, dy = br.top - p.y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if(d > 1){
+              p.vx += (dx / d) * 0.12 * dtMul;
+              p.vy += (dy / d) * 0.12 * dtMul;
+            }
+            p.vy += 0.06 * dtMul;
           }
           /* Repel free-flying particles that get too close to cursor near button. */
           if(hasCursor && d < 50 && d > 1 && mbDist < 200){
