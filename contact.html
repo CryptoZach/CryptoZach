@@ -47,7 +47,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="./styles.css?v=53" />
+  <link rel="stylesheet" href="./styles.css?v=54" />
 </head>
 
 <body class="contact-page">
@@ -110,10 +110,13 @@
   </nav>
 
   <main id="main">
+    <div class="contact-page-wrap">
+      <div class="contact-bottom-band" aria-hidden="true"></div>
+      <div class="contact-page-foreground">
     <section class="reveal contact-page-intro" aria-labelledby="contact-page-title">
       <div class="kicker kicker--subpage contact-page-kicker">
         <span class="kicker-dot" aria-hidden="true"></span>
-        Contact
+        CONTACT
       </div>
       <div class="section-title">
         <h1 id="contact-page-title">Tell me what you&rsquo;re building or evaluating.</h1>
@@ -121,7 +124,7 @@
       <p class="contact-page-deck">For roles, live policy or product questions, speaking, and advisory. I&rsquo;ll point you to the most relevant paper, resume version, or supporting material.</p>
       <div class="contact-hero-cta-row">
         <a class="action primary" href="mailto:zach@cryptozach.com">Email Zach</a>
-        <a class="action secondary contact-flagship-cta" href="./papers/routing-the-dollar.html">Read the flagship brief</a>
+        <a class="contact-flagship-link" href="./papers/routing-the-dollar-brief.html">Read the flagship brief</a>
       </div>
       <p class="contact-utility-links">
         <a href="./resume.html">View resume profiles</a>
@@ -133,13 +136,13 @@
     </section>
 
     <section class="reveal contact-page-detail" aria-labelledby="contact-paths-title">
-      <div class="contact-page-split">
-        <div class="contact-stack-top">
+      <div class="contact-body-grid">
+        <div class="contact-segment-email-paths">
           <!-- NOTE: Cloudflare Email Address Obfuscation must be disabled for this
                domain in the Cloudflare dashboard, or mailto links will return 404
                in automated tests. This is a Cloudflare dashboard setting, not a
                code fix. -->
-          <div class="contact-box contact-box--solo">
+          <div class="contact-box contact-box--email-only">
             <div class="left">
               <strong>Email</strong>
               <div class="email-row">
@@ -151,7 +154,6 @@
                 I read every email and typically reply within 24 hours.
               </div>
             </div>
-            <img class="contact-reach-headshot contact-reach-headshot--card" src="./Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="200" height="200" loading="lazy" decoding="async" />
           </div>
 
           <h2 id="contact-paths-title" class="contact-subsection-label">Quick paths</h2>
@@ -164,7 +166,7 @@
             <article class="card contact-path-card">
               <h3>Live policy or product question</h3>
               <p>Working through a live question in market infrastructure, tokenization, or product design? Start with the flagship brief or send the question directly.</p>
-              <p class="contact-path-card__cta"><a href="./papers/routing-the-dollar.html">Read the flagship brief</a></p>
+              <p class="contact-path-card__cta"><a href="./papers/routing-the-dollar-brief.html">Read the flagship brief</a></p>
             </article>
             <article class="card contact-path-card">
               <h3>Speaking &amp; advisory</h3>
@@ -179,16 +181,56 @@
           </div>
         </div>
 
-        <div class="contact-stack-bottom">
-          <div class="contact-what-helps">
-            <h2 class="contact-what-helps__title">What helps in the first email</h2>
+        <aside class="contact-segment-portrait" aria-label="Portrait">
+          <img class="contact-reach-headshot contact-reach-headshot--rail" src="./Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="200" height="200" loading="lazy" decoding="async" />
+        </aside>
+
+        <div class="contact-segment-lower">
+          <div class="contact-best-first" id="contact-best-first-email" aria-labelledby="contact-best-first-title">
+            <h2 id="contact-best-first-title" class="contact-best-first__title">Best first email</h2>
+            <p class="contact-best-first__intro">The fastest way to get a useful reply is to include:</p>
             <ul class="contact-first-email-list">
               <li>What you&rsquo;re building or evaluating.</li>
               <li>Who the audience or decision-maker is.</li>
               <li>Any deadline, hiring timeline, or event date.</li>
-              <li>Whether you want a paper, a resume version, a writing sample, or a framework overview.</li>
+              <li>Whether you want a paper, resume version, writing sample, or framework overview.</li>
             </ul>
+            <p class="contact-story-spine">If you&rsquo;re choosing where to start: <a href="./2026-frameworks.html">Overview</a> defines the objects. <a href="./Operating-Model.html">Frameworks</a> defines the tools. <a href="./selected-research.html">Research</a> shows the evidence.</p>
           </div>
+
+          <div class="contact-use-case-routing" aria-labelledby="contact-use-case-title">
+            <h2 id="contact-use-case-title" class="contact-subsection-label contact-use-case-routing__heading">Best links by use case</h2>
+            <div class="contact-use-case-rows">
+              <div class="contact-use-case-row">
+                <div class="contact-use-case-row__prompt">Need role fit?</div>
+                <ul class="contact-use-case-row__links">
+                  <li><a href="./resume/policy-market-infrastructure.html">Policy &amp; Market Infrastructure</a></li>
+                  <li><a href="./resume/asset-management-tokenization.html">Asset Management &amp; Tokenization</a></li>
+                  <li><a href="./resume/stablecoin-payments-strategy.html">Stablecoin &amp; Payments Strategy</a></li>
+                  <li><a href="./resume/risk-controls-market-infrastructure.html">Risk, Controls &amp; Market Infrastructure</a></li>
+                </ul>
+              </div>
+              <div class="contact-use-case-row">
+                <div class="contact-use-case-row__prompt">Need the shortest way into the work?</div>
+                <ul class="contact-use-case-row__links">
+                  <li><a href="./papers/routing-the-dollar.html">Read the 5-minute flagship brief</a></li>
+                </ul>
+              </div>
+              <div class="contact-use-case-row">
+                <div class="contact-use-case-row__prompt">Need the full evidence shelf?</div>
+                <ul class="contact-use-case-row__links">
+                  <li><a href="./selected-research.html">View research</a></li>
+                </ul>
+              </div>
+              <div class="contact-use-case-row">
+                <div class="contact-use-case-row__prompt">Need a talk, workshop, or advisory format?</div>
+                <ul class="contact-use-case-row__links">
+                  <li><a href="./speaker-advisory.html">Speaker &amp; Advisory</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <div class="contact-linkedin-block">
             <strong>LinkedIn</strong>
             <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
@@ -217,7 +259,9 @@
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
     <div id="copyStatus" class="sr-only" aria-live="polite"></div>
-</main>
+      </div>
+    </div>
+  </main>
 
   <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
