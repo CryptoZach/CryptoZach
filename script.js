@@ -2318,15 +2318,19 @@
               p.vy += (dy / d) * 0.2 * dtMul;
             }
           } else {
-            /* No cursor: attract toward particle's target position on button, apply gravity */
+            /* No cursor: attract toward particle's target position on button top */
             var tx = p.targetX != null ? p.targetX : br.cx;
-            var dx = tx - p.x, dy = br.top - p.y;
+            var ty = btnCeil;
+            var dx = tx - p.x, dy = ty - p.y;
             var d = Math.sqrt(dx * dx + dy * dy);
             if(d > 1){
-              p.vx += (dx / d) * 0.12 * dtMul;
-              p.vy += (dy / d) * 0.12 * dtMul;
+              p.vx += (dx / d) * 0.15 * dtMul;
+              p.vy += (dy / d) * 0.15 * dtMul;
             }
-            p.vy += 0.06 * dtMul;
+            /* Only apply gravity if above the button ceiling */
+            if(p.y < btnCeil){
+              p.vy += 0.04 * dtMul;
+            }
           }
           /* Repel free-flying particles that get too close to cursor near button. */
           if(hasCursor && d < 50 && d > 1 && mbDist < 200){
@@ -2666,19 +2670,20 @@
           drawnEdges[edgeKey] = true;
           var fadeB = meshNodeFade(ndB);
           var dist = neighbors[nb].dist;
-          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.22;
-          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.45;
+          var lineAlpha = Math.min(ndA.alpha, ndB.alpha) * Math.min(fadeA, fadeB) * (1 - dist / mtxMeshConnectionDist) * 0.35;
+          var reactBoost = Math.max(ndA.reactBright || 0, ndB.reactBright || 0) * 0.55;
           lineAlpha += reactBoost;
           if (now < (ndA.reactUntil || 0) || now < (ndB.reactUntil || 0)) {
-            lineAlpha += 0.08;
+            lineAlpha += 0.1;
           }
-          lineAlpha *= mtxMeshLaneAlpha((ndA.x + ndB.x) * 0.5, w, (ndA.y + ndB.y) * 0.5, h);
+          var laneAlpha = mtxMeshLaneAlpha((ndA.x + ndB.x) * 0.5, w, (ndA.y + ndB.y) * 0.5, h);
+          lineAlpha *= Math.max(0.6, laneAlpha);
           if (lineAlpha > 0.003) {
             mtxCtx.beginPath();
             mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
             mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
             mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
-            mtxCtx.lineWidth = 0.85;
+            mtxCtx.lineWidth = 1.0;
             mtxCtx.stroke();
           }
         }
