@@ -50,14 +50,267 @@
 
   <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-  <link rel="preload" as="image" href="Publication-Images/Routing_The_Dollar_CLII.png" />
-
   <link rel="preconnect" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
   <link rel="stylesheet" href="./styles.css?v=61" />
+  <style id="homepage-sprint1-density">
+    /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
+    #hero.hero--homepage .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #hero.hero--homepage .hero-proof-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 0 auto 2.5rem;
+      padding: 0;
+      list-style: none;
+      justify-content: center;
+      max-width: min(100%, 960px);
+    }
+
+    #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      color: var(--muted);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    #hero.hero--homepage .hero-anchors {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+      text-align: center;
+    }
+
+    #hero.hero--homepage .hero-anchors a {
+      color: var(--muted-soft);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+
+    #hero.hero--homepage .hero-anchors a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      #hero.hero--homepage .hero-cta-block .btn-primary {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
+
+    #role-paths.section-compact,
+    #frameworks.section-compact,
+    #research.section-compact {
+      padding: 4rem 0;
+      border-top: 1px solid var(--line);
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-compact h2 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    #role-paths.section-compact h2,
+    #frameworks.section-compact h2,
+    #research.section-compact h2 {
+      text-align: center;
+    }
+
+    .compact-card p,
+    .research-card-sm p,
+    .role-pill span {
+      font-weight: 400;
+    }
+
+    .role-pills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .role-pill {
+      display: block;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    .role-pill:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .role-pill strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .role-pill span {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .section-link {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .section-link a {
+      color: var(--muted-soft);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .section-link a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .role-pills {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .compact-card {
+      display: block;
+      padding: 1.75rem 2rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    .compact-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .compact-card h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .compact-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .card-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .research-card-sm {
+      display: block;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    .research-card-sm:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .badge-sm {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      margin-bottom: 0.75rem;
+      color: var(--muted);
+    }
+
+    .research-card-sm h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .research-card-sm p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .card-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .card-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -182,279 +435,93 @@
         <div class="hero-primary">
           <div class="hero-eyebrow matrix-hover-activator">
             <p class="hero-eyebrow-kicker" data-hero-safe="eyebrow">Digital Money &amp; Tokenization · From Policy to Execution</p>
-            <h1 id="hero-title" data-hero-safe="headline">Research for real-world policy and operating constraints.</h1>
           </div>
-          <p class="hero-subhead" data-hero-safe="body">Who routes the dollar determines how it is regulated, how it responds to Fed policy, and how it behaves under stress.</p>
-          <ul class="hero-proof-row" aria-label="Highlights" data-hero-safe="proof">
-            <li class="hero-proof-chip">
-              <span class="hero-proof-value">7</span>
-              <span class="hero-proof-label">papers · 4 on SSRN</span>
-            </li>
-            <li class="hero-proof-chip">
-              <span class="hero-proof-value">100+</span>
-              <span class="hero-proof-label">advisory engagements</span>
-            </li>
-            <li class="hero-proof-chip">
-              <span class="hero-proof-value">~250</span>
-              <span class="hero-proof-label">investments diligenced</span>
-            </li>
-            <li class="hero-proof-chip">
-              <span class="hero-proof-value">Led team of 4</span>
-              <span class="hero-proof-label">analysts</span>
-            </li>
+          <h1 id="hero-title" data-hero-safe="headline">Independent research on dollar infrastructure and tokenization.</h1>
+          <p class="hero-subtitle">Seven scholarly papers. Gateway analysis. Institutional diligence frameworks.</p>
+          <ul class="hero-proof-strip" aria-label="Highlights" data-hero-safe="proof">
+            <li class="hero-proof-chip">7 papers · 4 on SSRN</li>
+            <li class="hero-proof-chip">100+ advisory engagements</li>
+            <li class="hero-proof-chip">~250 investments diligenced</li>
           </ul>
-          <div class="hero-cta-cluster" data-hero-safe="cta">
-            <div class="hero-cta-row">
-              <a class="btn btn-primary cta-primary matrix-hover-activator" href="./papers/routing-the-dollar.html">Read the 5-minute flagship brief</a>
-              <a class="btn btn-secondary" href="./papers/minimum-viable-equivalence-packs.html">Read the diligence framework</a>
-            </div>
-            <p class="hero-tertiary-links">
-              <a href="./resume.html">View resume</a>
-              <span aria-hidden="true">·</span>
-              <a href="./speaker-advisory.html">Speaker &amp; advisory</a>
-            </p>
+          <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
+            <a class="btn btn-primary cta-primary matrix-hover-activator" href="./papers/routing-the-dollar.html">Read the flagship paper</a>
           </div>
-          <p class="hero-meta" data-hero-safe="trust">US-Focused · Independent Research · Non-Advocacy · Every Claim Replicable</p>
+          <p class="hero-anchors">
+            <a href="./selected-research.html">All research</a>
+            <span aria-hidden="true"> · </span>
+            <a href="./resume.html">Resume</a>
+            <span aria-hidden="true"> · </span>
+            <a href="./speaker-advisory.html">Speaker &amp; advisory</a>
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="role-paths" class="audience-router audience-routing reveal" aria-labelledby="audience-title">
-      <div class="section-title">
-        <h2 id="audience-title">Four roles, one research program.</h2>
-      </div>
-
-      <div class="audience-grid">
-        <div class="audience-panel">
-          <div class="audience-icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5L6 13v2h28v-2L20 5z"/><rect x="9" y="17" width="4" height="12" rx="1"/><rect x="18" y="17" width="4" height="12" rx="1"/><rect x="27" y="17" width="4" height="12" rx="1"/><path d="M5 31h30"/></svg>
-          </div>
-          <h3>Policy &amp; Market Infrastructure</h3>
-          <p>How Federal Reserve monetary policy transmits through stablecoin gateway infrastructure in a regime-dependent pattern, how risk concentrates as the routing network consolidates, and what the SVB and BUSD episodes revealed about entity-level stress behavior across digital-dollar gateways.</p>
-          <div class="audience-panel-actions">
-            <a class="action primary" href="./resume/policy-market-infrastructure.html">View policy profile</a>
-            <a class="action secondary" href="/resume/view-pdf.html?file=/resumes/Zukowski_Targeted_Resume_Versions_No_Orphans/Zukowski_Resume_Policy.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
-          </div>
-        </div>
-
-        <div class="audience-panel">
-          <div class="audience-icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="22" width="6" height="12" rx="1"/><rect x="17" y="14" width="6" height="20" rx="1"/><rect x="28" y="8" width="6" height="26" rx="1"/><path d="M5 36h30"/></svg>
-          </div>
-          <h3>Asset Management &amp; Tokenization</h3>
-          <p>You evaluate whether a tokenized product can prove legal, operational, and economic equivalence to its traditional counterpart, and what evidence should exist before commitment.</p>
-          <div class="audience-panel-actions">
-            <a class="action primary" href="./resume/asset-management-tokenization.html">View asset management profile</a>
-            <a class="action secondary" href="/resume/view-pdf.html?file=/resumes/Zukowski_Targeted_Resume_Versions_No_Orphans/Zukowski_Resume_Asset_Management.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
-          </div>
-        </div>
-
-        <div class="audience-panel">
-          <div class="audience-icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6v28M27 10H15.5a5 5 0 0 0 0 10h9a5 5 0 0 1 0 10H11"/></svg>
-          </div>
-          <h3>Stablecoin &amp; Payments Strategy</h3>
-          <p>How reserve structure, redemption mechanics, routing defaults, and control-layer design determine whether a stablecoin product survives regulatory scrutiny and market stress.</p>
-          <div class="audience-panel-actions">
-            <a class="action primary" href="./resume/stablecoin-payments-strategy.html">View operator profile</a>
-            <a class="action secondary" href="/resume/view-pdf.html?file=/resumes/Zukowski_Targeted_Resume_Versions_No_Orphans/Zukowski_Resume_Operator.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
-          </div>
-        </div>
-
-        <div class="audience-panel">
-          <div class="audience-icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32h24M8 24h24M12 8h16l4 8v8H8v-8l4-8z"/><path d="M14 16h12"/></svg>
-          </div>
-          <h3>Risk, Controls &amp; Market Infrastructure</h3>
-          <p>Whether a digital-asset product's controls, monitoring infrastructure, and escalation paths hold up under committee review, regulatory scrutiny, and operational stress.</p>
-          <div class="audience-panel-actions">
-            <a class="action primary" href="./resume/risk-controls-market-infrastructure.html">View profile</a>
-            <a class="action secondary" href="/resume/view-pdf.html?file=/resumes/Zukowski_Targeted_Resume_Versions_No_Orphans/Zukowski_Resume_Risk.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="what-i-can-send reveal" aria-labelledby="what-i-can-send-title">
-      <h2 id="what-i-can-send-title">What I can send you</h2>
-      <div class="send-grid">
-        <a href="./papers/routing-the-dollar.html" class="send-item site-artifact">
-          <strong>5-minute flagship brief.</strong>
-          The thesis, three findings, and policy implications. Fastest path into the work.
+    <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
+      <h2 id="audience-title">Four roles, one research program.</h2>
+      <div class="role-pills">
+        <a href="./resume/policy-market-infrastructure.html" class="role-pill">
+          <strong>Policy &amp; Market Infrastructure</strong>
+          <span>Fed transmission, gateway concentration, SVB stress analysis</span>
         </a>
-        <a href="./resume.html" class="send-item site-artifact">
-          <strong>Role-targeted resume<br>(PDF + DOCX).</strong>
-          Policy, asset management, stablecoin/payments, or risk/controls. Each links to supporting papers.
+        <a href="./resume/asset-management-tokenization.html" class="role-pill">
+          <strong>Asset Management &amp; Tokenization</strong>
+          <span>Equivalence testing, institutional diligence, composed products</span>
         </a>
-        <a href="./selected-research.html" class="send-item site-artifact">
-          <strong>Paper summaries + SSRN links.</strong>
-          Seven-paper research program across two tracks, four on SSRN. Filter by audience, status, or track.
+        <a href="./resume/stablecoin-payments-strategy.html" class="role-pill">
+          <strong>Stablecoin &amp; Payments Strategy</strong>
+          <span>Reserve structure, redemption mechanics, control-layer design</span>
         </a>
-        <a href="./Operating-Model.html" class="send-item site-artifact">
-          <strong>Frameworks and operating model.</strong>
-          CLII, MVEP, Credit Migration, Regime Dashboard: how each one works and where each paper stands.
+        <a href="./resume/risk-controls-market-infrastructure.html" class="role-pill">
+          <strong>Risk, Controls &amp; Market Infrastructure</strong>
+          <span>Operational risk, monitoring infrastructure, committee readiness</span>
         </a>
       </div>
+      <p class="section-link"><a href="./resume.html">View all roles and resumes &#x2192;</a></p>
     </section>
 
-    <section id="featured-research" class="flagship reveal" aria-labelledby="featured-research-title">
-      <h2 id="featured-research-title">Routing the Dollar</h2>
-      <p class="flagship-sub">Gateway infrastructure, monetary policy transmission, and the dollar's international functions.</p>
-      <div class="flagship-thumb-wrap">
-        <span class="flagship-thumb-shimmer" aria-hidden="true"></span>
-        <img class="flagship-thumb thumb-clii" src="Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram" loading="lazy" />
-        <p class="flagship-thumb-caption">The policy-relevant unit is the gateway (the issuer, exchange, or protocol that routes stablecoin value), not the token.</p>
+    <section class="section-compact reveal" id="frameworks" aria-labelledby="frameworks-title">
+      <h2 id="frameworks-title">Signature frameworks.</h2>
+      <div class="card-grid-2">
+        <a href="./papers/routing-the-dollar.html" class="compact-card" id="clii-home">
+          <h3>CLII (Control Layer Intensity Index)</h3>
+          <p>Scores regulatory intensity at the gateway layer across five dimensions. Stress performance varies by gateway, not by token.</p>
+        </a>
+        <a href="./papers/minimum-viable-equivalence-packs.html" class="compact-card" id="mvep-home">
+          <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
+          <p>Ten categories testing whether a tokenized product maintains equivalence under stress. Reverse-engineered from the SVB weekend.</p>
+        </a>
       </div>
-      <div class="card-badges flagship-badges">
-        <span class="badge">Under review</span>
-        <span class="badge">Best first read</span>
-      </div>
-      <p class="flagship-meta">Mar 2026 · FRBNY conference review pending · Policy / Markets / Stablecoins</p>
-      <div class="flagship-ctas">
-        <a href="./papers/routing-the-dollar.html" class="action primary">Read the 5-minute flagship brief</a>
-        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" class="action secondary" target="_blank" rel="noopener noreferrer">SSRN</a>
-      </div>
+      <p class="section-link"><a href="./Operating-Model.html">View all frameworks &#x2192;</a></p>
     </section>
 
-    <section id="featured-mvep" class="flagship reveal" aria-labelledby="featured-mvep-title">
-      <h2 id="featured-mvep-title">Minimum Viable Equivalence Pack</h2>
-      <p class="flagship-sub">Institutional diligence framework for tokenized products.</p>
-      <div class="flagship-thumb-wrap">
-        <span class="flagship-thumb-shimmer" aria-hidden="true"></span>
-        <img class="flagship-thumb thumb-wide" src="Publication-Images/Equivalence_Pack.webp" width="1200" height="732" alt="Minimum Viable Equivalence Pack: ten-category diligence checklist for tokenized products" loading="lazy" />
-      </div>
-      <p class="flagship-sub">Ten categories testing whether a tokenized product maintains legal, operational, and economic equivalence under stress. Each category specifies the required evidence and the pass condition. Reverse-engineered from the SVB weekend, stress-tested against seven scenarios, applied to tokenized Treasuries, composed products, and private credit.</p>
-      <div class="card-badges flagship-badges">
-        <span class="badge badge-public">Public</span>
-      </div>
-      <p class="flagship-meta">Mar 2026 · SSRN · Asset Management / Tokenization</p>
-      <div class="flagship-ctas">
-        <a href="./papers/minimum-viable-equivalence-packs.html" class="action primary">Read the paper summary</a>
-        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" class="action secondary" target="_blank" rel="noopener noreferrer">SSRN</a>
-      </div>
-    </section>
-
-    <section id="signature-frameworks" class="reveal" aria-labelledby="signature-frameworks-title">
-      <div class="section-title">
-        <h2 id="signature-frameworks-title">Signature frameworks</h2>
-        <p class="story-spine story-spine--tight"><a href="./start-here.html">Overview</a> defines the objects. <a href="./Operating-Model.html">Frameworks</a> defines the tools. <a href="./selected-research.html">Research</a> shows the evidence.</p>
-      </div>
-
-      <div class="track-a-frameworks">
-        <div class="track-card-header">
-          <span class="paper-track-badge">Track A</span>
-          <span class="track-context">Digital Money, Tokenization, and Market Infrastructure</span>
-        </div>
-        <div class="grid grid--halves framework-grid">
-          <article id="clii-home" class="card framework-card">
-            <h3>CLII (Control Layer Intensity Index)</h3>
-            <p>Measures how heavily regulated each stablecoin issuer, exchange, or protocol is across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Each entity receives a weighted score from 0 to 1. A high score means more regulatory obligations. Stress performance is a separate question: Circle and Coinbase had near-identical scores but showed sharply different outcomes during SVB because their banking exposures differed.</p>
-            <a class="action secondary" href="./papers/routing-the-dollar.html">View CLII framework</a>
-          </article>
-          <article id="mvep-home" class="card framework-card">
-            <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
-            <p>Ten categories testing whether a tokenized product maintains legal, operational, and economic equivalence to the traditional instrument under stress. Each category specifies the required artifact and the pass/fail test. Categories one through nine were reverse-engineered from the SVB weekend; the tenth addresses collateral operability, the question that now dominates institutional tokenization volume.</p>
-            <a class="action secondary" href="./papers/minimum-viable-equivalence-packs.html">View MVEP framework</a>
-          </article>
-          <article id="credit-migration-home" class="card framework-card">
-            <h3>Credit Migration Model</h3>
-            <p>Tracks where deposit balances move as stablecoin reserves grow: which banks gain funding, which lose it, and whether the deposits that remain become more concentrated and more vulnerable to rapid withdrawal. The core question: as dollars move from bank deposits into stablecoin reserves, does the funding base that monetary policy operates through change in ways that matter for financial stability? The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 finding that stablecoins can reduce, recycle, or restructure deposits.</p>
-            <a class="action secondary" href="./papers/dollar-v3.html">View Credit Migration Model</a>
-          </article>
-          <article id="regime-dashboard-home" class="card framework-card">
-            <h3>Regime Dashboard</h3>
-            <p>Classifies who controls the operating layer right now: who owns the interface, who sets the default routing, who holds the authority to freeze or delay transactions, and who bears the compliance obligations. Tracks routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations as they change. The central question is whether the entity responsible for compliance is the same one earning the fees, float, and data.</p>
-            <a class="action secondary" href="./Operating-Model.html#regime-dashboard">Request Regime Dashboard</a>
-          </article>
-        </div>
-      </div>
-
-      <div class="track-b-frameworks">
-        <canvas class="hero-btc-flight" id="heroBtcFlight" aria-hidden="true"></canvas>
-        <div class="track-card-header">
-          <span class="paper-track-badge">Track B</span>
-          <span class="track-context">Tokenomics and Physical Network Systems (DePIN)</span>
-        </div>
-        <article class="card track-b-card">
-          <div class="track-b-card-inner">
-            <figure class="track-b-card-fig">
-              <a href="./papers/adaptive-tokenomics.html">
-                <img src="./Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics discipline map exhibit" loading="lazy" />
-              </a>
-            </figure>
-            <div class="track-b-card-body">
-              <h3>Tokenomics &amp; DePIN</h3>
-              <p>Who earns the token matters more than who holds it.</p>
-              <p>Track B asks whether token economies reward productive contribution or concentrate into extraction. Each paper specifies the mechanism, stress-tests it under adversarial conditions, and asks whether the design survives contact with real participant behavior.</p>
-              <p>The anchor study, <a href="./papers/adaptive-tokenomics.html">Adaptive Tokenomics</a>, is a 240-run Monte Carlo simulation testing whether adaptive emission mechanisms sustain participation under adversarial conditions where static schedules mask path-dependent tail risk.</p>
-              <div class="track-b-anchor-ctas">
-                <a class="action secondary" href="./papers/adaptive-tokenomics.html">Read the paper summary</a>
-                <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">SSRN</a>
-              </div>
-              <a class="action secondary" href="./selected-research.html#track-b">View the full Tokenomics &amp; DePIN track</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="selected-research-preview" class="reveal" aria-labelledby="selected-research-preview-title">
-      <div class="section-title section-title--plain">
-        <h2 id="selected-research-preview-title">Selected Research</h2>
-      </div>
-
-      <div class="grid grid--halves research-preview-grid">
-        <article class="card research-card">
-          <div class="card-badges">
-            <span class="badge">Public</span>
-          </div>
-          <p class="research-date">Feb 2026 · SSRN · Asset Management / Tokenization</p>
+    <section class="section-compact reveal" id="research" aria-labelledby="research-title">
+      <h2 id="research-title">Recent papers.</h2>
+      <div class="card-grid-3">
+        <a href="./papers/routing-the-dollar.html" class="research-card-sm">
+          <span class="badge-sm">Under review</span>
+          <h3>Routing the Dollar</h3>
+          <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
+        </a>
+        <a href="./papers/minimum-viable-equivalence-packs.html" class="research-card-sm">
+          <span class="badge-sm">Public</span>
           <h3>Minimum Viable Equivalence Pack</h3>
-          <p>Circle's $3.3B reserve exposure at SVB broke legal, operational, and economic equivalence simultaneously. Ten categories structured around what risk committees ask before approving a tokenized product, including three liquidation paths, four constraints on path availability, and seven stress scenarios for the tokenized Treasury asset class. Continuous monitoring via the CLII drift detector.</p>
-          <a class="action secondary research-card-action" href="./papers/minimum-viable-equivalence-packs.html">Open paper summary</a>
-        </article>
-
-        <article class="card research-card">
-          <div class="card-badges">
-            <span class="badge">Public</span>
-          </div>
-          <p class="research-date">Dec 2025 · Medium · Policy / Payments / Stablecoins</p>
-          <h3>Dollar v3</h3>
-          <p>Policy essay mapping how three types of digital dollars (payment stablecoins, tokenized deposits, and yield wrappers) diverge in reserve structure, legal treatment, and crisis behavior, even though they look identical in a wallet. Analyzes the GENIUS Act's payment-stablecoin perimeter, the Federal Reserve's December 2025 finding that stablecoins can reduce, recycle, or restructure bank deposits, and OCC Interpretive Letter 1188 permitting national banks to engage in crypto-asset transactions in a safe and sound manner.</p>
-          <a class="action secondary research-card-action" href="./papers/dollar-v3.html">Open paper summary</a>
-        </article>
-
-        <article class="card research-card">
-          <div class="card-badges">
-            <span class="badge">Public / requestable</span>
-          </div>
-          <p class="research-date">Jan 2026 · Medium · Policy / Compliance / Market Infrastructure</p>
-          <h3>The Control Layer War</h3>
-          <p>Analyzes how CLARITY-style provisions (House-passed form) assign compliance obligations to the entities that control interfaces, routing defaults, hold and release workflows, and audit logs. The central question is whether the entity responsible for compliance is the same one earning the fees, float, and data. Companion to Dollar v3.</p>
-          <a class="action secondary research-card-action" href="./papers/control-layer-war.html">Open paper summary</a>
-        </article>
-
-        <article class="card research-card">
-          <div class="card-badges">
-            <span class="badge">Public</span>
-          </div>
-          <p class="research-date">2025 · SSRN · Tokenomics / DePIN / Operational Risk</p>
-          <h3>Operational Risk in Token Economies</h3>
-          <p>A 624-configuration simulation using real outage rates from Ethereum, Helium, Geodnet, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks (the counterintuitive result: failures strengthen the controller's advantage over static policy). Reputation-weighted governance moves in the opposite direction, and the outcome traces to one design parameter: the minimum uptime a node must maintain to recover its standing. At 99%, real-world outage rates make recovery nearly impossible and reputation scores collapse to 0.18 on a 5.0 scale by year five. At 95%, the system stabilizes. The paper also translates blockchain-specific failures into established operational risk categories that a traditional risk team already works with.</p>
-          <a class="action secondary research-card-action" href="./papers/operational-risk-token-economies.html">Open paper summary</a>
-        </article>
+          <p>Ten-category diligence framework for tokenized products. Reverse-engineered from the SVB weekend.</p>
+        </a>
+        <a href="./papers/adaptive-tokenomics.html" class="research-card-sm">
+          <span class="badge-sm">Public</span>
+          <h3>Adaptive Tokenomics</h3>
+          <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
+        </a>
       </div>
-
-      <p class="research-footer-link">
-        <a href="./selected-research.html#program-overview">View the full research program</a>
-      </p>
+      <p class="section-link"><a href="./selected-research.html">View all research &#x2192;</a></p>
     </section>
 
     <section id="about-this-site" class="reveal" aria-labelledby="about-this-site-title">
       <div class="section-title">
         <h2 id="about-this-site-title">About this site</h2>
       </div>
-      <p>My research program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly.<br>The site works the same way: transparent structure, named authorship, and evidence the reader can check.</p>
+      <p>My research program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly.<br>The site works the same way: transparent structure, named authorship, and evidence the reader can check. The work is US-focused, independent, and non-advocacy, and every claim is replicable.</p>
     </section>
 
     <section id="contact" class="reveal" aria-labelledby="contact-title">
