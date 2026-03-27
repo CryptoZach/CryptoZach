@@ -4105,9 +4105,9 @@
         'press-kit',
         'booking',
         'about-zach',
-        'about-this-site'
+        'about'
       ];
-      bottomSectionId = 'about-this-site';
+      bottomSectionId = 'about';
     } else {
       sections = [
         'three-dollar-objects',
