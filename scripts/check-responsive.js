@@ -18,8 +18,8 @@ const VIEWPORTS = [
 
 const PAGES = [
   { path: "/", name: "index" },
-  { path: "/selected-research.html", name: "selected-research" },
-  { path: "/papers/minimum-viable-equivalence-packs.html", name: "mvep-paper" },
+  { path: "/research/", name: "selected-research" },
+  { path: "/papers/mvep/", name: "mvep-paper" },
 ];
 
 async function checkOverflow(page) {

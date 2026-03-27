@@ -74,6 +74,14 @@
     navMobile.setAttribute('aria-hidden', String(!isOpen));
     navMobile.classList.toggle('open', isOpen);
     document.documentElement.classList.toggle('nav-mobile-open', isOpen);
+    if(isOpen){
+      window.requestAnimationFrame(function(){
+        var closeBtn = navMobile.querySelector('.mobile-nav-close');
+        if(closeBtn){
+          closeBtn.focus();
+        }
+      });
+    }
   }
   function closeMobileNavIfNeeded(){
     if(menuToggle && menuToggle.getAttribute('aria-expanded') === 'true'){
@@ -104,6 +112,24 @@
         if(!e.matches) closeMobileNavIfNeeded();
       });
     }
+    navMobile.addEventListener('keydown', (e) => {
+      if(e.key !== 'Tab' || !MOBILE_NAV_MQ.matches) return;
+      if(menuToggle.getAttribute('aria-expanded') !== 'true') return;
+      var focusables = navMobile.querySelectorAll(
+        '.mobile-nav-close, .mobile-nav-linkset a.navlink, .nav-mobile-social a.header-social-link'
+      );
+      if(!focusables.length) return;
+      var list = Array.prototype.slice.call(focusables);
+      var first = list[0];
+      var last = list[list.length - 1];
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault();
+        last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault();
+        first.focus();
+      }
+    });
   }
 
   // Back to top
@@ -1376,175 +1402,175 @@
     var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '\uFDFC': 1 };
 
     var iconDefs = [
-      { src: './icons/matrix/btc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/eth.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/sol.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/dai.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/busd.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wlfi.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/usdp.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fil.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/build-sources/aave.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ada.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/avax.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/dot.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/atom.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/link.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/doge.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/trx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/op.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/arb.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/near.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/apt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/sui.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/inj.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/tia.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/zec.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/crv.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/stx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/mkr.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/xtz.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/algo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hbar.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ton.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/sei.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wld.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/tao.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/base.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ink.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/arc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/stripe.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/1inch.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/gemini.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bitgo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/compound.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/okx.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/chainalysis.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fireblocks.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wintermute.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/grayscale.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/binance.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/binance.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/msft.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/jpmorgan.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/citi.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/gs.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/sq.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/visa.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fednow.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ma.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/googl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/meta.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/x.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wmt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/amd.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/btc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/eth.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sol.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dai.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/busd.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wlfi.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdp.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fil.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/uni.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/uni.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/build-sources/aave.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ada.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ada.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/avax.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dot.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/atom.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/link.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/doge.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/trx.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/op.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/arb.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/near.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/apt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sui.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/inj.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tia.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tia.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/zec.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/crv.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/crv.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stx.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mkr.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xtz.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/algo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hbar.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ton.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ton.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sei.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sei.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wld.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tao.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/base.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ink.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/arc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stripe.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/1inch.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/gemini.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bitgo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/compound.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/okx.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/chainalysis.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fireblocks.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wintermute.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/grayscale.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/binance.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/binance.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/msft.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpmorgan.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/citi.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/gs.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sq.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/visa.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fednow.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ma.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/googl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/meta.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/x.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wmt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/amd.png', loaded: false, img: null, tinted: null },
       /* nflx removed: file not present */
-      { src: './icons/matrix/bac.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/schw.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wise.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/intc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/csco.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/dis.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hood.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bac.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/schw.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wu.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wise.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wise.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/intc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/csco.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dis.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hood.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hood.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
       /* Second Nasdaq slot: former NDX text ticker (macro index) now uses Nasdaq logo PNG only. */
-      { src: './icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ice.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/revolut.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/block.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/blk.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/dtcc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/hsbc.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/stt.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/plaid.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/bybit.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ice.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/revolut.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/block.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/blk.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/blk.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dtcc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hsbc.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stt.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/plaid.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bybit.png', loaded: false, img: null, tinted: null },
       /* Fed removed: seal reads as ambiguous blob at matrix size. */
     ];
 
@@ -3119,7 +3145,7 @@
       if (mtxReducedMotion) {
         mtxDrawMeshUnderlay(meshNow, w, h, null, true);
         mtxDrawSubmersionBand(w, h, meshNow);
-        mtxRaf = requestAnimationFrame(mtxDraw);
+        mtxRaf = null;
         return;
       }
       mtxDrawMeshUnderlay(meshNow, w, h, ['back'], false);
@@ -3666,6 +3692,25 @@
 
     homeHeroMtxStop = mtxStop;
 
+    document.addEventListener('visibilitychange', function mtxTabVisibility(){
+      if(document.hidden){
+        if(mtxRaf){
+          cancelAnimationFrame(mtxRaf);
+          mtxRaf = null;
+        }
+        return;
+      }
+      if(!matrixContainer.classList.contains('active')){
+        return;
+      }
+      if(mtxReducedMotion){
+        return;
+      }
+      if(!mtxRaf){
+        mtxRaf = requestAnimationFrame(mtxDraw);
+      }
+    });
+
     if(heroHome){
       function mtxFlagshipStripArmingOnly(){
         if(heroFlagshipMtx && heroFlagshipMtx.classList){
@@ -3987,7 +4032,7 @@
     }
   }
 
-  // Sticky section rail: Operating-Model.html (Frameworks), start-here.html (Overview), speaker-advisory.html
+  // Sticky section rail: /frameworks/ (Frameworks), /overview/ (Overview), /speaker/
   (function(){
     var nav = document.getElementById('structureNav');
     if(!nav){

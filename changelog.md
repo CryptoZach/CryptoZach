@@ -50,8 +50,8 @@ Merged `/research-program.html` and `/tokenomics-research.html` into a single ca
 
 ## SEO / metadata
 
-- **selected-research.html**: `<title>Research | Zach Zukowski</title>`. Meta description: "Two research tracks, one thesis: regulate the operator, not just the token. Papers on stablecoin infrastructure, dollar tokenization, DePIN mechanism design, and operational risk." Canonical and OG point to `https://www.cryptozach.com/selected-research.html`.
-- **research-program.html** and **tokenomics-research.html**: Canonical points to `https://www.cryptozach.com/selected-research.html`; no duplicate content.
+- **selected-research.html**: `<title>Research | Zach Zukowski</title>`. Meta description: "Two research tracks, one thesis: regulate the operator, not just the token. Papers on stablecoin infrastructure, dollar tokenization, DePIN mechanism design, and operational risk." Canonical and OG point to `https://cryptozach.com/research`.
+- **research-program.html** and **tokenomics-research.html**: Canonical points to `https://cryptozach.com/research`; no duplicate content.
 
 ## What was not changed
 

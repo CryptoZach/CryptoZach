@@ -8,16 +8,16 @@ test.describe("CryptoZach smoke", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Research for real-world policy and operating constraints/i,
+        name: /Independent research on dollar infrastructure and tokenization/i,
       }),
     ).toBeVisible();
-    await expect(page.locator("#hero .hero-subhead")).toHaveText(
-      /Who routes the dollar determines how it is regulated/i,
+    await expect(page.locator("#hero .hero-subtitle")).toContainText(
+      /Seven scholarly papers/i,
     );
   });
 
-  test("selected research shows Track A and Track B", async ({ page }) => {
-    await page.goto("/selected-research.html");
+  test("research page shows Track A and Track B", async ({ page }) => {
+    await page.goto("/research/");
     await expect(
       page.getByRole("heading", { name: /track a/i }).first(),
     ).toBeVisible();
@@ -26,35 +26,35 @@ test.describe("CryptoZach smoke", () => {
     ).toBeVisible();
   });
 
-  test("Structure page fragment #clii is present", async ({ page }) => {
-    await page.goto("/Operating-Model.html#clii");
+  test("Frameworks page fragment #clii is present", async ({ page }) => {
+    await page.goto("/frameworks/#clii");
     const clii = page.locator("#clii");
     await expect(clii).toBeAttached();
     await clii.scrollIntoViewIfNeeded();
     await expect(clii).toBeVisible();
   });
 
-  test("frameworks.html redirects to Operating-Model with hash preserved", async ({
+  test("frameworks.html redirects to /frameworks with hash preserved", async ({
     page,
   }) => {
     await page.goto("/frameworks.html#clii");
-    await expect(page).toHaveURL(/Operating-Model\.html#clii/);
+    await expect(page).toHaveURL(/\/frameworks\/?#clii/);
   });
 
-  test("start-here.html loads Overview (Start Here)", async ({ page }) => {
-    await page.goto("/start-here.html");
-    await expect(page).toHaveURL(/start-here\.html/);
+  test("overview loads (Start Here)", async ({ page }) => {
+    await page.goto("/overview/");
+    await expect(page).toHaveURL(/\/overview\/?/);
     await expect(page).toHaveTitle(/Start Here/i);
   });
 
   test("routing-the-dollar paper layout", async ({ page }) => {
-    await page.goto("/papers/routing-the-dollar.html");
+    await page.goto("/papers/routing-the-dollar/");
     await expect(page).toHaveTitle(/Routing the Dollar/i);
     await expect(page.locator("main")).toBeVisible();
   });
 
-  test("minimum-viable-equivalence-packs paper layout", async ({ page }) => {
-    await page.goto("/papers/minimum-viable-equivalence-packs.html");
+  test("MVEP paper layout", async ({ page }) => {
+    await page.goto("/papers/mvep/");
     await expect(page).toHaveTitle(/Minimum Viable Equivalence/i);
     await expect(page.locator("main")).toBeVisible();
   });

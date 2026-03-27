@@ -25,24 +25,22 @@ test.describe("Responsive layout", () => {
     await assertNoHorizontalOverflow(page, "/");
   });
 
-  test("selected-research: no horizontal overflow", async ({ page }) => {
-    await assertNoHorizontalOverflow(page, "/selected-research.html");
+  test("research: no horizontal overflow", async ({ page }) => {
+    await assertNoHorizontalOverflow(page, "/research/");
   });
 
-  test("Structure page (Operating-Model): no horizontal overflow", async ({
-    page,
-  }) => {
-    await assertNoHorizontalOverflow(page, "/Operating-Model.html");
+  test("frameworks: no horizontal overflow", async ({ page }) => {
+    await assertNoHorizontalOverflow(page, "/frameworks/");
   });
 
-  test("Start Here (Overview): no horizontal overflow", async ({ page }) => {
-    await assertNoHorizontalOverflow(page, "/start-here.html");
+  test("overview: no horizontal overflow", async ({ page }) => {
+    await assertNoHorizontalOverflow(page, "/overview/");
   });
 
   test("routing-the-dollar paper: no horizontal overflow", async ({
     page,
   }) => {
-    await assertNoHorizontalOverflow(page, "/papers/routing-the-dollar.html");
+    await assertNoHorizontalOverflow(page, "/papers/routing-the-dollar/");
   });
 
   test("navigation matches viewport width", async ({ page }) => {
@@ -65,16 +63,16 @@ test.describe("Responsive layout", () => {
     }
   });
 
-  test("home hero H1 and tagline visible", async ({ page }) => {
+  test("home hero H1 and subtitle visible", async ({ page }) => {
     await page.goto("/");
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Research for real-world policy and operating constraints/i,
+        name: /Independent research on dollar infrastructure and tokenization/i,
       }),
     ).toBeVisible();
-    await expect(page.locator("#hero .hero-subhead")).toHaveText(
-      /Who routes the dollar determines how it is regulated/i,
+    await expect(page.locator("#hero .hero-subtitle")).toContainText(
+      /Seven scholarly papers/i,
     );
   });
 });
