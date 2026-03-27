@@ -57,6 +57,35 @@
   <link rel="dns-prefetch" href="https://medium.com" />
   <link rel="stylesheet" href="./styles.css?v=61" />
   <style id="homepage-sprint1-density">
+    /* Sprint 2 preflight: matrix glyphs use rgba(74, 222, 128) (#4ade80) in script.js; canvas unchanged. Homepage UI uses muted green. */
+    :root,
+    :root[data-theme="dark"] {
+      --accent: #1a7a3a;
+      --accent-hover: #145e2d;
+    }
+
+    :root {
+      --accent-light: #e8f5ec;
+    }
+
+    :root[data-theme="dark"] {
+      --accent-light: color-mix(in srgb, #4ade80 12%, var(--panel) 88%);
+    }
+
+    /* Sprint 2 Fix 1: hero H1 weight (scoped; do not restyle other pages) */
+    #hero.hero--homepage h1#hero-title {
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      margin-bottom: 1rem;
+    }
+
+    /* Sprint 2 Fix 2: accent links sitewide on homepage (exclude card shells and chrome) */
+    a:not(.btn-primary):not(.role-pill):not(.compact-card):not(.research-card-sm):not(.skip):not(.menu-toggle):not(.theme-toggle):not(.mobile-nav-close):not(.back-to-top):not(.action.copy) {
+      color: var(--accent);
+    }
+
     /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
     #hero.hero--homepage .hero-subtitle {
       font-size: 1.25rem;
@@ -84,12 +113,15 @@
 
     #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
       font-size: 0.8rem;
-      padding: 0.35rem 0.85rem;
-      border: 1px solid var(--line);
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      background: var(--accent-light);
+      border: 1px solid transparent;
       border-radius: 100px;
-      color: var(--muted);
+      color: var(--accent-hover);
       cursor: default;
       pointer-events: none;
+      letter-spacing: 0.01em;
     }
 
     #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
@@ -105,14 +137,43 @@
     }
 
     #hero.hero--homepage .hero-anchors a {
-      color: var(--muted-soft);
+      color: var(--accent);
       text-decoration: underline;
-      text-underline-offset: 2px;
+      text-underline-offset: 3px;
       font-weight: 500;
     }
 
     #hero.hero--homepage .hero-anchors a:hover {
-      color: var(--accent);
+      color: var(--accent-hover);
+    }
+
+    /* Sprint 2 Fix 3: primary CTA */
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary {
+      display: inline-block;
+      padding: 1rem 2.25rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s, filter 0.2s;
+      cursor: pointer;
+      box-shadow: none;
+      filter: none;
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      filter: none;
+      box-shadow: none;
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:active {
+      transform: translateY(0);
     }
 
     @media (max-width: 640px) {
@@ -135,6 +196,16 @@
       margin-right: auto;
     }
 
+    .section-eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
     .section-compact h2 {
       font-size: 1.75rem;
       font-weight: 500;
@@ -153,7 +224,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
-      margin: 1.5rem 0;
+      margin: 1.5rem 0 0;
     }
 
     .role-pill {
@@ -163,13 +234,8 @@
       border-radius: 12px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
       background: color-mix(in srgb, var(--panel) 40%, transparent);
-    }
-
-    .role-pill:hover {
-      border-color: var(--accent);
-      box-shadow: var(--shadow-sm);
     }
 
     /* Higher specificity + stronger edge: global link/card rules must not win */
@@ -181,15 +247,6 @@
 
     :root[data-theme="dark"] #role-paths.section-compact .role-pills a.role-pill {
       border-color: var(--line-strong);
-    }
-
-    #role-paths.section-compact .role-pills a.role-pill:hover {
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    :root[data-theme="dark"] #role-paths.section-compact .role-pills a.role-pill:hover {
-      box-shadow: var(--shadow-sm);
     }
 
     .role-pill strong {
@@ -205,19 +262,20 @@
     }
 
     .section-link {
-      margin-top: 1rem;
-      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      font-size: 0.88rem;
       text-align: left;
     }
 
     .section-link a {
-      color: var(--muted-soft);
+      color: var(--accent);
       text-decoration: underline;
-      text-underline-offset: 2px;
+      text-underline-offset: 3px;
     }
 
     .section-link a:hover {
-      color: var(--accent);
+      color: var(--accent-hover);
     }
 
     @media (max-width: 640px) {
@@ -230,7 +288,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
-      margin: 1.5rem 0;
+      margin: 1.5rem 0 0;
     }
 
     .card-grid-2 > * {
@@ -244,13 +302,8 @@
       border-radius: 12px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
       background: color-mix(in srgb, var(--panel) 40%, transparent);
-    }
-
-    .compact-card:hover {
-      border-color: var(--accent);
-      box-shadow: var(--shadow-sm);
     }
 
     #frameworks.section-compact .card-grid-2 > a.compact-card {
@@ -261,15 +314,6 @@
 
     :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card {
       border-color: var(--line-strong);
-    }
-
-    #frameworks.section-compact .card-grid-2 > a.compact-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card:hover {
-      box-shadow: var(--shadow-sm);
     }
 
     .compact-card h3 {
@@ -306,7 +350,7 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
-      margin: 1.5rem 0;
+      margin: 1.5rem 0 0;
     }
 
     .card-grid-3 > * {
@@ -320,25 +364,55 @@
       border-radius: 12px;
       text-decoration: none;
       color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
       background: color-mix(in srgb, var(--panel) 40%, transparent);
     }
 
+    .role-pill,
+    .compact-card,
+    .research-card-sm {
+      cursor: pointer;
+    }
+
+    .role-pill:hover,
+    .compact-card:hover,
     .research-card-sm:hover {
       border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .role-pill:active,
+    .compact-card:active,
+    .research-card-sm:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    :root[data-theme="dark"] .role-pill:hover,
+    :root[data-theme="dark"] .compact-card:hover,
+    :root[data-theme="dark"] .research-card-sm:hover {
       box-shadow: var(--shadow-sm);
     }
 
     .badge-sm {
       display: inline-block;
       font-size: 0.7rem;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 0.2rem 0.6rem;
+      padding: 0.2rem 0.65rem;
       border: 1px solid var(--line);
       border-radius: 100px;
       margin-bottom: 0.75rem;
       color: var(--muted);
+      background: transparent;
+    }
+
+    .badge-sm.badge-review {
+      border-color: #d4a017;
+      color: #8a6914;
+      background: #fdf6e3;
     }
 
     .research-card-sm h3 {
@@ -378,6 +452,11 @@
     main > section#about-this-site,
     main > section#contact {
       min-height: 0;
+    }
+
+    #main #about-this-site.about-section {
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
     }
   </style>
   <script type="application/ld+json">
@@ -527,6 +606,7 @@
     </section>
 
     <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
+      <span class="section-eyebrow">Roles</span>
       <h2 id="audience-title">Four roles, one research program.</h2>
       <div class="role-pills">
         <a href="./resume/policy-market-infrastructure.html" class="role-pill">
@@ -550,6 +630,7 @@
     </section>
 
     <section class="section-compact reveal" id="frameworks" aria-labelledby="frameworks-title">
+      <span class="section-eyebrow">Frameworks</span>
       <h2 id="frameworks-title">Signature frameworks.</h2>
       <div class="card-grid-2">
         <a href="./papers/routing-the-dollar.html" class="compact-card" id="clii-home">
@@ -567,10 +648,11 @@
     </section>
 
     <section class="section-compact reveal" id="research" aria-labelledby="research-title">
+      <span class="section-eyebrow">Research</span>
       <h2 id="research-title">Recent papers.</h2>
       <div class="card-grid-3">
         <a href="./papers/routing-the-dollar.html" class="research-card-sm">
-          <span class="badge-sm">Under review</span>
+          <span class="badge-sm badge-review">Under review</span>
           <h3>Routing the Dollar</h3>
           <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
         </a>
@@ -588,7 +670,7 @@
       <p class="section-link"><a href="./selected-research.html">View all research &#x2192;</a></p>
     </section>
 
-    <section id="about-this-site" class="reveal" aria-labelledby="about-this-site-title">
+    <section id="about-this-site" class="reveal about-section" aria-labelledby="about-this-site-title">
       <div class="section-title">
         <h2 id="about-this-site-title">About this site</h2>
       </div>
