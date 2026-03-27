@@ -492,7 +492,7 @@ main{
 .hero{
   margin-top:var(--space-md);
   margin-bottom:var(--space-lg);
-  padding:48px var(--space-xl) 44px;
+  padding:48px max(var(--page-gutter), env(safe-area-inset-right)) 44px max(var(--page-gutter), env(safe-area-inset-left));
   border:1px solid var(--line);
   border-top:3px solid var(--accent);
   border-radius:var(--radius);
@@ -1878,7 +1878,7 @@ main > section.research-library-page:first-of-type{
 }
 .research-library-page .writing-footnotes{
   margin-top:var(--space-xl);
-  padding:var(--space-lg) var(--space-xl);
+  padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   width:100%;
   max-width:100%;
   min-width:0;
@@ -4825,25 +4825,12 @@ section:has(.speaker-jump-to){
 }
 
 /* ── Resume profile sub-pages: container and layout ── */
-/* 960px content column: horizontal padding sits inside max-width (border-box) */
 main.resume-profile{
-  max-width:min(100%, calc(960px + 4rem));
+  max-width:var(--max);
   margin-left:auto;
   margin-right:auto;
   box-sizing:border-box;
-  padding:var(--space-lg) max(2rem, env(safe-area-inset-right)) var(--space-2xl) max(2rem, env(safe-area-inset-left));
-}
-@media (max-width:1023px){
-  main.resume-profile{
-    padding-left:max(1.5rem, env(safe-area-inset-left));
-    padding-right:max(1.5rem, env(safe-area-inset-right));
-  }
-}
-@media (max-width:767px){
-  main.resume-profile{
-    padding-left:max(1rem, env(safe-area-inset-left));
-    padding-right:max(1rem, env(safe-area-inset-right));
-  }
+  padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
 main.resume-profile section + section{
   padding-top:var(--space-lg);
@@ -5190,7 +5177,7 @@ main.resume-profile .resume-closing{
   color:var(--muted-soft);
   font-size:var(--font-size-min);
   font-style:italic;
-  max-width:56rem;
+  max-width:var(--max);
   min-width:0;
   overflow-wrap:break-word;
   word-break:break-word;
@@ -5487,7 +5474,7 @@ main.resume-profile .resume-closing{
   grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:var(--space-xl);
   width:100%;
-  max-width:min(100%, 72rem);
+  max-width:min(100%, var(--max));
   margin-inline:auto;
   box-sizing:border-box;
 }
@@ -5649,7 +5636,7 @@ main.resume-profile .resume-closing{
   display:flex;
   flex-wrap:wrap;
   gap:var(--space-sm);
-  padding:var(--space-md) var(--space-xl) var(--space-lg);
+  padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   border-top:1px solid var(--line);
 }
 .research-links .action{
@@ -5680,7 +5667,7 @@ main.resume-profile .resume-closing{
   margin-top:0;
 }
 .frameworks-2026-page #frameworks-2026-title{
-  max-width:64rem;
+  max-width:none;
   line-height:1.22;
   text-wrap:balance;
 }
@@ -5764,13 +5751,13 @@ main.resume-profile .resume-closing{
   margin-top:var(--space-sm);
 }
 
-/* Resume hub (resume.html): ~960px content column, same logic as profile pages */
+/* Resume hub (resume.html): align with site content width */
 .resume-page main{
-  max-width:min(100%, calc(960px + 4rem));
+  max-width:var(--max);
   margin-left:auto;
   margin-right:auto;
   box-sizing:border-box;
-  padding:var(--space-md) max(2rem, env(safe-area-inset-right)) var(--space-2xl) max(2rem, env(safe-area-inset-left));
+  padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
 .resume-page main > section:first-of-type{
   margin-top:0;
@@ -5808,18 +5795,6 @@ main.resume-profile .resume-closing{
   min-height:40px;
   line-height:1.35;
   border-radius:6px;
-}
-@media (max-width:1023px){
-  .resume-page main{
-    padding-left:max(1.5rem, env(safe-area-inset-left));
-    padding-right:max(1.5rem, env(safe-area-inset-right));
-  }
-}
-@media (max-width:767px){
-  .resume-page main{
-    padding-left:max(1rem, env(safe-area-inset-left));
-    padding-right:max(1rem, env(safe-area-inset-right));
-  }
 }
 .resume-page main > section:first-of-type > .kicker--subpage{
   margin-bottom:0.25rem;
@@ -6380,18 +6355,11 @@ footer{
 @media (min-width: 1400px){
   :root{ --max:1480px }
 }
-/* Homepage: wider main so hero, frameworks, and previews use more horizontal space */
-@media (min-width: 1024px){
-  main:has(.what-i-can-send),
-  main:has(#featured-research){
-    max-width: 110rem;
-  }
-}
 
 /* Tablet: 981px to 768px */
 @media (max-width: 980px){
   .hero-grid{grid-template-columns:1fr; gap:var(--space-lg)}
-  .hero{padding:var(--space-xl) var(--space-xl) var(--space-2xl)}
+  .hero{padding:var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left))}
   .hero-primary{max-width:none}
   .hero-points{max-width:none}
   .teaser-grid{grid-template-columns:1fr; gap:var(--space-md)}
@@ -6608,10 +6576,10 @@ footer{
     font-size:16px;
   }
 
-  main{padding:var(--space-md) var(--space-md) var(--space-xl)}
+  main{padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left))}
 
   .hero{
-    padding:var(--space-lg) var(--space-md);
+    padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
     margin-top:var(--space-sm);
   }
   .hero::before{display:none}
@@ -7036,14 +7004,13 @@ footer{
   .resume-actions .action{width:100%; justify-content:center; min-height:48px}
   .resume-actions--inline{flex-direction:row; flex-wrap:wrap}
   .resume-actions--inline .action{width:auto; min-height:44px; justify-content:center}
-  .research-links{padding:var(--space-sm) var(--space-md) var(--space-md)}
+  .research-links{padding:var(--space-sm) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-md) max(var(--page-gutter), env(safe-area-inset-left))}
   .explainer-section h3{font-size:var(--font-size-min)}
   .explainer-section p{font-size:var(--font-size-min)}
   .explainer-section ul{font-size:var(--font-size-min)}
   .explainer-links{flex-direction:column}
   .explainer-links .action{width:100%; justify-content:center; min-height:48px}
   .frameworks-2026-page #frameworks-2026-title{
-  max-width:64rem;
     max-width:none;
     text-wrap:pretty;
   }
@@ -7081,9 +7048,9 @@ footer{
 
 /* Small mobile: <=400px (stack thumb above text; 401px+ keep thumb left) */
 @media (max-width: 400px){
-  main{padding:var(--space-sm) var(--space-sm) var(--space-lg)}
+  main{padding:var(--space-sm) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left))}
   .hero{
-    padding:var(--space-md) var(--space-sm);
+    padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-md) max(var(--page-gutter), env(safe-area-inset-left));
     margin-top:var(--space-xs);
     border-radius:var(--radius-sm);
   }
@@ -7212,7 +7179,7 @@ footer{
 
 /* Landscape phones: short viewport */
 @media (max-height: 500px) and (orientation: landscape){
-  .hero{padding:var(--space-md) var(--space-lg)}
+  .hero{padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-md) max(var(--page-gutter), env(safe-area-inset-left))}
   .hero-actions{margin-top:var(--space-sm)}
   .meta{margin-top:var(--space-sm); padding-top:var(--space-sm)}
   .hero-rail{
@@ -8123,16 +8090,12 @@ footer{
 }
 /* Homepage compact flagship block */
 .flagship{
-  padding: var(--space-2xl) var(--space-lg);
+  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
   text-align: center;
-  max-width: 720px;
+  max-width: min(100%, var(--max));
   margin-left: auto;
   margin-right: auto;
-}
-@media (min-width: 1024px){
-  .flagship{
-    max-width: 56rem;
-  }
+  box-sizing: border-box;
 }
 /* CLII diagram card: quiet panel border + bottom flow line (same language as .hero::after + .hero-shimmer) */
 .flagship-thumb-wrap{
@@ -10819,7 +10782,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 #hero.hero--homepage{
   position: relative;
-  padding: clamp(18px, 2.5vw, 36px) clamp(22px, 3.5vw, 44px) clamp(8px, 1.1vw, 14px);
+  padding: clamp(18px, 2.5vw, 36px) max(var(--page-gutter), env(safe-area-inset-right)) clamp(8px, 1.1vw, 14px) max(var(--page-gutter), env(safe-area-inset-left));
   border-top: 3px solid var(--accent);
   /* Hero dollar stream: peak / late opacity (keyframes read these; hover + mobile override) */
   --df-o-peak: 0.35;
@@ -11164,7 +11127,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 #hero.hero--homepage .hero-cta-cluster{
   margin-top: 1.65rem;
-  max-width: 56rem;
+  max-width: min(100%, var(--max));
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -11317,7 +11280,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   list-style: none;
   padding: 0;
   margin: var(--space-lg) auto 0;
-  max-width: min(100%, 72rem);
+  max-width: min(100%, var(--max));
   width: 100%;
 }
 
@@ -11366,11 +11329,6 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   }
 }
 
-@media (min-width: 981px){
-  #hero.hero--homepage .hero-proof-row{
-    max-width: min(100%, 80rem);
-  }
-}
 
 /* ============================================================
    4. Hero meta line polish
