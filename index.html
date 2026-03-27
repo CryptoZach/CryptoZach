@@ -30,8 +30,7 @@
   <meta name="author" content="Zach Zukowski" />
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -54,7 +53,7 @@
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="theme-color" content="#0a0c10" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin.png" />
   <link rel="preconnect" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
@@ -113,7 +112,7 @@
       padding: 0;
       list-style: none;
       justify-content: center;
-      max-width: min(100%, 960px);
+      max-width: min(100%, 1200px);
     }
 
     .hero-institutional {
@@ -123,7 +122,7 @@
       margin-bottom: 2rem;
       line-height: 1.5;
       text-align: center;
-      max-width: min(100%, 960px);
+      max-width: min(100%, 1200px);
       margin-left: auto;
       margin-right: auto;
     }
@@ -258,15 +257,10 @@
     #role-paths.section-compact,
     #frameworks.section-compact,
     #research.section-compact,
-    #about.section-compact,
     #contact.section-compact {
       padding: 4rem 0;
       border-top: 1px solid var(--line);
       box-sizing: border-box;
-    }
-
-    #main #contact.section-compact {
-      padding-top: 2.25rem;
     }
 
     /* Sprint 3 Fix 5: section eyebrow labels (Roles / Frameworks / Research). */
@@ -278,10 +272,6 @@
       letter-spacing: 0.12em;
       color: var(--accent);
       margin-bottom: 0.5rem;
-    }
-
-    #main #about.about-section .section-eyebrow {
-      color: var(--accent);
     }
 
     .section-compact h2 {
@@ -421,6 +411,13 @@
       display: block;
     }
 
+    /* CLII diagram: trim dead space above the title, show more of the lower gateway row. */
+    #frameworks.section-compact #clii-home.compact-card img.compact-card-thumb {
+      height: 200px;
+      object-fit: cover;
+      object-position: 50% 9%;
+    }
+
     .compact-card h3 {
       font-size: 1.05rem;
       font-weight: 500;
@@ -547,148 +544,8 @@
       }
     }
 
-    /* Below-fold .reveal blocks stayed opacity:0 until IO; reads as huge blank gap */
-    #main #about.reveal,
-    #main #contact.reveal {
-      opacity: 1;
-      transform: none;
-    }
-
-    #main #about.reveal.visible,
-    #main #contact.reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    main > section#about,
-    main > section#contact {
-      min-height: 0;
-    }
-
-    #main #about.about-section {
-      border-left: 3px solid var(--accent);
-      padding-left: 1.5rem;
-    }
-
-    .about-content {
-      max-width: 680px;
-    }
-
-    .about-bio {
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
-
-    .about-method {
-      font-size: 0.9rem;
-      color: var(--text-secondary, #666);
-      line-height: 1.65;
-      margin-bottom: 1.25rem;
-    }
-
-    .about-contact {
-      font-size: 0.88rem;
-    }
-
-    .about-contact a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .about-contact a:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    #main #contact.section-compact > p:first-of-type {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--text-secondary, var(--muted));
-      margin: 0;
-      max-width: 680px;
-    }
-
-    #main #contact.section-compact .contact-details {
-      margin-top: 1.5rem;
-    }
-
-    #main #contact.section-compact .contact-email {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.5rem;
-    }
-
-    #main #contact.section-compact .contact-email a {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    #main #contact.section-compact .contact-email a:hover {
-      color: var(--accent);
-    }
-
-    #main #contact.section-compact .copy-email-btn {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.6rem;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--text-secondary, var(--muted));
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    #main #contact.section-compact .copy-email-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    #main #contact.section-compact .contact-note {
-      font-size: 0.85rem;
-      color: var(--text-secondary, var(--muted));
-      margin-bottom: 1.25rem;
-    }
-
-    #main #contact.section-compact .contact-details .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1.25rem;
-      margin-left: 0;
-      margin-top: 0;
-    }
-
-    #main #contact.section-compact .contact-details .contact-links a {
-      font-size: 0.88rem;
-      color: var(--text-secondary, var(--muted));
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    #main #contact.section-compact .contact-details .contact-links a:hover {
-      color: var(--accent);
-    }
-
-    #main #contact.section-compact .contact-speaker-link {
-      padding: 0.4rem 1rem;
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      color: var(--accent) !important;
-      font-weight: 500;
-    }
-
-    #main #contact.section-compact .contact-speaker-link:hover {
-      background: var(--accent);
-      color: #fff !important;
-    }
-
     @media (max-width: 640px) {
-      #main #contact.section-compact .contact-details .contact-links {
+      #contact #contact-link-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.75rem;
@@ -815,7 +672,7 @@
         <canvas class="matrix-canvas" tabindex="-1" aria-hidden="true"></canvas>
       </div>
       <canvas class="hero-reef" id="heroReef" aria-hidden="true"></canvas>
-      <div class="hero-grid" style="max-width: 960px; margin: 0 auto; padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); box-sizing: border-box;">
+      <div class="hero-grid" style="max-width: 1200px; margin: 0 auto; padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); box-sizing: border-box;">
         <div class="hero-primary">
           <div class="hero-eyebrow matrix-hover-activator">
             <p class="hero-eyebrow-kicker" data-hero-safe="eyebrow">Digital Money &amp; Tokenization · From Policy to Execution</p>
@@ -845,7 +702,7 @@
       </div>
     </section>
 
-    <div style="max-width: 960px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
+    <div style="max-width: 1200px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
     <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
       <span class="section-eyebrow">Roles</span>
       <h2 id="audience-title">Four roles, one research program.</h2>
@@ -912,45 +769,35 @@
       <p class="section-link"><a href="/research">View all research &#x2192;</a></p>
     </section>
 
-    <section class="section-compact reveal about-section" id="about" aria-labelledby="about-title">
-      <span class="section-eyebrow">About</span>
-      <h2 id="about-title">About the author.</h2>
-      <div class="about-content">
-        <p class="about-bio">Zach Zukowski is a Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Fed and policy audiences, institutional asset managers, and stablecoin and payments strategy teams.</p>
-        <p class="about-method">The program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. The work is US-focused, independent, non-advocacy, and every claim is replicable.</p>
-        <p class="about-contact">
-          <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a> ·
-          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a> ·
-          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a> ·
-          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
-        </p>
-      </div>
-    </section>
+    <section class="section-compact" id="contact" style="padding: 4rem 0; border-top: 1px solid var(--border-light, #2a2a2a);">
+      <span class="section-eyebrow" style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent, #2ecc71); margin-bottom: 0.5rem;">Contact</span>
+      <h2 style="font-size: 1.75rem; font-weight: 500; margin-bottom: 1.5rem; letter-spacing: -0.02em;">Get in touch.</h2>
 
-    <section class="section-compact reveal" id="contact" aria-labelledby="contact-title">
-      <span class="section-eyebrow">Contact</span>
-      <h2 id="contact-title">Get in touch.</h2>
-      <p>If you're working on policy, market infrastructure, tokenization, or token-economy design, I'd welcome the conversation. Tell me what you're building or evaluating and I'll send the most relevant paper, resume version, or supporting material.</p>
+      <p style="font-size: 1rem; line-height: 1.7; margin-bottom: 0.75rem; color: var(--text-primary, #e8e8e8);">Zach Zukowski is a Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Fed and policy audiences, institutional asset managers, and stablecoin and payments strategy teams.</p>
 
-      <div class="contact-details">
-        <p class="contact-email">
-          <a id="emailAddr" href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
-          <button id="copyEmail" class="copy-email-btn" type="button" aria-label="Copy email address" aria-live="polite">Copy email</button>
+      <p style="font-size: 0.9rem; line-height: 1.65; margin-bottom: 1.5rem; color: var(--text-secondary, #a0a0a0);">The program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. The work is US-focused, independent, non-advocacy, and every claim is replicable.</p>
+
+      <p style="font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem; color: var(--text-primary, #e8e8e8);">If you're working on policy, market infrastructure, tokenization, or token-economy design, I'd welcome the conversation. Tell me what you're building or evaluating and I'll send the most relevant paper, resume version, or supporting material.</p>
+
+      <div style="margin-top: 1.5rem;">
+        <p style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <a id="emailAddr" href="mailto:zach@cryptozach.com" style="font-size: 1rem; font-weight: 500; color: var(--text-primary, #e8e8e8); text-decoration: none;">zach@cryptozach.com</a>
+          <button id="copyEmail" type="button" aria-label="Copy email address" aria-live="polite" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border-light, #2a2a2a); border-radius: 6px; background: transparent; color: var(--text-secondary, #a0a0a0); cursor: pointer;">Copy email</button>
         </p>
-        <p class="contact-note">I read every email and typically reply within 24 hours.</p>
-        <div class="contact-links">
-          <a href="/contact">Get in touch</a>
-          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a>
-          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
-          <a href="/speaker" class="contact-speaker-link">Speaking &amp; advisory &#x2192;</a>
+        <p style="font-size: 0.85rem; color: var(--text-secondary, #a0a0a0); margin-bottom: 1.25rem;">I read every email and typically reply within 24 hours.</p>
+        <div id="contact-link-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;">
+          <a href="/contact.html" style="font-size: 0.88rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Get in touch</a>
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener" style="font-size: 0.88rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">LinkedIn</a>
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener" style="font-size: 0.88rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">SSRN</a>
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener" style="font-size: 0.88rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">X</a>
+          <a href="/speaker-advisory.html" style="font-size: 0.88rem; padding: 0.4rem 1rem; border: 1px solid var(--accent, #2ecc71); border-radius: 6px; color: var(--accent, #2ecc71); font-weight: 500; text-decoration: none;">Speaking &amp; advisory &#x2192;</a>
         </div>
       </div>
     </section>
     </div>
 
     <footer role="contentinfo" style="border-top: 1px solid var(--border-light, #2a2a2a); padding: 2.5rem 0 2rem; margin-top: 2rem;">
-      <div style="max-width: 960px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.25rem;">
           <div>
             <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary, #e8e8e8);">Zach Zukowski</div>
