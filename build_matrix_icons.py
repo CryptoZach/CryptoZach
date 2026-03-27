@@ -207,7 +207,6 @@ COMPANIES = {
     # "frbny" removed: building pattern reads as ambiguous "F" at matrix size.
     # "frbny": ("federalreservebankofnewyork", []),
     "fidelity": ("fidelity", []),  # bundled build-sources/fidelity.svg (starburst mark)
-    "cantor": ("cantor", []),  # bundled build-sources/cantor.svg (no SI slug)
     "clearstreet": ("clearstreet", []),  # bundled build-sources/clearstreet.svg (no SI slug)
     "wu": ("westernunion", []),
     "moneygram": ("moneygram", []),

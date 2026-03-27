@@ -457,11 +457,6 @@ const ICONS = [
     localSvg: 'icons/matrix/build-sources/frbny.svg',
   },
   {
-    name: 'cantor',
-    localSvg: 'icons/matrix/build-sources/cantor.svg',
-    si: [],
-  },
-  {
     name: 'clearstreet',
     localSvg: 'icons/matrix/build-sources/clearstreet.svg',
     si: [],

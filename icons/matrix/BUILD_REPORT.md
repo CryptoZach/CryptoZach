@@ -1,11 +1,11 @@
 # Matrix Icon Build Report
 
 **Date:** 2026-03-22T18:55:15.294900  
-**Total:** 103  
-**Sourced:** 101  
+**Total:** 102  
+**Sourced:** 100  
 **Missing:** 2  
 
-## Sourced (101)
+## Sourced (100)
 
 | File | Source | Size |
 |------|--------|------|
@@ -27,7 +27,6 @@
 | `block.png` | Simple Icons (square) | 421B |
 | `bnb.png` | bundled SVG (build-sources/bnb.svg) | 882B |
 | `btc.png` | Simple Icons (bitcoin) | 865B |
-| `cantor.png` | bundled SVG (build-sources/cantor.svg) | 478B |
 | `cashapp.png` | bundled SVG (build-sources/cashapp.svg) | 892B |
 | `circle.png` | bundled SVG (build-sources/circle.svg) | 993B |
 | `citi.png` | bundled SVG (build-sources/citi.svg) | 554B |

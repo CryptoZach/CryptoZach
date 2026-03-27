@@ -1506,8 +1506,6 @@
       { src: './icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
-      { src: './icons/matrix/cantor.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/wu.png', loaded: false, img: null, tinted: null },
       { src: './icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
@@ -1605,7 +1603,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '137';
+    var mtxIconAssetVer = '138';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -2160,8 +2158,6 @@
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
           ds = Math.min(ds + 6, 32);
-        } else if(item.def && item.def.src && item.def.src.indexOf('cantor.png') >= 0){
-          ds = 47 + Math.random() * 13;
         } else if(item.def && item.def.src && (item.def.src.indexOf('csco.png') >= 0 || item.def.src.indexOf('amd.png') >= 0 || item.def.src.indexOf('ink.png') >= 0 || item.def.src.indexOf('mkr.png') >= 0)){
           ds = Math.max(ds, 26);
         } else if(item.def && item.def.src && item.def.src.indexOf('gs.png') >= 0){
@@ -2174,7 +2170,7 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('cantor.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0 || item.def.src.indexOf('bybit.png') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0 || item.def.src.indexOf('bybit.png') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */
