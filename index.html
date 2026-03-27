@@ -63,9 +63,12 @@
       color: var(--muted);
       margin-top: 0.75rem;
       margin-bottom: 2rem;
-      max-width: 600px;
+      width: max-content;
+      max-width: 100%;
       margin-left: auto;
       margin-right: auto;
+      text-align: center;
+      box-sizing: border-box;
     }
 
     #hero.hero--homepage .hero-proof-strip {
@@ -172,6 +175,26 @@
 
     .role-pill:hover {
       border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Higher specificity + stronger edge: global link/card rules must not win */
+    #role-paths.section-compact .role-pills a.role-pill {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      border-style: solid;
+    }
+
+    :root[data-theme="dark"] #role-paths.section-compact .role-pills a.role-pill {
+      border-color: var(--line-strong);
+    }
+
+    #role-paths.section-compact .role-pills a.role-pill:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    :root[data-theme="dark"] #role-paths.section-compact .role-pills a.role-pill:hover {
       box-shadow: var(--shadow-sm);
     }
 
