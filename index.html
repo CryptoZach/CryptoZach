@@ -36,19 +36,19 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
   <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
-  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image" content="https://tokenization.systems/og-image.png" />
   <meta property="og:url" content="https://cryptozach.com" />
   <meta property="og:site_name" content="Tokenization.Systems" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:image:alt" content="Zach Zukowski digital money and tokenization research" />
   <link rel="canonical" href="https://cryptozach.com" />
-  <link rel="sitemap" type="application/xml" href="https://cryptozach.com/sitemap.xml" title="Sitemap" />
+  <link rel="sitemap" type="application/xml" href="https://tokenization.systems/sitemap.xml" title="Sitemap" />
 
   <!-- Twitter/X Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
   <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
-  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image" content="https://tokenization.systems/og-image.png" />
   <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -562,6 +562,109 @@
         gap: 0.75rem;
       }
     }
+
+    #contact .about-card {
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      padding: 2rem 2.5rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+      box-sizing: border-box;
+    }
+
+    :root[data-theme="dark"] #contact .about-card {
+      border-color: var(--line-strong, var(--line));
+    }
+
+    #contact .about-card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    #contact .about-card p {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    #contact .about-card-meta {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    #contact .about-card-meta p {
+      margin-bottom: 0.5rem;
+    }
+
+    #contact .about-card-ctas {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    #contact .about-card-ctas a.cta-primary {
+      display: inline-block;
+      padding: 1rem 2.25rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    #contact .about-card-ctas a.cta-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    #contact .about-card-ctas a.cta-secondary {
+      display: inline-block;
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s, transform 0.15s, border-color 0.2s;
+    }
+
+    #contact .about-card-ctas a.cta-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      #contact .about-card-ctas {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #contact .about-card-ctas a.cta-primary,
+      #contact .about-card-ctas a.cta-secondary {
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
+
+    #contact .home-contact-strip h2 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
   </style>
   <script type="application/ld+json">
     {
@@ -569,32 +672,32 @@
       "@graph": [
         {
           "@type": "WebSite",
-          "@id": "https://cryptozach.com/#website",
+          "@id": "https://tokenization.systems/#website",
           "name": "Zach Zukowski | Digital Money & Tokenization Research",
-          "url": "https://cryptozach.com",
+          "url": "https://tokenization.systems",
           "description": "Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams.",
           "inLanguage": "en",
-          "publisher": { "@id": "https://cryptozach.com/#person" },
-          "author": { "@id": "https://cryptozach.com/#person" }
+          "publisher": { "@id": "https://tokenization.systems/#person" },
+          "author": { "@id": "https://tokenization.systems/#person" }
         },
         {
           "@type": "WebPage",
           "name": "Zach Zukowski | Digital Money & Tokenization Research",
-          "url": "https://cryptozach.com",
+          "url": "https://tokenization.systems",
           "description": "Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams.",
-          "isPartOf": { "@id": "https://cryptozach.com/#website" },
+          "isPartOf": { "@id": "https://tokenization.systems/#website" },
           "primaryImageOfPage": {
             "@type": "ImageObject",
-            "url": "https://cryptozach.com/og-image.png"
+            "url": "https://tokenization.systems/og-image.png"
           },
-          "author": { "@id": "https://cryptozach.com/#person" }
+          "author": { "@id": "https://tokenization.systems/#person" }
         },
         {
           "@type": "Person",
-          "@id": "https://cryptozach.com/#person",
+          "@id": "https://tokenization.systems/#person",
           "name": "Zach Zukowski",
           "alternateName": "CryptoZach",
-          "url": "https://cryptozach.com",
+          "url": "https://tokenization.systems",
           "sameAs": [
             "https://x.com/CryptoZach",
             "https://www.linkedin.com/in/zachzukowski/",
@@ -784,27 +887,37 @@
     </section>
 
     <section class="section-compact" id="contact" style="padding: 4rem 0; border-top: 1px solid var(--border-light, #2a2a2a);">
-      <span class="section-eyebrow" style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent, #2ecc71); margin-bottom: 0.5rem;">Contact</span>
-      <h2 style="font-size: 1.75rem; font-weight: 500; margin-bottom: 1.5rem; letter-spacing: -0.02em;">Get in touch.</h2>
-
-      <p style="font-size: 1rem; line-height: 1.7; margin-bottom: 0.75rem; color: var(--text-primary, #e8e8e8);">Zach Zukowski is a Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Fed and policy audiences, institutional asset managers, and stablecoin and payments strategy teams.</p>
-
-      <p style="font-size: 0.9rem; line-height: 1.65; margin-bottom: 1.5rem; color: var(--text-secondary, #a0a0a0);">The program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. The work is US-focused, independent, non-advocacy, and every claim is replicable.</p>
-
-      <p style="font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem; color: var(--text-primary, #e8e8e8);">If you're working on policy, market infrastructure, tokenization, or token-economy design, I'd welcome the conversation. Tell me what you're building or evaluating and I'll send the most relevant paper, resume version, or supporting material.</p>
-
-      <div style="margin-top: 1.5rem;">
-        <p style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-          <a id="emailAddr" href="mailto:zach@cryptozach.com" style="font-size: 1rem; font-weight: 500; color: var(--text-primary, #e8e8e8); text-decoration: none;">zach@cryptozach.com</a>
-          <button id="copyEmail" type="button" aria-label="Copy email address" aria-live="polite" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border-light, #2a2a2a); border-radius: 6px; background: transparent; color: var(--text-secondary, #a0a0a0); cursor: pointer;">Copy email</button>
-        </p>
-        <div class="response-time" style="margin-bottom: 1.25rem; margin-top: 0; font-size: 0.85rem; color: var(--text-secondary, #a0a0a0);">
-          <span class="response-dot" aria-hidden="true"></span>
-          I read every email and typically reply within 24 hours.
+      <section class="about-card" id="about">
+        <h2>About Tokenization.Systems</h2>
+        <p>Tokenization.Systems is an independent, non-advocacy research program producing scholarly work on stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The program targets three audiences: Federal Reserve and policy designers, institutional asset managers, and stablecoin and payments strategy teams.</p>
+        <p>The research holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. Every claim is replicable. The work is US-focused and independent.</p>
+        <div class="about-card-meta">
+          <p><strong>Researcher:</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
+          <p><strong>Frameworks:</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring. Minimum Viable Equivalence Packs (MVEP) for institutional tokenization diligence.</p>
+          <p><strong>Papers on SSRN:</strong> Five published, two in draft.</p>
         </div>
-        <div id="contact-link-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;">
-          <a href="/contact" style="font-size: 0.88rem; font-weight: 500; padding: 0.4rem 1rem; border: 1px solid var(--border-light, #2a2a2a); border-radius: 6px; background: transparent; color: var(--text-secondary, #a0a0a0); text-decoration: none; display: inline-block; cursor: pointer; box-sizing: border-box;">Contact Page</a>
-          <a href="/speaker-advisory.html" style="font-size: 0.88rem; padding: 0.4rem 1rem; border: 1px solid var(--accent, #2ecc71); border-radius: 6px; color: var(--accent, #2ecc71); font-weight: 500; text-decoration: none;">Speaking &amp; advisory &#x2192;</a>
+        <div class="about-card-ctas">
+          <a href="/contact" class="cta-primary">Get in touch</a>
+          <a href="/research" class="cta-secondary">See the research</a>
+        </div>
+      </section>
+
+      <div class="home-contact-strip">
+        <span class="section-eyebrow" style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent, #2ecc71); margin-bottom: 0.5rem;">Contact</span>
+        <h2>Get in touch.</h2>
+        <div style="margin-top: 0;">
+          <p style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <a id="emailAddr" href="mailto:zach@tokenization.systems" style="font-size: 1rem; font-weight: 500; color: var(--text-primary, #e8e8e8); text-decoration: none;">zach@tokenization.systems</a>
+            <button id="copyEmail" type="button" aria-label="Copy email address" aria-live="polite" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border-light, #2a2a2a); border-radius: 6px; background: transparent; color: var(--text-secondary, #a0a0a0); cursor: pointer;">Copy email</button>
+          </p>
+          <div class="response-time" style="margin-bottom: 1.25rem; margin-top: 0; font-size: 0.85rem; color: var(--text-secondary, #a0a0a0);">
+            <span class="response-dot" aria-hidden="true"></span>
+            I read every email and typically reply within 24 hours.
+          </div>
+          <div id="contact-link-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;">
+            <a href="/contact" style="font-size: 0.88rem; font-weight: 500; padding: 0.4rem 1rem; border: 1px solid var(--border-light, #2a2a2a); border-radius: 6px; background: transparent; color: var(--text-secondary, #a0a0a0); text-decoration: none; display: inline-block; cursor: pointer; box-sizing: border-box;">Contact page</a>
+            <a href="/speaker" style="font-size: 0.88rem; padding: 0.4rem 1rem; border: 1px solid var(--accent, #2ecc71); border-radius: 6px; color: var(--accent, #2ecc71); font-weight: 500; text-decoration: none;">Speaking &amp; advisory &#x2192;</a>
+          </div>
         </div>
       </div>
     </section>
@@ -826,7 +939,7 @@
           </nav>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1rem;">
-          <a href="mailto:zach@cryptozach.com" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">zach@cryptozach.com</a>
+          <a href="mailto:zach@tokenization.systems" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">zach@tokenization.systems</a>
           <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" style="display: inline-flex; align-items: center; color: var(--text-tertiary, #707070); text-decoration: none;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
           <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener" aria-label="SSRN" title="SSRN" style="display: inline-flex; align-items: center; color: var(--text-tertiary, #707070); text-decoration: none;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
           <a href="https://x.com/CryptoZach" target="_blank" rel="noopener" aria-label="X" title="X" style="display: inline-flex; align-items: center; color: var(--text-tertiary, #707070); text-decoration: none;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>

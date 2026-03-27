@@ -15,7 +15,7 @@
   <meta property="og:site_name" content="Tokenization.Systems" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:url" content="https://cryptozach.com/contact" />
-  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image" content="https://tokenization.systems/og-image.png" />
   <meta property="og:image:alt" content="Portrait of Zach Zukowski" />
   <link rel="canonical" href="https://cryptozach.com/contact" />
 
@@ -24,7 +24,7 @@
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
   <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
-  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image" content="https://tokenization.systems/og-image.png" />
   <meta name="twitter:image:alt" content="Portrait of Zach Zukowski" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
@@ -48,6 +48,131 @@
     })();
   </script>
   <link rel="stylesheet" href="/styles.css?v=83" />
+  <style>
+    body.contact-page section.contact-page {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      box-sizing: border-box;
+    }
+
+    body.contact-page section.contact-page .contact-intro {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    body.contact-page section.contact-page .contact-email-block {
+      margin-bottom: 2.5rem;
+    }
+
+    body.contact-page section.contact-page .contact-email-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 0.5rem;
+    }
+
+    body.contact-page section.contact-page .contact-email {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary, inherit);
+      text-decoration: none;
+    }
+
+    body.contact-page section.contact-page .contact-email:hover {
+      color: var(--accent);
+    }
+
+    body.contact-page section.contact-page .contact-copy-email-btn {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    body.contact-page section.contact-page .contact-response {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      color: var(--text-secondary, inherit);
+      margin: 0;
+    }
+
+    body.contact-page section.contact-page .contact-bio {
+      margin-bottom: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    body.contact-page section.contact-page .contact-bio h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    body.contact-page section.contact-page .contact-bio p {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    body.contact-page section.contact-page .contact-actions {
+      margin-bottom: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    body.contact-page section.contact-page .contact-actions h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    body.contact-page section.contact-page .contact-actions ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    body.contact-page section.contact-page .contact-actions li {
+      padding: 0.4rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    body.contact-page section.contact-page .contact-actions li::before {
+      content: "\2192";
+      position: absolute;
+      left: 0;
+    }
+
+    body.contact-page section.contact-page .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    body.contact-page section.contact-page .contact-links a.cta-secondary {
+      display: inline-block;
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    body.contact-page section.contact-page .contact-links a.cta-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+  </style>
 </head>
 
 <body class="contact-page">
@@ -115,123 +240,37 @@
   <main id="main">
     <div class="contact-page-wrap">
       <div class="contact-page-foreground">
-    <section class="reveal contact-page-intro" aria-labelledby="contact-page-title">
-      <img class="contact-reach-headshot contact-reach-headshot--top" src="/Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="200" height="200" loading="eager" decoding="async" />
-      <div class="kicker kicker--subpage contact-page-kicker">
-        <span class="kicker-dot" aria-hidden="true"></span>
-        CONTACT
+    <section class="reveal contact-page" aria-labelledby="contact-page-title">
+      <h1 id="contact-page-title">Contact</h1>
+      <p class="contact-intro">If you work on policy, market infrastructure, tokenization, or token-economy design, I welcome the conversation. Tell me what you are building or evaluating and I will send the most relevant paper, resume version, or supporting material.</p>
+
+      <div class="contact-email-block">
+        <p class="contact-email-row">
+          <a href="mailto:zach@tokenization.systems" id="emailAddr" class="contact-email">zach@tokenization.systems</a>
+          <button id="copyEmail" type="button" class="contact-copy-email-btn" aria-label="Copy email address" aria-live="polite">Copy email</button>
+        </p>
+        <p class="contact-response">I read every email and typically reply within 24 hours.</p>
       </div>
-      <div class="section-title">
-        <h1 id="contact-page-title">Tell me what you&rsquo;re building or evaluating.</h1>
+
+      <div class="contact-bio">
+        <h2>About the researcher</h2>
+        <p>Zach Zukowski served six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. He built the firm&rsquo;s research function from scratch, led a four-analyst team, and supported diligence across approximately 250 investments and approximately $500M in assets under management.</p>
+        <p>His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Federal Reserve and policy audiences, institutional asset managers, and stablecoin and payments strategy teams. The program has five papers on SSRN, with work submitted to the Federal Reserve Board and FRBNY Fifth Conference on the International Roles of the U.S. Dollar.</p>
+        <p>Two signature frameworks anchor the program. The Control Layer Intensity Index (CLII) scores regulatory intensity at the gateway layer across five dimensions. The Minimum Viable Equivalence Packs (MVEP) framework specifies the minimum diligence artifacts required to clear a risk committee&rsquo;s threshold for any tokenized product, reverse-engineered from the USDC/SVB failure of March 2023.</p>
       </div>
-      <p class="contact-page-deck">For roles, live policy or product questions, speaking, and advisory. I&rsquo;ll point you to the most relevant paper, resume version, or supporting material.</p>
-      <div class="contact-hero-ctas" role="group" aria-label="Contact and quick links">
-        <a class="action primary" href="mailto:zach@cryptozach.com">Email Zach</a>
-        <a class="action secondary" href="/papers/routing-the-dollar">Read the flagship brief</a>
-        <a class="action secondary" href="/resume">View resume profiles</a>
-        <a class="action secondary" href="/speaker">Speaker &amp; advisory</a>
-        <a class="action secondary" href="/research">Research</a>
+
+      <div class="contact-actions">
+        <h2>What I can send</h2>
+        <ul>
+          <li>The paper most relevant to your current problem</li>
+          <li>A role-targeted resume (policy, asset management, or stablecoin/payments)</li>
+          <li>Supporting data or methodology detail for any published finding</li>
+        </ul>
       </div>
-    </section>
 
-    <section class="reveal contact-page-detail" aria-labelledby="contact-paths-title">
-      <div class="contact-body-grid">
-        <div class="contact-segment-email-paths">
-          <!-- NOTE: Cloudflare Email Address Obfuscation must be disabled for this
-               domain in the Cloudflare dashboard, or mailto links will return 404
-               in automated tests. This is a Cloudflare dashboard setting, not a
-               code fix. -->
-          <div class="contact-box contact-box--email-only">
-            <div class="left">
-              <strong>Email</strong>
-              <div class="email-row">
-                <a id="emailAddr" href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
-                <button id="copyEmail" class="action copy" type="button" aria-label="Copy email address" aria-live="polite">Copy email</button>
-              </div>
-              <div class="response-time">
-                <span class="response-dot" aria-hidden="true"></span>
-                I read every email and typically reply within 24 hours.
-              </div>
-            </div>
-            <div class="contact-email-shimmer" aria-hidden="true"></div>
-          </div>
-
-          <div class="contact-best-first" id="contact-best-first-email" aria-labelledby="contact-best-first-title">
-            <h2 id="contact-best-first-title" class="contact-best-first__title">Best first email</h2>
-            <p class="contact-best-first__intro">The fastest way to get a useful reply is to include:</p>
-            <ul class="contact-first-email-list">
-              <li>What you&rsquo;re building or evaluating.</li>
-              <li>Who the audience or decision-maker is.</li>
-              <li>Any deadline, hiring timeline, or event date.</li>
-              <li>Whether you want a paper, resume version, writing sample, or framework overview.</li>
-            </ul>
-            <p class="contact-story-spine">If you&rsquo;re choosing where to start: <a href="/overview">Overview</a> defines the objects. <a href="/frameworks">Frameworks</a> defines the tools. <a href="/research">Research</a> shows the evidence.</p>
-          </div>
-
-          <h2 id="contact-paths-title" class="contact-subsection-label">Quick paths</h2>
-          <div class="grid grid--contact-paths">
-            <article class="card contact-path-card">
-              <h3>Role or hiring fit</h3>
-              <p>Policy, asset management, stablecoin/payments, or risk/controls. Start with the profile page that matches the role.</p>
-              <p class="contact-path-card__cta"><a href="/resume">View resume profiles</a></p>
-            </article>
-            <article class="card contact-path-card">
-              <h3>Live policy or product question</h3>
-              <p>Working through a live question in market infrastructure, tokenization, or product design? Start with the flagship brief or send the question directly.</p>
-              <p class="contact-path-card__cta"><a href="/papers/routing-the-dollar">Read the flagship brief</a></p>
-            </article>
-            <article class="card contact-path-card">
-              <h3>Speaking &amp; advisory</h3>
-              <p>Talk formats, bios, and booking for conferences, workshops, and client work.</p>
-              <p class="contact-path-card__cta"><a href="/speaker">Speaker &amp; advisory</a></p>
-            </article>
-            <article class="card contact-path-card">
-              <h3>Research program</h3>
-              <p>Seven-paper research program across digital money, tokenization, and token economies.</p>
-              <p class="contact-path-card__cta"><a href="/research">View research</a></p>
-            </article>
-          </div>
-        </div>
-
-        <div class="contact-segment-lower">
-          <div class="contact-use-case-routing" aria-labelledby="contact-use-case-title">
-            <h2 id="contact-use-case-title" class="contact-subsection-label contact-use-case-routing__heading">Best links by use case</h2>
-            <div class="contact-use-case-rows">
-              <div class="contact-use-case-row">
-                <div class="contact-use-case-row__prompt">Need role fit?</div>
-                <ul class="contact-use-case-row__links" role="list">
-                  <li><a class="action secondary" href="/resume/policy">Policy &amp; Market Infrastructure</a></li>
-                  <li><a class="action secondary" href="/resume/asset-management">Asset Management &amp; Tokenization</a></li>
-                  <li><a class="action secondary" href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a></li>
-                  <li><a class="action secondary" href="/resume/risk-controls">Risk, Controls &amp; Market Infrastructure</a></li>
-                </ul>
-              </div>
-              <div class="contact-use-case-row">
-                <div class="contact-use-case-row__prompt">Need the shortest way into the work?</div>
-                <ul class="contact-use-case-row__links" role="list">
-                  <li><a class="action secondary" href="/papers/routing-the-dollar">Read the 5-minute flagship brief</a></li>
-                </ul>
-              </div>
-              <div class="contact-use-case-row">
-                <div class="contact-use-case-row__prompt">Need the full evidence shelf?</div>
-                <ul class="contact-use-case-row__links" role="list">
-                  <li><a class="action secondary" href="/research">View research</a></li>
-                </ul>
-              </div>
-              <div class="contact-use-case-row">
-                <div class="contact-use-case-row__prompt">Need a talk, workshop, or advisory format?</div>
-                <ul class="contact-use-case-row__links" role="list">
-                  <li><a class="action secondary" href="/speaker">Speaker &amp; Advisory</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-linkedin-block" aria-labelledby="contact-linkedin-label">
-            <strong id="contact-linkedin-label">LinkedIn</strong>
-            <a class="action secondary" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a>
-          </div>
-        </div>
+      <div class="contact-links">
+        <a href="/speaker" class="cta-secondary">Speaking and advisory</a>
+        <a href="/research" class="cta-secondary">See the research</a>
       </div>
     </section>
     <footer class="reveal">
