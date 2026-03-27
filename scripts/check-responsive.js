@@ -4,6 +4,7 @@
  * no horizontal overflow and that key layout elements are visible.
  * Usage: BASE_URL=http://127.0.0.1:8080 node scripts/check-responsive.js
  * Prerequisite: local server running on the BASE_URL port (e.g. python3 -m http.server 8080).
+ * Pages: index, selected-research, MVEP paper (checklist toggle, 10 rows, horizontal scroll in panel at 768px and below).
  */
 
 const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8080";
@@ -18,6 +19,7 @@ const VIEWPORTS = [
 const PAGES = [
   { path: "/", name: "index" },
   { path: "/selected-research.html", name: "selected-research" },
+  { path: "/papers/minimum-viable-equivalence-packs.html", name: "mvep-paper" },
 ];
 
 async function checkOverflow(page) {
@@ -42,6 +44,67 @@ async function checkKeyElements(page, pageName) {
     const cardBox = await card.boundingBox().catch(() => null);
     if (!cardBox || cardBox.width === 0) return { ok: false, msg: "no research card visible" };
   }
+  return { ok: true };
+}
+
+async function checkMvepChecklist(page, viewportLabel, viewportWidth) {
+  const toggle = page.locator(".mvep-checklist-toggle").first();
+  await toggle.waitFor({ state: "visible", timeout: 8000 });
+  const toggleBox = await toggle.boundingBox();
+  if (!toggleBox || toggleBox.width < 200) {
+    return { ok: false, msg: "checklist toggle missing or too narrow" };
+  }
+
+  const expandedBefore = await toggle.getAttribute("aria-expanded");
+  if (expandedBefore !== "false") {
+    return { ok: false, msg: "checklist should start collapsed (aria-expanded false)" };
+  }
+
+  await toggle.click();
+  const wrapper = page.locator(".mvep-checklist-wrapper").first();
+  const hasOpen = await wrapper.evaluate((el) => el.classList.contains("open"));
+  if (!hasOpen) {
+    return { ok: false, msg: "wrapper missing open class after click" };
+  }
+  const expandedOpen = await toggle.getAttribute("aria-expanded");
+  if (expandedOpen !== "true") {
+    return { ok: false, msg: "aria-expanded should be true when open" };
+  }
+
+  const rowCount = await page.locator(".mvep-table.checklist-main tbody tr").count();
+  if (rowCount !== 10) {
+    return { ok: false, msg: `expected 10 category rows, got ${rowCount}` };
+  }
+
+  const contentScrolls = await page.evaluate(() => {
+    const panel = document.querySelector(".mvep-checklist-content");
+    const table = document.querySelector(".mvep-table.checklist-main");
+    if (!panel || !table) return { ok: false, msg: "panel or main table missing" };
+    const panelOpen = window.getComputedStyle(panel).display === "block";
+    if (!panelOpen) return { ok: false, msg: "checklist content not display block when open" };
+    return { ok: true, panelScrollW: panel.scrollWidth, panelClientW: panel.clientWidth };
+  });
+  if (!contentScrolls.ok) return contentScrolls;
+
+  if (viewportWidth <= 768) {
+    if (contentScrolls.panelScrollW <= contentScrolls.panelClientW + 2) {
+      return {
+        ok: false,
+        msg: `expected checklist panel to scroll horizontally at ${viewportLabel} (scrollWidth ${contentScrolls.panelScrollW} vs clientWidth ${contentScrolls.panelClientW})`,
+      };
+    }
+  }
+
+  await toggle.click();
+  const hasOpenAfter = await wrapper.evaluate((el) => el.classList.contains("open"));
+  if (hasOpenAfter) {
+    return { ok: false, msg: "wrapper should not have open class after second click" };
+  }
+  const expandedClosed = await toggle.getAttribute("aria-expanded");
+  if (expandedClosed !== "false") {
+    return { ok: false, msg: "aria-expanded should be false when closed" };
+  }
+
   return { ok: true };
 }
 
@@ -100,6 +163,13 @@ async function run() {
           const cardOverflow = await checkResearchCardsNoOverflow(page, vp.width);
           if (cardOverflow) {
             failures.push({ viewport: vp.label, page: name, assertion: cardOverflow });
+          }
+        }
+
+        if (name === "mvep-paper") {
+          const mvep = await checkMvepChecklist(page, vp.label, vp.width);
+          if (!mvep.ok) {
+            failures.push({ viewport: vp.label, page: name, assertion: mvep.msg || "mvep checklist" });
           }
         }
       }
