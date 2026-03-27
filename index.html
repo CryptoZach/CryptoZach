@@ -54,15 +54,15 @@
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="theme-color" content="#0a0c10" />
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="./styles.css?v=61" />
+  <link rel="stylesheet" href="/styles.css?v=61" />
   <style id="homepage-sprint1-density">
-    /* Sprint 3: muted green accent on the three compact sections only (hero keeps theme tokens from styles.css). */
+    /* Compact sections use site --accent from styles.css (same blue as other pages). */
     /* Matrix glyphs use rgba(74, 222, 128) (#4ade80) in script.js. */
     /* Sprint 2 Fix 1: hero H1 weight (scoped; do not restyle other pages) */
     #hero.hero--homepage h1#hero-title {
@@ -73,9 +73,8 @@
       margin-bottom: 1rem;
     }
 
-    /* Match section eyebrow green (Roles / Frameworks / Research scoped --accent). */
     #hero.hero--homepage .hero-eyebrow-kicker {
-      color: #1a7a3a;
+      color: var(--accent);
     }
 
     /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
@@ -208,22 +207,13 @@
     #role-paths.section-compact,
     #frameworks.section-compact,
     #research.section-compact,
-    #about.section-compact {
+    #about.section-compact,
+    #contact.section-compact {
       padding: 4rem 0;
       border-top: 1px solid var(--line);
       max-width: 960px;
       margin-left: auto;
       margin-right: auto;
-      --accent: #1a7a3a;
-      --accent-hover: #145e2d;
-      --accent-light: #e8f5ec;
-    }
-
-    :root[data-theme="dark"] #role-paths.section-compact,
-    :root[data-theme="dark"] #frameworks.section-compact,
-    :root[data-theme="dark"] #research.section-compact,
-    :root[data-theme="dark"] #about.section-compact {
-      --accent-light: color-mix(in srgb, #1a7a3a 14%, var(--panel) 86%);
     }
 
     /* Sprint 3 Fix 5: section eyebrow labels (Roles / Frameworks / Research). */
@@ -346,10 +336,25 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       border-style: solid;
+      padding: 0;
+      overflow: hidden;
     }
 
     :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card {
       border-color: var(--line-strong);
+    }
+
+    #frameworks.section-compact .compact-card img,
+    #frameworks.section-compact .compact-card picture img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      object-position: top left;
+      border-radius: 12px 12px 0 0;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      margin: 0;
+      display: block;
     }
 
     .compact-card h3 {
@@ -365,15 +370,13 @@
       line-height: 1.6;
     }
 
-    #frameworks.section-compact .compact-card-thumb {
-      display: block;
-      width: calc(100% + 4rem);
-      max-width: none;
-      margin: -1.75rem -2rem 1rem -2rem;
-      border-radius: 12px 12px 0 0;
-      object-fit: contain;
-      aspect-ratio: 16 / 9;
-      background: color-mix(in srgb, var(--panel) 70%, transparent);
+    #frameworks.section-compact .compact-card h3 {
+      padding: 1.25rem 1.75rem 0;
+      margin-bottom: 0.5rem;
+    }
+
+    #frameworks.section-compact .compact-card p {
+      padding: 0 1.75rem 1.5rem;
     }
 
     @media (max-width: 640px) {
@@ -535,8 +538,6 @@
     }
 
     .site-footer {
-      --accent: #1a7a3a;
-      --accent-hover: #145e2d;
       border-top: 1px solid var(--border-light, #eee);
       padding: 3rem 0 2rem;
       margin-top: 2rem;
@@ -596,8 +597,8 @@
     }
 
     .footer-social a {
-      font-size: 0.82rem;
-      color: var(--text-secondary, #999);
+      font-size: 0.85rem;
+      color: var(--text-secondary, #666);
       text-decoration: none;
       transition: color 0.15s;
     }
@@ -608,15 +609,109 @@
 
     .site-footer .footer-copy {
       font-size: 0.78rem;
-      color: var(--text-secondary, #999);
+      color: var(--text-tertiary, var(--muted-soft, #707070));
       margin-top: 0.5rem;
-      max-width: 480px;
+      max-width: 520px;
+      white-space: normal;
+      overflow: visible;
+    }
+
+    #main #contact.section-compact > p:first-of-type {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-secondary, var(--muted));
+      margin: 0;
+      max-width: 680px;
+    }
+
+    #main #contact.section-compact .contact-details {
+      margin-top: 1.5rem;
+    }
+
+    #main #contact.section-compact .contact-email {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    #main #contact.section-compact .contact-email a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    #main #contact.section-compact .contact-email a:hover {
+      color: var(--accent);
+    }
+
+    #main #contact.section-compact .copy-email-btn {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-secondary, var(--muted));
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    #main #contact.section-compact .copy-email-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    #main #contact.section-compact .contact-note {
+      font-size: 0.85rem;
+      color: var(--text-secondary, var(--muted));
+      margin-bottom: 1.25rem;
+    }
+
+    #main #contact.section-compact .contact-details .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.25rem;
+      margin-left: 0;
+      margin-top: 0;
+    }
+
+    #main #contact.section-compact .contact-details .contact-links a {
+      font-size: 0.88rem;
+      color: var(--text-secondary, var(--muted));
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    #main #contact.section-compact .contact-details .contact-links a:hover {
+      color: var(--accent);
+    }
+
+    #main #contact.section-compact .contact-speaker-link {
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent) !important;
+      font-weight: 500;
+    }
+
+    #main #contact.section-compact .contact-speaker-link:hover {
+      background: var(--accent);
+      color: #fff !important;
     }
 
     @media (max-width: 640px) {
       .site-footer .footer-links,
       .footer-social {
         flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      #main #contact.section-compact .contact-details .contact-links {
+        flex-direction: column;
+        align-items: flex-start;
         gap: 0.75rem;
       }
     }
@@ -672,7 +767,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <a href="./index.html" style="text-decoration:none;color:inherit">
+        <a href="/" style="text-decoration:none;color:inherit">
           <strong>Zach Zukowski</strong>
           <span>Digital Money • Tokenization • Market Infrastructure</span>
         </a>
@@ -684,12 +779,12 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="./start-here.html">Overview</a>
-          <a class="navlink" href="./Operating-Model.html">Frameworks</a>
-          <a class="navlink" href="./selected-research.html">Research</a>
-          <a class="navlink" href="./resume.html">Resume</a>
-          <a class="navlink" href="./speaker-advisory.html">Speaker &amp; Advisory</a>
-          <a class="navlink" href="./contact.html">Contact</a>
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/research">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
         </div>
 
         <div class="header-social" role="group" aria-label="Social links">
@@ -717,12 +812,12 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
     <div class="mobile-nav-linkset">
-      <a class="navlink" href="./start-here.html">Overview</a>
-      <a class="navlink" href="./Operating-Model.html">Frameworks</a>
-      <a class="navlink" href="./selected-research.html">Research</a>
-      <a class="navlink" href="./resume.html">Resume</a>
-      <a class="navlink" href="./speaker-advisory.html">Speaker &amp; Advisory</a>
-      <a class="navlink" href="./contact.html">Contact</a>
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink" href="/research">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
     </div>
     <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
       <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -757,14 +852,14 @@
             Submitted to the <a href="https://www.newyorkfed.org/research/conference/international-roles-of-the-us-dollar" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
           </p>
           <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
-            <a class="btn btn-primary cta-primary matrix-hover-activator" href="./papers/routing-the-dollar.html">Read the flagship paper</a>
+            <a class="btn btn-primary cta-primary matrix-hover-activator" href="/papers/routing-the-dollar">Read the flagship paper</a>
           </div>
           <p class="hero-anchors">
-            <a href="./selected-research.html">All research</a>
+            <a href="/research">All research</a>
             <span aria-hidden="true"> · </span>
-            <a href="./resume.html">Resume</a>
+            <a href="/resume">Resume</a>
             <span aria-hidden="true"> · </span>
-            <a href="./speaker-advisory.html">Speaker &amp; advisory</a>
+            <a href="/speaker">Speaker &amp; advisory</a>
           </p>
         </div>
       </div>
@@ -774,66 +869,66 @@
       <span class="section-eyebrow">Roles</span>
       <h2 id="audience-title">Four roles, one research program.</h2>
       <div class="role-pills">
-        <a href="./resume/policy-market-infrastructure.html" class="role-pill">
+        <a href="/resume/policy" class="role-pill">
           <strong>Policy &amp; Market Infrastructure</strong>
           <span>Fed transmission, gateway concentration, SVB stress analysis</span>
         </a>
-        <a href="./resume/asset-management-tokenization.html" class="role-pill">
+        <a href="/resume/asset-management" class="role-pill">
           <strong>Asset Management &amp; Tokenization</strong>
           <span>Equivalence testing, institutional diligence, composed products</span>
         </a>
-        <a href="./resume/stablecoin-payments-strategy.html" class="role-pill">
+        <a href="/resume/stablecoin-payments" class="role-pill">
           <strong>Stablecoin &amp; Payments Strategy</strong>
           <span>Reserve structure, redemption mechanics, control-layer design</span>
         </a>
-        <a href="./resume/risk-controls-market-infrastructure.html" class="role-pill">
+        <a href="/resume/risk-controls" class="role-pill">
           <strong>Risk, Controls &amp; Market Infrastructure</strong>
           <span>Operational risk, monitoring infrastructure, committee readiness</span>
         </a>
       </div>
-      <p class="section-link"><a href="./resume.html">View all roles and resumes &#x2192;</a></p>
+      <p class="section-link"><a href="/resume">View all roles and resumes &#x2192;</a></p>
     </section>
 
     <section class="section-compact reveal" id="frameworks" aria-labelledby="frameworks-title">
       <span class="section-eyebrow">Frameworks</span>
       <h2 id="frameworks-title">Signature frameworks.</h2>
       <div class="card-grid-2">
-        <a href="./papers/routing-the-dollar.html" class="compact-card" id="clii-home">
-          <img class="compact-card-thumb" src="./Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Control Layer Intensity Index diagram: stablecoin gateway paths and relative CLII levels" loading="lazy" />
+        <a href="/papers/routing-the-dollar" class="compact-card" id="clii-home">
+          <img class="compact-card-thumb" src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Control Layer Intensity Index diagram: stablecoin gateway paths and relative CLII levels" loading="lazy" />
           <h3>CLII (Control Layer Intensity Index)</h3>
           <p>Scores regulatory intensity at the gateway layer across five dimensions. Stress performance varies by gateway, not by token.</p>
         </a>
-        <a href="./papers/minimum-viable-equivalence-packs.html" class="compact-card" id="mvep-home">
-          <img class="compact-card-thumb" src="./Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack, ten-category committee checklist cover" loading="lazy" />
+        <a href="/papers/mvep" class="compact-card" id="mvep-home">
+          <img class="compact-card-thumb" src="/Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack, ten-category committee checklist cover" loading="lazy" />
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
           <p>Ten categories testing whether a tokenized product maintains equivalence under stress. Reverse-engineered from the SVB weekend.</p>
         </a>
       </div>
-      <p class="section-link"><a href="./Operating-Model.html">View all frameworks &#x2192;</a></p>
+      <p class="section-link"><a href="/frameworks">View all frameworks &#x2192;</a></p>
     </section>
 
     <section class="section-compact reveal" id="research" aria-labelledby="research-title">
       <span class="section-eyebrow">Research</span>
       <h2 id="research-title">Recent papers.</h2>
       <div class="card-grid-3">
-        <a href="./papers/routing-the-dollar.html" class="research-card-sm">
+        <a href="/papers/routing-the-dollar" class="research-card-sm">
           <span class="badge-sm badge-review">Under review</span>
           <h3>Routing the Dollar</h3>
           <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
           <span class="card-venue">FRBNY conference review · March 2026</span>
         </a>
-        <a href="./papers/minimum-viable-equivalence-packs.html" class="research-card-sm">
+        <a href="/papers/mvep" class="research-card-sm">
           <span class="badge-sm">Public</span>
           <h3>Minimum Viable Equivalence Pack</h3>
           <p>Ten-category diligence framework for tokenized products. Reverse-engineered from the SVB weekend.</p>
         </a>
-        <a href="./papers/adaptive-tokenomics.html" class="research-card-sm">
+        <a href="/papers/adaptive-tokenomics" class="research-card-sm">
           <span class="badge-sm">Public</span>
           <h3>Adaptive Tokenomics</h3>
           <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
         </a>
       </div>
-      <p class="section-link"><a href="./selected-research.html">View all research &#x2192;</a></p>
+      <p class="section-link"><a href="/research">View all research &#x2192;</a></p>
     </section>
 
     <section class="section-compact reveal about-section" id="about" aria-labelledby="about-title">
@@ -851,41 +946,23 @@
       </div>
     </section>
 
-    <section id="contact" class="reveal" aria-labelledby="contact-title">
-      <div class="section-title">
-        <h2 id="contact-title">Contact</h2>
-        <p>If you're working on policy, market infrastructure, tokenization, or token-economy design, I'd welcome the conversation.<br>Tell me what you're building or evaluating and I'll send the most relevant paper, resume version, or supporting material.</p>
-      </div>
+    <section class="section-compact reveal" id="contact" aria-labelledby="contact-title">
+      <span class="section-eyebrow">Contact</span>
+      <h2 id="contact-title">Get in touch.</h2>
+      <p>If you're working on policy, market infrastructure, tokenization, or token-economy design, I'd welcome the conversation. Tell me what you're building or evaluating and I'll send the most relevant paper, resume version, or supporting material.</p>
 
-      <div class="contact-box contact-strip-simple">
-        <div class="left">
-          <strong>Email</strong>
-          <div class="email-row">
-            <a id="emailAddr" href="mailto:zach@cryptozach.com?subject=Inquiry">zach@cryptozach.com</a>
-            <button id="copyEmail" class="action copy" type="button" aria-label="Copy email address" aria-live="polite">Copy email</button>
-          </div>
-          <div class="response-time">
-            <span class="response-dot" aria-hidden="true"></span>
-            I read every email and typically reply within 24 hours.
-          </div>
-          <div class="contact-strip-row">
-            <p class="contact-strip-cta"><a href="https://cryptozach.com/contact">Get in touch</a></p>
-            <div class="contact-links">
-          <a class="contact-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            <span>LinkedIn</span>
-          </a>
-          <a class="contact-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN">
-            <svg aria-hidden="true" viewBox="0 6.5 24 10" fill="currentColor" width="16" height="16"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg>
-            <span>SSRN</span>
-          </a>
-          <a class="contact-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            <span>X</span>
-          </a>
-            <p class="contact-speaker-cta"><a href="./speaker-advisory.html">Speaking &amp; advisory →</a></p>
-            </div>
-          </div>
+      <div class="contact-details">
+        <p class="contact-email">
+          <a id="emailAddr" href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
+          <button id="copyEmail" class="copy-email-btn" type="button" aria-label="Copy email address" aria-live="polite">Copy email</button>
+        </p>
+        <p class="contact-note">I read every email and typically reply within 24 hours.</p>
+        <div class="contact-links">
+          <a href="/contact">Get in touch</a>
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a>
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
+          <a href="/speaker" class="contact-speaker-link">Speaking &amp; advisory &#x2192;</a>
         </div>
       </div>
     </section>
@@ -897,17 +974,17 @@
           <span class="footer-tagline">Tokenization.Systems</span>
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
-          <a href="/selected-research.html">Research</a>
-          <a href="/Operating-Model.html">Frameworks</a>
-          <a href="/resume.html">Resume</a>
-          <a href="/speaker-advisory.html">Speaker</a>
-          <a href="/contact.html">Contact</a>
+          <a href="/research">Research</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker</a>
+          <a href="/contact">Contact</a>
         </nav>
         <div class="footer-social">
-          <a href="mailto:zach@cryptozach.com" aria-label="Email">zach@cryptozach.com</a>
-          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener" aria-label="SSRN">SSRN</a>
-          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener" aria-label="X">X</a>
+          <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a>
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
         </div>
         <p class="footer-copy">Independent, empirically backed research on the infrastructure behind digital money.</p>
       </div>
@@ -918,6 +995,6 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="./script.js?v=118"></script>
+  <script defer src="/script.js?v=118"></script>
 </body>
 </html>
