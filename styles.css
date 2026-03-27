@@ -7806,14 +7806,14 @@ footer{
   background: var(--panel);
 }
 .paper-detail-page .paper-detail{
-  max-width: 64rem;
+  max-width: var(--max);
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-xl);
+  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
   min-width: 0;
 }
 /* Canonical paper template uses .paper-page; avoid narrow 65ch override */
 .paper-detail-page .paper-page.paper-detail{
-  max-width: 64rem;
+  max-width: var(--max);
 }
 .paper-detail-header{
   margin-bottom: var(--space-xl);
@@ -7883,9 +7883,9 @@ footer{
 
 /* Canonical paper page template (breadcrumb, track, thesis, takeaways, access, related) */
 .paper-page{
-  max-width: 64rem;
+  max-width: var(--max);
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-xl);
+  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
   min-width: 0;
 }
 .paper-breadcrumb{
@@ -9268,17 +9268,6 @@ footer{
 
 /* Paper page: wide desktop (1280px+) */
 @media (min-width: 1280px){
-  .paper-page{
-    max-width: 72rem;
-    padding: var(--space-2xl) 3rem;
-  }
-  .paper-detail-page .paper-detail{
-    max-width: 72rem;
-    padding: var(--space-2xl) 3rem;
-  }
-  .paper-detail-page .paper-page.paper-detail{
-    max-width: 72rem;
-  }
   .paper-thesis{
     font-size: 1.4em;
     padding-left: var(--space-xl);
@@ -9288,18 +9277,21 @@ footer{
 /* Paper page: tablet (768px to 1279px) */
 @media (max-width: 1279px) and (min-width: 769px){
   .paper-page{
-    padding: var(--space-xl) var(--space-lg);
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+  }
+  .paper-detail-page .paper-detail{
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
   }
 }
 
 @media (max-width: 768px){
   .paper-page{
-    padding: var(--space-xl) var(--space-lg);
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
     max-width: none;
   }
   .paper-detail-page .paper-detail{
     max-width: none;
-    padding: var(--space-xl) var(--space-lg);
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
   }
   .paper-detail-page .paper-page.paper-detail{
     max-width: none;
@@ -9332,7 +9324,10 @@ footer{
 /* Paper page: mobile (375px and below) */
 @media (max-width: 480px){
   .paper-page{
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
+  }
+  .paper-detail-page .paper-detail{
+    padding: var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   }
   .paper-thesis{
     font-size: 1.15em;
