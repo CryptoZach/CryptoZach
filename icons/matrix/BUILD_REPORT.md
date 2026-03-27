@@ -11,12 +11,12 @@
 |------|--------|------|
 | `1inch.png` | bundled WebP (build-sources/1inch.webp) | 1059B |
 | `aapl.png` | Simple Icons (apple) | 587B |
-| `aave.png` | bundled PNG (build-sources/aave.png) | 671B |
+| `aave.png` | bundled PNG (build-sources/aave.png) | 299B |
 | `ada.png` | Simple Icons (cardano) | 820B |
 | `algo.png` | Simple Icons (algorand) | 698B |
 | `amd.png` | bundled SVG (build-sources/amd.svg) | 510B |
 | `apt.png` | bundled SVG (build-sources/apt.svg) | 618B |
-| `arb.png` | bundled PNG (build-sources/arb.png) | 1059B |
+| `arb.png` | bundled PNG (build-sources/arb.png) | 1156B |
 | `arc.png` | bundled PNG (build-sources/arc.png) | 704B |
 | `atom.png` | bundled SVG (build-sources/atom.svg) | 496B |
 | `avax.png` | bundled SVG (build-sources/avax.svg) | 494B |
@@ -34,7 +34,7 @@
 | `coinbase.png` | bundled SVG (build-sources/coinbase.svg) | 502B |
 | `crv.png` | bundled PNG (build-sources/crv.png) | 908B |
 | `csco.png` | Simple Icons (cisco) | 659B |
-| `dai.png` | bundled PNG (build-sources/dai.png) | 595B |
+| `dai.png` | bundled PNG (build-sources/dai.png) | 422B |
 | `doge.png` | Simple Icons (dogecoin) | 752B |
 | `dot.png` | Simple Icons (polkadot) | 720B |
 | `eth.png` | bundled SVG (build-sources/eth.svg) | 1257B |
@@ -44,7 +44,7 @@
 | `googl.png` | Simple Icons (google) | 694B |
 | `gs.png` | bundled SVG (build-sources/gs.svg) | 642B |
 | `hbar.png` | bundled PNG (build-sources/hbar.png) | 372B |
-| `hnt.png` | bundled PNG (build-sources/hnt.png) | 1027B |
+| `hnt.png` | bundled PNG (build-sources/hnt.png) | 357B |
 | `hood.png` | bundled SVG (build-sources/hood.svg) | 714B |
 | `hyperliquid.png` | bundled SVG (build-sources/hyperliquid.svg) | 510B |
 | `ibm.png` | bundled PNG (build-sources/ibm.png) | 637B |
@@ -56,26 +56,26 @@
 | `kinexys.png` | bundled SVG (build-sources/kinexys.svg) | 368B |
 | `ko.png` | Simple Icons (cocacola) | 707B |
 | `kraken.png` | bundled SVG (build-sources/kraken.svg) | 559B |
-| `layerzero.png` | bundled SVG (build-sources/layerzero.svg) | 560B |
+| `layerzero.png` | bundled SVG (build-sources/layerzero.svg) | 672B |
 | `ldo.png` | bundled PNG (build-sources/ldo.png) | 430B |
-| `link.png` | bundled SVG (build-sources/link.svg) | 470B |
+| `link.png` | bundled SVG (build-sources/link.svg) | 241B |
 | `ltc.png` | bundled PNG (build-sources/ltc.png) | 555B |
 | `m0.png` | bundled PNG (build-sources/m0.png) | 567B |
 | `ma.png` | Simple Icons (mastercard) | 585B |
 | `meta.png` | Simple Icons (meta) | 755B |
 | `mkr.png` | bundled SVG (build-sources/mkr.svg) | 327B |
 | `moneygram.png` | Simple Icons (moneygram) | 769B |
-| `msft.png` | bundled SVG (build-sources/msft.svg) | 162B |
-| `mstr.png` | bundled PNG (build-sources/mstr.png) | 528B |
+| `msft.png` | bundled SVG (build-sources/msft.svg) | 128B |
+| `mstr.png` | bundled PNG (build-sources/mstr.png) | 1943B |
 | `nasdaq.png` | bundled SVG (build-sources/nasdaq.svg) | 610B |
 | `near.png` | Simple Icons (near) | 656B |
 | `nflx.png` | bundled PNG (build-sources/nflx.png) | 626B |
 | `nvda.png` | Simple Icons (nvidia) | 761B |
 | `nyse.png` | bundled PNG (build-sources/nyse.png) | 678B |
 | `ondo.png` | bundled PNG (build-sources/ondo.png) | 1159B |
-| `op.png` | bundled PNG (build-sources/op.png) | 876B |
+| `op.png` | bundled PNG (build-sources/op.png) | 588B |
 | `orcl.png` | bundled SVG (build-sources/orcl.svg) | 519B |
-| `pypl.png` | bundled PNG (build-sources/pypl.png) | 915B |
+| `pypl.png` | bundled PNG (build-sources/pypl.png) | 1093B |
 | `revolut.png` | Simple Icons (revolut) | 598B |
 | `rndr.png` | bundled SVG (build-sources/rndr.svg) | 551B |
 | `schw.png` | bundled SVG (build-sources/schw.svg) | 407B |
@@ -96,7 +96,7 @@
 | `usdt.png` | bundled PNG (build-sources/usdt.png) | 590B |
 | `venmo.png` | Iconify (fa7-brands/venmo-v) | 523B |
 | `visa.png` | Iconify (simple-icons/visa) | 582B |
-| `wfc.png` | bundled PNG (icons/matrix/wordmark-option-1/wfc.png) | 683B |
+| `wfc.png` | bundled PNG (icons/matrix/wordmark-option-1/wfc.png) | 689B |
 | `wise.png` | bundled PNG (build-sources/wise.png) | 855B |
 | `wld.png` | bundled SVG (build-sources/wld.svg) | 779B |
 | `wmt.png` | Iconify (tabler/brand-walmart) | 453B |
