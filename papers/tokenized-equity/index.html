@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Tokenized Equity | Zach Zukowski</title>
+  <meta name="description" content="Robinhood vs Backed same-day launch: OTC loop vs transferable trackers, legal claim shape, liquidity rails, and where continuity beats openness." />
+  <meta name="author" content="Zach Zukowski" />
+
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cryptozach.com/papers/tokenized-equity" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image:alt" content="Tokenized equity: digital tokens and traditional stock representation" />
+  <link rel="canonical" href="https://cryptozach.com/papers/tokenized-equity" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://medium.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=35" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://cryptozach.com/research" },
+        { "@type": "ListItem", "position": 3, "name": "Tokenized Equity Vehicles: Key Findings", "item": "https://cryptozach.com/papers/tokenized-equity" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "name": "Tokenized Equity Vehicles: Key Findings",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://cryptozach.com" },
+      "datePublished": "2025-07",
+      "description": "Same-launch comparison of Robinhood stock tokens and Backed xStocks: legal claim, liquidity architecture, and how continuity trades off against composability.",
+      "url": "https://cryptozach.com/papers/tokenized-equity",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/tokenized-equity" },
+      "image": "https://cryptozach.com/Publication-Images/Tokenized-Equity-Image.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization.Systems" }
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Zach Zukowski</strong>
+          <span>Digital Money • Tokenization • Market Infrastructure</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <a href="/research">Research</a> &gt; Tokenized Equity Vehicles: Key Findings
+      </nav>
+
+      <figure class="paper-cover" aria-hidden="true">
+        <img class="thumb-wide" src="/Publication-Images/Tokenized-Equity-Image.png" width="1536" height="1024" alt="Tokenized equity: digital tokens and traditional stock representation" loading="eager" />
+      </figure>
+
+      <span class="paper-track-badge">Track A: Digital Money, Tokenization, and Market Infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge">Public</span>
+      </div>
+
+      <h1 id="paper-title">Tokenized Equity Vehicles: Key Findings</h1>
+
+      <p class="paper-metadata-strip">Medium · Jul 2025 · Asset Management / Tokenization / Market Structure</p>
+      <p class="paper-description-note">Summary current as of March 2026. Full article includes figures on Medium.</p>
+
+      <p class="paper-thesis">Two June 30, 2025 tokenized-equity launches in Europe took different paths to the same goal: giving users on crypto rails access to U.S. equities. <strong>Robinhood Stock Tokens</strong> are closed-loop OTC derivative contracts inside the Robinhood Europe UAB app (Arbitrum-based, EU-only, 24/5 trading). <strong>Backed xStocks</strong> are freely transferable tracker certificates issued through a Jersey SPV and backed 1:1 by segregated shares, distributed across Kraken, Bybit, and Solana DeFi venues (ERC-20 and SPL, 24/7 trading). The core trade-off is broker-wrapped synthetic exposure with internal liquidity versus open, collateralized, multi-venue tokenized certificates with composability and more technical risk.</p>
+
+      <div class="paper-takeaways">
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">1</span>
+          <p class="paper-takeaway-text"><strong>The central distinction is where the investor&rsquo;s claim sits.</strong> Robinhood users hold a contractual claim on Robinhood Europe (counterparty exposure, Lithuania&rsquo;s compensation scheme up to &euro;22,000). Backed holders hold tracker certificates backed by shares held through an SPV and secured through a Security Agent (stronger collateral chain if the issuer fails). Neither structure gives ordinary shareholder voting rights; both deliver economic exposure.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">2</span>
+          <p class="paper-takeaway-text"><strong>Transferability drives market structure.</strong> Robinhood centralizes liquidity inside one venue with a &plusmn;0.5% price collar and broker-as-principal execution. xStocks distribute liquidity across centralized exchanges and DeFi venues, where arbitrage and composability can tighten spreads over time, at the cost of more moving parts and more technical risk.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Policy &amp; compliance</span>
+        <span class="paper-audience-tag">Market structure</span>
+        <span class="paper-audience-tag">DeFi &amp; tokenization</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://medium.com/@CryptoZach/deep-diligence-1-tokenized-equity-220f4ef522c5" target="_blank" rel="noopener noreferrer">Read on Medium</a>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>Executive summary</h2>
+        <p>This article compares two tokenized-equity launch architectures from the same date: a closed-loop, OTC derivative model (Robinhood on Arbitrum) and an open, share-backed certificate model (Backed xStocks on Ethereum and Solana). The regulatory and central-bank pilots of late June and early July 2025 explain the timing; the article&rsquo;s contribution is the comparative anatomy of legal form, investor claim, liquidity architecture, and risk surface.</p>
+
+        <h2>1. Product overviews: two architectures</h2>
+        <p><strong>Robinhood Stock Tokens.</strong> OTC derivative contracts on a closed Arbitrum instance. Users buy inside the Robinhood app, cannot withdraw tokens to external wallets, and rely on Robinhood to quote prices, hedge exposure, and manage corporate-action adjustments. The blockchain layer exists but is largely invisible to the end user at launch. Legally closer to contract-for-difference broker contracts than to portable on-chain securities.</p>
+        <p><strong>Backed xStocks.</strong> Transferable tracker certificates (classified as debt securities) issued through a Jersey SPV, backed 1:1 by underlying shares held through custody arrangements and secured by a Security Agent. Launched as ERC-20 and Solana SPL tokens, with distribution across Kraken, Bybit, and Solana DeFi venues. Broader chain expansion discussed as a forward path.</p>
+        <p><em>Figures:</em> product and rights diagrams appear in the full Medium article.</p>
+
+        <h2>2. Regulatory context: launch catalysts, not blanket approvals</h2>
+        <p>The late-June/early-July 2025 regulatory backdrop created a more favorable window for launch but did not amount to a universal approval for tokenized equities as a category.</p>
+        <p><strong>EU:</strong> ESMA&rsquo;s DLT Pilot review (25 Jun) recommended a permanent framework; MiCA/MiFID templates reduced ambiguity for tokenized instruments.</p>
+        <p><strong>U.S.:</strong> FINRA licensed Dinari (26 Jun); the SEC remained in an observational posture.</p>
+        <p><strong>ECB:</strong> The &ldquo;Pontes/Appia&rdquo; wholesale-DLT pilots (1 Jul) signaled future central-bank-money settlement on DLT rails.</p>
+        <p>The analytic point is how each product fits into existing legal frameworks: Robinhood used a non-transferable derivative structure to stay outside the prospectus path, while Backed used a Liechtenstein-approved prospectus and ISIN-bearing securities route.</p>
+
+        <h2>3. Technical architecture: closed rails versus open rails</h2>
+        <p><strong>Robinhood:</strong> Closed Arbitrum-based settlement environment with internal custody, broker-controlled execution, and a &plusmn;0.5% price collar around reference prices. Trust concentrates in one broker and one app experience: fewer attack surfaces, more single-firm dependence.</p>
+        <p><strong>xStocks:</strong> Multi-chain architecture using Chainlink CCIP for cross-chain state synchronization, Data Streams for sub-second pricing, and Proof of Reserve for collateral visibility. Trust distributes across smart contracts, custodians, exchanges, oracles, and bridge infrastructure: more composability, more technical and coordination risk.</p>
+
+        <h2>4. Investor rights and risk: neither product is direct share ownership</h2>
+        <p>Both products deliver economic exposure; neither gives direct shareholder status.</p>
+        <p><strong>Robinhood:</strong> Users hold a contractual claim on Robinhood Europe. Dividends pass through in-app. Robinhood can adjust, cash-settle, or terminate support for specific tokens. Investor protection through Lithuania&rsquo;s compensation scheme (&euro;22,000 cap). The central risk is direct platform and counterparty exposure.</p>
+        <p><strong>Backed:</strong> Holders are creditors of the certificate structure. Dividends accrue through the collateral stack and redemption economics. Holders rely on issuer, custodian, and Security Agent functioning correctly. The central risk is issuer/custodian/oracle/bridge failure, offset by a stronger collateral structure and external transferability.</p>
+        <p>The diligence question is claim quality: what exactly does the holder own, what is the claim priority if the issuer fails, and through how many intermediaries does the claim pass?</p>
+        <p><em>See Medium for the full rights and risk schematic.</em></p>
+
+        <h2>5. Market structure and liquidity: internalized versus network</h2>
+        <p><strong>Robinhood:</strong> Single-dealer internalized liquidity. Robinhood stands in the middle as principal market maker, offering stable app-native execution with opaque but capped spreads. 24/5 trading; activity queued or halted when underlying pricing is unavailable, preserving cleaner reference pricing.</p>
+        <p><strong>xStocks:</strong> Multi-venue arbitrage-linked liquidity across Kraken, Bybit, Raydium, and Jupiter. Spreads initially wider but compress over time through exchange competition, DeFi routing, and market-maker incentives. 24/7 trading, with a real off-hours trade-off: when U.S. equity markets are closed, token trading can drift from the last cash-market print, and arbitrage into real shares may not fully reopen until Monday.</p>
+        <p>The article&rsquo;s view is that xStocks have stronger long-run network effects if regulation remains manageable and DeFi integrations deepen. That is an argument about market structure and liquidity dynamics; it is not a demonstrated outcome from the June 2025 launch.</p>
+
+        <h2>6. Adoption scenarios (2025-2027)</h2>
+        <p>These are planning cases for how the broader tokenized-equity market could develop, conditional on specific catalysts. They are not findings from the June 2025 launch itself.</p>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Scenario</th>
+              <th scope="col">Illustrative TVL</th>
+              <th scope="col">Key conditions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Favorable</th>
+              <td>~$50B; spreads ~0.03%</td>
+              <td>U.S. no-action or pilot relief; ESMA cap lift; sustained chain reliability</td>
+            </tr>
+            <tr>
+              <th scope="row">Base</th>
+              <td>~$10B</td>
+              <td>Gradual EU/Asia growth; cautious U.S. stance; no major infrastructure failures</td>
+            </tr>
+            <tr>
+              <th scope="row">Adverse</th>
+              <td>~$1 to $2B</td>
+              <td>Regulatory clampdown, major custody/oracle/bridge failure, or prolonged market downturn</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>7. Risks: continuity versus openness</h2>
+        <p><strong>Robinhood:</strong> Counterparty solvency (Robinhood Europe as single point of failure), platform dependence (no external exit at launch), limited transferability, regulatory shutdown or forced cash-settlement risk.</p>
+        <p><strong>xStocks:</strong> Oracle failure or manipulation, CCIP/bridge failure or exploit, custody-chain breakdown, collateral shortfall if the SPV&rsquo;s share backing becomes impaired, and off-hours liquidity gaps where token prices diverge from underlying value.</p>
+        <p><strong>Both:</strong> Regulatory re-characterization risk (authorities could reclassify one or both products, forcing structural changes or withdrawal from market).</p>
+        <p>The underlying tension is between continuity (Robinhood&rsquo;s single-firm, controlled environment) and openness (xStocks&rsquo; distributed, composable, multi-venue architecture). Each model concentrates risk differently.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/mvep" class="companion-card">
+            <strong>Minimum Viable Equivalence Pack</strong>
+            <span>Ten categories for legal, operational, and economic equivalence under stress.</span>
+          </a>
+          <a href="/papers/routing-the-dollar" class="companion-card">
+            <strong>Routing the Dollar</strong>
+            <span>Gateway-level CLII classification for the market structure these equity rails plug into.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:zach@cryptozach.com?subject=Tokenized%20Equity%20-%20Discussion">zach@cryptozach.com</a></p>
+    </article>
+
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski. All rights reserved.</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=25"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

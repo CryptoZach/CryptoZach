@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Routing the Dollar | Zach Zukowski (CryptoZach)</title>
+  <meta name="description" content="Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data across 19 entities." />
+  <meta name="author" content="Zach Zukowski" />
+
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cryptozach.com/papers/routing-the-dollar" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image:alt" content="Routing the Dollar: CLII diagram" />
+  <link rel="canonical" href="https://cryptozach.com/papers/routing-the-dollar" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Routing the Dollar: CLII diagram" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=44" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://cryptozach.com/research" },
+        { "@type": "ListItem", "position": 3, "name": "Routing the Dollar", "item": "https://cryptozach.com/papers/routing-the-dollar" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "name": "Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar's International Functions",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://cryptozach.com" },
+      "datePublished": "2026-03",
+      "description": "Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data across 19 gateway entities.",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/routing-the-dollar" },
+      "image": "https://cryptozach.com/Publication-Images/Routing_The_Dollar_CLII.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization.Systems" }
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Zach Zukowski</strong>
+          <span>Digital Money • Tokenization • Market Infrastructure</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail brief-page" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="https://cryptozach.com">Home</a> &gt; <a href="https://cryptozach.com/research">Research</a> &gt; Routing the Dollar
+      </nav>
+
+      <span class="paper-track-badge">Track A: Stablecoin &amp; dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge">Under review</span>
+        <span class="badge">Code available</span>
+      </div>
+
+      <div id="brief-top">
+      <p class="paper-flagship-kicker">FLAGSHIP BRIEF · ~5 min brief · ~25 min full read</p>
+
+      <h1 id="paper-title">Routing the Dollar<br><span class="paper-subtitle-line">Gateway Infrastructure, Monetary Policy Transmission, and the Dollar&rsquo;s International Functions</span></h1>
+
+      <p class="paper-metadata-strip">March 2026 · SSRN · Submitted to the Fifth Conference on International Roles of the U.S. Dollar,<br>Federal Reserve Board and Federal Reserve Bank of New York, June 2026</p>
+      <p class="date-note">Description current as of March 2026.</p>
+
+      <div class="paper-thesis">
+        <p>The same dollar token can carry different regulatory obligations, different Fed-policy exposure, and different crisis behavior depending on which issuer, exchange, or protocol routes it.</p>
+        <p>This page explains why the gateway, not the token, is the policy-relevant unit.</p>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read on SSRN (PDF)</a>
+          <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/2031929065549025726" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
+        </div>
+        <div class="access-secondary">
+          <a href="https://github.com/CryptoZach/CryptoZach" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (data + replication)</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <a href="https://cryptozach.com/contact" class="access-link access-request">Request deeper memo</a>
+        </div>
+      </div>
+
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />When digital dollars scale, what matters more: the token itself, or the gateway that routes it?</p>
+        <p><strong>Answer</strong><br />The gateway matters more. The token may stay the same, but the routing layer changes the regulatory surface, the Fed-policy channel, and the way stress propagates. These are descriptive findings, not causal estimates.</p>
+        <p><strong>Evidence base</strong><br />Daily Ethereum transfer data tracking 19 gateway entities across 51 wallet addresses (covering 27.7% of USDC and USDT volume on Ethereum), monthly maps of which gateways transact with each other (15 gateways, 35 months, 3,804 unique pairs), stablecoin transfer volume across nine blockchains ($60.6T cumulative from February 2023 through January 2026, filtered by Artemis Analytics to remove spam and bot activity), and two stress episodes (SVB crisis and BUSD regulatory action).</p>
+      </aside>
+
+      <figure class="paper-cover brief-figure" aria-labelledby="brief-clii-caption">
+        <img src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Control Layer Intensity Index across 19 gateway entities" loading="eager" />
+        <figcaption id="brief-clii-caption">The Control Layer Intensity Index classifies regulatory intensity across 19 gateway entities on five dimensions. The CLII measures compliance posture; it is a classification tool for where obligations attach, not a predictor of how a gateway performs under stress. Tier 1 above 0.75; Tier 2 from 0.30 to 0.75; Tier 3 below 0.30.</figcaption>
+      </figure>
+
+      <section class="brief-problem" aria-labelledby="brief-problem-heading">
+        <h2 id="brief-problem-heading">The problem</h2>
+        <p>Dollar stablecoins now move across blockchains, exchanges, protocols, and regulatory jurisdictions at meaningful scale. Most debates still treat each stablecoin as a product to classify.</p>
+        <p>This paper argues that the more useful unit is the gateway: the issuer, exchange, or protocol that actually routes the token. Once you look at that layer, the same dollar token can behave very differently under tightening cycles, supervisory pressure, and crisis conditions.</p>
+      </section>
+
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-three-findings-heading">
+        <h2 id="brief-three-findings-heading" class="brief-findings-section-title">Three findings</h2>
+
+        <div class="brief-finding" id="brief-finding-card-1">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>Stablecoin supply moves through a dollar-specific, regime-dependent policy channel</h3>
+            <p>Stablecoin supply and Federal Reserve balance-sheet variables share a long-run relationship (cointegration) that is regime-dependent: strongest during quantitative tightening (when the Fed is shrinking its balance sheet) and weaker during easing (when rates are falling). The same relationship does not appear for Bitcoin or Ethereum, which points to a dollar-specific channel. A yield-spread mechanism helps explain the result: the gap between Treasury bill yields and on-chain lending rates forecasts stablecoin supply growth, consistent with issuers expanding supply when the reserve spread widens. No Federal Reserve policy announcement effect survives correction for multiple testing, so the evidence sits in the slower equilibrium and yield-spread channels.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Stablecoins already sit inside a dollar transmission channel, but the channel runs through issuer reserve economics and gateway structure, not headline announcements alone.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding" id="brief-finding-card-2">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>Gateway choice changes the regulatory and concentration outcome</h3>
+            <p>The Control Layer Intensity Index classifies regulatory intensity across 19 gateway entities on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Over three years, transfer volume doubled while the number of distinct counterparties fell by about one quarter and cross-gateway connections dropped from 5.8% to 2.6%. One market-making firm&rsquo;s share of identified counterparty volume rose from 1.4% to 19.9%. Tier 1 is effectively a Coinbase-Circle duopoly (56%/44% of Tier 1 volume).</p>
+            <p>Usage expanded. Control consolidated.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Aggregate stablecoin supply is too blunt to monitor the system well. Gateway-level flow and concentration data reveal the control layer that aggregate numbers do not capture.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding" id="brief-finding-card-3">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>Stress episodes caused rotation across dollar gateways, not exit from dollar-pegged instruments</h3>
+            <p>In the monitored Ethereum gateway sample, the share of volume routed through the most heavily regulated gateways fell from 63% to 13% during the SVB crisis and then recovered to 57% after banking-sector interventions. Circle and Coinbase had near-identical CLII scores but showed sharply different stress retention, consistent with entity-specific banking exposure mattering more than compliance tier. Three gateways with zero SVB exposure (MakerDAO, Paxos, Gemini) still saw their stablecoins depeg through reserve-chain contagion.</p>
+            <p>During the BUSD wind-down (the cleaner test, because Paxos guaranteed 1:1 redemption throughout and there was no peg pressure), users migrated toward USDT and Binance-adjacent routing rather than toward higher-CLII alternatives, suggesting exchange continuity can matter more than regulatory intensity. Wintermute&rsquo;s counterparty volume rose from $4.7B to $24.4B during the migration.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> The CLII classifies where regulatory obligations attach, but compliance posture and stress fragility are separate questions. Assessing both requires measuring at the gateway level.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="brief-so-what" aria-labelledby="brief-who-heading">
+        <h2 id="brief-who-heading">Who should care</h2>
+        <p><strong>For policymakers:</strong> Monitor gateway flows, banking dependencies, and settlement chokepoints, not aggregate stablecoin supply alone. The control layer is where obligations attach and where correlated exposure becomes visible. Three types of automatic rules deserve particular attention: default sweep destinations, routing preferences, and hold triggers.</p>
+        <p><strong>For issuers and operators:</strong> Reserve composition and bank placement matter, but so do routing defaults and continuity under stress. The monetary impact of stablecoin growth depends on which issuer absorbs it. Deposit recycling (the share of stablecoin reserves held as bank deposits) varies sharply by issuer: Tether 3.69%, Circle 14.24%, Gemini 100%.</p>
+        <p><strong>For investors and market-structure teams:</strong> The CLII classifies compliance posture; stress resilience requires separate assessment. A gateway can score highly on compliance and still prove fragile if its reserve chain, banking counterparties, or routing dependencies are weak.</p>
+        <p><strong>For payments and growth teams:</strong> Identified merchant payments are 0.1% of adjusted on-chain volume as a lower bound, while peer-to-peer transfers account for 45.7% and decentralized finance activity 33.2%. The market is still dominated by transfer, liquidity, and settlement uses.</p>
+      </section>
+
+      <p class="brief-closing"><strong>Who routes the dollar matters more than which dollar is routed.</strong></p>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action secondary" href="#brief-top">Back to brief</a>
+          <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
+          <a class="action secondary" href="https://github.com/CryptoZach/CryptoZach" target="_blank" rel="noopener noreferrer">GitHub replication</a>
+        </div>
+      </div>
+
+      <section class="methodology-summary" aria-labelledby="methodology-summary-heading">
+        <h2 id="methodology-summary-heading">How the paper is built</h2>
+        <ul>
+          <li>157-week panel across nine blockchains (February 2023 to January 2026)</li>
+          <li>51-address Ethereum counterparty registry (19 entities, capturing 27.7% of USDC/USDT volume)</li>
+          <li>Monthly counterparty networks (15 gateways, 3,804 unique transaction-pair relationships)</li>
+          <li>Johansen cointegration on a three-variable system (Fed total assets, overnight reverse repo balances, stablecoin supply), testing whether these variables share a stable long-run equilibrium</li>
+          <li>Application-level flow decomposition: Ethereum, Solana, and Base (64% of volume)</li>
+          <li>Five selection-bias robustness checks including Nansen cross-validation (rank correlation = 0.94, meaning the two independent data sources nearly perfectly agree on ordering)</li>
+          <li>Two stress-episode windows: SVB crisis and BUSD regulatory action</li>
+          <li>19 FOMC meetings tested for announcement effects; none survives correction for multiple testing</li>
+        </ul>
+      </section>
+      </div>
+
+      <!-- ═══ FULL TECHNICAL DEPTH ═══ -->
+      <hr class="depth-divider">
+      <p class="depth-label">Full technical summary</p>
+
+      <section class="brief-so-what" aria-labelledby="deep-changes-heading">
+        <h2 id="deep-changes-heading">What this paper changes</h2>
+        <p>Most stablecoin analysis focuses on the token: classification, reserve composition, market capitalization. This paper shifts the unit of analysis to the gateway: the issuer, exchange, or protocol that actually routes stablecoin value.</p>
+        <p>Once you measure at that layer, the same dollar token produces different regulatory exposure, different monetary-policy transmission, and different stress behavior.</p>
+        <p>The Control Layer Intensity Index (CLII) supports that shift by classifying regulatory intensity across licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. The CLII is a classification heuristic for compliance posture; it is not a resilience score and not a predictive model of stress outcomes.</p>
+        <p>These are descriptive findings. None should be read as causal estimates.</p>
+      </section>
+
+      <section class="brief-findings" aria-labelledby="deep-finding1-heading">
+        <h2 id="deep-finding1-heading">1. Monetary-policy transmission is real, dollar-specific, and regime-dependent</h2>
+        <p>Stablecoin supply and Federal Reserve balance-sheet variables move together in a long-run equilibrium relationship (cointegration) that is dollar-specific and regime-dependent. The paper measures this in a three-variable system: Fed total assets, overnight reverse repo (ON RRP) balances, and total stablecoin supply.</p>
+        <p>The relationship should not be summarized as a simple, always-inverse story. Co-movement flips by regime: strongly positive during COVID-era quantitative easing, near zero during bivariate tightening, and strongly negative during easing (when rates are falling). The statistical evidence for the long-run relationship is strongest during quantitative tightening (trace statistic = 48.18), while the inverse level correlation is strongest during easing (r = &minus;0.98).</p>
+        <p>The strongest mechanism-consistent evidence comes from the yield spread between 3-month Treasury bills and on-chain lending rates: past values of that spread help forecast stablecoin supply growth (Granger F = 11.30, p = 0.001), with similar results using either Compound or Aave as the on-chain rate source. Fed and ON RRP shocks jointly account for 13.9% of stablecoin supply variance at 26 weeks (forecast error variance decomposition), and deviations from the long-run equilibrium have a smoothed half-life of about five weeks.</p>
+        <p>No Federal Reserve policy announcement effect survives correction for multiple testing (Bonferroni correction across 19 FOMC meetings), so the evidence sits in the slower equilibrium and yield-spread channels, not in high-frequency reactions to rate decisions.</p>
+        <p>Issuers hold reserves in Treasury bills and keep the spread between what those reserves earn and what they pay holders (nothing, under current U.S. stablecoin law). During tightening, that spread widens and every dollar of stablecoin issued becomes more profitable. During easing, the issuer&apos;s margin shrinks, but rate cuts compress the gap between Treasury bill yields and on-chain lending rates, making stablecoin-denominated lending more competitive. The paper treats both channels as consistent with money-market transmission rather than directly measured capital-flow results.</p>
+        <p>This relationship distributes unevenly across gateway types. Institutional gateways (Tier 1 and Tier 2) share the aggregate inverse pattern. Permissionless protocol volumes (Tier 3) trend in the opposite direction, rising alongside decentralized finance usage growth rather than tracking Fed policy. The aggregate number masks a structural split.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> the paper supports a dollar-specific, regime-dependent transmission channel consistent with money-market mechanics. It does not support a blanket claim that stablecoin supply always moves mechanically opposite the Fed's balance sheet.</p>
+      </section>
+
+      <section class="brief-findings" aria-labelledby="deep-finding2-heading">
+        <h2 id="deep-finding2-heading">2. Concentration sits in the routing layer</h2>
+        <p>The CLII classifies regulatory intensity across 19 gateway entities. On Ethereum, the monitored routing surface breaks down as: Tier 2 at 55% of gross volume, Tier 1 at 41%, and Tier 3 at 4%. After netting out internal rebalancing transfers (where gateways move funds between their own wallets, inflating gross volume), Tier 2 falls to 50% and Tier 1 rises to 47%, so the market is closer to regulated/offshore near-parity than the gross numbers suggest.</p>
+        <p>Tier 1 is effectively a two-firm market: Coinbase accounts for 56% of Tier 1 volume and Circle 44%. Concentration at the tier level (HHI = 5,021, where the Herfindahl-Hirschman Index measures market concentration and values above 2,500 indicate a highly concentrated market by U.S. Department of Justice standards) and entity level (HHI = 2,742 gross, 2,583 net) both exceed the threshold for "highly concentrated."</p>
+        <p>That concentration extends below the gateway layer. In the monthly counterparty network, unique counterparties fell 25% and cross-gateway transaction-pairs dropped from 5.8% to 2.6% even as volume doubled. One market-making firm (Wintermute) saw its share of identified counterparty volume rise from 1.4% to 19.9%, making intermediary concentration part of the control-layer story alongside gateway concentration.</p>
+        <p>The same token also routes through materially different control environments by chain. Tier 1 presence is 41% on Ethereum, approximately 11% on Solana, and zero on Tron, where Tier 3 protocols account for 58% of monitored gateway volume. Even USDT routes 10.8% of its monitored Ethereum gateway volume through Tier 1.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> token-level supply tells you who issued the dollar. Gateway-level flow data tell you who routed it, where risk is concentrating, and which control environment applies.</p>
+      </section>
+
+      <section class="brief-findings" aria-labelledby="deep-finding3-heading">
+        <h2 id="deep-finding3-heading">3. Stress outcomes are gateway-contingent</h2>
+        <p>Two stress episodes bracket the range of gateway-level reallocation.</p>
+        <p><strong>SVB (March 2023).</strong> Capital rotated across dollar gateways rather than exiting dollar-pegged instruments. Tier 1 share of monitored gateway volume moved from 63% to 13% and then back to 57% after banking-sector interventions. USDC lost $5.1B in five days while USDT gained roughly $3B.</p>
+        <p>In relative-intensity terms (multiples of each gateway's normal-period volume), Curve 3pool retained 12.35x baseline volume, Coinbase 2.63x, and Circle 1.39x. The sharpest contrast is within Tier 1: Circle and Coinbase had similar CLII scores but very different stress retention, consistent with entity-specific banking exposure mattering more than regulatory tier. Three gateways with zero SVB exposure (MakerDAO, Paxos, Gemini) saw their issued stablecoins depeg through reserve-chain contagion.</p>
+        <p>The paper is careful about how far to push the SVB result. Those retention ratios are not pure capital-substitution measures (every major gateway saw more gross activity during the stress window), and SVB alone cannot cleanly separate whether users fled Circle's banking exposure or USDC's 12% peg deviation. The event-time placebo analysis (running the same test on non-stress periods) still shows the episode was statistically extreme: the Tier 1 swing was 51.8 percentage points, with a nadir 2.7 standard deviations below normal.</p>
+        <p><strong>BUSD wind-down (February 2023 onward).</strong> This is the cleaner routing test because there was no peg pressure. The New York Department of Financial Services ordered Paxos to stop minting BUSD. Paxos guaranteed 1:1 redemption throughout. Despite that guarantee, $16.1 billion in stablecoin value migrated mainly toward USDT and Binance-adjacent routing, choosing uninterrupted trading access over stronger regulatory protections. Wintermute's counterparty volume rose from $4.7B to $24.4B during the migration.</p>
+        <p>Taken together, SVB and BUSD suggest stress routing is driven more by entity-level exposure and routing continuity than by token labels or regulatory tier alone.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> the CLII is useful for mapping where regulatory obligations attach, but compliance posture and stress fragility are separate questions. Assessing both requires measuring at the gateway level.</p>
+      </section>
+
+      <div class="paper-key-numbers">
+        <h2>Key numbers</h2>
+        <p><strong>Sample</strong><br>
+        19 gateway entities · 51 tracked addresses · 9 blockchains · $60.6T cumulative transfer volume, Feb 2023 to Jan 2026 (Artemis-filtered)<br>
+        157 weeks (Feb 2023 to Jan 2026) · Ethereum: 27.7% of USDC + USDT volume<br>
+        <strong>Fed-stablecoin relationship</strong><br>
+        Level correlation r = &minus;0.98, strongest during easing (when rates are falling)<br>
+        Cointegration trace: 48.18 (tightening) · 17.71 (easing) · 30.68 (full sample)<br>
+        Yield-spread Granger F = 11.30 (p = 0.001); Fed + ON RRP variance share = 13.9% at 26 weeks<br>
+        No FOMC announcement effect survives Bonferroni correction (19 meetings tested)<br>
+        <strong>Concentration</strong><br>
+        Tier 1 is a Coinbase-Circle duopoly: 56% / 44% of Tier 1 volume<br>
+        Counterparties declined 25% · cross-gateway share 5.8% → 2.6%<br>
+        Wintermute intermediary share: 1.4% → 19.9%<br>
+        Tier HHI 5,021 · entity HHI 2,742 / 2,583 (highly concentrated by DOJ standards)<br>
+        3,804 monthly transaction-pair relationships<br>
+        <strong>SVB stress episode</strong><br>
+        Tier 1 share: 63% → 13% → 57%<br>
+        Circle 1.39x baseline · Coinbase 2.63x baseline · Curve 3pool 12.35x baseline<br>
+        Event-time nadir: 2.7 standard deviations below normal<br>
+        <strong>BUSD wind-down (no peg pressure)</strong><br>
+        $16.1B → $0.04B (regulatory action; Paxos guaranteed 1:1 redemption throughout)<br>
+        Migration: Paxos (CLII 0.88) → Tether (CLII 0.45)<br>
+        Wintermute counterparty volume: $4.7B → $24.4B<br>
+        <strong>Use cases</strong><br>
+        Merchant payments 0.1% lower bound · peer-to-peer 45.7% · decentralized finance 33.2% · centralized exchange 8.3%<br>
+        <strong>Deposit channel</strong><br>
+        First-differenced correlation = +0.12 (near zero; supply growth and deposit growth move almost independently at current scale)<br>
+        Issuer bank-deposit shares: Tether 3.69% · Circle 14.24% · Gemini 100%</p>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>Full technical abstract</h2>
+        <p>Dollar stablecoins extend the dollar's exchange, store-of-value, and funding functions into blockchain markets, largely outside the Federal Reserve's standard supervisory perimeter. This paper argues the policy-relevant unit is the gateway (the issuer, exchange, or protocol that routes stablecoin value), because the same dollar token inherits different compliance, monetary, and stress properties depending on which gateway processes it. These are descriptive findings; none should be read as causal estimates.</p>
+        <p><strong>Data.</strong> Daily Ethereum gateway transfers (19 entities, 51 addresses, 27.7% of USDC/USDT volume), monthly counterparty networks (15 gateways, 35 months, 3,804 unique transaction-pair relationships), multi-chain flow decomposition across 9 blockchains ($60.6T Artemis-filtered transfer volume), and stress-episode windows around the SVB crisis and the BUSD regulatory action.</p>
+        <p><strong>Monetary transmission.</strong> Stablecoin supply is cointegrated with Fed balance-sheet variables in a regime-dependent pattern consistent with money-market transmission. Cointegration is strongest during quantitative tightening (trace = 48.18) and weaker during easing (trace = 17.71), while inverse level correlations are strongest during easing (r = &minus;0.98). A yield-spread channel provides mechanism-consistent evidence: it forecasts stablecoin supply growth at lag 1 (Granger F = 11.30, p = 0.001). Fed and ON RRP innovations jointly account for 13.9% of stablecoin supply variance at 26 weeks; deviations from the long-run equilibrium have a smoothed half-life of approximately five weeks. No FOMC announcement effect survives Bonferroni correction. The co-movement distributes unevenly: institutional gateways share the aggregate negative correlation (Tier 1 r = &minus;0.56, Tier 2 r = &minus;0.45), while permissionless protocol volumes trend positively (Tier 3 r = +0.37).</p>
+        <p><strong>Gateway classification.</strong> The Control Layer Intensity Index (CLII) classifies regulatory intensity across five weighted dimensions: Regulatory License 25%, Reserve Transparency 20%, Freeze/Blacklist Capability 20%, Compliance Infrastructure 20%, Geographic Restrictions/Sanctions 15%. Tier 1 above 0.75; Tier 2 from 0.30 to 0.75; Tier 3 below 0.30. The CLII measures regulatory posture; it is a classification heuristic, not a resilience score. Circle (0.92) and Coinbase (0.85) produced opposite flow retention during SVB (1.39x vs. 2.63x) based on entity-specific banking exposure. Concentration increased as volume grew: unique counterparties declined 25%, cross-gateway connections fell from 5.8% to 2.6%, and Wintermute's share of identified counterparty volume rose from 1.4% to 19.9%.</p>
+        <p><strong>Stress transmission.</strong> Two stress episodes bracket the range of gateway-level reallocation. During SVB, capital rotated across dollar gateways; Tier 1 share collapsed from 63% to 13% and recovered to 57% after banking-sector interventions. Three gateways with zero SVB exposure (MakerDAO, Paxos, Gemini) saw their instruments depeg through reserve-chain contagion. During the BUSD wind-down (no peg pressure), displaced capital migrated to USDT and Binance-adjacent routing rather than to higher-CLII alternatives. Wintermute&apos;s counterparty volume surged from $4.7B to $24.4B during the migration. In both episodes, the salient variation was entity-level, and capital moved in directions that token-level frameworks would not have predicted.</p>
+        <p><strong>Deposit displacement.</strong> The paper does not find evidence that stablecoin growth displaces bank deposits at current scale (first-differenced correlation = +0.12, near zero). The more relevant finding is that deposit recycling varies sharply by issuer: Tether 3.69% bank deposits, Circle 14.24%, Gemini 100%. The monetary impact of stablecoin growth depends on which issuer absorbs it and which banks hold those reserves.</p>
+      </div>
+
+      <div class="paper-audience-tags-block">
+        <h2 class="paper-audience-tags-heading">Audience tags</h2>
+        <ul class="audience-chips" aria-label="Target audience">
+          <li class="audience-chip">Central banks</li>
+          <li class="audience-chip">Policy designers</li>
+          <li class="audience-chip">Stablecoin issuers</li>
+          <li class="audience-chip">Macro researchers</li>
+          <li class="audience-chip">Market infrastructure teams</li>
+        </ul>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>Related frameworks</h2>
+        <p><a href="/frameworks#clii">CLII</a> · <a href="/frameworks#credit-migration-model">Credit Migration Model</a></p>
+        <h2>Related role profiles</h2>
+        <p><a href="/resume/policy">Policy &amp; Market Infrastructure</a> · <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a> · <a href="/resume/risk-controls">Risk, Controls &amp; Market Infrastructure</a></p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/mvep" class="companion-card">
+            <strong>Minimum Viable Equivalence Pack</strong>
+            <span>The diligence framework applied to the gateways this paper identifies.</span>
+          </a>
+          <a href="/papers/control-layer-war" class="companion-card">
+            <strong>The Control Layer War</strong>
+            <span>Compliance obligations attach to whoever controls interfaces, routing defaults, and audit logs.</span>
+          </a>
+        </div>
+      </section>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action secondary" href="#brief-top">Back to brief</a>
+          <a class="action secondary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
+          <a class="action secondary" href="https://github.com/CryptoZach/CryptoZach" target="_blank" rel="noopener noreferrer">GitHub replication</a>
+        </div>
+      </div>
+      <div class="brief-meta paper-submission-contact" id="submission-contact">
+        <p>Submitted to the Fifth Conference on International Roles of the U.S. Dollar, Federal Reserve Board and Federal Reserve Bank of New York, June 22-23, 2026.</p>
+        <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:zach@cryptozach.com?subject=Routing%20the%20Dollar%20-%20Discussion">zach@cryptozach.com</a></p>
+      </div>
+    </article>
+
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski. All rights reserved.</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=26"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

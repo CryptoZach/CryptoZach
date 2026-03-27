@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Selected Research - Zach Zukowski (CryptoZach)</title>
+  <meta name="description" content="Seven-paper research program across two tracks. Four papers on SSRN. Gateway analysis, tokenization diligence, DePIN tokenomics, and operational risk." />
+  <meta name="author" content="Zach Zukowski" />
+
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://cryptozach.com/research" />
+  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <link rel="canonical" href="https://cryptozach.com/research" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
+  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://x.com" />
+  <link rel="dns-prefetch" href="https://www.linkedin.com" />
+  <link rel="dns-prefetch" href="https://medium.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=75" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Selected Research",
+      "url": "https://cryptozach.com/research",
+      "description": "Seven-paper research program across two tracks: digital-dollar infrastructure and token networks under stress.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://cryptozach.com/#website" },
+      "author": { "@id": "https://cryptozach.com/#person" },
+      "about": [
+        "Stablecoins",
+        "Tokenization",
+        "Digital Money",
+        "Market Infrastructure"
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["#main .section-title"]
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Seven-paper research program across two tracks",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Routing the Dollar", "item": "https://cryptozach.com/papers/routing-the-dollar" },
+          { "@type": "ListItem", "position": 2, "name": "Minimum Viable Equivalence Pack", "item": "https://cryptozach.com/papers/mvep" },
+          { "@type": "ListItem", "position": 3, "name": "Dollar v3", "item": "https://cryptozach.com/papers/dollar-v3" },
+          { "@type": "ListItem", "position": 4, "name": "The Control Layer War", "item": "https://cryptozach.com/papers/control-layer-war" },
+          { "@type": "ListItem", "position": 5, "name": "Tokenized Equity", "item": "https://cryptozach.com/papers/tokenized-equity" },
+          { "@type": "ListItem", "position": 6, "name": "Adaptive Tokenomics", "item": "https://cryptozach.com/papers/adaptive-tokenomics" },
+          { "@type": "ListItem", "position": 7, "name": "Operational Risk in Token Economies", "item": "https://cryptozach.com/papers/operational-risk" }
+        ]
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
+        { "@type": "ListItem", "position": 2, "name": "Selected Research", "item": "https://cryptozach.com/research" }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Zach Zukowski</strong>
+          <span>Digital Money • Tokenization • Market Infrastructure</span>
+        </a>
+      </div>
+
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Canonical research library (merged program + selected research). -->
+    <section class="reveal research-library-page" aria-labelledby="research-title">
+      <div class="kicker kicker--subpage">
+        <span class="kicker-dot" aria-hidden="true"></span>
+        RESEARCH
+      </div>
+      <div id="program-overview" class="section-title">
+        <h1 id="research-title">Seven-paper research program across two tracks</h1>
+        <p>Overview defines the objects. Frameworks defines the tools. Research shows the evidence.</p>
+        <p><strong>Track A</strong> studies digital-dollar products under stress: gateways, reserve chains, settlement dependencies, and the control layer that determines who bears the obligations and who absorbs the losses.</p>
+        <p><strong>Track B</strong> studies token networks under stress: reward schedules, governance thresholds, infrastructure reliability, and the operating economics that determine whether participation stays productive or concentrates into extraction.</p>
+        <p>Both tracks converge on the same conclusion: the policy-relevant unit is the operator, not the instrument. Classify the token, but regulate and audit the operator.</p>
+      </div>
+
+      <div class="research-filters-js" role="group" aria-label="Filter research" hidden>
+        <div class="filter-group">
+          <span class="filter-label">Audience:</span>
+          <button type="button" class="filter-btn active" data-filter="audience" data-value="all">All</button>
+          <button type="button" class="filter-btn" data-filter="audience" data-value="policy">Policy</button>
+          <button type="button" class="filter-btn" data-filter="audience" data-value="asset-management">Asset Management</button>
+          <button type="button" class="filter-btn" data-filter="audience" data-value="stablecoin">Stablecoin / Payments</button>
+          <button type="button" class="filter-btn" data-filter="audience" data-value="protocol-design">Protocol Design</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Track:</span>
+          <button type="button" class="filter-btn active" data-filter="track" data-value="all">All</button>
+          <button type="button" class="filter-btn" data-filter="track" data-value="track-a">Digital Money</button>
+          <button type="button" class="filter-btn" data-filter="track" data-value="track-b">Tokenomics &amp; DePIN</button>
+          <button type="button" class="filter-btn" data-filter="track" data-value="earlier">Earlier Work</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Status:</span>
+          <button type="button" class="filter-btn active" data-filter="status" data-value="all">All</button>
+          <button type="button" class="filter-btn" data-filter="status" data-value="public">Public</button>
+          <button type="button" class="filter-btn" data-filter="status" data-value="submitted">Under review</button>
+          <button type="button" class="filter-btn" data-filter="status" data-value="final-draft">Draft</button>
+          <button type="button" class="filter-btn" data-filter="status" data-value="requestable">Available on request</button>
+        </div>
+        <p class="filter-count-wrap"><span class="filter-count" aria-live="polite"></span></p>
+      </div>
+
+      <section id="best-first-read" class="featured-research reveal" aria-label="Featured papers">
+        <article id="routing-the-dollar" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="submitted">
+          <a class="writing-link writing-link--thumb" href="/papers/routing-the-dollar">
+            <div class="writing-meta">
+              <div class="card-badges">
+                <span class="badge">Under review</span>
+                <span class="badge">Best first read</span>
+              </div>
+              <span class="writing-meta-line">Mar 2026 · SSRN · FRBNY conference review pending · Policy / Markets / Stablecoins</span>
+              <p class="writing-evidence-type">Evidence type: On-chain panel + stress episodes</p>
+            </div>
+            <img class="writing-thumb thumb-clii" src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram showing gateway classification across 19 entities" loading="eager" />
+
+            <div class="writing-copy">
+              <h3 class="writing-title">Routing the Dollar</h3>
+              <p class="writing-thesis"><strong>The same stablecoin becomes a different policy object depending on who routes it.</strong></p>
+              <p class="writing-teaser">How the gateway that routes a dollar stablecoin changes its regulatory exposure, its response to Fed policy, and its behavior under stress.</p>
+              <p class="writing-excerpt">
+                <strong>What it is:</strong> A data-driven study of 19 gateway entities and 51 wallet addresses showing that the same dollar token inherits different regulatory obligations, different Fed-policy sensitivity, and different crisis behavior depending on who routes it. Introduces the CLII, which measures how heavily regulated each gateway is across five dimensions (licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions). A high CLII score means a gateway faces more regulatory obligations; stress performance depends on entity-specific conditions the CLII does not measure. Circle and Coinbase had near-identical CLII scores but showed sharply different stress retention during SVB, consistent with entity-specific banking exposure driving outcomes. These are descriptive findings, not causal estimates.
+              </p>
+              <p class="research-why"><strong>Why it matters:</strong> Moves stablecoin analysis from token labels to operators, reserve chains, and routing networks. SVB provides the richest stress variation; BUSD (where Paxos guaranteed 1:1 redemption and there was no peg pressure) is the cleaner routing test. In both episodes, capital rotated across dollar gateways, staying within dollar-pegged instruments.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Policy, central bank, market-structure, and tokenization-strategy readers.</p>
+            </div>
+
+          </a>
+          <div class="writing-card-actions">
+            <a class="writing-arrow" href="/papers/routing-the-dollar">Open paper summary <span aria-hidden="true">→</span></a>
+            <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN">SSRN</a>
+            <a class="writing-thread" href="https://x.com/CryptoZach/status/2031929065549025726" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
+          </div>
+        </article>
+
+        <article id="mvep-featured" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="asset-management risk-committee tokenization" data-track="track-a" data-status="public">
+          <a class="writing-link writing-link--thumb" href="/papers/mvep">
+            <div class="writing-meta">
+              <div class="card-badges">
+                <span class="badge badge-public">Public</span>
+              </div>
+              <span class="writing-meta-line">Mar 2026 · SSRN · Asset Management / Tokenization</span>
+              <p class="writing-evidence-type">Evidence type: Framework + stress scenarios</p>
+            </div>
+            <img class="writing-thumb thumb-wide" src="/Publication-Images/Equivalence_Pack.webp" width="1200" height="732" alt="Minimum Viable Equivalence Pack: ten-category diligence checklist for tokenized products" loading="lazy" />
+
+            <div class="writing-copy">
+              <h3 class="writing-title">Minimum Viable Equivalence Pack</h3>
+              <p class="writing-thesis"><strong>If equivalence is not proven under stress, it is not ready for committee.</strong></p>
+              <p class="writing-teaser">What tokenized products must prove before institutions should treat them as equivalent.</p>
+              <p class="writing-excerpt">
+                <strong>What it is:</strong> Ten diligence categories, each with required evidence and a pass condition, testing whether a tokenized product preserves legal, operational, and economic equivalence. Categories one through nine were reverse-engineered from the SVB weekend; the tenth (collateral operability) addresses whether tokenized fund shares posted as margin can be liquidated under stress within the contractual deadline. For the tokenized Treasury asset class, the paper identifies three liquidation paths, four constraints on path availability, seven stress scenarios, and three interaction chains where scenarios compound.
+              </p>
+            </div>
+
+          </a>
+          <div class="writing-card-actions">
+            <a class="writing-arrow" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a>
+            <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN">SSRN</a>
+            <a class="writing-thread" href="https://x.com/CryptoZach/status/2024998578335482251" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
+          </div>
+          <details class="card-expand card-expand--inline">
+            <summary>More on relevance and audience</summary>
+            <p class="research-why"><strong>Why it matters:</strong> Turns tokenized-product diligence from pitch-deck review into a repeatable committee standard with named evidence requirements and explicit pass conditions. Anchored on the SVB weekend, where tier labels, attestation reports, and "institutional grade" designations all failed to surface the risk. The governance section documents that on-chain verification of the four largest tokenized Treasury products reveals no timelocks in any admin chain.</p>
+            <p class="research-audience"><strong>Who it's for:</strong> Asset managers, risk committees, tokenization platforms, custodians, legal and compliance teams, and exchanges evaluating collateral acceptance.</p>
+          </details>
+        </article>
+      </section>
+
+      <nav class="jump-bar" aria-label="Page sections">
+        <span class="jump-bar-label">Jump to</span>
+        <div class="jump-bar-chips">
+          <a href="#track-a" class="jump-chip">Track A</a>
+          <a href="#track-b" class="jump-chip">Track B</a>
+          <a href="#earlier-work" class="jump-chip">Earlier work</a>
+          <a href="#cross-track-convergence" class="jump-chip">Cross-track convergence</a>
+        </div>
+      </nav>
+
+      <section class="start-here-rail" aria-labelledby="start-here-title">
+        <h2 id="start-here-title">Start here</h2>
+        <ul class="start-here-list">
+          <li><strong>If you are briefing policy or central-bank readers →</strong> <a href="/papers/routing-the-dollar">Routing the Dollar</a></li>
+          <li><strong>If you are taking a tokenized product to committee →</strong> <a href="/papers/mvep">Minimum Viable Equivalence Pack</a></li>
+          <li><strong>If you are designing a digital-dollar product or payment stack →</strong> <a href="/papers/dollar-v3">Dollar v3</a> and <a href="/papers/control-layer-war">The Control Layer War</a></li>
+          <li><strong>If you are designing incentives and token supply rules →</strong> <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a></li>
+          <li><strong>If you are stress-testing governance under real infrastructure conditions →</strong> <a href="/papers/operational-risk">Operational Risk in Token Economies</a></li>
+        </ul>
+      </section>
+
+      <section class="research-track" aria-labelledby="track-a">
+      <h2 id="track-a" class="track-heading"><span class="track-heading-prefix">Track A</span><span class="track-heading-desc">Digital Money, Tokenization, and Market Infrastructure</span></h2>
+
+      <p class="track-context">
+        Start here if your question is about stablecoins, tokenized deposits, settlement finality, routing, reserves, or control-layer obligations.
+      </p>
+
+      <ul class="writing-list">
+
+        <li id="mvep" data-audience="asset-management risk-committee tokenization" data-track="track-a" data-status="public">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="/papers/mvep">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-public">Public</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN · Asset Management / Tokenization</span>
+                <p class="writing-evidence-type">Evidence type: Framework + stress scenarios</p>
+              </div>
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Equivalence_Pack.webp" width="1200" height="732" alt="Minimum Viable Equivalence Pack: ten-category diligence checklist for tokenized products" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Minimum Viable Equivalence Pack</h3>
+                <p class="writing-thesis"><strong>If equivalence is not proven under stress, it is not ready for committee.</strong></p>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-teaser">What tokenized products must prove before institutions should treat them as equivalent.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Ten diligence categories, each with required evidence and a pass condition, testing whether a tokenized product preserves legal, operational, and economic equivalence. Categories one through nine were reverse-engineered from the SVB weekend; the tenth (collateral operability) addresses whether tokenized fund shares posted as margin can be liquidated under stress within the contractual deadline. For the tokenized Treasury asset class, the paper identifies three liquidation paths, four constraints on path availability, seven stress scenarios, and three interaction chains where scenarios compound.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a>
+              <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN">SSRN</a>
+              <a class="writing-thread" href="https://x.com/CryptoZach/status/2024998578335482251" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Turns tokenized-product diligence from pitch-deck review into a repeatable committee standard with named evidence requirements and explicit pass conditions. Anchored on failures that the SVB weekend exposed, where tier labels, attestation reports, and "institutional grade" designations all failed to surface the risk. The governance section documents that on-chain verification of the four largest tokenized Treasury products reveals no timelocks in any admin chain.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Asset managers, risk committees, tokenization platforms, custodians, legal and compliance teams, and exchanges evaluating collateral acceptance.</p>
+            </details>
+          </article>
+        </li>
+
+        <li id="dollar-v3-control-layer-war" data-audience="policy stablecoin market-infrastructure asset-management compliance" data-track="track-a" data-status="public requestable">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions research-card--dual-essays">
+            <div class="writing-link writing-link--thumb writing-link--static" role="group" aria-labelledby="dollar-control-title">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public / requestable</span>
+                </div>
+                <span class="writing-meta-line">Dec 2025 to Jan 2026 · Medium · Policy / Payments / Stablecoins</span>
+                <p class="writing-evidence-type">Evidence type: Policy essays</p>
+              </div>
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 and The Control Layer War: three digital-dollar objects and control-layer map" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 id="dollar-control-title" class="writing-title">Dollar v3 / The Control Layer War</h3>
+                <p class="writing-thesis"><strong>Three dollar objects share one wallet surface; defaults, holds, and routing decide who controls them.</strong></p>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-teaser">Two companion pages from one Track A output. Dollar v3 maps the three digital-dollar objects, Layer 0, and deposit mutation. The Control Layer War maps where compliance becomes operational.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Dollar v3 separates payment stablecoins, tokenized deposits, and yield wrappers by legal perimeter, reserve plumbing, and crisis behavior. The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 argument that stablecoins can reduce, recycle, or restructure deposits.<br />
+                  The Control Layer War maps how CLARITY-style provisions (House-passed form analyzed here) attach compliance to interfaces, routing defaults, holds, sweeps, and audit logs. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.
+                </p>
+              </div>
+            </div>
+            <div class="writing-card-actions">
+              <div class="writing-thumb-actions" role="group" aria-label="Open paper summaries">
+                <a class="writing-arrow" href="/papers/dollar-v3">Open Dollar v3 summary <span aria-hidden="true">→</span></a>
+                <a class="writing-arrow" href="/papers/control-layer-war">Open The Control Layer War summary <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="writing-thread-group writing-thread-group--dual" role="group" aria-label="Threads on X">
+                <a class="writing-thread" href="https://x.com/CryptoZach/status/1998874696893231210" target="_blank" rel="noopener noreferrer" aria-label="Dollar v3 thread on X"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Dollar v3 thread</a>
+                <a class="writing-thread" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer" aria-label="Control Layer thread on X"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Control Layer thread</a>
+              </div>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Explains where value capture, liability, and compelled-operator obligations concentrate as digital dollars scale. Three enforcement equilibria compete: issuer-centric, router-centric, and infrastructure-gated.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Policy, payments, bank-strategy, stablecoin, and market-infrastructure readers.</p>
+            </details>
+          </article>
+        </li>
+
+        <li id="tokenized-equity" data-audience="asset-management risk-committee tokenization" data-track="track-a" data-status="public">
+          <article class="writing-item writing-card research-card research-card--minimal writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="/papers/tokenized-equity">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Jul 2025 · Medium · Asset Management / Tokenization / Market Structure</span>
+                <p class="writing-evidence-type">Evidence type: Comparative launch analysis</p>
+              </div>
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Tokenized-Equity-Image.png" width="1536" height="1024" alt="Tokenized Equity: Robinhood versus Backed comparison" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Tokenized Equity</h3>
+                <p class="writing-thesis"><strong>Tokenized equity splits into at least two product categories.</strong></p>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-teaser">A comparative launch analysis of two tokenized-equity architectures.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> A comparative anatomy of two June 2025 tokenized-equity launches: Robinhood's broker-wrapped OTC stock-token exposure (where investors hold a derivative position, not the underlying share) versus Backed's open, transferable, share-backed xStocks (where a custodian holds the shares and the token tracks their value). Compares investor rights, custody chain, tradability, corporate-action treatment, and secondary-market liquidity.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/papers/tokenized-equity">Open paper summary <span aria-hidden="true">→</span></a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Shows that tokenized equity splits into at least two product categories. Legal form, who actually holds the shares, and how secondary liquidity works determine the real risk.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Asset managers, tokenization platforms, market-structure readers, and product teams evaluating whether to build or allocate to tokenized equity.</p>
+            </details>
+          </article>
+        </li>
+
+      </ul>
+      </section>
+
+      <div class="writing-more">
+        <p>
+          Hiring or evaluating fit for a policy, tokenization, market-infrastructure, or risk/controls role?
+          <a href="/resume/policy">Policy &amp; Market Infrastructure</a> ·
+          <a href="/resume/asset-management">Asset Management &amp; Tokenization</a> ·
+          <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a> ·
+          <a href="/resume/risk-controls">Risk, Controls &amp; Market Infrastructure</a>
+        </p>
+      </div>
+
+      <section class="research-track" aria-labelledby="track-b">
+      <h2 id="track-b" class="track-heading"><span class="track-heading-prefix">Track B</span><span class="track-heading-desc">Tokenomics and Physical Network Systems (DePIN)</span></h2>
+
+      <p class="track-context">
+        Track B asks whether token economies sustain productive contribution or concentrate into extraction. Each paper specifies the mechanism, stress-tests it under adversarial conditions, and asks whether the design survives contact with real participant behavior.
+      </p>
+
+      <ul class="writing-list">
+        <li id="adaptive-tokenomics" data-audience="protocol-design depin" data-track="track-b" data-status="public">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="/papers/adaptive-tokenomics">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN · Protocol Design / DePIN</span>
+                <p class="writing-evidence-type">Evidence type: Simulation + systems engineering</p>
+              </div>
+              <img class="writing-thumb thumb-wide thumb-exhibit-center thumb-discipline-map" src="/Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics: discipline map and simulation architecture" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Adaptive Tokenomics</h3>
+                <p class="writing-thesis"><strong>Adaptive emissions are conditional insurance with a defined boundary.</strong></p>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-teaser">Token design as systems engineering.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> A complete token economy (MeshNet) built as a systems-engineering design laboratory and stress-tested across a 240-run Monte Carlo simulation plus additional sensitivity checks covering prolonged bear markets, competitor entry, regulatory shocks, and combined stress. Input parameters are drawn from real hardware costs across twelve DePIN protocols. Finds that adaptive emissions function as downside insurance (compressing worst-case outcomes by roughly 6x), slashing dominates token burns during the early growth phase, and the most important results depend on market conditions and parameter settings. Running the model once hides rare but severe downside scenarios that only appear when you run it hundreds of times with different starting conditions.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/papers/adaptive-tokenomics">Open paper summary <span aria-hidden="true">→</span></a>
+              <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN">SSRN</a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Shows which token mechanisms earn their complexity and where they break. PID emission control helps under demand contraction but can overcorrect in tail scenarios, applying a supply-side lever to a demand-side problem.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Protocol designers, DePIN teams, mechanism designers, and governance researchers.</p>
+            </details>
+          </article>
+        </li>
+
+        <li id="operational-risk" data-audience="protocol-design depin" data-track="track-b" data-status="public">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="/papers/operational-risk">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                  <span class="badge">Code available</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN · Protocol Design / DePIN</span>
+                <p class="writing-evidence-type">Evidence type: 624-run simulation + operational-risk standards</p>
+              </div>
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies: ValOS-NORS standards bridge table" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Operational Risk in Token Economies</h3>
+                <p class="writing-thesis"><strong>Infrastructure failure can stabilize controllers and break governance at the same time.</strong></p>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-teaser">What happens when infrastructure fails while operators stay.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> A 624-configuration simulation study using real outage and failure rates from Ethereum, Helium, Geodnet, and Filecoin. Finds that adaptive emission controllers become more resilient under operational risk (the counterintuitive result: infrastructure shocks strengthen the controller's advantage over static policy). Reputation-weighted governance moves in the opposite direction, and the outcome depends entirely on one design parameter: the uptime threshold operators must clear to recover their standing. When the designer sets that bar at 99%, real-world outage rates make recovery nearly impossible, and reputation scores collapse to an average of 0.18 on a 5.0 scale by year five. When the designer lowers the bar to 95%, the system stabilizes.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/papers/operational-risk">Open paper summary <span aria-hidden="true">→</span></a>
+              <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN">SSRN</a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> The collapse traces to a single design parameter: the recovery threshold was set above what operators can reliably achieve. The fix is a single parameter change (0.99 to 0.95). Risk is assigned at the infrastructure-group level; whether smaller operators face systematically higher risk is explicitly future work.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Protocol designers, infrastructure operators, operator-risk teams, and governance researchers.</p>
+            </details>
+          </article>
+        </li>
+
+        <li id="institutional-design" data-audience="protocol-design policy" data-track="track-b" data-status="final-draft">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link" href="/contact">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Draft</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · Targeting Frontiers in Blockchain · Protocol Design / Governance</span>
+                <p class="writing-evidence-type">Evidence type: Governance criteria + 12-protocol comparison</p>
+              </div>
+              <div class="writing-copy">
+                <h3 class="writing-title">Tokenomics as Institutional Design</h3>
+                <p class="writing-thesis"><strong>Protocol design needs criteria drawn from institutional-fairness theory.</strong></p>
+                <p class="writing-teaser">When should a token economy count as a legitimate institution?</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Turns five theories of institutional fairness and accountability (covering questions like: are the rules public and predictable? do they protect the least advantaged participants? can any single actor dominate decisions? are governance responsibilities distributed across multiple centers? does the system use local knowledge effectively?) into specific, testable claims and evaluates them against governance data from 12 live protocols. The main evidence test is governance concentration: the paper measures how voting power distributes across protocols and whether the design features each theory recommends actually reduce concentration.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/contact">Writing sample available on request <span aria-hidden="true">→</span></a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Gives Track B a criteria layer for evaluating protocol governance alongside simulation results. Connects token design to established standards of institutional legitimacy.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> Governance designers, DAO researchers, and protocol teams.</p>
+            </details>
+          </article>
+        </li>
+
+        <li id="geodepin" data-audience="protocol-design depin" data-track="track-b" data-status="final-draft">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link" href="/contact">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Draft</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · Targeting Blockchain: Research and Applications · Protocol Design / DePIN</span>
+                <p class="writing-evidence-type">Evidence type: Field case study + taxonomy</p>
+              </div>
+              <div class="writing-copy">
+                <h3 class="writing-title">GeoDePIN</h3>
+                <p class="writing-thesis"><strong>A field map for decentralized geographic infrastructure.</strong></p>
+                <p class="writing-teaser">Design patterns for decentralized geographic infrastructure.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> A classification of the recurring design choices geographic networks make (coverage verification, location proofs, demand routing, subsidy tapering), grounded in a Helium case study tracked over nearly three years. During that period, Helium shifted from covering a fraction of infrastructure costs with real user fees to covering roughly twice its costs, though the crossover remains fragile. The paper also produces benchmarks operators can measure against their own deployments.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/contact">Writing sample available on request <span aria-hidden="true">→</span></a>
+            </div>
+            <details class="card-expand card-expand--inline">
+              <summary>More on relevance and audience</summary>
+              <p class="research-why"><strong>Why it matters:</strong> Gives Track B a field-based companion to the simulation papers. Shows where geographic token networks are maturing and where they remain dependent on subsidies.</p>
+              <p class="research-audience"><strong>Who it's for:</strong> GeoDePIN builders, protocol designers, and infrastructure researchers.</p>
+            </details>
+          </article>
+        </li>
+      </ul>
+      </section>
+
+      <p class="track-b-thesis-note">
+        <span class="badge">Draft</span>
+        Draft BSc thesis wrapping B2 (Tokenomics as Institutional Design) and B3 (GeoDePIN) into a unified institutional-design and geographic-infrastructure argument.
+      </p>
+
+      <section class="research-track research-track--earlier" aria-labelledby="earlier-work-heading">
+        <h2 id="earlier-work-heading" class="track-heading track-heading--earlier">Earlier work</h2>
+        <p class="track-context track-context--earlier">Practitioner articles and context writing that inform the core program.</p>
+        <ul class="writing-list" id="earlier-work" aria-label="Earlier work">
+        <li id="navigating-digital-assets" data-audience="policy asset-management compliance" data-track="earlier" data-status="public">
+          <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Aug 2025 · Medium · Policy / Compliance</span>
+              </div>
+              <img class="writing-thumb" src="/Publication-Images/Navigating_the_New_Era_of_Digital_Assets.webp" width="1400" height="1012" alt="Navigating the New Era of Digital Assets cover" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Navigating the New Era of Digital Assets</h3>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> An operating timeline of the coordinated U.S. regulatory shift in July 2025, organized by effective date and mapped to obligations for each actor type (exchanges, custodians, issuers, DeFi interfaces).
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </li>
+
+        <li id="future-tokenomics" data-audience="protocol-design depin" data-track="earlier" data-status="public">
+          <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Aug 2024 · Medium · Protocol Design / DePIN</span>
+              </div>
+              <img class="writing-thumb" src="/Publication-Images/The_Future_of_Tokenomics.webp" width="548" height="498" alt="The Future of Tokenomics cover" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">The Future of Tokenomics</h3>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Seven tokenomics sectors mapped to live implementations and assessed for maturity, from DeFi yield mechanics to DePIN coverage incentives.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </li>
+
+        <li id="gamification" data-audience="protocol-design" data-track="earlier" data-status="public">
+          <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Aug 2024 · Medium · Founders / Protocol teams</span>
+              </div>
+              <img class="writing-thumb" src="/Publication-Images/Gamification_In_Crypto.gif" width="2000" height="1125" alt="Gamification in Crypto cover" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Gamification in Crypto</h3>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Retention architectures and reward mechanics from nine live implementations across DeFi, gaming, and infrastructure protocols. Covers streak systems, achievement tiers, social competition, and leaderboard design.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
+              <a class="writing-thread" href="https://x.com/i/status/1825980270941544867" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
+            </div>
+          </article>
+        </li>
+
+        <li id="intro-tokenomics" data-audience="protocol-design depin" data-track="earlier" data-status="public">
+          <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
+            <a class="writing-link writing-link--thumb" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Public</span>
+                </div>
+                <span class="writing-meta-line">Apr 2022 · Medium · Protocol Design / DePIN</span>
+              </div>
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Introduction-to-Tokenomics.png" width="928" height="927" alt="Introduction to Tokenomics: flywheel of liquidity, borrowing, borrowers, token price, and yield" loading="lazy" />
+              <div class="writing-title-stack">
+                <h3 class="writing-title">Introduction to Tokenomics</h3>
+              </div>
+              <div class="writing-copy">
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> A practitioner's guide to incentive design, value capture, and mechanism risk across the lifecycle of a token economy. Covers supply schedules, staking mechanics, governance tradeoffs, and common failure modes.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
+              <a class="writing-thread" href="https://x.com/i/status/1517236122195316737" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
+            </div>
+          </article>
+        </li>
+      </ul>
+      </section>
+
+      <section id="cross-track-convergence" class="reveal" aria-labelledby="convergence-title">
+        <div class="section-title">
+          <h2 id="convergence-title">Same thesis, different laboratories</h2>
+          <p>Track A shows that the same dollar token changes when routed through different gateways, reserve chains, and control layers.</p>
+          <p>Track B shows that the same network changes when run under different reward schedules, governance gates, and infrastructure conditions.</p>
+        </div>
+        <h3 id="convergence-table-heading" class="convergence-subheading">Cross-track comparison</h3>
+        <div class="convergence-table-wrap" role="region" aria-labelledby="convergence-table-heading">
+          <div class="convergence-table-scroll">
+          <table class="convergence-table">
+            <thead>
+              <tr>
+                <th scope="col">Dimension</th>
+                <th scope="col">Track A (stablecoins)</th>
+                <th scope="col">Track B (token networks)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Where control concentrates</th>
+                <td>A small set of operators now dominates dollar-stablecoin routing. Transfer volume doubled while the number of distinct participants fell 25% and connections between them thinned from 5.8% to 2.6%. Usage expanded; control consolidated.</td>
+                <td>Governance voting across 12 networks is consistently concentrated in a small set of large holders. Concentration is the baseline outcome, present in every protocol studied.</td>
+              </tr>
+              <tr>
+                <th scope="row">What happens under stress</th>
+                <td>During the SVB crisis, Circle and Coinbase had near-identical compliance scores but produced sharply different stress outcomes because their banking exposures differed. Capital rotated across dollar gateways, staying within dollar-pegged instruments. During the BUSD wind-down (no peg pressure), users chose exchange continuity over stronger regulatory protections.</td>
+                <td>Adaptive emission controllers become more resilient under infrastructure shocks, compressing worst-case variance and sustaining roughly eight times more participants than static policy. Reputation-weighted governance moves in the opposite direction, and the outcome depends on one design parameter: when the designer sets the uptime recovery threshold at 99%, reputation scores collapse to 0.18 on a 5.0 scale by year five; lowering it to 95% stabilizes the system.</td>
+              </tr>
+              <tr>
+                <th scope="row">Where the economics sit</th>
+                <td>Stablecoin issuers earn reserve yield on Treasury bills. When the Fed changes rates, issuer economics shift, changing incentives to expand or contract supply. The relevant economics sit one layer below the token, on the operator balance sheet. The relationship is regime-dependent: strongest during tightening, weakest during easing.</td>
+                <td>Helium moved from covering a fraction of infrastructure costs with real user fees to covering roughly twice its costs over 34 months, though the crossover remains fragile. The relevant economics sit in the operating model, one layer below the token.</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <p class="convergence-synthesis">Two research tracks, one conclusion: the token is the surface; control, failure, and revenue resolve at the operator layer.</p>
+      </section>
+
+      <aside class="writing-footnotes" aria-label="Research notes and disclaimers">
+        <p>Writing samples or pre-prints are available on request for papers still in final draft or under review.</p>
+        <p>This site is informational. Views are my own; nothing here is investment advice.</p>
+      </aside>
+    </section>
+
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script defer src="/script.js?v=25"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+  (function() {
+    var filterEl = document.querySelector('.research-filters-js');
+    if (!filterEl) return;
+    filterEl.hidden = false;
+    var filters = { audience: 'all', track: 'all', status: 'all' };
+    var cards = document.querySelectorAll('.research-card');
+    var buttons = document.querySelectorAll('.research-filters-js .filter-btn');
+    function getCardData(card) {
+      var el = card.dataset.audience !== undefined || card.dataset.track !== undefined ? card : card.parentElement;
+      return el || card;
+    }
+    function applyFilters() {
+      cards.forEach(function(card) {
+        var data = getCardData(card);
+        var audience = (data.dataset.audience || '').trim();
+        var track = data.dataset.track || '';
+        var status = data.dataset.status || '';
+        var matchAudience = filters.audience === 'all' || audience.split(/\s+/).indexOf(filters.audience) !== -1;
+        var matchTrack = filters.track === 'all' || track === filters.track;
+        var statusTokens = (status || '').trim().split(/\s+/).filter(function (t) { return t.length; });
+        var matchStatus = filters.status === 'all' || statusTokens.indexOf(filters.status) !== -1;
+        var show = matchAudience && matchTrack && matchStatus;
+        card.style.display = show ? '' : 'none';
+        if (card.parentElement && card.parentElement.tagName === 'LI') {
+          card.parentElement.style.display = show ? '' : 'none';
+        }
+      });
+      var visible = 0;
+      cards.forEach(function(card) {
+        if (card.style.display === 'none') return;
+        visible++;
+      });
+      var counter = document.querySelector('.filter-count');
+      if (counter) {
+        counter.textContent = 'Showing ' + visible + (visible === 1 ? ' item' : ' items');
+      }
+    }
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var filterType = btn.dataset.filter;
+        var value = btn.dataset.value;
+        btn.closest('.filter-group').querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        filters[filterType] = value;
+        applyFilters();
+      });
+    });
+    applyFilters();
+  })();
+  </script>
+</body>
+</html>

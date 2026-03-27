@@ -26,7 +26,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <title>Zach Zukowski | Digital Money & Tokenization Research</title>
-  <meta name="description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta name="description" content="Seven scholarly papers on dollar infrastructure and tokenization. Gateway analysis, institutional diligence frameworks, and DePIN tokenomics." />
   <meta name="author" content="Zach Zukowski" />
 
   <!-- Favicon -->
@@ -96,15 +96,16 @@
 
     /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
     #hero.hero--homepage .hero-subtitle {
-      font-size: 1.25rem;
-      color: var(--muted);
+      font-size: 1rem;
+      color: var(--text-secondary, var(--muted));
       margin-top: 0.75rem;
       margin-bottom: 2rem;
-      width: max-content;
-      max-width: 100%;
+      max-width: 600px;
+      width: 100%;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      line-height: 1.5;
       box-sizing: border-box;
     }
 
@@ -286,6 +287,10 @@
       margin-bottom: 0.5rem;
     }
 
+    #main #about.about-section .section-eyebrow {
+      color: var(--accent);
+    }
+
     .section-compact h2 {
       font-size: 1.75rem;
       font-weight: 500;
@@ -309,7 +314,10 @@
     }
 
     .role-pill {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 88px;
       padding: 1.25rem 1.5rem;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -366,6 +374,10 @@
     @media (max-width: 640px) {
       .role-pills {
         grid-template-columns: 1fr;
+      }
+
+      .role-pill {
+        min-height: auto;
       }
     }
 

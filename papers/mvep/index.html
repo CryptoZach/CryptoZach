@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products | Zach Zukowski</title>
+  <meta name="description" content="Ten-category diligence framework for tokenized products. Reverse-engineered from the SVB weekend. Three liquidation paths, seven stress scenarios." />
+  <meta name="author" content="Zach Zukowski" />
+
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cryptozach.com/papers/mvep" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image:alt" content="Minimum Viable Equivalence Pack, ten-category committee checklist cover" />
+  <link rel="canonical" href="https://cryptozach.com/papers/mvep" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Minimum Viable Equivalence Pack, ten-category committee checklist cover" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=37" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://cryptozach.com/research" },
+        { "@type": "ListItem", "position": 3, "name": "Minimum Viable Equivalence Pack", "item": "https://cryptozach.com/papers/mvep" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "name": "Minimum Viable Equivalence Packs: Institutional Diligence Framework for Tokenized Products",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://cryptozach.com" },
+      "datePublished": "2026-02",
+      "description": "Ten categories testing whether a tokenized product maintains legal, operational, and economic equivalence under stress. Reverse-engineered from the SVB weekend.",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/mvep" },
+      "image": "https://cryptozach.com/Publication-Images/MVEP_Cover_v2.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization.Systems" }
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Zach Zukowski</strong>
+          <span>Digital Money • Tokenization • Market Infrastructure</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <a href="/research">Research</a> &gt; Minimum Viable Equivalence Pack
+      </nav>
+
+      <figure class="paper-cover paper-cover--wide" aria-hidden="true">
+        <img src="/Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack, ten-category committee checklist cover" loading="eager" />
+      </figure>
+
+      <span class="paper-track-badge">Track A: Stablecoin &amp; dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge badge-status-published">Public</span>
+      </div>
+
+      <h1 id="paper-title">Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products</h1>
+
+      <p class="paper-metadata-strip">~20 min read · ~7,800 words · 2026 · SSRN</p>
+      <p class="paper-description-note">Description current as of March 2026.</p>
+
+      <p class="paper-thesis">Institutional tokenization diligence fails when it treats the token wrapper (the on-chain representation) as the product. MVEP is a minimum artifact pack (the documents, memos, and test results a product must produce) for proving that a tokenized product preserves equivalence under stress, built from the USDC/SVB failure and structured around the questions risk committees actually ask before approval. Equivalence is three separate claims (legal, operational, economic), each of which must hold independently; a product can pass one while failing another.</p>
+
+      <div class="paper-takeaways">
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">1</span>
+          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the 13% peg deviation (USDC trading at $0.87 instead of $1.00) broke economic equivalence. Categories one through nine of MVEP were reverse-engineered from that weekend. The tenth, collateral operability (whether collateral can be liquidated to cash under stress within the contractual deadline), was surfaced by the collateral mobility use case that now dominates institutional tokenization volume.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">2</span>
+          <p class="paper-takeaway-text">The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass/fail test. Five test the legal and operational stack directly exposed by SVB (rights parity, system of record, custody, insolvency posture, disclosures); four address gaps SVB revealed would have failed if tested (reconciliation, settlement finality, exception handling, governance); the tenth addresses whether collateral can be liquidated to cash under stress. For the tokenized Treasury asset class, the paper identifies three distinct liquidation paths, four constraints on path availability, seven stress scenarios, and three scenario interaction chains where scenarios compound.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">3</span>
+          <p class="paper-takeaway-text">MVEP is the entry gate; the Control Layer Intensity Index (CLII) is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation (a defined event, such as a custodian losing its license or a reconciliation breach, that prompts the committee to reassess), with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance. Category 10 is the most time-sensitive and should be re-verified quarterly or when any key input changes.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Risk committees</span>
+        <span class="paper-audience-tag">Tokenization platforms</span>
+        <span class="paper-audience-tag">Custodians</span>
+        <span class="paper-audience-tag">Legal / Compliance teams</span>
+        <span class="paper-audience-tag">Exchanges evaluating collateral acceptance</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
+          <a class="action secondary" href="https://medium.com/@CryptoZach/tokenization-equivalence-packs-the-minimum-artifacts-that-clear-a-risk-committee-b415422432de" target="_blank" rel="noopener noreferrer">Read on Medium</a>
+          <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/2024998578335482251?s=20" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:zach@cryptozach.com?subject=Minimum%20Viable%20Equivalence%20Packs%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>What this paper changes</h2>
+        <p>Before an institution relies on a tokenized product, it should prove that the tokenized version maintains legal, operational, and economic equivalence, including under stress. Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and teams that build first and figure out custody, reconciliation, and exception handling later. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
+        <ol>
+          <li>What is the authoritative record, and what happens when it disagrees with the chain?</li>
+          <li>Who can freeze, rollback, or override, and what is the audit trail?</li>
+          <li>What does "settled" mean here, both technically and economically?</li>
+          <li>In insolvency, what exactly is the holder's claim, and in which jurisdiction?</li>
+          <li>What are the dependencies that can break equivalence (redemption paths, transfer restrictions, pricing feeds), and what triggers failure?</li>
+        </ol>
+        <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream. The MVEP applies to any institution evaluating a tokenized product for acceptance, custody, collateral posting, or distribution. The emphasis across categories varies by the institution's role: an exchange evaluating collateral acceptance will focus on Category 10; a custodian will focus on Categories 4 and 5; a fund evaluating a composed product will require all ten with equal rigor.</p>
+        <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation (the point at which the blockchain treats a transaction as irreversible). USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity (does the settled amount hold its intended value?), convertibility conditions (can the holder actually redeem?), halt triggers (when does settlement pause?), reversal authority (who can unwind?), and explicit loss allocation (who bears the risk when finality is breached?).</p>
+
+        <h2>Where the framework does its heaviest work</h2>
+        <h3>Tokenized Treasury bills and money market fund shares</h3>
+        <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, and Ondo's OUSG and USDY. The primary use case is collateral mobility: posting a tokenized fund share as margin without liquidating the underlying position.</p>
+        <p><strong>Three liquidation paths.</strong> Each has different availability, speed, and capacity. Path 1: an instant-redemption pool (Circle's smart contract exchanging BUIDL for USDC at par, 24/7, with a finite and fluctuating balance). Path 2: secondary market sale to another approved party via the transfer agent's alternative trading system. Path 3: standard fund redemption processed by the fund administrator against daily net asset value (NAV), unavailable on weekends and holidays.</p>
+        <p><strong>Four constraints</strong> determine which path is available and when. Pool capacity (the instant-redemption pool closes when depleted). Whitelist requirements (the instant-redemption and secondary market paths require the receiving wallet to be on the transfer agent's approved list). Cross-chain bridge risk (a bridge is a protocol that transfers tokens between blockchains; an exploit could create phantom balances on one chain that the share register does not reflect, corrupting collateral valuations). Transfer restriction model (whitelist products exclude decentralized finance (DeFi) liquidation venues; blocklist products enable permissionless liquidation paths). The transfer restriction model is also upgradeable: the contract that enforces restrictions can be modified after collateral is posted.</p>
+        <p><strong>Four distinct legal structures.</strong> Products in this asset class span at least four: a British Virgin Islands (BVI)-domiciled fund share under Reg D (a private placement exemption; BUIDL), a US-registered Investment Company Act of 1940 (40 Act) money market fund with statutory redemption rights (BENJI), a Delaware limited partnership whose general partner and investment manager are both subsidiaries of the same parent (OUSG, creating a single-point-of-failure for fund operations if the parent becomes insolvent), and a tokenized secured note where holders are senior secured creditors (USDY). Each structure requires a different evidence package for rights parity, insolvency posture, and collateral operability.</p>
+        <p><strong>Seven stress scenarios</strong> test the constraints against specific liquidation triggers: margin call escalation, counterparty default, fund redemption cascade, regulatory seizure or sanctions, collateral substitution, cross-chain bridge incident, and operational NAV risk. The fund redemption cascade has been tested in production: on March 27, 2025, Circle's instant BUIDL redemption facility experienced a 23-hour period of limited availability. Three scenario interaction chains show how scenarios compound.</p>
+        <p><strong>Yield-mechanism divergence</strong> across products creates different reconciliation and collateral valuation requirements. Some products distribute yield as new token mints (issuing additional tokens to holders, changing quantity while maintaining a fixed price); others use an accumulating model (fixed quantity, rising price); still others offer both with per-chain oracle updates (external pricing feeds that supply on-chain systems with the current NAV) that may lag each other, meaning the same token can have different effective prices on different chains at the same moment.</p>
+        <p><strong>The synthesis: the 2am Saturday margin call.</strong> The token can be posted as collateral instantly. But if it must be liquidated: the instant-redemption pool may be depleted, the secondary market may have no active market makers at 2am Saturday, and the fund administrator does not process redemptions until Monday. The MVEP must document the expected outcome when all three paths are degraded simultaneously and specify the loss allocation if conversion cannot complete before the margin deadline. For products with business-hours-only redemption, all seven stress scenarios outside those hours have no available path.</p>
+
+        <h3>Tokenized private credit and receivables</h3>
+        <p>Where the Treasury section demonstrates how operational and economic equivalence dominate, private credit introduces a different dominant failure mode: the token can be freely tradeable while the underlying claim requires procedural steps the token transfer does not trigger.</p>
+        <p>Earlier-stage but growing: Centrifuge, Maple, Goldfinch, Figure Technologies. Unlike T-bills, private credit has ongoing servicing obligations, covenant monitoring, and complex payment waterfalls. A token can be freely tradeable even when the underlying claim requires borrower notice, lender consent, or specific assignment steps. Under stress, the gap between what the token implies and what the holder can actually enforce becomes the central dispute.</p>
+        <p>The framework emphasizes servicing agreement mapping (does token transfer change servicing relationships?), waterfall computation controls with dispute paths, enforceable assignment mechanics, workout and collection playbooks, and authority over credit-event declarations.</p>
+
+        <h3>Composed products: equivalence in layers</h3>
+        <p>Each layer of a composed product (where each layer is a token, protocol, or fund structure between the end holder and the underlying asset) requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" falls short. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
+        <p>Category 2 must identify the registrar of record at every layer. A composed product may lack a named transfer agent at its own layer even when the underlying product has one. The operator may have acquired transfer agent capabilities for other product lines without applying them to the existing fund tokens.</p>
+        <p>Category 4 must trace the custody chain through all layers. Individual holders of the composed product have no visibility into, or direct relationship with, the underlying product's transfer agent or share register.</p>
+        <p>Category 10 must trace the redemption chain. The composed product's instant redemption executes as a single all-or-nothing transaction that redeems the underlying via its instant-redemption pool, creating a hard mechanical dependency. This mismatch can be quantified: a composed product may advertise instant redemption rate limits (caps on how much can be redeemed in a given period, e.g., $50 million global, $25 million individual per 24 hours) that exceed the underlying pool's typical provisioning, meaning the binding constraint is the underlying pool balance.</p>
+
+        <h2>Governance and monitoring</h2>
+        <h3>Governance and change control</h3>
+        <p>The paper sets a higher bar than most tokenization proposals meet. Single-signer admin keys are disqualifying. Minimum controls for any admin operation affecting token economics or holder rights: 3-of-5 multisig (multiple required signers). For core logic changes: 4-of-7 or equivalent. Signers must be identified individuals with named roles.</p>
+        <p>Timelock minimums (an enforced delay before a change takes effect): 48 hours for parameter changes, 7 days for logic upgrades, 30 days for migrations. Emergency overrides require a higher signer threshold, independent audit within 72 hours, and immediate holder notification.</p>
+        <p>These thresholds represent an institutional standard that no current market leader meets. On-chain verification of the four largest tokenized Treasury products reveals no timelocks in any admin chain (the sequence of smart contract permissions that controls who can modify the token). The most important governance evidence is the audit log showing the policy has been followed. A governance policy that has never been tested is an untested control.</p>
+
+        <h3>Continuous monitoring: CLII as the drift detector</h3>
+        <p>Where MVEP answers "is equivalence proven now?", the CLII answers "is the control layer degrading over time?"</p>
+        <p>A product can pass MVEP at launch and subsequently fail one of its categories: a custodian receives an enforcement action, reconciliation breaks exceed the agreed threshold, or admin keys get rotated outside documented change control. The CLII tracks custody segregation, reconciliation integrity, and concentration risk across the gateway layer, flagging when posture shifts.</p>
+        <p>Three outcomes from re-evaluation: reaffirmation (equivalence confirmed), conditional continuation (subject to specific remediation with a defined timeline), or suspension (product suspended from new issuance until remediation is complete). Counterparties must be notified within 24 hours of initiating review.</p>
+
+        <h2>How the paper is built</h2>
+        <ul>
+          <li>Three equivalence claims (legal, operational, economic) tested independently</li>
+          <li>SVB episode reverse-engineered into categories one through nine; tenth derived from subsequent collateral mobility use case</li>
+          <li>Worked example: BUIDL architecture with three liquidation paths, four constraints, seven stress scenarios, three interaction chains</li>
+          <li>Cross-product comparison: four legal structures, three yield mechanisms, whitelist vs. blocklist transfer restriction models</li>
+          <li>Composed-product analysis: Category 2 (transfer agent), Category 4 (custody chain), Category 10 (redemption chain) traced through all layers</li>
+          <li>Prescriptive governance thresholds benchmarked against on-chain verification of current market leaders</li>
+          <li>Framework paper anchored on a failure case; the findings describe observed patterns and should be read as evidence consistent with the framework, not as proof of causal relationships</li>
+        </ul>
+
+        <!-- MVEP ten-category checklist -->
+        <div class="mvep-checklist-wrapper" id="checklist">
+          <button type="button" class="mvep-checklist-toggle" aria-expanded="false" aria-controls="checklist-content" aria-label="Expand or collapse ten-category equivalence checklist">
+            <span>Ten-category equivalence checklist</span>
+            <span class="toggle-icon" aria-hidden="true">&#9654;</span>
+          </button>
+          <div class="mvep-checklist-content" id="checklist-content" role="region" aria-label="MVEP ten-category checklist">
+
+            <p class="mvep-ref-note">Each row is marked "pass," "in progress" (with target date), or "not applicable" (with written justification). Any "in progress" item means the proposal goes back to the workstream.</p>
+
+            <table class="mvep-table checklist-main">
+              <colgroup>
+                <col><col><col><col>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>What the committee is checking</th>
+                  <th>Required evidence</th>
+                  <th>Pass condition</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><strong>Tokenholder rights.</strong> Does the token give the holder the same legal claim as the underlying instrument?</td>
+                  <td>Rights mapping memo tracing the tokenholder's claim to the underlying asset, with counsel sign-off.</td>
+                  <td>Tokenholder rights match the underlying claim in contract and enforcement, verified independently of marketing materials.</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><strong>Authoritative record.</strong> When the blockchain says one thing and the off-chain register says another, which one governs?</td>
+                  <td>Canonical record definition specifying which record is authoritative, and a dispute resolution process for when records disagree.</td>
+                  <td>One record is authoritative. A defined path exists to resolve disagreements between on-chain state and off-chain registers.</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><strong>Record-keeping and discrepancy resolution.</strong> How often are records compared, and what happens when they disagree?</td>
+                  <td>Reconciliation schedule, discrepancy resolution procedures, and discrepancy categories ranked by severity. Must distinguish timing discrepancies (records temporarily disagree and will converge) from integrity discrepancies (records disagree because one is wrong and will not self-correct).<br>For tokens on multiple blockchains: per-chain reconciliation and cross-chain balance checks. For yield-distributing tokens: procedures for supply changes caused by dividend mints. The reconciliation surface scales with the number of deployment chains; products in this asset class range from 4 to over 12 chains.</td>
+                  <td>Timing discrepancies close before any collateral valuation or liquidation event. Integrity discrepancies trigger defined halt procedures (stop extending credit, freeze affected balances, escalate). No unresolved unknowns across any deployment chain.</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><strong>Asset segregation and custody.</strong> Are client assets separated from the custodian's own assets, and who controls movement?</td>
+                  <td>Segregation model, movement controls, and custody agreement.</td>
+                  <td>Customer property treatment is explicit, has been verified under a documented stress scenario (custodian failure or enforcement action), and is consistent with disclosures.</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><strong>Claim priority in insolvency.</strong> If the issuer, custodian, or intermediary fails, what is the tokenholder's claim and where does it rank?</td>
+                  <td>Bankruptcy/receivership treatment memo and scenario analysis covering each intermediary in the custody chain.</td>
+                  <td>Claim priority is clear at each intermediary. Rehypothecation risk (the custodian reusing client assets) and forced conversion risk (the token being converted to cash or another form in restructuring) are explicit.</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td><strong>Settlement finality.</strong> What does "settled" mean for this token, and does the definition hold when the pricing feed is disrupted?</td>
+                  <td>Definition of "settled" covering value integrity, convertibility, halt triggers, reversal authority, and loss allocation. Operational runbook. Pricing data dependency map naming providers, maximum acceptable staleness, fallback method, and defined behavior when the primary source is unavailable or disputed.</td>
+                  <td>Finality criteria and reversal authority are explicit. Value integrity is verifiable even when the pricing feed is disrupted.</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td><strong>Rollback and exception response.</strong> If the blockchain retroactively replaces confirmed transactions (a reorg), what happens?</td>
+                  <td>Reorg/rollback response plan (required if the token uses public blockchains) specifying: detection mechanism, halt criteria, loss allocation between parties, communication timelines, and the process for reconciling the share register with the post-reorg chain state.</td>
+                  <td>Halt triggers, loss allocation, and communication timelines are pre-agreed. The plan has been tested or tabletop-exercised.</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td><strong>Governance and change control.</strong> Who can change the smart contract's rules, and is there a record that the process was followed?</td>
+                  <td>Change control policy, admin key policy (identifying key holders by name and role), and audit logs of every admin operation since launch.</td>
+                  <td>Admin operations require 3-of-5 multisig (multiple required signers) approval; core logic changes require 4-of-7. Timelocks enforced: 48 hours (parameter changes), 7 days (logic upgrades), 30 days (migrations). Every change is logged, approved through the documented process, and reversible. The audit log demonstrates continuous compliance since launch.</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td><strong>Stress-scenario disclosures.</strong> Do the disclosures describe what happens under stress, or only during normal operations?</td>
+                  <td>Token-specific disclosure addendum matching actual product behavior under stress scenarios (reserve concentration, convertibility disruption, pricing delays, custody failure).</td>
+                  <td>Disclosures match how the product actually works under stress. No material risk identified in Categories 1 through 8 and 10 is absent from the disclosure.</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td><strong>Collateral liquidation readiness.</strong> If the collateral must be converted to cash under stress, can it be liquidated within the contractual deadline? Do the scenarios compound?</td>
+                  <td>Collateral agreement review covering: custody model (triparty vs. bilateral); the three liquidation paths (instant-redemption pool, secondary market sale, standard fund redemption) with capacity limits and availability windows; four constraints on path availability (pool capacity, whitelist requirements, cross-chain bridge risk, and transfer restriction model including whether the product uses a whitelist or blocklist architecture and whether the restriction contract is upgradeable); pre-authorized path priority and execution time per scenario; blocked-property provisions and loss allocation when collateral is frozen by a regulator; netting enforceability opinion covering sanctions scenarios; escalation ladder from haircut increase through forced liquidation; pool and market-maker capacity relative to large counterparty positions; dividend distribution handling; yield-mechanism documentation (mint-based, accumulating, or rebasing) with oracle dependency and stale-price risk during weekends or holidays; and scenario interaction chains documenting how scenarios compound.<br>For composed products: trace the redemption chain, custody chain, and registrar of record through every layer; document whether the composed product's rate limits exceed the underlying pool's capacity. For products with business-hours-only redemption: pre-agreed loss allocation for the hours gap and interim collateral credit arrangements. The collateral agreement must be reviewed against this category before committee; silence on any point means "in progress."</td>
+                  <td>At least one liquidation path can execute under each documented stress scenario within the contractual deadline. Scenario interaction chains have defined escalation procedures. When no path can complete in time, the loss allocation is explicit and pre-agreed in the collateral agreement.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="mvep-ref-section">
+              <h4>How to read this table</h4>
+
+              <p class="mvep-ref-note"><strong>Timing vs. integrity discrepancies (Category 3).</strong> Six mechanisms can cause the share register, on-chain balances, and cross-chain balances to disagree. Four are timing discrepancies that will self-correct: an on-chain transaction confirming before the transfer agent's systems record it; a redemption approved by the transfer agent whose on-chain burn has not yet confirmed; a cross-chain transfer in transit between burn on one chain and mint on another; and a dividend distribution propagating across chains at different confirmation speeds. Two are integrity discrepancies that will not self-correct: a bridge exploit creating phantom token balances on one chain; and a chain reorganization reversing a transfer the register still shows as complete. The required reconciliation cadence and response procedures differ by type.</p>
+
+              <p class="mvep-ref-note"><strong>Scenario interaction chains (Category 10).</strong> Three documented chains: a bridge incident triggers industry-wide collateral substitution, which triggers a fund redemption cascade as multiple parties redeem through the same pool simultaneously; a sanctions designation triggers counterparty default, which triggers margin calls on correlated positions at the same exchange; an operational NAV disruption triggers collateral substitution, which triggers a fund redemption cascade if the substitution is industry-wide.</p>
+
+              <p class="mvep-ref-note"><strong>Four constraints on path availability (Category 10).</strong> Pool capacity (the instant-redemption pool closes when depleted); whitelist requirements (the instant-redemption and secondary market paths require the receiving wallet to be approved); cross-chain bridge risk (a bridge exploit could corrupt collateral valuations); and transfer restriction model (whitelist products exclude DeFi liquidation venues, blocklist products enable permissionless paths, and the restriction contract may be upgradeable after collateral is posted).</p>
+
+              <p class="mvep-ref-note"><strong>Composed products (Categories 2, 4, 10).</strong> Each layer requires its own MVEP assessment. Category 2 must identify the registrar of record at every layer (the wrapper may lack a named transfer agent). Category 4 must trace the custody chain through all layers. Category 10 must trace the redemption chain (the composed product's instant redemption may depend on the underlying product's pool, and the composed product's rate limits may exceed the pool's capacity).</p>
+
+              <p class="mvep-ref-note"><strong>Business-hours-only products (Category 10).</strong> Products with no instant-redemption pool and no secondary market have no available liquidation path outside business hours. The pass condition requires pre-agreed loss allocation for the hours gap.</p>
+            </div>
+
+            <div class="mvep-ref-section">
+              <h4>Equivalence dimensions</h4>
+              <table class="mvep-table ref-table">
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>What it means</th>
+                    <th>Categories</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Legal</strong></td>
+                    <td>Tokenholder rights, claim priority, and enforceability match the underlying instrument under the governing law and insolvency regime.</td>
+                    <td>1, 5</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operational</strong></td>
+                    <td>The authoritative record, reconciliation, exception handling, and liquidation procedures make the claim administrable under stress.</td>
+                    <td>2, 3, 7, 8, 10</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Economic</strong></td>
+                    <td>Settlement finality includes value integrity and convertibility conditions consistent with how the product is marketed.</td>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cross-cutting</strong></td>
+                    <td>Custody is both legal (customer property in insolvency) and operational (who controls movement). Disclosures must reflect all three dimensions.</td>
+                    <td>4, 9</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="mvep-ref-note mvep-ref-note--after-table">A product can pass legal equivalence while failing operational or economic equivalence independently.</p>
+            </div>
+
+            <div class="mvep-ref-section">
+              <h4>Category provenance</h4>
+              <table class="mvep-table ref-table">
+                <thead>
+                  <tr>
+                    <th>Source</th>
+                    <th>Count</th>
+                    <th>Categories</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Directly tested by SVB failures (March 2023)</td>
+                    <td>5</td>
+                    <td>1, 2, 4, 5, 9</td>
+                  </tr>
+                  <tr>
+                    <td>Gap revealed by SVB (would have failed if tested, or existing definition proved insufficient)</td>
+                    <td>4</td>
+                    <td>3, 6, 7, 8</td>
+                  </tr>
+                  <tr>
+                    <td>Surfaced by collateral mobility use case (post-SVB institutional adoption)</td>
+                    <td>1</td>
+                    <td>10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <h2>Limitations</h2>
+        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Seven predictable failure modes:</p>
+        <ul>
+          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use.</li>
+          <li><strong>Stale equivalence:</strong> Products pass at launch but drift. Mandatory periodic re-certification addresses this.</li>
+          <li><strong>Category blindness:</strong> Ten categories are comprehensive for current structures, but novel products may introduce risks that do not fit. A "residual risk" disclosure covers this gap.</li>
+          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met.</li>
+          <li><strong>Jurisdictional scope:</strong> Three categories (rights parity, insolvency posture, system of record) require jurisdiction-specific analysis for cross-border distribution.</li>
+          <li><strong>Disclosure regime dependence:</strong> An evaluator's ability to verify Category 9 independently depends on the governing regime. Products under the Investment Company Act file public reports; products under Reg D or Reg S (exemptions for private placements and offshore offerings) disclose only to onboarded investors.</li>
+          <li><strong>Structural scope:</strong> The framework is calibrated for tokenized fund shares but also applies to tokenized secured notes, where the insolvency posture is fundamentally different. A secured noteholder is a senior secured creditor, with different Category 5 evidence requirements.</li>
+        </ul>
+        <p>The framework's value is in making the standard explicit, the gaps visible, and the failure modes predictable.</p>
+
+        <div class="paper-key-numbers">
+          <h2>Key numbers</h2>
+          <p><strong>SVB anchor case</strong><br>
+          Circle $3.3B reserve exposure at SVB · USDC traded at $0.87 · Three dimensions of equivalence broken simultaneously</p>
+          <p><strong>Framework structure</strong><br>
+          3 equivalence claims (legal, operational, economic) · 10 diligence categories · Each with required artifact and pass/fail test</p>
+          <p><strong>Tokenized Treasury analysis</strong><br>
+          3 liquidation paths · 4 constraints on path availability · 7 stress scenarios · 3 scenario interaction chains · 4 distinct legal structures · 3 yield mechanisms</p>
+          <p><strong>Governance minimums</strong><br>
+          Admin operations: 3-of-5 multisig · Core logic changes: 4-of-7 · Timelocks: 48h (parameters), 7d (upgrades), 30d (migrations) · Current market: zero timelocks verified in the four largest products</p>
+          <p><strong>Composed products</strong><br>
+          Equivalence = minimum across all layers · Rate limit mismatch: composed product rate limits can exceed the underlying pool's capacity · Category 2, 4, and 10 must be traced through every layer</p>
+          <p><strong>Implementation timeline</strong><br>
+          10 to 14 weeks for a team with dedicated legal counsel and established custodian relationship; 16 to 24 weeks for novel structures · Typical bottleneck: legal and custody · Category 10 re-verified quarterly or on input change</p>
+          <p><strong>Monitoring</strong><br>
+          CLII re-evaluation triggers: tier-boundary crossing (a gateway's regulatory score drops below the threshold separating tiers), dimension-level deterioration (custody, reconciliation, or concentration scores decline) · Counterparty notification: within 24 hours of initiating review</p>
+        </div>
+
+        <h2>Related frameworks</h2>
+        <p><a href="/frameworks#mvep">MVEP</a> (entry-gate diligence) · <a href="/frameworks#clii">CLII</a> (continuous monitoring and drift detection).</p>
+
+        <h2>Related role profiles</h2>
+        <p><a href="/resume/asset-management">Asset Management &amp; Tokenization</a> · <a href="/resume/risk-controls">Risk, Controls &amp; Market Infrastructure</a>.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/routing-the-dollar" class="companion-card">
+            <strong>Routing the Dollar</strong>
+            <span>The gateway analysis that motivated the MVEP framework.</span>
+          </a>
+          <a href="/papers/tokenized-equity" class="companion-card">
+            <strong>Tokenized Equity Vehicles</strong>
+            <span>Comparable launch architectures for legal claim, custody, and liquidity rails.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:zach@cryptozach.com?subject=Minimum%20Viable%20Equivalence%20Packs%20-%20Discussion">zach@cryptozach.com</a></p>
+    </article>
+
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski. All rights reserved.</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=25"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+(function() {
+  var wrapper = document.querySelector('.mvep-checklist-wrapper');
+  var toggle = document.querySelector('.mvep-checklist-toggle');
+  if (!wrapper || !toggle) return;
+  toggle.addEventListener('click', function() {
+    var isOpen = wrapper.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+})();
+  </script>
+</body>
+</html>

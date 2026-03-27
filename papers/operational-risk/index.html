@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Operational Risk in Token Economies | Zach Zukowski</title>
+  <meta name="description" content="624-configuration simulation using real outage rates. Adaptive controllers become more resilient under infrastructure shocks. The counterintuitive result." />
+  <meta name="author" content="Zach Zukowski" />
+
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cryptozach.com/papers/operational-risk" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:image:alt" content="Operational Risk in Token Economies: ValOS-NORS table" />
+  <link rel="canonical" href="https://cryptozach.com/papers/operational-risk" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Operational Risk in Token Economies: ValOS-NORS table" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=35" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cryptozach.com" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://cryptozach.com/research" },
+        { "@type": "ListItem", "position": 3, "name": "Operational Risk in Token Economies", "item": "https://cryptozach.com/papers/operational-risk" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "name": "Operational Risk in Token Economies",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://cryptozach.com" },
+      "datePublished": "2025",
+      "description": "624-configuration simulation using real outage rates from Ethereum, Helium, Geodnet, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks.",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/operational-risk" },
+      "image": "https://cryptozach.com/Publication-Images/Table3_ValOS-NORS.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization.Systems" }
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Zach Zukowski</strong>
+          <span>Digital Money • Tokenization • Market Infrastructure</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <a href="/research">Research</a> &gt; Operational Risk in Token Economies
+      </nav>
+
+      <figure class="paper-cover" aria-hidden="true">
+        <img src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies: ValOS-NORS comparison" loading="eager" />
+      </figure>
+
+      <span class="paper-track-badge">Track B: DePIN &amp; Tokenomics</span>
+      <div class="paper-badges">
+        <span class="badge badge-status-published">Public</span>
+        <span class="badge badge-access-code">Code available</span>
+      </div>
+
+      <h1 id="paper-title">Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers and Break Reputation Systems</h1>
+
+      <p class="paper-metadata-strip">~15 min read · ~6,500 words · 2026 · SSRN</p>
+      <p class="paper-description-note">Description current as of March 2026.</p>
+
+      <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, Geodnet, and Filecoin, using the emerging ValOS and NORS standards as the taxonomy for what can go wrong in production. The result is a split finding: temporary infrastructure failures make adaptive emission control more resilient under stress, while a threshold-gated reputation system can become structurally nonfunctional under routine operational risk.</p>
+
+      <div class="paper-takeaways">
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">1</span>
+          <p class="paper-takeaway-text">Under the tested parameterization, operational failures strengthen PID emission control. When temporary outages are misread as permanent departures, the controller overcompensates with higher rewards, building a financial buffer before the next economic shock. Under competitor shock, variance compression improves from 6.25x to 6.89x once operational risk is added. The result is counterintuitive and parameterization-dependent: at higher failure intensity, the buffer can erode.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">2</span>
+          <p class="paper-takeaway-text">The reputation system does not gradually drift; it collapses. At the default 99% uptime threshold over a 90-day season, average reputation decays to 0.18 on a 0-to-5 scale by year 5, effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">3</span>
+          <p class="paper-takeaway-text">The paper is as much a methods contribution as a findings paper. It maps 74 active ValOS risk vectors and 64 testable controls, plus 31 NORS control objectives, into seven simulatable parameters and stress-tests the result across a 624-configuration battery. That bridge from operator-risk standards to calibrated simulation is the reusable contribution.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Protocol designers</span>
+        <span class="paper-audience-tag">Infrastructure operators</span>
+        <span class="paper-audience-tag">Risk analysts</span>
+        <span class="paper-audience-tag">DePIN operators</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118" target="_blank" rel="noopener noreferrer">Full Paper</a>
+          <a href="https://github.com/CryptoZach/meshnet-depin-simulation" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (simulation)</a>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:zach@cryptozach.com?subject=Operational%20Risk%20in%20Token%20Economies%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
+      </div>
+
+      <section class="paper-artifact">
+        <h2>Key comparison</h2>
+        <table class="artifact-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>PID emission controller</th>
+              <th>Reputation-weighted governance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Under infrastructure shock</strong></td>
+              <td>Compresses variance; overcompensation builds pre-shock buffer</td>
+              <td>Collapses when uptime threshold exceeds the operator base's operational floor</td>
+            </tr>
+            <tr>
+              <td><strong>Failure mode</strong></td>
+              <td>Integral wind-up under sustained demand contraction (from the baseline MeshNet paper)</td>
+              <td>Threshold-gated collapse: 36% of operators lose recovery eligibility per season at 0.99 uptime</td>
+            </tr>
+            <tr>
+              <td><strong>Design implication</strong></td>
+              <td>Anti-windup clamping; regime-change detection</td>
+              <td>Lower the recovery threshold (0.95 restores a workable floor); independent monitoring</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="paper-abstract">
+        <h2>What problem it solves</h2>
+        <p>Most token simulations assume operators fail only for incentive reasons. This paper asks what happens when the infrastructure itself fails: outages, key loss, software bugs, correlated incidents, or regulatory disruption affecting operators who are still economically viable. Its contribution is a replicable process for extending token simulation with empirically calibrated operational risk, using ValOS and NORS as the taxonomic bridge from production failures to simulation parameters.</p>
+
+        <h2>What this paper changes</h2>
+        <p>Most token simulations model why operators leave for economic reasons (price decline, insufficient rewards, competitive alternatives). This paper asks what happens when operators are still economically viable but suffer real production failures: outages, key loss, software bugs, correlated infrastructure incidents, or regulatory disruption.</p>
+        <p>The methodological contribution is a replicable process for extending token simulation with empirically calibrated operational risk. The paper maps 74 active ValOS risk vectors and 64 testable controls, plus 31 NORS certification control objectives, into seven simulatable parameters. That mapping is the institutional bridge between operator-risk standards and token-economy simulation: it translates what can go wrong in production into parameters a model can test.</p>
+        <p>The paper also refines the earlier adaptive-tokenomics result. The baseline MeshNet model showed PID-based variance reduction under competitor shock; the operational-risk extension shows the gap versus static emission widens under stress:</p>
+        <ul>
+          <li><strong>Competitor shock:</strong> Static variability rises from 0.544 to 0.569; PID falls from 0.087 to 0.082.</li>
+          <li><strong>Regulatory shock:</strong> Static rises from 0.229 to 0.561; PID falls from 0.093 to 0.070.</li>
+          <li><strong>Bull conditions:</strong> Outcomes are effectively identical.</li>
+        </ul>
+        <p>The beneficial effect is parameterization-dependent. At higher operational-risk levels or higher failure correlation, the buffer can erode and may eventually overshoot into the dilution loop identified in the earlier MeshNet paper.</p>
+
+        <h2>Core findings</h2>
+        <h3>1. Temporary outages can make adaptive emission more stabilizing</h3>
+        <p>The controller mistakes recoverable downtime for economic exit, emits extra rewards, and unintentionally pre-loads operator income before the major shock arrives. That explains why the operational-risk version performs better than the economic-only version in the tested stress cases.</p>
+        <p>The paper is explicit that this is parameterization-dependent. The tested calibration (0.5% daily downtime probability, 10% correlated-failure exposure per event, 3-day mean recovery) produces the beneficial buffer. Higher intensity or higher correlation reduces the advantage, even if it does not reverse it within the tested range.</p>
+
+        <h3>2. Correlated failures are sharp but transient at the tested settings</h3>
+        <p>The biggest single-day node-count drop from a correlated infrastructure failure is 24.94%, but it remains within the controller's operating range and recovers within days. The operational-risk story is one of temporary disruption with asymmetric downstream effects on different mechanisms, not persistent infrastructure collapse under the base calibration.</p>
+
+        <h3>3. Reputation is the true fragility point</h3>
+        <p>With a daily downtime probability of 0.5%, the probability of zero downtime over a 90-day season is approximately 0.64. Roughly 36% of operators lose recovery eligibility in any given season. Over four seasons, only about 16% retain perfect eligibility. Once a season is missed, the 15% seasonal decay compounds without offset.</p>
+        <p>The paper treats this as structural collapse: the uptime threshold is set above the operational floor the operator base can actually achieve. Average reputation decays to 0.18 on a 0-to-5 scale by year 5, effectively disabling reputation-weighted governance.</p>
+        <p>The fix is specific: lower the recovery threshold. At 0.95, average reputation restores to approximately 1.0 by year 5. At 0.90, it restores to approximately 2.0. Changing the decay parameter alone does not restore stability at the 0.99 threshold. This is one of the most actionable findings in the paper.</p>
+
+        <h3>4. The methodological bridge matters as much as the findings</h3>
+        <p>ValOS and NORS are not background context; they are the institutional bridge between simulation and production controls. ValOS supplies the granular taxonomy of risk vectors and controls; NORS supplies the certification logic institutions can audit. The case-study signal is that this control language is already becoming economically consequential: Lido V3 stVaults use operator risk scores to set collateral requirements, and Figment's Full NORS Certification is evidence that these standards are moving from voluntary checklists toward enforceable operating rules.</p>
+
+        <h2>Methods / Data</h2>
+        <p>The simulation battery comprises approximately 624 runs:</p>
+        <ul>
+          <li><strong>240 baseline runs</strong> (from the Adaptive Tokenomics paper)</li>
+          <li><strong>240 operational-risk ensemble runs</strong> (30 seeds x 8 configurations with the operational-risk layer active)</li>
+          <li><strong>84 per-parameter sweeps</strong> (sensitivity across individual operational-risk parameters)</li>
+          <li><strong>12 protocol-specific runs</strong> (calibrated to Ethereum, Helium, Geodnet, and Filecoin failure profiles)</li>
+          <li><strong>40 correlated-shock runs</strong> (testing simultaneous infrastructure failures across operator groups)</li>
+          <li><strong>8 interaction tests</strong> (examining how operational risk interacts with economic shocks)</li>
+        </ul>
+        <p><strong>Calibration:</strong> Ethereum validator performance data, Helium network contraction and hotspot reliability, Geodnet station uptime, and Filecoin sector fault rates. MeshNet base assumptions: 0.5% daily downtime probability, 3% annual exit rate, 0.05% annual operational slashing rate, 10% correlated-failure exposure per event, 20% partial-failure share, mean recovery time of 3 days capped at 42 days.</p>
+        <p>The paper notes that these point estimates reflect author judgment within documented ranges; they are not mechanical aggregation from a single source.</p>
+
+        <div class="paper-key-numbers">
+          <h2>Key numbers</h2>
+          <p><strong>Simulation battery</strong><br>
+          ~624 runs: 240 baseline + 240 operational-risk ensemble + 84 sweeps + 12 protocol-specific + 40 correlated-shock + 8 interaction tests</p>
+          <p><strong>PID stabilization (operational risk widens the gap)</strong><br>
+          Competitor shock: static CV 0.544 to 0.569; PID CV 0.087 to 0.082 (variance compression improves from 6.25x to 6.89x)<br>
+          Regulatory shock: static CV 0.229 to 0.561; PID CV 0.093 to 0.070<br>
+          Bull: effectively identical</p>
+          <p><strong>Correlated failure</strong><br>
+          Largest single-day node-count drop: 24.94% · Recovery: within days · Within controller operating range</p>
+          <p><strong>Reputation collapse</strong><br>
+          At 0.99 uptime threshold: average reputation 0.18/5.0 by year 5<br>
+          At 0.95 threshold: average reputation ~1.0 by year 5<br>
+          At 0.90 threshold: average reputation ~2.0 by year 5<br>
+          Per-season eligibility loss: ~36% of operators at 0.5% daily downtime</p>
+          <p><strong>ValOS/NORS mapping</strong><br>
+          74 active ValOS risk vectors · 64 testable controls · 31 NORS control objectives to 7 simulatable parameters</p>
+          <p><strong>Calibration sources</strong><br>
+          Ethereum validator data · Helium network contraction · Geodnet station uptime · Filecoin sector fault rates</p>
+        </div>
+
+        <h2>Limitations</h2>
+        <p>The paper is explicit about the following boundaries:</p>
+        <ul>
+          <li>The beneficial overreaction result is parameterization-dependent. Higher correlated-failure intensity reduces the PID advantage, even if it does not reverse it within the tested range.</li>
+          <li>Most per-parameter sweeps are single-seed; multi-seed confirmation is complete only for the 240-run ensemble configurations.</li>
+          <li>Operational risk is assigned at infrastructure-group level. Operator-level heterogeneity (whether smaller operators face systematically higher risk) is explicitly identified as future work.</li>
+          <li>Cross-chain operational-risk correlation is not modeled; each chain's failure profile is tested independently.</li>
+          <li>Welfare analysis (whether the operational-risk buffer is socially efficient or just stabilizing) remains an open extension.</li>
+        </ul>
+
+        <h2>Related role profiles</h2>
+        <p>Track B work supports protocol and infrastructure audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/adaptive-tokenomics" class="companion-card">
+            <strong>Adaptive Tokenomics</strong>
+            <span>The anchor study this simulation extends: PID emission, slashing, and the 240-run MeshNet ensemble.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:zach@cryptozach.com?subject=Operational%20Risk%20in%20Token%20Economies%20-%20Discussion">zach@cryptozach.com</a></p>
+    </article>
+
+    <footer class="reveal">
+      <div class="footer-top">
+        <div class="footer-copy">© <span id="year"></span> Zach Zukowski. All rights reserved.</div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=25"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

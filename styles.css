@@ -2050,6 +2050,7 @@ footer{
 #adv-policy,
 #press-kit,
 #booking,
+#engagements,
 #about-zach,
 #about{
   scroll-margin-top: 6rem;
@@ -10806,6 +10807,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 #hero.hero--homepage{
   position: relative;
+  overflow-x: clip;
   padding: clamp(18px, 2.5vw, 36px) max(var(--page-gutter), env(safe-area-inset-right)) clamp(8px, 1.1vw, 14px) max(var(--page-gutter), env(safe-area-inset-left));
   border-top: 3px solid var(--accent);
   /* Hero dollar stream: peak / late opacity (keyframes read these; hover + mobile override) */
@@ -10894,6 +10896,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   top: 0;
   left: 0;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   display: block;
   /* No contain: strict / paint: strict clips composited 2D output (shadows, scaled sprites) at edges and caused Hyperliquid and similar marks to look cut off on the left. */
@@ -12673,4 +12676,288 @@ details.card-expand[open] summary {
 
 .writing-dual-summary-links .action.secondary {
   font-size: 0.85rem;
+}
+
+/* Sprint 5: OS prefers dark while the document uses light tokens (no data-theme="dark"). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="dark"]) {
+    --bg: #0f0f0f;
+    --panel: #1a1a1a;
+    --panel2: #151515;
+    --surface: #1e1e1e;
+    --text: #e8e8e8;
+    --text-soft: #d0d0d0;
+    --muted: #a0a0a0;
+    --muted-soft: #909090;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --accent: #2ecc71;
+    --accent-hover: #27ae60;
+    --accent-soft: rgba(46, 204, 113, 0.15);
+    --accent-muted: rgba(46, 204, 113, 0.08);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.2);
+    color-scheme: dark;
+  }
+
+  :root:not([data-theme="dark"]) body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container {
+    --matrix-trail-rgb: 22 32 28;
+    --matrix-trail-fade-alpha: 0.158;
+  }
+
+  :root:not([data-theme="dark"]) .role-pill,
+  :root:not([data-theme="dark"]) .compact-card,
+  :root:not([data-theme="dark"]) .research-card-sm {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+
+  :root:not([data-theme="dark"]) .role-pill:hover,
+  :root:not([data-theme="dark"]) .compact-card:hover,
+  :root:not([data-theme="dark"]) .research-card-sm:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  :root:not([data-theme="dark"]) .section-compact {
+    border-top-color: var(--line);
+  }
+
+  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-proof-chip {
+    background: #1a2f1f;
+    color: var(--accent);
+    border-color: transparent;
+  }
+
+  :root:not([data-theme="dark"]) .btn-primary {
+    background: var(--accent);
+  }
+
+  :root:not([data-theme="dark"]) .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  :root:not([data-theme="dark"]) .badge-sm {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  :root:not([data-theme="dark"]) .badge-sm.badge-review {
+    border-color: #b8860b;
+    color: #daa520;
+    background: #2a2010;
+  }
+
+  :root:not([data-theme="dark"]) .site-footer {
+    border-top-color: var(--line);
+  }
+
+  :root:not([data-theme="dark"]) .section-eyebrow {
+    color: var(--accent);
+  }
+
+  :root:not([data-theme="dark"]) .role-pill strong,
+  :root:not([data-theme="dark"]) .compact-card h3,
+  :root:not([data-theme="dark"]) .research-card-sm h3 {
+    color: var(--text);
+  }
+
+  :root:not([data-theme="dark"]) .role-pill span,
+  :root:not([data-theme="dark"]) .compact-card p,
+  :root:not([data-theme="dark"]) .research-card-sm p {
+    color: var(--muted);
+  }
+
+  :root:not([data-theme="dark"]) .section-link a,
+  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a,
+  :root:not([data-theme="dark"]) .about-contact a,
+  :root:not([data-theme="dark"]) .site-footer .footer-links a,
+  :root:not([data-theme="dark"]) .footer-social a {
+    color: var(--muted);
+  }
+
+  :root:not([data-theme="dark"]) .section-link a:hover,
+  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a:hover,
+  :root:not([data-theme="dark"]) .about-contact a:hover,
+  :root:not([data-theme="dark"]) .site-footer .footer-links a:hover,
+  :root:not([data-theme="dark"]) .footer-social a:hover {
+    color: var(--accent);
+  }
+
+  :root:not([data-theme="dark"]) .about-bio {
+    color: var(--text);
+  }
+
+  :root:not([data-theme="dark"]) .about-method {
+    color: var(--muted);
+  }
+
+  :root:not([data-theme="dark"]) .hero-institutional,
+  :root:not([data-theme="dark"]) .hero-institutional a {
+    color: var(--muted-soft);
+  }
+
+  :root:not([data-theme="dark"]) .hero-institutional a:hover {
+    color: var(--accent);
+  }
+
+  :root:not([data-theme="dark"]) .card-venue {
+    color: var(--muted-soft);
+  }
+}
+
+/* Sprint 5: mobile nav touch targets and footer link hit areas. */
+@media (max-width: 640px) {
+  .menu-toggle {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #nav-mobile .mobile-nav-close {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #nav-mobile .mobile-nav-linkset a.navlink {
+    display: block;
+    padding: 0.75rem 1rem;
+    min-height: 48px;
+    line-height: 1.35;
+    box-sizing: border-box;
+  }
+
+  #nav-mobile .nav-mobile-social a.header-social-link {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .site-footer .footer-links a,
+  .site-footer .footer-social a {
+    padding: 0.5rem 0;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Sprint 9: companion papers ("Read next") on paper summary pages */
+.companions {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.companions h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+
+.companion-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.companion-card {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.companion-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.companion-card strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.companion-card span {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .companion-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sprint 10: speaker page past engagements */
+.engagement-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.engagement-list li {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.engagement-list li strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.engagement-list li span {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.speaker-page #engagements.section-compact {
+  padding: 2.5rem max(var(--page-gutter), env(safe-area-inset-left)) 1rem max(var(--page-gutter), env(safe-area-inset-right));
+  border-top: 1px solid var(--line);
+  margin-top: 0.5rem;
+  max-width: var(--max);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.speaker-page #engagements.section-compact h2 {
+  margin-top: 0;
 }
