@@ -14,11 +14,11 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products | Zach Zukowski</title>
-  <meta name="description" content="MVEP: three equivalence claims (legal, operational, economic) tested through nine diligence categories, anchored on USDC/SVB. Paired with CLII for drift detection after launch." />
+  <meta name="description" content="MVEP: three equivalence claims (legal, operational, economic) tested through ten diligence categories, anchored on USDC/SVB. Paired with CLII for drift detection after launch." />
   <meta name="author" content="Zach Zukowski" />
 
   <meta property="og:title" content="Minimum Viable Equivalence Pack: Institutional Diligence for Tokenized Products | Zach Zukowski" />
-  <meta property="og:description" content="MVEP: three equivalence claims tested through nine diligence categories. Five committee questions, settlement finality redefined, governance minimums, CLII as drift detector." />
+  <meta property="og:description" content="MVEP: three equivalence claims tested through ten diligence categories. Five committee questions, settlement finality redefined, governance minimums, CLII as drift detector." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://cryptozach.com/papers/minimum-viable-equivalence-packs" />
   <meta property="og:site_name" content="Zach Zukowski" />
@@ -31,7 +31,7 @@
   <meta name="twitter:image:alt" content="Minimum Viable Equivalence Pack cover" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Minimum Viable Equivalence Pack: Institutional Diligence | Zach Zukowski (CryptoZach)" />
-  <meta name="twitter:description" content="Three equivalence claims, nine diligence categories, five committee questions. MVEP as entry gate; CLII as drift detector." />
+  <meta name="twitter:description" content="Three equivalence claims, ten diligence categories, five committee questions. MVEP as entry gate; CLII as drift detector." />
 
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
@@ -62,7 +62,7 @@
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
       "name": "Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products",
-      "description": "Institutional diligence framework: legal, operational, and economic equivalence tested through nine categories with required artifacts and pass/fail tests. Anchored on USDC/SVB. MVEP for approval; CLII for ongoing drift detection.",
+      "description": "Institutional diligence framework: legal, operational, and economic equivalence tested through ten categories with required artifacts and pass/fail tests. Anchored on USDC/SVB. MVEP for approval; CLII for ongoing drift detection.",
       "url": "https://cryptozach.com/papers/minimum-viable-equivalence-packs",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cryptozach.com/papers/minimum-viable-equivalence-packs" },
       "image": "https://cryptozach.com/Publication-Images/Equivalence_Pack.webp",
@@ -147,7 +147,7 @@
 
       <h1 id="paper-title">Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products</h1>
 
-      <p class="paper-metadata-strip">~12 min read · ~3,500 words · 2026 · SSRN</p>
+      <p class="paper-metadata-strip">~20 min read · ~7,800 words · 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
       <p class="paper-thesis">Institutional tokenization diligence fails when it treats the token wrapper as the product. MVEP is a minimum artifact pack for proving that a tokenized product preserves equivalence under stress, built from the USDC/SVB failure and structured around the questions risk committees actually ask before approval. Equivalence is three separate claims (legal, operational, economic), each of which must hold independently; a product can pass one while failing another.</p>
@@ -155,15 +155,15 @@
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, system-of-record operability broke operational equivalence, and the 13% peg deviation broke economic equivalence. The failure was broader than reserve exposure; the legal and operational stack had not been documented for crisis conditions.</p>
+          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the 13% peg deviation broke economic equivalence. Categories one through nine of MVEP were reverse-engineered from that weekend. The tenth, collateral operability, was surfaced by the collateral mobility use case that now dominates institutional tokenization volume.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The framework tests equivalence through nine diligence categories, each tied to a required artifact and an explicit pass/fail test: rights parity, system of record, records and reconciliation, custody and customer property, insolvency posture, settlement finality, reorg and exception handling, governance and change control, and disclosures. This replaces ad hoc vendor-pitch diligence with a versioned, comparable checklist.</p>
+          <p class="paper-takeaway-text">The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass/fail test. Five test the legal and operational stack directly exposed by SVB (rights parity, system of record, custody, insolvency posture, disclosures); four address gaps SVB revealed would have failed if tested (reconciliation, settlement finality, exception handling, governance); the tenth addresses collateral operability. For the tokenized Treasury asset class, the paper identifies three distinct liquidation paths, four constraints on path availability, seven stress scenarios, and three scenario interaction chains where scenarios compound.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">MVEP is the entry gate; CLII is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation: a tier-boundary crossing or dimension-level deterioration triggers review, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance.</p>
+          <p class="paper-takeaway-text">MVEP is the entry gate; CLII is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance. Category 10 (collateral operability) is the most time-sensitive and should be re-verified quarterly or when any key input changes.</p>
         </div>
       </div>
 
@@ -172,7 +172,8 @@
         <span class="paper-audience-tag">Risk committees</span>
         <span class="paper-audience-tag">Tokenization platforms</span>
         <span class="paper-audience-tag">Custodians</span>
-        <span class="paper-audience-tag">Legal / Compliance Teams</span>
+        <span class="paper-audience-tag">Legal / Compliance teams</span>
+        <span class="paper-audience-tag">Exchanges evaluating collateral acceptance</span>
       </div>
 
       <div class="paper-access-block access-block">
@@ -186,59 +187,71 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What problem it solves</h2>
-        <p>Before an institution relies on a tokenized product, it should prove that the tokenized version preserves legal, operational, and economic equivalence under stress. MVEP is the practical entry gate for doing that, framed the way risk committees actually review proposals: what artifacts must exist, what tests must pass, and what monitoring must be in place before approval and after launch.</p>
-
         <h2>What this paper changes</h2>
-        <p>Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and "we'll figure out custody later" as an implicit operating model. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
+        <p>Before an institution relies on a tokenized product, it should prove that the tokenized version preserves legal, operational, and economic equivalence under stress. Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and teams that build first and figure out custody, reconciliation, and exception handling later. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
         <ol>
           <li>What is the authoritative record, and what happens when it disagrees with the chain?</li>
           <li>Who can freeze, rollback, or override, and what is the audit trail?</li>
           <li>What does "settled" mean here, both technically and economically?</li>
           <li>In insolvency, what exactly is the holder's claim, and in which jurisdiction?</li>
-          <li>What are the top three dependencies that can break equivalence (custodian, oracle, gateway), and what are the triggers?</li>
+          <li>What are the dependencies that can break equivalence (redemption paths, transfer restrictions, pricing feeds), and what triggers failure?</li>
         </ol>
-        <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream.</p>
-        <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation. USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity (does the settled amount hold its intended value?), convertibility conditions (can the holder actually redeem?), halt triggers (when does settlement pause?), reversal authority (who can unwind?), and explicit loss allocation (who bears the residual risk when finality is breached?).</p>
+        <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream. The MVEP applies to any institution evaluating a tokenized product for acceptance, custody, collateral posting, or distribution. The emphasis across categories varies by the institution's role: an exchange evaluating collateral acceptance will focus on Category 10; a custodian will focus on Categories 4 and 5; a fund evaluating a composed product will require all ten with equal rigor.</p>
+        <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation. USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity (does the settled amount hold its intended value?), convertibility conditions (can the holder actually redeem?), halt triggers (when does settlement pause?), reversal authority (who can unwind?), and explicit loss allocation (who bears the risk when finality is breached?).</p>
 
         <h2>Where the framework does its heaviest work</h2>
         <h3>Tokenized Treasury bills and money market fund shares</h3>
-        <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, Ondo's OUSG. The primary use case is collateral mobility, posting a tokenized T-bill as margin without liquidating the underlying position.</p>
-        <p>The dominant risks are records integrity, settlement finality, and operational resilience across mismatched rails. That is why the framework emphasizes transfer-agent integration with defined reconciliation cadence, collateral eligibility policies with haircut schedules accounting for both settlement cycles, failover procedures for asymmetric rail availability, and oracle and pricing data dependencies with maximum acceptable latency and fallback procedures.</p>
-        <p>The stress test: a margin call triggers a tokenized collateral transfer at 2am Saturday. The token settles in seconds. The underlying Treasury will not settle until Monday. The MVEP must document how this gap is managed.</p>
+        <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, and Ondo's OUSG and USDY. The primary use case is collateral mobility: posting a tokenized fund share as margin without liquidating the underlying position.</p>
+        <p><strong>Three liquidation paths.</strong> Each has different availability, speed, and capacity. Path 1: an instant-redemption pool (Circle's smart contract exchanging BUIDL for USDC at par, 24/7, with a finite and fluctuating balance). Path 2: secondary market sale to another approved party via the transfer agent's alternative trading system. Path 3: standard fund redemption processed by the fund administrator against daily NAV, unavailable on weekends and holidays.</p>
+        <p><strong>Four constraints</strong> determine which path is available and when. Pool capacity (the instant-redemption pool closes when depleted). Whitelist requirements (the instant-redemption and secondary market paths require the receiving wallet to be on the transfer agent's approved list). Cross-chain bridge risk (a bridge exploit could create phantom balances corrupting collateral valuations). Transfer restriction model (whitelist products exclude DeFi liquidation venues; blocklist products enable permissionless liquidation paths). The transfer restriction model is also upgradeable: the contract that enforces restrictions can be modified after collateral is posted.</p>
+        <p><strong>Four distinct legal structures.</strong> Products in this asset class span at least four: a BVI-domiciled fund share under Reg D (a private placement exemption; BUIDL), a US-registered 40 Act money market fund with statutory redemption rights (BENJI), a Delaware limited partnership whose general partner and investment manager are both subsidiaries of the same parent (OUSG, creating a single-point-of-failure for fund operations if the parent becomes insolvent), and a tokenized secured note where holders are senior secured creditors (USDY). Each structure requires a different evidence package for rights parity, insolvency posture, and collateral operability.</p>
+        <p><strong>Seven stress scenarios</strong> test the constraints against specific liquidation triggers: margin call escalation, counterparty default, fund redemption cascade, regulatory seizure or sanctions, collateral substitution, cross-chain bridge incident, and operational NAV risk. The fund redemption cascade has been tested in production: on March 27, 2025, Circle's instant BUIDL redemption facility experienced a 23-hour period of limited availability. Three scenario interaction chains show how scenarios compound.</p>
+        <p><strong>Yield-mechanism divergence</strong> across products creates different reconciliation and collateral valuation requirements. Some products distribute yield as new token mints (changing quantity, fixed price); others use an accumulating model (fixed quantity, changing price); still others offer both with per-chain oracle updates that may lag each other, meaning the same token can have different effective prices on different chains at the same moment.</p>
+        <p><strong>The synthesis: the 2am Saturday margin call.</strong> The token can be posted as collateral instantly. But if it must be liquidated: the instant-redemption pool may be depleted, the secondary market may have no active market makers at 2am Saturday, and the fund administrator does not process redemptions until Monday. The MVEP must document the expected outcome when all three paths are degraded simultaneously and specify the loss allocation if conversion cannot complete before the margin deadline. For products with business-hours-only redemption, all seven stress scenarios outside those hours have no available path.</p>
 
         <h3>Tokenized private credit and receivables</h3>
-        <p>Earlier-stage but growing: Centrifuge, Maple, Goldfinch, Figure Technologies. Unlike T-bills, private credit has ongoing servicing obligations, covenant monitoring, and complex payment waterfalls.</p>
-        <p>The dominant risk is enforceability. A token can be freely tradeable even when the underlying claim requires borrower notice, lender consent, or specific assignment steps. Under stress, the gap between what the token implies the holder can do and what the holder can actually enforce becomes the central dispute.</p>
-        <p>The framework therefore emphasizes servicing agreement mapping (does token transfer change servicing relationships?), waterfall computation controls with dispute paths, enforceable assignment mechanics (can the tokenholder actually enforce the claim against the borrower?), workout and collection playbooks, and authority over credit-event declarations.</p>
+        <p>Where the Treasury section demonstrates how operational and economic equivalence dominate, private credit introduces a different dominant failure mode: the gap between token transferability and claim enforceability.</p>
+        <p>Earlier-stage but growing: Centrifuge, Maple, Goldfinch, Figure Technologies. Unlike T-bills, private credit has ongoing servicing obligations, covenant monitoring, and complex payment waterfalls. A token can be freely tradeable even when the underlying claim requires borrower notice, lender consent, or specific assignment steps. Under stress, the gap between what the token implies the holder can do and what the holder can actually enforce becomes the central dispute.</p>
+        <p>The framework emphasizes servicing agreement mapping (does token transfer change servicing relationships?), waterfall computation controls with dispute paths, enforceable assignment mechanics, workout and collection playbooks, and authority over credit-event declarations.</p>
 
         <h3>Composed products: equivalence in layers</h3>
-        <p>Each layer of a composed product requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" is not sufficient. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
+        <p>Each layer of a composed product (where each layer is a token, protocol, or fund structure between the end holder and the underlying asset) requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" falls short. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
+        <p>Category 2 must identify the registrar of record at every layer. A composed product may lack a named transfer agent at its own layer even when the underlying product has one. The operator may have acquired transfer agent capabilities for other product lines without applying them to the existing fund tokens.</p>
+        <p>Category 4 must trace the custody chain through all layers. Individual holders of the composed product have no visibility into, or direct relationship with, the underlying product's transfer agent or share register.</p>
+        <p>Category 10 must trace the redemption chain. The composed product's instant redemption executes as a single all-or-nothing transaction that redeems the underlying via its instant-redemption pool, creating a hard mechanical dependency. This mismatch can be quantified: a composed product may advertise instant redemption rate limits (for example, $50 million global, $25 million individual per 24 hours) that exceed the underlying pool's typical provisioning, meaning the binding constraint is the underlying pool balance.</p>
 
         <h2>Governance and monitoring</h2>
         <h3>Governance and change control</h3>
         <p>The paper sets a higher bar than most tokenization proposals meet. Single-signer admin keys are disqualifying. Minimum controls for any admin operation affecting token economics or holder rights: 3-of-5 multisig (multiple required signers). For core logic changes: 4-of-7 or equivalent. Signers must be identified individuals with named roles.</p>
         <p>Timelock minimums (an enforced delay before a change takes effect): 48 hours for parameter changes, 7 days for logic upgrades, 30 days for migrations. Emergency overrides require a higher signer threshold, independent audit within 72 hours, and immediate holder notification.</p>
-        <p>The most important governance evidence is the audit log showing the policy has been followed: every admin key operation since launch, evidence that each was approved through the documented process, and records of any governance changes with their own approval trails. A governance policy that has never been tested is an untested control.</p>
+        <p>These thresholds represent an institutional standard that no current market leader meets. On-chain verification of the four largest tokenized Treasury products reveals no timelocks in any admin chain. The most important governance evidence is the audit log showing the policy has been followed. A governance policy that has never been tested is an untested control.</p>
 
         <h3>Continuous monitoring: CLII as the drift detector</h3>
-        <p>MVEP is the entry gate; CLII is the drift detector. MVEP answers "is equivalence proven now?" CLII answers "is the control surface degrading over time?"</p>
-        <p>A product can pass MVEP at launch and subsequently fail one of its categories: a custodian receives an enforcement action, reconciliation breaks exceed the service-level agreement for three consecutive weeks, or admin keys get rotated outside documented change control. The CLII tracks custody segregation, reconciliation integrity, and concentration risk across the gateway layer, flagging when posture shifts.</p>
+        <p>MVEP is the entry gate; CLII is the drift detector. MVEP answers "is equivalence proven now?" CLII answers "is the control layer degrading over time?"</p>
+        <p>A product can pass MVEP at launch and subsequently fail one of its categories: a custodian receives an enforcement action, reconciliation breaks exceed the agreed threshold, or admin keys get rotated outside documented change control. The CLII tracks custody segregation, reconciliation integrity, and concentration risk across the gateway layer, flagging when posture shifts.</p>
         <p>Three outcomes from re-evaluation: reaffirmation (equivalence confirmed), conditional continuation (subject to specific remediation with a defined timeline), or suspension (product suspended from new issuance until remediation is complete). Counterparties must be notified within 24 hours of initiating review.</p>
 
-        <h2>Anchor case / applications</h2>
-        <p><strong>Anchor case:</strong> The USDC/SVB depeg (March 10 to 12, 2023), where Circle's $3.3B reserve exposure at Silicon Valley Bank broke legal, operational, and economic equivalence simultaneously. The nine MVEP categories are reverse-engineered from the six failure modes that weekend exposed.</p>
-        <p><strong>Applications:</strong> Tokenized T-bills and money market fund shares (records integrity, settlement-cycle mismatch, collateral eligibility), tokenized private credit (enforceability, servicing continuity, waterfall controls), composed products (layer-by-layer equivalence assessment), settlement-finality models (value integrity, convertibility, halt triggers, loss allocation), governance and change-control evidence (multisig thresholds, timelocks, audit logs), and continuous monitoring through CLII (drift detection, trigger-based re-evaluation).</p>
-        <p>This is better described as a framework paper anchored on a failure case than as a conventional methods-and-data paper.</p>
+        <h2>How the paper is built</h2>
+        <ul>
+          <li>Three equivalence claims (legal, operational, economic) tested independently</li>
+          <li>SVB episode reverse-engineered into categories one through nine; tenth derived from subsequent collateral mobility use case</li>
+          <li>Worked example: BUIDL architecture with three liquidation paths, four constraints, seven stress scenarios, three interaction chains</li>
+          <li>Cross-product comparison: four legal structures, three yield mechanisms, whitelist vs. blocklist transfer restriction models</li>
+          <li>Composed-product analysis: Category 2 (transfer agent), Category 4 (custody chain), Category 10 (redemption chain) traced through all layers</li>
+          <li>Prescriptive governance thresholds benchmarked against on-chain verification of the four largest tokenized Treasury products</li>
+          <li>Framework paper anchored on a failure case; the findings describe observed patterns and should be read as evidence consistent with the framework, not as proof of causal relationships</li>
+        </ul>
 
         <h2>Limitations</h2>
-        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Five predictable failure modes:</p>
+        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Seven predictable failure modes:</p>
         <ul>
-          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use, not documentation alone.</li>
+          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use.</li>
           <li><strong>Stale equivalence:</strong> Products pass at launch but drift. The framework requires mandatory periodic re-certification.</li>
-          <li><strong>Category blindness:</strong> Nine categories are comprehensive for current structures, but novel products may introduce risks that do not fit. The framework requires a "residual risk" disclosure.</li>
-          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met; it does not guarantee equivalence.</li>
+          <li><strong>Category blindness:</strong> Ten categories are comprehensive for current structures, but novel products may introduce risks that do not fit. The framework requires a "residual risk" disclosure.</li>
+          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met.</li>
           <li><strong>Jurisdictional scope:</strong> Three categories (rights parity, insolvency posture, system of record) require jurisdiction-specific analysis for cross-border distribution.</li>
+          <li><strong>Disclosure regime dependence:</strong> An evaluator's ability to verify Category 9 independently depends on the governing regime. Products under the Investment Company Act file public reports; products under Reg D or Reg S disclose only to onboarded investors.</li>
+          <li><strong>Structural scope:</strong> The framework is calibrated for tokenized fund shares but also applies to tokenized secured notes, where the insolvency posture is fundamentally different. A secured noteholder is a senior secured creditor, with different Category 5 evidence requirements.</li>
         </ul>
         <p>The framework's value is in making the standard explicit, the gaps visible, and the failure modes predictable.</p>
 
@@ -247,11 +260,15 @@
           <p><strong>SVB anchor case</strong><br>
           Circle $3.3B reserve exposure at SVB · USDC traded at $0.87 · Three dimensions of equivalence broken simultaneously</p>
           <p><strong>Framework structure</strong><br>
-          3 equivalence claims (legal, operational, economic) · 9 diligence categories · Each with required artifact and pass/fail test</p>
+          3 equivalence claims (legal, operational, economic) · 10 diligence categories · Each with required artifact and pass/fail test</p>
+          <p><strong>Tokenized Treasury analysis</strong><br>
+          3 liquidation paths · 4 constraints on path availability · 7 stress scenarios · 3 scenario interaction chains · 4 distinct legal structures · 3 yield mechanisms</p>
           <p><strong>Governance minimums</strong><br>
-          Admin operations: 3-of-5 multisig · Core logic changes: 4-of-7 · Timelocks: 48h (parameters), 7d (upgrades), 30d (migrations)</p>
+          Admin operations: 3-of-5 multisig · Core logic changes: 4-of-7 · Timelocks: 48h (parameters), 7d (upgrades), 30d (migrations) · Current market: zero timelocks verified in the four largest products</p>
+          <p><strong>Composed products</strong><br>
+          Equivalence = minimum across all layers · Rate limit mismatch: composed product rate limits can exceed the underlying pool's capacity · Category 2, 4, and 10 must be traced through every layer</p>
           <p><strong>Implementation timeline</strong><br>
-          10 to 14 weeks for a well-resourced team; 16 to 24 weeks for novel structures · Typical bottleneck: legal and custody</p>
+          10 to 14 weeks for a team with dedicated legal counsel and established custodian relationship; 16 to 24 weeks for novel structures · Typical bottleneck: legal and custody · Category 10 re-verified quarterly or on input change</p>
           <p><strong>Monitoring</strong><br>
           CLII re-evaluation triggers: tier-boundary crossing, dimension-level deterioration · Counterparty notification: within 24 hours of initiating review</p>
         </div>
