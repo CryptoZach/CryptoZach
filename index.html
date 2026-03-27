@@ -331,6 +331,26 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Below-fold .reveal blocks stayed opacity:0 until IO; reads as huge blank gap */
+    #main #about-this-site.reveal,
+    #main #contact.reveal,
+    #main > footer.reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    #main #about-this-site.reveal.visible,
+    #main #contact.reveal.visible,
+    #main > footer.reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    main > section#about-this-site,
+    main > section#contact {
+      min-height: 0;
+    }
   </style>
   <script type="application/ld+json">
     {
