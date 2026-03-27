@@ -276,9 +276,13 @@
 
     .card-grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
       margin: 1.5rem 0;
+    }
+
+    .card-grid-3 > * {
+      min-width: 0;
     }
 
     .research-card-sm {
@@ -322,13 +326,7 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 1024px) {
-      .card-grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .card-grid-3 {
         grid-template-columns: 1fr;
       }
