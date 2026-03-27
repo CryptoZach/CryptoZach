@@ -8895,6 +8895,17 @@ footer{
   width: 100%;
   height: auto;
 }
+/* Wider hero cover: breakout past article padding, capped for viewport and max width */
+.paper-detail-page .paper-page .paper-cover--wide{
+  position: relative;
+  max-width: none;
+  width: min(
+    calc(100vw - max(var(--page-gutter), env(safe-area-inset-left)) - max(var(--page-gutter), env(safe-area-inset-right))),
+    1600px
+  );
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 /* Control Layer graphic: center the shield in the frame (shield is in upper-third of image) */
 .paper-cover--control-layer{
   aspect-ratio: 1401 / 933;
