@@ -228,9 +228,13 @@
 
     .card-grid-2 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
       margin: 1.5rem 0;
+    }
+
+    .card-grid-2 > * {
+      min-width: 0;
     }
 
     .compact-card {
@@ -246,6 +250,25 @@
 
     .compact-card:hover {
       border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #frameworks.section-compact .card-grid-2 > a.compact-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      border-style: solid;
+    }
+
+    :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card {
+      border-color: var(--line-strong);
+    }
+
+    #frameworks.section-compact .card-grid-2 > a.compact-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card:hover {
       box-shadow: var(--shadow-sm);
     }
 
