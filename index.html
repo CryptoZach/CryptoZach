@@ -26,29 +26,34 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <title>Zach Zukowski | Digital Money & Tokenization Research</title>
-  <meta name="description" content="Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money. 7 papers · 4 on SSRN · two tracks." />
+  <meta name="description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
   <meta name="author" content="Zach Zukowski" />
 
-  <meta property="og:title" content="Zach Zukowski | Digital Money & Tokenization Research" />
-  <meta property="og:description" content="Who routes the dollar matters more than which dollar is routed. Decision frameworks for the people building and regulating digital money infrastructure." />
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="CryptoZach" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:url" content="https://cryptozach.com/" />
+  <meta property="og:title" content="Zach Zukowski | Independent Research on Dollar Infrastructure &amp; Tokenization" />
+  <meta property="og:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams." />
   <meta property="og:image" content="https://cryptozach.com/og-image.png" />
+  <meta property="og:url" content="https://cryptozach.com" />
+  <meta property="og:site_name" content="Tokenization.Systems" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:image:alt" content="Zach Zukowski digital money and tokenization research" />
   <link rel="canonical" href="https://cryptozach.com" />
   <link rel="sitemap" type="application/xml" href="https://cryptozach.com/sitemap.xml" title="Sitemap" />
+
+  <!-- Twitter/X Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@CryptoZach" />
-  <meta name="twitter:creator" content="@CryptoZach" />
-  <meta name="twitter:title" content="Zach Zukowski | Digital Money & Tokenization Research" />
-  <meta name="twitter:description" content="Who routes the dollar matters more than which dollar is routed. Decision frameworks for the people building and regulating digital money infrastructure." />
+  <meta name="twitter:title" content="Zach Zukowski | Dollar Infrastructure &amp; Tokenization Research" />
+  <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
   <meta name="twitter:image" content="https://cryptozach.com/og-image.png" />
   <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="theme-color" content="#0a0c10" />
-
-  <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
   <link rel="preconnect" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://papers.ssrn.com" />
@@ -66,6 +71,11 @@
       letter-spacing: -0.03em;
       font-size: clamp(2rem, 5vw, 3.25rem);
       margin-bottom: 1rem;
+    }
+
+    /* Match section eyebrow green (Roles / Frameworks / Research scoped --accent). */
+    #hero.hero--homepage .hero-eyebrow-kicker {
+      color: #1a7a3a;
     }
 
     /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
@@ -86,11 +96,41 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin: 0 auto 2.5rem;
+      margin: 0 auto 0;
       padding: 0;
       list-style: none;
       justify-content: center;
       max-width: min(100%, 960px);
+    }
+
+    .hero-institutional {
+      font-size: 0.78rem;
+      color: var(--text-secondary, #666);
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      text-align: center;
+      max-width: min(100%, 960px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-institutional a {
+      color: var(--text-secondary, #666);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .hero-institutional a:hover {
+      color: var(--accent);
+    }
+
+    .card-venue {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-secondary, #999);
+      margin-top: 0.5rem;
+      font-style: italic;
     }
 
     #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
@@ -167,7 +207,8 @@
 
     #role-paths.section-compact,
     #frameworks.section-compact,
-    #research.section-compact {
+    #research.section-compact,
+    #about.section-compact {
       padding: 4rem 0;
       border-top: 1px solid var(--line);
       max-width: 960px;
@@ -180,7 +221,8 @@
 
     :root[data-theme="dark"] #role-paths.section-compact,
     :root[data-theme="dark"] #frameworks.section-compact,
-    :root[data-theme="dark"] #research.section-compact {
+    :root[data-theme="dark"] #research.section-compact,
+    :root[data-theme="dark"] #about.section-compact {
       --accent-light: color-mix(in srgb, #1a7a3a 14%, var(--panel) 86%);
     }
 
@@ -439,28 +481,144 @@
     }
 
     /* Below-fold .reveal blocks stayed opacity:0 until IO; reads as huge blank gap */
-    #main #about-this-site.reveal,
-    #main #contact.reveal,
-    #main > footer.reveal {
+    #main #about.reveal,
+    #main #contact.reveal {
       opacity: 1;
       transform: none;
     }
 
-    #main #about-this-site.reveal.visible,
-    #main #contact.reveal.visible,
-    #main > footer.reveal.visible {
+    #main #about.reveal.visible,
+    #main #contact.reveal.visible {
       opacity: 1;
       transform: none;
     }
 
-    main > section#about-this-site,
+    main > section#about,
     main > section#contact {
       min-height: 0;
     }
 
-    #main #about-this-site.about-section {
+    #main #about.about-section {
       border-left: 3px solid var(--accent);
       padding-left: 1.5rem;
+    }
+
+    .about-content {
+      max-width: 680px;
+    }
+
+    .about-bio {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .about-method {
+      font-size: 0.9rem;
+      color: var(--text-secondary, #666);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-contact {
+      font-size: 0.88rem;
+    }
+
+    .about-contact a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .about-contact a:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .site-footer {
+      --accent: #1a7a3a;
+      --accent-hover: #145e2d;
+      border-top: 1px solid var(--border-light, #eee);
+      padding: 3rem 0 2rem;
+      margin-top: 2rem;
+    }
+
+    :root[data-theme="dark"] .site-footer {
+      border-top-color: var(--line);
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .footer-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--text-secondary, #666);
+      letter-spacing: 0.02em;
+    }
+
+    .site-footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .site-footer .footer-links a {
+      font-size: 0.85rem;
+      color: var(--text-secondary, #666);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .site-footer .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .footer-social a {
+      font-size: 0.82rem;
+      color: var(--text-secondary, #999);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent);
+    }
+
+    .site-footer .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-secondary, #999);
+      margin-top: 0.5rem;
+      max-width: 480px;
+    }
+
+    @media (max-width: 640px) {
+      .site-footer .footer-links,
+      .footer-social {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
     }
   </style>
   <script type="application/ld+json">
@@ -472,7 +630,7 @@
           "@id": "https://cryptozach.com/#website",
           "name": "Zach Zukowski | Digital Money & Tokenization Research",
           "url": "https://cryptozach.com",
-          "description": "Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money. 7 papers · 4 on SSRN · two tracks.",
+          "description": "Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams.",
           "inLanguage": "en",
           "publisher": { "@id": "https://cryptozach.com/#person" },
           "author": { "@id": "https://cryptozach.com/#person" }
@@ -481,7 +639,7 @@
           "@type": "WebPage",
           "name": "Zach Zukowski | Digital Money & Tokenization Research",
           "url": "https://cryptozach.com",
-          "description": "Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money. 7 papers · 4 on SSRN · two tracks.",
+          "description": "Seven scholarly papers. Gateway analysis. Institutional diligence frameworks. Research for Fed/policy audiences, asset managers, and stablecoin/payments teams.",
           "isPartOf": { "@id": "https://cryptozach.com/#website" },
           "primaryImageOfPage": {
             "@type": "ImageObject",
@@ -595,6 +753,9 @@
             <li class="hero-proof-chip">100+ advisory engagements</li>
             <li class="hero-proof-chip">~250 investments diligenced</li>
           </ul>
+          <p class="hero-institutional">
+            Submitted to the <a href="https://www.newyorkfed.org/research/conference/international-roles-of-the-us-dollar" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
+          </p>
           <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
             <a class="btn btn-primary cta-primary matrix-hover-activator" href="./papers/routing-the-dollar.html">Read the flagship paper</a>
           </div>
@@ -659,6 +820,7 @@
           <span class="badge-sm badge-review">Under review</span>
           <h3>Routing the Dollar</h3>
           <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
+          <span class="card-venue">FRBNY conference review · March 2026</span>
         </a>
         <a href="./papers/minimum-viable-equivalence-packs.html" class="research-card-sm">
           <span class="badge-sm">Public</span>
@@ -674,11 +836,19 @@
       <p class="section-link"><a href="./selected-research.html">View all research &#x2192;</a></p>
     </section>
 
-    <section id="about-this-site" class="reveal about-section" aria-labelledby="about-this-site-title">
-      <div class="section-title">
-        <h2 id="about-this-site-title">About this site</h2>
+    <section class="section-compact reveal about-section" id="about" aria-labelledby="about-title">
+      <span class="section-eyebrow">About</span>
+      <h2 id="about-title">About the author.</h2>
+      <div class="about-content">
+        <p class="about-bio">Zach Zukowski is a Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Fed and policy audiences, institutional asset managers, and stablecoin and payments strategy teams.</p>
+        <p class="about-method">The program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. The work is US-focused, independent, non-advocacy, and every claim is replicable.</p>
+        <p class="about-contact">
+          <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a> ·
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a> ·
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a> ·
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
+        </p>
       </div>
-      <p>My research program holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly.<br>The site works the same way: transparent structure, named authorship, and evidence the reader can check. The work is US-focused, independent, and non-advocacy, and every claim is replicable.</p>
     </section>
 
     <section id="contact" class="reveal" aria-labelledby="contact-title">
@@ -720,34 +890,27 @@
       </div>
     </section>
 
-    <footer class="reveal">
-      <div class="footer-top">
-        <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="./start-here.html">Overview</a>
-          <a href="./Operating-Model.html">Frameworks</a>
-          <a href="./selected-research.html">Research</a>
-          <a href="./resume.html">Resume</a>
-          <a href="./speaker-advisory.html">Speaker &amp; Advisory</a>
-          <a href="./contact.html">Contact</a>
-        </nav>
-        <div class="footer-links">
-          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg>
-          </a>
-          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg>
-          </a>
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong class="footer-name">Zach Zukowski</strong>
+          <span class="footer-tagline">Tokenization.Systems</span>
         </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/selected-research.html">Research</a>
+          <a href="/Operating-Model.html">Frameworks</a>
+          <a href="/resume.html">Resume</a>
+          <a href="/speaker-advisory.html">Speaker</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a href="mailto:zach@cryptozach.com" aria-label="Email">zach@cryptozach.com</a>
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener" aria-label="SSRN">SSRN</a>
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener" aria-label="X">X</a>
+        </div>
+        <p class="footer-copy">Independent, empirically backed research on the infrastructure behind digital money.</p>
       </div>
-
-      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -756,8 +919,5 @@
   </button>
 
   <script defer src="./script.js?v=118"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
