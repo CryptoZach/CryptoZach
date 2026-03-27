@@ -62,21 +62,17 @@
   <link rel="dns-prefetch" href="https://medium.com" />
   <link rel="stylesheet" href="/styles.css?v=61" />
   <style id="homepage-sprint1-density">
-    /* Sprint 7: main full-bleed horizontally; sections and hero copy use 1.5rem gutters. */
+    /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
     #main {
-      padding-inline: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      max-width: none !important;
+      margin-left: 0;
+      margin-right: 0;
     }
 
     #main #hero.hero--homepage {
       padding-inline: 0 !important;
-    }
-
-    #main #hero.hero--homepage .hero-grid {
-      max-width: 960px;
-      margin-left: auto;
-      margin-right: auto;
-      padding-inline: max(1.5rem, env(safe-area-inset-left)) max(1.5rem, env(safe-area-inset-right));
-      box-sizing: border-box;
     }
 
     /* Compact sections use site --accent from styles.css (same blue as other pages). */
@@ -264,11 +260,8 @@
     #research.section-compact,
     #about.section-compact,
     #contact.section-compact {
-      padding: 4rem 1.5rem;
+      padding: 4rem 0;
       border-top: 1px solid var(--line);
-      max-width: 960px;
-      margin-left: auto;
-      margin-right: auto;
       box-sizing: border-box;
     }
 
@@ -608,111 +601,6 @@
       text-underline-offset: 3px;
     }
 
-    .site-footer {
-      border-top: 1px solid var(--line);
-      padding: 2.5rem 0 2rem;
-      margin-top: 2rem;
-    }
-
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      box-sizing: border-box;
-    }
-
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1.25rem;
-    }
-
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    .footer-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .site-footer .footer-tagline {
-      font-size: 0.82rem;
-      color: var(--text-secondary, var(--muted));
-      border-left: none;
-      padding-left: 0;
-      letter-spacing: 0.02em;
-    }
-
-    .site-footer .footer-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      align-items: center;
-      justify-content: flex-end;
-      min-width: 0;
-      min-height: 0;
-      background: transparent;
-    }
-
-    .site-footer .footer-nav a {
-      font-size: 0.82rem;
-      color: var(--text-secondary, var(--muted));
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    .site-footer .footer-nav a:hover {
-      color: var(--accent);
-    }
-
-    .site-footer .footer-social {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      align-items: center;
-      min-width: 0;
-      min-height: 0;
-      background: transparent;
-    }
-
-    .site-footer .footer-social a {
-      font-size: 0.82rem;
-      color: var(--text-tertiary, var(--muted-soft, #707070));
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    .site-footer .footer-social a:hover {
-      color: var(--accent);
-    }
-
-    .site-footer .footer-copy {
-      font-size: 0.75rem;
-      color: var(--text-tertiary, var(--muted-soft, #707070));
-      margin: 0;
-      max-width: 520px;
-      white-space: normal;
-      overflow: visible;
-    }
-
-    :root:not([data-theme="dark"]) .site-footer .footer-nav a,
-    :root:not([data-theme="dark"]) .site-footer .footer-social a {
-      color: var(--muted);
-    }
-
-    :root:not([data-theme="dark"]) .site-footer .footer-nav a:hover,
-    :root:not([data-theme="dark"]) .site-footer .footer-social a:hover {
-      color: var(--accent);
-    }
-
     #main #contact.section-compact > p:first-of-type {
       font-size: 1rem;
       line-height: 1.65;
@@ -800,32 +688,6 @@
     }
 
     @media (max-width: 640px) {
-      .footer-top {
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
-      .site-footer .footer-nav {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 0.6rem;
-      }
-
-      .site-footer .footer-social {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.6rem;
-      }
-
-      .site-footer .footer-nav a,
-      .site-footer .footer-social a {
-        min-height: 44px;
-        padding: 0.5rem 0;
-        display: inline-flex;
-        align-items: center;
-      }
-
       #main #contact.section-compact .contact-details .contact-links {
         flex-direction: column;
         align-items: flex-start;
@@ -877,7 +739,7 @@
   </script>
 </head>
 
-<body>
+<body style="padding-left: 0; padding-right: 0; margin: 0;">
   <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
 
@@ -944,7 +806,7 @@
     </div>
   </nav>
 
-  <main id="main">
+  <main id="main" style="max-width: none; margin: 0; padding-left: 0 !important; padding-right: 0 !important;">
     <!-- Canonical homepage. Nav/footer shared across site. -->
     <section id="hero" class="hero hero--homepage" aria-labelledby="hero-title">
       <div class="hero-grain" aria-hidden="true"></div>
@@ -953,7 +815,7 @@
         <canvas class="matrix-canvas" tabindex="-1" aria-hidden="true"></canvas>
       </div>
       <canvas class="hero-reef" id="heroReef" aria-hidden="true"></canvas>
-      <div class="hero-grid">
+      <div class="hero-grid" style="max-width: 960px; margin: 0 auto; padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); box-sizing: border-box;">
         <div class="hero-primary">
           <div class="hero-eyebrow matrix-hover-activator">
             <p class="hero-eyebrow-kicker" data-hero-safe="eyebrow">Digital Money &amp; Tokenization · From Policy to Execution</p>
@@ -983,6 +845,7 @@
       </div>
     </section>
 
+    <div style="max-width: 960px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
     <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
       <span class="section-eyebrow">Roles</span>
       <h2 id="audience-title">Four roles, one research program.</h2>
@@ -1084,29 +947,30 @@
         </div>
       </div>
     </section>
+    </div>
 
-    <footer class="site-footer" role="contentinfo">
-      <div class="footer-inner">
-        <div class="footer-top">
-          <div class="footer-brand">
-            <strong class="footer-name">Zach Zukowski</strong>
-            <span class="footer-tagline">Tokenization.Systems</span>
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-light, #2a2a2a); padding: 2.5rem 0 2rem; margin-top: 2rem;">
+      <div style="max-width: 960px; margin: 0 auto; padding: 0 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.25rem;">
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary, #e8e8e8);">Zach Zukowski</div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); margin-top: 0.15rem;">Tokenization.Systems</div>
           </div>
-          <nav class="footer-nav" aria-label="Footer navigation">
-            <a href="/research">Research</a>
-            <a href="/frameworks">Frameworks</a>
-            <a href="/resume">Resume</a>
-            <a href="/speaker">Speaker</a>
-            <a href="/contact">Contact</a>
+          <nav aria-label="Footer navigation" style="display: flex; flex-wrap: wrap; gap: 1.25rem;">
+            <a href="/selected-research.html" style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Research</a>
+            <a href="/Operating-Model.html" style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Frameworks</a>
+            <a href="/resume.html" style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Resume</a>
+            <a href="/speaker-advisory.html" style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Speaker</a>
+            <a href="/contact.html" style="font-size: 0.82rem; color: var(--text-secondary, #a0a0a0); text-decoration: none;">Contact</a>
           </nav>
         </div>
-        <div class="footer-social">
-          <a href="mailto:zach@cryptozach.com">zach@cryptozach.com</a>
-          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN</a>
-          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener">X</a>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1rem;">
+          <a href="mailto:zach@cryptozach.com" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">zach@cryptozach.com</a>
+          <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">LinkedIn</a>
+          <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">SSRN</a>
+          <a href="https://x.com/CryptoZach" target="_blank" rel="noopener" style="font-size: 0.82rem; color: var(--text-tertiary, #707070); text-decoration: none;">X</a>
         </div>
-        <p class="footer-copy">Independent, empirically backed research on the infrastructure behind digital money.</p>
+        <div style="font-size: 0.75rem; color: var(--text-tertiary, #707070); max-width: 520px;">Independent, empirically backed research on the infrastructure behind digital money.</div>
       </div>
     </footer>
   </main>
