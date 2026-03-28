@@ -486,6 +486,10 @@ main{
   margin:0 auto;
   padding:var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
+/* Footer lives inside main: default bottom padding read as a blank strip under the tagline */
+body main:has(footer){
+  padding-bottom:max(var(--space-md), env(safe-area-inset-bottom, 0px));
+}
 
 
 /* ── Hero ── */
@@ -701,26 +705,21 @@ h1{
 }
 .contact-page-foreground{
   position:relative;
-  padding-bottom:100px;
+  /* Was 100px; read as a huge empty band under the footer tagline */
+  padding-bottom:max(var(--space-md), env(safe-area-inset-bottom, 0px));
 }
 
 /* Contact page rebuild: content block inside .contact-page-foreground */
 body.contact-page .contact-page-foreground > .contact-page{
-  max-width:800px;
+  max-width:var(--max);
   margin:0 auto;
-  padding:2rem 1.5rem 4rem;
+  /* Horizontal inset comes from main; avoid double gutters */
+  padding:var(--space-xl) 0 var(--space-2xl);
+  box-sizing:border-box;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-hero{
   margin-bottom:3rem;
-}
-
-body.contact-page .contact-page-foreground > .contact-page .contact-eyebrow{
-  font-size:0.85rem;
-  text-transform:uppercase;
-  letter-spacing:0.08em;
-  opacity:0.5;
-  margin-bottom:0.5rem;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-hero h1{
@@ -733,7 +732,7 @@ body.contact-page .contact-page-foreground > .contact-page .contact-subhead{
   font-size:1.05rem;
   line-height:1.6;
   opacity:0.8;
-  max-width:600px;
+  max-width:none;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-email-row{
@@ -786,7 +785,13 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-response-time{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
   font-size:0.85rem;
+  margin:0;
+}
+body.contact-page .contact-page-foreground > .contact-page .contact-response-time > span:last-child{
   opacity:0.5;
 }
 
@@ -833,6 +838,12 @@ body.contact-page .contact-page-foreground > .contact-page .about-grid{
   display:grid;
   grid-template-columns:1fr;
   gap:1.25rem;
+}
+@media (min-width:900px){
+  body.contact-page .contact-page-foreground > .contact-page .about-grid{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:var(--space-lg);
+  }
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item{
@@ -5982,6 +5993,9 @@ main.resume-profile .resume-closing{
   box-sizing:border-box;
   padding:var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
+.resume-page main:has(footer){
+  padding-bottom:max(var(--space-md), env(safe-area-inset-bottom, 0px));
+}
 .resume-page main > section:first-of-type{
   margin-top:0;
 }
@@ -6351,7 +6365,7 @@ main.resume-profile .resume-closing{
 /* ── Footer ── */
 footer{
   margin-top:var(--space-2xl);
-  padding:var(--space-xl) 0 var(--space-lg);
+  padding:var(--space-xl) 0 max(var(--space-md), env(safe-area-inset-bottom, 0px));
   border-top:1px solid var(--line);
   color:var(--text-soft);
   font-size:var(--font-size-min);
@@ -11025,6 +11039,9 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 #main:has(> #hero.hero--homepage:first-child){
   padding-top: var(--space-md);
   padding-bottom: var(--space-xl);
+}
+#main:has(> #hero.hero--homepage:first-child):has(> footer:last-child){
+  padding-bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
 }
 
 #hero.hero--homepage{
