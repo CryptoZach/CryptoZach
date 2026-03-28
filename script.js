@@ -2946,7 +2946,7 @@
       mtxCtx.globalCompositeOperation = 'lighter';
       var sprH = mtxGlowSpriteFor(isDollar, 1, Math.min(2, Math.round(submerge * 2.5)));
       var bh = sprH.width * (0.5 + submerge * 0.14);
-      mtxCtx.globalAlpha = Math.min(0.55, op * 0.42 * wakeAtt);
+      mtxCtx.globalAlpha = Math.min(0.42, op * 0.32 * wakeAtt);
       mtxCtx.drawImage(sprH, warpedHead.x - bh * 0.5, warpedHead.y - bh * 0.5, bh, bh);
 
       var si;
@@ -2961,7 +2961,7 @@
         var shimmer = Math.sin(now * 0.014 + s.x * 0.09) * submerge * 2.2;
         var spr = mtxGlowSpriteFor(!!s.isDollar, 2, 1);
         var sw = spr.width * (0.2 + ageF * 0.22) * widen;
-        mtxCtx.globalAlpha = Math.min(0.48, s.op * ageF * ageF * 0.2 * (1 - submerge * 0.32) * mtxGetCenterSafeAttenuation(s.x + shimmer, s.y, 'wake'));
+        mtxCtx.globalAlpha = Math.min(0.38, s.op * ageF * ageF * 0.15 * (1 - submerge * 0.32) * mtxGetCenterSafeAttenuation(s.x + shimmer, s.y, 'wake'));
         mtxCtx.drawImage(spr, s.x + shimmer - sw * 0.5, s.y - sw * 0.42, sw, sw);
       }
       mtxCtx.restore();
@@ -2971,7 +2971,7 @@
         return;
       }
       mtxCtx.save();
-      var filAlpha = op * 0.1 * (1 - submerge * 0.45) * wakeAtt;
+      var filAlpha = op * 0.07 * (1 - submerge * 0.45) * wakeAtt;
       mtxCtx.strokeStyle = 'rgba(' + col + ', ' + filAlpha + ')';
       mtxCtx.lineWidth = submerge > 0.35 ? 0.32 : 0.42;
       mtxCtx.lineCap = 'round';
