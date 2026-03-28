@@ -3640,8 +3640,27 @@
       }
     }
 
+    var mtxPointerLeaveTimer = null;
+    var mtxPointerLeaveDelayMs = 85;
+
+    function mtxCancelPointerLeaveStop(){
+      if(mtxPointerLeaveTimer !== null){
+        clearTimeout(mtxPointerLeaveTimer);
+        mtxPointerLeaveTimer = null;
+      }
+    }
+
+    function mtxSchedulePointerLeaveStop(){
+      mtxCancelPointerLeaveStop();
+      mtxPointerLeaveTimer = window.setTimeout(function(){
+        mtxPointerLeaveTimer = null;
+        mtxStop();
+      }, mtxPointerLeaveDelayMs);
+    }
+
     function mtxStart(opts){
       opts = opts || {};
+      mtxCancelPointerLeaveStop();
       mtxTrailFillCache = '';
       mtxTrailFillFrame = 0;
       if(opts.forceReset === true){
@@ -3663,6 +3682,7 @@
     }
 
     function mtxStop(force){
+      mtxCancelPointerLeaveStop();
       if(mtxHeroLongPressPin && force !== true){
         return;
       }
@@ -3843,7 +3863,7 @@
       if(hh && typeof hh.hasPointerCapture === 'function' && hh.hasPointerCapture(e.pointerId)){
         return;
       }
-      mtxStop();
+      mtxSchedulePointerLeaveStop();
     }
 
     /* pointerenter does not bubble: the h1 inside .hero-eyebrow gets the hit, so the parent never saw enter. */
