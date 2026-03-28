@@ -4997,7 +4997,7 @@
     }
   }
 
-  // Sticky section rail: /frameworks/ (Frameworks), /overview/ (Overview), /speaker/
+  // Sticky section rail: /frameworks/ (Frameworks), /overview/ (Overview), /speaker-and-advisory/
   (function(){
     var nav = document.getElementById('structureNav');
     if(!nav){
