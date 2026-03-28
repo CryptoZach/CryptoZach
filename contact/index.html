@@ -47,132 +47,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=83" />
-  <style>
-    body.contact-page section.contact-page {
-      max-width: 720px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-      box-sizing: border-box;
-    }
-
-    body.contact-page section.contact-page .contact-intro {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    body.contact-page section.contact-page .contact-email-block {
-      margin-bottom: 2.5rem;
-    }
-
-    body.contact-page section.contact-page .contact-email-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 0 0 0.5rem;
-    }
-
-    body.contact-page section.contact-page .contact-email {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary, inherit);
-      text-decoration: none;
-    }
-
-    body.contact-page section.contact-page .contact-email:hover {
-      color: var(--accent);
-    }
-
-    body.contact-page section.contact-page .contact-copy-email-btn {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.6rem;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    body.contact-page section.contact-page .contact-response {
-      font-size: 0.9rem;
-      opacity: 0.85;
-      color: var(--text-secondary, inherit);
-      margin: 0;
-    }
-
-    body.contact-page section.contact-page .contact-bio {
-      margin-bottom: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--line);
-    }
-
-    body.contact-page section.contact-page .contact-bio h2 {
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-    }
-
-    body.contact-page section.contact-page .contact-bio p {
-      margin-bottom: 0.75rem;
-      line-height: 1.6;
-    }
-
-    body.contact-page section.contact-page .contact-actions {
-      margin-bottom: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--line);
-    }
-
-    body.contact-page section.contact-page .contact-actions h2 {
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-    }
-
-    body.contact-page section.contact-page .contact-actions ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    body.contact-page section.contact-page .contact-actions li {
-      padding: 0.4rem 0;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-
-    body.contact-page section.contact-page .contact-actions li::before {
-      content: "\2192";
-      position: absolute;
-      left: 0;
-    }
-
-    body.contact-page section.contact-page .contact-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 2rem;
-    }
-
-    body.contact-page section.contact-page .contact-links a.cta-secondary {
-      display: inline-block;
-      padding: 0.85rem 1.75rem;
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-    }
-
-    body.contact-page section.contact-page .contact-links a.cta-secondary:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-  </style>
+  <link rel="stylesheet" href="/styles.css?v=84" />
 </head>
 
 <body class="contact-page">
@@ -240,39 +115,72 @@
   <main id="main">
     <div class="contact-page-wrap">
       <div class="contact-page-foreground">
-    <section class="reveal contact-page" aria-labelledby="contact-page-title">
-      <h1 id="contact-page-title">Contact</h1>
-      <p class="contact-intro">If you work on policy, market infrastructure, tokenization, or token-economy design, I welcome the conversation. Tell me what you are building or evaluating and I will send the most relevant paper, resume version, or supporting material.</p>
+    <div class="reveal contact-page">
 
-      <div class="contact-email-block">
-        <p class="contact-email-row">
-          <a href="mailto:zach@tokenization.systems" id="emailAddr" class="contact-email">zach@tokenization.systems</a>
-          <button id="copyEmail" type="button" class="contact-copy-email-btn" aria-label="Copy email address" aria-live="polite">Copy email</button>
-        </p>
-        <p class="contact-response">I read every email and typically reply within 24 hours.</p>
-      </div>
+  <section class="contact-hero">
+    <p class="contact-eyebrow">Contact</p>
+    <h1>Tell me what you&rsquo;re building or evaluating.</h1>
+    <p class="contact-subhead">I&rsquo;ll send the most relevant paper, resume version, or supporting material. For roles, live infrastructure questions, speaking, and advisory.</p>
+  </section>
 
-      <div class="contact-bio">
-        <h2>About the researcher</h2>
-        <p>Zach Zukowski served six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. He built the firm&rsquo;s research function from scratch, led a four-analyst team, and supported diligence across approximately 250 investments and approximately $500M in assets under management.</p>
-        <p>His independent research program operates under the Tokenization.Systems brand, producing scholarly work for Federal Reserve and policy audiences, institutional asset managers, and stablecoin and payments strategy teams. The program has five papers on SSRN, with work submitted to the Federal Reserve Board and FRBNY Fifth Conference on the International Roles of the U.S. Dollar.</p>
-        <p>Two signature frameworks anchor the program. The Control Layer Intensity Index (CLII) scores regulatory intensity at the gateway layer across five dimensions. The Minimum Viable Equivalence Packs (MVEP) framework specifies the minimum diligence artifacts required to clear a risk committee&rsquo;s threshold for any tokenized product, reverse-engineered from the USDC/SVB failure of March 2023.</p>
-      </div>
+  <section class="contact-email-row" aria-label="Email and first message tips">
+    <div class="contact-email-block">
+      <a href="mailto:zach@tokenization.systems" class="contact-email-address">zach@tokenization.systems</a>
+      <button type="button" class="copy-email-btn" aria-label="Copy email address" onclick="navigator.clipboard.writeText('zach@tokenization.systems').then(() => { this.textContent = 'Copied'; setTimeout(() => { this.textContent = 'Copy email'; }, 2000); })">Copy email</button>
+      <p class="contact-response-time">I read every email and typically reply within 24 hours.</p>
+    </div>
+    <div class="contact-guidance">
+      <h2>A useful first email includes</h2>
+      <ul class="guidance-list">
+        <li>What you are building, evaluating, or hiring for</li>
+        <li>Who the audience or decision-maker is</li>
+        <li>Any deadline, hiring timeline, or event date</li>
+        <li>Whether you want a paper, resume, data, or framework overview</li>
+      </ul>
+    </div>
+  </section>
 
-      <div class="contact-actions">
-        <h2>What I can send</h2>
-        <ul>
-          <li>The paper most relevant to your current problem</li>
-          <li>A role-targeted resume (policy, asset management, or stablecoin/payments)</li>
-          <li>Supporting data or methodology detail for any published finding</li>
-        </ul>
+  <section class="contact-about">
+    <h2>About the researcher</h2>
+    <div class="about-grid">
+      <div class="about-item">
+        <p class="about-label">Background</p>
+        <p>Six years as Senior Investment Analyst and founding research hire at Borderless Capital (Web3-focused RIA). Built the research function, led a four-analyst team, and supported diligence across ~250 investments and ~$500M AUM.</p>
       </div>
+      <div class="about-item">
+        <p class="about-label">Research program</p>
+        <p>Independent, non-advocacy work under the Tokenization.Systems brand. Five papers on SSRN. Work submitted to the FRBNY Fifth Conference on the International Roles of the U.S. Dollar. Audiences: Fed and policy, institutional asset managers, stablecoin and payments strategy teams.</p>
+      </div>
+      <div class="about-item">
+        <p class="about-label">Signature frameworks</p>
+        <p><strong>CLII</strong> (Control Layer Intensity Index): scores regulatory intensity at the gateway layer across five dimensions. <strong>MVEP</strong> (Minimum Viable Equivalence Packs): the minimum diligence artifacts required to clear a risk committee&rsquo;s threshold for any tokenized product, reverse-engineered from the USDC/SVB failure of March 2023.</p>
+      </div>
+    </div>
+  </section>
 
-      <div class="contact-links">
-        <a href="/speaker" class="cta-secondary">Speaking and advisory</a>
-        <a href="/research" class="cta-secondary">See the research</a>
-      </div>
-    </section>
+  <section class="contact-routes">
+    <h2>Not sure where to start?</h2>
+    <div class="route-cards">
+      <a href="/resume" class="route-card">
+        <p class="route-card-title">Evaluating role fit</p>
+        <p class="route-card-desc">Three resume profiles: policy and market infrastructure, asset management and tokenization, stablecoin and payments strategy.</p>
+      </a>
+      <a href="/research" class="route-card">
+        <p class="route-card-title">Reading the research</p>
+        <p class="route-card-desc">Seven papers across stablecoins, tokenized deposits, settlement infrastructure, and token-economy design.</p>
+      </a>
+      <a href="/speaker" class="route-card">
+        <p class="route-card-title">Booking a talk or workshop</p>
+        <p class="route-card-desc">Conference talks, team workshops, and advisory formats with bios and booking.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="contact-social">
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer">linkedin.com/in/zachzukowski</a></p>
+  </section>
+
+    </div>
     <footer class="reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Zach Zukowski</div>
