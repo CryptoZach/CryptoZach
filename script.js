@@ -535,7 +535,7 @@
 
       function pileResize(){
         var r = heroHome.getBoundingClientRect();
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min(window.devicePixelRatio || 1, 3);
         pileCanvas.width = Math.floor(r.width * dpr);
         pileCanvas.height = Math.floor(r.height * dpr);
         pileCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -702,7 +702,7 @@
       function btcResize(){
         if(!btcCanvas || !btcContainer) return;
         var r = btcContainer.getBoundingClientRect();
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min(window.devicePixelRatio || 1, 3);
         btcCanvas.width = Math.floor(r.width * dpr);
         btcCanvas.height = Math.floor(r.height * dpr);
         btcCanvas.style.width = r.width + 'px';
@@ -989,7 +989,7 @@
 
       function reefResize() {
         var r = heroContainer.getBoundingClientRect();
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min(window.devicePixelRatio || 1, 3);
         reefCanvas.width = Math.floor(r.width * dpr);
         reefCanvas.height = Math.floor(r.height * dpr);
         reefCanvas.style.width = r.width + 'px';
@@ -2065,7 +2065,7 @@
 
     function mtxInitCanvas(forceResetDrops){
       var rect = matrixContainer.getBoundingClientRect();
-      var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      var dpr = Math.min(window.devicePixelRatio || 1, 3);
       var w = Math.max(1, rect.width);
       var h = Math.max(1, rect.height);
       matrixCanvas.width = Math.floor(w * dpr);
