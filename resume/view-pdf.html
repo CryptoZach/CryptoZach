@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
   <title>Resume PDF - Zach Zukowski</title>
-  <meta name="description" content="Embedded Google Docs viewer for Zach Zukowski resume PDFs under cryptozach.com/resumes/." />
+  <meta name="description" content="Embedded Google Docs viewer for Zach Zukowski resume PDFs under tokenization.systems/resumes/." />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; background: #1a1a1a; }
@@ -17,7 +17,7 @@
     var params = new URLSearchParams(window.location.search);
     var file = params.get('file');
     if (file && file.match(/^\/resumes\/.*\.pdf$/)) {
-      var fullUrl = 'https://www.cryptozach.com' + file;
+      var fullUrl = 'https://tokenization.systems' + file;
       var iframe = document.createElement('iframe');
       iframe.src = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(fullUrl);
       iframe.setAttribute('allowfullscreen', '');
