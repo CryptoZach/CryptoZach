@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Replace zach@cryptozach.com and cryptozach.com in site HTML and resume DOCX.
+Replace legacy zach@cryptozach.com and cryptozach.com in site HTML and resume DOCX.
+Target contact address: Zach@Tokenization.Systems (display and mailto).
 
 Preserves <link rel="canonical" ...> and <meta property="og:url" ...> unchanged
 (CNAME / canonical policy). All other occurrences migrate to tokenization.systems.
@@ -22,7 +23,8 @@ _PROTECT = re.compile(
 
 
 def _migrate_chunk(text: str) -> str:
-    text = text.replace("zach@cryptozach.com", "zach@tokenization.systems")
+    text = text.replace("zach@cryptozach.com", "Zach@Tokenization.Systems")
+    text = text.replace("zach@tokenization.systems", "Zach@Tokenization.Systems")
     text = text.replace("https://www.cryptozach.com", "https://tokenization.systems")
     text = text.replace("http://www.cryptozach.com", "https://tokenization.systems")
     text = text.replace("https://cryptozach.com", "https://tokenization.systems")
