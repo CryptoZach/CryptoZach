@@ -116,6 +116,40 @@ body::before{
     var(--bg);
 }
 
+/* Bottom accent fade (sitewide; same treatment as former contact-page-wrap band) */
+body::after{
+  content:"";
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:220px;
+  pointer-events:none;
+  z-index:0;
+  background:linear-gradient(
+    to top,
+    color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 8%, transparent) 42%,
+    transparent 100%
+  );
+  animation:footerAccentBandPulse 6s ease-in-out infinite;
+}
+@keyframes footerAccentBandPulse{
+  0%, 100%{opacity:0.72;}
+  50%{opacity:1;}
+}
+@media (max-width: 767px){
+  body::after{
+    height:160px;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  body::after{
+    animation:none;
+    opacity:0.85;
+  }
+}
+
 a{color:inherit}
 
 /* Skip link */
@@ -677,31 +711,6 @@ h1{
 }
 .contact-page-wrap{
   position:relative;
-  isolation:isolate;
-}
-/* Bottom ambient band: z-index -1 keeps it under page content but above the wrap
-   background so it shows through transparent footer and section gaps (a sibling
-   band at z-index 0 was hidden behind a composited .contact-page-foreground). */
-.contact-page-wrap::after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:220px;
-  pointer-events:none;
-  z-index:-1;
-  background:linear-gradient(
-    to top,
-    color-mix(in srgb, var(--accent) 18%, transparent) 0%,
-    color-mix(in srgb, var(--accent) 8%, transparent) 42%,
-    transparent 100%
-  );
-  animation:contactBandPulse 6s ease-in-out infinite;
-}
-@keyframes contactBandPulse{
-  0%, 100%{opacity:0.72;}
-  50%{opacity:1;}
 }
 .contact-page-foreground{
   position:relative;
@@ -957,17 +966,6 @@ body.contact-page .contact-page-foreground > .contact-page .contact-social a:hov
   border-radius:var(--radius-sm);
   border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
   margin:0 auto var(--space-lg);
-}
-@media (max-width: 767px){
-  .contact-page-wrap::after{
-    height:160px;
-  }
-}
-@media (prefers-reduced-motion: reduce){
-  .contact-page-wrap::after{
-    animation:none;
-    opacity:0.85;
-  }
 }
 .contact-page-kicker{
   text-transform:uppercase;
@@ -6372,10 +6370,18 @@ footer.site-footer{
   --footer-strip-border:rgba(255, 255, 255, 0.09);
   --footer-strip-text:rgba(209, 213, 219, 0.92);
   --footer-strip-muted:rgba(180, 186, 198, 0.88);
+  position:relative;
+  z-index:1;
   margin-top:var(--space-2xl);
   padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
   border-top:1px solid var(--footer-strip-border);
-  background:var(--footer-strip-bg);
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 12%, transparent) 0%,
+      transparent 36%
+    ),
+    var(--footer-strip-bg);
   color:var(--footer-strip-muted);
   font-size:var(--font-size-min);
   box-sizing:border-box;
