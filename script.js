@@ -1921,13 +1921,30 @@
       mtxCtaY = (br.top + br.height / 2) - cr.top;
     }
 
-    /* Dollar-specific warp: CTA pull, then cursor pull when the pointer is near (larger $). */
+    /* Dollar-specific warp: cursor pull first, then mild CTA drift.
+       If CTA ran first, it moved the glyph toward the button and inflated distance to the
+       pointer, so the old "cursor when close" test (from post-CTA ox,oy) often failed and $ never followed the cursor. */
     function mtxDollarWarp(px, py, cw, ch){
       var ox = px, oy = py;
-      /* Attract toward CTA button */
+      var maxRCursor = Math.max(180, Math.min(cw, ch) * 0.65);
+      /* Toward smoothed cursor: proximity from true column head (px,py) so CTA cannot disable this band. */
+      if(mtxWarpX != null && mtxWarpY != null){
+        var dx0 = mtxWarpX - px;
+        var dy0 = mtxWarpY - py;
+        var dist0 = Math.sqrt(dx0 * dx0 + dy0 * dy0);
+        var strengthCursor = Math.min(cw, ch) * 0.095;
+        if(dist0 > 0.5 && dist0 < maxRCursor){
+          var inv0 = 1 / dist0;
+          var tc = 1 - dist0 / maxRCursor;
+          var sc = tc * tc * strengthCursor;
+          ox += dx0 * inv0 * sc;
+          oy += dy0 * inv0 * sc;
+        }
+      }
+      /* Attract toward flagship CTA after cursor (weaker while pointer is near the glyph). */
       if(mtxCtaX != null && mtxCtaY != null){
-        var dxC = px - mtxCtaX;
-        var dyC = py - mtxCtaY;
+        var dxC = ox - mtxCtaX;
+        var dyC = oy - mtxCtaY;
         var distC = Math.sqrt(dxC * dxC + dyC * dyC);
         var maxR = Math.max(128, Math.min(cw, ch) * 0.5);
         var strength = Math.min(cw, ch) * 0.05;
@@ -1935,23 +1952,14 @@
           var invd = 1 / distC;
           var t = 1 - distC / maxR;
           var s = t * t * strength;
-          ox = px - dxC * invd * s;
-          oy = py - dyC * invd * s;
-        }
-      }
-      /* Toward smoothed cursor when close (applied after CTA so the pointer wins locally). */
-      if(mtxWarpX != null && mtxWarpY != null){
-        var dxP = mtxWarpX - ox;
-        var dyP = mtxWarpY - oy;
-        var distP = Math.sqrt(dxP * dxP + dyP * dyP);
-        var maxRCursor = Math.max(140, Math.min(cw, ch) * 0.5);
-        var strengthCursor = Math.min(cw, ch) * 0.062;
-        if(distP > 0.5 && distP < maxRCursor){
-          var invp = 1 / distP;
-          var tc = 1 - distP / maxRCursor;
-          var sc = tc * tc * strengthCursor;
-          ox += dxP * invp * sc;
-          oy += dyP * invp * sc;
+          if(mtxWarpX != null && mtxWarpY != null){
+            var dNear = Math.sqrt((mtxWarpX - px) * (mtxWarpX - px) + (mtxWarpY - py) * (mtxWarpY - py));
+            if(dNear < maxRCursor * 0.9){
+              s *= 0.32;
+            }
+          }
+          ox -= dxC * invd * s;
+          oy -= dyC * invd * s;
         }
       }
       return { x: ox, y: oy };
@@ -3756,6 +3764,19 @@
       var mtxFontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
       mtxCtx.textBaseline = 'top';
 
+      /* Keep warp target in matrix-local space every frame: clientX/Y are viewport-fixed but
+         getBoundingClientRect moves on scroll, so mtxWarpTx/Ty go stale if we only set them on pointermove. */
+      if(mtxLastPointerClientX != null && mtxLastPointerClientY != null && heroHome && matrixContainer){
+        var hbSync = heroHome.getBoundingClientRect();
+        var edgePadSync = 16;
+        if(mtxLastPointerClientX >= hbSync.left - edgePadSync && mtxLastPointerClientX <= hbSync.right + edgePadSync
+            && mtxLastPointerClientY >= hbSync.top - edgePadSync && mtxLastPointerClientY <= hbSync.bottom + edgePadSync){
+          var rSync = matrixContainer.getBoundingClientRect();
+          mtxWarpTx = mtxLastPointerClientX - rSync.left;
+          mtxWarpTy = mtxLastPointerClientY - rSync.top;
+        }
+      }
+
       if(mtxWarpTx != null && mtxWarpTy != null){
         if(mtxWarpX == null){
           mtxWarpX = mtxWarpTx;
@@ -4728,6 +4749,25 @@
         mtxUpdateWarpFromEvent(e);
       });
     });
+
+    /* Capture phase: pointermove on #hero can be missed when the hit target is awkward or
+       events do not bubble as expected; dollars use mtxWarp* for cursor pull in mtxDollarWarp. */
+    document.addEventListener('pointermove', function mtxHeroMatrixPointerSync(e){
+      if(!matrixContainer || !matrixContainer.classList.contains('active') || !heroHome){
+        return;
+      }
+      var hb = heroHome.getBoundingClientRect();
+      var pad = 20;
+      var cx = e.clientX;
+      var cy = e.clientY;
+      if(typeof cx !== 'number' || typeof cy !== 'number'){
+        return;
+      }
+      if(cx < hb.left - pad || cx > hb.right + pad || cy < hb.top - pad || cy > hb.bottom + pad){
+        return;
+      }
+      mtxUpdateWarpFromEvent(e);
+    }, true);
 
     document.addEventListener('pointerdown', function mtxHeroMatrixUnpin(e){
       if(mtxMobileMatrixAlways){
