@@ -15,13 +15,13 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Start Here | Dollar Objects &amp; Frameworks | TS</title>
-  <meta name="description" content="Start Here defines stablecoins, tokenized deposits, gateways, and the control layer. Three dollar objects, five diligence questions, and entry points by audience. Who routes the dollar matters more than which dollar is routed." />
+  <meta name="description" content="Start Here defines stablecoins, tokenized deposits, deposit tokens, gateways, and the control layer. Four dollar objects, five diligence questions, and entry points by audience. Who routes the dollar matters more than which dollar is routed." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="Start Here, stablecoin overview, tokenized deposit, gateway, control layer, dollar infrastructure, tokenization primer, institutional entry points" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Start Here | Dollar Objects and Entry Points" />
-  <meta property="og:description" content="Definitions for payment stablecoins, tokenized deposits, and yield wrappers, plus five questions every tokenized product should answer." />
+  <meta property="og:description" content="Definitions for payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers, plus five questions every tokenized product should answer." />
   <meta property="og:url" content="https://tokenization.systems/overview" />
   <meta property="og:image" content="https://tokenization.systems/assets/og-image.png" />
   <meta property="og:site_name" content="Tokenization Systems" />
@@ -31,7 +31,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Start Here | Dollar Objects and Entry Points" />
-  <meta name="twitter:description" content="Definitions for three dollar objects, the gateway, and the control layer. Five diagnostic questions and where to go next by role." />
+  <meta name="twitter:description" content="Definitions for four dollar objects, the gateway, and the control layer. Five diagnostic questions and where to go next by role." />
   <meta name="twitter:image" content="https://tokenization.systems/assets/og-image.png" />
   <meta name="twitter:image:alt" content="Tokenization Systems Start Here overview" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -73,7 +73,7 @@
       "@type": "AboutPage",
       "name": "Start Here",
       "url": "https://tokenization.systems/overview",
-      "description": "Who routes the dollar matters more than which dollar is routed. Overview explains the objects. Frameworks explains the decision tools. Definitions, three dollar objects, five diagnostic questions, and entry points by decision context.",
+      "description": "Who routes the dollar matters more than which dollar is routed. Overview explains the objects. Frameworks explains the decision tools. Definitions, four dollar objects, five diagnostic questions, and entry points by decision context.",
       "isPartOf": { "@id": "https://tokenization.systems/#website" },
       "author": { "@id": "https://tokenization.systems/#person" },
       "speakable": {
@@ -164,7 +164,7 @@
           </ol>
         </li>
         <li>
-          <a href="#dollar-objects" class="structure-nav__link" data-section="dollar-objects">Three dollar objects</a>
+          <a href="#dollar-objects" class="structure-nav__link" data-section="dollar-objects">Four dollar objects</a>
         </li>
         <li>
           <a href="#why-institutions-care" class="structure-nav__link" data-section="why-institutions-care">Why institutions care</a>
@@ -225,7 +225,7 @@
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
           <a class="page-toc-link" href="#definitions">Definitions</a>
-          <a class="page-toc-link" href="#dollar-objects">Three dollar objects</a>
+          <a class="page-toc-link" href="#dollar-objects">Four dollar objects</a>
           <a class="page-toc-link" href="#why-institutions-care">Why institutions care</a>
           <a class="page-toc-link" href="#five-questions">Five questions</a>
           <a class="page-toc-link" href="#start-by-context">Start by context</a>
@@ -255,7 +255,7 @@
         <div id="what-deposit" class="frameworks-anchor-block">
           <article class="explainer-section">
             <h2>What is a tokenized deposit?</h2>
-            <p>A tokenized deposit is a bank deposit represented on token-based rails. It remains a bank liability inside the banking perimeter, with bank supervision and, where applicable, deposit insurance protecting the holder's claim.</p>
+            <p>A bank deposit represented on token-based rails. Two forms are emerging, and the distinction between them matters for settlement architecture. A tokenized deposit mirrors the bank&apos;s core banking ledger: non-fungible, single-bank, redeemable only at the issuing institution. A deposit token operates on its own ledger: fungible across institutions, with potential to settle at any accepting bank. Both stay inside the banking perimeter. The tokenized deposit digitizes an existing liability. The deposit token creates a new interbank settlement rail.</p>
           </article>
         </div>
 
@@ -277,8 +277,8 @@
 
     <section class="reveal" id="dollar-objects" aria-labelledby="three-objects-title">
       <div class="section-title">
-        <h2 id="three-objects-title">Three dollar objects, three rulebooks</h2>
-        <p>The same wallet can show three products that look similar in calm conditions but behave very differently under stress.</p>
+        <h2 id="three-objects-title">Four dollar objects, four rulebooks</h2>
+        <p>The same wallet can hold four products that look similar in calm conditions but behave very differently under stress.</p>
       </div>
 
       <div class="grid grid--thirds">
@@ -288,24 +288,17 @@
         </article>
         <article class="card">
           <h3>Tokenized deposits</h3>
-          <p>Bank deposits in token form. The bank liability structure, bank supervision, and resolution framework matter most. These stay inside the banking perimeter. OCC Interpretive Letter 1188 (December 2025) confirms that national banks may engage in riskless principal crypto-asset transactions, but only in a safe and sound manner and in compliance with applicable law.</p>
+          <p>A bank&apos;s existing deposit liability represented on a blockchain that mirrors its core banking ledger. Non-fungible: a tokenized deposit at HSBC is an HSBC liability, redeemable only at HSBC. The instrument is not new; the representation is. The bank liability structure, bank supervision, and resolution framework carry over intact. Use cases are internal: intraday liquidity, collateral posting, same-bank transfers. OCC Interpretive Letter 1188 (December 2025) confirms that national banks may engage in riskless principal crypto-asset transactions in a safe and sound manner.</p>
+          <p><small><em>Non-fungible. Single-bank. Mirrors the existing ledger.</em></small></p>
+        </article>
+        <article class="card">
+          <h3>Deposit tokens</h3>
+          <p>A bank-issued digital instrument on its own ledger, independent of the core banking ledger. Fungible across institutions: a deposit token issued by JPMorgan (JPMD) has potential to settle at DBS, BNY, or Citi. This interbank acceptance transforms a deposit token from a digitization tool into a settlement rail. DBS and JPMorgan are building the first cross-bank acceptance framework. The open question: if one deposit token becomes the interbank default, settlement consolidates into a monopoly. If several achieve cross-bank fungibility, settlement becomes a competitive network.</p>
+          <p><small><em>Fungible. Multi-bank. Own ledger. Interbank settlement rail.</em></small></p>
         </article>
         <article class="card">
           <h3>Yield wrappers and sweeps</h3>
           <p>Investment and cash-management products such as tokenized money funds, Treasury wrappers, and sweep programs. Disclosure, liquidity governance, custody, and marketing rules matter most. When the payment object stays clean, yield migrates here.</p>
-        </article>
-      </div>
-
-      <div class="grid grid--halves" style="margin-top: var(--space-lg);">
-        <article class="card">
-          <h3>Tokenized Deposits</h3>
-          <p>A bank&apos;s existing deposit liability represented on a blockchain that mirrors its core banking ledger. Non-fungible: a tokenized deposit at HSBC is an HSBC liability, redeemable only at HSBC. The instrument is not new; the representation is. Use cases are internal: intraday liquidity, collateral posting, same-bank transfers.</p>
-          <p><small><em>Non-fungible. Single-bank. Mirrors the existing ledger.</em></small></p>
-        </article>
-        <article class="card">
-          <h3>Deposit Tokens</h3>
-          <p>A bank-issued digital instrument on its own ledger, independent of the core banking ledger. Fungible across institutions: a deposit token issued by JPMorgan (JPMD) has potential to settle at DBS, BNY, or Citi. This interbank acceptance transforms a deposit token from a digitization tool into a settlement rail. DBS and JPMorgan are building the first cross-bank acceptance framework. The open question: if one deposit token becomes the interbank default, settlement consolidates into a monopoly. If several achieve cross-bank fungibility, settlement becomes a competitive network.</p>
-          <p><small><em>Fungible. Multi-bank. Own ledger. Interbank settlement rail.</em></small></p>
         </article>
       </div>
 
@@ -424,7 +417,7 @@
           <h3>Track A: Digital money, tokenization, and market infrastructure</h3>
           <p><strong>Routing the Dollar.</strong> Gateway concentration, regime-dependent monetary-policy transmission, and operator accountability under stress. The CLII measures how heavily regulated each gateway is across five dimensions. A high score means more regulatory obligations; stress performance depends on reserve-bank exposure and other entity-specific conditions.</p>
           <p><strong>Minimum Viable Equivalence Pack.</strong> Three equivalence claims (legal, operational, economic) tested through ten diligence categories. MVEP is the entry gate; CLII is the drift detector.</p>
-          <p><strong>Dollar v3.</strong> Three digital-dollar objects, Layer 0, and deposit mutation. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.</p>
+          <p><strong>Dollar v3.</strong> Four digital-dollar objects, Layer 0, and deposit mutation. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.</p>
           <p><strong>The Control Layer War.</strong> How CLARITY-style provisions (House-passed form analyzed here) attach compliance at the control layer: interfaces, routing defaults, hold workflows, and audit logs.</p>
         </article>
         <article class="explainer-section">
