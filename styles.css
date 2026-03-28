@@ -11107,8 +11107,8 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 /* Full-hero matrix behind copy (same motion as strip build). Higher --matrix-trail-fade-alpha = shorter trails. */
 #hero.hero--homepage .matrix-container{
   --matrix-trail-rgb: 255 255 255;
-  /* Higher --matrix-trail-fade-alpha = shorter trails, sharper glyph heads */
-  --matrix-trail-fade-alpha: 0.198;
+  /* Higher --matrix-trail-fade-alpha = shorter trails (pre-0a2b797: 0.168 / 0.158) */
+  --matrix-trail-fade-alpha: 0.168;
   position: absolute;
   inset: 0;
   border-radius: var(--radius);
@@ -11122,7 +11122,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 :root[data-theme="dark"] #hero.hero--homepage .matrix-container{
   /* Slight green tint so trails harmonize with glyph color on dark panels */
   --matrix-trail-rgb: 22 32 28;
-  --matrix-trail-fade-alpha: 0.188;
+  --matrix-trail-fade-alpha: 0.158;
 }
 
 #hero.hero--homepage .matrix-container.active{
@@ -12946,7 +12946,7 @@ details.card-expand[open] summary {
 
   :root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container {
     --matrix-trail-rgb: 22 32 28;
-    --matrix-trail-fade-alpha: 0.188;
+    --matrix-trail-fade-alpha: 0.158;
   }
 
   :root:not([data-theme="dark"]) .role-pill,
