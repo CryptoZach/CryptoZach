@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f3f4f6" />
+  <meta name="theme-color" content="#0a0c10" />
   <meta name="author" content="Zach Zukowski" />
 
   <title>Resume · Risk, Controls &amp; Market Infrastructure - Zach Zukowski (CryptoZach)</title>
@@ -36,10 +36,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
   </script>

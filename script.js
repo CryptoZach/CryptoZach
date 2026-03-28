@@ -1,15 +1,15 @@
 (function(){
-  // Theme toggle (default = light; dark only when explicitly saved)
+  // Theme toggle (default = dark / blue accent; light only when explicitly saved)
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
 
   const saved = localStorage.getItem('theme');
-  if(saved === 'dark'){
-    root.setAttribute('data-theme','dark');
-    if(toggle) toggle.setAttribute('aria-pressed','true');
-  } else {
+  if(saved === 'light'){
     root.removeAttribute('data-theme');
     if(toggle) toggle.setAttribute('aria-pressed','false');
+  } else {
+    root.setAttribute('data-theme','dark');
+    if(toggle) toggle.setAttribute('aria-pressed','true');
   }
 
   if(toggle){
