@@ -2068,8 +2068,14 @@
       var dpr = Math.min(window.devicePixelRatio || 1, 3);
       var w = Math.max(1, rect.width);
       var h = Math.max(1, rect.height);
-      matrixCanvas.width = Math.floor(w * dpr);
-      matrixCanvas.height = Math.floor(h * dpr);
+      var newW = Math.floor(w * dpr);
+      var newH = Math.floor(h * dpr);
+      /* Assigning width/height clears the bitmap; skip when unchanged to avoid one-frame flashes on pointerover. */
+      var needBufferResize = matrixCanvas.width !== newW || matrixCanvas.height !== newH;
+      if(needBufferResize){
+        matrixCanvas.width = newW;
+        matrixCanvas.height = newH;
+      }
       matrixCanvas.style.width = w + 'px';
       matrixCanvas.style.height = h + 'px';
       mtxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -2084,8 +2090,9 @@
       var cw = Math.max(1, matrixCanvas.clientWidth || Math.floor(w));
       var colCount = Math.max(1, Math.floor(cw / mtxColWidth));
       var prevColCount = mtxDrops.length;
+      var colLayoutChanged = colCount !== prevColCount;
       /* Only reset drop positions if column count changed or explicitly requested. */
-      if(forceResetDrops || colCount !== prevColCount){
+      if(forceResetDrops || colLayoutChanged){
         mtxDrops = new Array(colCount).fill(0).map(function(){
           return -8 - Math.random() * 32;
         });
@@ -2097,17 +2104,32 @@
         mtxColDriftX = new Array(colCount).fill(0);
         mtxColDriftRate = new Array(colCount).fill(0);
       }
-      mtxPrevDrawTs = 0;
-      mtxMeshNodes = [];
-      mtxMeshRipples = [];
-      mtxMeshEdgeFlashes = [];
-      mtxMeshReactCooldown = new Array(Math.max(1, mtxDrops.length)).fill(0);
-      mtxNextMeshNodeId = 1;
-      mtxMeshDidBootstrap = false;
-      var ncolWake = Math.max(1, mtxDrops.length);
-      mtxHeadWake = new Array(ncolWake).fill(null).map(function(){
-        return [];
-      });
+      /* Reset mesh and head wake only when the buffer or columns changed, or a full reseed was requested. */
+      var resetMesh = forceResetDrops || needBufferResize || colLayoutChanged;
+      if(resetMesh){
+        mtxPrevDrawTs = 0;
+        mtxMeshNodes = [];
+        mtxMeshRipples = [];
+        mtxMeshEdgeFlashes = [];
+        mtxMeshReactCooldown = new Array(Math.max(1, mtxDrops.length)).fill(0);
+        mtxNextMeshNodeId = 1;
+        mtxMeshDidBootstrap = false;
+        var ncolWake = Math.max(1, mtxDrops.length);
+        mtxHeadWake = new Array(ncolWake).fill(null).map(function(){
+          return [];
+        });
+      } else {
+        /* Cooldown array length must track column count after first init only when layout changed above. */
+        if(mtxMeshReactCooldown.length !== Math.max(1, mtxDrops.length)){
+          mtxMeshReactCooldown = new Array(Math.max(1, mtxDrops.length)).fill(0);
+        }
+        if(mtxHeadWake.length !== Math.max(1, mtxDrops.length)){
+          var nWake = Math.max(1, mtxDrops.length);
+          mtxHeadWake = new Array(nWake).fill(null).map(function(){
+            return [];
+          });
+        }
+      }
       mtxMeasureHeroSafeZones();
     }
 
@@ -3668,8 +3690,7 @@
       } else {
         var alreadyRunning = matrixContainer.classList.contains('active') && mtxRaf;
         if(alreadyRunning){
-          /* Animation is live: resize the canvas buffer but do not reset column positions. */
-          mtxInitCanvas(false);
+          /* Do not re-init: mtxInitCanvas would clear the bitmap (width/height) and wipe mesh, causing a visible flash. */
         } else {
           /* Fresh start: reset everything. */
           mtxInitCanvas(true);
