@@ -11,7 +11,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="theme-color" content="#0a0c10" />
+  <meta name="theme-color" content="#f3f4f6" />
 
   <title>Tokenomics as Systems Engineering: Capital, Labor, Land, and the Design of Autonomous Economies | Zach Zukowski</title>
   <meta name="description" content="240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk. PID-controlled token economies." />
@@ -41,11 +41,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=35" />
+  <link rel="stylesheet" href="/styles.css?v=36" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -346,7 +346,7 @@
       <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:Zach@Tokenization Systems?subject=Adaptive%20Tokenomics%20-%20Discussion">Zach@Tokenization Systems</a></p>
     </article>
 
-    <footer class="reveal">
+    <footer class="site-footer reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
         <nav class="footer-nav" aria-label="Footer navigation">

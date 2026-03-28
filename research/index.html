@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="theme-color" content="#0a0c10" />
+  <meta name="theme-color" content="#f3f4f6" />
 
   <title>Selected Research - Zach Zukowski (CryptoZach)</title>
   <meta name="description" content="Seven-paper research program across two tracks. Four papers on SSRN. Gateway analysis, tokenization diligence, DePIN tokenomics, and operational risk." />
@@ -48,15 +48,14 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
+        if (savedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=75" />
+  <link rel="stylesheet" href="/styles.css?v=76" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -688,7 +687,7 @@
       </aside>
     </section>
 
-    <footer class="reveal">
+    <footer class="site-footer reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
         <nav class="footer-nav" aria-label="Footer navigation">
@@ -714,7 +713,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=25"></script>
+  <script defer src="/script.js?v=26"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
   (function() {

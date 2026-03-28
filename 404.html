@@ -5,11 +5,10 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
+        if (savedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
   </script>
@@ -47,7 +46,7 @@
   <meta name="twitter:description" content="Seven scholarly papers. Gateway analysis. Institutional diligence frameworks." />
   <meta name="twitter:image" content="https://tokenization.systems/og-image.png" />
   <meta name="twitter:image:alt" content="Zach Zukowski digital money and tokenization research" />
-  <meta name="theme-color" content="#0a0c10" />
+  <meta name="theme-color" content="#f3f4f6" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin.png" />
@@ -58,7 +57,7 @@
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="/styles.css?v=35" />
+  <link rel="stylesheet" href="/styles.css?v=36" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -176,7 +175,7 @@
       <p>The URL may have changed. Use the navigation above or return to the <a href="/">home page</a>.</p>
     </section>
 
-    <footer class="reveal">
+    <footer class="site-footer reveal">
       <div class="footer-top">
         <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
         <nav class="footer-nav" aria-label="Footer navigation">

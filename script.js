@@ -1,15 +1,15 @@
 (function(){
-  // Theme toggle (default = dark for new visitors; light only when explicitly saved)
+  // Theme toggle (default = light; dark only when explicitly saved)
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
 
   const saved = localStorage.getItem('theme');
-  if(saved === 'light'){
-    root.removeAttribute('data-theme');
-    if(toggle) toggle.setAttribute('aria-pressed','false');
-  } else {
+  if(saved === 'dark'){
     root.setAttribute('data-theme','dark');
     if(toggle) toggle.setAttribute('aria-pressed','true');
+  } else {
+    root.removeAttribute('data-theme');
+    if(toggle) toggle.setAttribute('aria-pressed','false');
   }
 
   if(toggle){
@@ -59,6 +59,8 @@
 
   // Set by homepage matrix init so hero-wide touch release can call mtxStop (capture target is #hero).
   var homeHeroMtxStop = null;
+  var homeHeroReefStop = null;
+  var homeHeroReefHardClear = null;
   /* Long-press flagship CTA on coarse pointers: keep matrix running until outside tap or Escape. */
   var mtxHeroLongPressPin = false;
 
@@ -211,6 +213,12 @@
   // Homepage hero: eyebrow spotlight, coral reef on full #hero, matrix on eyebrow (see below)
   const heroHome = document.querySelector('#hero.hero--homepage');
   const heroEyebrow = heroHome && heroHome.querySelector('.hero-eyebrow');
+  var mtxReefMagnetBridge = { fade: 0, heroW: 0, heroH: 0, nodes: [] };
+  var mtxReefIconBridge = { points: [] };
+  var mtxReefCoralNeighborHero = {};
+  function mtxReefIconHeroKey(ix, iy){
+    return (Math.round(ix / 10) * 10) + ',' + (Math.round(iy / 10) * 10);
+  }
   if(heroHome && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const isFinePointer = (e) => e.pointerType === 'mouse';
     const setEyebrowSpot = (clientX, clientY) => {
@@ -653,8 +661,8 @@
           pileCtx.font = '600 13px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
           pileCtx.textAlign = 'center';
           pileCtx.textBaseline = 'middle';
-          pileCtx.fillStyle = 'rgba(74, 222, 128, 0.7)';
-          pileCtx.shadowColor = 'rgba(74, 222, 128, 0.3)';
+          pileCtx.fillStyle = 'rgba(96, 108, 62, 0.7)';
+          pileCtx.shadowColor = 'rgba(96, 108, 62, 0.3)';
           pileCtx.shadowBlur = 4;
           pileCtx.fillText('$', p.x, p.y);
           pileCtx.restore();
@@ -1042,6 +1050,51 @@
         });
       }
 
+      var reefCoralHoldMs = 25;
+      var reefCoralAbsorbR = 12;
+      var reefCoralTransitMs = 400;
+
+      function reefBeginCoralTransit(nd, x0, y0, x1, y1, nowMs) {
+        var mdx = x1 - x0;
+        var mdy = y1 - y0;
+        var len = Math.sqrt(mdx * mdx + mdy * mdy) || 1;
+        var perpX = -mdy / len;
+        var perpY = mdx / len;
+        var sway = len * (0.14 + Math.random() * 0.11);
+        var flip = Math.random() > 0.5 ? 1 : -1;
+        nd.coralPhase = 'transit';
+        delete nd.coralAbsorbT;
+        delete nd.coralIconK;
+        nd.coralTr0 = nowMs;
+        nd.coralTr1 = nowMs + reefCoralTransitMs + Math.random() * 140;
+        nd.coralTx0 = x0;
+        nd.coralTy0 = y0;
+        nd.coralTx1 = x1;
+        nd.coralTy1 = y1;
+        nd.coralCpX = (x0 + x1) * 0.5 + perpX * sway * flip;
+        nd.coralCpY = (y0 + y1) * 0.5 + perpY * sway * flip;
+        nd.x = x0;
+        nd.y = y0;
+      }
+
+      function reefSpawnCoralTraveler(x0, y0, x1, y1, nowMs, gen) {
+        if (reefNodes.length >= reefMaxNodes) {
+          return;
+        }
+        var ndNew = {
+          x: x0,
+          y: y0,
+          r: reefRand(1.0, 2.4),
+          alpha: reefRand(0.35, 0.72),
+          born: nowMs,
+          maxAge: reefRand(2800, 6200),
+          gen: gen || 0,
+          pulse: reefRand(0, Math.PI * 2)
+        };
+        reefBeginCoralTransit(ndNew, x0, y0, x1, y1, nowMs);
+        reefNodes.push(ndNew);
+      }
+
       function reefSpawnCluster(cx, cy, velocity) {
         var vel = velocity || 0;
         /* More branches at higher velocity */
@@ -1103,6 +1156,10 @@
         rctx.clearRect(0, 0, W, H);
 
         if (reefFade < 0.001 && reefBranches.length === 0 && reefNodes.length === 0) {
+          mtxReefMagnetBridge.fade = 0;
+          mtxReefMagnetBridge.nodes.length = 0;
+          mtxReefMagnetBridge.heroW = 0;
+          mtxReefMagnetBridge.heroH = 0;
           cancelAnimationFrame(reefRaf);
           reefRaf = null;
           rctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1113,6 +1170,142 @@
 
         var now = performance.now();
 
+        /* Coral $: snap at icon, hold 25ms, then ride a tendril-like curve to neighbor icons. */
+        var rcl;
+        for (rcl = 0; rcl < reefNodes.length; rcl++) {
+          var nhd = reefNodes[rcl];
+          if (nhd.coralPhase !== 'held' || !nhd.coralIconK) continue;
+          var bestSnap = 9999;
+          var sxx = nhd.x;
+          var syy = nhd.y;
+          var pk;
+          for (pk = 0; pk < mtxReefIconBridge.points.length; pk++) {
+            var Pk = mtxReefIconBridge.points[pk];
+            if (mtxReefIconHeroKey(Pk.x, Pk.y) !== nhd.coralIconK) continue;
+            var sdk = Math.sqrt((Pk.x - nhd.x) * (Pk.x - nhd.x) + (Pk.y - nhd.y) * (Pk.y - nhd.y));
+            if (sdk < bestSnap) {
+              bestSnap = sdk;
+              sxx = Pk.x;
+              syy = Pk.y;
+            }
+          }
+          if (bestSnap < 88) {
+            nhd.x = sxx;
+            nhd.y = syy;
+          }
+        }
+
+        for (rcl = 0; rcl < reefNodes.length; rcl++) {
+          var ntr = reefNodes[rcl];
+          if (ntr.coralPhase !== 'transit') continue;
+          var trT = (now - ntr.coralTr0) / (ntr.coralTr1 - ntr.coralTr0);
+          if (trT >= 1) {
+            ntr.x = ntr.coralTx1;
+            ntr.y = ntr.coralTy1;
+            ntr.coralPhase = 'free';
+            delete ntr.coralTr0;
+            delete ntr.coralTr1;
+            delete ntr.coralTx0;
+            delete ntr.coralTy0;
+            delete ntr.coralTx1;
+            delete ntr.coralTy1;
+            delete ntr.coralCpX;
+            delete ntr.coralCpY;
+            continue;
+          }
+          var omt = 1 - trT;
+          ntr.x = omt * omt * ntr.coralTx0 + 2 * omt * trT * ntr.coralCpX + trT * trT * ntr.coralTx1;
+          ntr.y = omt * omt * ntr.coralTy0 + 2 * omt * trT * ntr.coralCpY + trT * trT * ntr.coralTy1;
+        }
+
+        for (rcl = 0; rcl < reefNodes.length; rcl++) {
+          var nhl = reefNodes[rcl];
+          if (nhl.coralPhase !== 'held') continue;
+          if (now - nhl.coralAbsorbT < reefCoralHoldMs) continue;
+          var neighL = mtxReefCoralNeighborHero[nhl.coralIconK];
+          if (!neighL || !neighL.length) {
+            nhl.coralPhase = 'free';
+            delete nhl.coralAbsorbT;
+            delete nhl.coralIconK;
+            continue;
+          }
+          var tg = neighL.slice();
+          var tj;
+          for (tj = tg.length - 1; tj > 0; tj--) {
+            var ri = Math.floor(Math.random() * (tj + 1));
+            var tswap = tg[tj];
+            tg[tj] = tg[ri];
+            tg[ri] = tswap;
+          }
+          var capOut = Math.min(4, tg.length);
+          var ox = nhl.x;
+          var oy = nhl.y;
+          reefBeginCoralTransit(nhl, ox, oy, tg[0].x, tg[0].y, now);
+          var tk;
+          for (tk = 1; tk < capOut; tk++) {
+            reefSpawnCoralTraveler(ox, oy, tg[tk].x, tg[tk].y, now, nhl.gen);
+          }
+        }
+
+        for (rcl = 0; rcl < reefNodes.length; rcl++) {
+          var nab = reefNodes[rcl];
+          if (nab.coralPhase && nab.coralPhase !== 'free') continue;
+          if (!mtxReefIconBridge.points.length) continue;
+          var ba = 9999;
+          var bax = 0;
+          var bay = 0;
+          var pb;
+          for (pb = 0; pb < mtxReefIconBridge.points.length; pb++) {
+            var Pbz = mtxReefIconBridge.points[pb];
+            var dbz = Math.sqrt((Pbz.x - nab.x) * (Pbz.x - nab.x) + (Pbz.y - nab.y) * (Pbz.y - nab.y));
+            if (dbz < ba) {
+              ba = dbz;
+              bax = Pbz.x;
+              bay = Pbz.y;
+            }
+          }
+          if (ba <= reefCoralAbsorbR) {
+            nab.coralPhase = 'held';
+            nab.coralAbsorbT = now;
+            nab.coralIconK = mtxReefIconHeroKey(bax, bay);
+            nab.x = bax;
+            nab.y = bay;
+          }
+        }
+
+        var reefIconPullR = window.matchMedia('(max-width: 768px)').matches ? 175 : 240;
+        var reefIconPullK = 0.22 * reefFade;
+        if (mtxReefIconBridge.points.length > 0 && reefFade > 0.03 && reefIconPullK > 0) {
+          for (var rai = 0; rai < reefNodes.length; rai++) {
+            var ndPull = reefNodes[rai];
+            if (ndPull.coralPhase === 'held' || ndPull.coralPhase === 'transit') continue;
+            var agePull = now - ndPull.born;
+            if (agePull > ndPull.maxAge) continue;
+            var bestId = reefIconPullR;
+            var bix = 0;
+            var biy = 0;
+            var pii;
+            for (pii = 0; pii < mtxReefIconBridge.points.length; pii++) {
+              var pip = mtxReefIconBridge.points[pii];
+              var pdx = pip.x - ndPull.x;
+              var pdy = pip.y - ndPull.y;
+              var pd = Math.sqrt(pdx * pdx + pdy * pdy);
+              if (pd < bestId) {
+                bestId = pd;
+                bix = pip.x;
+                biy = pip.y;
+              }
+            }
+            if (bestId < reefIconPullR && bestId > 0.6) {
+              var fall = (1 - bestId / reefIconPullR) * reefIconPullK;
+              ndPull.x += (bix - ndPull.x) * fall;
+              ndPull.y += (biy - ndPull.y) * fall;
+              ndPull.x = Math.max(-12, Math.min(W + 12, ndPull.x));
+              ndPull.y = Math.max(-12, Math.min(H + 12, ndPull.y));
+            }
+          }
+        }
+
         for (var n = 0; n < reefNodes.length; n++) {
           var nd = reefNodes[n];
           var age = now - nd.born;
@@ -1121,16 +1314,18 @@
           var fadeOut = age > nd.maxAge * 0.7 ? 1 - (age - nd.maxAge * 0.7) / (nd.maxAge * 0.3) : 1;
           nAlpha *= fadeOut;
           var p = Math.sin(now * 0.003 + nd.pulse) * 0.3 + 0.7;
-
-          rctx.beginPath();
-          rctx.arc(nd.x, nd.y, nd.r * p, 0, Math.PI * 2);
-          rctx.fillStyle = 'rgba(74, 222, 128, ' + nAlpha * 0.6 + ')';
-          rctx.fill();
-
-          rctx.beginPath();
-          rctx.arc(nd.x, nd.y, nd.r * p * 1.8, 0, Math.PI * 2);
-          rctx.fillStyle = 'rgba(74, 222, 128, ' + nAlpha * 0.12 + ')';
-          rctx.fill();
+          var fontPx = Math.max(8, Math.min(15, nd.r * p * 3.8));
+          rctx.save();
+          rctx.font = '700 ' + fontPx + 'px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
+          rctx.textAlign = 'center';
+          rctx.textBaseline = 'middle';
+          rctx.shadowColor = 'rgba(52, 211, 153, ' + (nAlpha * 0.4) + ')';
+          rctx.shadowBlur = Math.min(7, fontPx * 0.5);
+          rctx.shadowOffsetX = 0;
+          rctx.shadowOffsetY = 0;
+          rctx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(1, nAlpha * 0.72 + 0.1) + ')';
+          rctx.fillText('$', nd.x, nd.y);
+          rctx.restore();
         }
 
         /* Spatial grid for O(n) neighbor lookup instead of O(n²) */
@@ -1174,7 +1369,7 @@
                     rctx.beginPath();
                     rctx.moveTo(a2.x, a2.y);
                     rctx.lineTo(b2.x, b2.y);
-                    rctx.strokeStyle = 'rgba(74, 222, 128, ' + la + ')';
+                    rctx.strokeStyle = 'rgba(96, 108, 62, ' + la + ')';
                     rctx.lineWidth = 0.5;
                     rctx.stroke();
                   }
@@ -1200,7 +1395,7 @@
           rctx.beginPath();
           rctx.moveTo(prevX, prevY);
           rctx.lineTo(br.x, br.y);
-          rctx.strokeStyle = 'rgba(74, 222, 128, ' + bAlpha + ')';
+          rctx.strokeStyle = 'rgba(96, 108, 62, ' + bAlpha + ')';
           rctx.lineWidth = br.thickness * (1 - progress * 0.6);
           rctx.stroke();
 
@@ -1222,6 +1417,46 @@
             reefBranches.splice(i, 1); i--;
           }
         }
+
+        var reefMagCap = 48;
+        var reefMagCandidates = [];
+        var hRsnap = heroContainer.getBoundingClientRect();
+        var mtxWrapSnap = heroHome.querySelector('.matrix-container');
+        var mRsnap = mtxWrapSnap ? mtxWrapSnap.getBoundingClientRect() : hRsnap;
+        var reefToMtxX = mRsnap.left - hRsnap.left;
+        var reefToMtxY = mRsnap.top - hRsnap.top;
+        for (var rmi = 0; rmi < reefNodes.length; rmi++) {
+          var rnd = reefNodes[rmi];
+          var rAge = now - rnd.born;
+          if (rAge > rnd.maxAge) continue;
+          var rAlpha = rnd.alpha * reefFade;
+          var rFadeOut = rAge > rnd.maxAge * 0.7 ? 1 - (rAge - rnd.maxAge * 0.7) / (rnd.maxAge * 0.3) : 1;
+          rAlpha *= rFadeOut;
+          var rPulse = Math.sin(now * 0.003 + rnd.pulse) * 0.3 + 0.7;
+          var rWeight = rAlpha * rnd.r * rPulse;
+          if (rWeight < 0.008) continue;
+          reefMagCandidates.push({
+            x: rnd.x - reefToMtxX,
+            y: rnd.y - reefToMtxY,
+            weight: Math.min(1, rWeight * 0.35)
+          });
+        }
+        /* Strong anchor at pointer so matrix tendrils meet the reef the user is drawing */
+        if (reefActive && reefFade > 0.05 && reefMx >= 0 && reefMy >= 0) {
+          reefMagCandidates.push({
+            x: reefMx - reefToMtxX,
+            y: reefMy - reefToMtxY,
+            weight: 1
+          });
+        }
+        reefMagCandidates.sort(function(a, b) { return b.weight - a.weight; });
+        mtxReefMagnetBridge.fade = reefFade;
+        mtxReefMagnetBridge.heroW = W;
+        mtxReefMagnetBridge.heroH = H;
+        mtxReefMagnetBridge.nodes.length = 0;
+        for (var rmc = 0; rmc < reefMagCandidates.length && rmc < reefMagCap; rmc++) {
+          mtxReefMagnetBridge.nodes.push(reefMagCandidates[rmc]);
+        }
       }
 
       function reefStart() {
@@ -1235,6 +1470,25 @@
       function reefStop() {
         reefActive = false;
       }
+      function reefHardClear() {
+        if(reefRaf){
+          cancelAnimationFrame(reefRaf);
+          reefRaf = null;
+        }
+        reefBranches.length = 0;
+        reefNodes.length = 0;
+        reefFade = 0;
+        reefActive = false;
+        mtxReefMagnetBridge.fade = 0;
+        mtxReefMagnetBridge.nodes.length = 0;
+        mtxReefMagnetBridge.heroW = 0;
+        mtxReefMagnetBridge.heroH = 0;
+        rctx.setTransform(1, 0, 0, 1, 0, 0);
+        rctx.clearRect(0, 0, reefCanvas.width, reefCanvas.height);
+        reefResize();
+      }
+      homeHeroReefStop = reefStop;
+      homeHeroReefHardClear = reefHardClear;
 
       heroHome.addEventListener('pointermove', function(e) {
         var r = heroContainer.getBoundingClientRect();
@@ -1386,9 +1640,8 @@
   if(matrixContainer && matrixCanvas && matrixActivatorList.length > 0){
     /* Control-layer canvas: full motion, or static faint mesh when prefers-reduced-motion. */
     var mtxReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    /* Mobile layout or touch-first: keep matrix running without hover (hero pointerup otherwise calls mtxStop every lift). */
-    var mtxMobileMatrixAlways = window.matchMedia('(pointer: coarse)').matches
-      || window.matchMedia('(max-width: 768px)').matches;
+    /* Keep matrix rain running without requiring hero hover (desktop and mobile). */
+    var mtxMobileMatrixAlways = true;
     const mtxCtx = matrixCanvas.getContext('2d');
     /* One USD glyph: USDC stablecoin read comes from usdc.png in the crypto pool (duplicated there). */
     const textChars = [
@@ -1653,6 +1906,8 @@
     var mtxWarpTy = null;
     var mtxWarpX = null;
     var mtxWarpY = null;
+    var mtxLastPointerClientX = null;
+    var mtxLastPointerClientY = null;
 
     /* CTA position in matrix-local coords for $ attraction */
     var mtxCtaX = null, mtxCtaY = null;
@@ -1666,7 +1921,7 @@
       mtxCtaY = (br.top + br.height / 2) - cr.top;
     }
 
-    /* Dollar-specific warp: attract to CTA only, no cursor interaction */
+    /* Dollar-specific warp: CTA pull, then cursor pull when the pointer is near (larger $). */
     function mtxDollarWarp(px, py, cw, ch){
       var ox = px, oy = py;
       /* Attract toward CTA button */
@@ -1682,6 +1937,21 @@
           var s = t * t * strength;
           ox = px - dxC * invd * s;
           oy = py - dyC * invd * s;
+        }
+      }
+      /* Toward smoothed cursor when close (applied after CTA so the pointer wins locally). */
+      if(mtxWarpX != null && mtxWarpY != null){
+        var dxP = mtxWarpX - ox;
+        var dyP = mtxWarpY - oy;
+        var distP = Math.sqrt(dxP * dxP + dyP * dyP);
+        var maxRCursor = Math.max(140, Math.min(cw, ch) * 0.5);
+        var strengthCursor = Math.min(cw, ch) * 0.062;
+        if(distP > 0.5 && distP < maxRCursor){
+          var invp = 1 / distP;
+          var tc = 1 - distP / maxRCursor;
+          var sc = tc * tc * strengthCursor;
+          ox += dxP * invp * sc;
+          oy += dyP * invp * sc;
         }
       }
       return { x: ox, y: oy };
@@ -1864,7 +2134,7 @@
       if (trailGlowSprites.def.length) return;
       for (var gi = 0; gi < trailGlowSpriteSizes.length; gi++) {
         var sz = trailGlowSpriteSizes[gi];
-        trailGlowSprites.def.push(buildGlowSprite(sz, 74, 222, 128));
+        trailGlowSprites.def.push(buildGlowSprite(sz, 96, 108, 62));
         trailGlowSprites.mint.push(buildGlowSprite(sz, 204, 251, 229));
       }
     }
@@ -1901,9 +2171,47 @@
     var mtxDollarMagBtnTick = 0;
     var mtxDollarMagPrevMx = null;
     var mtxDollarMagPrevMy = null;
+    var mtxDollarMagIconPts = [];
+    var mtxDollarMagLeavingHero = false;
+    var mtxDollarMagLeaveFadeMs = 75;
+    var mtxDollarMagLeaveStartedAt = 0;
+    var mtxDollarMagHoldMs = 10;
+    var mtxDollarMagIconRefractoryMs = 240;
+
+    function mtxDollarMagIconKey(ix, iy){
+      return (Math.round(ix / 10) * 10) + ',' + (Math.round(iy / 10) * 10);
+    }
+
+    function mtxIsFranklinMatrixIcon(item){
+      var src = item && item.def && item.def.src;
+      return !!(src && src.indexOf('franklin.png') >= 0);
+    }
+
+    /* Drop head-wake samples and mesh ripples so glow trails do not outlive the fast trail purge. */
+    function mtxClearMatrixTrailGhosts(){
+      mtxMeshRipples.length = 0;
+      var hw;
+      for(hw = 0; hw < mtxHeadWake.length; hw++){
+        if(mtxHeadWake[hw]){
+          mtxHeadWake[hw].length = 0;
+        }
+      }
+    }
 
     function mtxTrailFill(){
       mtxTrailFillFrame++;
+      /* Normal trail uses low alpha (~0.16): ghosts linger for seconds. After hero leave, match the
+         ~75ms dollar fade by nearly resetting the bitmap each frame so residue clears with it. */
+      if(mtxDollarMagLeavingHero){
+        var csP = getComputedStyle(matrixContainer);
+        var rawP = csP.getPropertyValue('--matrix-trail-rgb').trim();
+        var partsP = rawP.split(/\s+/).map(Number);
+        var purgA = 0.92;
+        if(partsP.length >= 3 && partsP.every(function(n){ return !Number.isNaN(n); })){
+          return 'rgba(' + partsP[0] + ',' + partsP[1] + ',' + partsP[2] + ',' + purgA + ')';
+        }
+        return 'rgba(22, 32, 28, ' + purgA + ')';
+      }
       if(mtxTrailFillCache && mtxTrailFillFrame % 40 !== 0){
         return mtxTrailFillCache;
       }
@@ -2017,8 +2325,11 @@
     }
 
     function mtxUpdateWarpFromEvent(e){
+      /* Reef starts on any pointermove while inactive; matrix used to rely only on pointerover.
+         After reload, if the cursor is already over the hero, the browser often skips pointerover
+         until the pointer leaves and re-enters, so the first move only fired pointermove: coral ran, matrix did not. */
       if(!matrixContainer.classList.contains('active')){
-        return;
+        mtxStart();
       }
       var cx = e.clientX;
       var cy = e.clientY;
@@ -2029,6 +2340,8 @@
       if(typeof cx !== 'number' || typeof cy !== 'number'){
         return;
       }
+      mtxLastPointerClientX = cx;
+      mtxLastPointerClientY = cy;
       var r = matrixContainer.getBoundingClientRect();
       mtxWarpTx = cx - r.left;
       mtxWarpTy = cy - r.top;
@@ -2334,9 +2647,66 @@
     }
 
     function mtxDollarMagUpdate(w, h, dtMul){
+      var nowMs = performance.now();
+      /* If the pointer is outside the hero in viewport space, start the dollar fade immediately.
+         Pointerout can lag (scroll, capture, or missed events); warp can stay "live" for minutes. */
+      if(!mtxMobileMatrixAlways && heroHome && mtxLastPointerClientX != null && mtxLastPointerClientY != null
+          && matrixContainer.classList.contains('active')){
+        var hrbOut = heroHome.getBoundingClientRect();
+        var edgePad = 8;
+        var outsideHero = mtxLastPointerClientX < hrbOut.left - edgePad || mtxLastPointerClientX > hrbOut.right + edgePad
+            || mtxLastPointerClientY < hrbOut.top - edgePad || mtxLastPointerClientY > hrbOut.bottom + edgePad;
+        if(outsideHero){
+          mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
+          if(mtxDollarMag.length > 0){
+            mtxDollarMagLeavingHero = true;
+            if(mtxDollarMagLeaveStartedAt === 0){
+              mtxDollarMagLeaveStartedAt = nowMs;
+              mtxClearMatrixTrailGhosts();
+            }
+          } else {
+            mtxStop();
+          }
+        }
+      }
+
       var br = mtxDollarMagBtnRect();
       if(!br) return;
       var hasCursor = mtxWarpX != null && mtxWarpY != null;
+
+      if(mtxDollarMagLeavingHero){
+        if(mtxDollarMagLeaveStartedAt === 0){
+          mtxDollarMagLeaveStartedAt = nowMs;
+        }
+        var leaveElapsed = nowMs - mtxDollarMagLeaveStartedAt;
+        var fadeLin = Math.max(0, 1 - leaveElapsed / mtxDollarMagLeaveFadeMs);
+        for(var fi = mtxDollarMag.length - 1; fi >= 0; fi--){
+          var pf = mtxDollarMag[fi];
+          pf.iconHold = false;
+          if(pf.leaveAlpha0 == null){
+            pf.leaveAlpha0 = pf.alpha;
+          }
+          pf.alpha = pf.leaveAlpha0 * fadeLin;
+          pf.vx *= Math.pow(0.9, dtMul);
+          pf.vy *= Math.pow(0.9, dtMul);
+          var spf = Math.sqrt(pf.vx * pf.vx + pf.vy * pf.vy);
+          if(spf > 14){ pf.vx = (pf.vx / spf) * 14; pf.vy = (pf.vy / spf) * 14; }
+          pf.x += pf.vx * dtMul;
+          pf.y += pf.vy * dtMul;
+          if(fadeLin <= 0 || pf.alpha < 0.02){
+            mtxDollarMag.splice(fi, 1);
+          } else if(pf.x < -90 || pf.x > w + 90 || pf.y < -90 || pf.y > h + 90){
+            mtxDollarMag.splice(fi, 1);
+          }
+        }
+        if(mtxDollarMag.length === 0){
+          queueMicrotask(function(){
+            mtxStop();
+          });
+        }
+        return;
+      }
+
       var spawnRate = hasCursor ? 0.06 : 0.02;
       if(mtxDollarMag.length < mtxDollarMagMax && Math.random() < spawnRate * dtMul){
         mtxDollarMag.push(mtxDollarMagSpawn(w, h));
@@ -2360,94 +2730,221 @@
       }
       var btnCeil = br.top - 14;
       var btnFloor = br.top + br.h;
+      var useIconMagnet = hasCursor && mtxDollarMagIconPts.length > 0;
+      var iconAttractR = 220;
+      var iconSnapR = 20;
+
+      function mtxDollarMagPickIconIx(px, py, refractoryKey, refractoryUntil){
+        var cand = [];
+        var ikp;
+        for(ikp = 0; ikp < mtxDollarMagIconPts.length; ikp++){
+          var ipp = mtxDollarMagIconPts[ikp];
+          var ikeyp = mtxDollarMagIconKey(ipp.x, ipp.y);
+          if(refractoryKey === ikeyp && nowMs < refractoryUntil){
+            continue;
+          }
+          var pdx = ipp.x - px;
+          var pdy = ipp.y - py;
+          var pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+          if(pdist < iconAttractR){
+            cand.push({ ix: ikp, dist: pdist });
+          }
+        }
+        if(!cand.length){
+          return -1;
+        }
+        cand.sort(function(a, b){ return a.dist - b.dist; });
+        var kPick = Math.min(6, cand.length);
+        var wsum = 0;
+        var weights = [];
+        var wi;
+        for(wi = 0; wi < kPick; wi++){
+          var dd = Math.max(14, cand[wi].dist);
+          weights[wi] = (1 / dd) * (0.32 + Math.random() * 1.25);
+          wsum += weights[wi];
+        }
+        var roul = Math.random() * wsum;
+        var accw = 0;
+        for(wi = 0; wi < kPick; wi++){
+          accw += weights[wi];
+          if(roul <= accw){
+            return cand[wi].ix;
+          }
+        }
+        return cand[kPick - 1].ix;
+      }
+
       for(var i = mtxDollarMag.length - 1; i >= 0; i--){
         var p = mtxDollarMag[i];
-        if(!p.settled){
-          if(hasCursor){
-            var dx = mx - p.x, dy = my - p.y;
-            var d = Math.sqrt(dx * dx + dy * dy);
-            if(d > 1){
-              p.vx += (dx / d) * 0.2 * dtMul;
-              p.vy += (dy / d) * 0.2 * dtMul;
+        var skipIntegrate = false;
+
+        if(p.iconHold){
+          var trackX = p.holdIx;
+          var trackY = p.holdIy;
+          var hi;
+          var bestTrack = 99999;
+          for(hi = 0; hi < mtxDollarMagIconPts.length; hi++){
+            var ipt = mtxDollarMagIconPts[hi];
+            var tdx = ipt.x - p.holdIx;
+            var tdy = ipt.y - p.holdIy;
+            var td = Math.sqrt(tdx * tdx + tdy * tdy);
+            if(td < bestTrack){
+              bestTrack = td;
+              trackX = ipt.x;
+              trackY = ipt.y;
+            }
+          }
+          if(bestTrack < 44){
+            p.holdIx = trackX;
+            p.holdIy = trackY;
+          }
+          p.x = trackX;
+          p.y = trackY;
+          p.vx = 0;
+          p.vy = 0;
+          if(nowMs >= p.holdEnd){
+            p.iconHold = false;
+            var burstAng = Math.random() * Math.PI * 2;
+            var bsp = 6.6 + Math.random() * 8.2;
+            p.vx += Math.cos(burstAng) * bsp;
+            p.vy += Math.sin(burstAng) * bsp;
+            var kickAng = burstAng + (Math.random() - 0.5) * Math.PI * 1.35;
+            var kickSp = 1.1 + Math.random() * 3.1;
+            p.vx += Math.cos(kickAng) * kickSp;
+            p.vy += Math.sin(kickAng) * kickSp;
+            p.refractoryKey = mtxDollarMagIconKey(p.holdIx, p.holdIy);
+            p.refractoryUntil = nowMs + mtxDollarMagIconRefractoryMs;
+          } else {
+            skipIntegrate = true;
+          }
+        }
+
+        if(!skipIntegrate){
+          if(!p.settled){
+            if(useIconMagnet){
+              var bestIx = mtxDollarMagPickIconIx(p.x, p.y, p.refractoryKey, p.refractoryUntil);
+              if(bestIx >= 0){
+                var bp = mtxDollarMagIconPts[bestIx];
+                var bdx = bp.x - p.x;
+                var bdy = bp.y - p.y;
+                var bd = Math.sqrt(bdx * bdx + bdy * bdy) || 1;
+                var perpX = -bdy / bd;
+                var perpY = bdx / bd;
+                var jit = (Math.random() - 0.5) * 0.14 * dtMul;
+                p.vx += (bdx / bd) * 0.24 * dtMul + perpX * jit;
+                p.vy += (bdy / bd) * 0.24 * dtMul + perpY * jit;
+                if(bd < iconSnapR){
+                  p.iconHold = true;
+                  p.holdEnd = nowMs + mtxDollarMagHoldMs;
+                  p.holdIx = bp.x;
+                  p.holdIy = bp.y;
+                  p.x = bp.x;
+                  p.y = bp.y;
+                  p.vx = 0;
+                  p.vy = 0;
+                  skipIntegrate = true;
+                }
+              } else {
+                var dxF = mx - p.x, dyF = my - p.y;
+                var dF = Math.sqrt(dxF * dxF + dyF * dyF);
+                if(dF > 1){
+                  p.vx += (dxF / dF) * 0.2 * dtMul;
+                  p.vy += (dyF / dF) * 0.2 * dtMul;
+                }
+                if(dF < 50 && dF > 1 && mbDist < 200){
+                  var repFf = (1 - dF / 50) * 1.2;
+                  p.vx -= (dxF / dF) * repFf;
+                  p.vy -= (dyF / dF) * repFf;
+                }
+              }
+            } else if(hasCursor){
+              var dx = mx - p.x, dy = my - p.y;
+              var d = Math.sqrt(dx * dx + dy * dy);
+              if(d > 1){
+                p.vx += (dx / d) * 0.2 * dtMul;
+                p.vy += (dy / d) * 0.2 * dtMul;
+              }
+              if(d < 50 && d > 1 && mbDist < 200){
+                var repF = (1 - d / 50) * 1.2;
+                p.vx -= (dx / d) * repF;
+                p.vy -= (dy / d) * repF;
+              }
+            } else {
+              var tx = p.targetX != null ? p.targetX : br.cx;
+              var ty = btnCeil;
+              var dx2 = tx - p.x, dy2 = ty - p.y;
+              var d2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+              if(d2 > 1){
+                p.vx += (dx2 / d2) * 0.15 * dtMul;
+                p.vy += (dy2 / d2) * 0.15 * dtMul;
+              }
+              if(p.y < btnCeil){
+                p.vy += 0.04 * dtMul;
+              }
+            }
+            if(!skipIntegrate){
+              if(!(useIconMagnet && hasCursor)){
+                var inBtnX = p.x > br.x - 20 && p.x < br.x + br.w + 20;
+                var nearTop = p.y > btnCeil - 18 && p.y < btnCeil + 6;
+                var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if(inBtnX && nearTop && spd < 1.8 && (!hasCursor || mbDist < 200)){
+                  p.settled = true;
+                  p.vx *= 0.3;
+                  p.vy *= 0.3;
+                }
+              }
+              p.vx *= 0.965;
+              p.vy *= 0.965;
             }
           } else {
-            /* No cursor: attract toward particle's target position on button top */
-            var tx = p.targetX != null ? p.targetX : br.cx;
-            var ty = btnCeil;
-            var dx = tx - p.x, dy = ty - p.y;
-            var d = Math.sqrt(dx * dx + dy * dy);
-            if(d > 1){
-              p.vx += (dx / d) * 0.15 * dtMul;
-              p.vy += (dy / d) * 0.15 * dtMul;
+            var overBtn = p.x > br.x - 6 && p.x < br.x + br.w + 6;
+            if(overBtn){
+              p.vy += 0.025 * dtMul;
+              if(p.y > btnCeil){ p.y = btnCeil; p.vy = 0; }
+            } else {
+              p.settled = false;
+              p.vy += 0.15 * dtMul;
             }
-            /* Only apply gravity if above the button ceiling */
-            if(p.y < btnCeil){
-              p.vy += 0.04 * dtMul;
+            if(hasCursor){
+              var rx = p.x - mx, ry = p.y - my;
+              var rd = Math.sqrt(rx * rx + ry * ry);
+              if(rd < 1) rd = 1;
+              if(rd < 90){
+                var proxF = (1 - rd / 90) * 1.6;
+                var latBiasP = (p.x < br.cx) ? -1 : 1;
+                p.vx += (rx / rd) * proxF * 2.0 + latBiasP * proxF * 1.0;
+                p.vy += (ry / rd) * proxF * 0.8 - proxF * 0.6;
+                p.settled = false;
+              }
+              if(bounceF > 0 && rd < 200){
+                var f = bounceF * (1 - rd / 200);
+                var lateralBias = (p.x < br.cx) ? -1 : 1;
+                p.vx += (rx / rd) * f * 4.2 + lateralBias * f * 2.4;
+                p.vy += (ry / rd) * f * 1.2 - f * 1.0;
+                p.settled = false;
+              }
             }
+            p.vx *= 0.94;
+            p.vy *= 0.94;
           }
-          /* Repel free-flying particles that get too close to cursor near button. */
-          if(hasCursor && d < 50 && d > 1 && mbDist < 200){
-            var repF = (1 - d / 50) * 1.2;
-            p.vx -= (dx / d) * repF;
-            p.vy -= (dy / d) * repF;
-          }
-          var inBtnX = p.x > br.x - 20 && p.x < br.x + br.w + 20;
-          var nearTop = p.y > btnCeil - 18 && p.y < btnCeil + 6;
-          var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-          if(inBtnX && nearTop && spd < 1.8 && (!hasCursor || mbDist < 200)){
-            p.settled = true;
-            p.vx *= 0.3;
-            p.vy *= 0.3;
-          }
-          p.vx *= 0.965;
-          p.vy *= 0.965;
-        } else {
-          var overBtn = p.x > br.x - 6 && p.x < br.x + br.w + 6;
-          if(overBtn){
-            p.vy += 0.025 * dtMul;
-            if(p.y > btnCeil){ p.y = btnCeil; p.vy = 0; }
-          } else {
+        }
+
+        if(!skipIntegrate){
+          var insideX = p.x > br.x - 6 && p.x < br.x + br.w + 6;
+          var insideY = p.y > btnCeil && p.y < btnFloor;
+          if(insideX && insideY){
+            p.y = btnCeil;
+            if(p.vy > 0) p.vy = -p.vy * 0.5;
+            var pushDir = (p.x < br.cx) ? -1 : 1;
+            p.vx += pushDir * 1.5;
             p.settled = false;
-            p.vy += 0.15 * dtMul;
           }
-          if(hasCursor){
-            var rx = p.x - mx, ry = p.y - my;
-            var rd = Math.sqrt(rx * rx + ry * ry);
-            if(rd < 1) rd = 1;
-            /* Proximity repulsion: always active when cursor is near a settled particle. */
-            if(rd < 90){
-              var proxF = (1 - rd / 90) * 1.6;
-              var latBiasP = (p.x < br.cx) ? -1 : 1;
-              p.vx += (rx / rd) * proxF * 2.0 + latBiasP * proxF * 1.0;
-              p.vy += (ry / rd) * proxF * 0.8 - proxF * 0.6;
-              p.settled = false;
-            }
-            /* Velocity-based bounce: triggers when mouse moves toward the button. */
-            if(bounceF > 0 && rd < 200){
-              var f = bounceF * (1 - rd / 200);
-              var lateralBias = (p.x < br.cx) ? -1 : 1;
-              p.vx += (rx / rd) * f * 4.2 + lateralBias * f * 2.4;
-              p.vy += (ry / rd) * f * 1.2 - f * 1.0;
-              p.settled = false;
-            }
-          }
-          p.vx *= 0.94;
-          p.vy *= 0.94;
+          var sp = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if(sp > 23){ p.vx = (p.vx / sp) * 23; p.vy = (p.vy / sp) * 23; }
+          p.x += p.vx * dtMul;
+          p.y += p.vy * dtMul;
         }
-        /* Hard boundary: deflect any particle that enters the button rect. */
-        var insideX = p.x > br.x - 6 && p.x < br.x + br.w + 6;
-        var insideY = p.y > btnCeil && p.y < btnFloor;
-        if(insideX && insideY){
-          p.y = btnCeil;
-          if(p.vy > 0) p.vy = -p.vy * 0.5;
-          var pushDir = (p.x < br.cx) ? -1 : 1;
-          p.vx += pushDir * 1.5;
-          p.settled = false;
-        }
-        var sp = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if(sp > 20){ p.vx = (p.vx / sp) * 20; p.vy = (p.vy / sp) * 20; }
-        p.x += p.vx * dtMul;
-        p.y += p.vy * dtMul;
+
         if(p.x < -60 || p.x > w + 60 || p.y < -60 || p.y > h + 60){
           mtxDollarMag.splice(i, 1);
         }
@@ -2677,7 +3174,7 @@
         if (a0 < 0.002) {
           return;
         }
-        var col = isDollarFamily ? '204, 251, 229' : '74, 222, 128';
+        var col = isDollarFamily ? '204, 251, 229' : '96, 108, 62';
         mtxCtx.save();
         mtxCtx.translate(px + drift, py);
         mtxCtx.rotate(rot + Math.sin(nd.padPhase * 0.7) * 0.04);
@@ -2735,7 +3232,7 @@
             mtxCtx.beginPath();
             mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
             mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
-            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + lineAlpha + ')';
+            mtxCtx.strokeStyle = 'rgba(96, 108, 62, ' + lineAlpha + ')';
             mtxCtx.lineWidth = 1.0;
             mtxCtx.stroke();
           }
@@ -2769,11 +3266,11 @@
         var cx = nd.x + (nd.partOx || 0);
         var cy = nd.y + (nd.partOy || 0);
         mtxCtx.arc(cx, cy, nd.r * pulse, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + (drawAlpha * 0.3 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
+        mtxCtx.fillStyle = 'rgba(96, 108, 62, ' + (drawAlpha * 0.3 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
         mtxCtx.fill();
         mtxCtx.beginPath();
         mtxCtx.arc(cx, cy, nd.r * pulse * 1.75, 0, Math.PI * 2);
-        mtxCtx.fillStyle = 'rgba(74, 222, 128, ' + (drawAlpha * 0.048 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
+        mtxCtx.fillStyle = 'rgba(96, 108, 62, ' + (drawAlpha * 0.048 * mtxMeshLaneAlpha(cx, w, cy, h)) + ')';
         mtxCtx.fill();
       }
 
@@ -2789,7 +3286,7 @@
           if (rAlpha > 0.003) {
             mtxCtx.beginPath();
             mtxCtx.arc(rp.x, rp.y, rRadius, 0, Math.PI * 2);
-            var rc = rp.isDollar ? '204, 251, 229' : '74, 222, 128';
+            var rc = rp.isDollar ? '204, 251, 229' : '96, 108, 62';
             mtxCtx.strokeStyle = 'rgba(' + rc + ', ' + rAlpha + ')';
             mtxCtx.lineWidth = 0.65;
             mtxCtx.stroke();
@@ -2805,7 +3302,7 @@
           if (fa > 0.002) {
             mtxCtx.beginPath();
             mtxCtx.arc(fl.x, fl.y, 16 + fp * 22, 0, Math.PI * 2);
-            mtxCtx.strokeStyle = 'rgba(74, 222, 128, ' + fa + ')';
+            mtxCtx.strokeStyle = 'rgba(96, 108, 62, ' + fa + ')';
             mtxCtx.lineWidth = 0.5;
             mtxCtx.stroke();
           }
@@ -2829,9 +3326,9 @@
       mtxCtx.restore();
 
       var tie = mtxCtx.createLinearGradient(0, zTop, 0, h);
-      tie.addColorStop(0, 'rgba(74, 222, 128, 0)');
-      tie.addColorStop(0.65, 'rgba(74, 222, 128, ' + (0.0016 * pulse) + ')');
-      tie.addColorStop(1, 'rgba(74, 222, 128, ' + (0.0035 * pulse) + ')');
+      tie.addColorStop(0, 'rgba(96, 108, 62, 0)');
+      tie.addColorStop(0.65, 'rgba(96, 108, 62, ' + (0.0016 * pulse) + ')');
+      tie.addColorStop(1, 'rgba(96, 108, 62, ' + (0.0035 * pulse) + ')');
       mtxCtx.save();
       mtxCtx.globalAlpha = 0.82;
       mtxCtx.fillStyle = tie;
@@ -2857,8 +3354,8 @@
           var pocketR = 22 + Math.sin(now * 0.0008 + nd.pulse) * 6;
           var grad = mtxCtx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, pocketR);
           grad.addColorStop(0, 'rgba(96, 165, 250, ' + pocketAlpha + ')');
-          grad.addColorStop(0.55, 'rgba(74, 222, 128, ' + (pocketAlpha * 0.45) + ')');
-          grad.addColorStop(1, 'rgba(74, 222, 128, 0)');
+          grad.addColorStop(0.55, 'rgba(96, 108, 62, ' + (pocketAlpha * 0.45) + ')');
+          grad.addColorStop(1, 'rgba(96, 108, 62, 0)');
           mtxCtx.fillStyle = grad;
           mtxCtx.fillRect(nd.x - pocketR, nd.y - pocketR, pocketR * 2, pocketR * 2);
         }
@@ -2960,7 +3457,7 @@
       ensureGlowSprites();
       var isDollar = item.type === 'text' && item.value === '$';
       var submerge = mtxGetSubmerge(headBaseY, h);
-      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var col = isDollar ? '204, 251, 229' : '96, 108, 62';
       var arr = mtxHeadWake[colIndex] || [];
       var wakeAtt = mtxGetCenterSafeAttenuation(warpedHead.x, warpedHead.y, 'wake');
 
@@ -3028,7 +3525,7 @@
       var footCx = cx + glyphW * 0.5;
       var footCy = cy + glyphH * 0.7;
       var searchR = mtxIsMobile ? 40 : 60;
-      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var col = isDollar ? '204, 251, 229' : '96, 108, 62';
 
       /* Find nearby mesh nodes */
       var nearby = [];
@@ -3115,7 +3612,7 @@
       }
       var footX = cx + glyphW * 0.5;
       var footY = cy + glyphH * 0.75;
-      var col = isDollar ? '204, 251, 229' : '74, 222, 128';
+      var col = isDollar ? '204, 251, 229' : '96, 108, 62';
       var wakeAlpha = submerge * 0.08;
       var wakeW = glyphW * (0.6 + submerge * 0.4);
       var wobble = Math.sin(now * 0.004 + cx * 0.1) * 1.2;
@@ -3137,9 +3634,45 @@
       mtxCtx.restore();
     }
 
+    function mtxHardFinishHeroLeaveMatrix(){
+      mtxCancelPointerLeaveStop();
+      mtxDollarMag.length = 0;
+      mtxDollarMagLeavingHero = false;
+      mtxDollarMagLeaveStartedAt = 0;
+      mtxClearMatrixTrailGhosts();
+      mtxReefIconBridge.points.length = 0;
+      mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
+      mtxDollarMagPrevMx = mtxDollarMagPrevMy = null;
+      mtxDollarMagBtnCache = null;
+      mtxTrailFillCache = '';
+      if(!mtxMobileMatrixAlways){
+        matrixContainer.classList.remove('active');
+      }
+      if(mtxRaf){
+        cancelAnimationFrame(mtxRaf);
+        mtxRaf = null;
+      }
+      mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
+      mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      mtxPrevDrawTs = 0;
+      if(typeof homeHeroReefHardClear === 'function'){
+        homeHeroReefHardClear();
+      } else if(typeof homeHeroReefStop === 'function'){
+        homeHeroReefStop();
+      }
+      window.setTimeout(function(){
+        if(matrixContainer.classList.contains('active')){
+          return;
+        }
+        mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
+        mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      }, 50);
+    }
+
     function mtxDraw(ts){
       var mtxIsActive = matrixContainer.classList.contains('active');
       if(!mtxIsActive && mtxDollarMag.length === 0){
+        mtxReefIconBridge.points.length = 0;
         mtxRaf = null;
         mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
         mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
@@ -3168,12 +3701,49 @@
         w = Math.max(1, matrixCanvas.clientWidth);
         h = Math.max(1, matrixCanvas.clientHeight);
       }
+      var meshNow = performance.now();
+      /* While leaving hero: do not redraw falling matrix $ / mesh (they re-smear trails for seconds).
+         Opaque base + magnet dollars only; hard-clear at 75ms. */
+      if(mtxDollarMagLeavingHero && !mtxReducedMotion && !mtxMobileMatrixAlways){
+        var leaveElapsedDraw = mtxDollarMagLeaveStartedAt > 0 ? (meshNow - mtxDollarMagLeaveStartedAt) : 0;
+        if(leaveElapsedDraw >= mtxDollarMagLeaveFadeMs){
+          mtxHardFinishHeroLeaveMatrix();
+          return;
+        }
+        mtxCtx.fillStyle = mtxPanelMatteRgb();
+        mtxCtx.fillRect(0, 0, w, h);
+        mtxDollarMagUpdate(w, h, dtMul);
+        var mtxFontFamilyLeave = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+        mtxDollarMagDraw(mtxCtx, mtxFontFamilyLeave);
+        if(t > 0){
+          if(mtxLastDrawT > 0){
+            var frameDtL = t - mtxLastDrawT;
+            if(frameDtL > 0 && frameDtL < 200){
+              mtxFpsSampleAcc += frameDtL;
+              mtxFpsSampleN++;
+              if(mtxFpsSampleN >= 42){
+                var avgFL = mtxFpsSampleAcc / mtxFpsSampleN;
+                if(avgFL > 34 && mtxWakePerfTier < 2){
+                  mtxWakePerfTier++;
+                } else if(avgFL < 22 && mtxWakePerfTier > 0){
+                  mtxWakePerfTier--;
+                }
+                mtxFpsSampleAcc = 0;
+                mtxFpsSampleN = 0;
+              }
+            }
+          }
+          mtxLastDrawT = t;
+        }
+        mtxRaf = requestAnimationFrame(mtxDraw);
+        return;
+      }
       mtxCtx.fillStyle = mtxTrailFill();
       mtxCtx.fillRect(0, 0, w, h);
-      var meshNow = performance.now();
       mtxStepControlLayer(meshNow, w, h, dtMul);
       mtxBootstrapMeshIfEmpty(w, h, meshNow);
       if (mtxReducedMotion) {
+        mtxReefIconBridge.points.length = 0;
         mtxDrawMeshUnderlay(meshNow, w, h, null, true);
         mtxDrawSubmersionBand(w, h, meshNow);
         mtxRaf = null;
@@ -3236,9 +3806,14 @@
           mtxReactMeshNear(colCenterX, y0, meshNow, isDollarHead, i, w, h);
         }
 
-        /* Control-layer head-attached wake (history sampled after draw; lighter pass inside). */
-        mtxDrawHeadWake(item, warped, y0, op, meshNow, w, h, i);
-        mtxPushHeadWakeSample(i, warped.x, warped.y, meshNow, op, isDollarHead, item.type === 'icon');
+        /* Control-layer head-attached wake: text columns only. Icons use warped head at sprite
+           top-left, which reads like a pre-attached mark; skip wake + clear stale column history. */
+        if(item.type === 'icon'){
+          mtxHeadWake[i] = [];
+        } else {
+          mtxDrawHeadWake(item, warped, y0, op, meshNow, w, h, i);
+          mtxPushHeadWakeSample(i, warped.x, warped.y, meshNow, op, isDollarHead, false);
+        }
 
         if(item.type === 'text'){
           mtxCtx.textAlign = 'left';
@@ -3252,7 +3827,7 @@
             mtxCtx.shadowColor = 'rgba(167, 243, 208, 0.32)';
           } else if(mtxFiatNonUsd[item.value]){
             mtxCtx.fillStyle = 'rgba(134, 239, 172, ' + Math.min(0.96, op + 0.14) + ')';
-            mtxCtx.shadowColor = 'rgba(74, 222, 128, 0.22)';
+            mtxCtx.shadowColor = 'rgba(96, 108, 62, 0.22)';
           } else {
             mtxCtx.fillStyle = 'rgba(96, 230, 156, ' + Math.min(0.94, op + 0.12) + ')';
             mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.28)';
@@ -3291,7 +3866,8 @@
               bh: glyphH,
               op: op,
               isDollar: isDollarHead,
-              colIdx: i
+              colIdx: i,
+              isIcon: false
             });
             /* Foreground wade overlay + footline for text glyphs in submersion zone */
             var textSubmerge = mtxGetSubmerge(y0, h);
@@ -3379,13 +3955,33 @@
             bh: q.ih,
             op: q.op,
             isDollar: q.iconDollarTint,
-            colIdx: q.colIdx
+            colIdx: q.colIdx,
+            isIcon: true,
+            skipDollarMagnet: mtxIsFranklinMatrixIcon(q.item)
           });
         }
         /* Foreground wade overlay + footline: redraw nearby pads OVER icon bottom */
         if (q.submerge > 0.08) {
           mtxDrawGlyphWadeOverlay(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, w, h, q.iconDollarTint);
           mtxDrawFootlineWake(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, q.iconDollarTint);
+        }
+      }
+
+      mtxReefIconBridge.points.length = 0;
+      if (heroHome && mtxIsActive && coralNodes.length > 0) {
+        var hRi = heroHome.getBoundingClientRect();
+        var mRi = matrixContainer.getBoundingClientRect();
+        var iconToHeroX = mRi.left - hRi.left;
+        var iconToHeroY = mRi.top - hRi.top;
+        var iconCap = 56;
+        var iib;
+        for (iib = 0; iib < coralNodes.length && mtxReefIconBridge.points.length < iconCap; iib++) {
+          var cni = coralNodes[iib];
+          if (!cni.isIcon || cni.skipDollarMagnet) continue;
+          mtxReefIconBridge.points.push({
+            x: cni.cx + iconToHeroX,
+            y: cni.cy + iconToHeroY
+          });
         }
       }
 
@@ -3397,13 +3993,32 @@
          Tendrils connect from all sides (nearest edge to nearest edge).
          Connected icons are magnetized toward each other.
          ══════════════════════════════════════════════ */
-      if (coralNodes.length > 1 && !mtxReducedMotion) {
+      mtxReefCoralNeighborHero = {};
+      if (!mtxReducedMotion && coralNodes.length > 0) {
         var coralThreshold = mtxIsMobile ? 90 : 130;
         var coralMaxLinks = mtxWakePerfTier >= 1 ? (mtxIsMobile ? 2 : 3) : (mtxIsMobile ? 2 : 4);
         var coralAttractBase = mtxIsMobile ? 0.018 : 0.028;
         var coralLinkCount = {};
         var drawnCoralEdges = {};
+        var reefAdjHx = 0;
+        var reefAdjHy = 0;
+        if (heroHome && matrixContainer) {
+          var hRaf = heroHome.getBoundingClientRect();
+          var mRaf = matrixContainer.getBoundingClientRect();
+          reefAdjHx = mRaf.left - hRaf.left;
+          reefAdjHy = mRaf.top - hRaf.top;
+        }
+        function mtxReefPushCoralAdj(k, px, py) {
+          if (!mtxReefCoralNeighborHero[k]) mtxReefCoralNeighborHero[k] = [];
+          var lst = mtxReefCoralNeighborHero[k];
+          var zi;
+          for (zi = 0; zi < lst.length; zi++) {
+            if (Math.abs(lst[zi].x - px) < 3 && Math.abs(lst[zi].y - py) < 3) return;
+          }
+          lst.push({ x: px, y: py });
+        }
 
+        if (coralNodes.length > 1) {
         for (var ci = 0; ci < coralNodes.length; ci++) {
           var cn = coralNodes[ci];
           var neighbors = [];
@@ -3427,6 +4042,17 @@
             var edgeKey = ci < nbIdx ? ci + ':' + nbIdx : nbIdx + ':' + ci;
             if (drawnCoralEdges[edgeKey]) continue;
             drawnCoralEdges[edgeKey] = true;
+
+            if (cn.isIcon && nb.isIcon) {
+              var rax = cn.cx + reefAdjHx;
+              var ray = cn.cy + reefAdjHy;
+              var rbx = nb.cx + reefAdjHx;
+              var rby = nb.cy + reefAdjHy;
+              var rka = mtxReefIconHeroKey(rax, ray);
+              var rkb = mtxReefIconHeroKey(rbx, rby);
+              mtxReefPushCoralAdj(rka, rbx, rby);
+              mtxReefPushCoralAdj(rkb, rax, ray);
+            }
 
             var closeness = 1 - dist / coralThreshold;
 
@@ -3501,7 +4127,7 @@
             if (brAlpha < 0.01) continue;
 
             var isMint = cn.isDollar || nb.isDollar;
-            var brCol = isMint ? '204, 251, 229' : '74, 222, 128';
+            var brCol = isMint ? '204, 251, 229' : '96, 108, 62';
 
             /* Anchor points: connect center to center (simple, reliable) */
             var startX = cn.cx;
@@ -3560,6 +4186,83 @@
             }
           }
         }
+        }
+
+        /* Bridge nodes are already in matrix-container space (reefDraw converts hero to matrix). */
+        if (mtxReefMagnetBridge.fade > 0.04 && mtxReefMagnetBridge.nodes.length > 0) {
+          var reefMagMaxR = Math.min(360, Math.max(130, Math.min(w, h) * 0.48));
+          if (mtxIsMobile) {
+            reefMagMaxR = Math.min(280, Math.max(110, Math.min(w, h) * 0.42));
+          }
+          var reefStrH = mtxIsMobile ? 0.085 : 0.14;
+          var reefStrV = 0.006;
+          var rni;
+          for (var rgi = 0; rgi < coralNodes.length; rgi++) {
+            var crn = coralNodes[rgi];
+            if (crn.colIdx == null || !crn.isIcon || crn.skipDollarMagnet) continue;
+            var bestRd = reefMagMaxR;
+            var bestRx = 0;
+            var bestRy = 0;
+            var bestRw = 0;
+            for (rni = 0; rni < mtxReefMagnetBridge.nodes.length; rni++) {
+              var rnode = mtxReefMagnetBridge.nodes[rni];
+              var rdx = crn.cx - rnode.x;
+              var rdy = crn.cy - rnode.y;
+              var rdist = Math.sqrt(rdx * rdx + rdy * rdy);
+              if (rdist < bestRd && rdist > 0.5) {
+                bestRd = rdist;
+                bestRx = rnode.x;
+                bestRy = rnode.y;
+                bestRw = rnode.weight;
+              }
+            }
+            if (bestRd >= reefMagMaxR) continue;
+            var closenessReef = (1 - bestRd / reefMagMaxR) * mtxReefMagnetBridge.fade * Math.max(0.25, bestRw);
+            if (closenessReef < 0.006) continue;
+            coralLinkCount[crn.colIdx] = (coralLinkCount[crn.colIdx] || 0) + 1;
+            var hPullReef = closenessReef * reefStrH * dtMul;
+            if (crn.cx < bestRx) {
+              mtxColDriftX[crn.colIdx] += hPullReef;
+            } else {
+              mtxColDriftX[crn.colIdx] -= hPullReef;
+            }
+            var vPullReef = closenessReef * reefStrV * dtMul;
+            if (crn.cy < bestRy) {
+              mtxDrops[crn.colIdx] += vPullReef;
+            } else {
+              mtxDrops[crn.colIdx] -= vPullReef * 0.5;
+            }
+
+            var trAlpha = Math.min(0.52, 0.1 + closenessReef * 0.32);
+            if (trAlpha >= 0.02) {
+              var tdx = bestRx - crn.cx;
+              var tdy = bestRy - crn.cy;
+              var tdist = Math.sqrt(tdx * tdx + tdy * tdy) || 1;
+              var endFx = bestRx;
+              var endFy = bestRy;
+              var trCol = crn.isDollar ? '204, 251, 229' : '96, 108, 62';
+              var tangle = Math.atan2(endFy - crn.cy, endFx - crn.cx);
+              var tperpX = -Math.sin(tangle);
+              var tperpY = Math.cos(tangle);
+              var tsway = Math.sin(meshNow * 0.002 + rgi * 1.7) * tdist * 0.13;
+              var tcpX = (crn.cx + endFx) * 0.5 + tperpX * tsway;
+              var tcpY = (crn.cy + endFy) * 0.5 + tperpY * tsway;
+              mtxCtx.save();
+              mtxCtx.globalAlpha = 1;
+              mtxCtx.shadowBlur = 0;
+              mtxCtx.shadowColor = 'transparent';
+              mtxCtx.beginPath();
+              mtxCtx.moveTo(crn.cx, crn.cy);
+              mtxCtx.quadraticCurveTo(tcpX, tcpY, endFx, endFy);
+              mtxCtx.strokeStyle = 'rgba(' + trCol + ', ' + trAlpha + ')';
+              mtxCtx.lineWidth = 0.62 + closenessReef * 0.36;
+              mtxCtx.lineCap = 'round';
+              mtxCtx.lineJoin = 'round';
+              mtxCtx.stroke();
+              mtxCtx.restore();
+            }
+          }
+        }
 
         /* Dampen driftX back toward 0 for unconnected columns */
         for (var di = 0; di < mtxColDriftX.length; di++) {
@@ -3575,7 +4278,15 @@
         }
       }
 
-      /* Pass 3: dollar magnet particles. */
+      /* Pass 3: dollar magnet particles (icon targets in matrix space, after coral drift). */
+      mtxDollarMagIconPts.length = 0;
+      var dmi;
+      for(dmi = 0; dmi < coralNodes.length; dmi++){
+        var cnd = coralNodes[dmi];
+        if(cnd.isIcon && !cnd.skipDollarMagnet){
+          mtxDollarMagIconPts.push({ x: cnd.cx, y: cnd.cy });
+        }
+      }
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
 
@@ -3663,7 +4374,7 @@
     }
 
     var mtxPointerLeaveTimer = null;
-    var mtxPointerLeaveDelayMs = 85;
+    var mtxPointerLeaveDelayMs = 0;
 
     function mtxCancelPointerLeaveStop(){
       if(mtxPointerLeaveTimer !== null){
@@ -3697,6 +4408,12 @@
         }
       }
       matrixContainer.classList.add('active');
+      mtxDollarMagLeavingHero = false;
+      mtxDollarMagLeaveStartedAt = 0;
+      var la;
+      for(la = 0; la < mtxDollarMag.length; la++){
+        delete mtxDollarMag[la].leaveAlpha0;
+      }
       if(!mtxRaf){
         mtxRaf = requestAnimationFrame(mtxDraw);
       }
@@ -3715,17 +4432,25 @@
       mtxFlagshipLastDownEv = null;
       mtxClearFlagshipLpTimer();
       mtxFlagshipLpStripClasses();
+      if(mtxMobileMatrixAlways){
+        /* Rain stays on: do not clear warp; pointerout still calls mtxStop and would break $ cursor magnet. */
+        return;
+      }
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
       /* Let magnetized $ symbols fade out gracefully instead of vanishing */
       mtxDollarMagPrevMx = mtxDollarMagPrevMy = null;
       mtxDollarMagBtnCache = null;
-      if(mtxMobileMatrixAlways){
-        return;
-      }
+      mtxDollarMagLeavingHero = true;
       /* Keep active + draw loop alive while $ particles remain visible */
       if(mtxDollarMag.length > 0){
+        if(mtxDollarMagLeaveStartedAt === 0){
+          mtxDollarMagLeaveStartedAt = performance.now();
+          mtxClearMatrixTrailGhosts();
+        }
         return;
       }
+      mtxDollarMagLeavingHero = false;
+      mtxDollarMagLeaveStartedAt = 0;
       matrixContainer.classList.remove('active');
       if(mtxRaf){
         cancelAnimationFrame(mtxRaf);
@@ -3737,7 +4462,7 @@
         }
         mtxCtx.setTransform(1, 0, 0, 1, 0, 0);
         mtxCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-      }, 500);
+      }, 120);
     }
 
     homeHeroMtxStop = mtxStop;
