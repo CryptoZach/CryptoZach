@@ -1964,12 +1964,106 @@
       }
       return { x: ox, y: oy };
     }
+
+    function mtxRebuildIconHitRects(queue){
+      mtxLastIconHitRects.length = 0;
+      if(!queue || !queue.length){
+        return;
+      }
+      var ri, pad, q;
+      for(ri = 0; ri < queue.length; ri++){
+        q = queue[ri];
+        pad = 8;
+        mtxLastIconHitRects.push({
+          left: q.ix - pad,
+          right: q.ix + q.iw + pad,
+          top: q.iy - pad,
+          bottom: q.iy + q.ih + pad,
+          colIdx: q.colIdx
+        });
+      }
+    }
+
+    function mtxDollarBBoxOverlapsIcon(tx, ty, gw, gh, colIdx, queue, padD, padI){
+      if(!queue || !queue.length){
+        return false;
+      }
+      var dl = tx - padD;
+      var dr = tx + gw + padD;
+      var dt = ty - padD;
+      var db = ty + gh + padD;
+      var qi, iq;
+      for(qi = 0; qi < queue.length; qi++){
+        iq = queue[qi];
+        if(iq.colIdx === colIdx){
+          continue;
+        }
+        var il = iq.ix - padI;
+        var ir = iq.ix + iq.iw + padI;
+        var itop = iq.iy - padI;
+        var ib = iq.iy + iq.ih + padI;
+        if(dl < ir && dr > il && dt < ib && db > itop){
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function mtxTryDollarIconBurst(colIdx, tx, ty, gw, gh, nowMs){
+      if(mtxWarpX == null || mtxWarpY == null || mtxLastIconHitRects.length === 0){
+        return;
+      }
+      if(nowMs < mtxColDollarIconBurstCooldownUntil[colIdx]){
+        return;
+      }
+      var padB = 5;
+      var dl = tx - padB;
+      var dr = tx + gw + padB;
+      var dt = ty - padB;
+      var db = ty + gh + padB;
+      var dcx = tx + gw * 0.5;
+      var dcy = ty + gh * 0.5;
+      var hi, R;
+      for(hi = 0; hi < mtxLastIconHitRects.length; hi++){
+        R = mtxLastIconHitRects[hi];
+        if(R.colIdx === colIdx){
+          continue;
+        }
+        if(dl >= R.right || dr <= R.left || dt >= R.bottom || db <= R.top){
+          continue;
+        }
+        var dx = mtxWarpX - dcx;
+        var dy = mtxWarpY - dcy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if(dist < 14){
+          return;
+        }
+        var nx = dx / dist;
+        var ny = dy / dist;
+        var sh = mtxIsMobile ? 3.2 : 5.4;
+        var sv = mtxIsMobile ? 0.088 : 0.14;
+        mtxColDollarShotVx[colIdx] += nx * sh;
+        mtxColDollarShotVDrop[colIdx] += ny * sv;
+        mtxColDollarShotVx[colIdx] = Math.max(-12, Math.min(12, mtxColDollarShotVx[colIdx]));
+        mtxColDollarShotVDrop[colIdx] = Math.max(-0.38, Math.min(0.38, mtxColDollarShotVDrop[colIdx]));
+        mtxColDollarIconBurstCooldownUntil[colIdx] = nowMs + 270;
+        break;
+      }
+    }
+
     var mtxDrops = [];
     var mtxColItem = [];
     var mtxColOpacity = [];
     var mtxColStep = [];
     var mtxColDriftX = [];
     var mtxColDriftRate = [];
+    /* Large $: burst toward pointer when overlapping an icon column (rects from prior frame). */
+    var mtxColDollarShotVx = [];
+    var mtxColDollarShotVDrop = [];
+    var mtxColDollarIconBurstCooldownUntil = [];
+    var mtxLastIconHitRects = [];
+    /* Pass 1 records $ draw state; pass 2b redraws on top of icons when bbox overlaps (avoids $ vanishing under sprites). */
+    var mtxPass1DollarOverdraw = [];
     var mtxPrevDrawTs = 0;
     var mtxColWidth = 22;
     var mtxFontSize = 13;
@@ -2424,6 +2518,9 @@
         });
         mtxColDriftX = new Array(colCount).fill(0);
         mtxColDriftRate = new Array(colCount).fill(0);
+        mtxColDollarShotVx = new Array(colCount).fill(0);
+        mtxColDollarShotVDrop = new Array(colCount).fill(0);
+        mtxColDollarIconBurstCooldownUntil = new Array(colCount).fill(0);
       }
       /* Reset mesh and head wake only when the buffer or columns changed, or a full reseed was requested. */
       var resetMesh = forceResetDrops || needBufferResize || colLayoutChanged;
@@ -2449,6 +2546,12 @@
           mtxHeadWake = new Array(nWake).fill(null).map(function(){
             return [];
           });
+        }
+        if(mtxColDollarShotVx.length !== mtxDrops.length){
+          var nsShot = mtxDrops.length;
+          mtxColDollarShotVx = new Array(nsShot).fill(0);
+          mtxColDollarShotVDrop = new Array(nsShot).fill(0);
+          mtxColDollarIconBurstCooldownUntil = new Array(nsShot).fill(0);
         }
       }
       mtxMeasureHeroSafeZones();
@@ -3798,6 +3901,12 @@
          when icons are wider than mtxColWidth. */
       var iconQueue = [];
       var coralNodes = []; /* collect glyph positions for inter-glyph coral web */
+      mtxPass1DollarOverdraw.length = 0;
+      for(i = 0; i < n; i++){
+        var dShotDecay = Math.pow(0.88, dtMul);
+        mtxColDollarShotVx[i] *= dShotDecay;
+        mtxColDollarShotVDrop[i] *= dShotDecay;
+      }
       for(i = 0; i < n; i++){
         var x0 = i * mtxColWidth + 1 + mtxColDriftX[i];
         var y0 = mtxDrops[i] * mtxLineStep;
@@ -3873,6 +3982,20 @@
           /* Clamp X only: warp can pull columns left; clamping Y to 0 stacked every glyph on one row at the top. */
           tx = Math.max(0, Math.min(tx, Math.max(0, w - twEst)));
           var twMeasured = mtxCtx.measureText(item.value).width;
+          if(item.value === '$'){
+            var ghBurst = fs * 1.18;
+            var gwBurst = Math.max(8, twMeasured);
+            mtxTryDollarIconBurst(i, tx, ty, gwBurst, ghBurst, meshNow);
+            mtxPass1DollarOverdraw.push({
+              tx: tx,
+              ty: ty,
+              tw: gwBurst,
+              th: ghBurst,
+              fs: fs,
+              op: op,
+              colIdx: i
+            });
+          }
           mtxCtx.fillText(item.value, tx, ty);
           mtxCtx.restore();
           /* Collect position for coral web */
@@ -3938,14 +4061,18 @@
           mtxDrops[i] = Math.random() * -5;
           mtxColDriftX[i] = 0;
           mtxColDriftRate[i] = 0;
+          mtxColDollarShotVx[i] = 0;
+          mtxColDollarShotVDrop[i] = 0;
+          mtxColDollarIconBurstCooldownUntil[i] = 0;
           mtxAssignColVisual(i);
           if(mtxColItem[i].type !== 'icon'){
             mtxColStep[i] = 0.15 + Math.random() * 0.04;
           }
         }
-        mtxDrops[i] += mtxColStep[i] * dtMul;
-        mtxColDriftX[i] += mtxColDriftRate[i] * dtMul;
+        mtxDrops[i] += mtxColStep[i] * dtMul + mtxColDollarShotVDrop[i] * dtMul;
+        mtxColDriftX[i] += mtxColDriftRate[i] * dtMul + mtxColDollarShotVx[i] * dtMul;
       }
+      mtxRebuildIconHitRects(iconQueue);
       /* Pass 2: draw all icon sprites on top of every matte. */
       for(i = 0; i < iconQueue.length; i++){
         var q = iconQueue[i];
@@ -3985,6 +4112,29 @@
         if (q.submerge > 0.08) {
           mtxDrawGlyphWadeOverlay(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, w, h, q.iconDollarTint);
           mtxDrawFootlineWake(q.ix, q.iy, q.iw, q.ih, q.submerge, meshNow, q.iconDollarTint);
+        }
+      }
+
+      /* Pass 2b: $ was drawn in pass 1 then covered by icon sprites; paint again on top when overlapping. */
+      if(mtxPass1DollarOverdraw.length > 0 && iconQueue.length > 0){
+        var oi, du;
+        for(oi = 0; oi < mtxPass1DollarOverdraw.length; oi++){
+          du = mtxPass1DollarOverdraw[oi];
+          if(!mtxDollarBBoxOverlapsIcon(du.tx, du.ty, du.tw, du.th, du.colIdx, iconQueue, 3, 4)){
+            continue;
+          }
+          mtxCtx.save();
+          mtxCtx.textAlign = 'left';
+          mtxCtx.textBaseline = 'top';
+          mtxCtx.font = '700 ' + du.fs + 'px ' + mtxFontFamily;
+          mtxCtx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(0.99, du.op + 0.24) + ')';
+          mtxCtx.shadowColor = 'rgba(167, 243, 208, 0.38)';
+          mtxCtx.shadowBlur = 7;
+          mtxCtx.shadowOffsetX = 0;
+          mtxCtx.shadowOffsetY = 0;
+          mtxCtx.globalAlpha = 1;
+          mtxCtx.fillText('$', du.tx, du.ty);
+          mtxCtx.restore();
         }
       }
 
