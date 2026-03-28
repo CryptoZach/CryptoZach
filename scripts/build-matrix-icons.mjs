@@ -436,7 +436,7 @@ const ICONS = [
   { name: 'revolut', si: ['revolut'] },
   /* Block Inc: Simple Icons slug is "square" */
   { name: 'block', si: ['square'] },
-  /* BlackRock: not in SI v16; bundled BR monogram (wordmark is too wide for 32px) */
+  /* BlackRock: not in SI v16; bundled wordmark (matrix draws blk as wide wordmark) */
   {
     name: 'blk',
     localSvg: 'icons/matrix/build-sources/blk.svg',
