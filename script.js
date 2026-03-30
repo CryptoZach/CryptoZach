@@ -210,6 +210,28 @@
   const yearEl = document.getElementById('year');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* Homepage hero: scroll / touch diagnosis (iOS Display Zoom, large Dynamic Type):
+   * - This site does not use GSAP ScrollTrigger or a scroll-scrub timeline on the hero.
+   * - The trap is script + CSS: on #hero, touchstart sets reefTouchActive and touchmove calls
+   *   preventDefault() while true, so any scroll gesture that starts inside the hero cannot
+   *   scroll the page. A tall hero makes that every gesture.
+   * - .hero-eyebrow uses touch-action: none so drags go to matrix/coral instead of scroll.
+   * - prefers-reduced-motion: reduce skips the entire coral-reef init block (no reef listeners).
+   * Mitigation: heroHomepageExceedsViewport() vs visual viewport height, data-hero-overflows
+   * + CSS, gated preventDefault, resize/visualViewport refresh, MAX_HERO_REEF_SCROLL_LOCK_MS. */
+  var MAX_HERO_REEF_SCROLL_LOCK_MS = 4000;
+  function heroHomepageExceedsViewport(){
+    var el = document.querySelector('#hero.hero--homepage');
+    if(!el) return false;
+    var vh = window.innerHeight;
+    try{
+      if(window.visualViewport && typeof window.visualViewport.height === 'number' && window.visualViewport.height > 0){
+        vh = window.visualViewport.height;
+      }
+    } catch(_){}
+    return el.scrollHeight > vh * 0.95;
+  }
+
   // Homepage hero: eyebrow spotlight, coral reef on full #hero, matrix on eyebrow (see below)
   const heroHome = document.querySelector('#hero.hero--homepage');
   const heroEyebrow = heroHome && heroHome.querySelector('.hero-eyebrow');
@@ -219,6 +241,41 @@
   function mtxReefIconHeroKey(ix, iy){
     return (Math.round(ix / 10) * 10) + ',' + (Math.round(iy / 10) * 10);
   }
+
+  function refreshHeroHomepageOverflowDataAttr(){
+    if(!heroHome) return;
+    if(heroHomepageExceedsViewport()){
+      heroHome.setAttribute('data-hero-overflows', 'true');
+    } else {
+      heroHome.removeAttribute('data-hero-overflows');
+    }
+  }
+  /* Set by coral-reef init when present; clears reef touch lock when overflow flips on resize. */
+  var heroReefScrollLockRelease = null;
+  if(heroHome){
+    function onHeroHomepageViewportChange(){
+      refreshHeroHomepageOverflowDataAttr();
+      if(typeof heroReefScrollLockRelease === 'function'){
+        heroReefScrollLockRelease();
+      }
+    }
+    window.addEventListener('resize', onHeroHomepageViewportChange, { passive: true });
+    window.addEventListener('orientationchange', onHeroHomepageViewportChange, { passive: true });
+    if(window.visualViewport){
+      try{
+        window.visualViewport.addEventListener('resize', onHeroHomepageViewportChange, { passive: true });
+      } catch(_){}
+    }
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(function(){
+        requestAnimationFrame(onHeroHomepageViewportChange);
+      });
+    }
+    requestAnimationFrame(function(){
+      requestAnimationFrame(onHeroHomepageViewportChange);
+    });
+  }
+
   if(heroHome && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const isFinePointer = (e) => e.pointerType === 'mouse';
     const setEyebrowSpot = (clientX, clientY) => {
@@ -1550,19 +1607,49 @@
         }
       });
 
-      /* Prevent scrolling while touch-dragging in hero so coral reef captures the gesture */
+      /* Prevent scrolling while touch-dragging in hero so coral reef captures the gesture.
+         Skip when the hero is taller than the visible viewport (large text / zoom): otherwise
+         users cannot scroll past the hero. MAX_HERO_REEF_SCROLL_LOCK_MS releases if needed. */
       var reefTouchActive = false;
-      heroHome.addEventListener('touchstart', function(e) {
+      var reefScrollLockEscapeTimer = null;
+      function clearHeroReefScrollLockTimer(){
+        if(reefScrollLockEscapeTimer !== null){
+          clearTimeout(reefScrollLockEscapeTimer);
+          reefScrollLockEscapeTimer = null;
+        }
+      }
+      heroReefScrollLockRelease = function(){
+        if(heroHomepageExceedsViewport()){
+          reefTouchActive = false;
+          clearHeroReefScrollLockTimer();
+        }
+      };
+
+      heroHome.addEventListener('touchstart', function() {
+        refreshHeroHomepageOverflowDataAttr();
+        if(heroHomepageExceedsViewport()){
+          reefTouchActive = false;
+          return;
+        }
         reefTouchActive = true;
+        clearHeroReefScrollLockTimer();
+        reefScrollLockEscapeTimer = window.setTimeout(function(){
+          reefTouchActive = false;
+          reefScrollLockEscapeTimer = null;
+        }, MAX_HERO_REEF_SCROLL_LOCK_MS);
       }, { passive: true });
       heroHome.addEventListener('touchmove', function(e) {
-        if (reefTouchActive) e.preventDefault();
+        if(reefTouchActive && !heroHomepageExceedsViewport()){
+          e.preventDefault();
+        }
       }, { passive: false });
       heroHome.addEventListener('touchend', function() {
         reefTouchActive = false;
+        clearHeroReefScrollLockTimer();
       }, { passive: true });
       heroHome.addEventListener('touchcancel', function() {
         reefTouchActive = false;
+        clearHeroReefScrollLockTimer();
       }, { passive: true });
 
       /* Spawn reef on tap/press for instant touch feedback */
@@ -1927,12 +2014,14 @@
     function mtxDollarWarp(px, py, cw, ch){
       var ox = px, oy = py;
       var maxRCursor = Math.max(180, Math.min(cw, ch) * 0.65);
+      /* Large $ reads frantic on small viewports if warp matches desktop impulse. */
+      var dollarWarpMob = mtxIsMobile ? 0.5 : 1;
       /* Toward smoothed cursor: proximity from true column head (px,py) so CTA cannot disable this band. */
       if(mtxWarpX != null && mtxWarpY != null){
         var dx0 = mtxWarpX - px;
         var dy0 = mtxWarpY - py;
         var dist0 = Math.sqrt(dx0 * dx0 + dy0 * dy0);
-        var strengthCursor = Math.min(cw, ch) * 0.095;
+        var strengthCursor = Math.min(cw, ch) * 0.095 * dollarWarpMob;
         if(dist0 > 0.5 && dist0 < maxRCursor){
           var inv0 = 1 / dist0;
           var tc = 1 - dist0 / maxRCursor;
@@ -1947,7 +2036,7 @@
         var dyC = oy - mtxCtaY;
         var distC = Math.sqrt(dxC * dxC + dyC * dyC);
         var maxR = Math.max(128, Math.min(cw, ch) * 0.5);
-        var strength = Math.min(cw, ch) * 0.05;
+        var strength = Math.min(cw, ch) * 0.05 * dollarWarpMob;
         if(distC > 0.5 && distC < maxR){
           var invd = 1 / distC;
           var t = 1 - distC / maxR;
@@ -2040,8 +2129,8 @@
         }
         var nx = dx / dist;
         var ny = dy / dist;
-        var sh = mtxIsMobile ? 3.2 : 5.4;
-        var sv = mtxIsMobile ? 0.088 : 0.14;
+        var sh = mtxIsMobile ? 1.65 : 5.4;
+        var sv = mtxIsMobile ? 0.045 : 0.14;
         mtxColDollarShotVx[colIdx] += nx * sh;
         mtxColDollarShotVDrop[colIdx] += ny * sv;
         mtxColDollarShotVx[colIdx] = Math.max(-12, Math.min(12, mtxColDollarShotVx[colIdx]));
@@ -2709,6 +2798,11 @@
         } else if(item.value && item.value.length > 2){
           mtxColOpacity[i] = Math.min(0.78, mtxColOpacity[i] + 0.12);
         }
+        var stepT = 0.15 + Math.random() * 0.04;
+        if(item.type === 'text' && item.value === '$' && mtxIsMobile){
+          stepT *= 0.52;
+        }
+        mtxColStep[i] = stepT;
       }
 
       /* Bitcoin: 50% chance of diagonal movement */
@@ -4066,7 +4160,11 @@
           mtxColDollarIconBurstCooldownUntil[i] = 0;
           mtxAssignColVisual(i);
           if(mtxColItem[i].type !== 'icon'){
-            mtxColStep[i] = 0.15 + Math.random() * 0.04;
+            var stepR = 0.15 + Math.random() * 0.04;
+            if(mtxColItem[i].type === 'text' && mtxColItem[i].value === '$' && mtxIsMobile){
+              stepR *= 0.52;
+            }
+            mtxColStep[i] = stepR;
           }
         }
         mtxDrops[i] += mtxColStep[i] * dtMul + mtxColDollarShotVDrop[i] * dtMul;
@@ -4166,8 +4264,9 @@
          ══════════════════════════════════════════════ */
       mtxReefCoralNeighborHero = {};
       if (!mtxReducedMotion && coralNodes.length > 0) {
-        var coralThreshold = mtxIsMobile ? 90 : 130;
-        var coralMaxLinks = mtxWakePerfTier >= 1 ? (mtxIsMobile ? 2 : 3) : (mtxIsMobile ? 2 : 4);
+        /* Max center distance for icon pairs: tendrils + mutual pull (was 90 / 130). */
+        var coralThreshold = mtxIsMobile ? 118 : 182;
+        var coralMaxLinks = mtxWakePerfTier >= 1 ? (mtxIsMobile ? 3 : 4) : (mtxIsMobile ? 3 : 5);
         var coralAttractBase = mtxIsMobile ? 0.018 : 0.028;
         var coralLinkCount = {};
         var drawnCoralEdges = {};
@@ -4273,7 +4372,7 @@
                 }
               } else {
                 /* ATTRACTION: gentle pull when separated but within tendril range */
-                var hPull = closeness * (mtxIsMobile ? 0.18 : 0.32) * dtMul;
+                var hPull = closeness * (mtxIsMobile ? 0.22 : 0.38) * dtMul;
                 if (cn.cx < nb.cx) {
                   mtxColDriftX[cnCol] += hPull;
                   mtxColDriftX[nbCol] -= hPull;
@@ -4281,7 +4380,7 @@
                   mtxColDriftX[cnCol] -= hPull;
                   mtxColDriftX[nbCol] += hPull;
                 }
-                var vPull = closeness * 0.008 * dtMul;
+                var vPull = closeness * 0.011 * dtMul;
                 if (cn.cy < nb.cy) {
                   mtxDrops[cnCol] += vPull;
                   mtxDrops[nbCol] -= vPull * 0.5;
@@ -4294,8 +4393,7 @@
 
             /* ── Tendril rendering ── */
             /* Use a high base alpha — op values are low (0.17-0.5) so we compensate */
-            var brAlpha = closeness * 0.30;
-            if (brAlpha < 0.01) continue;
+            var brAlpha = Math.max(0.035, closeness * 0.34);
 
             var isMint = cn.isDollar || nb.isDollar;
             var brCol = isMint ? '204, 251, 229' : '96, 108, 62';
@@ -4310,7 +4408,7 @@
             var angle = Math.atan2(endY - startY, endX - startX);
             var perpX = -Math.sin(angle);
             var perpY = Math.cos(angle);
-            var sway = Math.sin(meshNow * 0.002 + ci * 1.3 + ck * 2.1) * dist * 0.15;
+            var sway = Math.sin(meshNow * 0.002 + ci * 1.3 + ck * 2.1) * dist * 0.21;
             var cpX = (startX + endX) * 0.5 + perpX * sway;
             var cpY = (startY + endY) * 0.5 + perpY * sway;
 
@@ -4319,7 +4417,7 @@
             mtxCtx.moveTo(startX, startY);
             mtxCtx.quadraticCurveTo(cpX, cpY, endX, endY);
             mtxCtx.strokeStyle = 'rgba(' + brCol + ', ' + brAlpha + ')';
-            mtxCtx.lineWidth = 0.6 + closeness * 0.5;
+            mtxCtx.lineWidth = 0.65 + closeness * 0.58;
             mtxCtx.lineCap = 'round';
             mtxCtx.stroke();
 
@@ -4339,9 +4437,9 @@
             }
 
             /* Fork off midpoint on close connections */
-            if (!mtxIsMobile && closeness > 0.45) {
+            if (!mtxIsMobile && closeness > 0.32) {
               var forkAngle = angle + Math.PI * 0.5 * (Math.sin(ci + ck) > 0 ? 1 : -1);
-              var forkLen = dist * 0.2;
+              var forkLen = dist * 0.28;
               var forkX = cpX + Math.cos(forkAngle) * forkLen;
               var forkY = cpY + Math.sin(forkAngle) * forkLen;
               mtxCtx.beginPath();
