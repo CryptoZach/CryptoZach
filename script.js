@@ -2014,50 +2014,95 @@
       mtxCtaY = (br.top + br.height * 0.5 - c.top) * sy;
     }
 
-    /* Dollar-specific warp: cursor pull first, then mild CTA drift.
-       If CTA ran first, it moved the glyph toward the button and inflated distance to the
-       pointer, so the old "cursor when close" test (from post-CTA ox,oy) often failed and $ never followed the cursor. */
-    function mtxDollarWarp(px, py, cw, ch){
-      var ox = px, oy = py;
+    /* ── Diagnosis (hero matrix $ parallax): Floating $ are text columns in mtxDraw (item.value === '$').
+       Input: mtxLastPointerClientX/Y, synced to mtxWarpX/Y in the draw loop (not a separate DOM parallax).
+       Interactive pull is mtxDollarRawCursorDelta + per-column lerp, then mtxDollarApplyCtaAttract; idle column motion is unchanged.
+       Tuning: raw cursor delta (depth-scaled, clamped to 4vw) is lerped per column; CTA attract applies after lerp.
+       Touch-only 12px dead zone uses mtxHeroDollarTouchParallaxOrigin (hero pointerdown/up). */
+    var mtxDollarParallaxLerpBase = 0.07;
+    var mtxDollarParallaxMaxDispVw = 4;
+    var mtxDollarParallaxTouchDeadPx = 12;
+
+    function mtxParallaxTouchDevice(){
+      return typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0;
+    }
+
+    function mtxHeroDollarParallaxAdjustClient(clientX, clientY){
+      if(!mtxParallaxTouchDevice() || !mtxHeroDollarTouchParallaxOrigin){
+        return { x: clientX, y: clientY };
+      }
+      var o = mtxHeroDollarTouchParallaxOrigin;
+      var ddx = clientX - o.x;
+      var ddy = clientY - o.y;
+      var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+      if(dist < mtxDollarParallaxTouchDeadPx){
+        return { x: o.x, y: o.y };
+      }
+      var sc = (dist - mtxDollarParallaxTouchDeadPx) / dist;
+      return { x: o.x + ddx * sc, y: o.y + ddy * sc };
+    }
+
+    /* Pointer-only displacement (viewport px) before per-column lerp and CTA pass. Large fonts get smaller depthMul. */
+    function mtxDollarRawCursorDelta(px, py, cw, ch, fontSize, wpx, wpy){
+      var dx = 0;
+      var dy = 0;
+      if(wpx == null || wpy == null){
+        return { dx: dx, dy: dy };
+      }
       var maxRCursor = Math.max(180, Math.min(cw, ch) * 0.65);
-      /* Large $ reads frantic on small viewports if warp matches desktop impulse. */
       var dollarWarpMob = mtxIsMobile ? 0.5 : 1;
-      /* Toward smoothed cursor: proximity from true column head (px,py) so CTA cannot disable this band. */
+      var dx0 = wpx - px;
+      var dy0 = wpy - py;
+      var dist0 = Math.sqrt(dx0 * dx0 + dy0 * dy0);
+      var strengthCursor = Math.min(cw, ch) * 0.095 * dollarWarpMob;
+      var fsUse = fontSize || mtxFontSize;
+      var layerDepth = mtxFontSize / Math.max(fsUse, mtxFontSize);
+      var clampedDepth = Math.pow(Math.min(1, layerDepth), 0.4);
+      var depthMul = clampedDepth * 0.35;
+      if(dist0 > 0.5 && dist0 < maxRCursor){
+        var inv0 = 1 / dist0;
+        var tc = 1 - dist0 / maxRCursor;
+        var sc = tc * tc * strengthCursor * depthMul;
+        dx = dx0 * inv0 * sc;
+        dy = dy0 * inv0 * sc;
+      }
+      var maxParallaxPx = (typeof window !== 'undefined' ? window.innerWidth : cw) * mtxDollarParallaxMaxDispVw / 100;
+      var dMag = Math.sqrt(dx * dx + dy * dy);
+      if(dMag > maxParallaxPx && dMag > 0){
+        dx = dx * maxParallaxPx / dMag;
+        dy = dy * maxParallaxPx / dMag;
+      }
+      return { dx: dx, dy: dy };
+    }
+
+    /* CTA attract on positions already including smoothed cursor offset (base column px,py for near-pointer test). */
+    function mtxDollarApplyCtaAttract(ox, oy, cw, ch, basePx, basePy){
+      var maxRCursor = Math.max(180, Math.min(cw, ch) * 0.65);
+      var dollarWarpMob = mtxIsMobile ? 0.5 : 1;
+      if(mtxCtaX == null || mtxCtaY == null){
+        return { x: ox, y: oy };
+      }
+      var dxC = ox - mtxCtaX;
+      var dyC = oy - mtxCtaY;
+      var distC = Math.sqrt(dxC * dxC + dyC * dyC);
+      var maxR = Math.max(128, Math.min(cw, ch) * 0.5);
+      var strength = Math.min(cw, ch) * 0.05 * dollarWarpMob;
+      if(distC <= 0.5 || distC >= maxR){
+        return { x: ox, y: oy };
+      }
+      var invd = 1 / distC;
+      var t = 1 - distC / maxR;
+      var s = t * t * strength;
       if(mtxWarpX != null && mtxWarpY != null){
-        var dx0 = mtxWarpX - px;
-        var dy0 = mtxWarpY - py;
-        var dist0 = Math.sqrt(dx0 * dx0 + dy0 * dy0);
-        var strengthCursor = Math.min(cw, ch) * 0.095 * dollarWarpMob;
-        if(dist0 > 0.5 && dist0 < maxRCursor){
-          var inv0 = 1 / dist0;
-          var tc = 1 - dist0 / maxRCursor;
-          var sc = tc * tc * strengthCursor;
-          ox += dx0 * inv0 * sc;
-          oy += dy0 * inv0 * sc;
+        var dNear = Math.sqrt((mtxWarpX - basePx) * (mtxWarpX - basePx) + (mtxWarpY - basePy) * (mtxWarpY - basePy));
+        if(dNear < maxRCursor * 0.9){
+          s *= 0.32;
         }
       }
-      /* Attract toward flagship CTA after cursor (weaker while pointer is near the glyph). */
-      if(mtxCtaX != null && mtxCtaY != null){
-        var dxC = ox - mtxCtaX;
-        var dyC = oy - mtxCtaY;
-        var distC = Math.sqrt(dxC * dxC + dyC * dyC);
-        var maxR = Math.max(128, Math.min(cw, ch) * 0.5);
-        var strength = Math.min(cw, ch) * 0.05 * dollarWarpMob;
-        if(distC > 0.5 && distC < maxR){
-          var invd = 1 / distC;
-          var t = 1 - distC / maxR;
-          var s = t * t * strength;
-          if(mtxWarpX != null && mtxWarpY != null){
-            var dNear = Math.sqrt((mtxWarpX - px) * (mtxWarpX - px) + (mtxWarpY - py) * (mtxWarpY - py));
-            if(dNear < maxRCursor * 0.9){
-              s *= 0.32;
-            }
-          }
-          ox -= dxC * invd * s;
-          oy -= dyC * invd * s;
-        }
-      }
-      return { x: ox, y: oy };
+      return {
+        x: ox - dxC * invd * s,
+        y: oy - dyC * invd * s
+      };
     }
 
     function mtxRebuildIconHitRects(queue){
@@ -2156,6 +2201,10 @@
     var mtxColDollarShotVx = [];
     var mtxColDollarShotVDrop = [];
     var mtxColDollarIconBurstCooldownUntil = [];
+    /* Hero matrix $: pointer response only (lerp toward raw cursor pull; idle column motion unchanged). */
+    var mtxColDollarSmoothedPullX = [];
+    var mtxColDollarSmoothedPullY = [];
+    var mtxHeroDollarTouchParallaxOrigin = null;
     var mtxLastIconHitRects = [];
     /* Pass 1 records $ draw state; pass 2b redraws on top of icons when bbox overlaps (avoids $ vanishing under sprites). */
     var mtxPass1DollarOverdraw = [];
@@ -2643,6 +2692,8 @@
         mtxColDollarShotVx = new Array(colCount).fill(0);
         mtxColDollarShotVDrop = new Array(colCount).fill(0);
         mtxColDollarIconBurstCooldownUntil = new Array(colCount).fill(0);
+        mtxColDollarSmoothedPullX = new Array(colCount).fill(0);
+        mtxColDollarSmoothedPullY = new Array(colCount).fill(0);
       }
       /* Reset mesh and head wake only when the buffer or columns changed, or a full reseed was requested. */
       var resetMesh = forceResetDrops || needBufferResize || colLayoutChanged;
@@ -2674,6 +2725,11 @@
           mtxColDollarShotVx = new Array(nsShot).fill(0);
           mtxColDollarShotVDrop = new Array(nsShot).fill(0);
           mtxColDollarIconBurstCooldownUntil = new Array(nsShot).fill(0);
+        }
+        if(mtxColDollarSmoothedPullX.length !== mtxDrops.length){
+          var nsPull = mtxDrops.length;
+          mtxColDollarSmoothedPullX = new Array(nsPull).fill(0);
+          mtxColDollarSmoothedPullY = new Array(nsPull).fill(0);
         }
       }
       mtxMeasureHeroSafeZones();
@@ -4028,6 +4084,10 @@
 
       var n = mtxDrops.length;
       var i;
+      if(mtxColDollarSmoothedPullX.length !== n){
+        mtxColDollarSmoothedPullX = new Array(n).fill(0);
+        mtxColDollarSmoothedPullY = new Array(n).fill(0);
+      }
       /* Two-pass rendering: pass 1 draws text glyphs and icon mattes (panel-base rectangles that
          prevent trail accumulation through transparent icon pixels). Pass 2 draws icon sprites on
          top of every matte. This prevents column i+1's matte from overwriting column i's icon
@@ -4049,7 +4109,30 @@
         var item = mtxColItem[i];
         var op = mtxColOpacity[i];
         var itemIsDollar = item && item.type === 'text' && item.value === '$';
-        var warped = itemIsDollar ? mtxDollarWarp(x0, y0, w, h) : mtxWarpPoint(x0, y0, w, h);
+        var warped;
+        if(itemIsDollar){
+          var fsD = item.fontSize || mtxFontSize;
+          var dWx = mtxWarpX;
+          var dWy = mtxWarpY;
+          if(mtxParallaxTouchDevice() && mtxHeroDollarTouchParallaxOrigin
+              && mtxLastPointerClientX != null && mtxLastPointerClientY != null){
+            var acPar = mtxHeroDollarParallaxAdjustClient(mtxLastPointerClientX, mtxLastPointerClientY);
+            var locDw = mtxPointerToMatrixLocal(acPar.x, acPar.y, w, h);
+            dWx = locDw.x;
+            dWy = locDw.y;
+          }
+          var rawD = mtxDollarRawCursorDelta(x0, y0, w, h, fsD, dWx, dWy);
+          var lerpK = 1 - Math.pow(1 - mtxDollarParallaxLerpBase, Math.min(2.4, dtMul));
+          mtxColDollarSmoothedPullX[i] += (rawD.dx - mtxColDollarSmoothedPullX[i]) * lerpK;
+          mtxColDollarSmoothedPullY[i] += (rawD.dy - mtxColDollarSmoothedPullY[i]) * lerpK;
+          var oxD = x0 + mtxColDollarSmoothedPullX[i];
+          var oyD = y0 + mtxColDollarSmoothedPullY[i];
+          warped = mtxDollarApplyCtaAttract(oxD, oyD, w, h, x0, y0);
+        } else {
+          mtxColDollarSmoothedPullX[i] = 0;
+          mtxColDollarSmoothedPullY[i] = 0;
+          warped = mtxWarpPoint(x0, y0, w, h);
+        }
         var x = warped.x;
         var y = warped.y;
 
@@ -4062,6 +4145,12 @@
         }
 
         op *= mtxGetCenterSafeAttenuation(x, y, 'foreground');
+        if(item.type === 'text' && item.value === '$'){
+          var fsRead = item.fontSize || mtxFontSize;
+          var szRatio = Math.min(1.48, Math.max(0.88, fsRead / mtxFontSize));
+          var opDamp = 0.88 - (szRatio - 0.88) * 0.62;
+          op *= Math.max(0.42, Math.min(1, opDamp));
+        }
 
         var isDollarHead = item.type === 'text' && item.value === '$';
         if (mtxGetSubmerge(y0, h) > 0.04) {
@@ -4086,8 +4175,12 @@
             mtxCtx.fillStyle = 'rgba(247, 147, 26, ' + Math.min(1, op + 0.22) + ')';
             mtxCtx.shadowColor = 'rgba(251, 191, 36, 0.35)';
           } else if(item.value === '$'){
-            mtxCtx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(0.99, op + 0.24) + ')';
-            mtxCtx.shadowColor = 'rgba(167, 243, 208, 0.32)';
+            var dollarAlpha = Math.min(0.99, op + 0.24);
+            if(fs >= mtxFontSize * 1.06){
+              dollarAlpha = Math.min(dollarAlpha, 0.19);
+            }
+            mtxCtx.fillStyle = 'rgba(204, 251, 229, ' + dollarAlpha + ')';
+            mtxCtx.shadowColor = 'rgba(167, 243, 208, ' + Math.min(0.32, dollarAlpha * 0.85) + ')';
           } else if(mtxFiatNonUsd[item.value]){
             mtxCtx.fillStyle = 'rgba(134, 239, 172, ' + Math.min(0.96, op + 0.14) + ')';
             mtxCtx.shadowColor = 'rgba(96, 108, 62, 0.22)';
@@ -4197,6 +4290,8 @@
           mtxColDollarShotVx[i] = 0;
           mtxColDollarShotVDrop[i] = 0;
           mtxColDollarIconBurstCooldownUntil[i] = 0;
+          mtxColDollarSmoothedPullX[i] = 0;
+          mtxColDollarSmoothedPullY[i] = 0;
           mtxAssignColVisual(i);
           if(mtxColItem[i].type !== 'icon'){
             var stepR = 0.15 + Math.random() * 0.04;
@@ -5042,7 +5137,7 @@
     });
 
     /* Capture phase: pointermove on #hero can be missed when the hit target is awkward or
-       events do not bubble as expected; dollars use mtxWarp* for cursor pull in mtxDollarWarp.
+       events do not bubble as expected; matrix $ cursor pull uses mtxDollarRawCursorDelta + smoothed pull.
        If the pointer is already over the hero during the short window before mtxStart() runs,
        record client coords only (no mtxStart side effects) so the first active frame can sync warp. */
     document.addEventListener('pointermove', function mtxHeroMatrixPointerSync(e){
@@ -5066,6 +5161,30 @@
       }
       mtxUpdateWarpFromEvent(e);
     }, true);
+
+    /* Touch-only parallax dead zone for matrix $ (see mtxDollarRawCursorDelta / mtxHeroDollarParallaxAdjustClient). */
+    if(heroHome){
+      heroHome.addEventListener('pointerdown', function mtxHeroDollarParallaxTouchDown(e){
+        if(e.pointerType === 'touch'){
+          mtxHeroDollarTouchParallaxOrigin = { x: e.clientX, y: e.clientY };
+        }
+      }, true);
+      heroHome.addEventListener('pointerup', function mtxHeroDollarParallaxTouchUp(e){
+        if(e.pointerType === 'touch'){
+          mtxHeroDollarTouchParallaxOrigin = null;
+        }
+      }, true);
+      heroHome.addEventListener('pointercancel', function mtxHeroDollarParallaxTouchCancel(e){
+        if(e.pointerType === 'touch'){
+          mtxHeroDollarTouchParallaxOrigin = null;
+        }
+      }, true);
+      heroHome.addEventListener('pointerleave', function mtxHeroDollarParallaxTouchLeave(e){
+        if(e.pointerType === 'touch'){
+          mtxHeroDollarTouchParallaxOrigin = null;
+        }
+      }, true);
+    }
 
     document.addEventListener('pointerdown', function mtxHeroMatrixUnpin(e){
       if(mtxMobileMatrixAlways){
