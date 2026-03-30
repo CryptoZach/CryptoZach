@@ -4901,9 +4901,11 @@
     });
 
     /* Capture phase: pointermove on #hero can be missed when the hit target is awkward or
-       events do not bubble as expected; dollars use mtxWarp* for cursor pull in mtxDollarWarp. */
+       events do not bubble as expected; dollars use mtxWarp* for cursor pull in mtxDollarWarp.
+       If the pointer is already over the hero during the short window before mtxStart() runs,
+       record client coords only (no mtxStart side effects) so the first active frame can sync warp. */
     document.addEventListener('pointermove', function mtxHeroMatrixPointerSync(e){
-      if(!matrixContainer || !matrixContainer.classList.contains('active') || !heroHome){
+      if(!matrixContainer || !heroHome){
         return;
       }
       var hb = heroHome.getBoundingClientRect();
@@ -4914,6 +4916,11 @@
         return;
       }
       if(cx < hb.left - pad || cx > hb.right + pad || cy < hb.top - pad || cy > hb.bottom + pad){
+        return;
+      }
+      if(!matrixContainer.classList.contains('active')){
+        mtxLastPointerClientX = cx;
+        mtxLastPointerClientY = cy;
         return;
       }
       mtxUpdateWarpFromEvent(e);
