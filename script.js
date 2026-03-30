@@ -2001,11 +2001,17 @@
     function mtxUpdateCtaPos(){
       var btn = heroHome.querySelector('a.cta-primary[href*="routing-the-dollar"]')
         || heroHome.querySelector('a.cta-primary');
-      if(!btn || !matrixContainer) return;
+      if(!btn || !matrixCanvas) return;
       var br = btn.getBoundingClientRect();
-      var cr = matrixContainer.getBoundingClientRect();
-      mtxCtaX = (br.left + br.width / 2) - cr.left;
-      mtxCtaY = (br.top + br.height / 2) - cr.top;
+      var c = matrixCanvas.getBoundingClientRect();
+      var cw = Math.max(1, matrixCanvas.clientWidth);
+      var ch = Math.max(1, matrixCanvas.clientHeight);
+      var rw = Math.max(1, c.width);
+      var rh = Math.max(1, c.height);
+      var sx = Math.abs(cw - rw) > 0.75 ? cw / rw : 1;
+      var sy = Math.abs(ch - rh) > 0.75 ? ch / rh : 1;
+      mtxCtaX = (br.left + br.width * 0.5 - c.left) * sx;
+      mtxCtaY = (br.top + br.height * 0.5 - c.top) * sy;
     }
 
     /* Dollar-specific warp: cursor pull first, then mild CTA drift.
@@ -2203,20 +2209,26 @@
 
     function mtxMeasureHeroSafeZones() {
       mtxHeroSafeZones = [];
-      if (!heroContainerMtx || !matrixContainer) {
+      if (!heroContainerMtx || !matrixCanvas) {
         return;
       }
-      var cr = matrixContainer.getBoundingClientRect();
+      var c = matrixCanvas.getBoundingClientRect();
+      var cw = Math.max(1, matrixCanvas.clientWidth);
+      var ch = Math.max(1, matrixCanvas.clientHeight);
+      var rw = Math.max(1, c.width);
+      var rh = Math.max(1, c.height);
+      var sx = Math.abs(cw - rw) > 0.75 ? cw / rw : 1;
+      var sy = Math.abs(ch - rh) > 0.75 ? ch / rh : 1;
       var nodes = heroContainerMtx.querySelectorAll('[data-hero-safe]');
       var pad = 12;
       var zi;
       for (zi = 0; zi < nodes.length; zi++) {
         var r = nodes[zi].getBoundingClientRect();
         mtxHeroSafeZones.push({
-          left: r.left - cr.left - pad,
-          top: r.top - cr.top - pad,
-          right: r.right - cr.left + pad,
-          bottom: r.bottom - cr.top + pad
+          left: (r.left - c.left) * sx - pad,
+          top: (r.top - c.top) * sy - pad,
+          right: (r.right - c.left) * sx + pad,
+          bottom: (r.bottom - c.top) * sy + pad
         });
       }
     }
@@ -2358,8 +2370,6 @@
     /* ── Dollar magnet: canvas $ particles follow cursor, pile on flagship CTA, bounce on approach (desktop only) ── */
     var mtxDollarMag = [];
     var mtxDollarMagMax = 30;
-    var mtxDollarMagBtnCache = null;
-    var mtxDollarMagBtnTick = 0;
     var mtxDollarMagPrevMx = null;
     var mtxDollarMagPrevMy = null;
     var mtxDollarMagIconPts = [];
@@ -2515,6 +2525,29 @@
       return false;
     }
 
+    /* Viewport pointer to canvas logical space (same as mtxDraw w,h and icon ix,iy). clientX/Y and
+       getBoundingClientRect share one CSS-pixel space; use offset-only mapping when rect size matches
+       clientWidth within a pixel so browser zoom (subpixel rect vs integer clientWidth) does not bias X. */
+    function mtxPointerToMatrixLocal(clientX, clientY, cwOpt, chOpt){
+      if(!matrixCanvas){
+        return { x: 0, y: 0 };
+      }
+      var cw = cwOpt != null ? cwOpt : Math.max(1, matrixCanvas.clientWidth);
+      var ch = chOpt != null ? chOpt : Math.max(1, matrixCanvas.clientHeight);
+      var r = matrixCanvas.getBoundingClientRect();
+      var rw = Math.max(1, r.width);
+      var rh = Math.max(1, r.height);
+      var sx = Math.abs(cw - rw) > 0.75 ? cw / rw : 1;
+      var sy = Math.abs(ch - rh) > 0.75 ? ch / rh : 1;
+      var tx = (clientX - r.left) * sx;
+      var ty = (clientY - r.top) * sy;
+      var bleed = 6;
+      return {
+        x: Math.max(-bleed, Math.min(cw + bleed, tx)),
+        y: Math.max(-bleed, Math.min(ch + bleed, ty))
+      };
+    }
+
     function mtxUpdateWarpFromEvent(e){
       /* Reef starts on any pointermove while inactive; matrix used to rely only on pointerover.
          After reload, if the cursor is already over the hero, the browser often skips pointerover
@@ -2533,9 +2566,9 @@
       }
       mtxLastPointerClientX = cx;
       mtxLastPointerClientY = cy;
-      var r = matrixContainer.getBoundingClientRect();
-      mtxWarpTx = cx - r.left;
-      mtxWarpTy = cy - r.top;
+      var loc = mtxPointerToMatrixLocal(cx, cy);
+      mtxWarpTx = loc.x;
+      mtxWarpTy = loc.y;
     }
 
     function mtxApplyWarp(px, py, cw, ch){
@@ -2816,16 +2849,23 @@
     }
 
     function mtxDollarMagBtnRect(){
-      mtxDollarMagBtnTick++;
-      if(mtxDollarMagBtnCache && mtxDollarMagBtnTick % 90 !== 0) return mtxDollarMagBtnCache;
-      if(!heroFlagshipMtx) return null;
+      if(!heroFlagshipMtx || !matrixCanvas) return null;
       var b = heroFlagshipMtx.getBoundingClientRect();
-      var c = matrixContainer.getBoundingClientRect();
-      mtxDollarMagBtnCache = {
-        x: b.left - c.left, y: b.top - c.top, w: b.width, h: b.height,
-        cx: b.left - c.left + b.width / 2, top: b.top - c.top
+      var c = matrixCanvas.getBoundingClientRect();
+      var cw = Math.max(1, matrixCanvas.clientWidth);
+      var ch = Math.max(1, matrixCanvas.clientHeight);
+      var rw = Math.max(1, c.width);
+      var rh = Math.max(1, c.height);
+      var sx = Math.abs(cw - rw) > 0.75 ? cw / rw : 1;
+      var sy = Math.abs(ch - rh) > 0.75 ? ch / rh : 1;
+      return {
+        x: (b.left - c.left) * sx,
+        y: (b.top - c.top) * sy,
+        w: b.width * sx,
+        h: b.height * sy,
+        cx: (b.left - c.left + b.width * 0.5) * sx,
+        top: (b.top - c.top) * sy
       };
-      return mtxDollarMagBtnCache;
     }
 
     function mtxDollarMagSpawn(w, h){
@@ -2936,7 +2976,7 @@
       var btnCeil = br.top - 14;
       var btnFloor = br.top + br.h;
       var useIconMagnet = hasCursor && mtxDollarMagIconPts.length > 0;
-      var iconAttractR = 220;
+      var iconAttractR = mtxIsMobile ? 260 : 248;
       var iconSnapR = 20;
 
       function mtxDollarMagPickIconIx(px, py, refractoryKey, refractoryUntil){
@@ -3848,7 +3888,6 @@
       mtxReefIconBridge.points.length = 0;
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
       mtxDollarMagPrevMx = mtxDollarMagPrevMy = null;
-      mtxDollarMagBtnCache = null;
       mtxTrailFillCache = '';
       if(!mtxMobileMatrixAlways){
         matrixContainer.classList.remove('active');
@@ -3968,9 +4007,9 @@
         var edgePadSync = 16;
         if(mtxLastPointerClientX >= hbSync.left - edgePadSync && mtxLastPointerClientX <= hbSync.right + edgePadSync
             && mtxLastPointerClientY >= hbSync.top - edgePadSync && mtxLastPointerClientY <= hbSync.bottom + edgePadSync){
-          var rSync = matrixContainer.getBoundingClientRect();
-          mtxWarpTx = mtxLastPointerClientX - rSync.left;
-          mtxWarpTy = mtxLastPointerClientY - rSync.top;
+          var locSync = mtxPointerToMatrixLocal(mtxLastPointerClientX, mtxLastPointerClientY, w, h);
+          mtxWarpTx = locSync.x;
+          mtxWarpTy = locSync.y;
         }
       }
 
@@ -4092,8 +4131,8 @@
           }
           mtxCtx.fillText(item.value, tx, ty);
           mtxCtx.restore();
-          /* Collect position for coral web */
-          if (y0 > 0 && y0 < h) {
+          /* Collect position for coral web (iy/y0 may be 0 at top row; do not exclude) */
+          if (y0 >= 0 && y0 < h) {
             var glyphW = Math.max(6, twMeasured);
             var glyphH = fs * 1.18;
             coralNodes.push({
@@ -4192,7 +4231,7 @@
         mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
         mtxCtx.restore();
         /* Collect position for coral web */
-        if (q.iy > 0 && q.iy < h) {
+        if (q.iy >= 0 && q.iy < h) {
           coralNodes.push({
             cx: q.ix + q.iw * 0.5,
             cy: q.iy + q.ih * 0.5,
@@ -4547,14 +4586,19 @@
         }
       }
 
-      /* Pass 3: dollar magnet particles (icon targets in matrix space, after coral drift). */
+      /* Pass 3: dollar magnet targets must match sprites actually drawn this frame.
+         coralNodes can omit or desync from pass-2 icons; iconQueue is authoritative. */
       mtxDollarMagIconPts.length = 0;
-      var dmi;
-      for(dmi = 0; dmi < coralNodes.length; dmi++){
-        var cnd = coralNodes[dmi];
-        if(cnd.isIcon && !cnd.skipDollarMagnet){
-          mtxDollarMagIconPts.push({ x: cnd.cx, y: cnd.cy });
+      var iqMag;
+      for(iqMag = 0; iqMag < iconQueue.length; iqMag++){
+        var qqMag = iconQueue[iqMag];
+        if(!qqMag.item || mtxIsFranklinMatrixIcon(qqMag.item)){
+          continue;
         }
+        mtxDollarMagIconPts.push({
+          x: qqMag.ix + qqMag.iw * 0.5,
+          y: qqMag.iy + qqMag.ih * 0.5
+        });
       }
       mtxDollarMagUpdate(w, h, dtMul);
       mtxDollarMagDraw(mtxCtx, mtxFontFamily);
@@ -4708,7 +4752,6 @@
       mtxWarpTx = mtxWarpTy = mtxWarpX = mtxWarpY = null;
       /* Let magnetized $ symbols fade out gracefully instead of vanishing */
       mtxDollarMagPrevMx = mtxDollarMagPrevMy = null;
-      mtxDollarMagBtnCache = null;
       mtxDollarMagLeavingHero = true;
       /* Keep active + draw loop alive while $ particles remain visible */
       if(mtxDollarMag.length > 0){
