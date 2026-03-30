@@ -218,18 +218,33 @@
    * - .hero-eyebrow uses touch-action: none so drags go to matrix/coral instead of scroll.
    * - prefers-reduced-motion: reduce skips the entire coral-reef init block (no reef listeners).
    * Mitigation: heroHomepageExceedsViewport() vs visual viewport height, data-hero-overflows
-   * + CSS, gated preventDefault, resize/visualViewport refresh, MAX_HERO_REEF_SCROLL_LOCK_MS. */
+   * + CSS, gated preventDefault, resize/visualViewport refresh, MAX_HERO_REEF_SCROLL_LOCK_MS.
+   * iOS: URL bar show/hide grows visualViewport height; hero can read as "fits" and re-enable
+   * touchmove preventDefault so users who scrolled away cannot scroll again from the hero. We
+   * latch overflow after the first tall-hero reading and clear the latch only on window resize
+   * or orientationchange (not visualViewport.resize). */
   var MAX_HERO_REEF_SCROLL_LOCK_MS = 4000;
+  var heroHomepageOverflowLatched = false;
+  function heroHomepageResetOverflowLatch(){
+    heroHomepageOverflowLatched = false;
+  }
   function heroHomepageExceedsViewport(){
     var el = document.querySelector('#hero.hero--homepage');
     if(!el) return false;
+    if(heroHomepageOverflowLatched){
+      return true;
+    }
     var vh = window.innerHeight;
     try{
       if(window.visualViewport && typeof window.visualViewport.height === 'number' && window.visualViewport.height > 0){
-        vh = window.visualViewport.height;
+        vh = Math.min(vh, window.visualViewport.height);
       }
     } catch(_){}
-    return el.scrollHeight > vh * 0.95;
+    var exceeds = el.scrollHeight > vh * 0.95;
+    if(exceeds){
+      heroHomepageOverflowLatched = true;
+    }
+    return exceeds;
   }
 
   // Homepage hero: eyebrow spotlight, coral reef on full #hero, matrix on eyebrow (see below)
@@ -259,8 +274,12 @@
         heroReefScrollLockRelease();
       }
     }
-    window.addEventListener('resize', onHeroHomepageViewportChange, { passive: true });
-    window.addEventListener('orientationchange', onHeroHomepageViewportChange, { passive: true });
+    function onHeroHomepageViewportChangeResetLatch(){
+      heroHomepageResetOverflowLatch();
+      onHeroHomepageViewportChange();
+    }
+    window.addEventListener('resize', onHeroHomepageViewportChangeResetLatch, { passive: true });
+    window.addEventListener('orientationchange', onHeroHomepageViewportChangeResetLatch, { passive: true });
     if(window.visualViewport){
       try{
         window.visualViewport.addEventListener('resize', onHeroHomepageViewportChange, { passive: true });
@@ -1639,6 +1658,7 @@
         }, MAX_HERO_REEF_SCROLL_LOCK_MS);
       }, { passive: true });
       heroHome.addEventListener('touchmove', function(e) {
+        refreshHeroHomepageOverflowDataAttr();
         if(reefTouchActive && !heroHomepageExceedsViewport()){
           e.preventDefault();
         }
@@ -1648,6 +1668,12 @@
         clearHeroReefScrollLockTimer();
       }, { passive: true });
       heroHome.addEventListener('touchcancel', function() {
+        reefTouchActive = false;
+        clearHeroReefScrollLockTimer();
+      }, { passive: true });
+
+      /* Any document scroll releases reef lock (covers missed touchend when returning to hero on iOS). */
+      window.addEventListener('scroll', function(){
         reefTouchActive = false;
         clearHeroReefScrollLockTimer();
       }, { passive: true });
