@@ -175,6 +175,22 @@
       color: var(--accent);
     }
 
+    #hero.hero--homepage .hero-institutional.hero-qualifier {
+      margin-top: 1rem;
+      margin-bottom: 0;
+      font-size: 0.85rem;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional.hero-qualifier,
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional.hero-qualifier a {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional.hero-qualifier,
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional.hero-qualifier a {
+      color: var(--muted-soft);
+    }
+
     .card-venue {
       display: block;
       font-size: 0.72rem;
@@ -842,13 +858,13 @@
             <li class="hero-proof-chip">100+ advisory engagements</li>
             <li class="hero-proof-chip">~250 investments diligenced</li>
           </ul>
-          <p class="hero-institutional">
-            Submitted to the <a href="https://www.newyorkfed.org/research/conference/international-roles-of-the-us-dollar" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
-          </p>
           <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
             <a class="btn btn-primary cta-primary matrix-hover-activator" href="/papers/routing-the-dollar">Read the flagship paper</a>
             <a class="btn btn-secondary matrix-hover-activator" href="/papers/mvep">Tokenization equivalence framework</a>
           </div>
+          <p class="hero-institutional hero-qualifier">
+            Submitted to the <a href="https://www.newyorkfed.org/research/conference/international-roles-of-the-us-dollar" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
+          </p>
           <p class="hero-anchors">
             <a href="/research">All research</a>
             <span aria-hidden="true"> · </span>
