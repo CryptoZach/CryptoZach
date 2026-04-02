@@ -96,14 +96,21 @@
       max-width: none;
     }
 
-    #hero.hero--homepage .hero-eyebrow-kicker {
-      color: var(--accent);
+    :root[data-theme="dark"] #hero.hero--homepage .hero-headline-stack h1#hero-title {
+      color: #ffffff;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-eyebrow-kicker {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-eyebrow-kicker {
+      color: var(--text-secondary, var(--muted));
     }
 
     /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
     #hero.hero--homepage .hero-headline-stack .hero-subtitle {
       font-size: 1rem;
-      color: var(--text-secondary, var(--muted));
       margin-top: 0.75rem;
       margin-bottom: 2rem;
       margin-left: 0;
@@ -113,6 +120,14 @@
       text-align: center;
       line-height: 1.5;
       box-sizing: border-box;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-headline-stack .hero-subtitle {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-headline-stack .hero-subtitle {
+      color: var(--text-secondary, var(--muted));
     }
 
     #hero.hero--homepage .hero-proof-strip {
@@ -126,11 +141,8 @@
       max-width: min(100%, 1200px);
     }
 
-    .hero-institutional {
+    #hero.hero--homepage .hero-institutional {
       font-size: 0.78rem;
-      color: var(--text-secondary, #666);
-      margin-top: 0.5rem;
-      margin-bottom: 2rem;
       line-height: 1.5;
       text-align: center;
       max-width: min(100%, 1200px);
@@ -138,13 +150,28 @@
       margin-right: auto;
     }
 
-    .hero-institutional a {
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional {
       color: var(--text-secondary, #666);
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional a {
+      color: var(--text-secondary, #666);
+    }
+
+    #hero.hero--homepage .hero-institutional a {
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
-    .hero-institutional a:hover {
+    #hero.hero--homepage .hero-institutional a:hover {
       color: var(--accent);
     }
 
@@ -161,9 +188,16 @@
       padding: 0.35rem 0.85rem;
       border: 1px solid var(--line);
       border-radius: 100px;
-      color: var(--muted);
       cursor: default;
       pointer-events: none;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      color: var(--muted);
     }
 
     #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
@@ -178,16 +212,30 @@
 
     #hero.hero--homepage .hero-anchors {
       font-size: 0.9rem;
-      color: var(--muted);
       margin: 0;
       text-align: center;
     }
 
+    :root[data-theme="dark"] #hero.hero--homepage .hero-anchors {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors {
+      color: var(--muted);
+    }
+
     #hero.hero--homepage .hero-anchors a {
-      color: var(--muted-soft);
       text-decoration: underline;
       text-underline-offset: 2px;
       font-weight: 500;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-anchors a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a {
+      color: var(--muted-soft);
     }
 
     #hero.hero--homepage .hero-anchors a:hover {
