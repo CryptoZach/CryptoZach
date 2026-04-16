@@ -12,7 +12,7 @@ test.describe("CryptoZach smoke", () => {
       }),
     ).toBeVisible();
     await expect(page.locator("#hero .hero-subtitle")).toContainText(
-      /Seven scholarly papers/i,
+      /Eight papers/i,
     );
   });
 

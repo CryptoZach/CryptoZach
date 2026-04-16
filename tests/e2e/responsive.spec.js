@@ -72,7 +72,7 @@ test.describe("Responsive layout", () => {
       }),
     ).toBeVisible();
     await expect(page.locator("#hero .hero-subtitle")).toContainText(
-      /Seven scholarly papers/i,
+      /Eight papers/i,
     );
   });
 });
