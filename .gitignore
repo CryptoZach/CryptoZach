@@ -12,3 +12,68 @@ node_modules/
 test-results/
 playwright-report/
 playwright/.cache/
+
+# ── Stale working assets (audit 2026-04-18) ──────────────────────────────
+# These are working-folder assets that were never wired into the live site.
+# Tracked locations (Publication-Images/, icons/, exhibits/, ink-brand-kit/,
+# ink-logos/, assets/) are unaffected because patterns below are root-anchored.
+
+# Stale working folders (older versions of /resumes/, replication scratch)
+Resumes_TokenizationSystems/
+Resumes_v2/
+Claude/
+
+# Archived content drafts (the ARCHIVED_*.md marker file stays tracked)
+Cryptozach-site-files/*.md
+!Cryptozach-site-files/ARCHIVED_*.md
+
+# Stale duplicate resume DOCX at root (canonical location is /resumes/)
+/Zukowski_Resume_Asset_Management.docx
+/Zukowski_Resume_Operator.docx
+/Zukowski_Resume_Policy.docx
+/Zukowski_Resume_Risk.docx
+
+# Personal portfolio scratch
+/Zach Zukowski _ Digital Money & Tokenization Research.pdf
+
+# One-off scripts (sprint complete; conversion script done)
+/convert_mvep.js
+scripts/sprint5-link-rewrite.py
+
+# Empty stub
+.files/design-critique.md
+
+# Stale brand logos and working zips at repo root.
+# Root-only ignore by extension (the leading slash anchors to repo root,
+# so subdirectories like Publication-Images/, icons/, etc. are unaffected).
+/*.svg
+/*.png
+/*.webp
+/*.jpeg
+/*.jpg
+/*.zip
+
+# Whitelist tracked root-level images and zips (these stay version-controlled)
+!/Binance_Logo.svg.png
+!/Curve_logo.png
+!/TAO.png
+!/apple-touch-icon.png
+!/base-logo.svg
+!/bnb-chain-binance-smart-chain-logo.svg
+!/coinbase-logo-icon.svg
+!/ethereum-cryptocurrency-svgrepo-com.svg
+!/favicon.png
+!/favicon.svg
+!/filecoin-fil-logo.svg
+!/helium-hnt-logo.svg
+!/hyper-foundation.svg
+!/hyperliquid-logo-330x330.webp
+!/hyperliquid-logo.webp
+!/ink-logo-purple-icon.svg
+!/kraken-2.svg
+!/og-image.png
+!/render-token-logo.svg
+!/wormhole-w-logo.svg
+!/ink-logos.zip
+!/ink-brand-kit.zip
+# ────────────────────────────────────────────────────────────────────────
