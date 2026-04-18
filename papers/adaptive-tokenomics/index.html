@@ -307,7 +307,7 @@
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
         <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
-        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Governance concentration analysis draws on a twelve-protocol subset selected from a broader DePIN and DeFi sample on criteria of public governance token availability, measurable concentration metrics, and at least 12 months of post-launch history (specific subset selection criteria pending author resolution, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>).</p>
+        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Cross-sectional governance concentration patterns referenced in this paper are addressed empirically in the companion paper <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2), which uses a 40-protocol cross-section across DePIN and DeFi with Blockscout-verified exclusion of 69 protocol-controlled addresses.</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
@@ -328,9 +328,8 @@
           21-day review interval achieves 15.5% mean deviation from target versus 22.0% for the default 14-day cadence</p>
           <p><strong>Adversarial defense</strong><br>
           Proof-of-coverage reduces modeled fraudulent reward capture from 3.0% to 0.09%</p>
-          <p><strong>Governance concentration</strong><br>
-          DePIN governance concentration exceeds DeFi benchmarks across 12 protocols<br>
-          Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the modeled setup</p>
+          <p><strong>Governance concentration (modeled setup)</strong><br>
+          Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the simulated MeshNet setup. Cross-sectional empirical governance concentration patterns are addressed in companion paper B2 (<a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>); see B2 for the 40-protocol DePIN vs DeFi comparison and the exclusion methodology.</p>
         </div>
 
         <h2>Related role profiles</h2>
@@ -342,7 +341,15 @@
         <div class="companion-cards">
           <a href="/papers/operational-risk" class="companion-card">
             <strong>Operational Risk in Token Economies</strong>
-            <span>Infrastructure shocks widen adaptive controllers' variance advantage while threshold-gated reputation collapses.</span>
+            <span>Companion B4: infrastructure shocks widen adaptive controllers' variance advantage while threshold-gated reputation collapses. Extends this paper's MeshNet ensemble.</span>
+          </a>
+          <a href="/papers/governance-concentration" class="companion-card">
+            <strong>Governance Concentration Beyond Token Allocation</strong>
+            <span>Companion B2: empirical cross-section of 40 protocols across DePIN and DeFi. Allocation null, sector significant, delegation amplifies. Track B thematic companion (no data dependency on this paper).</span>
+          </a>
+          <a href="/papers/who-burns-the-tokens" class="companion-card">
+            <strong>Who Burns the Tokens?</strong>
+            <span>Companion B3: GeoDePIN deep-dive into fiscal sustainability and demand concentration. Helium S2R = 1.84 over 34-month window; BME crossed parity in November 2025.</span>
           </a>
         </div>
       </section>
