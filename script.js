@@ -4402,7 +4402,12 @@
         var mRi = matrixContainer.getBoundingClientRect();
         var iconToHeroX = mRi.left - hRi.left;
         var iconToHeroY = mRi.top - hRi.top;
-        var iconCap = 56;
+        /* Was 56; coralNodes is populated left-to-right by column iteration, so capping at 56
+           when ~100 icons are visible meant the rightmost ~44% of icons (right 30%+ of screen)
+           never made it into the reef bridge. Reef nodes spawned by the cursor in the right
+           portion of the hero had no icons to route through. Raising to 200 covers any
+           realistic icon count without measurable performance impact. */
+        var iconCap = 200;
         var iib;
         for (iib = 0; iib < coralNodes.length && mtxReefIconBridge.points.length < iconCap; iib++) {
           var cni = coralNodes[iib];
