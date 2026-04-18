@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B48REJCQF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B48REJCQF2');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Who Burns the Tokens? | TS</title>
+  <meta name="description" content="GeoDePIN deep dive into fiscal sustainability and demand concentration. Helium S2R = 1.84 over a 34-month window (May 2023 to February 2026). Burn-mechanism design, not network size, determines demand concentration: Helium carrier-contract Top-5 ~90% (HHI 0.22) versus GEODNET subscription Top-5 = 40.4% (HHI 0.055). Companion to Governance Concentration Beyond Token Allocation (B2)." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="DePIN, GeoDePIN, Subsidy-to-Revenue ratio, burn-and-mint equilibrium, demand concentration, Helium, GEODNET, service verification, token velocity, HIP-147, SuperHex" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Who Burns the Tokens?" />
+  <meta property="og:description" content="Fiscal sustainability and demand concentration in GeoDePIN. Helium S2R = 1.84 (34-month window). Burn-mechanism design, not network size, determines who pays for the network: Helium ~90% Top-5 vs GEODNET 40.4% Top-5." />
+  <meta property="og:url" content="https://tokenization.systems/papers/who-burns-the-tokens" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Zachcoin.png" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Tokenization Systems mark" />
+  <link rel="canonical" href="https://tokenization.systems/papers/who-burns-the-tokens" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Who Burns the Tokens?" />
+  <meta name="twitter:description" content="Helium S2R = 1.84 (34-month). BME crossed parity Nov 2025. Three drivers: 20x fee growth, HIP-147 emission halving, price decline. Fee growth alone insufficient without halving's supply compression." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Zachcoin.png" />
+  <meta name="twitter:image:alt" content="Tokenization Systems mark" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+
+  <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin.png" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=101" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
+        { "@type": "ListItem", "position": 3, "name": "Who Burns the Tokens?", "item": "https://tokenization.systems/papers/who-burns-the-tokens" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "name": "Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks",
+      "headline": "Who Burns the Tokens?",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems" },
+      "datePublished": "2026-04",
+      "description": "GeoDePIN study of fiscal sustainability (Subsidy-to-Revenue ratio, S2R) and demand concentration. Helium S2R = 1.84 over 34 months (May 2023 to February 2026); BME crossed parity in November 2025 driven by 20x fee growth, HIP-147 emission halving, and price decline. Burn-mechanism design determines demand concentration: Helium carrier-contract Top-5 ~90% versus GEODNET subscription Top-5 = 40.4%.",
+      "url": "https://tokenization.systems/papers/who-burns-the-tokens",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/who-burns-the-tokens" },
+      "image": "https://tokenization.systems/Publication-Images/Zachcoin.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems" }
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Tokenization Systems</strong>
+          <span>Digital Asset Research &amp; Consulting</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <a href="/research">Research</a> &gt; Who Burns the Tokens?
+      </nav>
+
+      <span class="paper-track-badge">Track B: DePIN tokenomics</span>
+      <div class="paper-badges">
+        <span class="badge badge-under-review">Submission pending</span>
+        <span class="badge badge-access-code">Code available</span>
+      </div>
+
+      <h1 id="paper-title">Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks</h1>
+
+      <p class="paper-metadata-strip">~25 min read · April 2026 · SSRN abstract pending · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
+      <p class="paper-description-note">Description current as of April 18, 2026. SSRN approval pending; the SSRN link will be added when the abstract is published.</p>
+
+      <p class="paper-thesis"><strong>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast the network reaches fiscal sustainability.</strong> Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes: Helium's carrier-contract burn model concentrates ~90% of burn volume in the Top-5 demand sources (HHI 0.22); GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055). This paper measures fiscal sustainability through the Subsidy-to-Revenue ratio (S2R) and shows that S2R trajectory matters more than S2R level: Helium's S2R = 1.84 over a 34-month window (May 2023 to February 2026), and the burn-mint equilibrium (BME) crossed parity in November 2025 driven by 20-fold fee revenue growth, the HIP-147 emission halving in August 2025, and price decline. Fee growth alone would not have crossed parity without the halving's supply compression.</p>
+
+      <div class="paper-takeaways">
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">1</span>
+          <p class="paper-takeaway-text"><strong>Fiscal sustainability is dynamic, not static.</strong> The Subsidy-to-Revenue ratio (S2R) measures how much token emission subsidy is required per unit of protocol revenue: values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">2</span>
+          <p class="paper-takeaway-text"><strong>Burn-mechanism design determines demand concentration.</strong> Helium uses carrier-contract burns where a small number of mobile-network counterparties account for most demand: Top-5 ~90%, HHI 0.22. GEODNET uses subscription-style payments where many small RTK GPS subscribers each contribute small burn volumes: Top-5 = 40.4%, HHI 0.055. The two networks are comparable in physical footprint and service category, so the concentration gap is a design effect, not a network-size effect.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">3</span>
+          <p class="paper-takeaway-text"><strong>GEODNET governance concentration is a separate, sharper story than its demand-concentration profile.</strong> Despite the more distributed demand side, on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding 25.3% of Polygon-side voting power. Both figures are required: HHI alone undersells the team-wallet concentration. The demand-side dispersion does not extend to the governance side.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text"><strong>SuperHex is a novel design primitive with no analog in digital-only token economies.</strong> GEODNET's spatial staking mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">5</span>
+          <p class="paper-takeaway-text"><strong>DePIN tokenomics is a design space with at least two viable architectures.</strong> The Helium and GEODNET comparison shows two coherent and operating burn-mechanism designs producing divergent demand-concentration outcomes; both are running networks at scale. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">DePIN protocol designers</span>
+        <span class="paper-audience-tag">GeoDePIN operators</span>
+        <span class="paper-audience-tag">Tokenomics researchers</span>
+        <span class="paper-audience-tag">Token-fund analysts</span>
+        <span class="paper-audience-tag">Helium / GEODNET ecosystem builders</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="/contact">Request preprint</a>
+          <a class="access-link" href="https://github.com/Research-Publications-and-Data" target="_blank" rel="noopener noreferrer">GitHub (replication, tag b3-v1.0.0-bra-submission)</a>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
+      </div>
+
+      <section class="paper-artifact">
+        <h2>Burn-mechanism design comparison</h2>
+        <table class="artifact-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Helium (carrier-contract burns)</th>
+              <th>GEODNET (subscription burns)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Demand-side concentration</strong></td>
+              <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
+              <td>Top-5 = 40.4% of burns; HHI 0.055</td>
+            </tr>
+            <tr>
+              <td><strong>Operating S2R</strong></td>
+              <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
+              <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
+            </tr>
+            <tr>
+              <td><strong>BME phase as of late 2025</strong></td>
+              <td>Crossed parity in November 2025; net-deflationary</td>
+              <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
+            </tr>
+            <tr>
+              <td><strong>Governance concentration</strong></td>
+              <td>Documented but not the primary focus</td>
+              <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
+            </tr>
+            <tr>
+              <td><strong>Distinctive design primitive</strong></td>
+              <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
+              <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="paper-abstract">
+        <h2>What this paper changes</h2>
+        <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
+        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2): protocol-controlled addresses are filtered out before concentration measurements. It also uses the Ostromian polycentricity framing from B2, but it is not a philosophy paper; the broader five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) is developed in B2.</p>
+
+        <h2>Core findings</h2>
+
+        <h3>1. Helium's S2R = 1.84 across the 34-month window; the BME crossed parity in November 2025</h3>
+        <p>Subsidy-to-Revenue ratio measures how much subsidy (token emission) is needed per unit of protocol revenue. The 34-month window (May 2023 to February 2026) yields S2R = 1.84 for Helium, indicating net deflationary pressure on average across the window: revenue grew faster than subsidies.</p>
+        <p>The Burn-Mint Equilibrium (BME) is a related but distinct metric: the ratio of token burns to token emissions over a given period. BME above 1.0 indicates net token supply contraction. Helium's BME phases over the study window:</p>
+        <ul>
+          <li><strong>Subsidy-dependent:</strong> BME &lt; 0.1 (May 2023 to May 2025)</li>
+          <li><strong>Transitional:</strong> BME 0.1 to 1.0 (June to October 2025)</li>
+          <li><strong>Net-deflationary:</strong> BME &gt; 1.0 (November 2025 onward)</li>
+        </ul>
+        <p>Across the 12-month window from January 2025 to January 2026, BME ranged from 0.006 to 1.103.</p>
+
+        <h3>2. Three drivers explain the BME crossover (each necessary; fee growth alone insufficient)</h3>
+        <p>Three drivers all moved together to cross BME parity:</p>
+        <ol>
+          <li><strong>20-fold fee revenue growth.</strong> Weekly Data Credit burns grew from approximately $10,700 to approximately $217,000 across the study window.</li>
+          <li><strong>HIP-147 emission halving.</strong> The Helium Improvement Proposal passed in August 2025 halved the network's emission rate.</li>
+          <li><strong>Price decline.</strong> The HNT price decline reduced the absolute USD value of the unburned subsidy, contributing to the BME crossover from the supply side.</li>
+        </ol>
+        <p>The counterfactual is load-bearing: <strong>fee growth alone would not have crossed parity without the halving's supply compression.</strong> Each of the three drivers contributed; HIP-147 is what tipped the system across.</p>
+
+        <h3>3. Helium and GEODNET produce different demand-concentration outcomes from different burn-mechanism designs</h3>
+        <p>Helium uses a carrier-contract model: a small number of mobile-network counterparties (telcos, MVNOs, IoT customers) commit to large burn volumes in exchange for service. Result: Top-5 demand sources account for ~90% of burns; HHI 0.22.</p>
+        <p>GEODNET uses a subscription-style model: many small RTK GPS subscribers each contribute small burn volumes for high-precision positioning service. Result: Top-5 demand sources account for 40.4% of burns; HHI 0.055.</p>
+        <p>The two networks are roughly comparable on physical footprint and service category. The concentration gap is a design effect, not a network-size effect. The framing is: <strong>burn-mechanism design, not network size, determines demand concentration.</strong></p>
+
+        <h3>4. GEODNET governance is more concentrated than its demand profile</h3>
+        <p>Despite the dispersed demand side, GEODNET's on-chain governance concentrates: HHI 0.14 across active voters. The team wallet alone accounts for 25.3% of Polygon-side voting power. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution.</p>
+        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see B2 finding F-B2-8 on Token Terminal DePIN measurement error).</p>
+
+        <h3>5. SuperHex as a novel design primitive</h3>
+        <p>GEODNET's SuperHex mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives directly to coverage geography. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as worth instrumenting as a separate design dimension worth studying in other GeoDePIN networks.</p>
+
+        <h2>Methods and data</h2>
+
+        <h3>Definitions (first-use)</h3>
+        <p><strong>DePIN:</strong> Decentralized Physical Infrastructure Network. <strong>GeoDePIN:</strong> the DePIN subset where service verification is location-dependent (coverage proofs, location proofs). The paper studies GeoDePIN specifically.</p>
+        <p><strong>Subsidy-to-Revenue ratio (S2R):</strong> how much token emission subsidy is required per unit of protocol revenue. Values above 1.0 indicate net deflationary pressure; below 1.0 indicate subsidy dependence.</p>
+        <p><strong>Burn-Mint Equilibrium (BME):</strong> the ratio of token burns to token emissions over a given period. BME above 1.0 indicates net token supply contraction. S2R compares subsidy to revenue (a flow comparison); BME compares burns to mints (a token-supply flow comparison). They can diverge when vesting unlocks are active, because vesting adds to token supply without going through emission accounting.</p>
+        <p><strong>HIP-147:</strong> Helium Improvement Proposal passed August 2025 that halved Helium's emission rate.</p>
+        <p><strong>SuperHex:</strong> GEODNET's spatial staking mechanism. Operators stake MINER tokens on specific hexagonal cells (Uber H3 hexes), tying token incentives to coverage geography.</p>
+        <p><strong>Fiscal sustainability:</strong> protocol revenue sufficient to sustain token emissions without external capital injection. The paper-specific term is distinct from corporate fiscal sustainability, where the analogous concept involves sovereign or debt rollover dynamics.</p>
+        <p><strong>Demand concentration:</strong> the distribution of protocol revenue sources, measuring who pays for the network's services. Distinct from governance concentration (who controls the protocol) and supply concentration (who holds the tokens). The paper's distinctive empirical contribution is the measurement of demand concentration as a separate axis.</p>
+        <p><strong>Service verification:</strong> the protocol-specific mechanism for confirming that a node delivered the physical service it claims (location proof, coverage proof, data integrity proof). Critical for GeoDePIN because services are physical and not directly observable on-chain without an oracle bridge.</p>
+
+        <h3>HNT versus Data Credits (Helium architecture)</h3>
+        <p>HNT (the Helium Network Token) is the speculative and tradeable token. Data Credits are non-speculative, USD-pegged utility credits that customers burn to pay for network services. Data Credits are produced by burning HNT at the oracle-reported HNT/USD price. This separation is critical for BME intuition: the burn side of the BME is denominated in Data Credit demand (real network usage); the mint side is denominated in HNT emissions (operator subsidies).</p>
+
+        <h3>Methodology blind spot (non-negotiable disclosure)</h3>
+        <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R rather than buried in a limitations section.</p>
+
+        <h3>Exclusion methodology (inherited from B2)</h3>
+        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2). Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
+
+        <h3>Philosophy disposition</h3>
+        <p>This is not a philosophy paper. It uses Ostromian polycentricity as the framing for governance distribution and references the broader five-lens institutional-design framework developed in B2 (reference [34]). The paper does not apply the full five-lens framework. Earlier draft versions had broader philosophical scope; the v10 manuscript narrows to the empirical Helium/GEODNET focus.</p>
+
+        <div class="paper-key-numbers">
+          <h2>Key numbers</h2>
+          <p><strong>Helium S2R</strong><br>
+          1.84 over 34-month window (May 2023 to February 2026)</p>
+          <p><strong>Helium BME phases</strong><br>
+          Subsidy-dependent &lt; 0.1 (May 2023 to May 2025) · Transitional 0.1 to 1.0 (June to October 2025) · Net-deflationary &gt; 1.0 (November 2025 onward)</p>
+          <p><strong>Helium 12-month BME (January 2025 to January 2026)</strong><br>
+          0.006 to 1.103 · Three necessary drivers: 20-fold fee growth ($10,700 to $217,000 weekly Data Credit burns) · HIP-147 emission halving (August 2025) · price decline · Fee growth alone insufficient without halving's supply compression</p>
+          <p><strong>Demand concentration (design effect, not size effect)</strong><br>
+          Helium carrier-contract: Top-5 ~90%, HHI 0.22 · GEODNET subscription: Top-5 = 40.4%, HHI 0.055</p>
+          <p><strong>GEODNET governance</strong><br>
+          HHI 0.14 across active voters · team wallet 25.3% Polygon-side voting power · Q2 2025 vesting unlocks +60% (23M to 30M per month) · 54% of supply unlocked by Q2 · 62.3% by Q3</p>
+          <p><strong>DIMO (post-exclusion)</strong><br>
+          HHI 0.038 · GnosisSafeL2 holding ~44% excluded as protocol-controlled · 643% HHI delta if exclusion skipped</p>
+          <p><strong>Filecoin S2R</strong><br>
+          0.045 (cross-section reference only; partially Token Terminal-derived, see B2 F-B2-8)</p>
+        </div>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li>S2R excludes vesting dilution; vesting unlocks can move the BME without changing emissions or revenue. Surfaced at first S2R mention; treated as a first-order caveat.</li>
+          <li>The two-network comparison (Helium and GEODNET) is intentionally narrow. The "burn-mechanism design determines demand concentration" framing is supported by the contrast and by the size-controlled comparison; it is not a population claim across all DePIN networks.</li>
+          <li>Filecoin S2R is included for cross-section reference only and is partially Token Terminal-derived. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
+          <li>SuperHex is a novel design primitive; the paper documents it but does not evaluate it against alternative spatial-staking designs (because none currently exist at comparable scale).</li>
+          <li>Demand-concentration measurements are a snapshot of the study window and may shift as either network's demand mix evolves.</li>
+        </ul>
+
+        <h2>Maintenance plan</h2>
+        <p>When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
+
+        <h2>Related role profiles</h2>
+        <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/governance-concentration" class="companion-card">
+            <strong>Governance Concentration Beyond Token Allocation</strong>
+            <span>Companion B2: cross-sectional empirical foundation (40 protocols across DePIN and DeFi) for this paper's within-sector GeoDePIN vertical. Source of the exclusion methodology and the Ostromian polycentricity framing.</span>
+          </a>
+          <a href="/papers/adaptive-tokenomics" class="companion-card">
+            <strong>Adaptive Tokenomics</strong>
+            <span>Companion B1: simulation-based study of PID emission control on the MeshNet framework. Track B thematic companion; no data dependency.</span>
+          </a>
+          <a href="/papers/operational-risk" class="companion-card">
+            <strong>Operational Risk in Token Economies</strong>
+            <span>Companion B4: 624-configuration simulation of operational failures interacting with adaptive controllers and reputation systems. Calibrates partly on Helium and GEODNET failure profiles.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss this paper or request a preprint? <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Discussion">Zach@Tokenization.Systems</a></p>
+    </article>
+
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=26"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
