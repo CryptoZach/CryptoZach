@@ -1382,6 +1382,11 @@
           }
         }
 
+        /* Horizontal gradient (inverse of icons): reef $ render BLUE on the left fading to
+           MINT GREEN on the right. Mirrors the icon green→blue gradient so the two systems
+           form a coordinated cross-fade (icons and reef $ are complementary colors at every
+           x position). Blue end uses the dark-mode accent (91, 156, 245); green end uses the
+           original mint (204, 251, 229). Shadow color interpolates the same way. */
         for (var n = 0; n < reefNodes.length; n++) {
           var nd = reefNodes[n];
           var age = now - nd.born;
@@ -1391,15 +1396,22 @@
           nAlpha *= fadeOut;
           var p = Math.sin(now * 0.003 + nd.pulse) * 0.3 + 0.7;
           var fontPx = Math.max(8, Math.min(15, nd.r * p * 3.8));
+          var reefMix = Math.max(0, Math.min(1, nd.x / W));
+          var reefR = Math.round(91 * (1 - reefMix) + 204 * reefMix);
+          var reefG = Math.round(156 * (1 - reefMix) + 251 * reefMix);
+          var reefB = Math.round(245 * (1 - reefMix) + 229 * reefMix);
+          var reefSR = Math.round(91 * (1 - reefMix) + 52 * reefMix);
+          var reefSG = Math.round(156 * (1 - reefMix) + 211 * reefMix);
+          var reefSB = Math.round(245 * (1 - reefMix) + 153 * reefMix);
           rctx.save();
           rctx.font = '700 ' + fontPx + 'px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
           rctx.textAlign = 'center';
           rctx.textBaseline = 'middle';
-          rctx.shadowColor = 'rgba(52, 211, 153, ' + (nAlpha * 0.4) + ')';
+          rctx.shadowColor = 'rgba(' + reefSR + ', ' + reefSG + ', ' + reefSB + ', ' + (nAlpha * 0.4) + ')';
           rctx.shadowBlur = Math.min(7, fontPx * 0.5);
           rctx.shadowOffsetX = 0;
           rctx.shadowOffsetY = 0;
-          rctx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(1, nAlpha * 0.72 + 0.1) + ')';
+          rctx.fillStyle = 'rgba(' + reefR + ', ' + reefG + ', ' + reefB + ', ' + Math.min(1, nAlpha * 0.72 + 0.1) + ')';
           rctx.fillText('$', nd.x, nd.y);
           rctx.restore();
         }
@@ -2548,6 +2560,39 @@
       tctx.fillRect(0, 0, nw, nh);
       tctx.globalCompositeOperation = 'source-over';
       def.tinted = tmp;
+      return tmp;
+    }
+
+    /* Accent-tinted version of the icon for the horizontal x-position gradient. Pre-baked at
+       native size and cached per def, mirroring buildTinted. The hero canvas cross-fades
+       between this and the green tint based on each icon's x position so right-side icons
+       shift toward the "Audit the operator" accent color. */
+    function buildTintedAccent(def){
+      if(def.tintedAccent){
+        return def.tintedAccent;
+      }
+      if(!def.img || !def.loaded){
+        return null;
+      }
+      var nw = def.img.naturalWidth || 32;
+      var nh = def.img.naturalHeight || 32;
+      if(nw < 1){
+        nw = 32;
+      }
+      if(nh < 1){
+        nh = 32;
+      }
+      var tmp = document.createElement('canvas');
+      tmp.width = nw;
+      tmp.height = nh;
+      var tctx = tmp.getContext('2d');
+      tctx.imageSmoothingEnabled = false;
+      tctx.drawImage(def.img, 0, 0, nw, nh);
+      tctx.globalCompositeOperation = 'source-atop';
+      tctx.fillStyle = 'rgba(91, 156, 245, 1)';
+      tctx.fillRect(0, 0, nw, nh);
+      tctx.globalCompositeOperation = 'source-over';
+      def.tintedAccent = tmp;
       return tmp;
     }
 
@@ -4275,6 +4320,7 @@
         } else if(item.type === 'icon' && item.def.loaded && item.def.img){
           var tint = buildTinted(item.def);
           if(tint){
+            var tintAccent = buildTintedAccent(item.def);
             var iw = item.drawSize != null ? item.drawSize : mtxIconDrawSize;
             var ih = item.drawHeight != null ? item.drawHeight : iw;
             /* Integer draw size for all icons: avoids subpixel drawImage scaling artifacts. */
@@ -4291,6 +4337,7 @@
             var iconDollarTint = !!(item.def.src && /\/(usdc|usdt2?|dai|m0)\.png/i.test(item.def.src));
             iconQueue.push({
               tint: tint,
+              tintAccent: tintAccent,
               ix: ix,
               iy: iy,
               iw: iw,
@@ -4349,7 +4396,19 @@
         if('imageSmoothingQuality' in mtxCtx && !q.hollow && !q.noSmooth){
           mtxCtx.imageSmoothingQuality = 'high';
         }
-        mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
+        /* Horizontal gradient: cross-fade icon tint from green (left) to accent blue (right)
+           based on icon's x position within the hero. Ties the matrix to the "Audit the
+           operator" gradient on the hero h1. Pure green at x=0, pure accent at x=w, linear
+           between. Uses two pre-tinted bitmaps so per-frame cost is just 2 drawImages. */
+        if(q.tintAccent){
+          var __gMix = Math.max(0, Math.min(1, (q.ix + q.iw * 0.5) / w));
+          mtxCtx.globalAlpha = q.op * (1 - __gMix);
+          mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
+          mtxCtx.globalAlpha = q.op * __gMix;
+          mtxCtx.drawImage(q.tintAccent, q.ix, q.iy, q.iw, q.ih);
+        } else {
+          mtxCtx.drawImage(q.tint, q.ix, q.iy, q.iw, q.ih);
+        }
         mtxCtx.restore();
         /* Collect position for coral web */
         if (q.iy >= 0 && q.iy < h) {
