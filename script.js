@@ -3343,20 +3343,30 @@
       }
     }
 
-    function mtxDollarMagDraw(ctx, fontFamily){
+    function mtxDollarMagDraw(ctx, fontFamily, w){
       if(!mtxDollarMag.length) return;
       ctx.save();
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.shadowBlur = 7;
-      ctx.shadowColor = 'rgba(167, 243, 208, 0.45)';
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
+      var canvasW = w > 0 ? w : 1;
       for(var i = 0; i < mtxDollarMag.length; i++){
         var p = mtxDollarMag[i];
         ctx.font = '700 ' + Math.round(p.sz) + 'px ' + fontFamily;
         ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(0.99, p.alpha + 0.1) + ')';
+        /* Horizontal gradient: mint green (left) to accent blue (right), matching matrix text/icons. */
+        var dmMix = Math.max(0, Math.min(1, p.x / canvasW));
+        var dmInv = 1 - dmMix;
+        var dmFR = Math.round(204 * dmInv + 91 * dmMix);
+        var dmFG = Math.round(251 * dmInv + 156 * dmMix);
+        var dmFB = Math.round(229 * dmInv + 245 * dmMix);
+        ctx.fillStyle = 'rgba(' + dmFR + ',' + dmFG + ',' + dmFB + ',' + Math.min(0.99, p.alpha + 0.1) + ')';
+        var dmSR = Math.round(167 * dmInv + 91 * dmMix);
+        var dmSG = Math.round(243 * dmInv + 156 * dmMix);
+        var dmSB = Math.round(208 * dmInv + 245 * dmMix);
+        ctx.shadowColor = 'rgba(' + dmSR + ',' + dmSG + ',' + dmSB + ', 0.45)';
         ctx.fillText('$', Math.round(p.x), Math.round(p.y));
       }
       ctx.restore();
@@ -4085,7 +4095,7 @@
         mtxCtx.fillRect(0, 0, w, h);
         mtxDollarMagUpdate(w, h, dtMul);
         var mtxFontFamilyLeave = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
-        mtxDollarMagDraw(mtxCtx, mtxFontFamilyLeave);
+        mtxDollarMagDraw(mtxCtx, mtxFontFamilyLeave, w);
         if(t > 0){
           if(mtxLastDrawT > 0){
             var frameDtL = t - mtxLastDrawT;
@@ -4242,6 +4252,10 @@
           mtxCtx.textAlign = 'left';
           var fs = item.fontSize || mtxFontSize;
           mtxCtx.font = '700 ' + fs + 'px ' + mtxFontFamily;
+          /* Horizontal gradient: text logos shift from mint green (left) to accent blue (right),
+             matching the icon gradient. ₿ keeps its Bitcoin orange brand color. */
+          var txtMix = w > 0 ? Math.max(0, Math.min(1, x / w)) : 0;
+          var txtInv = 1 - txtMix;
           if(item.value === '₿'){
             mtxCtx.fillStyle = 'rgba(247, 147, 26, ' + Math.min(1, op + 0.22) + ')';
             mtxCtx.shadowColor = 'rgba(251, 191, 36, 0.35)';
@@ -4250,14 +4264,32 @@
             if(fs >= mtxFontSize * 1.06){
               dollarAlpha = Math.min(dollarAlpha, 0.19);
             }
-            mtxCtx.fillStyle = 'rgba(204, 251, 229, ' + dollarAlpha + ')';
-            mtxCtx.shadowColor = 'rgba(167, 243, 208, ' + Math.min(0.32, dollarAlpha * 0.85) + ')';
+            var dFR = Math.round(204 * txtInv + 91 * txtMix);
+            var dFG = Math.round(251 * txtInv + 156 * txtMix);
+            var dFB = Math.round(229 * txtInv + 245 * txtMix);
+            mtxCtx.fillStyle = 'rgba(' + dFR + ',' + dFG + ',' + dFB + ',' + dollarAlpha + ')';
+            var dSR = Math.round(167 * txtInv + 91 * txtMix);
+            var dSG = Math.round(243 * txtInv + 156 * txtMix);
+            var dSB = Math.round(208 * txtInv + 245 * txtMix);
+            mtxCtx.shadowColor = 'rgba(' + dSR + ',' + dSG + ',' + dSB + ',' + Math.min(0.32, dollarAlpha * 0.85) + ')';
           } else if(mtxFiatNonUsd[item.value]){
-            mtxCtx.fillStyle = 'rgba(134, 239, 172, ' + Math.min(0.96, op + 0.14) + ')';
-            mtxCtx.shadowColor = 'rgba(96, 108, 62, 0.22)';
+            var fFR = Math.round(134 * txtInv + 91 * txtMix);
+            var fFG = Math.round(239 * txtInv + 156 * txtMix);
+            var fFB = Math.round(172 * txtInv + 245 * txtMix);
+            mtxCtx.fillStyle = 'rgba(' + fFR + ',' + fFG + ',' + fFB + ',' + Math.min(0.96, op + 0.14) + ')';
+            var fSR = Math.round(96 * txtInv + 91 * txtMix);
+            var fSG = Math.round(108 * txtInv + 156 * txtMix);
+            var fSB = Math.round(62 * txtInv + 245 * txtMix);
+            mtxCtx.shadowColor = 'rgba(' + fSR + ',' + fSG + ',' + fSB + ', 0.22)';
           } else {
-            mtxCtx.fillStyle = 'rgba(96, 230, 156, ' + Math.min(0.94, op + 0.12) + ')';
-            mtxCtx.shadowColor = 'rgba(52, 211, 153, 0.28)';
+            var tFR = Math.round(96 * txtInv + 91 * txtMix);
+            var tFG = Math.round(230 * txtInv + 156 * txtMix);
+            var tFB = Math.round(156 * txtInv + 245 * txtMix);
+            mtxCtx.fillStyle = 'rgba(' + tFR + ',' + tFG + ',' + tFB + ',' + Math.min(0.94, op + 0.12) + ')';
+            var tSR = Math.round(52 * txtInv + 91 * txtMix);
+            var tSG = Math.round(211 * txtInv + 156 * txtMix);
+            var tSB = Math.round(153 * txtInv + 245 * txtMix);
+            mtxCtx.shadowColor = 'rgba(' + tSR + ',' + tSG + ',' + tSB + ', 0.28)';
           }
           mtxCtx.save();
           var isLargeBtc = (item.value === '₿' && item.btcLarge && item.fontSize > mtxFontSize * 1.3);
@@ -4444,8 +4476,17 @@
           mtxCtx.textAlign = 'left';
           mtxCtx.textBaseline = 'top';
           mtxCtx.font = '700 ' + du.fs + 'px ' + mtxFontFamily;
-          mtxCtx.fillStyle = 'rgba(204, 251, 229, ' + Math.min(0.99, du.op + 0.24) + ')';
-          mtxCtx.shadowColor = 'rgba(167, 243, 208, 0.38)';
+          /* Match Pass-1 horizontal gradient: green (left) to accent blue (right). */
+          var ovMix = w > 0 ? Math.max(0, Math.min(1, (du.tx + du.tw * 0.5) / w)) : 0;
+          var ovInv = 1 - ovMix;
+          var ovFR = Math.round(204 * ovInv + 91 * ovMix);
+          var ovFG = Math.round(251 * ovInv + 156 * ovMix);
+          var ovFB = Math.round(229 * ovInv + 245 * ovMix);
+          mtxCtx.fillStyle = 'rgba(' + ovFR + ',' + ovFG + ',' + ovFB + ',' + Math.min(0.99, du.op + 0.24) + ')';
+          var ovSR = Math.round(167 * ovInv + 91 * ovMix);
+          var ovSG = Math.round(243 * ovInv + 156 * ovMix);
+          var ovSB = Math.round(208 * ovInv + 245 * ovMix);
+          mtxCtx.shadowColor = 'rgba(' + ovSR + ',' + ovSG + ',' + ovSB + ', 0.38)';
           mtxCtx.shadowBlur = 7;
           mtxCtx.shadowOffsetX = 0;
           mtxCtx.shadowOffsetY = 0;
@@ -4786,7 +4827,7 @@
         });
       }
       mtxDollarMagUpdate(w, h, dtMul);
-      mtxDollarMagDraw(mtxCtx, mtxFontFamily);
+      mtxDollarMagDraw(mtxCtx, mtxFontFamily, w);
 
 
       if (t > 0) {
