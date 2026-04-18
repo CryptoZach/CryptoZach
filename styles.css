@@ -373,7 +373,7 @@ nav{
   font-weight:600;
   background:none;
   border-color:transparent;
-  border-bottom:2px solid var(--accent);
+  border-bottom:2px solid color-mix(in srgb, var(--accent) 55%, transparent);
   border-radius:0;
   padding-bottom:calc(var(--space-xs) - 2px);
 }
@@ -494,6 +494,38 @@ nav .action:hover{
 .cta-primary:hover {
   background: var(--accent-hover, #1d4ed8);
   border-color: var(--accent-hover, #1d4ed8);
+}
+
+/* About card: single primary CTA + quiet text follow-up to other destinations */
+.about-card-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: var(--space-md);
+}
+.about-card-followup {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.about-card-followup a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding-bottom: 1px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.about-card-followup a:hover {
+  color: var(--accent-hover, var(--accent));
+  border-bottom-color: var(--accent);
+}
+.about-card-followup a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .flagship-nudge {
@@ -624,11 +656,11 @@ body main:has(footer){
 .kicker{
   display:flex;
   align-items:center;
-  gap:8px;
-  font-size:var(--font-size-min);
+  gap:7px;
+  font-size:0.7rem;
   font-weight:600;
   color:var(--accent);
-  letter-spacing:.14em;
+  letter-spacing:0.1em;
   text-transform:uppercase;
   margin:0;
 }
@@ -657,19 +689,15 @@ body main:has(footer){
 
 .kicker-dot{
   display:inline-block;
-  width:6px;
-  height:6px;
+  width:5px;
+  height:5px;
   border-radius:50%;
   background:var(--accent);
   flex-shrink:0;
-  animation:kicker-pulse 2.5s ease-in-out infinite;
 }
 @keyframes kicker-pulse{
   0%,100%{opacity:1}
   50%{opacity:.4}
-}
-@media (prefers-reduced-motion: reduce){
-  .kicker-dot{animation:none}
 }
 
 h1{
@@ -856,21 +884,29 @@ body.contact-page .contact-page-foreground > .contact-page .about-grid{
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item{
-  padding:0;
+  padding:1.5rem 1.6rem;
+  border-radius:8px;
+  display:flex;
+  flex-direction:column;
+  gap:0.55rem;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-label{
-  font-size:0.8rem;
+  margin:0;
+  font-size:0.7rem;
   text-transform:uppercase;
-  letter-spacing:0.06em;
-  opacity:0.45;
-  margin-bottom:0.35rem;
+  letter-spacing:0.08em;
+  font-weight:600;
+  color:color-mix(in srgb, var(--accent) 75%, transparent);
+  opacity:1;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item p:last-child{
+  margin:0;
   font-size:0.95rem;
   line-height:1.6;
-  opacity:0.85;
+  color:var(--text-soft);
+  opacity:1;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-routes{
@@ -1667,65 +1703,7 @@ body.contact-page section.contact-page-detail{
 .agenda-table tbody tr:last-child td{
   border-bottom:none;
 }
-/* How the work runs: two-column principle table (Structure page) */
-.structure-table-wrap--how-work-runs{
-  margin-top:var(--space-lg);
-  margin-bottom:var(--space-md);
-  border:1px solid var(--line-strong);
-  border-radius:var(--radius-sm);
-  background:color-mix(in srgb, var(--panel) 92%, transparent);
-  box-shadow:var(--shadow-sm);
-}
-.how-work-runs-table{
-  width:100%;
-  min-width:min(100%, 520px);
-  border-collapse:collapse;
-  font-size:var(--font-size-min);
-  background:transparent;
-}
-.how-work-runs-table th,
-.how-work-runs-table td{
-  padding:1rem 1.125rem;
-  text-align:left;
-  vertical-align:top;
-  border-bottom:1px solid var(--line);
-  border-right:1px solid var(--line);
-}
-.how-work-runs-table td:last-child,
-.how-work-runs-table th:last-child{
-  border-right:none;
-}
-.how-work-runs-table tbody tr:last-child th,
-.how-work-runs-table tbody tr:last-child td{
-  border-bottom:none;
-}
-.how-work-runs-table th[scope="row"]{
-  width:12rem;
-  min-width:9.5rem;
-  max-width:40%;
-  font-weight:700;
-  font-size:var(--font-size-min);
-  text-transform:uppercase;
-  letter-spacing:0.07em;
-  line-height:1.4;
-  color:var(--text-soft);
-  background:color-mix(in srgb, var(--accent) 14%, var(--panel));
-  border-right-color:color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
-  vertical-align:middle;
-}
-.how-work-runs-table td{
-  /* Was --muted-soft: too low contrast on striped panel rows for low vision / color-deficient readers */
-  color:var(--text-soft);
-  line-height:1.55;
-  max-width:none;
-  vertical-align:top;
-}
-.how-work-runs-table tbody tr:nth-child(odd) td{
-  background:color-mix(in srgb, var(--panel) 55%, transparent);
-}
-.how-work-runs-table tbody tr:nth-child(even) td{
-  background:color-mix(in srgb, var(--accent) 6%, var(--panel2));
-}
+/* How the work runs: closing track-bridge + section-title body sit flush with cards */
 .page-focus #how-the-work-runs > p:last-of-type{
   margin-top:var(--space-lg);
   margin-bottom:0;
@@ -1735,42 +1713,6 @@ body.contact-page section.contact-page-detail{
 }
 .page-focus #how-the-work-runs .section-title p{
   max-width:none;
-}
-@media (max-width:560px){
-  .how-work-runs-table{
-    min-width:0;
-  }
-  .how-work-runs-table tbody tr{
-    display:block;
-    border-bottom:1px solid var(--line);
-  }
-  .how-work-runs-table tbody tr:last-child{
-    border-bottom:none;
-  }
-  .how-work-runs-table th[scope="row"],
-  .how-work-runs-table td{
-    display:block;
-    width:100%;
-    max-width:none;
-    border-right:none;
-    border-bottom:none;
-    box-sizing:border-box;
-  }
-  .how-work-runs-table th[scope="row"]{
-    padding-bottom:var(--space-xs);
-  }
-  .how-work-runs-table td{
-    padding-top:0;
-    padding-bottom:var(--space-md);
-  }
-  .how-work-runs-table tbody tr:nth-child(odd) td,
-  .how-work-runs-table tbody tr:nth-child(even) td{
-    background:transparent;
-  }
-  .how-work-runs-table tbody tr:nth-child(odd),
-  .how-work-runs-table tbody tr:nth-child(even){
-    background:color-mix(in srgb, var(--panel) 40%, transparent);
-  }
 }
 
 /* Structure stack (Operating-Model.html): METHOD / SCOPE / GOAL / Unifying thesis (vertical container) */
@@ -2512,28 +2454,18 @@ main > section.reveal{
   flex-direction:column;
   gap:var(--space-xs);
   margin-bottom:var(--space-lg);
-  padding-bottom:var(--space-md);
-  border-bottom:1px solid var(--line);
+  padding-bottom:var(--space-sm);
+  border-bottom:1px solid var(--glass-edge);
   position:relative;
-}
-.section-title::after{
-  content:"";
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  width:120px;
-  height:2px;
-  background:var(--accent);
-  border-radius:1px;
 }
 .section-title h1,
 .section-title h2{
   margin:0;
-  font-size:19px;
+  font-size:clamp(20px, 2.2vw, 24px);
   font-weight:700;
-  letter-spacing:-0.02em;
-  padding-left:var(--space-md);
-  border-left:3px solid var(--accent);
+  letter-spacing:-0.022em;
+  padding-left:0;
+  border-left:none;
   color:var(--text);
 }
 .section-title p{
@@ -2542,7 +2474,7 @@ main > section.reveal{
   font-size:var(--font-size-min);
   max-width:none;
   line-height:1.55;
-  padding-left:calc(var(--space-md) + 3px);
+  padding-left:0;
   text-wrap:pretty;
   hyphens:none;
 }
@@ -2613,12 +2545,12 @@ section:has(.speaker-jump-to){
 .speaker-jump-to{
   display:flex;
   flex-wrap:wrap;
-  align-items:center;
-  gap:var(--space-sm) var(--space-md);
-  padding:var(--space-sm) var(--space-md);
+  align-items:baseline;
+  gap:0.3rem 0.7rem;
+  padding:0.5rem 0.95rem;
   margin:0 0 var(--space-lg);
   border:1px solid var(--line);
-  border-left:3px solid var(--accent);
+  border-left:2px solid var(--glass-edge-accent);
   border-radius:var(--radius-sm);
   background:color-mix(in srgb, var(--panel) 92%, transparent);
   overflow:visible;
@@ -2627,15 +2559,16 @@ section:has(.speaker-jump-to){
   max-width:100%;
 }
 .speaker-jump-to .jump-to-label{
-  margin:0;
-  font-size:var(--font-size-min);
+  margin:0 0.25rem 0 0;
+  padding:0 0.6rem 0 0;
+  font-size:0.65rem;
   font-weight:700;
-  letter-spacing:.12em;
+  letter-spacing:0.08em;
   text-transform:uppercase;
   color:var(--accent);
   line-height:1.4;
   flex-shrink:0;
-  padding-right:var(--space-sm);
+  border-right:1px solid var(--glass-edge);
 }
 .speaker-jump-to__link{
   text-decoration:none;
@@ -2675,10 +2608,10 @@ section:has(.speaker-jump-to){
   flex-wrap:wrap;
   align-items:center;
   gap:var(--space-sm) var(--space-md);
-  padding:var(--space-sm) var(--space-md);
+  padding:0.5rem 1rem;
   margin:0 0 var(--space-lg);
   border:1px solid var(--line);
-  border-left:3px solid var(--accent);
+  border-left:2px solid var(--glass-edge-accent);
   border-radius:var(--radius-sm);
   background:color-mix(in srgb, var(--panel) 92%, transparent);
   overflow:visible;
@@ -2739,33 +2672,35 @@ section:has(.speaker-jump-to){
 
 /* Structure jump-to (start-here, Operating-Model): full-width panel, label above links, plain text chips */
 .page-toc.structure-jump-to{
-  border-left-width:2px;
-  flex-direction:column;
-  align-items:flex-start;
+  flex-direction:row;
+  align-items:baseline;
+  flex-wrap:wrap;
   align-self:stretch;
   width:100%;
   max-width:100%;
   box-sizing:border-box;
-  padding:0.75rem 1.25rem 0.85rem;
-  gap:0.35rem 0;
+  padding:0.5rem 0.95rem 0.55rem;
+  gap:0.3rem 0.85rem;
+  border-left-width:2px;
+  border-left-color:var(--glass-edge-accent);
 }
 .page-toc.structure-jump-to .page-toc-title{
   flex:0 0 auto;
-  width:100%;
-  max-width:100%;
-  padding-right:0;
-  margin-bottom:0.15rem;
+  width:auto;
+  margin:0 0.25rem 0 0;
+  padding:0 0.6rem 0 0;
+  font-size:0.65rem;
+  letter-spacing:0.08em;
+  border-right:1px solid var(--glass-edge);
 }
 .page-toc.structure-jump-to .page-toc-list{
-  gap:0.4rem 1.25rem;
-  width:100%;
-  max-width:100%;
-  align-items:baseline;
+  display:contents;
 }
 .page-toc.structure-jump-to .page-toc-link{
-  padding:0.2rem 0;
+  padding:0.1rem 0;
   border-radius:0;
   background:transparent;
+  font-size:0.78rem;
 }
 @media (prefers-reduced-motion: no-preference){
   .page-toc.structure-jump-to .page-toc-link{
@@ -2785,10 +2720,10 @@ section:has(.speaker-jump-to){
   display:flex;
   align-items:center;
   gap:var(--space-md);
-  padding:0.75rem 1.25rem;
+  padding:0.5rem 1rem;
   margin:0 0 var(--space-lg);
   border:1px solid var(--line);
-  border-left:3px solid var(--accent);
+  border-left:2px solid var(--glass-edge-accent);
   border-radius:var(--radius-sm);
   background:color-mix(in srgb, var(--panel) 92%, transparent);
   max-width:100%;
@@ -2796,8 +2731,9 @@ section:has(.speaker-jump-to){
   min-width:0;
 }
 .jump-bar-label{
-  margin:0;
-  font-size:var(--font-size-min);
+  margin:0 0.25rem 0 0;
+  padding:0 0.6rem 0 0;
+  font-size:0.65rem;
   font-weight:700;
   letter-spacing:0.08em;
   text-transform:uppercase;
@@ -2805,6 +2741,7 @@ section:has(.speaker-jump-to){
   line-height:1.4;
   white-space:nowrap;
   flex-shrink:0;
+  border-right:1px solid var(--glass-edge);
 }
 .jump-bar-chips{
   display:flex;
@@ -5977,11 +5914,7 @@ main.resume-profile .resume-closing{
 }
 .structure-page .page-toc.structure-jump-to .page-toc-title,
 .frameworks-2026-page .page-toc.structure-jump-to .page-toc-title{
-  margin:0;
-}
-.structure-page .page-toc.structure-jump-to .page-toc-list,
-.frameworks-2026-page .page-toc.structure-jump-to .page-toc-list{
-  align-items:baseline;
+  margin:0 0.25rem 0 0;
 }
 .structure-page .track-overview{
   margin-top:var(--space-sm);
@@ -6401,8 +6334,33 @@ footer.site-footer .footer-top{
 }
 footer.site-footer .footer-copy{
   justify-self:start;
+  display:inline-flex;
+  align-items:baseline;
+  gap:0.4em;
   color:var(--footer-strip-muted);
   font-size:var(--font-size-min);
+  letter-spacing:0.02em;
+  line-height:1.5;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1, "lnum" 1;
+}
+footer.site-footer .footer-copy__mark{
+  color:color-mix(in srgb, var(--footer-strip-muted) 70%, transparent);
+  font-size:0.95em;
+  letter-spacing:0;
+  position:relative;
+  top:-0.02em;
+}
+footer.site-footer .footer-copy__year{
+  color:var(--footer-strip-text);
+  font-weight:500;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0.04em;
+}
+footer.site-footer .footer-copy__brand{
+  color:var(--footer-strip-text);
+  font-weight:500;
+  white-space:nowrap;
 }
 footer.site-footer .footer-nav{
   justify-self:center;
@@ -8180,11 +8138,11 @@ footer.site-footer .footer-tagline{
   color: var(--accent);
 }
 .paper-flagship-kicker{
-  font-size: var(--font-size-min);
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, transparent);
   margin: 0 0 var(--space-md);
 }
 .paper-inline-ctas{
@@ -10458,8 +10416,7 @@ body.page-focus.structure-page .card h3{
 }
 body.page-focus.structure-page .structure-go-deeper-list,
 body.page-focus.structure-page .structure-table-wrap,
-body.page-focus.structure-page .agenda-table,
-body.page-focus.structure-page .how-work-runs-table{
+body.page-focus.structure-page .agenda-table{
   max-width:100%;
   width:100%;
   box-sizing:border-box;
@@ -11885,8 +11842,8 @@ main > section:first-of-type{
 
 /* Tighten relationships between headings and content blocks */
 .section-title{
-  margin-bottom: clamp(18px, 2.5vw, 28px);
-  padding-bottom: clamp(14px, 1.8vw, 20px);
+  margin-bottom: clamp(16px, 2vw, 22px);
+  padding-bottom: clamp(10px, 1.4vw, 16px);
 }
 
 .section-title + .grid,
@@ -12307,7 +12264,7 @@ header{
   color: var(--accent);
   border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
   background: color-mix(in srgb, var(--accent) 10%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
   border-radius: var(--nav-radius);
   padding-bottom: 6px;
 }
@@ -13036,7 +12993,7 @@ details.card-expand[open] summary {
   }
 
   :root:not([data-theme="dark"]) .site-footer {
-    border-top-color: var(--line);
+    border-top-color: var(--glass-edge);
   }
 
   :root:not([data-theme="dark"]) .section-eyebrow {
@@ -13225,7 +13182,7 @@ details.card-expand[open] summary {
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--accent);
   margin-bottom: 0.5rem;
 }
@@ -13242,4 +13199,434 @@ details.card-expand[open] summary {
 
 .speaker-page #engagements.section-compact h2 {
   margin-top: 0;
+}
+
+/* ───────────────────────────────────────────────────────────── */
+/* Liquid glass containers                                       */
+/* Softens hard 1px borders into low-contrast translucent edges, */
+/* adds a top inner highlight, applies a subtle backdrop blur,   */
+/* and fades the colored accent stripes on .card so containers   */
+/* read as panels of glass rather than as outlined boxes.        */
+/* Tokens auto-adapt to light and dark via color-mix().          */
+/* ───────────────────────────────────────────────────────────── */
+
+:root {
+  --glass-edge: color-mix(in srgb, var(--text) 9%, transparent);
+  --glass-edge-strong: color-mix(in srgb, var(--text) 20%, transparent);
+  --glass-edge-accent: color-mix(in srgb, var(--accent) 18%, transparent);
+  --glass-tint: color-mix(in srgb, var(--panel) 55%, transparent);
+  --glass-tint-strong: color-mix(in srgb, var(--panel) 72%, transparent);
+  --glass-highlight: color-mix(in srgb, #ffffff 10%, transparent);
+  --glass-highlight-soft: color-mix(in srgb, #ffffff 5%, transparent);
+  --glass-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 2px 32px -10px color-mix(in srgb, #000 60%, transparent);
+  --glass-blur: 22px;
+}
+
+:root[data-theme="dark"] {
+  --glass-edge: color-mix(in srgb, var(--text) 8%, transparent);
+  --glass-edge-strong: color-mix(in srgb, var(--text) 18%, transparent);
+  --glass-tint: color-mix(in srgb, var(--panel) 45%, transparent);
+  --glass-tint-strong: color-mix(in srgb, var(--panel) 65%, transparent);
+  --glass-highlight: color-mix(in srgb, #ffffff 7%, transparent);
+  --glass-highlight-soft: color-mix(in srgb, #ffffff 3%, transparent);
+}
+
+/* Soften borders + add translucency on common container classes.
+   :is() bumps specificity above existing single-class rules so
+   border-color, background, and box-shadow take effect without
+   needing !important. Existing border-radius and padding are kept. */
+:is(
+  .card,
+  .research-card,
+  .compact-card,
+  .role-pill,
+  .resume-card,
+  .resume-preview-card,
+  .resume-summary-card,
+  .advisory-card,
+  .talk-format-card > .card,
+  .experience-block,
+  .about-card,
+  .about-item,
+  .resume-closing-panel,
+  .paper-access-block.access-block,
+  .resume-quick-nav
+) {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Soften .card colored top accent without removing it. */
+.card {
+  border-top-color: var(--glass-edge-accent);
+}
+
+/* Fade the .card::after left stripe so it whispers rather than shouts. */
+.card::after {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 38%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 8%, transparent) 100%
+  );
+  width: 2px;
+  opacity: 0.9;
+}
+
+/* Soften thicker accent on resume hub role cards. */
+.resume-card {
+  border-top-color: var(--glass-edge-accent);
+}
+
+/* Soften accent left rule on summary/preview/closing/snapshot cards. */
+:is(
+  .resume-summary-card,
+  .resume-preview-card,
+  .resume-closing-panel
+) {
+  border-left-color: var(--glass-edge-accent);
+}
+
+/* Hover: gentle border brighten + fill, no jump. */
+:is(
+  .card:hover,
+  .research-card:hover,
+  .compact-card:hover,
+  .role-pill:hover,
+  .resume-card:hover,
+  .advisory-card:hover,
+  .talk-format-card > .card:hover
+) {
+  border-color: var(--glass-edge-strong);
+  background: var(--glass-tint-strong);
+}
+
+/* ───────────────────────────────────────────────────────────── */
+/* Liquid glass phase 2: TOCs, thesis rails, tables, secondary   */
+/* controls, footer strip, contact and speaker surfaces.         */
+/* ───────────────────────────────────────────────────────────── */
+
+:is(.page-toc, .jump-bar, .speaker-jump-to, .structure-jump-to) {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+:is(.operating-model-stack, .start-here-rail) {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+.operating-model-stack__row--thesis {
+  border-top-color: var(--glass-edge-accent);
+}
+
+:is(.frameworks-routing-table-wrap, .structure-table-wrap, .convergence-table-wrap) {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+.agenda-table th,
+.convergence-table th,
+.frameworks-routing-table th {
+  border-bottom-color: var(--glass-edge-strong);
+}
+
+:is(
+  .action.secondary,
+  .btn.btn-secondary:not(#hero *),
+  .copy-email-btn,
+  .page-toc-link,
+  .jump-chip
+) {
+  background: var(--glass-tint);
+  border-color: var(--glass-edge);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+:is(
+  .action.secondary,
+  .btn.btn-secondary:not(#hero *),
+  .copy-email-btn,
+  .page-toc-link,
+  .jump-chip
+):hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--glass-tint-strong);
+}
+
+.research-filters-js .filter-btn:not(.active) {
+  background: var(--glass-tint);
+  border-color: var(--glass-edge);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+.research-filters-js .filter-btn:not(.active):hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--glass-tint-strong);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--glass-tint-strong);
+}
+
+footer.site-footer {
+  background: var(--glass-tint);
+  border-top: 1px solid var(--glass-edge);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+}
+
+footer.site-footer .footer-tagline {
+  box-shadow: 0 1px 0 0 var(--glass-highlight) inset;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-email-row {
+  border: none;
+  background: transparent;
+  padding: 0;
+  gap: 1rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-email-block,
+body.contact-page .contact-page-foreground > .contact-page .contact-guidance {
+  border: 1px solid var(--glass-edge);
+  border-radius: 8px;
+  padding: 2rem;
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-card {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: var(--glass-shadow);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-card:hover {
+  border-color: var(--glass-edge-strong);
+  background: var(--glass-tint-strong);
+}
+
+:is(.engagement-list > li, .talk-format-card details) {
+  border-color: var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+.talk-format-card details {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  border-style: solid;
+  border-width: 1px;
+}
+
+.featured-talk-content {
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Respect user preference for reduced transparency (macOS, iOS). */
+@media (prefers-reduced-transparency: reduce) {
+  :is(
+    .card,
+    .research-card,
+    .compact-card,
+    .role-pill,
+    .resume-card,
+    .resume-preview-card,
+    .resume-summary-card,
+    .advisory-card,
+    .talk-format-card > .card,
+    .experience-block,
+    .about-card,
+    .about-item,
+    .resume-closing-panel,
+    .paper-access-block.access-block,
+    .resume-quick-nav
+  ) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--panel);
+    border-color: var(--line);
+  }
+
+  :is(.page-toc, .jump-bar, .speaker-jump-to, .structure-jump-to),
+  :is(.operating-model-stack, .start-here-rail),
+  :is(.frameworks-routing-table-wrap, .structure-table-wrap, .convergence-table-wrap),
+  :is(
+    .action.secondary,
+    .btn.btn-secondary:not(#hero *),
+    .copy-email-btn,
+    .page-toc-link,
+    .jump-chip
+  ),
+  .research-filters-js .filter-btn:not(.active),
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-block,
+  body.contact-page .contact-page-foreground > .contact-page .contact-guidance,
+  body.contact-page .contact-page-foreground > .contact-page .route-card,
+  :is(.engagement-list > li, .talk-format-card details),
+  .featured-talk-content,
+  footer.site-footer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--panel);
+    border-color: var(--line);
+  }
+
+  footer.site-footer .footer-tagline {
+    box-shadow: none;
+  }
+
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-row {
+    background: transparent;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────── */
+/* Header polish: prevent two-row wrap, glass-up the chrome,    */
+/* hide brand subtitle at squeezed widths instead of wrapping.   */
+/* ───────────────────────────────────────────────────────────── */
+
+/* Liquid-glass header chrome */
+header {
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  border-bottom-color: var(--glass-edge, color-mix(in srgb, var(--text) 12%, transparent));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+header.scrolled {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border-bottom-color: var(--glass-edge-strong, color-mix(in srgb, var(--text) 22%, transparent));
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight, rgba(255, 255, 255, 0.04)) inset,
+    0 4px 24px -8px color-mix(in srgb, #000 35%, transparent);
+}
+
+/* Social icons: glass pill treatment that matches the chip system */
+.header-social-link {
+  border-color: var(--glass-edge, color-mix(in srgb, var(--text) 14%, transparent));
+  background: var(--glass-tint, color-mix(in srgb, var(--panel) 65%, transparent));
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+.header-social-link:hover {
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--glass-tint, transparent));
+  color: var(--accent);
+}
+
+/* Theme toggle: matched glass treatment */
+.theme-toggle {
+  border-color: var(--glass-edge, color-mix(in srgb, var(--text) 14%, transparent));
+  background: var(--glass-tint, color-mix(in srgb, var(--panel) 65%, transparent));
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Desktop layout: prevent nav wrap so social icons stay on the same row.
+   Keep flex-shrink so brand can compress, and ensure brand subtitle never wraps. */
+@media (min-width: 769px) {
+  header > .header-inner > nav,
+  header > .header-inner > nav.nav-desktop {
+    flex-wrap: nowrap;
+    gap: var(--space-sm);
+  }
+  .header-inner {
+    gap: var(--space-md);
+  }
+  .brand {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  .brand a {
+    min-width: 0;
+  }
+  .brand span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-links--desktop {
+    /* keep display: contents so children participate in nav's flex layout */
+    flex-wrap: nowrap;
+  }
+  .header-social {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* Squeezed desktop widths (tablet landscape, narrow desktop): subtitle disappears
+   so the nav row never breaks. Brand wordmark remains visible. */
+@media (min-width: 769px) and (max-width: 1099px) {
+  .brand span {
+    display: none;
+  }
+  .navlink {
+    padding: 6px 10px;
+  }
+}
+
+/* Just below the break, free up extra room by tightening social-icon gap */
+@media (min-width: 769px) and (max-width: 999px) {
+  .header-social {
+    gap: 4px;
+  }
+  .header-social-link {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Fallback for browsers without backdrop-filter support: opaque-ish fill. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :is(
+    .card,
+    .research-card,
+    .compact-card,
+    .role-pill,
+    .resume-card,
+    .resume-preview-card,
+    .resume-summary-card,
+    .advisory-card,
+    .talk-format-card > .card,
+    .experience-block,
+    .about-card,
+    .about-item,
+    .resume-closing-panel,
+    .paper-access-block.access-block,
+    .resume-quick-nav
+  ) {
+    background: color-mix(in srgb, var(--panel) 96%, transparent);
+  }
 }

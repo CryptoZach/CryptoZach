@@ -36,7 +36,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
-  <meta property="og:description" content="Eight papers on SSRN. Two original frameworks. One thesis: classify the token, but regulate and audit the operator." />
+  <meta property="og:description" content="Eight papers across two tracks; four on SSRN. Two original frameworks (CLII, MVEP). One thesis: classify the token, but regulate and audit the operator." />
   <meta property="og:url" content="https://tokenization.systems/" />
   <meta property="og:image" content="https://tokenization.systems/assets/og-image.png" />
   <meta property="og:site_name" content="Tokenization Systems" />
@@ -48,7 +48,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
-  <meta name="twitter:description" content="Eight papers on SSRN. Two original frameworks. One thesis: classify the token, but regulate and audit the operator." />
+  <meta name="twitter:description" content="Eight papers across two tracks; four on SSRN. Two original frameworks (CLII, MVEP). One thesis: classify the token, but regulate and audit the operator." />
   <meta name="twitter:image" content="https://tokenization.systems/assets/og-image.png" />
   <meta name="twitter:image:alt" content="Tokenization Systems research preview" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -59,7 +59,7 @@
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="/styles.css?v=90" />
+  <link rel="stylesheet" href="/styles.css?v=100" />
   <style id="homepage-sprint1-density">
     /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
     #main {
@@ -201,19 +201,66 @@
 
     #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
       font-size: 0.8rem;
-      padding: 0.35rem 0.85rem;
-      border: 1px solid var(--line);
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--glass-edge, color-mix(in srgb, var(--text) 14%, transparent));
+      background: var(--glass-tint, color-mix(in srgb, var(--panel) 65%, transparent));
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
       border-radius: 100px;
       cursor: default;
       pointer-events: none;
+      box-shadow: 0 1px 0 0 var(--glass-highlight, rgba(255,255,255,0.06)) inset;
+      letter-spacing: 0.005em;
     }
 
     :root[data-theme="dark"] #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(255, 255, 255, 0.85);
     }
 
     :root:not([data-theme="dark"]) #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
       color: var(--muted);
+    }
+
+    /* Eyebrow accent dot */
+    #hero.hero--homepage .hero-eyebrow-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    #hero.hero--homepage .hero-eyebrow-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px 0 color-mix(in srgb, var(--accent) 60%, transparent);
+      flex-shrink: 0;
+    }
+
+    /* H1 second-clause accent: subtle gradient on "Regulate the operator." */
+    #hero.hero--homepage .hero-title-accent {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 88%, #fff) 0%,
+        var(--accent) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline;
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      #hero.hero--homepage .hero-title-accent {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: var(--accent);
+      }
     }
 
     #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
@@ -258,21 +305,24 @@
       color: var(--accent);
     }
 
-    /* Sprint 2 Fix 3: primary CTA */
+    /* Sprint 2 Fix 3: primary CTA, polished with subtle accent glow */
     #hero.hero--homepage .hero-cta-cluster .btn.btn-primary {
       display: inline-block;
       padding: 1rem 2.25rem;
       background: var(--accent);
       color: #fff;
-      border: none;
-      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, #fff 18%, var(--accent));
+      border-radius: 10px;
       text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
       letter-spacing: 0.01em;
-      transition: background 0.2s, transform 0.15s, filter 0.2s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s, border-color 0.2s;
       cursor: pointer;
-      box-shadow: none;
+      box-shadow:
+        0 1px 0 0 color-mix(in srgb, #fff 22%, transparent) inset,
+        0 8px 24px -8px color-mix(in srgb, var(--accent) 55%, transparent),
+        0 1px 2px 0 rgba(0, 0, 0, 0.18);
       filter: none;
     }
 
@@ -280,7 +330,11 @@
       background: var(--accent-hover);
       transform: translateY(-1px);
       filter: none;
-      box-shadow: none;
+      box-shadow:
+        0 1px 0 0 color-mix(in srgb, #fff 28%, transparent) inset,
+        0 12px 32px -8px color-mix(in srgb, var(--accent) 70%, transparent),
+        0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      border-color: color-mix(in srgb, #fff 26%, var(--accent));
     }
 
     #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:active {
@@ -289,11 +343,13 @@
 
     #hero.hero--homepage .hero-cta-cluster .btn.btn-secondary {
       display: inline-block;
-      padding: 0.85rem 1.75rem;
-      background: transparent;
+      padding: 0.95rem 1.85rem;
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
       color: var(--accent);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+      border-radius: 10px;
+      backdrop-filter: blur(8px) saturate(115%);
+      -webkit-backdrop-filter: blur(8px) saturate(115%);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
@@ -371,6 +427,10 @@
       margin-bottom: 0;
     }
 
+    .role-pills > .role-pill:nth-child(5):last-child {
+      grid-column: 1 / -1;
+    }
+
     .role-pill {
       display: flex;
       flex-direction: column;
@@ -432,6 +492,10 @@
     @media (max-width: 640px) {
       .role-pills {
         grid-template-columns: 1fr;
+      }
+
+      .role-pills > .role-pill:nth-child(5):last-child {
+        grid-column: auto;
       }
 
       .role-pill {
@@ -846,12 +910,12 @@
       <div class="hero-grid" style="max-width: 1200px; margin: 0 auto; padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); box-sizing: border-box;">
         <div class="hero-primary">
           <div class="hero-eyebrow matrix-hover-activator">
-            <p class="hero-eyebrow-kicker" data-hero-safe="eyebrow">Digital Money &amp; Tokenization · From Policy to Execution</p>
+            <p class="hero-eyebrow-kicker" data-hero-safe="eyebrow"><span class="hero-eyebrow-dot" aria-hidden="true"></span>Independent research · Digital money &amp; tokenization</p>
           </div>
           <div class="hero-headline-stack">
-            <h1 id="hero-title" data-hero-safe="headline">Independent research on dollar infrastructure and tokenization.</h1>
+            <h1 id="hero-title" data-hero-safe="headline">Classify the token. <span class="hero-title-accent">Regulate the operator.</span></h1>
             <p class="hero-subtitle">Who routes the dollar determines how it behaves under stress.<br />
-            Eight papers mapping gateway infrastructure, tokenization diligence, and DePIN mechanism design.</p>
+            Eight papers across two tracks, mapping gateway infrastructure, tokenization diligence, and DePIN mechanism design.</p>
           </div>
           <ul class="hero-proof-strip" aria-label="Highlights" data-hero-safe="proof">
             <li class="hero-proof-chip">4 SSRN publications</li>
@@ -860,14 +924,16 @@
             <li class="hero-proof-chip">~250 investments diligenced</li>
           </ul>
           <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
-            <a class="btn btn-primary cta-primary matrix-hover-activator" href="/papers/routing-the-dollar">Read the flagship paper</a>
-            <a class="btn btn-secondary matrix-hover-activator" href="/papers/mvep">Tokenization equivalence framework</a>
+            <a class="btn btn-primary cta-primary matrix-hover-activator" href="/papers/routing-the-dollar">Read the flagship brief</a>
+            <a class="btn btn-secondary matrix-hover-activator" href="/papers/mvep">View the MVEP framework</a>
           </div>
           <p class="hero-institutional hero-qualifier">
-            Submitted to the <a href="https://www.federalreserve.gov/conferences/fifth-conference-on-the-international-roles-of-the-us-dollar.htm" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
+            <em>Routing the Dollar</em> prepared for the <a href="https://www.federalreserve.gov/conferences/fifth-conference-on-the-international-roles-of-the-us-dollar.htm" target="_blank" rel="noopener">FRBNY Fifth Conference on International Roles of the U.S. Dollar</a> · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
           </p>
           <p class="hero-anchors">
             <a href="/research">All research</a>
+            <span aria-hidden="true"> · </span>
+            <a href="/frameworks">Frameworks</a>
             <span aria-hidden="true"> · </span>
             <a href="/resume">Resume</a>
             <span aria-hidden="true"> · </span>
@@ -880,7 +946,7 @@
     <div style="max-width: 1200px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
     <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
       <span class="section-eyebrow">Roles</span>
-      <h2 id="audience-title">Four roles, one research program.</h2>
+      <h2 id="audience-title">Five roles, one research program.</h2>
       <div class="role-pills">
         <a href="/resume/policy" class="role-pill">
           <strong>Policy &amp; Market Infrastructure</strong>
@@ -894,12 +960,16 @@
           <strong>Stablecoin &amp; Payments Strategy</strong>
           <span>Reserve structure, redemption mechanics, control-layer design</span>
         </a>
+        <a href="/resume/ai-governance-infrastructure" class="role-pill">
+          <strong>AI Governance &amp; Infrastructure</strong>
+          <span>Control-layer instruments (CLII, MVEP) transferable to AI accountability</span>
+        </a>
         <a href="/resume/risk-controls" class="role-pill">
           <strong>Risk, Controls &amp; Market Infrastructure</strong>
           <span>Operational risk, monitoring infrastructure, committee readiness</span>
         </a>
       </div>
-      <p class="section-link"><a href="/resume">View all roles and resumes &#x2192;</a></p>
+      <p class="section-link"><a href="/resume">View all roles and resumes <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="section-compact reveal" id="frameworks" aria-labelledby="frameworks-title">
@@ -917,7 +987,7 @@
           <p>Ten categories testing whether a tokenized product maintains equivalence under stress. Reverse-engineered from the SVB weekend.</p>
         </a>
       </div>
-      <p class="section-link"><a href="/frameworks">View all frameworks &#x2192;</a></p>
+      <p class="section-link"><a href="/frameworks">View all frameworks <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="section-compact reveal" id="research" aria-labelledby="research-title">
@@ -925,10 +995,10 @@
       <h2 id="research-title">Recent papers.</h2>
       <div class="card-grid-3">
         <a href="/papers/routing-the-dollar" class="research-card-sm">
-          <span class="badge-sm badge-review">Under review</span>
+          <span class="badge-sm">Public</span>
           <h3>Routing the Dollar</h3>
           <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
-          <span class="card-venue">FRBNY conference review · March 2026</span>
+          <span class="card-venue">Prepared for FRBNY · March 2026</span>
         </a>
         <a href="/papers/mvep" class="research-card-sm">
           <span class="badge-sm">Public</span>
@@ -941,23 +1011,22 @@
           <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
         </a>
       </div>
-      <p class="section-link"><a href="/research">View all research &#x2192;</a></p>
+      <p class="section-link"><a href="/research">View all research <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="section-compact" id="contact" style="padding: 4rem 0; border-top: 1px solid var(--border-light, #2a2a2a);">
       <section class="about-card" id="about">
         <h2>About Tokenization Systems</h2>
-        <p>Tokenization Systems is an independent research, advisory, and infrastructure practice focused on digital financial systems. It produces scholarly work on stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The program targets three audiences: Federal Reserve and policy designers, institutional asset managers, and stablecoin and payments strategy teams.</p>
+        <p>Tokenization Systems is an independent research, advisory, and infrastructure practice focused on digital financial systems. It produces scholarly work on stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The program serves five audiences: Federal Reserve and policy designers, institutional asset managers, stablecoin and payments strategy teams, AI governance and infrastructure programs, and risk and controls leaders.</p>
         <p>The research holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. Every claim is replicable. The work is US-focused and independent.</p>
         <div class="about-card-meta">
           <p><strong>Researcher:</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
           <p><strong>Frameworks:</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring. Minimum Viable Equivalence Packs (MVEP) for institutional tokenization diligence.</p>
-          <p><strong>Papers on SSRN:</strong> Four published, four more pending publication.</p>
+          <p><strong>Papers:</strong> Eight across two tracks. Four currently on SSRN; the remaining four are under review.</p>
         </div>
         <div class="about-card-ctas">
-          <a href="/contact" class="cta-primary">Get in touch &#x2192;</a>
-          <a href="/speaker-and-advisory" class="cta-secondary">Speaking &amp; advisory &#x2192;</a>
-          <a href="/research" class="cta-secondary">See the research &#x2192;</a>
+          <a href="/contact" class="cta-primary">Get in touch <span aria-hidden="true">→</span></a>
+          <p class="about-card-followup">Or browse <a href="/research">research</a>, <a href="/frameworks">frameworks</a>, or <a href="/speaker-and-advisory">speaking &amp; advisory</a>.</p>
         </div>
       </section>
     </section>
@@ -965,7 +1034,7 @@
 
     <footer class="site-footer reveal">
       <div class="footer-top">
-        <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="/overview">Overview</a>
           <a href="/frameworks">Frameworks</a>

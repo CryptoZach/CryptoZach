@@ -139,7 +139,7 @@
   if(backToTop){
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 400);
-    });
+    }, { passive: true });
     backToTop.addEventListener('click', () => {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
@@ -5386,7 +5386,7 @@
         'q4',
         'q5',
         'start-by-context',
-        'seven-papers',
+        'eight-papers',
         'what-tools',
         'overview-contact'
       ];
@@ -5575,9 +5575,9 @@
         requestAnimationFrame(function(){
           var top = sectionEls[hashId].getBoundingClientRect().top + window.scrollY - scrollOffsetForTarget();
           window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-        if(history.replaceState){
-          history.replaceState(null, '', '#' + hashId);
-        }
+          if(history.replaceState){
+            history.replaceState(null, '', '#' + hashId);
+          }
         });
       }
     }

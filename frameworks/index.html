@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=88" />
+  <link rel="stylesheet" href="/styles.css?v=100" />
   <style>
     #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
   </style>
@@ -159,7 +159,7 @@
       <ol class="structure-nav__links" role="list">
         <li>
           <a href="#three-dollar-objects" class="structure-nav__link" data-section="three-dollar-objects">
-            Three dollar objects
+            Four dollar objects
           </a>
         </li>
         <li>
@@ -210,7 +210,7 @@
       <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Frameworks jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
-          <a class="page-toc-link" href="#three-dollar-objects">Three dollar objects</a>
+          <a class="page-toc-link" href="#three-dollar-objects">Four dollar objects</a>
           <a class="page-toc-link" href="#framework-stack">Framework stack</a>
           <a class="page-toc-link" href="#core-frameworks">Core frameworks</a>
           <a class="page-toc-link" href="#clii">CLII</a>
@@ -236,18 +236,22 @@
 
     <section class="reveal" id="three-dollar-objects" aria-labelledby="objects-title">
       <div class="section-title">
-        <h2 id="objects-title">Three dollar objects, one wallet</h2>
-        <p>Payment stablecoins, tokenized deposits, and yield wrappers look similar in a wallet but diverge in reserve structure, legal treatment, and crisis behavior. The frameworks below exist because each object needs different tests, different monitoring, and different escalation paths.</p>
+        <h2 id="objects-title">Four dollar objects, one wallet</h2>
+        <p>Payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers look similar in a wallet but diverge in reserve structure, legal treatment, and crisis behavior. The frameworks below exist because each object needs different tests, different monitoring, and different escalation paths.</p>
         <p>Full definitions: <a href="/overview">Overview</a>.</p>
       </div>
-      <div class="grid grid--thirds">
+      <div class="grid grid--halves">
         <article class="card">
           <h3>Payment stablecoins</h3>
           <p>Settlement objects designed for par redemption. Under GENIUS, the federal rulebook is built around the payment-stablecoin perimeter, with liquid reserve backing, public disclosures, and redemption obligations.</p>
         </article>
         <article class="card">
           <h3>Tokenized deposits</h3>
-          <p>Bank liabilities in token form. They stay inside the banking perimeter and keep the balance-sheet and supervisory logic of deposits.</p>
+          <p>A bank&apos;s existing deposit liability represented on a blockchain that mirrors its core banking ledger. Non-fungible, single-bank, redeemable only at the issuing institution. The supervisory and resolution framework carries over intact.</p>
+        </article>
+        <article class="card">
+          <h3>Deposit tokens</h3>
+          <p>A bank-issued instrument on its own ledger, fungible across institutions. Cross-bank acceptance turns a deposit token from a digitization tool into an interbank settlement rail. If one becomes the default, settlement consolidates; if several reach fungibility, settlement becomes a competitive network.</p>
         </article>
         <article class="card">
           <h3>Yield wrappers and sweeps</h3>
@@ -315,7 +319,7 @@
           <h3>Credit Migration Model</h3>
           <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales.</p>
           <p><strong>What it is for.</strong> Understanding whether reserve growth reduces, recycles, or restructures deposits; which banks gain or lose funding; and how funding quality changes even when aggregate deposits hold steady.</p>
-          <p><strong>Why it matters.</strong> The policy question is whether bank funding becomes more concentrated (fewer banks hold larger shares), more dependent on institutional rather than retail depositors, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserve balances. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of that argument; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
+          <p><strong>Why it matters.</strong> The policy question is whether bank funding becomes more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserve balances. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of that argument; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
           <p><strong>What should trigger re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
           <p class="framework-related-paper"><a href="/papers/dollar-v3">Related paper: Dollar v3</a></p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a></p>
@@ -375,30 +379,27 @@
     <section class="reveal" id="how-the-work-runs" aria-labelledby="process-title">
       <div class="section-title">
         <h2 id="process-title">How the work runs</h2>
+        <p>Four operating principles behind every framework on this page.</p>
       </div>
-      <div class="structure-table-wrap structure-table-wrap--how-work-runs" role="region" aria-label="How the work runs, four principles">
-        <table class="how-work-runs-table">
-          <tbody>
-            <tr>
-              <th scope="row">Evidence-led</th>
-              <td>Claims tie to a source, a threshold, or a tested condition before they ship.</td>
-            </tr>
-            <tr>
-              <th scope="row">Scenario architecture</th>
-              <td>The work names what should change the view, where stress enters first, and which thresholds force re-evaluation.</td>
-            </tr>
-            <tr>
-              <th scope="row">Monitoring and control design</th>
-              <td>Every framework points to a named decision owner: who approves, who monitors, who escalates, and what event forces action.</td>
-            </tr>
-            <tr>
-              <th scope="row">Versioned publication</th>
-              <td>Frameworks are public when the evidence is strong enough to support real operating decisions, with manuscripts and code published when possible.</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="grid grid--halves">
+        <article class="card">
+          <h3>Evidence-led</h3>
+          <p>Every claim ties to a source, a threshold, or a tested condition. No claim ships without one.</p>
+        </article>
+        <article class="card">
+          <h3>Stress-first design</h3>
+          <p>Each framework names where stress enters first, which thresholds force re-evaluation, and what evidence should change the view.</p>
+        </article>
+        <article class="card">
+          <h3>Named decision owners</h3>
+          <p>Every framework points to who approves, who monitors, who escalates, and what event forces action.</p>
+        </article>
+        <article class="card">
+          <h3>Versioned and replicable</h3>
+          <p>Frameworks publish when the evidence is strong enough to support real operating decisions. Manuscripts and code travel with them when possible.</p>
+        </article>
       </div>
-      <p class="track-bridge">Two research tracks, one thesis. Both converge on the same conclusion: the operator layer determines outcomes that asset-level analysis alone cannot observe.</p>
+      <p class="track-bridge">Built so allocators, regulators, and operators can trace every framework decision back to its trigger, its owner, and its evidence.</p>
     </section>
 
     <section class="reveal structure-go-deeper-cta" id="go-deeper" aria-labelledby="go-deeper-title">
@@ -408,7 +409,7 @@
       <ul class="structure-go-deeper-list">
         <li>Start with <a href="/overview">Overview</a> for definitions and entry points</li>
         <li>Go to <a href="/research">Research Library</a> for papers and summaries</li>
-        <li>View <a href="/resume">Resume</a> for decision-context versions</li>
+        <li>View <a href="/resume">Resume</a> for decision-context versions, including the new <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a> profile</li>
         <li><a href="/contact">Get in touch</a> for the requestable dashboard and memo set</li>
         <li>View <a href="/research#track-b">Tokenomics &amp; DePIN track</a> for mechanism design and operational failure research</li>
       </ul>
@@ -416,7 +417,7 @@
 
     <footer class="site-footer reveal">
       <div class="footer-top">
-        <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="/overview">Overview</a>
           <a href="/frameworks">Frameworks</a>

@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=88" />
+  <link rel="stylesheet" href="/styles.css?v=100" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -209,14 +209,14 @@
       </div>
 
       <section id="best-first-read" class="featured-research reveal" aria-label="Featured papers">
-        <article id="routing-the-dollar" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="submitted">
+        <article id="routing-the-dollar" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="public">
           <a class="writing-link writing-link--thumb" href="/papers/routing-the-dollar">
             <div class="writing-meta">
               <div class="card-badges">
-                <span class="badge">Under review</span>
+                <span class="badge badge-public">Public</span>
                 <span class="badge">Best first read</span>
               </div>
-              <span class="writing-meta-line">Mar 2026 · SSRN · FRBNY conference review pending · Policy / Markets / Stablecoins</span>
+              <span class="writing-meta-line">Mar 2026 · SSRN · Prepared for FRBNY Dollar Conference · Policy / Markets / Stablecoins</span>
               <p class="writing-evidence-type">Evidence type: On-chain panel + stress episodes</p>
             </div>
             <img class="writing-thumb thumb-clii" src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram showing gateway classification across 19 entities" loading="eager" />
@@ -292,6 +292,7 @@
           <li><strong>If you are designing a digital-dollar product or payment stack →</strong> <a href="/papers/dollar-v3">Dollar v3</a> and <a href="/papers/control-layer-war">The Control Layer War</a></li>
           <li><strong>If you are designing incentives and token supply rules →</strong> <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a></li>
           <li><strong>If you are stress-testing governance under real infrastructure conditions →</strong> <a href="/papers/operational-risk">Operational Risk in Token Economies</a></li>
+          <li><strong>If you are working on AI governance or infrastructure accountability →</strong> <a href="/papers/routing-the-dollar">Routing the Dollar</a> and <a href="/papers/mvep">Minimum Viable Equivalence Pack</a> (transferable control-layer instruments). See the <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure profile</a>.</li>
         </ul>
       </section>
 
@@ -317,12 +318,12 @@
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 and The Control Layer War: three digital-dollar objects and control-layer map" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 id="dollar-control-title" class="writing-title">Dollar v3 / The Control Layer War</h3>
-                <p class="writing-thesis"><strong>Three dollar objects share one wallet surface; defaults, holds, and routing decide who controls them.</strong></p>
+                <p class="writing-thesis"><strong>Four dollar objects share one wallet surface; defaults, holds, and routing decide who controls them.</strong></p>
               </div>
               <div class="writing-copy">
-                <p class="writing-teaser">Two companion pages from one Track A output. Dollar v3 maps the three digital-dollar objects, Layer 0, and deposit mutation. The Control Layer War maps where compliance becomes operational.</p>
+                <p class="writing-teaser">Two companion pages from one Track A output. Dollar v3 maps the four digital-dollar objects, Layer 0, and deposit mutation. The Control Layer War maps where compliance becomes operational.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Dollar v3 separates payment stablecoins, tokenized deposits, and yield wrappers by legal perimeter, reserve plumbing, and crisis behavior. The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 argument that stablecoins can reduce, recycle, or restructure deposits.<br />
+                  <strong>What it is:</strong> Dollar v3 separates payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers by legal perimeter, reserve structure, and crisis behavior. The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 argument that stablecoins can reduce, recycle, or restructure deposits.<br />
                   The Control Layer War maps how CLARITY-style provisions (House-passed form analyzed here) attach compliance to interfaces, routing defaults, holds, sweeps, and audit logs. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.
                 </p>
               </div>
@@ -383,10 +384,11 @@
 
       <div class="writing-more">
         <p>
-          Hiring or evaluating fit for a policy, tokenization, market-infrastructure, or risk/controls role?
+          Hiring or evaluating fit for a policy, tokenization, market-infrastructure, AI governance, or risk/controls role?
           <a href="/resume/policy">Policy &amp; Market Infrastructure</a> ·
           <a href="/resume/asset-management">Asset Management &amp; Tokenization</a> ·
           <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a> ·
+          <a href="/resume/ai-governance-infrastructure">AI governance &amp; infrastructure</a> ·
           <a href="/resume/risk-controls">Risk, Controls &amp; Market Infrastructure</a>
         </p>
       </div>
@@ -668,8 +670,8 @@
               </tr>
               <tr>
                 <th scope="row">What happens under stress</th>
-                <td>Capital rotates across dollar gateways rather than exiting dollar-pegged instruments. During SVB, Circle (1.39x retention) and Coinbase (2.63x) diverged sharply despite near-identical CLII scores; the gap traced to banking exposure, not regulatory tier. Curve 3pool, a permissionless Tier 3 protocol, absorbed the most displaced volume at 12.35x. During the BUSD wind-down, where Paxos guaranteed 1:1 redemption and no peg pressure existed, users chose exchange continuity over regulatory protection: Wintermute&apos;s volume surged from $4.7B to $24.4B mediating the BUSD-to-USDT migration into Binance, while Paxos as a Binance counterparty declined 88%. In both events the salient variation was entity-level, not tier-level. CLII captures compliance posture, not resilience.</td>
-                <td>Adaptive emission control raises the floor under worst-case outcomes rather than improving averages. An adaptive controller calibrated to Helium parameters (240-run simulation) reduces the spread of network size outcomes by sixfold compared to fixed emission, raising the worst-case from roughly 1,000 to roughly 9,000 nodes. The compression is strongest under bear markets (CV 0.219 vs. 0.958) but inverts under regulatory shock, where fixed emission produces marginally lower price variance. Adaptive control does not dominate uniformly; the contribution is identifying where, on which dimension, and under which conditions each mechanism provides value.</td>
+                <td>Capital rotates across dollar gateways and stays within dollar-pegged instruments. During SVB, Circle (1.39x retention) and Coinbase (2.63x) diverged sharply despite near-identical CLII scores; the gap traced to banking exposure, not regulatory tier. Curve 3pool, a permissionless Tier 3 protocol, absorbed the most displaced volume at 12.35x. During the BUSD wind-down, where Paxos guaranteed 1:1 redemption and no peg pressure existed, users chose exchange continuity over regulatory protection: Wintermute&apos;s volume surged from $4.7B to $24.4B mediating the BUSD-to-USDT migration into Binance, while Paxos as a Binance counterparty declined 88%. In both events the salient variation was entity-level, not tier-level. CLII captures compliance posture, not resilience.</td>
+                <td>Adaptive emission control raises the floor under worst-case outcomes; averages do not improve. An adaptive controller calibrated to Helium parameters (240-run simulation) reduces the spread of network size outcomes by sixfold compared to fixed emission, raising the worst-case from roughly 1,000 to roughly 9,000 nodes. The compression is strongest under bear markets (CV 0.219 vs. 0.958) but inverts under regulatory shock, where fixed emission produces marginally lower price variance. Adaptive control does not dominate uniformly; the contribution is identifying where, on which dimension, and under which conditions each mechanism provides value.</td>
               </tr>
               <tr>
                 <th scope="row">Where the economics sit</th>
@@ -691,7 +693,7 @@
 
     <footer class="site-footer reveal">
       <div class="footer-top">
-        <div class="footer-copy">© <span id="year"></span> Tokenization Systems</div>
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="/overview">Overview</a>
           <a href="/frameworks">Frameworks</a>
