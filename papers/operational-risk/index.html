@@ -66,7 +66,7 @@
       "name": "Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers and Break Reputation Systems",
       "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems" },
       "datePublished": "2026-03",
-      "description": "624-configuration simulation using real outage rates from Ethereum, Helium, Geodnet, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks.",
+      "description": "624-configuration simulation using real outage rates from Ethereum, Helium, GEODNET, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks.",
       "url": "https://tokenization.systems/papers/operational-risk",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/operational-risk" },
       "isBasedOn": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118",
@@ -155,7 +155,7 @@
       <p class="paper-metadata-strip">~15 min read · ~6,500 words · 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, Geodnet, and Filecoin, using the emerging ValOS and NORS standards as the taxonomy for what can go wrong in production. The result is a split finding: temporary infrastructure failures make adaptive emission control more resilient under stress, while a threshold-gated reputation system can become structurally nonfunctional under routine operational risk.</p>
+      <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, GEODNET, and Filecoin, using the emerging ValOS (Validator Operating System) and NORS (Node Operator Reputation System) standards as the taxonomy for what can go wrong in production. (Maintainer attributions for ValOS and NORS pending verification; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.) The result is a split finding: temporary infrastructure failures make adaptive emission control more resilient under stress, while a threshold-gated reputation system can become structurally nonfunctional under routine operational risk.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
@@ -164,7 +164,7 @@
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The reputation system does not gradually drift; it collapses. At the default 99% uptime threshold over a 90-day season, average reputation decays to 0.18 on a 0-to-5 scale by year 5, effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
+          <p class="paper-takeaway-text">The reputation system does not gradually drift; it collapses. Model parameters: uptime threshold (0.99), season length (90 days). The recovery threshold is the proportion of pre-shock reputation an operator must regain before re-entering full rotation. At the default 99% uptime threshold over a 90-day season, average reputation decays to 0.18 on a 0-to-5 scale by year 5 of simulation clock (not calendar time), effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by simulation year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
@@ -248,7 +248,8 @@
         <p>The fix is specific: lower the recovery threshold. At 0.95, average reputation restores to approximately 1.0 by year 5. At 0.90, it restores to approximately 2.0. Changing the decay parameter alone does not restore stability at the 0.99 threshold. This is one of the most actionable findings in the paper.</p>
 
         <h3>4. The methodological bridge matters as much as the findings</h3>
-        <p>ValOS and NORS are not background context; they are the institutional bridge between simulation and production controls. ValOS supplies the granular taxonomy of risk vectors and controls; NORS supplies the certification logic institutions can audit. The case-study signal is that this control language is already becoming economically consequential: Lido V3 stVaults use operator risk scores to set collateral requirements, and Figment's Full NORS Certification is evidence that these standards are moving from voluntary checklists toward enforceable operating rules.</p>
+        <p>ValOS and NORS are not background context; they are the institutional bridge between simulation and production controls. ValOS supplies the granular taxonomy of risk vectors and controls; NORS supplies the certification logic institutions can audit. The case-study signal is that this control language is already becoming economically consequential: as of March 2026, Lido V3 stVaults use operator risk scores to set collateral requirements, and Figment&rsquo;s Full NORS Certification is evidence that these standards are moving from voluntary checklists toward enforceable operating rules. (Specific launch and certification dates pending verification, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>; the underlying pattern, reputation-system operators seeking formal certification frameworks, is observable across multiple operator categories.)
+        <!-- MAINTENANCE: Re-verify Lido V3 stVaults launch and Figment Full NORS Certification quarterly. Next check: July 2026. --></p>
 
         <h2>Methods / Data</h2>
         <p>The simulation battery comprises approximately 624 runs:</p>
@@ -256,11 +257,11 @@
           <li><strong>240 baseline runs</strong> (from the Adaptive Tokenomics paper)</li>
           <li><strong>240 operational-risk ensemble runs</strong> (30 seeds x 8 configurations with the operational-risk layer active)</li>
           <li><strong>84 per-parameter sweeps</strong> (sensitivity across individual operational-risk parameters)</li>
-          <li><strong>12 protocol-specific runs</strong> (calibrated to Ethereum, Helium, Geodnet, and Filecoin failure profiles)</li>
+          <li><strong>12 protocol-specific runs</strong> (calibrated to Ethereum, Helium, GEODNET, and Filecoin failure profiles)</li>
           <li><strong>40 correlated-shock runs</strong> (testing simultaneous infrastructure failures across operator groups)</li>
           <li><strong>8 interaction tests</strong> (examining how operational risk interacts with economic shocks)</li>
         </ul>
-        <p><strong>Calibration:</strong> Ethereum validator performance data, Helium network contraction and hotspot reliability, Geodnet station uptime, and Filecoin sector fault rates. MeshNet base assumptions: 0.5% daily downtime probability, 3% annual exit rate, 0.05% annual operational slashing rate, 10% correlated-failure exposure per event, 20% partial-failure share, mean recovery time of 3 days capped at 42 days.</p>
+        <p><strong>Calibration:</strong> Ethereum validator performance data, Helium network contraction and hotspot reliability, GEODNET station uptime, and Filecoin sector fault rates. MeshNet base assumptions: 0.5% daily downtime probability, 3% annual exit rate, 0.05% annual operational slashing rate, 10% correlated-failure exposure per event, 20% partial-failure share, mean recovery time of 3 days capped at 42 days.</p>
         <p>The paper notes that these point estimates reflect author judgment within documented ranges; they are not mechanical aggregation from a single source.</p>
 
         <div class="paper-key-numbers">
@@ -268,7 +269,7 @@
           <p><strong>Simulation battery</strong><br>
           ~624 runs: 240 baseline + 240 operational-risk ensemble + 84 sweeps + 12 protocol-specific + 40 correlated-shock + 8 interaction tests</p>
           <p><strong>PID stabilization (operational risk widens the gap)</strong><br>
-          Competitor shock: static CV 0.544 to 0.569; PID CV 0.087 to 0.082 (variance compression improves from 6.25x to 6.89x)<br>
+          Competitor shock: static CV 0.544 to 0.569; PID CV 0.087 to 0.082 (variance compression improves from 6.25x to 6.89x). CV is coefficient of variation; specific underlying variable pending author resolution, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a><br>
           Regulatory shock: static CV 0.229 to 0.561; PID CV 0.093 to 0.070<br>
           Bull: effectively identical</p>
           <p><strong>Correlated failure</strong><br>
@@ -281,7 +282,7 @@
           <p><strong>ValOS/NORS mapping</strong><br>
           74 active ValOS risk vectors · 64 testable controls · 31 NORS control objectives to 7 simulatable parameters</p>
           <p><strong>Calibration sources</strong><br>
-          Ethereum validator data · Helium network contraction · Geodnet station uptime · Filecoin sector fault rates</p>
+          Ethereum validator data · Helium network contraction · GEODNET station uptime · Filecoin sector fault rates</p>
         </div>
 
         <h2>Limitations</h2>

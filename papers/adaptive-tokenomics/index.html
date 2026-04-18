@@ -155,7 +155,7 @@
       <p class="paper-metadata-strip">~35 min read · ~20,900 words · March 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <p class="paper-thesis">Token design is best understood as systems engineering. MeshNet, a fictional but empirically parameterized DePIN network, combines productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions, then stress-tests the full stack across five years of adverse scenarios. The result is that integrated design reveals which mechanisms earn their complexity, which failure modes only appear under stress, and where bootstrapping economics diverge from long-run theory. Results are mechanism demonstrations under stated assumptions; they are not deployment forecasts.</p>
+      <p class="paper-thesis">Token design is best understood as systems engineering. MeshNet (a fictional but empirically parameterized DePIN network used throughout this paper to illustrate the framework; not a real operator or deployed protocol) combines productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional, integral, derivative controller, a standard feedback-control architecture used in engineering to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios. The result is that integrated design reveals which mechanisms earn their complexity, which failure modes only appear under stress, and where bootstrapping economics diverge from long-run theory. Results are mechanism demonstrations under stated assumptions; they are not deployment forecasts.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
@@ -264,7 +264,7 @@
             <tr><td>Node count target (N*)</td><td>10,000</td><td>n/a</td><td>Design choice</td></tr>
           </tbody>
         </table>
-        <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a></p>
+        <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration source URLs (manufacturer pricing, Messari, ByteTree, Dune Analytics) pending verification with stable references; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.</p>
       </section>
 
       <div class="paper-abstract">
@@ -307,7 +307,7 @@
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
         <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
-        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Governance concentration data drawn from 12 DePIN and DeFi protocols.</p>
+        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Governance concentration analysis draws on a twelve-protocol subset selected from a broader DePIN and DeFi sample on criteria of public governance token availability, measurable concentration metrics, and at least 12 months of post-launch history (specific subset selection criteria pending author resolution, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>).</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>

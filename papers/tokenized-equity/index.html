@@ -149,9 +149,9 @@
       <h1 id="paper-title">Tokenized Equity Vehicles: Key Findings</h1>
 
       <p class="paper-metadata-strip">Medium · Jul 2025 · Asset Management / Tokenization / Market Structure</p>
-      <p class="paper-description-note">Summary current as of March 2026. Full article includes figures on Medium.</p>
+      <p class="paper-description-note">Summary current as of March 2026. Full article includes figures on Medium. Summary is updated when the Medium post materially changes; check the linked Medium post for the canonical current version.</p>
 
-      <p class="paper-thesis">Two June 30, 2025 tokenized-equity launches in Europe took different paths to the same goal: giving users on crypto rails access to U.S. equities. <strong>Robinhood Stock Tokens</strong> are closed-loop OTC derivative contracts inside the Robinhood Europe UAB app (Arbitrum-based, EU-only, 24/5 trading). <strong>Backed xStocks</strong> are freely transferable tracker certificates issued through a Jersey SPV and backed 1:1 by segregated shares, distributed across Kraken, Bybit, and Solana DeFi venues (ERC-20 and SPL, 24/7 trading). The core trade-off is broker-wrapped synthetic exposure with internal liquidity versus open, collateralized, multi-venue tokenized certificates with composability and more technical risk.</p>
+      <p class="paper-thesis">Two June 30, 2025 tokenized-equity launches in Europe took different paths to the same goal: giving users on crypto rails access to U.S. equities. <strong>Robinhood Stock Tokens</strong> are closed-loop OTC derivative contracts inside the Robinhood Europe UAB app (Arbitrum-based, EU-only, 24/5 trading). <strong>Backed xStocks</strong> are freely transferable tracker certificates issued through a Jersey special purpose vehicle (SPV) and backed 1:1 by segregated shares, distributed across Kraken, Bybit, and Solana DeFi venues (ERC-20 and SPL, 24/7 trading). The core trade-off is broker-wrapped synthetic exposure with internal liquidity versus open, collateralized, multi-venue tokenized certificates with composability and more technical risk.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
@@ -183,19 +183,19 @@
 
         <h2>1. Product overviews: two architectures</h2>
         <p><strong>Robinhood Stock Tokens.</strong> OTC derivative contracts on a closed Arbitrum instance. Users buy inside the Robinhood app, cannot withdraw tokens to external wallets, and rely on Robinhood to quote prices, hedge exposure, and manage corporate-action adjustments. The blockchain layer exists but is largely invisible to the end user at launch. Legally closer to contract-for-difference broker contracts than to portable on-chain securities.</p>
-        <p><strong>Backed xStocks.</strong> Transferable tracker certificates (classified as debt securities) issued through a Jersey SPV, backed 1:1 by underlying shares held through custody arrangements and secured by a Security Agent. Launched as ERC-20 and Solana SPL tokens, with distribution across Kraken, Bybit, and Solana DeFi venues. Broader chain expansion discussed as a forward path.</p>
+        <p><strong>Backed xStocks.</strong> Transferable tracker certificates (classified as debt securities) issued through a Jersey SPV, backed 1:1 by underlying shares held through custody arrangements and secured by a Security Agent. Launched as ERC-20 and Solana SPL tokens (SPL is the Solana Program Library token standard, Solana's fungible-token primitive analogous to Ethereum's ERC-20), with distribution across Kraken, Bybit, and Solana DeFi venues. Broader chain expansion discussed as a forward path.</p>
         <p><em>Figures:</em> product and rights diagrams appear in the full Medium article.</p>
 
         <h2>2. Regulatory context: launch catalysts, not blanket approvals</h2>
         <p>The late-June/early-July 2025 regulatory backdrop created a more favorable window for launch but did not amount to a universal approval for tokenized equities as a category.</p>
-        <p><strong>EU:</strong> ESMA&rsquo;s DLT Pilot review (25 Jun) recommended a permanent framework; MiCA/MiFID templates reduced ambiguity for tokenized instruments.</p>
-        <p><strong>U.S.:</strong> FINRA licensed Dinari (26 Jun); the SEC remained in an observational posture.</p>
+        <p><strong>EU:</strong> ESMA&rsquo;s review of the DLT Pilot Regime (EU Regulation 2022/858, in force March 2023) on 25 Jun recommended a permanent framework; MiCA/MiFID templates reduced ambiguity for tokenized instruments.</p>
+        <p><strong>U.S.:</strong> As of the paper&rsquo;s original publication in July 2025, FINRA licensed Dinari (26 Jun) and the SEC remained in an observational posture. Status as of April 2026 is not independently re-verified; readers should check directly with FINRA BrokerCheck and SEC.gov for current status.</p>
         <p><strong>ECB:</strong> The &ldquo;Pontes/Appia&rdquo; wholesale-DLT pilots (1 Jul) signaled future central-bank-money settlement on DLT rails.</p>
         <p>The analytic point is how each product fits into existing legal frameworks: Robinhood used a non-transferable derivative structure to stay outside the prospectus path, while Backed used a Liechtenstein-approved prospectus and ISIN-bearing securities route.</p>
 
         <h2>3. Technical architecture: closed rails versus open rails</h2>
         <p><strong>Robinhood:</strong> Closed Arbitrum-based settlement environment with internal custody, broker-controlled execution, and a &plusmn;0.5% price collar around reference prices. Trust concentrates in one broker and one app experience: fewer attack surfaces, more single-firm dependence.</p>
-        <p><strong>xStocks:</strong> Multi-chain architecture using Chainlink CCIP for cross-chain state synchronization, Data Streams for sub-second pricing, and Proof of Reserve for collateral visibility. Trust distributes across smart contracts, custodians, exchanges, oracles, and bridge infrastructure: more composability, more technical and coordination risk.</p>
+        <p><strong>xStocks:</strong> Multi-chain architecture using Chainlink&rsquo;s Cross-Chain Interoperability Protocol (CCIP) for cross-chain state synchronization, Data Streams for sub-second pricing, and Proof of Reserve for collateral visibility. Trust distributes across smart contracts, custodians, exchanges, oracles, and bridge infrastructure: more composability, more technical and coordination risk.</p>
 
         <h2>4. Investor rights and risk: neither product is direct share ownership</h2>
         <p>Both products deliver economic exposure; neither gives direct shareholder status.</p>
@@ -210,7 +210,7 @@
         <p>The article&rsquo;s view is that xStocks have stronger long-run network effects if regulation remains manageable and DeFi integrations deepen. That is an argument about market structure and liquidity dynamics; it is not a demonstrated outcome from the June 2025 launch.</p>
 
         <h2>6. Adoption scenarios (2025-2027)</h2>
-        <p>These are planning cases for how the broader tokenized-equity market could develop, conditional on specific catalysts. They are not findings from the June 2025 launch itself.</p>
+        <p>Scenarios are illustrative planning cases grounded in institutional pipeline signals and pilot observations, not forecasts or backtests. Ranges reflect qualitative assessment, not empirical fit. They are not findings from the June 2025 launch itself.</p>
         <table>
           <thead>
             <tr>
