@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Three Tokenization Strategies: Infrastructure competition and settlement architecture | Tokenization Systems</title>
+  <meta name="description" content="Institutional tokenization of US securities is proceeding through three distinct strategies. Securitize is transfer agent across all three, a system-level concentration risk that entity-level regulatory scores do not capture." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="tokenization, tokenized securities, BUIDL, JPMD, Ubyx, Securitize, Canton Network, Nasdaq, NYSE, DTC, deposit tokens, MVEP, CLII, settlement infrastructure, corporate actions, market structure" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Three Tokenization Strategies" />
+  <meta property="og:description" content="Three strategies, one transfer agent, one clearing layer. The system-level risks live in the entities that connect the strategies, not in the strategies themselves." />
+  <meta property="og:url" content="https://tokenization.systems/papers/three-strategies" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/MVEP_Cover_v2.png" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Three Tokenization Strategies, infrastructure competition and settlement architecture" />
+  <link rel="canonical" href="https://tokenization.systems/papers/three-strategies" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Three Tokenization Strategies" />
+  <meta name="twitter:description" content="Collateral circuit, multi-issuer yield stack, tokenized equity rails. Securitize is transfer agent in all three. The corporate-actions gap is the most novel operational risk on the roadmap." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/MVEP_Cover_v2.png" />
+  <meta name="twitter:image:alt" content="Three Tokenization Strategies, infrastructure competition and settlement architecture" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+
+  <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin.png" />
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=100" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
+        { "@type": "ListItem", "position": 3, "name": "Three Tokenization Strategies", "item": "https://tokenization.systems/papers/three-strategies" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "name": "Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk in Institutional Digital Asset Markets",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems" },
+      "datePublished": "2026-03",
+      "description": "Institutional tokenization of US securities is proceeding through three distinct strategies, each composed from the same small set of entities. The same transfer agent (Securitize) sits in all three, a system-level concentration risk entity-level regulatory scores do not capture.",
+      "url": "https://tokenization.systems/papers/three-strategies",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/three-strategies" },
+      "image": "https://tokenization.systems/Publication-Images/MVEP_Cover_v2.png",
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
+      "creativeWorkStatus": "Working paper",
+      "keywords": "Track A: Stablecoin and dollar infrastructure, tokenization, Securitize, Ubyx, JPMD, Canton Network, BUIDL, MVEP, CLII"
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Tokenization Systems</strong>
+          <span>Digital Asset Research &amp; Consulting</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/resume">Resume</a>
+          <a class="navlink" href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <button class="mobile-nav-close" type="button" aria-label="Close menu" onclick="document.getElementById('menuToggle').click()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mobile-nav-linkset">
+      <a class="navlink" href="/overview">Overview</a>
+      <a class="navlink" href="/frameworks">Frameworks</a>
+      <a class="navlink active" href="/research" aria-current="page">Research</a>
+      <a class="navlink" href="/resume">Resume</a>
+      <a class="navlink" href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+      <a class="navlink" href="/contact">Contact</a>
+    </div>
+    <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+      <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+      <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <a href="/research">Research</a> &gt; Three Tokenization Strategies
+      </nav>
+
+      <span class="paper-track-badge">Track A: Stablecoin and dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge">Working paper</span>
+        <span class="badge">SSRN pending</span>
+      </div>
+
+      <h1 id="paper-title">Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk in Institutional Digital Asset Markets</h1>
+
+      <p class="paper-metadata-strip">~12 min read · 2026 · Working paper</p>
+      <p class="paper-description-note">Infrastructure map dated March 27, 2026. Institutional tokenization is evolving rapidly; events after this date may alter sequencing and competitive dynamics.</p>
+
+      <p class="paper-thesis">Institutional tokenization of US securities is proceeding through three distinct strategies: a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router, and tokenized equity rails on Nasdaq and NYSE. Each strategy synthesizes infrastructure from different combinations of regulated entities, but the same small set of entities recurs. Securitize, an SEC-registered transfer agent, sits in all three. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
+
+      <div class="paper-takeaways">
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">1</span>
+          <p class="paper-takeaway-text">Three distinct strategies are now under construction. Strategy 1 is a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, cleared at par through Ubyx (a new clearing layer that allows different banks' deposit tokens to settle against each other). Strategy 2 is a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router. Strategy 3 is tokenized equity rails on Nasdaq and NYSE. The MVEP category profile across the three is a complementarity map, not a competitive ranking.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">2</span>
+          <p class="paper-takeaway-text">Securitize, an SEC-registered transfer agent (the regulated entity that maintains the authoritative holder register for a security), is transfer agent across all three strategies. Entity-level regulatory scores rate Securitize high. System-effective regulatory strength is lower, because the same entity operates across all three strategies with no documented fallback. A 72-hour Securitize operational failure would degrade all three simultaneously.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">3</span>
+          <p class="paper-takeaway-text">Strategy 3 faces a novel reconciliation gap that current frameworks do not address. When the Depository Trust Company (DTC) operates on business-day cycles and tokens trade 24/7, record dates, ex-dates, and stock splits produce different holders on-chain and on the DTC register at the same instant. Three architectures can close the gap (trading halt, blockchain-as-authoritative, dual-record synchronization); each has distinct operational-risk implications.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text">The deposit-token market is control-layer competition applied to institutional settlement. JPMorgan, BNY, and Citi are each building bank-issued deposit tokens; Ubyx is building a clearing layer that allows them to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer. If multi-issuer clearing operates, the rent is competed away. Who routes the token matters more than what the token is called.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Central banks</span>
+        <span class="paper-audience-tag">Policy designers</span>
+        <span class="paper-audience-tag">Securities regulators</span>
+        <span class="paper-audience-tag">Exchange operators</span>
+        <span class="paper-audience-tag">Transfer agents</span>
+        <span class="paper-audience-tag">Prime brokers</span>
+        <span class="paper-audience-tag">Clearinghouses</span>
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Tokenization issuers</span>
+        <span class="paper-audience-tag">Risk committees</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="mailto:Zach@Tokenization.Systems?subject=Three%20Tokenization%20Strategies%20-%20Pre-print%20Request">Email for a pre-print</a>
+          <span class="access-link" aria-disabled="true">SSRN: upload pending</span>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Three%20Tokenization%20Strategies%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <span class="access-link" aria-disabled="true">GitHub replication: forthcoming</span>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>What this paper changes</h2>
+        <p>The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
+        <p>The paper maps each strategy against the <a href="/frameworks#mvep">MVEP</a>'s ten diligence categories, develops nine stress scenarios traced through the category failure chains, and identifies the four cross-cutting findings that shape the institutional-tokenization roadmap. The analysis is prospective: the collateral circuit is live in controlled production, the yield stack is composed from operating products, and the tokenized equity rails went from SEC approval (Nasdaq, March 18, 2026) to a signed MoU (NYSE with Securitize, March 24, 2026) in the week before the paper went to draft.</p>
+
+        <figure class="paper-figure-callout" aria-label="Figure 1 caption">
+          <figcaption>
+            <strong>Figure 1.</strong> Strategy 1 (the Regulated Collateral Circuit). DTC-tokenized Treasuries serve as 24/7 margin collateral. The asset leg settles on Canton Network, a permissioned blockchain designed for institutional finance. The cash leg settles in bank-issued deposit tokens (JPMD is JPMorgan's USD deposit token, with BNY and Citi equivalents announced). Ubyx clears the legs together at par. The circuit satisfies all ten MVEP categories by construction; its binding constraint is Ubyx's depth across deposit-token issuers.
+          </figcaption>
+        </figure>
+
+        <h2>Finding 1. Each strategy is strongest where the others are weakest</h2>
+        <p>Strategy 1 (Regulated Collateral Circuit) is strongest on custody and settlement finality, because it uses DTC and Canton Network's atomic settlement, a design in which the asset leg and cash leg of a transaction either both succeed or both fail. Strategy 2 (Multi-Issuer Yield Stack) is strongest on collateral operability, because the redemption router spreads demand across multiple underlying pools, avoiding concentration in any single one. Strategy 3 (Tokenized Equity Rails) is strongest on rights parity, because SEC rules mandate identical economic and voting rights for tokenized and non-tokenized shares, and weakest on reconciliation, because 24/7 trading runs on a different clock than business-day corporate actions.</p>
+        <p><strong>What this means.</strong> An institution cannot rank the strategies on a single axis; they satisfy different diligence categories with different strength. The MVEP category profile is a complementarity map, not a competitive ranking. A portfolio that needs a strong custody profile and a strong collateral operability profile needs both strategies operating together, not a choice between them.</p>
+
+        <h2>Finding 2. Securitize concentration is a system-level risk that entity-level scoring does not capture</h2>
+        <p>Securitize is the transfer agent for BUIDL (BlackRock's tokenized US Treasury money-market fund and the largest on-chain institutional tokenized product), for the BUIDL layer of Strategy 2's yield stack, and for NYSE's digital-asset trading platform. It is also the first digital transfer agent approved to mint on NYSE's Digital Trading Platform and an expected broker-dealer participant there. The same entity therefore connects the collateral asset layer, the yield-stack underlying layer, and the equity-venue register.</p>
+        <p>A 72-hour Securitize operational failure, from any cause, would freeze the authoritative register in all three strategies simultaneously. No fallback digital transfer agent is documented in the BUIDL operating documents or in the public NYSE Digital Trading Platform materials. Entity-level regulatory scoring rates Securitize high, consistent with its SEC registration and institutional client base. System-effective regulatory strength, measured as the degree of independent redundancy across the three strategies, is lower.</p>
+        <p><strong>What this means.</strong> Regulatory frameworks calibrated for entity-level assessment (<a href="/frameworks#clii">CLII</a>, transfer-agent licensing, cybersecurity rules) are necessary but not sufficient. A second diligence pass is required at the system level: which entities appear in more than one strategy, and what fallback infrastructure exists for each.</p>
+
+        <h2>Finding 3. Strategy 3's corporate-actions gap requires an explicit architecture choice</h2>
+        <p>Corporate actions are the business-day events that change share counts, ownership, or economic rights: stock splits, dividends, mergers, and the record dates and ex-dates that govern them. A stock split announced Friday at 4pm with a Monday record date (the date on which a holder must be on the register to receive the corresponding adjustment) illustrates the gap. Tokenized shares of the same CUSIP trade all weekend. If a tokenized share changes hands six times between Friday close and Monday open, the DTC register (updated Monday) and the blockchain ledger (updated continuously) show different holders at the same timestamp. This is the corporate actions reconciliation gap, and it is the most novel failure mode in the tokenized-equities strategy.</p>
+        <p>Three architectures close the gap. The first halts tokenized trading during corporate-action processing windows, which removes the 24/7 trading feature that motivated tokenization. The second designates the blockchain ledger as authoritative, which requires DTC to change its record-keeping role. The third runs a dual-record synchronization protocol with a named adjudication procedure for divergences at the record date. Each architecture satisfies different MVEP categories and imposes different costs on issuers, exchanges, and holders.</p>
+        <p><strong>What this means.</strong> The corporate-actions gap is not a defect that can be patched inside the existing Nasdaq or NYSE rulebook. It is a design decision that SEC rulemaking, exchange implementation, and DTC operations will make explicitly or implicitly. The paper specifies the three options and the MVEP implications of each so the choice can be made deliberately.</p>
+
+        <h2>Finding 4. The deposit-token market is control-layer competition applied to institutional settlement</h2>
+        <p>JPMorgan, BNY, and Citi are each building bank-issued deposit tokens. Ubyx is building a clearing layer that allows these tokens to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer; if multi-issuer clearing operates, the settlement rent is competed away. This is the same control-layer competition the research program identifies across the dollar stack: who routes the token matters more than what the token is called.</p>
+        <p>The binding constraint on multi-issuer clearing is not regulatory. It is infrastructure: the clearing function must verify funding and settle in a single atomic operation using pre-funded Delivery versus Payment (DvP, where the cash and asset legs settle simultaneously only after both sides are verified funded), each issuer must expose a settlement account visible exclusively to the clearing layer, and a named procedure must govern cascading settlement failure when an upstream payment bounces. A pre-funded architecture sidesteps the insolvency-posture divergence across issuers (a working-paper extension; see Forthcoming below).</p>
+        <p><strong>What this means.</strong> Whether institutional settlement becomes a competitive market or a single-issuer monopoly depends on whether Ubyx, or a successor clearing entity, achieves multi-issuer depth before one bank achieves dominant volume. Policy attention to the deposit-token layer should focus on the clearing function; absent multi-issuer clearing, supervisory attention to any one issuer has limited effect.</p>
+
+        <p class="paper-callout"><strong>Forthcoming.</strong> The pre-funded-clearing architecture extension is drafted and will be added after author verification with Ubyx. The extension is not a revision; it is additional analysis of how pre-funded DvP reshapes the binding constraints.</p>
+
+        <h2>Who should care</h2>
+        <p><strong>Policymakers.</strong> If the goal is to prevent the tokenized-securities buildout from repeating the concentrated-custody failure modes of 2022 to 2023, the supervisory instrument most likely to catch it is a system-level diligence pass that names the shared dependencies across strategies, not an entity-level regulatory rating.</p>
+        <p><strong>Issuers, operators, and transfer agents.</strong> What determines whether a strategy clears its MVEP profile is the independence of its shared-entity dependencies. A strategy strong on custody but weak on transfer-agent redundancy is operationally fragile in ways that entity-level scores do not reveal.</p>
+        <p><strong>Investors and market-structure teams.</strong> The three strategies produce complementary MVEP profiles; the corporate-actions gap in Strategy 3 is the most novel operational risk on the roadmap; the deposit-token competition is the control-layer question for institutional settlement.</p>
+
+        <h2>Dollar-infrastructure context</h2>
+        <p>Three Tokenization Strategies is the fourth and most forward-looking paper in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and the gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. The Seven Dollars work applies both frameworks to seven dollar-denominated digital products. This paper extends the same control-layer logic to institutional settlement infrastructure: tokenized Treasuries, tokenized equities, and bank-issued deposit tokens.</p>
+
+        <blockquote class="paper-thesis-line">
+          <p>Three strategies, one transfer agent, one clearing layer. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
+        </blockquote>
+
+        <h2>How the paper is built</h2>
+        <ul>
+          <li>Infrastructure map: eight operating entities supplying institutional-tokenization building blocks (DTCC, Kinexys, Nasdaq, NYSE, Securitize, BNY, JPMorgan, Ubyx), dated March 27, 2026.</li>
+          <li>MVEP mapping: each of the three strategies scored across all ten diligence categories.</li>
+          <li>Stress scenarios: nine strategy-specific scenarios traced through MVEP category failure chains (three per strategy).</li>
+          <li>Cross-strategy concentration analysis: Securitize as transfer agent across all three strategies; DTC and Ubyx as shared dependencies in two of three.</li>
+          <li>Corporate-actions gap: three architectures specified (trading halt, blockchain-as-authoritative, dual-record synchronization) with MVEP implications.</li>
+          <li>Deposit-token competition framework: JPMD, BNY deposits, Citi deposits; Ubyx clearing function as the determinant of monopoly versus competitive outcome.</li>
+          <li>Phase-gate structure: quantitative thresholds gating each strategy transition ($100M minted, 30 consecutive days, 2% daily volume-to-outstanding ratio).</li>
+        </ul>
+
+        <h2>Abstract</h2>
+        <p><strong>Opening and claim boundary.</strong> Institutional tokenization of US securities is proceeding through three distinct strategies. The analysis is prospective and descriptive; the stress scenarios are hypothetical, no DTC-tokenized Treasury has been used as margin collateral in production, no smart redemption router operates at institutional scale, and no tokenized equity has processed a stock split on a 24/7 trading rail. None of the findings should be read as causal estimates.</p>
+        <p><strong>Data.</strong> Public regulatory filings and announcements from March 2025 through March 2026; SEC approvals (Nasdaq March 18, 2026; NYSE-Securitize MoU March 24, 2026; BNY tokenized deposits January 9, 2026; DTCC SEC no-action authorization for Canton-based Russell 1000 pilot); public technical specifications for Canton Network, Kinexys JPMD, and Ubyx clearing; author-assessed CLII scores for participant entities based on public information.</p>
+        <p><strong>Strategy 1 (Section 3.1).</strong> Regulated Collateral Circuit. DTC-tokenized Treasuries as 24/7 margin collateral, asset leg on Canton, cash leg in bank-issued deposit tokens (JPMD primary; BNY, Citi optional), clearing through Ubyx. Three liquidation paths specified: secondary market, redemption, bilateral swap. Satisfies all ten MVEP categories by construction.</p>
+        <p><strong>Strategy 2 (Section 3.2).</strong> Multi-Issuer Yield Stack. Composed product holding five tokenized Treasury products (BUIDL, BENJI, FDIT, WTGXX, ULTRA) with a smart redemption router that queries available liquidity and routes to the deepest available pool. Five layers: underlying, router, transfer-agent aggregation, yield-mechanism normalization, multi-chain deployment (Canton, Ethereum, Solana). The Ondo-Oasis Pro acquisition closes the Category 2 gap the MVEP identifies.</p>
+        <p><strong>Strategy 3 (Section 3.3).</strong> Tokenized Equity Rails. Issuance-to-trading pipeline for US equities on SEC-approved exchange infrastructure. Nasdaq-Kraken partnership for global distribution; NYSE-Securitize MoU for digital transfer-agent services. Same CUSIP, same rights, same order book.</p>
+        <p><strong>Cross-cutting findings (Section 5).</strong> Securitize concentration risk: entity is transfer agent in all three strategies; no documented fallback. Corporate-actions reconciliation gap: three architectures specified. Deposit-token competition: Ubyx clearing function determines monopoly versus multi-issuer outcome.</p>
+        <p><strong>Phase gates (Section 8).</strong> Quantitative thresholds for each strategy transition. Phase 1 to Phase 2: $100M minted on Canton circuit, 30 days of JPMD 24/7 settlement without material downtime, two-issuer Ubyx clearing, one end-to-end off-hours margin call. Phase 2 to Phase 3: 90 consecutive days of exchange tokenized-equity trading, one corporate action processed with documented reconciliation, Securitize demonstrating SEC-registered TA functions for fund shares and equities, 2% daily volume-to-outstanding ratio for 30 consecutive days.</p>
+        <p><strong>Scope boundary.</strong> CLII scores for strategy participants are author-assessed from public information; Securitize's score in particular would require internal compliance documentation to validate. Phase-gate thresholds reflect the author's assessment of institutional-adoption minimums; different institutional contexts may require different thresholds. The corporate-actions analysis is forward-looking; no jurisdiction has finalized a regulatory framework for 24/7 corporate-action processing.</p>
+
+        <div class="paper-key-numbers">
+          <h2>Key numbers</h2>
+          <p><strong>Infrastructure map (as of March 27, 2026)</strong><br>
+          Entities in scope: 8 · Strategies analyzed: 3 · MVEP categories applied: 10 · Stress scenarios: 9</p>
+          <p><strong>Approvals and announcements in the preceding six months</strong><br>
+          SEC approval for Nasdaq tokenized securities: March 18, 2026 · NYSE-Securitize MoU: March 24, 2026 · BNY tokenized deposits announcement: January 9, 2026 · Barclays investment in Ubyx: January 7, 2026</p>
+          <p><strong>Strategy 2 composition</strong><br>
+          Underlying products: 5 (BUIDL, BENJI, FDIT, WTGXX, ULTRA) · Deployment chains specified: 3 (Canton, Ethereum, Solana) · NAV reconciliation threshold: 5 basis points · Concentration-matrix single-entity trigger: 60% of underlying positions</p>
+          <p><strong>Cross-strategy concentration</strong><br>
+          Securitize role count: 3 of 3 strategies · DTC role count: 2 of 3 strategies · Ubyx role count: 2 of 3 strategies · 72-hour Securitize failure impact: degradation of all three strategies simultaneously</p>
+          <p><strong>Phase-gate thresholds</strong><br>
+          Phase 1 to 2: $100M Canton-minted, 30 days uninterrupted JPMD settlement, 2 deposit-token issuers live through Ubyx at par, 1 off-hours margin call completed · Phase 2 to 3: 90 days of exchange tokenized-equity trading, 1 corporate action processed, 2 product types on Securitize SEC-registered TA, 2% daily volume-to-outstanding ratio for 30 consecutive days</p>
+        </div>
+
+        <h2>Related frameworks</h2>
+        <p><a href="/frameworks#clii">Control Layer Intensity Index (CLII)</a>: five-dimension operator regulation score (introduced in Routing the Dollar). <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>: ten-category product diligence framework (introduced in MVEP).</p>
+
+        <h2>Related role profiles</h2>
+        <p><a href="/resume/policy">Policy &amp; market infrastructure</a> · <a href="/resume/asset-management">Asset management &amp; tokenization</a> · <a href="/resume/stablecoin-payments">Stablecoin &amp; payments strategy</a>.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/routing-the-dollar" class="companion-card">
+            <strong>Routing the Dollar</strong>
+            <span>Companion A1: gateway-level variation in stablecoin transmission. Establishes the CLII.</span>
+          </a>
+          <a href="/papers/mvep" class="companion-card">
+            <strong>Minimum Viable Equivalence Pack</strong>
+            <span>Companion A2: the ten-category diligence framework reverse-engineered from SVB. Composed-product dependency chains.</span>
+          </a>
+          <a href="/papers/tokenized-equity" class="companion-card">
+            <strong>Tokenized Equity Vehicles</strong>
+            <span>Companion: comparable launch architectures for legal claim, custody, and liquidity rails. Earlier read on the equity-rails strategy now formalized as Strategy 3.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:Zach@Tokenization.Systems?subject=Three%20Tokenization%20Strategies%20-%20Discussion">Zach@Tokenization.Systems</a></p>
+    </article>
+
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker-and-advisory">Speaker &amp; Advisory</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=26"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
