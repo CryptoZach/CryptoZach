@@ -552,9 +552,9 @@ main{
   margin:0 auto;
   padding:var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
 }
-/* Footer lives inside main: default bottom padding read as a blank strip under the tagline */
+/* Footer lives inside main: bottom padding doubles up under the article and footer's own padding, so collapse it. */
 body main:has(footer){
-  padding-bottom:max(var(--space-md), env(safe-area-inset-bottom, 0px));
+  padding-bottom:env(safe-area-inset-bottom, 0px);
 }
 
 
@@ -850,6 +850,11 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li{
   font-size:0.95rem;
   line-height:1.5;
   opacity:0.85;
+  transition:opacity 0.2s ease;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .guidance-list li:hover{
+  opacity:1;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .guidance-list li::before{
@@ -857,6 +862,42 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li::be
   position:absolute;
   left:0;
   opacity:0.4;
+  color:inherit;
+  text-shadow:none;
+  transition:color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+}
+
+@keyframes contactArrowPulse{
+  0%, 100%{
+    color:#34d399;
+    opacity:1;
+    text-shadow:0 0 4px color-mix(in srgb, #34d399 35%, transparent),
+                0 0 10px color-mix(in srgb, #34d399 20%, transparent);
+    transform:translateX(0);
+  }
+  50%{
+    color:#6ee7b7;
+    opacity:0.85;
+    text-shadow:0 0 10px color-mix(in srgb, #34d399 70%, transparent),
+                0 0 20px color-mix(in srgb, #34d399 45%, transparent),
+                0 0 30px color-mix(in srgb, #34d399 25%, transparent);
+    transform:translateX(2px);
+  }
+}
+
+body.contact-page .contact-page-foreground > .contact-page .guidance-list li:hover::before,
+body.contact-page .contact-page-foreground > .contact-page .guidance-list li:focus-within::before{
+  animation:contactArrowPulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce){
+  body.contact-page .contact-page-foreground > .contact-page .guidance-list li:hover::before,
+  body.contact-page .contact-page-foreground > .contact-page .guidance-list li:focus-within::before{
+    animation:none;
+    color:#34d399;
+    opacity:1;
+    text-shadow:0 0 6px color-mix(in srgb, #34d399 35%, transparent);
+  }
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-about{
@@ -4006,14 +4047,15 @@ section:has(.speaker-jump-to){
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-thumb{
   float:none;
   flex:0 0 140px;
+  align-self:center;
   width:140px;
   max-width:min(140px, 30vw);
   height:8.25rem;
   min-height:8.25rem;
   max-height:8.25rem;
   margin:0;
-  object-fit:contain;
-  object-position:center top;
+  object-fit:cover;
+  object-position:center center;
   background:var(--panel);
   border-radius:6px;
   display:block;
@@ -4025,9 +4067,10 @@ section:has(.speaker-jump-to){
 .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack{
   display:block;
   flex:1 1 0;
+  align-self:center;
   min-width:0;
   max-width:calc(100% - 140px - 1rem);
-  margin:0 0 0.25rem 0;
+  margin:0;
   overflow:visible;
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack .writing-title{
@@ -4259,12 +4302,44 @@ section:has(.speaker-jump-to){
 
 .research-library-page ul.writing-list > li > article.writing-card:hover .writing-link .writing-thumb:not(.writing-thumb--placeholder),
 .featured-research .featured-paper-card:hover .writing-link.writing-link--thumb .writing-thumb{
-  transform:scale(1.02);
   filter:saturate(1) brightness(1.08);
 }
 .research-library-page ul.writing-list > li > article.writing-card:hover .writing-thumb--placeholder{
   border-color:color-mix(in srgb, var(--accent) 35%, var(--line));
   color:color-mix(in srgb, var(--text-soft) 90%, var(--muted));
+}
+
+/* Hover: scale entire research card 2x (use z-index so it sits above neighbors) */
+.research-library-page ul.writing-list > li > article.writing-card,
+.featured-research .featured-paper-card{
+  position:relative;
+  transform-origin:center center;
+  transition:transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+             box-shadow 0.28s ease,
+             border-color 0.28s ease;
+  will-change:transform;
+}
+.research-library-page ul.writing-list > li > article.writing-card:hover,
+.research-library-page ul.writing-list > li > article.writing-card:focus-within,
+.featured-research .featured-paper-card:hover,
+.featured-research .featured-paper-card:focus-within{
+  transform:scale(1.25);
+  z-index:50;
+  box-shadow:0 24px 60px color-mix(in srgb, #000 65%, transparent),
+             0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+@media (prefers-reduced-motion: reduce){
+  .research-library-page ul.writing-list > li > article.writing-card,
+  .featured-research .featured-paper-card{
+    transition:none;
+  }
+  .research-library-page ul.writing-list > li > article.writing-card:hover,
+  .research-library-page ul.writing-list > li > article.writing-card:focus-within,
+  .featured-research .featured-paper-card:hover,
+  .featured-research .featured-paper-card:focus-within{
+    transform:none;
+    z-index:auto;
+  }
 }
 
 @media (max-width:1023px){
@@ -6485,7 +6560,7 @@ footer.site-footer{
   --footer-strip-muted:rgba(180, 186, 198, 0.88);
   position:relative;
   z-index:1;
-  margin-top:var(--space-2xl);
+  margin-top:var(--space-lg);
   padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
   border-top:1px solid var(--footer-strip-border);
   background:
@@ -8243,7 +8318,7 @@ footer.site-footer .footer-tagline{
 .paper-detail-page .paper-detail{
   max-width: var(--max);
   margin: 0 auto;
-  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
+  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   min-width: 0;
 }
 /* Canonical paper template uses .paper-page; avoid narrow 65ch override */
@@ -8320,7 +8395,7 @@ footer.site-footer .footer-tagline{
 .paper-page{
   max-width: var(--max);
   margin: 0 auto;
-  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-left));
+  padding: var(--space-2xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
   min-width: 0;
 }
 .paper-breadcrumb{
@@ -9710,8 +9785,8 @@ footer.site-footer .footer-tagline{
   text-decoration: underline;
 }
 .paper-contact-strip{
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-xl);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
   border-top: 1px solid var(--line);
   font-size: var(--font-size-min);
   color: var(--muted);
@@ -9732,21 +9807,21 @@ footer.site-footer .footer-tagline{
 /* Paper page: tablet (768px to 1279px) */
 @media (max-width: 1279px) and (min-width: 769px){
   .paper-page{
-    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   }
   .paper-detail-page .paper-detail{
-    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-lg) max(var(--page-gutter), env(safe-area-inset-left));
   }
 }
 
 @media (max-width: 768px){
   .paper-page{
-    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-md) max(var(--page-gutter), env(safe-area-inset-left));
     max-width: none;
   }
   .paper-detail-page .paper-detail{
     max-width: none;
-    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+    padding: var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-md) max(var(--page-gutter), env(safe-area-inset-left));
   }
   .paper-detail-page .paper-page.paper-detail{
     max-width: none;
@@ -13293,8 +13368,8 @@ details.card-expand[open] summary {
 
 /* Sprint 9: companion papers ("Read next") on paper summary pages */
 .companions {
-  margin-top: 3rem;
-  padding-top: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--line);
 }
 
@@ -13304,13 +13379,13 @@ details.card-expand[open] summary {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
 }
 
 .companion-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 0.875rem;
 }
 
 .companion-card {
