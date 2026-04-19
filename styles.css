@@ -3835,10 +3835,13 @@ section:has(.speaker-jump-to){
   float:left;
   width:200px;
   max-width:min(200px, 48vw);
-  height:auto;
+  height:8rem;
+  min-height:8rem;
+  max-height:8rem;
   margin:0 1.25rem 0.75rem 0;
-  object-fit:cover;
+  object-fit:contain;
   object-position:center top;
+  background:var(--panel);
   border-radius:6px;
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 55%, transparent);
@@ -3874,21 +3877,55 @@ section:has(.speaker-jump-to){
   margin:0;
 }
 
-/* Core program + dual-essay: float cover top-left, title stack and body wrap, full-width prose */
+/* Core program + dual-essay: grid reserves a fixed cover column so body copy lines up with no-cover cards */
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb,
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb{
-  display:flow-root;
+  display:grid;
+  grid-template-columns:minmax(0, min(160px, 34vw)) minmax(0, 1fr);
+  grid-template-rows:auto auto auto;
+  column-gap:1.25rem;
+  row-gap:0.35rem;
+  align-items:start;
   width:100%;
   max-width:100%;
   box-sizing:border-box;
   padding:0;
 }
-.research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb{
-  display:flow-root;
+/* No-cover cards: empty first column aligns titles and "What it is" with thumb cards */
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static){
+  display:grid;
+  grid-template-columns:minmax(0, min(160px, 34vw)) minmax(0, 1fr);
+  column-gap:1.25rem;
+  row-gap:0.35rem;
+  align-items:start;
   width:100%;
   max-width:100%;
   box-sizing:border-box;
   padding:0;
+}
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static) > .writing-meta{
+  grid-column:1 / -1;
+}
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static) > .writing-copy{
+  grid-column:2;
+  grid-row:2;
+  width:100%;
+  min-width:0;
+  max-width:none;
+}
+.research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb{
+  display:flex;
+  flex-wrap:wrap;
+  column-gap:1rem;
+  row-gap:0.5rem;
+  align-items:center;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  padding:0;
+}
+.research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb .writing-meta{
+  flex:0 0 100%;
 }
 .research-library-page ul.writing-list > li > article > .writing-link.writing-link--thumb .writing-meta,
 .research-library-page ul.writing-list > li > article > .writing-link.writing-link--static.writing-link--thumb .writing-meta{
@@ -3898,22 +3935,40 @@ section:has(.speaker-jump-to){
   margin-bottom:0.75rem;
   overflow:visible;
 }
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb .writing-meta,
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb .writing-meta{
+  grid-column:1 / -1;
+}
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-thumb,
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-thumb{
-  float:left;
-  width:160px;
+  float:none;
+  grid-column:1;
+  /* Span title + body rows so column 1 does not reserve a second full-height empty cell beside long copy */
+  grid-row:2 / span 2;
+  justify-self:start;
+  align-self:start;
+  width:100%;
   max-width:min(160px, 34vw);
-  height:auto;
-  max-height:none;
-  margin:0 1.25rem 0.75rem 0;
-  object-fit:cover;
-  object-position:center;
+  height:7.25rem;
+  min-height:7.25rem;
+  max-height:7.25rem;
+  margin:0;
+  object-fit:contain;
+  object-position:center top;
+  background:var(--panel);
   border-radius:6px;
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 50%, transparent);
   box-shadow:0 2px 8px color-mix(in srgb, #000 25%, transparent);
   transition:transform 0.2s ease, filter 0.2s ease;
   filter:saturate(0.85) brightness(0.95);
+}
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-title-stack,
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-title-stack{
+  grid-column:2;
+  grid-row:2;
+  align-self:center;
+  margin-bottom:0;
 }
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) .writing-title-stack{
   display:block;
@@ -3931,7 +3986,9 @@ section:has(.speaker-jump-to){
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-copy,
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-copy{
   display:block;
-  width:auto;
+  grid-column:2;
+  grid-row:3;
+  width:100%;
   max-width:none;
   min-width:0;
   box-sizing:border-box;
@@ -3947,13 +4004,17 @@ section:has(.speaker-jump-to){
   margin-bottom:0;
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-thumb{
-  float:left;
+  float:none;
+  flex:0 0 104px;
   width:104px;
   max-width:min(104px, 26vw);
-  height:auto;
-  margin:0 1rem 0.5rem 0;
-  object-fit:cover;
-  object-position:center;
+  height:6.5rem;
+  min-height:6.5rem;
+  max-height:6.5rem;
+  margin:0;
+  object-fit:contain;
+  object-position:center top;
+  background:var(--panel);
   border-radius:6px;
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 45%, transparent);
@@ -3963,8 +4024,10 @@ section:has(.speaker-jump-to){
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack{
   display:block;
-  margin:0 0 0.5rem 0;
+  flex:1 1 0;
   min-width:0;
+  max-width:calc(100% - 104px - 1rem);
+  margin:0 0 0.25rem 0;
   overflow:visible;
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack .writing-title{
@@ -3973,12 +4036,17 @@ section:has(.speaker-jump-to){
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-copy{
   display:block;
-  width:auto;
-  max-width:none;
+  flex:1 0 100%;
   min-width:0;
+  width:100%;
+  max-width:100%;
   box-sizing:border-box;
   padding:0;
   overflow:visible;
+}
+/* Excerpts: plain flow (no hanging indent beside narrow grid columns; it left a large empty wedge) */
+.research-library-page p.writing-excerpt{
+  text-wrap:pretty;
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-copy > p{
   margin:0 0 0.5rem 0;
@@ -4046,6 +4114,10 @@ section:has(.speaker-jump-to){
   position:relative;
   z-index:1;
 }
+.research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-card-actions{
+  margin-top:0.75rem;
+  padding-top:0.65rem;
+}
 .research-library-page ul.writing-list > li > article > .writing-card-actions .writing-thread-group,
 .research-library-page ul.writing-list > li > article > .writing-card-actions .writing-thread-group--dual,
 .featured-research .featured-paper-card > .writing-card-actions .writing-thread-group,
@@ -4094,6 +4166,97 @@ section:has(.speaker-jump-to){
   grid-row:unset;
 }
 
+/* Desktop: research library + featured CTAs top-right (saves vertical space; mobile stays stacked) */
+@media (min-width: 769px){
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions,
+  .featured-research .featured-paper-card.writing-card--has-actions{
+    position:relative;
+  }
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions > .writing-card-actions,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
+    position:absolute;
+    top:1.25rem;
+    right:1.25rem;
+    left:auto;
+    width:auto;
+    max-width:calc(100% - 2.5rem);
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:0;
+    padding-bottom:0;
+    border-top:none;
+    clear:none;
+    justify-content:flex-end;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:0.45rem 0.65rem;
+    z-index:4;
+  }
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions:not(.research-card--dual-essays) > .writing-card-actions,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-card-actions{
+    flex-wrap:wrap;
+    align-items:flex-start;
+    justify-content:flex-end;
+    align-content:flex-end;
+    row-gap:0.4rem;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--earlier-work.writing-card--has-actions > .writing-card-actions{
+    top:1rem;
+  }
+  .research-library-page ul.writing-list > li > article > .writing-card-actions .writing-thread-group,
+  .research-library-page ul.writing-list > li > article > .writing-card-actions .writing-thread-group--dual,
+  .featured-research .featured-paper-card > .writing-card-actions .writing-thread-group,
+  .featured-research .featured-paper-card > .writing-card-actions .writing-thread-group--dual{
+    justify-content:flex-end;
+  }
+  .research-library-page ul.writing-list > li > article > .writing-card-actions .writing-thumb-actions,
+  .featured-research .featured-paper-card > .writing-card-actions .writing-thumb-actions{
+    justify-content:flex-end;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays > .writing-card-actions .writing-thread-group--dual{
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays > .writing-card-actions .writing-thumb-actions{
+    flex-wrap:nowrap;
+    justify-content:flex-end;
+  }
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions > .writing-link .writing-meta,
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions > .writing-link .writing-title-stack,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-link .writing-meta{
+    padding-right:min(50%, 18rem);
+    box-sizing:border-box;
+  }
+  /* Do not pad all of .writing-copy (that narrowed excerpts). Only the lines that sit under the top-right CTAs. */
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-link.writing-link--thumb .writing-copy > .writing-title,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-link.writing-link--thumb .writing-copy > .writing-thesis,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-link.writing-link--thumb .writing-copy > .writing-teaser{
+    padding-right:min(42%, 14rem);
+    box-sizing:border-box;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-link .writing-meta,
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-link .writing-title-stack{
+    padding-right:min(52%, 22rem);
+    box-sizing:border-box;
+  }
+}
+@media (min-width: 1024px){
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions:not(.research-card--earlier-work) > .writing-card-actions,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
+    top:1.5rem;
+    right:1.5rem;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--earlier-work.writing-card--has-actions > .writing-card-actions{
+    top:1rem;
+    right:1.5rem;
+  }
+}
+
 .research-library-page ul.writing-list > li > article.writing-card:hover .writing-link .writing-thumb:not(.writing-thumb--placeholder),
 .featured-research .featured-paper-card:hover .writing-link.writing-link--thumb .writing-thumb{
   transform:scale(1.02);
@@ -4105,6 +4268,11 @@ section:has(.speaker-jump-to){
 }
 
 @media (max-width:1023px){
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb,
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb,
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static){
+    grid-template-columns:minmax(0, min(160px, 38vw)) minmax(0, 1fr);
+  }
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-thumb,
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-thumb{
     width:160px;
@@ -7070,7 +7238,8 @@ footer.site-footer .footer-tagline{
   }
   /* Research library list: stack meta, centered thumb+title, then body */
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb,
-  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb{
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb,
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static){
     display:flex;
     flex-direction:column;
     align-items:stretch;
@@ -7080,14 +7249,23 @@ footer.site-footer .footer-tagline{
     row-gap:0;
     padding:0;
   }
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link:not(.writing-link--thumb):not(.writing-link--static) > .writing-copy{
+    grid-column:unset;
+    grid-row:unset;
+    width:100%;
+    max-width:none;
+  }
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-thumb,
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-thumb{
     float:none;
     display:block;
+    grid-column:unset;
+    grid-row:auto;
     width:100%;
     max-width:min(280px, 100%);
     height:auto;
     max-height:220px;
+    min-height:0;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:1rem;
@@ -7096,7 +7274,13 @@ footer.site-footer .footer-tagline{
   }
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) .writing-title-stack{
     width:100%;
+    grid-column:unset;
+    grid-row:unset;
     text-align:left;
+  }
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-title-stack,
+  .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb > .writing-title-stack{
+    margin-bottom:0.5rem;
   }
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb .writing-meta,
   .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--static.writing-link--thumb .writing-meta{
@@ -7162,6 +7346,8 @@ footer.site-footer .footer-tagline{
   }
   .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack{
     width:100%;
+    max-width:none;
+    flex:none;
     text-align:left;
   }
   .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-copy{
