@@ -11624,14 +11624,17 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   }
 }
 
-/* Coral reef canvas (branching animation) fills whole hero */
+/* Coral reef canvas (branching animation) fills whole hero.
+   z-index 2 (matches .matrix-canvas) so the 45% black .hero-overlay (z-index 1)
+   sits BELOW the reef. Without this the overlay washed the blue reef $ on the
+   left into near-invisibility while matrix glyphs (z-index 2) stayed bright. */
 #hero.hero--homepage .hero-reef{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Dims matrix + reef canvas so hero copy reads clearly; sits above animation, below .hero-grid */
