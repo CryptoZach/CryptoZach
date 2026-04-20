@@ -4,11 +4,11 @@ const { test, expect } = require("@playwright/test");
 test.describe("CryptoZach smoke", () => {
   test("home loads with expected title and hero", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/Zach Zukowski/);
+    await expect(page).toHaveTitle(/Tokenization Systems/);
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Independent research on dollar infrastructure and tokenization/i,
+        name: /Classify the token\. Audit the operator\./i,
       }),
     ).toBeVisible();
     await expect(page.locator("#hero .hero-subtitle")).toContainText(

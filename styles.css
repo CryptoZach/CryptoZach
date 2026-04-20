@@ -246,6 +246,9 @@ header.scrolled{
   flex-direction:column;
   gap:2px;
   min-width:0;
+  /* Hold the brand at its natural width so a wide nav cannot squeeze it to 0
+     and let the brand text overflow into the nav column visually. */
+  flex-shrink:0;
 }
 .brand a{
   display:flex;
@@ -266,6 +269,9 @@ header.scrolled{
   letter-spacing:-0.01em;
   color:var(--text);
   transition:color .15s ease;
+  /* Keep the brand title on a single line; the brand container holds its
+     full intrinsic width thanks to flex-shrink:0 above. */
+  white-space:nowrap;
 }
 .brand:hover strong{
   color:var(--accent);
@@ -4577,6 +4583,11 @@ section:has(.speaker-jump-to){
   font-size:var(--font-size-min);
   color:var(--muted);
   letter-spacing:.02em;
+  /* Prefer breaking at the bullet separators ( · ) and avoid orphans like a
+     lone trailing tag on its own line. The non-breaking spaces around the
+     slashes in the HTML keep "Policy / Markets / Stablecoins" together as a
+     single unbreakable unit; this hint is the browser-level fallback. */
+  text-wrap:pretty;
 }
 .writing-thread{
   display:inline-flex;
@@ -6560,6 +6571,14 @@ footer.site-footer{
   --footer-strip-muted:rgba(180, 186, 198, 0.88);
   position:relative;
   z-index:1;
+  /* Full-bleed: the footer lives inside <main>, which is capped at
+     var(--max). Pull the footer back out to span the entire viewport so
+     the dark band reaches both edges. <html>/<body> use overflow-x:clip
+     with scrollbar-gutter:stable, so 100vw cannot create a horizontal
+     scrollbar. The existing padding below keeps inner content inset. */
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
   margin-top:var(--space-lg);
   padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
   border-top:1px solid var(--footer-strip-border);
@@ -6722,10 +6741,13 @@ footer.site-footer .footer-social[aria-label="SSRN"] svg{
 }
 
 footer.site-footer .footer-tagline{
-  margin:var(--space-md) 0 0;
+  margin:var(--space-md) auto 0;
   padding:var(--space-md) 0 0 calc(var(--space-md) + 3px);
   border-top:1px solid var(--footer-strip-border);
-  max-width:none;
+  /* Match the page content max-width (--max = 1400-1480px) so the tagline
+     spans the same horizontal length as the cards in the section above
+     instead of collapsing to a narrow column inside the full-bleed footer. */
+  max-width:var(--max);
   border-left:3px solid var(--accent);
   color:var(--footer-strip-muted);
   font-size:var(--font-size-min);
@@ -6736,7 +6758,13 @@ footer.site-footer .footer-tagline{
   letter-spacing:.005em;
   line-height:1.55;
 }
-@media (max-width: 900px){
+/* Footer: collapse the 3-column grid (copy | nav | socials) to a single
+   stacked column at tablet/desktop widths where the columns cannot all fit
+   without the brand text in the copy column overflowing into the nav column.
+   The copy text is nowrap and the nav has 6 wide links plus 4 social icons,
+   so the 3-column grid only fits comfortably above ~1320px. Below that we
+   stack to keep "Tokenization Systems" from clipping into "Frameworks". */
+@media (max-width: 1320px){
   footer.site-footer .footer-top{
     grid-template-columns:1fr;
     justify-items:center;
@@ -6750,9 +6778,8 @@ footer.site-footer .footer-tagline{
   footer.site-footer .footer-tagline{
     text-align:left;
     padding-left:calc(var(--space-md) + 3px);
-    max-width:36rem;
-    margin-left:auto;
-    margin-right:auto;
+    /* Inherit max-width:var(--max) and margin:auto from the base rule so the
+       tagline aligns with the cards above instead of collapsing to 36rem. */
   }
 }
 
@@ -6916,6 +6943,70 @@ footer.site-footer .footer-tagline{
   .grid--thirds{grid-template-columns:1fr}
   .process-strip .process-point p{max-width:none}
   h1{max-width:none}
+}
+
+/* Header at narrower desktops: hide social cluster so the 6 nav links fit
+   without crowding the brand. Tagline links live in the footer regardless. */
+@media (max-width: 1180px){
+  header .header-social{display:none}
+}
+
+/* Header at tablet landscape and narrower: drop the brand subtitle so the
+   brand title (now nowrap) stays compact next to the nav. */
+@media (max-width: 1100px){
+  header .brand span{display:none}
+}
+
+/* Tablet portrait and narrower: collapse the desktop nav to the hamburger
+   menu. With 6 nav links plus the theme toggle, the desktop layout cannot
+   fit below ~900px without the brand being squeezed and the nav overflowing
+   the right edge. Mirrors the navigation rules in the <=768px block so the
+   sheet renders identically across the 769 to 900px range. */
+@media (max-width: 900px){
+  .header-inner{flex-wrap:nowrap}
+  .header-inner .menu-toggle{margin-left:auto; flex-shrink:0}
+  .header-inner > nav.nav-desktop,
+  .header-inner > .nav-desktop{flex-shrink:0}
+  .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
+  .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
+  .nav-links--desktop{display:none}
+  header .header-social{display:none}
+
+  .nav-links--mobile:not([hidden]){display:flex !important}
+
+  html.nav-mobile-open,
+  html.nav-mobile-open body{overflow:hidden; touch-action:none}
+  html.nav-mobile-open header{z-index:12000}
+
+  .nav-links--mobile{
+    top:calc(var(--header-h) + env(safe-area-inset-top, 0px));
+    padding:var(--space-md);
+    background:var(--bg);
+    background-color:var(--bg);
+    z-index:11000;
+    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
+    min-height:calc(100vh - var(--header-h) - env(safe-area-inset-top, 0px));
+    box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
+  }
+  #nav-mobile.nav-links--mobile:not([hidden]){
+    position:fixed !important;
+    top:calc(var(--header-h) + env(safe-area-inset-top, 0px)) !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    z-index:11000 !important;
+    background-color:var(--bg) !important;
+    background:var(--bg) !important;
+  }
+  :root[data-theme="dark"] .nav-links--mobile:not([hidden]){
+    background:var(--bg);
+    background-color:var(--bg);
+    box-shadow:0 16px 48px color-mix(in srgb, #000 45%, transparent);
+  }
+  :root[data-theme="dark"] #nav-mobile.nav-links--mobile:not([hidden]){
+    background-color:var(--bg) !important;
+    background:var(--bg) !important;
+  }
 }
 
 /* Mobile: <=768px */
