@@ -22,6 +22,7 @@ Rolling, dated release notes for site, resume, and social deliverable surfaces.
 - Resume hub adds **View resume PDF** CTA across all resume profiles.
 - `SITE_STATE.md` refreshed with 8/8 table and asset-version notes.
 - `cryptozach-site-polish-audit` skill updated for current routes and 8/8 paper status.
+- **Hotfix (post-deploy):** removed `papers/three-strategies.html` and `papers/operational-risk.html` legacy client-side redirect stubs. Those files and the `papers/…/index.html` trees both map to the same path on static hosts, which caused an infinite refresh loop on `/papers/three-strategies` and `/papers/operational-risk`. Cloudflare `_redirects` still 301s `/papers/three-strategies.html` and `/papers/operational-risk.html` to the clean paths.
 
 ### Resume (commit `a637df1`)
 
