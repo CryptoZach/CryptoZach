@@ -158,6 +158,7 @@
       <span class="paper-track-badge">Track B: DePIN tokenomics</span>
       <div class="paper-badges">
         <span class="badge badge-under-review">Under review</span>
+        <span class="badge">Public on SSRN</span>
         <span class="badge badge-access-code">Code available</span>
       </div>
 
@@ -282,7 +283,7 @@
           <li><strong>DeFi:</strong> 0.003 (Balancer, BAL) to 0.174 (Curve raw, CRV)</li>
           <li><strong>DePIN:</strong> 0.013 (Morpheus AI) to 0.199 (Livepeer)</li>
         </ul>
-        <p>Within each sector there is roughly an order of magnitude variation. The sector effect (DePIN higher on average) sits on top of substantial within-sector heterogeneity. The paper's framing is design-sensitive rather than sector-determined: the sector signal is real, and within-sector variation is the operative space for design improvement.</p>
+        <p>Within each sector there is roughly an order of magnitude variation. The sector effect (DePIN higher on average) sits on top of substantial within-sector heterogeneity. The paper's framing is design-sensitive, with the sector as signal and within-sector variation as the operative space for design improvement, not a fully sector-determined story.</p>
 
         <h3>7. Lead-finding framing (locked)</h3>
         <p>The paper's headline result is the allocation null. The four supporting findings (sector significant in bivariate and multivariate tests; insider retention as the mechanism; subsidy LPT-driven; delegation amplification 3 to 6 times in DePIN) frame the why. Avoid the earlier "no covariate predicts governance concentration" or "universal covariate null" framings; they overgeneralized the result and have been retired.</p>
@@ -333,7 +334,7 @@
           <p><strong>Delegation amplification</strong><br>
           DePIN: 3 to 6 times · Infrastructure heterogeneous: Optimism 0.79x, Arbitrum 4.3x</p>
           <p><strong>Concentration ranges</strong><br>
-          DeFi HHI 0.003 (BAL) to 0.174 (CRV raw) · DePIN HHI 0.013 (Morpheus AI) to 0.199 (Livepeer) · framing: design-sensitive rather than sector-determined</p>
+          DeFi HHI 0.003 (BAL) to 0.174 (CRV raw) · DePIN HHI 0.013 (Morpheus AI) to 0.199 (Livepeer) · framing: design-sensitive with sector as cross-check</p>
           <p><strong>Methodology finding</strong><br>
           Token Terminal underreports DePIN protocol revenue (Livepeer $0 reported vs ~$23.8M LPT burns; Morpheus $997K reported vs ~$9.6M on-chain); paper uses on-chain values where they diverge</p>
         </div>
@@ -342,8 +343,8 @@
         <ul>
           <li>Cross-sectional design captures concentration at a snapshot; it does not directly observe how concentration evolves through governance episodes. Time-series extension is identified as future work.</li>
           <li>The five-lens framework operationalization relies on a 0-to-2 scoring rubric (Table 3). Coding judgments are documented in the replication package, but other researchers using the same lenses might score individual protocols differently.</li>
-          <li>The subsidy correlation result is single-outlier-driven; readers should treat it as a Livepeer-specific observation rather than a population pattern. The paper flags this explicitly.</li>
-          <li>Token Terminal coverage gaps for DePIN protocols mean some external benchmarks may not align with the paper's on-chain measurements; the paper documents the gap rather than asserting a corrected benchmark.</li>
+          <li>The subsidy correlation result is single-outlier-driven; readers should treat it as a Livepeer-specific observation, not a general population pattern. The paper flags this explicitly.</li>
+          <li>Token Terminal coverage gaps for DePIN protocols mean some external benchmarks may not align with the paper's on-chain measurements; the paper documents the gap while preserving its on-chain results as the primary read.</li>
           <li>Insider-retention proxies are constructed from holder-pattern analysis; a richer dataset (off-chain governance participation, signed proposals) would sharpen the mechanism claim in finding 3.</li>
         </ul>
 
@@ -394,7 +395,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=26"></script>
+  <script defer src="/script.js?v=179"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

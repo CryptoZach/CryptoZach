@@ -69,7 +69,11 @@
       "url": "https://tokenization.systems/papers/who-burns-the-tokens",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/who-burns-the-tokens" },
       "image": "https://tokenization.systems/Publication-Images/Zachcoin.png",
-      "publisher": { "@type": "Organization", "name": "Tokenization Systems" }
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
+      "isBasedOn": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619",
+      "identifier": "6483619",
+      "sameAs": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619",
+      "creativeWorkStatus": "Working paper"
     }
   </script>
 </head>
@@ -139,14 +143,15 @@
 
       <span class="paper-track-badge">Track B: DePIN tokenomics</span>
       <div class="paper-badges">
-        <span class="badge badge-under-review">Submission pending</span>
+        <span class="badge">Public on SSRN</span>
+        <span class="badge">Working paper</span>
         <span class="badge badge-access-code">Code available</span>
       </div>
 
       <h1 id="paper-title">Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks</h1>
 
-      <p class="paper-metadata-strip">~25 min read · April 2026 · SSRN abstract pending · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
-      <p class="paper-description-note">Description current as of April 18, 2026. SSRN approval pending; the SSRN link will be added when the abstract is published.</p>
+      <p class="paper-metadata-strip">~25 min read · Apr 2026 · SSRN 6483619 · DOI 10.2139/ssrn.6483619 · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
+      <p class="paper-description-note">Description current as of April 20, 2026. Manuscript and SSRN abstract are public; journal submission in progress at <em>Blockchain: Research and Applications</em> (Elsevier).</p>
 
       <p class="paper-thesis"><strong>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast the network reaches fiscal sustainability.</strong> Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes: Helium's carrier-contract burn model concentrates ~90% of burn volume in the Top-5 demand sources (HHI 0.22); GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055). This paper measures fiscal sustainability through the Subsidy-to-Revenue ratio (S2R) and shows that S2R trajectory matters more than S2R level: Helium's S2R = 1.84 over a 34-month window (May 2023 to February 2026), and the burn-mint equilibrium (BME) crossed parity in November 2025 driven by 20-fold fee revenue growth, the HIP-147 emission halving in August 2025, and price decline. Fee growth alone would not have crossed parity without the halving's supply compression.</p>
 
@@ -183,10 +188,12 @@
 
       <div class="paper-access-block access-block">
         <div class="access-primary">
-          <a class="action primary cta-primary" href="/contact">Request preprint</a>
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
           <a class="access-link" href="https://github.com/Research-Publications-and-Data" target="_blank" rel="noopener noreferrer">GitHub (replication, tag b3-v1.0.0-bra-submission)</a>
         </div>
         <div class="access-secondary">
+          <a class="action secondary" href="/contact">Request preprint</a>
+          <span class="access-sep" aria-hidden="true">·</span>
           <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
         </div>
       </div>
@@ -285,7 +292,7 @@
         <p>HNT (the Helium Network Token) is the speculative and tradeable token. Data Credits are non-speculative, USD-pegged utility credits that customers burn to pay for network services. Data Credits are produced by burning HNT at the oracle-reported HNT/USD price. This separation is critical for BME intuition: the burn side of the BME is denominated in Data Credit demand (real network usage); the mint side is denominated in HNT emissions (operator subsidies).</p>
 
         <h3>Methodology blind spot (non-negotiable disclosure)</h3>
-        <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R rather than buried in a limitations section.</p>
+        <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, with limitations handled in the limitations section, not only there.</p>
 
         <h3>Exclusion methodology (inherited from B2)</h3>
         <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2). Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
@@ -370,7 +377,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=26"></script>
+  <script defer src="/script.js?v=179"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

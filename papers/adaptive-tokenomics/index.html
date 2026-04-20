@@ -182,7 +182,7 @@
 
       <div class="paper-access-block access-block">
         <div class="access-primary">
-          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">Full Paper</a>
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer">Read on SSRN</a>
           <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (replication)</a>
         </div>
         <div class="access-secondary">
@@ -269,11 +269,11 @@
 
       <div class="paper-abstract">
         <h2>What problem it solves</h2>
-        <p>Most token models are built by precedent and pattern-matching. This paper treats token design as an integrated engineering problem: how to coordinate autonomous agents under uncertainty, distribute ownership to contributors without centralized enforcement, and test whether the combined mechanism stack still works once it is exposed to adversarial conditions and macro shocks. MeshNet is the design laboratory: a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET) and whose results identify reusable failure modes and design patterns rather than prescribing a single preferred configuration.</p>
+        <p>Most token models are built by precedent and pattern-matching. This paper treats token design as an integrated engineering problem: how to coordinate autonomous agents under uncertainty, distribute ownership to contributors without centralized enforcement, and test whether the combined mechanism stack still works once it is exposed to adversarial conditions and macro shocks. MeshNet is the design laboratory: a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET) and whose results identify reusable failure modes and design patterns with no single mandated configuration across runs.</p>
 
         <h2>What this paper changes</h2>
         <p>Most tokenomics analysis evaluates mechanisms one at a time: staking, emissions, burns, or governance. This paper shifts the unit of analysis to the full system. MeshNet combines five mechanism layers (productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and adaptive emissions) and measures what happens when they interact under stress.</p>
-        <p>The paper's strongest contribution is a set of failure modes, tradeoffs, and reusable design patterns rather than a single "best" parameter set:</p>
+        <p>The paper's strongest contribution is a set of failure modes, tradeoffs, and reusable design patterns, with no one-size-fits-all "best" parameter set across scenarios:</p>
         <ul>
           <li>Controller design shapes governance timing: bounded automation can outrun governance voice, creating a tension between speed of response and legitimacy of decision.</li>
           <li>Successful defense weakens treasury inflow: when slashing deters bad behavior, the penalty revenue that funds the treasury declines, creating a funding paradox for protocol sustainability.</li>
@@ -282,8 +282,8 @@
         <p>These compound findings do not appear when mechanisms are analyzed in isolation.</p>
 
         <h2>Core findings</h2>
-        <h3>1. Adaptive emissions reduce tail risk rather than maximizing average performance</h3>
-        <p>Single-seed trajectories are misleading. Under competitor shock, static emission's seed-42 result of 11,934 nodes is an optimistic outlier from a much wider distribution. PID's contribution is a materially safer worst case, not a better best case. That is why the paper frames adaptive emissions as monetary-policy insurance rather than optimization.</p>
+        <h3>1. Adaptive emissions cut tail risk before they chase average performance</h3>
+        <p>Single-seed trajectories are misleading. Under competitor shock, static emission's seed-42 result of 11,934 nodes is an optimistic outlier from a much wider distribution. PID's contribution is a materially safer worst case, not a better best case. That is why the paper frames adaptive emissions as monetary-policy insurance, with average-path optimization a secondary read.</p>
         <p>The insurance premium is real: PID compresses the coefficient of variation from 0.544 to 0.087 under competitor shock and raises the 5th-percentile outcome from 1,049 nodes to 8,880. In bull markets, PID and static schedules produce effectively identical outcomes, so the engineering value emerges only when the system is under stress.</p>
 
         <h3>2. The controller's key failure is channel mismatch</h3>
@@ -379,7 +379,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=26"></script>
+  <script defer src="/script.js?v=179"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
