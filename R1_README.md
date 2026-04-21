@@ -1,6 +1,6 @@
 # R1: Research Content Architecture
 
-**Status:** Phase R1.0 scaffolding complete. Phase R1.1 (A5 pilot migration) and beyond pending.
+**Status:** Phase R1.0 scaffolding complete. Phase R1.1 (A5 pilot migration) complete. **Per-paper containers + canonical manuscripts** scaffolded for all 11 academic slots and 3 practitioner briefings (commit 25, 2026-04-21; per DEC-101 + DEC-102). Full per-paper R1.3 / R1.4 migration (METADATA.md schema, exhibits, submissions, versions) still pending.
 
 **Authoritative spec:** `handoff/architecture/Upgrade_R1_Research_Content_Canonicalization_Spec.md`
 **Author decisions:** `handoff/architecture/AD_Resolutions_014_020_R1_Spec.md` (AD-014 through AD-020 resolved)
@@ -33,8 +33,22 @@ The R1 spec was amended 2026-04-21 to adopt the `research_content/` parent names
 
 ```
 research_content/
-├── papers/
-│   └── A5_svb_causal/             # populated in R1.1 (early R1.1-lite import 2026-04-21)
+├── papers/                                         # 11 academic slots (per DEC-102)
+│   ├── A1_routing_the_dollar/                     # SSRN 6267698; v43 docx + pdf + md (Mar 11)
+│   ├── A2_mvep/                                   # SSRN 6363138; v9_Final docx + pdf (Apr 10)
+│   ├── A3_seven_dollars/                          # SSRN 6483118; SSRN docx + pdf (Apr 20)
+│   ├── A4_three_strategies/                       # SSRN 6483198; Final_polished docx + pdf (Apr 20)
+│   ├── A5_svb_causal/                             # working paper; PAPER.md (R1.1 pilot) + working/ drafts
+│   ├── A6_optimal_gateway_regulation/             # STUB; research_inputs/ placeholder pending verification
+│   ├── A7_control_layer_theory/                   # STUB; research_inputs/ ideation memo
+│   ├── B1_adaptive_tokenomics/                    # SSRN 6364158; EC_B1a docx + pdf (Apr 18)
+│   ├── B2_governance_concentration/               # SSRN 6599278; Frontiers_Submission docx + pdf (Apr 18)
+│   ├── B3_who_burns_the_tokens/                   # SSRN 6483619; Final_v10 docx + pdf (Apr 18)
+│   └── B4_operational_risk/                       # SSRN 6352118; FINAL docx (Mar 9; freshness flag)
+├── briefings/                                      # 3 practitioner briefings (per DEC-102)
+│   ├── TEV_tokenized_equity/                      # Medium / site only
+│   ├── DV3_dollar_v3/                             # Medium / site only
+│   └── CLW_control_layer_war/                     # Medium / site only
 ├── letters/
 ├── practitioner/
 ├── reviewer_assets/
