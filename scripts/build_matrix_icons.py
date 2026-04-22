@@ -121,7 +121,7 @@ ICONIFY_CRYPTO_PATHS = {
 # dot: bundled dot.svg (thick Polkadot ring reads as a filled circle when blurred).
 # uni: Iconify token/uniswap (unicorn silhouette; bundled UNI text retired).
 # aave: bundled aave.svg (color disk reads as a large blank green circle at 20px).
-# crv: bundled build-sources/crv.png (from repo-root Curve_logo.png; Phase 0b raster; old crv.svg removed).
+# crv: bundled build-sources/crv.png (from assets/logos/Curve_logo.png; Phase 0b raster; old crv.svg removed).
 # tao: bundled tao.svg (Iconify token/tao path mark; no TAO text ticker).
 # bac: bundled bac.svg (BoA monospace label; SI bankofamerica mark is a tiny flag blob at 32px).
 # m0: bundled build-sources/m0.png in npm manifest (no Iconify slug for M0 Labs in common matrix sets).

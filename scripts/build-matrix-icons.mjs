@@ -175,7 +175,7 @@ const ICONS = [
   },
   { name: 'xmr', si: ['monero'], cc: 'xmr' },
   { name: 'zec', si: ['zcash'], cc: 'zec' },
-  /* Curve: bundled crv.png from repo-root Curve_logo.png (official mark). */
+  /* Curve: bundled crv.png from assets/logos/Curve_logo.png (official mark). */
   {
     name: 'crv',
     localRaster: 'icons/matrix/build-sources/crv.png',
