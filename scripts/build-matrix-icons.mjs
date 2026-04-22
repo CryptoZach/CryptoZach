@@ -244,7 +244,7 @@ const ICONS = [
     si: [],
     iconifyExtra: ['arcticons/wormhole', 'arcticons/wormhole-2'],
   },
-  /* 1inch: bundled WebP (unicorn outline); npm manifest matches build_matrix_icons.py Phase 0b WebP */
+  /* 1inch: bundled WebP (unicorn outline); npm manifest matches scripts/build_matrix_icons.py Phase 0b WebP */
   {
     name: '1inch',
     localRaster: 'icons/matrix/build-sources/1inch.webp',
@@ -252,7 +252,7 @@ const ICONS = [
     iconifyExtra: ['token/1inch', 'simple-icons/1inch'],
     cc: '1inch',
   },
-  /* Ondo: no Simple Icons slug; CoinGecko token image (see build-sources/ondo.png comment in build_matrix_icons.py). */
+  /* Ondo: no Simple Icons slug; CoinGecko token image (see build-sources/ondo.png comment in scripts/build_matrix_icons.py). */
   {
     name: 'ondo',
     localPng: 'icons/matrix/build-sources/ondo.png',
