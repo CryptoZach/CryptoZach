@@ -1,7 +1,97 @@
 # scripts/
 
 Helper scripts for the CryptoZach research-program repo. Most are one-off
-sprint tools; the canonical long-lived utility is `audit_session.py`.
+sprint tools; the canonical long-lived utilities are `audit_session.py` and
+`claude-code-sync.py`.
+
+---
+
+## claude-code-sync.py (Claude Code CLI session-start sync; v1)
+
+Prints a current-state snapshot of the research program for Claude Code CLI
+to ingest at the start of every session in this repo. Replaces the need for
+a paste-able project memory dump (Claude Code CLI has direct file access,
+so the script reads the canonical files and emits a fresh snapshot every
+run).
+
+### Usage
+
+```bash
+python3 scripts/claude-code-sync.py                       # full snapshot to stdout
+python3 scripts/claude-code-sync.py --terse               # 3 entries per section
+python3 scripts/claude-code-sync.py --decisions 10        # tune per section
+python3 scripts/claude-code-sync.py > /tmp/cc-sync.md     # write to file, then paste
+```
+
+Recommended session-start workflow inside a Claude Code CLI session:
+
+```
+> Run scripts/claude-code-sync.py and treat the output as your sync surface
+> for this session. Read any canonical file you need to act on; do not
+> write to docs/. Confirm you understand your lane before proceeding.
+```
+
+Claude Code CLI has shell access; it will execute the script and parse the
+markdown output directly into context. Re-run between major task switches
+to refresh.
+
+### What it prints (in order)
+
+1. Header: identity, lane reminder, hard constraints, timestamp
+2. Canonical-file freshness table (Last-updated date per file, normalized to ISO)
+3. SSRN publication snapshot (parsed from `PROGRAM_STATE.md`)
+4. Recent decisions (last N `DEC-NNN` entries)
+5. Recent corrections (last N `EC-YYYY-MM-DD-X` entries)
+6. Critical known unknowns (KU entries under "Critical (Blocks Active Work)")
+7. Open outreach (OL entries with non-Closed/FILED/Logged/Declined status)
+8. Top pending actions (PROGRAM_STATE "Pending actions (open)" entries)
+9. Output conventions (working-tree paths, handoff-memo location)
+10. Common workflow pointers (skill files for Dune, surgery, handoff, etc.)
+11. Comprehensive memory pointer (`handoff/claude_web_project_memory.md`)
+
+Default output is ~165 lines / ~10.8 KB, well under typical context budgets.
+`--terse` brings it to ~150 lines.
+
+### Options
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `--decisions N` | 5 | Last N `DEC-NNN` entries from `DECISION_LOG.md` |
+| `--corrections N` | 5 | Last N `EC-...` entries from `ERROR_CORRECTION_LOG.md` |
+| `--outreach N` | 12 | First N open `OL-NNN` entries from `OUTREACH_LOG.md` |
+| `--pending N` | 8 | First N `### titles` under PROGRAM_STATE Pending actions |
+| `--terse` | off | Sets all counts to 3 (5 for outreach and pending) |
+
+Setting any count to `0` suppresses that section's entries (the section
+header still prints with a "no entries" note).
+
+### Caveats
+
+- **"Recent" means file order, not strict chronological order.** The script
+  takes the last N matches by file position. For DEC entries (sequential
+  numbering) this matches chronological order; for EC entries (date-prefixed
+  but appended in commit order) it approximates "most recently appended."
+- **Outreach `_is_closed` heuristic.** Statuses containing "closed,"
+  "declined," "filed," "logged," "complete," or "completed" are filtered out.
+  Edge cases (e.g., a status that says "Closed loop reopened") may misclassify.
+- **No commit-history awareness.** The freshness column reflects what the
+  file's `Last updated:` line claims, not git mtime. A stale header with a
+  recent commit is invisible to the script.
+- **No write side effects.** The script reads `docs/` and prints to stdout;
+  it does not modify any file. Safe to run from any tool, any time.
+
+### When to update this script
+
+- A new canonical file is added to `docs/`: append to `CANONICAL_FILES`.
+- A canonical file's `Last updated:` format changes: update `parse_last_updated`.
+- A new entry-prefix pattern appears (e.g., a future `CPA-NNN` for cross-paper
+  author decisions): add a `get_recent_entries(... prefix="CPA")` call and a
+  matching render function.
+- A new skill or workflow becomes a session-start essential: add a row to
+  the "Common workflow pointers" table in `render_conventions`.
+
+Pair with `cryptozach-living-files` skill: when canonical files change shape,
+this script may need to learn the new shape.
 
 ---
 
