@@ -59,6 +59,17 @@ When METADATA cross-references would require inventing a finding ID (`F-*`), dec
 
 ---
 
+## Model B: Sequential collaboration (Cursor specs, executor tool runs)
+
+For bulk-edit cycles where spec-authoring discipline is justified but per-edit token cost is not, Cursor may author a spec or script and route execution to a non-Cursor agent (typically Claude Code CLI). The executor runs the spec; commit handling per the cycle's risk profile (Option A commit-and-push directly; Option B stage-and-return diff for Cursor review).
+
+**Scope:**
+
+- **IN:** site file edits (root `papers/`, `index.html`, `resume/`, `frameworks/`, `overview/`); bulk text replacements; pattern-based edits with explicit `(old, new)` tuples; cache-buster bumps; mechanical cleanups per audit findings; `_config.yml` / `sitemap.xml` / `robots.txt` mechanical updates per spec.
+- **OUT:** `docs/` canonical-state edits (DEC-069 unchanged); one-off surgical edits; new content authoring; cycles requiring halt-on-divergence judgment mid-execution.
+
+**Adopted operationally 2026-04-22** per author authorization. No DEC entry filed. First proof-of-concept cycle: commit `66739cb`. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` "Cursor to Claude Code execution (Model B sequential collaboration)" section for full pattern, scope details, and execution prompt template.
+
 ## Recurring workflow: cited research backlog processing
 
 `research_content/cited_research/Uncategorized_Reading_Additions/` is the author's drop zone for new research PDFs. The author drops PDFs (optionally with sidecar `.notes.md` files); periodic processing categorizes and relocates them into `cited_research/tier_N/` or `cited_research/category_*/` subdirectories with METADATA.md.
@@ -102,4 +113,4 @@ Update when:
 
 Keep this file and `CLAUDE.md` in lockstep on shared content; tool-specific operational detail (e.g., Claude Code CLI's exact session-start prompt) lives in `CLAUDE.md` only.
 
-Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1).
+Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1). Further updated 2026-04-22 (evening): Model B sequential collaboration section added; documents the operational pattern of Cursor authoring specs and a non-Cursor executor (typically Claude Code) running the spec for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; mirrors `CLAUDE.md` "Model B" subsection. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` for full pattern.

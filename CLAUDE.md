@@ -138,6 +138,19 @@ When applying memo or patch content to canonical state, always read the current 
 
 Claude Code CLI is the preferred execution engine for batch runs (cost). Cursor handles one-off or interactive categorization. The handoff itself is tool-agnostic: same spec, same output format, same handoff-back-to-Cursor pattern for canonical-state propagation (READING_LIST.md, DATA_REGISTRY.md, KEY_FINDINGS.md, CROSS_REFERENCE_MAP.md updates).
 
+### Model B: Sequential collaboration (Cursor specs, Claude Code executes)
+
+For bulk-edit cycles where Cursor's spec-authoring discipline is justified but Cursor's per-edit token cost is not, Cursor may author a spec or script and route execution to Claude Code. Claude Code executes; Cursor reviews and/or commits per cycle risk profile.
+
+**Scope:**
+
+- **IN:** site file edits (root `papers/`, `index.html`, `resume/`, `frameworks/`, `overview/`, etc.); bulk text replacements across many files; pattern-based edits with explicit `(old, new)` tuples; cache-buster bumps; mechanical cleanups per audit findings; `_config.yml` / `sitemap.xml` / `robots.txt` mechanical updates per spec
+- **OUT:** `docs/` canonical-state edits (DEC-069 unchanged); one-off surgical edits; new content authoring with iteration on intent; cycles requiring halt-on-divergence judgment mid-execution
+
+**Pattern:** Cursor authors the spec (typically Python script with `(old, new)` tuples plus assertions); Claude Code executes; commit handling per spec instruction (Option A commit-and-push for clearly-scoped mechanical cycles; Option B stage-and-return-diff for cycles needing pre-commit author review).
+
+**Adopted operationally 2026-04-22** per author authorization. No DEC entry filed. First proof-of-concept cycle: commit `66739cb` (site sweep findings cleanup; 22 files). See `cryptozach-multi-tool-handoff` skill "Cursor to Claude Code execution (Model B sequential collaboration)" section for full pattern, scope details, and execution prompt template.
+
 ### Status-append pattern (PROGRAM_STATE pending actions; KU resolutions; OL transitions)
 
 Per `cryptozach-status-tracking` skill: when a pending action's trigger fires or a status changes, append a status line that preserves history rather than overwriting. Example:
@@ -178,4 +191,4 @@ This file documents Claude Code CLI session-start workflow. Update when:
 - A new common workflow pattern stabilizes (e.g., a new skill becomes a session-start essential).
 - The hybrid-repo partition shifts (e.g., a new top-level directory is added with its own lane).
 
-Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern).
+Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern). Further updated 2026-04-22 (evening): Model B sequential collaboration section added under Common workflow patterns; documents the operational pattern of Cursor authoring specs and Claude Code executing for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; first proof-of-concept cycle is commit `66739cb`. See `cryptozach-multi-tool-handoff` skill for full pattern.
