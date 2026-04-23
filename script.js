@@ -210,20 +210,8 @@
   const yearEl = document.getElementById('year');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* Homepage hero: scroll / touch diagnosis (iOS Display Zoom, large Dynamic Type):
-   * - This site does not use GSAP ScrollTrigger or a scroll-scrub timeline on the hero.
-   * - The trap is script + CSS: on #hero, touchstart sets reefTouchActive and touchmove calls
-   *   preventDefault() while true, so any scroll gesture that starts inside the hero cannot
-   *   scroll the page. A tall hero makes that every gesture.
-   * - .hero-eyebrow uses touch-action: none so drags go to matrix/coral instead of scroll.
-   * - prefers-reduced-motion: reduce skips the entire coral-reef init block (no reef listeners).
-   * Mitigation: heroHomepageExceedsViewport() vs visual viewport height, data-hero-overflows
-   * + CSS, gated preventDefault, resize/visualViewport refresh, MAX_HERO_REEF_SCROLL_LOCK_MS.
-   * iOS: URL bar show/hide grows visualViewport height; hero can read as "fits" and re-enable
-   * touchmove preventDefault so users who scrolled away cannot scroll again from the hero. We
-   * latch overflow after the first tall-hero reading and clear the latch only on window resize
-   * or orientationchange (not visualViewport.resize). */
-  var MAX_HERO_REEF_SCROLL_LOCK_MS = 4000;
+  /* Homepage hero overflow tracking. Used only to toggle data-hero-overflows for CSS; touch
+   * scrolling is no longer blocked regardless of overflow state (see touchmove handler below). */
   var heroHomepageOverflowLatched = false;
   function heroHomepageResetOverflowLatch(){
     heroHomepageOverflowLatched = false;
@@ -1638,56 +1626,14 @@
         }
       });
 
-      /* Prevent scrolling while touch-dragging in hero so coral reef captures the gesture.
-         Skip when the hero is taller than the visible viewport (large text / zoom): otherwise
-         users cannot scroll past the hero. MAX_HERO_REEF_SCROLL_LOCK_MS releases if needed. */
-      var reefTouchActive = false;
-      var reefScrollLockEscapeTimer = null;
-      function clearHeroReefScrollLockTimer(){
-        if(reefScrollLockEscapeTimer !== null){
-          clearTimeout(reefScrollLockEscapeTimer);
-          reefScrollLockEscapeTimer = null;
-        }
-      }
-      heroReefScrollLockRelease = function(){
-        if(heroHomepageExceedsViewport()){
-          reefTouchActive = false;
-          clearHeroReefScrollLockTimer();
-        }
-      };
+      /* Touch gestures on #hero always scroll the page. The coral reef still animates via
+         pointerdown/pointermove, but the browser owns the vertical scroll. Previous versions
+         called preventDefault() in touchmove to "capture" the gesture for the reef; on iPhone
+         that trapped users at the top of the page when the hero happened to fit the viewport. */
+      heroReefScrollLockRelease = function(){};
 
-      heroHome.addEventListener('touchstart', function() {
+      heroHome.addEventListener('touchmove', function() {
         refreshHeroHomepageOverflowDataAttr();
-        if(heroHomepageExceedsViewport()){
-          reefTouchActive = false;
-          return;
-        }
-        reefTouchActive = true;
-        clearHeroReefScrollLockTimer();
-        reefScrollLockEscapeTimer = window.setTimeout(function(){
-          reefTouchActive = false;
-          reefScrollLockEscapeTimer = null;
-        }, MAX_HERO_REEF_SCROLL_LOCK_MS);
-      }, { passive: true });
-      heroHome.addEventListener('touchmove', function(e) {
-        refreshHeroHomepageOverflowDataAttr();
-        if(reefTouchActive && !heroHomepageExceedsViewport()){
-          e.preventDefault();
-        }
-      }, { passive: false });
-      heroHome.addEventListener('touchend', function() {
-        reefTouchActive = false;
-        clearHeroReefScrollLockTimer();
-      }, { passive: true });
-      heroHome.addEventListener('touchcancel', function() {
-        reefTouchActive = false;
-        clearHeroReefScrollLockTimer();
-      }, { passive: true });
-
-      /* Any document scroll releases reef lock (covers missed touchend when returning to hero on iOS). */
-      window.addEventListener('scroll', function(){
-        reefTouchActive = false;
-        clearHeroReefScrollLockTimer();
       }, { passive: true });
 
       /* Spawn reef on tap/press for instant touch feedback */

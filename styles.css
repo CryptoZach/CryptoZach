@@ -11590,24 +11590,8 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   position: relative;
   isolation: isolate;
   overflow: visible;
-  /* Let drags over the headline drive matrix / coral without the browser taking scroll */
-  touch-action: none;
-}
-
-/* iOS Safari: when script sets data-hero-overflows (hero taller than visible viewport), allow
-   vertical scroll inside the hero and pan-y on the eyebrow so zoom / large Dynamic Type users
-   are not trapped by touch-action:none + reef touchmove preventDefault bypass elsewhere. */
-@supports (-webkit-touch-callout: none){
-  #hero.hero--homepage[data-hero-overflows="true"]{
-    max-height: 100dvh;
-    max-height: 100vh;
-    overflow-x: clip;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  #hero.hero--homepage[data-hero-overflows="true"] .hero-eyebrow{
-    touch-action: pan-y;
-  }
+  /* pan-y: vertical scroll always reaches the page; horizontal drags still drive matrix / coral. */
+  touch-action: pan-y;
 }
 
 /* Mouse-following spotlight (position set via --hero-eyebrow-x/y from script.js; script adds inset offset so glow is centered on cursor) */
