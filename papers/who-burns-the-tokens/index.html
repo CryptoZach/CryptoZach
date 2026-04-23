@@ -14,7 +14,7 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Who Burns the Tokens? | TS</title>
-  <meta name="description" content="GeoDePIN deep dive into fiscal sustainability and demand concentration. Helium S2R = 1.84 over a 34-month window (May 2023 to February 2026). Burn-mechanism design, not network size, determines demand concentration: Helium carrier-contract Top-5 ~90% (HHI 0.22) versus GEODNET subscription Top-5 = 40.4% (HHI 0.055). Companion to Governance Concentration Beyond Token Allocation (B2)." />
+  <meta name="description" content="GeoDePIN deep dive into fiscal sustainability and demand concentration. Helium S2R = 1.84 over a 34-month window (May 2023 to February 2026). Burn-mechanism design, not network size, determines demand concentration: Helium carrier-contract Top-5 ~90% (HHI 0.22) versus GEODNET subscription Top-5 = 40.4% (HHI 0.055). Companion to Governance Concentration Beyond Token Allocation." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="DePIN, GeoDePIN, Subsidy-to-Revenue ratio, burn-and-mint equilibrium, demand concentration, Helium, GEODNET, service verification, token velocity, HIP-147, SuperHex" />
 
@@ -238,7 +238,7 @@
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
-        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2): protocol-controlled addresses are filtered out before concentration measurements. It also uses the Ostromian polycentricity framing from B2, but it is not a philosophy paper; the broader five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) is developed in B2.</p>
+        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It also uses the Ostromian polycentricity framing from Governance Concentration, but it is not a philosophy paper; the broader five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) is developed in Governance Concentration.</p>
 
         <h2>Core findings</h2>
 
@@ -268,7 +268,7 @@
 
         <h3>4. GEODNET governance is more concentrated than its demand profile</h3>
         <p>Despite the dispersed demand side, GEODNET's on-chain governance concentrates: HHI 0.14 across active voters. The team wallet alone accounts for 25.3% of Polygon-side voting power. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution.</p>
-        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see B2 finding F-B2-8 on Token Terminal DePIN measurement error).</p>
+        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see the Token Terminal DePIN measurement error finding documented in Governance Concentration).</p>
 
         <h3>5. SuperHex as a novel design primitive</h3>
         <p>GEODNET's SuperHex mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives directly to coverage geography. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as worth instrumenting as a separate design dimension worth studying in other GeoDePIN networks.</p>
@@ -291,11 +291,11 @@
         <h3>Methodology blind spot (non-negotiable disclosure)</h3>
         <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, with limitations handled in the limitations section, not only there.</p>
 
-        <h3>Exclusion methodology (inherited from B2)</h3>
-        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> (B2). Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
+        <h3>Exclusion methodology (inherited from Governance Concentration)</h3>
+        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
 
         <h3>Philosophy disposition</h3>
-        <p>This is not a philosophy paper. It uses Ostromian polycentricity as the framing for governance distribution and references the broader five-lens institutional-design framework developed in B2 (reference [34]). The paper does not apply the full five-lens framework. Earlier draft versions had broader philosophical scope; the v10 manuscript narrows to the empirical Helium/GEODNET focus.</p>
+        <p>This is not a philosophy paper. It uses Ostromian polycentricity as the framing for governance distribution and references the broader five-lens institutional-design framework developed in Governance Concentration Beyond Token Allocation (reference [34]). The paper does not apply the full five-lens framework. Earlier draft versions had broader philosophical scope; the v10 manuscript narrows to the empirical Helium/GEODNET focus.</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
@@ -312,7 +312,7 @@
           <p><strong>DIMO (post-exclusion)</strong><br>
           HHI 0.038 · GnosisSafeL2 holding ~44% excluded as protocol-controlled · 643% HHI delta if exclusion skipped</p>
           <p><strong>Filecoin S2R</strong><br>
-          0.045 (cross-section reference only; partially Token Terminal-derived, see B2 F-B2-8)</p>
+          0.045 (cross-section reference only; partially Token Terminal-derived; the Token Terminal DePIN measurement error is documented in Governance Concentration)</p>
         </div>
 
         <h2>Limitations</h2>
@@ -336,15 +336,15 @@
         <div class="companion-cards">
           <a href="/papers/governance-concentration" class="companion-card">
             <strong>Governance Concentration Beyond Token Allocation</strong>
-            <span>Companion B2: cross-sectional empirical foundation (40 protocols across DePIN and DeFi) for this paper's within-sector GeoDePIN vertical. Source of the exclusion methodology and the Ostromian polycentricity framing.</span>
+            <span>Cross-sectional empirical foundation (40 protocols across DePIN and DeFi) for this paper's within-sector GeoDePIN vertical. Source of the exclusion methodology and the Ostromian polycentricity framing.</span>
           </a>
           <a href="/papers/adaptive-tokenomics" class="companion-card">
             <strong>Adaptive Tokenomics</strong>
-            <span>Companion B1: simulation-based study of PID emission control on the MeshNet framework. Track B thematic companion; no data dependency.</span>
+            <span>Simulation-based study of PID emission control on the MeshNet framework. Track B thematic companion; no data dependency.</span>
           </a>
           <a href="/papers/operational-risk" class="companion-card">
             <strong>Operational Risk in Token Economies</strong>
-            <span>Companion B4: 624-configuration simulation of operational failures interacting with adaptive controllers and reputation systems. Calibrates partly on Helium and GEODNET failure profiles.</span>
+            <span>624-configuration simulation of operational failures interacting with adaptive controllers and reputation systems. Calibrates partly on Helium and GEODNET failure profiles.</span>
           </a>
         </div>
       </section>

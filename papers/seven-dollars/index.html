@@ -209,7 +209,7 @@
         <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
 
         <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
-        <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in the companion paper, A1, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
+        <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in Routing the Dollar, the companion paper, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
         <p><strong>What this means.</strong> If the objective is to supervise the gateway, the CLII is the correct instrument. If the objective is to assess whether a specific product will hold its peg under a specific stress, the MVEP is the correct instrument. Supervisory practice that uses one framework to answer both questions produces false comfort.</p>
 
         <h2>Finding 2. Collateral eligibility ranks products differently than regulation does</h2>
@@ -228,7 +228,7 @@
         <p><strong>Investors and market-structure teams.</strong> Two products trading at one dollar can require structurally different diligence packages. The four-dimension taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile) is the first-pass filter that determines which MVEP categories are binding for each product before the full ten-category assessment begins.</p>
 
         <h2>Dollar-infrastructure context</h2>
-        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar (A1)</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP (A2)</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies (A4)</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
+        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
 
         <blockquote class="paper-thesis-line">
           <p>Seven products. Seven structurally different diligence packages. The dollar denomination is the least informative thing about them.</p>
@@ -237,7 +237,7 @@
         <h2>How the paper is built</h2>
         <ul>
           <li>Seven products classified on four structural dimensions (legal claim, ledger, insolvency, liquidation profile).</li>
-          <li>CLII extended to five operators using the A1 methodology.</li>
+          <li>CLII extended to five operators using the Routing the Dollar methodology.</li>
           <li>MVEP category binding predicted from the taxonomy and checked against each product.</li>
           <li>Eight-metric collateral eligibility framework scored across the seven products.</li>
           <li>Two production stress events analyzed (SVB March 2023, Circle pool March 2025).</li>
@@ -260,7 +260,7 @@
           <h2>Key numbers</h2>
           <p><strong>Sample</strong><br>
           Products: 7 · Operators: 5 (Circle, Tether, Paxos, Ondo, MakerDAO) · Regulatory regimes: 5 · Time window: Jan 2023 to Mar 2026</p>
-          <p><strong>CLII (A3 extension)</strong><br>
+          <p><strong>CLII (Seven Dollars extension)</strong><br>
           Circle 0.92 · Paxos (USDG) 0.83 · Ondo 0.61 · Tether 0.52 · MakerDAO 0.15</p>
           <p><strong>Collateral eligibility (composite score, tier)</strong><br>
           USDC 0.777 (A) · PYUSD 0.753 (A) · USDT 0.657 (B) · USDS 0.657 (B) · USDe 0.604 (B) · DAI 0.589 (C) · USDG 0.495 (C) · OUSG 0.295 (D)</p>
@@ -282,15 +282,15 @@
         <div class="companion-cards">
           <a href="/papers/routing-the-dollar" class="companion-card">
             <strong>Routing the Dollar</strong>
-            <span>Companion A1: gateway-level variation in stablecoin transmission. Establishes the CLII used in this paper.</span>
+            <span>Gateway-level variation in stablecoin transmission. Establishes the CLII used in this paper.</span>
           </a>
           <a href="/papers/mvep" class="companion-card">
             <strong>Minimum Viable Equivalence Pack</strong>
-            <span>Companion A2: the ten-category diligence framework developed from the SVB case. Applied here to seven dollar-denominated products.</span>
+            <span>The ten-category diligence framework developed from the SVB case. Applied here to seven dollar-denominated products.</span>
           </a>
           <a href="/papers/three-strategies" class="companion-card">
             <strong>Three Tokenization Strategies</strong>
-            <span>Companion A4: deposit tokens and tokenized securities extend the same control-layer logic to institutional settlement infrastructure.</span>
+            <span>Deposit tokens and tokenized securities extend the same control-layer logic to institutional settlement infrastructure.</span>
           </a>
         </div>
       </section>
