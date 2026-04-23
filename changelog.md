@@ -4,6 +4,34 @@ Rolling, dated release notes for site, resume, and social deliverable surfaces.
 
 ---
 
+## 2026-04-22: GitHub Pages build fix (Jekyll scoped to served paths)
+
+The GitHub Pages build for `tokenization.systems` failed across six consecutive `pages-build-deployment` runs (`24807527773` through `24810090602`) with a Jekyll Liquid syntax error at `research_content/papers/B3_who_burns_the_tokens/PAPER.md` line 174 plus YAML warnings on two FDIC LETTER.md files. Two-part fix landed in commit `070ad09`; first green run `24810293594` shipped at 00:43:41Z (46s).
+
+### Site (commit `070ad09`; first green run `24810293594`)
+
+- **New `_config.yml` at repo root** scopes Jekyll to served paths via a 37-entry `exclude:` list (Jekyll defaults plus `research_content/`, `docs/`, `handoff/`, `Cryptozach-site-files/`, `scripts/`, `tools/`, `tests/`, `Resumes_v2/`, `Resumes_TokenizationSystems/`, `exhibits/`, `results/`, `src/`, `Claude/`, plus repo metadata files). Without it, Jekyll greedily processed 185+ Markdown files in operational scratch dirs that were never intended to be web pages, intermittently breaking the build whenever LaTeX or front-matter-like syntax appeared. Verified safe: zero Liquid syntax in any served HTML; only two harmless stub MD files under `papers/` (`pub3_ssrn_link.md`, `pub4_ssrn_link.md`) remain Jekyll-rendered.
+- **B3 PAPER.md line 174** brace-spacing fix as belt-and-suspenders: `\frac{{Budget}_{t}}{{Price}_{t}^{TWAP}}` becomes `\frac{ {Budget}_{t} }{ {Price}_{t}^{TWAP} }`. Visually identical math output. The `{{Budget}` adjacency had read to Jekyll's Liquid parser as the start of an unterminated variable expression.
+- **Two FDIC LETTER.md files** (AG19 + AG20) that had emitted YAML warnings (their leading triple-dash on line 1 reads to Jekyll as a YAML front-matter opener, then the prose body fails YAML parsing) are now ignored by Jekyll via the `_config.yml` exclude. Operator-authored letter sources remain exactly as written.
+
+### Side benefit
+
+Jekyll no longer wastes build time on hundreds of operational Markdown files. Future Liquid-trap patterns in research drafts cannot break the production build as long as they live under excluded paths.
+
+### Attribution note
+
+The fix was authored across two parallel agent sessions in two local clones (Cursor in `/Users/zach/ai-research/CryptoZach/`, Claude Code in `/Users/zach/Tokenization_Systems_Website/`). Both agents independently arrived at the brace-spacing fix; Cursor authored `_config.yml` as the structural fix. The combined two-file edit set was inadvertently absorbed into commit `070ad09` (a parallel Cursor agent's sweeping `git add` bundled it with unrelated R1.5.1 handoff-back P1 + P2 + P3 + P4 + R1.5.2 + R1.7 dispatch work). Build went green from that commit. See `docs/PROGRAM_STATE.md` Session Changes (2026-04-22, GitHub Pages build fix attribution backfill) for the full audit trail.
+
+### Out of scope
+
+The Node.js 20 deprecation warning on `actions/checkout@v4` is emitted by the GitHub-managed `pages-build-deployment` workflow (no `.github/workflows/` file in this repo) and is not actionable from this repo. GitHub will roll the runner to Node 24 by default in June 2026.
+
+### Editorial discipline
+
+Zero em-dashes added (no-em-dashes rule). No site asset versioning bump (no shared CSS or JS edits in this fix).
+
+---
+
 ## 2026-04-22: TCMAG / MVEP comparative briefing published
 
 The Tokenized Cash Management Advisory Group (TCMAG) published its initial set of eleven principles for tokenized corporate cash management on April 21, 2026. The Tokenization Systems research program responded with a comparative briefing positioning the program's Minimum Viable Equivalence Pack (MVEP) framework as the supply-side diagnostic complement to TCMAG's buyer-side principles.
