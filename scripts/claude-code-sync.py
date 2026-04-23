@@ -198,8 +198,42 @@ def _is_closed(status: str) -> bool:
     return any(s.startswith(m) or f" {m}" in s for m in closed_markers)
 
 
+CLOSED_TITLE_MARKERS = (
+    "(CLOSED ",
+    "(COMPLETE ",
+    "(RESOLVED ",
+    "(DONE ",
+    "(SUPERSEDED ",
+    "(RETIRED ",
+    "(CLOSED;",
+    "(COMPLETE;",
+    "(RESOLVED;",
+)
+
+
+def _is_closed_pending_title(title: str) -> bool:
+    """Filter pending-action titles whose header explicitly indicates closure.
+
+    Pending-action sections in PROGRAM_STATE accumulate over time; some
+    entries get resolved without being moved out of the section. The
+    convention: append a closure marker to the title (e.g.,
+    "(CLOSED 2026-04-18 via Path D)" or "(COMPLETE 2026-04-20)") so the
+    sync script naturally skips them. See `CLAUDE.md` and `AGENTS.md` for
+    the closure-marker convention.
+    """
+    upper = title.upper()
+    return any(marker in upper for marker in CLOSED_TITLE_MARKERS)
+
+
 def get_pending_actions(path: Path, n: int = 8) -> list[str]:
-    """Extract H3 titles under '## Pending actions (open)' in PROGRAM_STATE."""
+    """Extract H3 titles under '## Pending actions (open)' in PROGRAM_STATE.
+
+    Filters titles indicating closure (see CLOSED_TITLE_MARKERS) so resolved
+    entries that have not been moved out of the section do not surface as
+    pending. This is a parsing-side filter; the canonical convention is to
+    append "(CLOSED <date> ...)" or "(COMPLETE <date>)" to the H3 title
+    when an entry resolves without being relocated.
+    """
     if n <= 0:
         return []
     text = read_text(path)
@@ -218,7 +252,9 @@ def get_pending_actions(path: Path, n: int = 8) -> list[str]:
         if in_section:
             match = h3_re.match(stripped)
             if match:
-                titles.append(match.group(1))
+                title = match.group(1)
+                if not _is_closed_pending_title(title):
+                    titles.append(title)
     return titles[:n]
 
 
