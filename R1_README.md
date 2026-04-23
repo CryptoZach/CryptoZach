@@ -45,9 +45,9 @@ research_content/
 │   ├── B2_governance_concentration/               # SSRN 6599278; PAPER.md + submissions/{docx,pdf} (Frontiers; Apr 18; ns-prefix-normalized for pandoc)
 │   ├── B3_who_burns_the_tokens/                   # SSRN 6483619; PAPER.md + submissions/{docx,pdf} (Final_v10; Apr 18)
 │   └── B4_operational_risk/                       # SSRN 6352118; PAPER.md + submissions/{docx,pdf} (full body; Mar 5; restaged 2026-04-22) + versions/Exhibit_Appendix_FINAL_2026-03-09.docx
-├── briefings/                                      # 4 practitioner briefings (per DEC-102 + DEC-103); R1.5 populated
-│   ├── TEV_tokenized_equity/                      # Medium / site only; STUB with METADATA (R1.5)
-│   ├── DV3_dollar_v3/                             # Medium / site; HYBRID (R1.5 manuscripts/Dollar_v3_FINAL_MEDIUM_LINKED.md)
+├── briefings/                                      # 4 practitioner briefings (per DEC-102 + DEC-103); R1.5 populated, R1.5.1 refreshed
+│   ├── TEV_tokenized_equity/                      # Medium + DocSend + site; HYBRID (R1.5.1 reversed Option 1 STUB: manuscripts/Tokenized_Equity_Vehicles_Final_Removed_Parallels.md 25,543 words + TEV_Deep_Diligence_1_Medium.md + source .pdf)
+│   ├── DV3_dollar_v3/                             # Medium / site; HYBRID (R1.5 Dec-23 snapshot + R1.5.1 April-2026 current-version refresh at manuscripts/Dollar_v3_Medium_CurrentVersion_2026-04-22.md)
 │   ├── CLW_control_layer_war/                     # Medium / site; HYBRID (R1.5 manuscripts/Control_Layer_War_FINAL.md, split via Approach A)
 │   └── MVEP_TCMAG_comparison/                     # site briefing 2026-04-22; HYBRID (manuscripts/MVEP_TCMAG_briefing_v1.md; METADATA added R1.5)
 ├── letters/                                        # R1.2 complete 2026-04-22: 8 letter dirs (METADATA + LETTER.md + PDF) + _program_strategy/
@@ -60,11 +60,12 @@ research_content/
 │   ├── 2026-04-18_Banking_Agencies_91FR18304_Joint_AML/ # 91 Fed. Reg. 18304 joint
 │   ├── 2026-04-20_FDIC_AG19_PPSI_Activities_Rule/  # RIN 3064-AG19 (program-closing; + Public_Intro.md)
 │   └── _program_strategy/                          # AML strategic update + GENIUS gap analysis + Fed NPRM skeleton
-├── practitioner/                                   # R1.5 complete 2026-04-22: 3 practitioner subdirs + type-level README
+├── practitioner/                                   # R1.5 complete 2026-04-22: 3 subdirs + type-level README; R1.5.1 adds 4th subdir + refreshes 2026-01 + 2026-02 with current-form companions
+│   ├── 2025-08_genius_clarity_overview/            # NEW R1.5.1: Medium July 2025 policy synthesis (GENIUS + CLARITY + EO 14178 + Project Crypto); ARTICLE.md + METADATA + README
 │   ├── 2025-12_dollar_v3_memo/                    # MEMO.md (pandoc gfm) + .docx + .pdf + METADATA + README
-│   ├── 2026-01_clarity_control_layer/             # ARTICLE.md (Jan 24 2026 Medium essay; Piece_1) + METADATA + README
-│   ├── 2026-02_mvep_content_suite/                # ARTICLE_medium.md + POST_linkedin.md + THREAD_x.md + COVER + OnePager + METADATA + README
-│   └── README.md                                   # practitioner type-level README (R1.5)
+│   ├── 2026-01_clarity_control_layer/             # ARTICLE.md (Piece_1 ancestor) + ARTICLE_medium_published.md (R1.5.1 refined published form) + METADATA + README
+│   ├── 2026-02_mvep_content_suite/                # ARTICLE_medium.md (R1.5.1 April-2026 10-category) + ARTICLE_medium_v7_2026-02-20.md (Feb-2026 9-category original) + POST_linkedin.md + THREAD_x.md + COVER + OnePager + METADATA + README
+│   └── README.md                                   # practitioner type-level README (R1.5; R1.5.1 refreshed)
 ├── reviewer_assets/
 ├── memos/
 │   ├── handoffs/
