@@ -78,9 +78,9 @@
     document.documentElement.classList.toggle('nav-mobile-open', isOpen);
     if(isOpen){
       window.requestAnimationFrame(function(){
-        var closeBtn = navMobile.querySelector('.mobile-nav-close');
-        if(closeBtn){
-          closeBtn.focus();
+        var firstLink = navMobile.querySelector('.mobile-nav-linkset a.navlink');
+        if(firstLink){
+          firstLink.focus();
         }
       });
     }
@@ -118,7 +118,7 @@
       if(e.key !== 'Tab' || !MOBILE_NAV_MQ.matches) return;
       if(menuToggle.getAttribute('aria-expanded') !== 'true') return;
       var focusables = navMobile.querySelectorAll(
-        '.mobile-nav-close, .mobile-nav-linkset a.navlink, .nav-mobile-social a.header-social-link'
+        '.mobile-nav-linkset a.navlink, .nav-mobile-social a.header-social-link'
       );
       if(!focusables.length) return;
       var list = Array.prototype.slice.call(focusables);
