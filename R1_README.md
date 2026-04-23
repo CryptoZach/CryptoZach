@@ -1,6 +1,6 @@
 # R1: Research Content Architecture
 
-**Status:** Phases R1.0 through R1.5 complete (2026-04-22); sub-cycles R1.5.1 (2026-04-22) and R1.5.2 (2026-04-22) delivered. R1.0 scaffolding, R1.1 A5 pilot, R1.2 letter migration (8 of 8 letters with METADATA + LETTER.md + as-filed PDF + 2 FDIC public-intro files; `_program_strategy/` populated with 3 strategy docs), R1.3 paper wave 1 (A4 + B2 + B3 with METADATA + submissions/ + versions/ + exhibits/ scaffolding), R1.4 paper wave 2 (A1 + A2 + A3 + B1 + B4 same scaffolding), R1.5 practitioner migration (4 items: DV3 + CLW + TEV + MVEP_TCMAG briefings populated; 3 practitioner subdirs 2025-12_dollar_v3_memo + 2026-01_clarity_control_layer + 2026-02_mvep_content_suite created with METADATA + body files + READMEs), R1.5.1 practitioner content refresh (TEV HYBRID, CLARITY ancestor-plus-published, DV3 April current-version companion, MVEP April ten-category refresh, 2025-08 Navigating subdir added), and R1.5.2 Dollar v3 source bank memos migration (memos/strategy/ with 5 subdirs, memos/reading_notes/ with 3 subdirs, resumes/_archive/ with 1 subdir) all delivered. A5 (R1.1 pilot) gained METADATA.md in the same 2026-04-22 batch for canonical-structure consistency; A6 / A7 STUB papers also gained METADATA. R1.6 (cited research), R1.7 (build tooling), and R1.8 (steady state) remain pending.
+**Status:** Phases R1.0 through R1.5 complete (2026-04-22); sub-cycles R1.5.1 (2026-04-22) and R1.5.2 (2026-04-22) delivered; R1.7 (build tooling) complete (2026-04-23). R1.0 scaffolding, R1.1 A5 pilot, R1.2 letter migration (8 of 8 letters with METADATA + LETTER.md + as-filed PDF + 2 FDIC public-intro files; `_program_strategy/` populated with 3 strategy docs), R1.3 paper wave 1 (A4 + B2 + B3 with METADATA + submissions/ + versions/ + exhibits/ scaffolding), R1.4 paper wave 2 (A1 + A2 + A3 + B1 + B4 same scaffolding), R1.5 practitioner migration (4 items: DV3 + CLW + TEV + MVEP_TCMAG briefings populated; 3 practitioner subdirs 2025-12_dollar_v3_memo + 2026-01_clarity_control_layer + 2026-02_mvep_content_suite created with METADATA + body files + READMEs), R1.5.1 practitioner content refresh (TEV HYBRID, CLARITY ancestor-plus-published, DV3 April current-version companion, MVEP April ten-category refresh, 2025-08 Navigating subdir added), and R1.5.2 Dollar v3 source bank memos migration (memos/strategy/ with 5 subdirs, memos/reading_notes/ with 3 subdirs, resumes/_archive/ with 1 subdir) all delivered. A5 (R1.1 pilot) gained METADATA.md in the same 2026-04-22 batch for canonical-structure consistency; A6 / A7 STUB papers also gained METADATA. R1.7 (build tooling) shipped 2026-04-23: build pipeline operational with pandoc templates, citeproc CSL configs, bibliography compilation, build.py with structured logging, exhibit_builder skeleton, and plotting skeletons; A1 + A2 integration items from spec section 7 deferred to a separate cycle per author authorization scope. R1.6 (cited research) and R1.8 (steady state) remain pending.
 
 **Authoritative spec:** `handoff/architecture/Upgrade_R1_Research_Content_Canonicalization_Spec.md`
 **Author decisions:** `handoff/architecture/AD_Resolutions_014_020_R1_Spec.md` (AD-014 through AD-020 resolved)
@@ -94,12 +94,12 @@ research_content/
         └── 2026-01_fed_head_application/            # cover letter + resume (.docx + .pdf each) + 90_day_workplan.md + research_agenda_appendix.md + METADATA + README
 
 tools/content-build/
-├── pandoc_templates/              # SSRN, Frontiers, JFS, FDIC, OCC, FinCEN, Treasury, Medium, LinkedIn, resume targets
-├── citeproc_config/               # citation styles per target venue
-├── plotting/                      # shared exhibit infrastructure (theme.R, palette.py, panel_layouts.R)
-├── exhibit_builder/               # per-paper exhibit generation orchestration (planned R1.7)
+├── pandoc_templates/              # 6 templates (R1.7): ssrn_paper.{docx,tex}, comment_letter.tex, medium_article.html, frontiers_paper.docx, elsevier_bra.docx
+├── citeproc_config/               # 4 CSL files (R1.7) + build_bibliography.py: apa, frontiers, elsevier_bra, comment_letter
+├── plotting/                      # shared exhibit infrastructure (R1.7 skeletons): theme.R, palette.py, panel_layouts.R
+├── exhibit_builder/               # per-paper exhibit-regeneration orchestrate.py (R1.7 skeleton; no-op until per-paper sources land)
 ├── metadata_templates/            # one schema-stub per R1 content type (7 templates)
-└── build.py                       # top-level build entry (placeholder; Phase R1.7 implementation)
+└── build.py                       # top-level build entry (R1.7 full implementation)
 ```
 
 ## Per-content-item structure (post-R1.1)
@@ -129,7 +129,7 @@ research_content/papers/A5_svb_causal/
 | R1.4 | Paper wave 2 (A1, A2, A3, B1, B4) | 10-15 hours | DONE (2026-04-22): same scaffolding plus B4 full body restage from `~/Downloads/SSRN Pub Plan/` and A3 table-fmt polish restage |
 | R1.5 | Practitioner migration | 9-13 hours | DONE (2026-04-22): per-item METADATA + body files across briefings/ (DV3 HYBRID with Medium essay in manuscripts/; CLW HYBRID with site-page-copy split via Approach A; TEV STUB-with-METADATA via Option 1; MVEP_TCMAG METADATA add to prior HYBRID) and practitioner/ (2025-12_dollar_v3_memo with pandoc-gfm MEMO.md + docx + pdf; 2026-01_clarity_control_layer with Piece_1 Jan essay as ARTICLE.md; 2026-02_mvep_content_suite with per-venue Medium + LinkedIn + X + cover + one-pager). Sub-cycles: R1.5.1 practitioner content refresh (2026-04-22; TEV HYBRID revert, CLARITY ancestor-plus-published, DV3 April current-version, MVEP April ten-category, 2025-08 Navigating subdir add); R1.5.2 Dollar v3 source bank memos migration (2026-04-22; memos/strategy/ 5 subdirs, memos/reading_notes/ 3 subdirs, resumes/_archive/ 1 subdir). |
 | R1.6 | Cited research bootstrap | 32-38 hours | pending |
-| R1.7 | Build tooling implementation | 6-8 hours | pending |
+| R1.7 | Build tooling implementation | 6-8 hours | DONE (2026-04-23): build pipeline operational; 6 pandoc templates (ssrn_paper.{docx,tex}, comment_letter.tex, medium_article.html, frontiers_paper.docx, elsevier_bra.docx) + 4 CSL configs (apa, frontiers, elsevier_bra, comment_letter) + bibliography compilation (build_bibliography.py with R1.6 fallback) + build.py full implementation (METADATA dispatch, path-based fallbacks, structured logging, summary table) + exhibit_builder/orchestrate.py skeleton (graceful no-op until per-paper exhibit sources land) + plotting skeletons (theme.R, palette.py, panel_layouts.R). End-to-end builds verified: A5 PAPER.md to docx, AG19 LETTER.md to pdf, CLARITY ARTICLE_medium_published.md to html. A1 + A2 integration deferred to separate cycle per author authorization scope. |
 | R1.8 | Adoption steady state | ongoing | pending |
 
 Total: 100-139 hours; 3-4 month elapsed timeline. Per `Research_Content_Inventory_2026-04-20.md`.
