@@ -22,6 +22,17 @@ Default output is approximately 165 lines / 11 KB. Add `--terse` to compress to 
 
 **Re-run the script between major task switches** so you always have current canonical state. The script is read-only (zero side effects); safe to run any time.
 
+### Sync-state hotword
+
+When the user message is `sync state`, `sync`, `/sync`, `/state`, or `refresh state` (case-insensitive, as the leading or sole directive), immediately:
+
+1. Run `python3 scripts/claude-code-sync.py`.
+2. Read the markdown snapshot output.
+3. Confirm with one line: "Synced. <Last canonical update ISO date>; <N> open OL; <K> critical KU; <M> pending actions."
+4. Continue with any remaining directive in the same message, or await further instruction.
+
+The hotword exists so the author can refresh agent state without retyping the script invocation. Do not show the full snapshot to the user unless they ask; the one-line confirmation is the default. Treat the snapshot as authoritative for the rest of the turn.
+
 ---
 
 ## Hard constraints
@@ -115,6 +126,17 @@ When the author hands you a handoff prompt (`handoff/<workstream>_*_handoff.md`)
 ### Canonical-state-aware merge (Pattern 16)
 
 When applying memo or patch content to canonical state, always read the current canonical state first. Per Pattern 16 (canonical-aware merge), the source memo's proposed structure may differ from current canonical state; pick the current state's structure and merge content into it rather than reproducing the memo's structure verbatim. Halt and ask the author when the merge is non-obvious.
+
+### Cited research backlog processing (recurring)
+
+`research_content/cited_research/Uncategorized_Reading_Additions/` is the author's drop zone for new research PDFs. Process via `handoff/cited_research_processing_handoff.md` when:
+
+- The author says "process the cited research backlog" or similar directive.
+- The drop folder has accumulated 3 or more PDFs.
+- Before a major publication cycle (paper submission, framework update) where cited references should be locked.
+- Periodic agent-cadence run when no other work is queued.
+
+Claude Code CLI is the preferred execution engine for batch runs (cost). Cursor handles one-off or interactive categorization. The handoff itself is tool-agnostic: same spec, same output format, same handoff-back-to-Cursor pattern for canonical-state propagation (READING_LIST.md, DATA_REGISTRY.md, KEY_FINDINGS.md, CROSS_REFERENCE_MAP.md updates).
 
 ### Status-append pattern (PROGRAM_STATE pending actions; KU resolutions; OL transitions)
 

@@ -16,6 +16,17 @@ Reads `docs/` at run time and emits a markdown snapshot covering: identity, lane
 
 The script is named `claude-code-sync.py` because it was authored for Claude Code CLI's session-start flow, but it is a pure `docs/`-tree reader and runnable from any tool with shell access (Cursor, Codex CLI, etc.). Re-running across tools costs nothing and keeps every session aligned to current canonical state.
 
+### Sync-state hotword
+
+When the user message is `sync state`, `sync`, `/sync`, `/state`, or `refresh state` (case-insensitive, as the leading or sole directive), immediately:
+
+1. Run `python3 scripts/claude-code-sync.py`.
+2. Read the markdown snapshot output.
+3. Confirm with one line: "Synced. <Last canonical update ISO date>; <N> open OL; <K> critical KU; <M> pending actions."
+4. Continue with any remaining directive in the same message, or await further instruction.
+
+The hotword exists so the author can refresh agent state without retyping the script invocation. Do not show the full snapshot to the user unless they ask; the one-line confirmation is the default. Treat the snapshot as authoritative for the rest of the turn.
+
 ---
 
 ## Critical constraints (full detail in CLAUDE.md)
@@ -45,6 +56,16 @@ Do not write to website-lane paths from R1 / canonical-state work, and vice vers
 ### No invented IDs
 
 When METADATA cross-references would require inventing a finding ID (`F-*`), decision ID (`DEC-*`), unknown ID (`KU-*`), entity row, error code (`EC-*`), or outreach ID (`OL-*`) that does not exist in canonical state, leave the array empty and flag in the handoff-back note. Cursor will assign IDs in a follow-up commit per status-tracking discipline.
+
+---
+
+## Recurring workflow: cited research backlog processing
+
+`research_content/cited_research/Uncategorized_Reading_Additions/` is the author's drop zone for new research PDFs. The author drops PDFs (optionally with sidecar `.notes.md` files); periodic processing categorizes and relocates them into `cited_research/tier_N/` or `cited_research/category_*/` subdirectories with METADATA.md.
+
+Spec: `handoff/cited_research_processing_handoff.md`. Drop folder docs: `research_content/cited_research/Uncategorized_Reading_Additions/README.md`.
+
+Claude Code CLI is the preferred execution engine for batch runs (cost). Cursor handles one-off or interactive categorization. Either tool reads the same handoff. Triggered by author directive ("process the cited research backlog"), accumulated drop count (3+ PDFs), or before a major publication cycle.
 
 ---
 
