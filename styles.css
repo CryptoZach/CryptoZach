@@ -97,6 +97,7 @@ svg{overflow:visible}
   overflow:hidden;
 }
 .icon-x-inline{display:inline-block;width:1em;height:1em;vertical-align:middle;margin:0 .15em}
+.icon-ssrn-inline{display:inline-block;width:1.85em;height:1em;vertical-align:middle;margin:0 .15em}
 
 /* Subtle editorial background: soft radial + very faint grid */
 body::before{
@@ -4611,6 +4612,8 @@ section:has(.speaker-jump-to){
   background:var(--accent-muted);
 }
 .writing-thread .icon-x-inline{width:12px; height:12px}
+.writing-thread .icon-ssrn-inline{width:40px; height:22px}
+.research-card-action .icon-ssrn-inline{width:40px; height:22px}
 .writing-thread{cursor:pointer}
 
 /* Keep X Thread chip visible in research meta and homepage badge row */
@@ -9626,6 +9629,14 @@ footer.site-footer .footer-tagline{
   height: 1.1em;
   margin-right: 0.25em;
   vertical-align: -0.1em;
+}
+.cta-primary .icon-ssrn-inline,
+.action.primary .icon-ssrn-inline,
+.action.secondary .icon-ssrn-inline{
+  width: 2.2em;
+  height: 1.2em;
+  margin-right: 0.4em;
+  vertical-align: -0.2em;
 }
 .paper-thread-links{
   display: flex;
