@@ -1,0 +1,76 @@
+# Jekyll config for tokenization.systems (GitHub Pages auto-build).
+#
+# This site is a static HTML site. No served page uses Liquid templating.
+# Jekyll runs only because GitHub Pages forces it, and its sole purpose here
+# is to pass HTML/asset files through and stay out of the way of the
+# operational research content that lives alongside the site source.
+#
+# The exclude list below scopes Jekyll to ignore operational scratch dirs
+# (research drafts, canonical docs/living files, handoffs, build scripts,
+# tests, source files for off-site articles, repo metadata). Without these
+# excludes, Jekyll tries to YAML-parse and Liquid-render hundreds of
+# Markdown files that were never meant to be web pages, which intermittently
+# breaks the GitHub Pages build (e.g. LaTeX math like \frac{{a}}{{b}} reads
+# to Liquid as an unterminated variable expression).
+#
+# When adding new operational directories at the repo root, add them here.
+
+title: Tokenization Systems
+url: https://tokenization.systems
+
+# Keep Jekyll's defaults working for the few stub Markdown notes that do
+# live under served paths (e.g. papers/pub3_ssrn_link.md).
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Re-include Jekyll defaults plus our operational dirs/files. Jekyll
+# REPLACES (does not merge) defaults when `exclude:` is set, so we list
+# everything we want skipped.
+exclude:
+  # Jekyll defaults
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+  # Repo metadata and config (not site content)
+  - README.md
+  - R1_README.md
+  - AI_Governance_Profile_Content.md
+  - changelog.md
+  - LICENSE
+  - CITATION.cff
+  - package.json
+  - package-lock.json
+  - playwright.config.js
+  - playwright-report/
+  - test-results/
+  - tests/
+  - requirements.txt
+  - convert_mvep.js
+  - __pycache__/
+
+  # Operational research scratch (sources for papers, letters, briefings)
+  - research_content/
+  - docs/
+  - handoff/
+  - Cryptozach-site-files/
+  - Claude/
+  - exhibits/
+  - results/
+  - src/
+
+  # Build/tooling
+  - scripts/
+  - tools/
+
+  # Source resumes (served resumes live under resume/ and resumes/)
+  - Resumes_v2/
+  - Resumes_TokenizationSystems/
