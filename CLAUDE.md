@@ -10,6 +10,22 @@ If you are running Claude Code CLI and reading this for the first time in this s
 
 ## Step 0: Active sync (run at every session start)
 
+Session-start sync has two parts: pull origin into your working clone, then read canonical state.
+
+### Step 0a: Pre-flight git pull-before-work
+
+Before any work, fetch origin and rebase if this clone is behind. The two-clone setup (see Multi-clone coordination below) plus parallel Claude Code / Cursor sessions produce frequent 1-to-8 commit gaps between local state and origin:
+
+```bash
+git fetch origin
+git status                          # "Your branch is behind 'origin/main'" means rebase needed
+git pull --rebase origin main       # rebase (not merge) to keep history linear
+```
+
+Read-only fetch first (so you see divergence without committing to a rebase). Skip the rebase if status is clean or ahead-only. If status shows diverged history with unstaged local edits, commit or stash before rebasing.
+
+### Step 0b: Read canonical state
+
 Run the active-sync script and treat the output as your canonical-state snapshot for this session:
 
 ```bash
@@ -32,6 +48,21 @@ When the user message is `sync state`, `sync`, `/sync`, `/state`, or `refresh st
 4. Continue with any remaining directive in the same message, or await further instruction.
 
 The hotword exists so the author can refresh agent state without retyping the script invocation. Do not show the full snapshot to the user unless they ask; the one-line confirmation is the default. Treat the snapshot as authoritative for the rest of the turn.
+
+---
+
+## Multi-clone coordination
+
+Two local clones of this repo exist on the author's machine:
+
+- **Primary clone:** `/Users/zach/ai-research/CryptoZach/` (convenience symlink: `/Users/zach/cryptozach`). This is the designated canonical clone. `CLAUDE.md` and `AGENTS.md` narratives, `docs/*.md` absolute-path references, the Cursor project-id (`Users-zach-ai-research-CryptoZach`), and agent transcripts all bind to this path. Prefer starting sessions here.
+- **Working clone:** `/Users/zach/Tokenization_Systems_Website/`. Pre-existing parallel clone; retained for site-deploy workflows and in-flight parallel sessions. Fully functional (same origin, same git history) but not the designated canonical path.
+
+Both clones push and pull from the same origin (`github.com/CryptoZach/CryptoZach`). Divergence between clones (one ahead, one behind) is common during multi-session work; Step 0a's pull-before-work pre-flight resolves it.
+
+**Which clone to use for new sessions:** the primary clone. Start Claude Code CLI there by running `cd ~/cryptozach && claude` (the symlink resolves transparently). The working clone remains valid for active in-flight sessions or purpose-built tasks, but new sessions default to primary.
+
+**Narrative-of-record vs functional dependency.** The 50+ absolute-path references to `/Users/zach/ai-research/CryptoZach/` across `docs/*.md`, `handoff/*.md`, and skill bodies are narrative-of-record (documenting where canonical state lives conceptually), not functional dependencies. A session running out of the working clone does not break canonical state: the sync script resolves `REPO_ROOT` via `Path(__file__).resolve().parent.parent` and works from either clone. The sync script's header prints a **clone identity** line (primary or working) so every session sees its clone context at session start. The primary-clone designation is a UX and organizational convention, not a filesystem constraint.
 
 ---
 
@@ -191,4 +222,4 @@ This file documents Claude Code CLI session-start workflow. Update when:
 - A new common workflow pattern stabilizes (e.g., a new skill becomes a session-start essential).
 - The hybrid-repo partition shifts (e.g., a new top-level directory is added with its own lane).
 
-Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern). Further updated 2026-04-22 (evening): Model B sequential collaboration section added under Common workflow patterns; documents the operational pattern of Cursor authoring specs and Claude Code executing for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; first proof-of-concept cycle is commit `66739cb`. See `cryptozach-multi-tool-handoff` skill for full pattern.
+Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern). Further updated 2026-04-22 (evening): Model B sequential collaboration section added under Common workflow patterns; documents the operational pattern of Cursor authoring specs and Claude Code executing for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; first proof-of-concept cycle is commit `66739cb`. See `cryptozach-multi-tool-handoff` skill for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); `scripts/claude-code-sync.py` now emits a clone-identity line in its header so every session sees primary-vs-working clone at session start. Convention wraps existing filesystem reality (sync script was already clone-path-agnostic via `Path(__file__).resolve().parent.parent`); zero code-level breakage risk.

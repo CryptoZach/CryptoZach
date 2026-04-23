@@ -39,6 +39,7 @@ from datetime import datetime
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+PRIMARY_CLONE = Path("/Users/zach/ai-research/CryptoZach")
 DOCS = REPO_ROOT / "docs"
 
 CANONICAL_FILES = [
@@ -290,6 +291,14 @@ def get_ssrn_table_block(path: Path) -> str:
 
 
 def render_header(now: str) -> str:
+    if REPO_ROOT == PRIMARY_CLONE:
+        clone_identity = "primary clone (designated canonical; see `CLAUDE.md` Multi-clone coordination)"
+    else:
+        clone_identity = (
+            f"**WORKING CLONE** (primary is `{PRIMARY_CLONE}`, symlink `~/cryptozach`). "
+            "Session is fully functional; `docs/*.md` absolute-path narrative references cite the primary clone path. "
+            "Prefer starting new sessions in the primary clone."
+        )
     return f"""# Claude Code CLI sync, {now}
 
 > Snapshot from `scripts/claude-code-sync.py`. Reflects the current canonical state in `docs/` at run time.
@@ -298,6 +307,7 @@ def render_header(now: str) -> str:
 ## You are Claude Code CLI in the CryptoZach research repo
 
 - **Repo root:** `{REPO_ROOT}`
+- **Clone identity:** {clone_identity}
 - **Project:** Tokenization Systems research program (Zach Zukowski; zach@tokenization.systems)
 - **Site:** tokenization.systems (cryptozach.com 301 redirects via Cloudflare)
 

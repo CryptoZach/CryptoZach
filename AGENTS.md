@@ -8,11 +8,25 @@ If your tool reads `CLAUDE.md` directly, no further reading needed; both files d
 
 ## Step 0: Active sync (any tool, any session)
 
+Session-start sync has two parts: pull origin into your working clone, then read canonical state.
+
+### Step 0a: Pre-flight git pull-before-work
+
+```bash
+git fetch origin
+git status                       # check for "Your branch is behind 'origin/main'"
+git pull --rebase origin main    # rebase if behind; skip if clean/ahead-only
+```
+
+Multi-clone coordination (two local clones; see CLAUDE.md for detail) produces frequent 1-to-8 commit gaps between local state and origin. Read-only fetch first; rebase if needed.
+
+### Step 0b: Active sync
+
 ```bash
 python3 scripts/claude-code-sync.py
 ```
 
-Reads `docs/` at run time and emits a markdown snapshot covering: identity, lane reminder, hard constraints, timestamp; canonical-file freshness table for all 17 `docs/` files; SSRN publication snapshot; recent decisions (last 5 `DEC-NNN`); recent corrections (last 5 `EC-...`); critical KU; open OL; top PROGRAM_STATE pending actions; output conventions; common workflow pointers. Default approximately 165 lines / 11 KB. Read-only; safe to re-run between major task switches. See `scripts/README.md` for full options table and caveats.
+Reads `docs/` at run time and emits a markdown snapshot covering: identity, lane reminder, hard constraints, timestamp; canonical-file freshness table for all 17 `docs/` files; SSRN publication snapshot; recent decisions (last 5 `DEC-NNN`); recent corrections (last 5 `EC-...`); critical KU; open OL; top PROGRAM_STATE pending actions; output conventions; common workflow pointers. Default approximately 165 lines / 11 KB. Read-only; safe to re-run between major task switches. The header includes a **clone identity** line so you see immediately which clone you are in. See `scripts/README.md` for full options table and caveats.
 
 The script is named `claude-code-sync.py` because it was authored for Claude Code CLI's session-start flow, but it is a pure `docs/`-tree reader and runnable from any tool with shell access (Cursor, Codex CLI, etc.). Re-running across tools costs nothing and keeps every session aligned to current canonical state.
 
@@ -26,6 +40,17 @@ When the user message is `sync state`, `sync`, `/sync`, `/state`, or `refresh st
 4. Continue with any remaining directive in the same message, or await further instruction.
 
 The hotword exists so the author can refresh agent state without retyping the script invocation. Do not show the full snapshot to the user unless they ask; the one-line confirmation is the default. Treat the snapshot as authoritative for the rest of the turn.
+
+---
+
+## Multi-clone coordination (full detail in CLAUDE.md)
+
+Two local clones exist on the author's machine:
+
+- **Primary:** `/Users/zach/ai-research/CryptoZach/` (symlink: `/Users/zach/cryptozach`). Designated canonical clone.
+- **Working:** `/Users/zach/Tokenization_Systems_Website/`. Parallel clone retained for site-deploy workflows.
+
+Both share the same origin (`github.com/CryptoZach/CryptoZach`). Divergence between clones is common during multi-session work; Step 0a's pull-before-work pre-flight resolves it. Start new sessions in the primary clone: `cd ~/cryptozach && <your-tool>`. See `CLAUDE.md` Multi-clone coordination section for the full discipline.
 
 ---
 
@@ -113,4 +138,4 @@ Update when:
 
 Keep this file and `CLAUDE.md` in lockstep on shared content; tool-specific operational detail (e.g., Claude Code CLI's exact session-start prompt) lives in `CLAUDE.md` only.
 
-Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1). Further updated 2026-04-22 (evening): Model B sequential collaboration section added; documents the operational pattern of Cursor authoring specs and a non-Cursor executor (typically Claude Code) running the spec for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; mirrors `CLAUDE.md` "Model B" subsection. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` for full pattern.
+Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1). Further updated 2026-04-22 (evening): Model B sequential collaboration section added; documents the operational pattern of Cursor authoring specs and a non-Cursor executor (typically Claude Code) running the spec for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; mirrors `CLAUDE.md` "Model B" subsection. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); sync script emits a clone-identity line in its header. Mirrors `CLAUDE.md` updates.
