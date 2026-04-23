@@ -136,7 +136,15 @@ def get_recent_entries(path: Path, prefix: str, n: int = 5) -> list[tuple[str, s
 
 
 def get_critical_kus(path: Path) -> list[tuple[str, str]]:
-    """Extract KU entries under the 'Critical (Blocks Active Work)' H2 section."""
+    """Extract KU entries under the 'Critical (Blocks Active Work)' H2 section.
+
+    Filters titles indicating closure (see `_is_closed_title()`) so resolved
+    KU entries that have not been moved out of the Critical section do not
+    surface as still-blocking. Same closure-marker convention as
+    `get_pending_actions()`: append "(RESOLVED <date> <outcome>)" or
+    "(CLOSED <date> ...)" to the KU H3 title when the question resolves
+    without being relocated.
+    """
     text = read_text(path)
     if not text:
         return []
@@ -153,7 +161,9 @@ def get_critical_kus(path: Path) -> list[tuple[str, str]]:
         if in_section:
             match = pattern.match(stripped)
             if match:
-                entries.append((match.group(1), match.group(2)))
+                title = match.group(2)
+                if not _is_closed_title(title):
+                    entries.append((match.group(1), title))
     return entries
 
 
@@ -211,15 +221,17 @@ CLOSED_TITLE_MARKERS = (
 )
 
 
-def _is_closed_pending_title(title: str) -> bool:
-    """Filter pending-action titles whose header explicitly indicates closure.
+def _is_closed_title(title: str) -> bool:
+    """Filter section H3 titles whose header explicitly indicates closure.
 
-    Pending-action sections in PROGRAM_STATE accumulate over time; some
-    entries get resolved without being moved out of the section. The
-    convention: append a closure marker to the title (e.g.,
-    "(CLOSED 2026-04-18 via Path D)" or "(COMPLETE 2026-04-20)") so the
-    sync script naturally skips them. See `CLAUDE.md` and `AGENTS.md` for
-    the closure-marker convention.
+    Used by both pending-action filtering (PROGRAM_STATE `## Pending actions`
+    section) and critical-KU filtering (KNOWN_UNKNOWNS `## Critical (Blocks
+    Active Work)` section). Convention: append a closure marker to the H3
+    title (e.g., "(CLOSED 2026-04-18 via Path D)", "(COMPLETE 2026-04-20)",
+    or "(RESOLVED 2026-04-22 REJECTED)") when an entry resolves but the
+    section it's in does not have a natural relocation target. The
+    parsing-side filter naturally hides the entry from the snapshot. See
+    `.cursor/rules/knowledge-architecture.mdc` for the convention spec.
     """
     upper = title.upper()
     return any(marker in upper for marker in CLOSED_TITLE_MARKERS)
@@ -228,7 +240,7 @@ def _is_closed_pending_title(title: str) -> bool:
 def get_pending_actions(path: Path, n: int = 8) -> list[str]:
     """Extract H3 titles under '## Pending actions (open)' in PROGRAM_STATE.
 
-    Filters titles indicating closure (see CLOSED_TITLE_MARKERS) so resolved
+    Filters titles indicating closure (see `_is_closed_title()`) so resolved
     entries that have not been moved out of the section do not surface as
     pending. This is a parsing-side filter; the canonical convention is to
     append "(CLOSED <date> ...)" or "(COMPLETE <date>)" to the H3 title
@@ -253,7 +265,7 @@ def get_pending_actions(path: Path, n: int = 8) -> list[str]:
             match = h3_re.match(stripped)
             if match:
                 title = match.group(1)
-                if not _is_closed_pending_title(title):
+                if not _is_closed_title(title):
                     titles.append(title)
     return titles[:n]
 
