@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=187" />
+  <link rel="stylesheet" href="/styles.css?v=188" />
   <style>
     #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #how-the-work-runs, #dollar-objects-pointer, #go-deeper { scroll-margin-top: 8rem; }
   </style>
@@ -285,8 +285,7 @@
           <p><strong>Stress performance is a separate question.</strong> A high CLII score means a gateway faces more regulatory obligations. Stress performance depends on reserve-bank exposure, counterparty concentration, and other entity-specific conditions that sit outside what the CLII measures. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB.</p>
           <p><strong>What should trigger re-evaluation.</strong> A gateway crossing from one tier to another (for example Tier 1 to Tier 2), a significant drop in any single dimension score, a jump in volume concentration through one gateway, or a new dependency where traffic that previously spread across multiple gateways now routes through one.</p>
           <p><strong>Re-evaluation outcomes.</strong> Reaffirmation (no change needed), conditional continuation (with a defined remediation timeline), or suspension of new issuance until the issue is resolved.</p>
-          <p class="framework-related-paper"><a href="/papers/routing-the-dollar">Related paper: Routing the Dollar</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="mvep">
           <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
@@ -296,8 +295,7 @@
           <p><strong>How it works.</strong> A ten-category diligence pack for testing whether a tokenized product preserves the legal rights, operational resilience, and economic behavior of the traditional asset under stress. Covers rights parity, system of record, reconciliation, custody, insolvency posture, settlement finality, exception handling, governance, disclosures, and collateral operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
           <p><strong>What should trigger re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or a situation where it is unclear who absorbs losses if the product fails.</p>
           <p><strong>Relationship to CLII.</strong> MVEP is the entry gate (is equivalence proven now?). CLII is the drift detector (is the control layer degrading over time?). A product can pass MVEP at launch and subsequently fail one of its categories; CLII flags that drift.</p>
-          <p class="framework-related-paper"><a href="/papers/mvep">Related paper: Minimum Viable Equivalence Pack</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="credit-migration-model">
           <p class="card-eyebrow">Deposit analysis &middot; Funding-structure shift</p>
@@ -306,8 +304,7 @@
           <p><strong>What it is for.</strong> Understanding whether reserve growth reduces, recycles, or restructures deposits; which banks gain or lose funding; and how funding quality changes even when aggregate deposits hold steady.</p>
           <p><strong>Why it matters.</strong> The policy question is whether bank funding becomes more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserve balances. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of that argument; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
           <p><strong>What should trigger re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
-          <p class="framework-related-paper"><a href="/papers/dollar-v3">Related paper: Dollar v3</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="regime-dashboard">
           <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
@@ -316,8 +313,7 @@
           <p><strong>What it is for.</strong> Tracking where value capture, liability, and compliance actually sit in a live product: routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
           <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in the routing defaults, in the hold and release workflows, and in the audit logs. The question is which entity becomes the one that regulators hold accountable for compliance, and whether that entity also captures the economics (fees, float, data) or whether compliance obligations and economic benefits end up at different points in the stack.</p>
           <p><strong>What should trigger re-evaluation.</strong> A shift in who owns the front-end interface, who controls default routing, where yield is allowed to live, or where hold and reporting obligations attach.</p>
-          <p class="framework-related-paper"><a href="/papers/control-layer-war">Related paper: The Control Layer War</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-e" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
@@ -328,8 +324,7 @@
           <p><strong>How it works.</strong> Each axis scored 0 to 6 via three measurable components. ControlScore captures obligated-interface share of flows, default sweep and wrapper penetration, and holds or freeze usage as operating norm. IssuerScore captures settlement-object concentration, reserve carry retention, and direct mint and burn authority. Classification rule uses a 3-month rolling average (updated weekly in stress): Control-dominant if ControlScore is 4 or more and exceeds IssuerScore by 2 or more; Issuer-dominant by the mirror test; Split / Contested otherwise.</p>
           <p><strong>What should trigger re-evaluation.</strong> Three or more of five high-beta policy signposts moving in the same direction within a quarter (GENIUS implementation rulemaking; CBDC posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes); or two or more component scores flipping within a quarter.</p>
           <p><strong>Relationship to CLII and MVEP.</strong> Complementary, not substitute. CLII scores per-gateway regulatory posture (entity-level). MVEP scores per-product institutional diligence. Regime Classifier scores the market-structure equilibrium (system-level) those entities operate in. All three can be computed for the same universe of operators; each answers a different question.</p>
-          <p class="framework-related-paper"><a href="/papers/dollar-v3">Related paper: Dollar v3</a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
@@ -448,7 +443,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=215"></script>
+  <script defer src="/script.js?v=216"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
