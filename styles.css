@@ -16520,3 +16520,170 @@ main.resume-profile .resume-related-profiles a{
     color: var(--accent);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MVEP checklist table polish. Two table variants share the .mvep-table
+   base class: .mvep-table.checklist-main is the 10-category equivalence
+   checklist (the flagship artifact on /papers/mvep/ and also used on
+   /papers/mvep-tcmag-comparison/); .mvep-table.ref-table provides the
+   supporting reference grids (equivalence dimensions, category
+   mapping). The checklist is the hero here — row numbers become
+   accent chips, the "Pass condition" column gets a success-green tint
+   suggesting "target state," row hover adds a subtle accent highlight.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Container: thin accent-tinted outline + rounded corners so the table
+   reads as a distinct artifact within the brief. */
+.mvep-table{
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  border-radius: var(--radius-sm, 8px);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Header: replace the flat bluish tint with a subtle gradient running
+   left-to-right and a bottom accent line that aligns with the row
+   number column. */
+.mvep-table thead th{
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 8%, var(--panel)) 0%,
+    color-mix(in srgb, var(--accent) 4%, var(--panel)) 100%
+  );
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  color: var(--text);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+/* Row hover: subtle accent tint for scanability on long tables.
+   Applies to both checklist-main and ref-table variants. */
+.mvep-table tbody tr{
+  transition: background-color .15s ease;
+}
+.mvep-table tbody tr:hover{
+  background-color: color-mix(in srgb, var(--accent) 5%, transparent) !important;
+}
+
+/* Row zebra stripe: softer + accent-tinted instead of flat black tint */
+.mvep-table tr:nth-child(even){
+  background-color: color-mix(in srgb, var(--accent) 2.5%, transparent);
+}
+
+/* ── Checklist-main variant: the 10-row equivalence checklist ─────── */
+
+/* Row number cell: upgrade from plain accent-colored text to a circular
+   chip badge (accent-tinted circle with the number inside). */
+.mvep-table.checklist-main td:first-child{
+  padding: 1rem 0.5rem;
+  color: transparent;
+  position: relative;
+  width: 3rem;
+}
+
+.mvep-table.checklist-main td:first-child::before{
+  content: attr(data-row-num);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  color: color-mix(in srgb, var(--accent) 85%, var(--text));
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1;
+}
+
+/* Fallback if the HTML doesn't carry data-row-num (we haven't populated
+   that attribute yet): fall back to a content::before with counter
+   reset on the tbody. */
+.mvep-table.checklist-main tbody{
+  counter-reset: mvep-row;
+}
+.mvep-table.checklist-main tbody tr{
+  counter-increment: mvep-row;
+}
+.mvep-table.checklist-main td:first-child::before{
+  content: counter(mvep-row);
+}
+
+/* Category title (second column: "<strong>Tokenholder rights.</strong>
+   Does the token..."): bolder + slight accent tint on the strong label */
+.mvep-table.checklist-main td:nth-child(2) strong{
+  display: block;
+  margin-bottom: 0.375rem;
+  color: color-mix(in srgb, var(--accent) 35%, var(--text));
+  font-weight: 650;
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
+}
+
+/* Pass condition column (4th col): success-green left-tinted border +
+   tiny "target state" eyebrow cue. Uses #0d9488 (teal) to match the
+   site's success/positive vocabulary without introducing a net-new
+   color. */
+.mvep-table.checklist-main td:nth-child(4){
+  position: relative;
+  padding-left: 1.25rem;
+  color: color-mix(in srgb, #0d9488 15%, var(--text));
+}
+
+.mvep-table.checklist-main td:nth-child(4)::before{
+  content: "";
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 0.5rem;
+  width: 2px;
+  background: color-mix(in srgb, #0d9488 50%, var(--line));
+  border-radius: 1px;
+}
+
+/* ── Ref-table variant: keep cleaner + simpler since these are lookups ── */
+
+.mvep-table.ref-table thead th{
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--line) 90%, transparent);
+  font-size: 0.75rem;
+}
+
+.mvep-table.ref-table td:first-child{
+  color: color-mix(in srgb, var(--accent) 25%, var(--text));
+  font-weight: 650;
+}
+
+/* Mobile: simplify the number chip to avoid crowding; pass-condition
+   column left-border becomes smaller */
+@media (max-width: 768px){
+  .mvep-table.checklist-main td:first-child{
+    width: 2.5rem;
+    padding: 0.625rem 0.25rem;
+  }
+  .mvep-table.checklist-main td:first-child::before{
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+  .mvep-table.checklist-main td:nth-child(4){
+    padding-left: 0.875rem;
+  }
+  .mvep-table.checklist-main td:nth-child(2) strong{
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark theme: zebra stripe opacity bump so it remains visible */
+:root[data-theme="dark"] .mvep-table tr:nth-child(even){
+  background-color: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+:root[data-theme="dark"] .mvep-table tbody tr:hover{
+  background-color: color-mix(in srgb, var(--accent) 8%, transparent) !important;
+}
+
