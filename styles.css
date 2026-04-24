@@ -17474,3 +17474,192 @@ main.error-page{
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Contact page v3: tighten the email row + brighten the availability
+   signal + polish the about-researcher grid. Author feedback:
+   - Too much padding, too much blank space (left email block
+     stretched to match the taller right column)
+   - Copy-email too small
+   - Green dot too faint and dull
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Grid alignment: align-items start so the shorter (left) email block
+   doesn't stretch to match the 4-item guidance list on the right.
+   Eliminates the big empty vertical space under the email block. */
+body.contact-page .contact-page-foreground > .contact-page .contact-email-row{
+  align-items: start;
+  gap: 2rem;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Email address: bump size and tighten top/bottom */
+body.contact-page .contact-page-foreground > .contact-page .contact-email-address{
+  font-size: 1.25rem;
+  margin-bottom: 0.875rem;
+  margin-top: 0;
+}
+
+/* Copy-email button: bump size + weight + add subtle scale-pop feel */
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn{
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-height: 36px;
+  margin-bottom: 1rem;
+}
+
+/* Response-time row: brighter text + more prominent green dot */
+body.contact-page .contact-page-foreground > .contact-page .contact-response-time{
+  font-size: 0.925rem;
+  gap: 0.625rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-response-time > span:last-child{
+  opacity: 0.92;
+  color: var(--text-soft);
+}
+
+/* Brighter, more prominent green dot. Previous #16a34a at 8px read
+   faint and dull; bump to #22c55e at 10px with a more saturated base
+   glow that never fully fades (keeps the dot feeling alive even at
+   animation trough). */
+body.contact-page .contact-page-foreground > .contact-page .response-dot{
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  box-shadow:
+    0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
+    0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+  animation: contact-response-pulse-v2 2.4s ease-out infinite;
+}
+
+@keyframes contact-response-pulse-v2{
+  0%{
+    box-shadow:
+      0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
+      0 0 0 0 color-mix(in srgb, #22c55e 40%, transparent),
+      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+  }
+  50%{
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
+      0 0 0 11px color-mix(in srgb, #22c55e 0%, transparent),
+      0 0 10px 0 color-mix(in srgb, #22c55e 55%, transparent);
+  }
+  100%{
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
+      0 0 0 12px color-mix(in srgb, #22c55e 0%, transparent),
+      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body.contact-page .contact-page-foreground > .contact-page .response-dot{
+    animation: none;
+    box-shadow: 0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+  }
+}
+
+/* Guidance h2: bump size to match the new email prominence */
+body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
+  font-size: 1.0625rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .guidance-list li{
+  padding: 0.3rem 0 0.3rem 1.4rem;
+  font-size: 0.975rem;
+  line-height: 1.55;
+}
+
+/* ── About-researcher section: tighten padding, accent-rotation on
+   the 3 items for scanability (Background blue / Research program teal
+   / Signature frameworks violet matches the site accent vocabulary) ── */
+
+body.contact-page .contact-page-foreground > .contact-page .contact-about{
+  padding-top: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-about h2{
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item{
+  padding: 1.25rem 1.4rem;
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  transition: border-color .2s ease, background .22s ease,
+              transform .18s cubic-bezier(.2, .8, .2, 1);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item:hover{
+  transform: translateY(-1px);
+}
+
+/* Accent-rotation per item: Background blue / Research program teal /
+   Frameworks violet. Left-accent border (3px) keyed to each position. */
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1){
+  border-left: 3px solid color-mix(in srgb, #2563eb 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1):hover{
+  border-left-color: #2563eb;
+  background: color-mix(in srgb, #2563eb 5%, var(--panel));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1) .about-label{
+  color: color-mix(in srgb, #2563eb 80%, var(--text-soft));
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2){
+  border-left: 3px solid color-mix(in srgb, #0d9488 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2):hover{
+  border-left-color: #0d9488;
+  background: color-mix(in srgb, #0d9488 5%, var(--panel));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2) .about-label{
+  color: color-mix(in srgb, #0d9488 80%, var(--text-soft));
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3){
+  border-left: 3px solid color-mix(in srgb, #7c3aed 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3):hover{
+  border-left-color: #7c3aed;
+  background: color-mix(in srgb, #7c3aed 5%, var(--panel));
+}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3) .about-label{
+  color: color-mix(in srgb, #7c3aed 80%, var(--text-soft));
+}
+
+/* About label: slightly larger + tighter spacing */
+body.contact-page .contact-page-foreground > .contact-page .about-label{
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.125rem;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item p:last-child{
+  font-size: 0.925rem;
+  line-height: 1.58;
+}
+
+/* Mobile: revert grid to default block alignment + tighten padding */
+@media (max-width: 700px){
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-row{
+    padding: 1.25rem;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-address{
+    font-size: 1.15rem;
+  }
+  body.contact-page .contact-page-foreground > .contact-page .about-item{
+    padding: 1rem 1.125rem;
+  }
+}
+
