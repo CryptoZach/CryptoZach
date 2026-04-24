@@ -14091,3 +14091,48 @@ header.scrolled {
     font-size: 1.1rem;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Polished card treatment extensions: eyebrow+accent for card variants that
+   do NOT use the dollar-objects pill-strip pattern. Works with .card alone
+   plus .card--accent-* modifiers. Accent-e added for 5-card rotations.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Accent-e: rose-600 (institutional tone; lands between amber and violet) */
+.card--accent-e{
+  border-top-color: #e11d48; /* rose-600 */
+}
+.card--accent-e .card-eyebrow{
+  color: #fb7185; /* rose-400 for dark theme */
+}
+:root:not([data-theme="dark"]) .card--accent-e .card-eyebrow{
+  color: #be123c;
+}
+
+/* Polished-card modifier: applies eyebrow + accent treatment to cards
+   outside the dollar-objects section (richer cards with their own internal
+   structure, like the core-frameworks cards). */
+.card--polished{
+  padding: var(--space-xl);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card--polished:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.card--polished > h3{
+  margin-top: 0;
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+}
+.card--polished .card-eyebrow{
+  margin: 0 0 var(--space-xs);
+}
+
+/* When a .card--polished is inside a .talk-format-card wrapper (grid--thirds
+   speaker page), inherit the same padding; the wrapper already handles
+   grid placement. */
+.talk-format-card > .card--polished{
+  flex: 1;
+  min-height: 0;
+}

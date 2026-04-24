@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=131" />
+  <link rel="stylesheet" href="/styles.css?v=132" />
   <style>
     #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
   </style>
@@ -317,7 +317,8 @@
         <h2 id="frameworks-title">Core frameworks</h2>
       </div>
       <div class="grid grid--halves">
-        <article class="card" id="clii">
+        <article class="card card--polished card--accent-a" id="clii">
+          <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
           <h3>CLII (Control Layer Intensity Index)</h3>
           <p><strong>What it does.</strong> Measures how heavily regulated each gateway is across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Each gateway receives a weighted score from 0 to 1.</p>
           <p><strong>What it is for.</strong> Ongoing monitoring after a product is approved. Tracks whether a gateway&apos;s custody arrangements, transaction screening, reconciliation practices, or volume concentration are changing in ways that should trigger review.</p>
@@ -327,7 +328,8 @@
           <p class="framework-related-paper"><a href="/papers/routing-the-dollar">Related paper: Routing the Dollar</a></p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card" id="mvep">
+        <article class="card card--polished card--accent-b" id="mvep">
+          <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
           <p><strong>What it does.</strong> Tests whether a tokenized product preserves three equivalence claims: legal (does the holder have the same rights?), operational (does the infrastructure perform the same functions?), and economic (does the product behave the same way under stress?).</p>
           <p><strong>What it is for.</strong> Entry-gate diligence before launch or committee approval. A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption.</p>
@@ -337,7 +339,8 @@
           <p class="framework-related-paper"><a href="/papers/mvep">Related paper: Minimum Viable Equivalence Pack</a></p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card" id="credit-migration-model">
+        <article class="card card--polished card--accent-c" id="credit-migration-model">
+          <p class="card-eyebrow">Deposit analysis &middot; Funding-structure shift</p>
           <h3>Credit Migration Model</h3>
           <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales.</p>
           <p><strong>What it is for.</strong> Understanding whether reserve growth reduces, recycles, or restructures deposits; which banks gain or lose funding; and how funding quality changes even when aggregate deposits hold steady.</p>
@@ -346,7 +349,8 @@
           <p class="framework-related-paper"><a href="/papers/dollar-v3">Related paper: Dollar v3</a></p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card" id="regime-dashboard">
+        <article class="card card--polished card--accent-d" id="regime-dashboard">
+          <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
           <h3>Regime Dashboard</h3>
           <p><strong>What it does.</strong> Classifies who controls the operating layer right now: who owns the interface, who sets the default routing, who holds the authority to freeze or delay transactions, and who bears the compliance obligations.</p>
           <p><strong>What it is for.</strong> Tracking where value capture, liability, and compliance actually sit in a live product: routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
@@ -356,7 +360,8 @@
           <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open paper summary <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
+        <article class="card card--polished card--accent-e" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
+          <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
           <h3>Dollar v3 Regime Classifier</h3>
           <p><strong>What it does.</strong> Classifies the current U.S. dollar operating-layer equilibrium along two axes: control-layer dominance (how much of the economic surface is captured by interfaces, routers, and sweep products that regulators attach obligations to) and issuer dominance (how much accrues to the stablecoin or deposit-token issuer layer itself). Produces one of three regime labels: Control-dominant, Issuer-dominant, or Split / Contested.</p>
           <p><strong>What it is for.</strong> Market-structure classification over time. Which layer of the tokenized-dollar stack is capturing the economics, who bears the regulatory burden, and whether policy changes are shifting the equilibrium. Not a safety or solvency model; tracks structural power allocation.</p>
@@ -414,24 +419,28 @@
         <p>Four operating principles behind every framework on this page.</p>
       </div>
       <div class="grid grid--halves">
-        <article class="card">
+        <article class="card card--polished card--accent-a">
+          <p class="card-eyebrow">Principle &middot; Source discipline</p>
           <h3>Evidence-led</h3>
           <p>Every claim ties to a source, a threshold, or a tested condition. No claim ships without one.</p>
         </article>
-        <article class="card">
+        <article class="card card--polished card--accent-b">
+          <p class="card-eyebrow">Principle &middot; Stress-first orientation</p>
           <h3>Stress-first design</h3>
           <p>Each framework names where stress enters first, which thresholds force re-evaluation, and what evidence should change the view.</p>
         </article>
-        <article class="card">
+        <article class="card card--polished card--accent-c">
+          <p class="card-eyebrow">Principle &middot; Accountability</p>
           <h3>Named decision owners</h3>
           <p>Every framework points to who approves, who monitors, who escalates, and what event forces action.</p>
         </article>
-        <article class="card">
+        <article class="card card--polished card--accent-d">
+          <p class="card-eyebrow">Principle &middot; Reproducibility</p>
           <h3>Versioned and replicable</h3>
           <p>Frameworks publish when the evidence is strong enough to support real operating decisions. Manuscripts and code travel with them when possible.</p>
         </article>
       </div>
-      <p class="track-bridge">Built so allocators, regulators, and operators can trace every framework decision back to its trigger, its owner, and its evidence.</p>
+      <p class="track-bridge track-bridge--pullquote">Built so allocators, regulators, and operators can trace every framework decision back to its trigger, its owner, and its evidence.</p>
     </section>
 
     <section class="reveal structure-go-deeper-cta" id="go-deeper" aria-labelledby="go-deeper-title">
