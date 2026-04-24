@@ -14136,3 +14136,192 @@ header.scrolled {
   flex: 1;
   min-height: 0;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Paper briefing page polish pass: applies to all 12 paper pages via shared
+   class rules. Append-only. No existing rules modified.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Paper access block: richer CTA card treatment.
+   The block hosts the primary SSRN CTA + secondary X thread + tertiary
+   GitHub/contact links. Elevate its visual weight to match its functional
+   importance (it is the paper's action-layer call). */
+.paper-access-block.access-block{
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid color-mix(in srgb, var(--line) 120%, transparent);
+  border-left: 3px solid var(--accent-cta, #2563eb);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 70%, transparent) 0%,
+    color-mix(in srgb, var(--panel2) 55%, transparent) 100%
+  );
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.paper-access-block.access-block::before{
+  content: "Read the paper";
+  position: absolute;
+  top: 10px;
+  left: var(--space-xl);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-cta, #2563eb);
+  opacity: 0.9;
+}
+.paper-access-block.access-block .access-primary{
+  margin-top: var(--space-sm);
+  gap: var(--space-sm) var(--space-md);
+}
+.paper-access-block.access-block .access-secondary{
+  padding-top: var(--space-xs);
+  border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+
+/* At-a-glance aside: stronger eyebrow + more generous interior breathing room. */
+.brief-at-a-glance{
+  padding: var(--space-lg) var(--space-xl);
+  position: relative;
+}
+.brief-at-a-glance h2{
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+}
+.brief-at-a-glance p strong{
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-soft) 90%, transparent);
+  margin-bottom: 0.2rem;
+}
+
+/* Brief findings: elevate the numbered cards.
+   Findings are the paper's "what you learn" layer; they deserve distinct
+   visual weight below the at-a-glance abstract. */
+.brief-findings{
+  margin: var(--space-xl) 0;
+}
+.brief-findings-section-title{
+  position: relative;
+  padding-left: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.brief-findings-section-title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  bottom: 0.25em;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.brief-finding{
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
+  background: color-mix(in srgb, var(--panel) 40%, transparent);
+  transition: border-color .2s ease, background .2s ease;
+}
+.brief-finding + .brief-finding{
+  margin-top: var(--space-md);
+}
+.brief-finding:hover{
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+}
+.brief-finding-num{
+  width: 2.1em;
+  height: 2.1em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--accent) 35%, transparent);
+  border: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  margin-top: 2px;
+}
+.brief-finding-copy > h3{
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.brief-finding-copy .brief-what-this-means{
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.95rem;
+}
+.brief-finding-copy .brief-what-this-means strong{
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
+/* Section heads on paper briefing pages: eyebrow accent bar pattern.
+   Consistent left-of-heading visual anchor makes the page scannable by
+   section at a glance. */
+.brief-problem > h2,
+.brief-so-what > h2{
+  position: relative;
+  padding-left: var(--space-md);
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+}
+.brief-problem > h2::before,
+.brief-so-what > h2::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  bottom: 0.25em;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+/* Paper-thesis: tighten typography; visible "Thesis" eyebrow */
+.paper-thesis{
+  position: relative;
+}
+.paper-thesis::before{
+  content: "Thesis";
+  position: absolute;
+  top: calc(-1 * var(--space-md));
+  left: var(--space-md);
+  padding: 0 var(--space-xs);
+  background: var(--bg);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, transparent);
+}
+
+/* Mobile: reduce padding on polished blocks */
+@media (max-width: 767px){
+  .paper-access-block.access-block,
+  .brief-at-a-glance,
+  .brief-finding{
+    padding: var(--space-md);
+  }
+  .brief-finding-num{
+    width: 1.85em;
+    height: 1.85em;
+    font-size: 0.85rem;
+  }
+}
