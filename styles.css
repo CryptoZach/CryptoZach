@@ -15833,3 +15833,39 @@ main li a:not([class])[target="_blank"]:hover::after{
   opacity: 1;
   transform: translate(1px, -1px);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer + back-to-top refinement per author feedback:
+   1. MISSION eyebrow too small (0.6rem -> 0.72rem).
+   2. MISSION too close to top fade — more breathing room.
+   3. Back-to-top button overlapped the right-side footer socials —
+      reposition to the lower-left so it never conflicts.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+body footer.site-footer .footer-tagline::before{
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  top: 0.25rem;
+}
+
+body footer.site-footer .footer-tagline{
+  padding-top: 2.25rem;
+}
+
+/* Back-to-top: reposition from bottom-right to bottom-left to avoid
+   visual collision with the right-side footer social icons. Also bump
+   the bottom offset to float it clearly above the footer band when the
+   user is at the document bottom. */
+.back-to-top{
+  right: auto;
+  left: max(var(--space-lg), env(safe-area-inset-left, 0px));
+  bottom: max(var(--space-xl), env(safe-area-inset-bottom, 0px));
+}
+
+@media (max-width: 768px){
+  .back-to-top{
+    right: auto;
+    left: max(var(--space-md), env(safe-area-inset-left, 0px));
+    bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
+  }
+}
