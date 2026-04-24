@@ -8625,7 +8625,9 @@ footer.site-footer .footer-tagline{
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.4;
+  /* Opacity 0.7 keeps the muted appearance while meeting WCAG AA 4.5:1
+     contrast against --bg (was 0.4; yielded 3.35:1 on dark theme). */
+  opacity: 0.7;
   margin-bottom: 2rem;
 }
 .paper-key-numbers{
@@ -9180,7 +9182,9 @@ footer.site-footer .footer-tagline{
 }
 .date-note{
   font-size: 0.75rem;
-  opacity: 0.4;
+  /* Opacity 0.7 meets WCAG AA 4.5:1 on dark theme (was 0.4; yielded
+     3.35:1 per the post-deploy Lighthouse audit). */
+  opacity: 0.7;
   margin-top: 0.25rem;
   margin-bottom: 0;
 }
@@ -9570,10 +9574,13 @@ footer.site-footer .footer-tagline{
   text-decoration: underline;
 }
 .paper-access-block .access-link.access-request{
-  opacity: 0.6;
+  /* Opacity 0.85 meets WCAG AA 4.5:1 with color: var(--accent) on dark
+     theme (was 0.6; yielded 3.19:1 per post-deploy Lighthouse audit).
+     Preserves the muted "secondary action" appearance while accessible. */
+  opacity: 0.85;
 }
 .paper-access-block .access-link.access-request:hover{
-  opacity: 0.9;
+  opacity: 1;
 }
 .paper-access-block .access-sep{
   opacity: 0.3;
