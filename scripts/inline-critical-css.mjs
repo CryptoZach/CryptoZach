@@ -88,13 +88,94 @@ function stripCacheBusters(html) {
 
 function restoreCacheBusters(html, versions) {
   if (versions.length === 0) return html;
-  // After Critters, there may be MORE <link> references to the same
+  // After Beasties, there may be MORE <link> references to the same
   // stylesheet (e.g., preload + original kept as fallback). We apply the
   // first captured version to all .css href attributes; the site only
   // has one stylesheet (styles.css) so a single version value is
   // sufficient.
   const version = versions[0];
   return html.replace(/(href="[^"]*\.css)(")/g, `$1?v=${version}$2`);
+}
+
+// Beasties 0.4.2 with preload: 'swap' (and most other preload modes)
+// emits THREE stylesheet references per file:
+//   1. <link rel="preload" ... onload="this.rel='stylesheet'" as="style">
+//      (async preload that swaps to stylesheet on load; non-blocking)
+//   2. <link rel="stylesheet" ...>
+//      (render-blocking duplicate; defeats the preload swap)
+//   3. <noscript><link rel="stylesheet" ...></noscript>
+//      (fallback for JS-disabled browsers; correct)
+//
+// The render-blocking duplicate (item 2) undoes the entire point of
+// critical-CSS inlining. This function removes it while preserving the
+// preload (1) and the noscript fallback (3). Result: zero render-
+// blocking stylesheet links for JS-enabled browsers; noscript
+// fallback preserves CSS for JS-disabled browsers.
+//
+// Detection rule: a <link rel="stylesheet" href="...css...">  that is
+// NOT inside a <noscript> block AND is preceded somewhere upstream by a
+// matching <link rel="preload" ... as="style"> for the same stylesheet
+// href is the duplicate to remove.
+function removeRedundantStylesheetLink(html) {
+  // Find all <link rel="preload" ... as="style" ...> hrefs.
+  const preloadRe = /<link\s+[^>]*rel="preload"[^>]*as="style"[^>]*>/g;
+  const preloadHrefs = new Set();
+  for (const m of html.matchAll(preloadRe)) {
+    const hrefMatch = m[0].match(/href="([^"]+)"/);
+    if (hrefMatch) preloadHrefs.add(hrefMatch[1]);
+  }
+  if (preloadHrefs.size === 0) return html;
+
+  // Remove each <link rel="stylesheet" href="X"> where X is in
+  // preloadHrefs AND the link is not inside a <noscript> block.
+  // Strategy: walk the HTML, tracking whether we're inside noscript.
+  // For each <link rel="stylesheet">, check href; if matches a preload
+  // href and we are not inside noscript, remove the tag.
+  let result = '';
+  let i = 0;
+  let insideNoscript = false;
+  while (i < html.length) {
+    if (!insideNoscript && html.startsWith('<noscript', i)) {
+      const close = html.indexOf('>', i);
+      if (close > -1) {
+        insideNoscript = true;
+        result += html.substring(i, close + 1);
+        i = close + 1;
+        continue;
+      }
+    }
+    if (insideNoscript && html.startsWith('</noscript>', i)) {
+      insideNoscript = false;
+      result += '</noscript>';
+      i += '</noscript>'.length;
+      continue;
+    }
+    if (!insideNoscript && html.startsWith('<link', i)) {
+      const close = html.indexOf('>', i);
+      if (close > -1) {
+        const tag = html.substring(i, close + 1);
+        // Is this a rel="stylesheet" link matching a preload href?
+        const relMatch = tag.match(/rel="stylesheet"/);
+        const hrefMatch = tag.match(/href="([^"]+)"/);
+        if (relMatch && hrefMatch && preloadHrefs.has(hrefMatch[1])) {
+          // Skip this tag. Also skip any trailing whitespace before next
+          // element, but only up to one whitespace run, to preserve
+          // formatting.
+          i = close + 1;
+          while (i < html.length && (html[i] === ' ' || html[i] === '\n' || html[i] === '\t')) {
+            i++;
+          }
+          continue;
+        }
+        result += tag;
+        i = close + 1;
+        continue;
+      }
+    }
+    result += html[i];
+    i++;
+  }
+  return result;
 }
 
 async function main() {
@@ -149,7 +230,8 @@ async function main() {
       const { stripped, versions } = stripCacheBusters(html);
       const inputSize = stripped.length;
       const processed = await beasties.process(stripped);
-      const restored = restoreCacheBusters(processed, versions);
+      const deduped = removeRedundantStylesheetLink(processed);
+      const restored = restoreCacheBusters(deduped, versions);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
       await fs.writeFile(file, restored, 'utf-8');
