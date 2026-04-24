@@ -296,12 +296,13 @@
     }
 
     /* Sprint 2 Fix 3: primary CTA, polished with subtle accent glow */
+    /* Uses --accent-cta (WCAG AA compliant) for text-on-fill contrast. */
     #hero.hero--homepage .hero-cta-cluster .btn.btn-primary {
       display: inline-block;
       padding: 1rem 2.25rem;
-      background: var(--accent);
+      background: var(--accent-cta, #2563eb);
       color: #fff;
-      border: 1px solid color-mix(in srgb, #fff 18%, var(--accent));
+      border: 1px solid color-mix(in srgb, #fff 18%, var(--accent-cta, #2563eb));
       border-radius: 10px;
       text-decoration: none;
       font-weight: 600;
@@ -311,20 +312,20 @@
       cursor: pointer;
       box-shadow:
         0 1px 0 0 color-mix(in srgb, #fff 22%, transparent) inset,
-        0 8px 24px -8px color-mix(in srgb, var(--accent) 55%, transparent),
+        0 8px 24px -8px color-mix(in srgb, var(--accent-cta, #2563eb) 55%, transparent),
         0 1px 2px 0 rgba(0, 0, 0, 0.18);
       filter: none;
     }
 
     #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:hover {
-      background: var(--accent-hover);
+      background: var(--accent-cta-hover, #1d4ed8);
       transform: translateY(-1px);
       filter: none;
       box-shadow:
         0 1px 0 0 color-mix(in srgb, #fff 28%, transparent) inset,
-        0 12px 32px -8px color-mix(in srgb, var(--accent) 70%, transparent),
+        0 12px 32px -8px color-mix(in srgb, var(--accent-cta, #2563eb) 70%, transparent),
         0 2px 4px 0 rgba(0, 0, 0, 0.2);
-      border-color: color-mix(in srgb, #fff 26%, var(--accent));
+      border-color: color-mix(in srgb, #fff 26%, var(--accent-cta, #2563eb));
     }
 
     #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:active {
@@ -726,7 +727,7 @@
     #contact .about-card-ctas a.cta-primary {
       display: inline-block;
       padding: 1rem 2.25rem;
-      background: var(--accent);
+      background: var(--accent-cta, #2563eb);
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -738,7 +739,7 @@
     }
 
     #contact .about-card-ctas a.cta-primary:hover {
-      background: var(--accent-hover);
+      background: var(--accent-cta-hover, #1d4ed8);
       transform: translateY(-1px);
     }
 

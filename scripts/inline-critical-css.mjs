@@ -28,7 +28,7 @@
  *   2: Critters processing error on one or more files
  */
 
-import Critters from 'critters';
+import Beasties from 'beasties';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -108,9 +108,18 @@ async function main() {
     return 1;
   }
 
-  const critters = new Critters({
+  // Beasties is the maintained successor to Critters (Nuxt team fork;
+  // see https://github.com/danielroe/beasties). Drop-in API-compatible
+  // replacement. Selected over Critters 0.0.25 because Critters'
+  // `preload: 'swap'` mode produced malformed output (two rel="stylesheet"
+  // links, no rel="preload") instead of the expected preload+onload swap
+  // pattern, preserving render-blocking behavior and defeating the
+  // critical-CSS LCP fix. Beasties emits the correct preload+noscript
+  // fallback pattern.
+  const beasties = new Beasties({
     path: buildPath,
-    // Preload strategy: swap (preload + onload swap to stylesheet).
+    // Preload strategy: swap (preload + onload swap to stylesheet +
+    // noscript fallback).
     preload: 'swap',
     // Inline only CSS used above-the-fold; do not inline fonts (they are
     // loaded lazily via the preload swap).
@@ -120,8 +129,10 @@ async function main() {
     pruneSource: false,
     // Minimize the inlined critical CSS.
     compress: true,
-    // Log level: only warnings and errors.
-    logLevel: 'warn',
+    // Log level: silent to suppress harmless "Empty sub-selector"
+    // warnings from CSS containing (psuedo-selector with trailing
+    // specificity-increase patterns).
+    logLevel: 'silent',
   });
 
   const htmlFiles = await findHtmlFiles(buildPath);
@@ -137,7 +148,7 @@ async function main() {
       const html = await fs.readFile(file, 'utf-8');
       const { stripped, versions } = stripCacheBusters(html);
       const inputSize = stripped.length;
-      const processed = await critters.process(stripped);
+      const processed = await beasties.process(stripped);
       const restored = restoreCacheBusters(processed, versions);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
