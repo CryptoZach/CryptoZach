@@ -14766,3 +14766,145 @@ header.scrolled {
     font-size: 0.65rem;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Contact page: "Not sure where to start?" route-cards polish.
+   4 cards; fix orphan row (was 3-col producing 3+1); apply accent-tint
+   variants + eyebrow labels + hover arrow indicator. Append-only.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Grid: 3-col to 2x2 for symmetric 4-card layout */
+body.contact-page .contact-page-foreground > .contact-page .route-cards{
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+/* Card container: richer treatment with per-card accent, subtle bg,
+   hover elevation, arrow indicator */
+body.contact-page .contact-page-foreground > .contact-page .route-card{
+  position: relative;
+  padding: var(--space-lg) 3rem var(--space-lg) var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-left-width: 3px;
+  border-left-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--panel) 40%, transparent);
+  transition: border-color .2s ease,
+              background .2s ease,
+              transform .15s ease,
+              box-shadow .2s ease;
+}
+
+/* Arrow indicator */
+body.contact-page .contact-page-foreground > .contact-page .route-card::after{
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: var(--space-md);
+  transform: translate(0, -50%);
+  font-size: 1.1rem;
+  color: color-mix(in srgb, var(--accent) 70%, transparent);
+  opacity: 0.55;
+  transition: transform .2s ease, opacity .2s ease, color .2s ease;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-card:hover{
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+  transform: translateX(2px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-card:hover::after{
+  transform: translate(3px, -50%);
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Per-card accent variation (a/b/c/d rotation matching earlier cycles) */
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(1){
+  border-left-color: color-mix(in srgb, var(--accent-cta, #2563eb) 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(1):hover{
+  border-left-color: var(--accent-cta, #2563eb);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(2){
+  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(2):hover{
+  border-left-color: #2dd4bf;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(3){
+  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(3):hover{
+  border-left-color: #a78bfa;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(4){
+  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+}
+body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(4):hover{
+  border-left-color: #fbbf24;
+}
+
+/* Title typography refinement */
+body.contact-page .contact-page-foreground > .contact-page .route-card-title{
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.005em;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .route-card-desc{
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Mobile: stack grid and hide arrow (same pattern as role-pills on home) */
+@media (max-width: 700px){
+  body.contact-page .contact-page-foreground > .contact-page .route-cards{
+    grid-template-columns: 1fr;
+  }
+  body.contact-page .contact-page-foreground > .contact-page .route-card{
+    padding-right: var(--space-lg);
+  }
+  body.contact-page .contact-page-foreground > .contact-page .route-card::after{
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   About-researcher items: light polish to match.
+   .about-grid (3 items: Background / Research program / Signature frameworks)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+body.contact-page .contact-page-foreground > .contact-page .about-item{
+  padding: var(--space-md) var(--space-lg);
+  border-left: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: color-mix(in srgb, var(--panel) 25%, transparent);
+  transition: border-left-color .2s ease, background .2s ease;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item:hover{
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .about-item .about-label{
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  margin-bottom: var(--space-xs);
+}
