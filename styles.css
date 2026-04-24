@@ -15089,31 +15089,9 @@ footer.site-footer .footer-tagline::before{
    this pass adds subtle finishing details.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Eyebrow-kicker accent dot: fills the pre-existing 0.55rem flex gap that
-   was reserved in the inline CSS but without a visible dot element. Uses
-   a pseudo-element so no HTML change required. */
-body #hero.hero--homepage .hero-eyebrow-kicker::before{
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
-  flex-shrink: 0;
-  animation: heroEyebrowPulse 2.4s ease-in-out infinite;
-}
-
-@keyframes heroEyebrowPulse{
-  0%, 100%{ opacity: 0.75; transform: scale(1); }
-  50%{ opacity: 1; transform: scale(1.15); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body #hero.hero--homepage .hero-eyebrow-kicker::before{
-    animation: none;
-  }
-}
+/* Eyebrow-kicker accent dot removed per author feedback. The pulsing dot
+   previously filled the 0.55rem flex gap reserved in index.html's inline
+   CSS; leaving the gap with no content is fine (it collapses naturally). */
 
 /* Hero proof chips: add a subtle leading accent dot to each chip. Chips
    have pointer-events: none (decorative), so no hover interaction needed;
