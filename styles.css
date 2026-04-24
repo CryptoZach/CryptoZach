@@ -15538,3 +15538,43 @@ body #contact .about-card .about-card-ctas a.cta-primary:hover{
     border-left-width: 2px;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer compact pass: reduce excessive vertical spacing. The liquid pass
+   added padding + margins + gradient heights that stacked taller than
+   intended. Tighten all three to a compact footer band.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Outer footer: reduce outer vertical padding */
+body footer.site-footer{
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-sm);
+}
+
+/* Tagline: reduce top padding (MISSION eyebrow space) + trim bottom margin */
+body footer.site-footer .footer-tagline{
+  padding-top: 1.25rem;
+  margin-bottom: var(--space-sm);
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+body footer.site-footer .footer-tagline::before{
+  top: 0;
+  font-size: 0.6rem;
+}
+
+/* Top row (credit + nav + socials): tighten top padding */
+body footer.site-footer .footer-top{
+  padding-top: var(--space-sm);
+}
+
+body footer.site-footer .footer-top::before{
+  width: min(50%, 240px);
+}
+
+/* Top-edge gradient fade: reduce from 80px to 50px (less aggressive) */
+body footer.site-footer::before{
+  top: -50px;
+  height: 50px;
+}
