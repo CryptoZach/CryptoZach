@@ -14908,3 +14908,78 @@ body.contact-page .contact-page-foreground > .contact-page .about-item .about-la
   color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
   margin-bottom: var(--space-xs);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Paper key-numbers polish: card container + eyebrow heading + subsection
+   label treatment on inline <strong> grouping markers. 8 paper pages benefit
+   via shared class rule. Append-only; no HTML changes (content structure
+   varies across pages: some use single <p> with <br>, others use multiple
+   <p> elements; polish works for both patterns).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.paper-key-numbers{
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 50%, var(--line));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: color-mix(in srgb, var(--panel) 35%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.paper-key-numbers > h2{
+  margin: 0 0 var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Subsection labels inside key-numbers paragraphs: the <strong> tags that
+   head each grouping ("Sample", "Concentration", "SVB stress episode",
+   etc.) get uppercase-eyebrow treatment with accent tint. */
+.paper-key-numbers p strong{
+  display: inline-block;
+  margin-top: var(--space-xs);
+  padding-right: var(--space-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  opacity: 0.95;
+}
+
+/* First <strong> in a <p> has no top margin (already at the start) */
+.paper-key-numbers p > strong:first-child{
+  margin-top: 0;
+}
+
+/* Monospace body text retains monospace + line-height from existing rule.
+   Tighten slightly and shift to soft-text color for hierarchy with the
+   uppercase labels. */
+.paper-key-numbers p{
+  margin: 0 0 var(--space-md);
+  line-height: 1.85;
+  color: var(--text-soft);
+}
+
+.paper-key-numbers p:last-child{
+  margin-bottom: 0;
+}
+
+/* Mobile: tighten padding so the card does not dominate narrow viewports */
+@media (max-width: 640px){
+  .paper-key-numbers{
+    padding: var(--space-md) var(--space-lg);
+  }
+  .paper-key-numbers > h2{
+    font-size: 0.7rem;
+  }
+  .paper-key-numbers p strong{
+    font-size: 0.65rem;
+  }
+}
