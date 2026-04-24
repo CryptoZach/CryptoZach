@@ -137,13 +137,28 @@
   // Back to top
   const backToTop = document.getElementById('backToTop');
   if(backToTop){
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
+    let footerVisible = false;
+    const updateVisibility = () => {
+      const shouldShow = window.scrollY > 400 && !footerVisible;
+      backToTop.classList.toggle('visible', shouldShow);
+    };
+    window.addEventListener('scroll', updateVisibility, { passive: true });
     backToTop.addEventListener('click', () => {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     });
+    // Hide the button when the footer enters the viewport so it does not
+    // visually overlap with the footer copyright (bottom-left) or socials
+    // (bottom-right). Without this guard, the fixed-position button
+    // occupies the same screen coordinates as footer content at scroll-end.
+    const footer = document.querySelector('footer.site-footer');
+    if(footer && 'IntersectionObserver' in window){
+      const observer = new IntersectionObserver((entries) => {
+        footerVisible = entries[0].isIntersecting;
+        updateVisibility();
+      }, { rootMargin: '0px 0px -40px 0px', threshold: 0 });
+      observer.observe(footer);
+    }
   }
 
   // Homepage hero: secondary CTA smooth-scroll to role paths + one-time accent (skipped under reduced motion).
