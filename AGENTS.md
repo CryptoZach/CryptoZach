@@ -54,6 +54,20 @@ Both share the same origin (`github.com/CryptoZach/CryptoZach`). Divergence betw
 
 ---
 
+## Multi-actor coordination (full detail in CLAUDE.md)
+
+Multiple actors (author, Cursor sessions, Claude Code CLI sessions, linter passes) modify files in parallel. Step 0a's session-start fetch handles initial alignment, but parallel work continues mid-session.
+
+**Mid-session fetch triggers:** re-fetch when (a) a system-reminder signals external file modification (`Note: <file> was modified, either by the user or by a linter`), (b) more than 15 minutes elapsed since last fetch and you are about to enter a substantive edit cycle in a high-velocity path (`.claude/`, `.cursor/`, `docs/`, `handoff/`, `research_content/papers/`, `research_content/letters/`), or (c) an Edit tool call fails with the "File has been modified since read" error.
+
+**Pre-push recovery:** the pre-push hook blocks non-fast-forward pushes. Standard recovery: `git fetch origin` to confirm divergence; if working tree has parallel-session unstaged work, `git stash push -u -m "<short reason>"` first; `git pull --rebase origin main`; `git stash pop` (check conflicts); re-push. Do NOT force-push or `git reset --hard`. If rebase conflicts in code your cycle did not author, halt and surface to the author.
+
+**Friction-cost expectations:** in high-velocity multi-actor cycles, naive cycle-time estimates underestimate by approximately 1.5x to 2x. Apply a friction multiplier when estimating.
+
+See `CLAUDE.md` Multi-actor coordination section for full per-trigger detail and high-velocity-path enumeration.
+
+---
+
 ## Critical constraints (full detail in CLAUDE.md)
 
 ### Lane discipline (DEC-069)
@@ -150,4 +164,4 @@ Update when:
 
 Keep this file and `CLAUDE.md` in lockstep on shared content; tool-specific operational detail (e.g., Claude Code CLI's exact session-start prompt) lives in `CLAUDE.md` only.
 
-Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1). Further updated 2026-04-22 (evening): Model B sequential collaboration section added; documents the operational pattern of Cursor authoring specs and a non-Cursor executor (typically Claude Code) running the spec for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; mirrors `CLAUDE.md` "Model B" subsection. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); sync script emits a clone-identity line in its header. Mirrors `CLAUDE.md` updates.
+Last updated: 2026-04-22 (initial author; pairs with `CLAUDE.md` ship same date and `scripts/claude-code-sync.py` v1). Further updated 2026-04-22 (evening): Model B sequential collaboration section added; documents the operational pattern of Cursor authoring specs and a non-Cursor executor (typically Claude Code) running the spec for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; mirrors `CLAUDE.md` "Model B" subsection. See `.cursor/skills/cryptozach-multi-tool-handoff/SKILL.md` for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); sync script emits a clone-identity line in its header. Mirrors `CLAUDE.md` updates. Further updated 2026-04-23 (evening): new Multi-actor coordination section between Multi-clone coordination and Critical constraints; condenses the full CLAUDE.md section to a 3-trigger summary (mid-session fetch triggers; pre-push recovery; friction-cost expectations). Captures the multi-actor coordination patterns observed during the site-sweep-auditor pass-3 validation cycle. Mirrors `CLAUDE.md` Multi-actor coordination section.

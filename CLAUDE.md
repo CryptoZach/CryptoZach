@@ -66,6 +66,49 @@ Both clones push and pull from the same origin (`github.com/CryptoZach/CryptoZac
 
 ---
 
+## Multi-actor coordination
+
+This repo runs at high velocity with multiple actors making changes in parallel: the author, Cursor sessions, Claude Code CLI sessions, and occasional linter passes. Step 0a's session-start fetch handles the initial alignment, but parallel work continues mid-session and produces external file modifications visible only after they happen. The discipline below codifies the recurring patterns observed during the site-sweep-auditor pass-3 validation cycle (3+ external touches in a single 30-minute cycle).
+
+### Mid-session fetch triggers
+
+Re-fetch origin during a session (not just at Step 0a) when any of the following holds:
+
+- A system-reminder appears with the form `Note: <file> was modified, either by the user or by a linter.` This is the explicit signal that an external actor touched a file you are about to edit. Re-fetch immediately, then re-read the file before continuing the edit cycle.
+- More than 15 minutes have passed since the last `git fetch` AND you are about to begin a substantive edit cycle in a high-velocity path (see High-velocity paths below).
+- An Edit tool call fails with `File has been modified since read, either by the user or by a linter.` This is the post-hoc signal that drift happened during your prep. Re-read the file (the harness invalidates the cached read state); re-fetch before retrying so subsequent edits land on current state.
+
+### Pre-push expectations and recovery
+
+The pre-push git hook in this repo blocks non-fast-forward pushes (force-push is also blocked unless explicitly overridden via `ALLOW_FORCE_PUSH_ORIGIN=1`). Expect rejection in high-velocity cycles; standard recovery when push is rejected:
+
+1. `git fetch origin` (read-only confirmation of divergence).
+2. If working tree is dirty with parallel-session unstaged work that is NOT yours, `git stash push -u -m "<short reason for traceability>"` first.
+3. `git pull --rebase origin main`.
+4. `git stash pop` (if step 2 ran; check for conflicts and resolve only conflicts in YOUR rebased commits, not in the stashed parallel work).
+5. Re-push.
+
+Do NOT force-push to recover. Do NOT `git reset --hard` or otherwise discard the parallel work. If the rebase produces conflicts in code your cycle did not author, halt and surface to the author rather than resolving unilaterally.
+
+### High-velocity paths
+
+Paths where multi-actor changes recur frequently and where the mid-session fetch trigger applies:
+
+- `.claude/agents/*.md`: agent-spec evolution cycles (validate-find-fix pattern; pass 1, 2, 3 precedent).
+- `.cursor/skills/cryptozach-*/SKILL.md`: skill maintenance (in-place updates allowed during Cursor-skills freeze; new files blocked per Phase A).
+- `.cursor/tasks/`: Cursor task drops and Living_File_Updates memos.
+- `docs/*.md`: Cursor canonical writes (DEC-069 lane).
+- `handoff/`: cycle-spanning architecture specs, validation reports, and active handoff prompts.
+- `research_content/papers/*/`, `research_content/letters/*/`: active manuscript and letter cycles.
+
+Lower-velocity paths (rarely touched by parallel actors): `assets/`, `icons/`, `ink-brand-kit/`, `tools/canonical-state/`, `_build/`, root-level `.html` files (unless a Model B site cycle is in progress).
+
+### Friction-cost expectations
+
+In high-velocity multi-actor cycles, naive cycle-time estimates underestimate by approximately 1.5x to 2x. Friction sources include: re-fetching after external file touches; re-reading files after Edit tool failures; rebasing on push rejection; stashing and restoring parallel work. Apply a friction multiplier when estimating cycle time so the author has accurate expectations. A naive "10 minute" estimate in `.claude/agents/`, `docs/`, or `handoff/` is more accurately a 15-25 minute estimate during active multi-actor periods.
+
+---
+
 ## Hard constraints
 
 These are program-level constraints. Violations break canonical-state coherence; if a task requires you to violate one, halt and surface to the author rather than improvise.
@@ -234,4 +277,4 @@ This file documents Claude Code CLI session-start workflow. Update when:
 - A new common workflow pattern stabilizes (e.g., a new skill becomes a session-start essential).
 - The hybrid-repo partition shifts (e.g., a new top-level directory is added with its own lane).
 
-Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern). Further updated 2026-04-22 (evening): Model B sequential collaboration section added under Common workflow patterns; documents the operational pattern of Cursor authoring specs and Claude Code executing for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; first proof-of-concept cycle is commit `66739cb`. See `cryptozach-multi-tool-handoff` skill for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); `scripts/claude-code-sync.py` now emits a clone-identity line in its header so every session sees primary-vs-working clone at session start. Convention wraps existing filesystem reality (sync script was already clone-path-agnostic via `Path(__file__).resolve().parent.parent`); zero code-level breakage risk.
+Last updated: 2026-04-22 (initial author; covers the 2026-04-22 ship of `scripts/claude-code-sync.py` v1 + R1 lane discipline per DEC-069 + em-dash rule + standard handoff execution pattern). Further updated 2026-04-22 (evening): Model B sequential collaboration section added under Common workflow patterns; documents the operational pattern of Cursor authoring specs and Claude Code executing for bulk site-file edits, with `docs/` remaining Cursor-only per DEC-069. Adopted operationally per author authorization; first proof-of-concept cycle is commit `66739cb`. See `cryptozach-multi-tool-handoff` skill for full pattern. Further updated 2026-04-23: Step 0 expanded into 0a (pre-flight git pull-before-work) plus 0b (active sync); new Multi-clone coordination section documents the two-clone setup (primary `/Users/zach/ai-research/CryptoZach/` with symlink `~/cryptozach`; working `/Users/zach/Tokenization_Systems_Website/`); `scripts/claude-code-sync.py` now emits a clone-identity line in its header so every session sees primary-vs-working clone at session start. Convention wraps existing filesystem reality (sync script was already clone-path-agnostic via `Path(__file__).resolve().parent.parent`); zero code-level breakage risk. Further updated 2026-04-23 (evening): new Multi-actor coordination section between Multi-clone coordination and Hard constraints; documents mid-session fetch triggers (system-reminder-driven; time-based; Edit-failure-driven), pre-push expectations and recovery (stash to rebase to pop pattern), high-velocity paths enumeration, and friction-cost expectations (1.5x to 2x multiplier). Captures the multi-actor coordination patterns that surfaced 3+ times during the site-sweep-auditor pass-3 validation cycle (`handoff/site_sweep_auditor_validation_2026-04-23.md`). AGENTS.md mirror updated in lockstep.
