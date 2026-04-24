@@ -15578,3 +15578,116 @@ body footer.site-footer::before{
   top: -50px;
   height: 50px;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Top navigation header polish: append-only refinements on the shared
+   sticky header. Site-wide (25 pages). Preserves existing sticky + blur +
+   scrolled shadow behavior; adds: animated navlink underline, subtle
+   active-state indicator, ghost social icons, brand breathing dot,
+   scrolled-state enhancement.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Navlink: animated underline on hover (matches footer nav pattern
+   from commit 14f0b06). Preserves the existing accent-muted bg hover;
+   underline layered on top as additional motion cue. */
+header .navlink{
+  position: relative;
+  overflow: hidden;
+}
+
+header .navlink::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 3px;
+  height: 1px;
+  background: var(--accent);
+  transition: left .22s ease, right .22s ease, opacity .22s ease;
+  opacity: 0;
+}
+
+header .navlink:hover::after{
+  left: 12px;
+  right: 12px;
+  opacity: 0.75;
+}
+
+/* Active navlink: enhance existing bottom-accent-border with a subtle
+   accent-tinted bg halo for stronger current-page presence. */
+header .navlink.active{
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+header .navlink.active::after{
+  display: none;
+}
+
+/* Brand: breathing accent dot next to the strong title. Uses a pseudo-
+   element on the a element so the anchor area stays clickable without
+   extra HTML. */
+header .brand a strong{
+  position: relative;
+  padding-left: 14px;
+}
+
+header .brand a strong::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 55%, transparent);
+  opacity: 0.75;
+  animation: brandPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes brandPulse{
+  0%, 100%{ opacity: 0.75; transform: translateY(-50%) scale(1); }
+  50%{ opacity: 1; transform: translateY(-50%) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  header .brand a strong::before{
+    animation: none;
+  }
+}
+
+/* Header social links: ghost treatment with accent glow on hover.
+   Matches the footer ghost-icon pattern from f02db92. */
+header .header-social-link{
+  border-color: transparent;
+  background: transparent;
+  transition: border-color .2s ease, color .2s ease, background .2s ease,
+              transform .2s ease, box-shadow .2s ease;
+}
+
+header .header-social-link:hover{
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Scrolled header: slightly darker background + stronger separator for
+   extra visual lift when the page has scrolled past the fold. */
+header.scrolled{
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--line) 120%, transparent);
+}
+
+/* Theme toggle button: subtle hover refinement matching social icons */
+header .theme-toggle{
+  transition: color .2s ease, background .2s ease, transform .2s ease;
+}
+
+header .theme-toggle:hover{
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateY(-1px);
+}
