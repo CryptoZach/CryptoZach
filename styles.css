@@ -15847,3 +15847,20 @@ body footer.site-footer .footer-tagline{
     bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Homepage hero: reduce space between header and hero top per author
+   feedback. Base .hero had 20px margin-top + 48px padding-top = 68px
+   empty band. Tighten on the homepage variant specifically.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+body #hero.hero--homepage{
+  margin-top: 0;
+  padding-top: 1.25rem;
+}
+
+@media (min-width: 768px){
+  body #hero.hero--homepage{
+    padding-top: 1.5rem;
+  }
+}
