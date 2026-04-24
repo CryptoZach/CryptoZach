@@ -15989,3 +15989,235 @@ body #contact .about-card .about-card-followup{
     gap: var(--space-lg);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Resume polish: landing hub + 5 variant pages. Applies the accent-rotation
+   + left-border + hover-lift vocabulary already used on overview/frameworks
+   dollar-object cards to resume-cards (5-accent rotation: blue, teal,
+   violet, amber, rose matching the five profiles). Variant pages get a
+   pill proof-strip, a stack-item 3-accent rotation, and pill-style
+   related-profiles nav.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Landing hub: 5-color accent rotation on resume cards. Each card gets a
+   left-border accent matching its nav-button position so the two surfaces
+   read as a synchronized set. */
+.resume-page #resume-policy{
+  border-left: 3px solid color-mix(in srgb, #2563eb 70%, var(--line));
+}
+.resume-page #resume-asset-mgmt{
+  border-left: 3px solid color-mix(in srgb, #0d9488 70%, var(--line));
+}
+.resume-page #resume-payments{
+  border-left: 3px solid color-mix(in srgb, #7c3aed 70%, var(--line));
+}
+.resume-page #resume-ai-governance{
+  border-left: 3px solid color-mix(in srgb, #d97706 70%, var(--line));
+}
+.resume-page #resume-risk{
+  border-left: 3px solid color-mix(in srgb, #e11d48 70%, var(--line));
+}
+
+/* Card-icon container: tint background to match the card accent.
+   Gives each icon a subtle chromatic halo instead of a uniform neutral. */
+.resume-page #resume-policy .resume-card-heading .card-icon{
+  background: color-mix(in srgb, #2563eb 10%, var(--panel));
+  color: color-mix(in srgb, #2563eb 85%, var(--text));
+  border-radius: 8px;
+}
+.resume-page #resume-asset-mgmt .resume-card-heading .card-icon{
+  background: color-mix(in srgb, #0d9488 10%, var(--panel));
+  color: color-mix(in srgb, #0d9488 85%, var(--text));
+  border-radius: 8px;
+}
+.resume-page #resume-payments .resume-card-heading .card-icon{
+  background: color-mix(in srgb, #7c3aed 10%, var(--panel));
+  color: color-mix(in srgb, #7c3aed 85%, var(--text));
+  border-radius: 8px;
+}
+.resume-page #resume-ai-governance .resume-card-heading .card-icon{
+  background: color-mix(in srgb, #d97706 10%, var(--panel));
+  color: color-mix(in srgb, #d97706 85%, var(--text));
+  border-radius: 8px;
+}
+.resume-page #resume-risk .resume-card-heading .card-icon{
+  background: color-mix(in srgb, #e11d48 10%, var(--panel));
+  color: color-mix(in srgb, #e11d48 85%, var(--text));
+  border-radius: 8px;
+}
+
+/* Hover: gentle lift + accent-tinted shadow keyed to each card's color */
+.resume-page .resume-card{
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.resume-page #resume-policy:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, #2563eb 22%, transparent);
+}
+.resume-page #resume-asset-mgmt:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, #0d9488 22%, transparent);
+}
+.resume-page #resume-payments:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, #7c3aed 22%, transparent);
+}
+.resume-page #resume-ai-governance:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, #d97706 22%, transparent);
+}
+.resume-page #resume-risk:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, #e11d48 22%, transparent);
+}
+
+/* Bump heading size on landing hub cards so h3 doesn't get buried under
+   the icon. Previously 17px with margin; tighten the gap, boost the size. */
+.resume-page .resume-card h3{
+  font-size: 1.0625rem;
+  font-weight: 650;
+}
+
+/* Resume-evidence: add a subtle uppercase eyebrow accent tint matching the
+   card's color. Base rule at line 5460 sets color:var(--muted); we just
+   add accent tint per card via the parent scope. */
+.resume-page #resume-policy .resume-evidence strong{
+  color: color-mix(in srgb, #2563eb 80%, var(--muted));
+}
+.resume-page #resume-asset-mgmt .resume-evidence strong{
+  color: color-mix(in srgb, #0d9488 80%, var(--muted));
+}
+.resume-page #resume-payments .resume-evidence strong{
+  color: color-mix(in srgb, #7c3aed 80%, var(--muted));
+}
+.resume-page #resume-ai-governance .resume-evidence strong{
+  color: color-mix(in srgb, #d97706 80%, var(--muted));
+}
+.resume-page #resume-risk .resume-evidence strong{
+  color: color-mix(in srgb, #e11d48 80%, var(--muted));
+}
+
+/* Closing band: replace flat neutral panel with a centered pill-styled
+   band that echoes the about-card voice. */
+.resume-page .resume-closing{
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-top: 3px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+}
+
+/* ── Variant pages (resume-profile) ────────────────────────────────── */
+
+/* Proof strip: promote from muted inline text to a pill badge group. The
+   dot separator `·` acts as item delimiter; wrap visually by giving each
+   segment a subtle panel-tinted pill. */
+main.resume-profile .proof-strip-inline{
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-top: var(--space-md);
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-soft);
+}
+
+/* Decision-lens summary card: uppercase eyebrow on the h3 title so it
+   matches the scannable-label vocabulary used on key-number blocks,
+   evidence chips, and the about-card meta labels. */
+main.resume-profile .resume-summary-card h3{
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+}
+
+/* Stack-item 3-accent rotation inside the resume-preview-card.
+   "When is payment final?" / "What changes when deposits become tokens?"
+   / "Where does control concentrate?" — three items read as a scannable
+   set when color-keyed. */
+main.resume-profile .stack-list .stack-item:nth-child(3n+1){
+  border-left-color: color-mix(in srgb, #2563eb 70%, var(--line));
+}
+main.resume-profile .stack-list .stack-item:nth-child(3n+2){
+  border-left-color: color-mix(in srgb, #0d9488 70%, var(--line));
+}
+main.resume-profile .stack-list .stack-item:nth-child(3n){
+  border-left-color: color-mix(in srgb, #7c3aed 70%, var(--line));
+}
+
+/* Stack-item strong label: color-match the left border for scannability */
+main.resume-profile .stack-list .stack-item:nth-child(3n+1) strong{
+  color: color-mix(in srgb, #2563eb 82%, var(--text));
+}
+main.resume-profile .stack-list .stack-item:nth-child(3n+2) strong{
+  color: color-mix(in srgb, #0d9488 82%, var(--text));
+}
+main.resume-profile .stack-list .stack-item:nth-child(3n) strong{
+  color: color-mix(in srgb, #7c3aed 82%, var(--text));
+}
+
+/* Related profiles: convert dot-separated text links to tappable pill
+   chips. Improves scannability + tap target size (mobile) + reduces
+   visual clutter from the ·-separators. */
+main.resume-profile .resume-related-profiles{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  list-style: none;
+}
+main.resume-profile .resume-related-profiles a{
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: border-color .2s ease, color .2s ease,
+              background .2s ease, transform .15s ease;
+}
+main.resume-profile .resume-related-profiles a:hover{
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  transform: translateY(-1px);
+}
+
+/* Hide the text-node `·` separators between links (unwrap them visually
+   by making them transparent; they still exist in DOM for a11y fallback
+   when CSS fails). */
+main.resume-profile .resume-related-profiles{
+  font-size: 0;
+}
+main.resume-profile .resume-related-profiles a{
+  font-size: 0.875rem;
+}
+
+/* Supporting-research heading eyebrow on landing hub (resume-evidence
+   strong) already stylized via base rule; no change needed. */
+
+/* Mobile: reduce card heading gap, tighten pill spacing */
+@media (max-width: 640px){
+  main.resume-profile .resume-related-profiles{
+    gap: 0.375rem;
+  }
+  main.resume-profile .resume-related-profiles a{
+    padding: 0.4375rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+  main.resume-profile .proof-strip-inline{
+    font-size: 0.8125rem;
+  }
+}
+
