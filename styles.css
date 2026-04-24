@@ -14030,27 +14030,42 @@ header.scrolled {
   margin: 0 0 var(--space-md);
 }
 
+/* Body paragraph (non-eyebrow) fills remaining vertical space so the
+   pill strip below sits at the bottom of every card consistently. The
+   earlier `margin-top: auto` on .card-tag-strip alone was not reliably
+   pushing pills to bottom when cards were stretched to equal row height
+   via grid-auto-rows: 1fr. */
+.card--dollar-object > p:not(.card-eyebrow){
+  flex-grow: 1;
+}
+
 .card-tag-strip{
   list-style: none;
   margin: auto 0 0;
   padding: var(--space-sm) 0 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
   gap: 6px 8px;
   border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  min-height: calc(var(--space-sm) + 1.75rem);
 }
 .card-tag-strip li{
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  justify-content: center;
+  height: 1.75rem;
+  padding: 0 0.75rem;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
+  line-height: 1;
   color: var(--text-soft);
   background: color-mix(in srgb, var(--panel2) 70%, transparent);
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   border-radius: 999px;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 /* Per-card accent variants: subtle top-border color coding for scannability.
