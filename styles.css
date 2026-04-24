@@ -15079,3 +15079,109 @@ footer.site-footer .footer-tagline::before{
     left: calc(var(--space-md) + 3px);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Homepage hero polish: minimal refinements on the existing rich hero
+   (grain, shimmer, matrix canvas, reef, gradient accent title, chips,
+   CTAs, anchors). Append-only; uses higher specificity to layer over the
+   inline <style> rules in index.html where needed.
+   Design choice: minimal touch. Hero already carries strong visual weight;
+   this pass adds subtle finishing details.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Eyebrow-kicker accent dot: fills the pre-existing 0.55rem flex gap that
+   was reserved in the inline CSS but without a visible dot element. Uses
+   a pseudo-element so no HTML change required. */
+body #hero.hero--homepage .hero-eyebrow-kicker::before{
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
+  flex-shrink: 0;
+  animation: heroEyebrowPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes heroEyebrowPulse{
+  0%, 100%{ opacity: 0.75; transform: scale(1); }
+  50%{ opacity: 1; transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body #hero.hero--homepage .hero-eyebrow-kicker::before{
+    animation: none;
+  }
+}
+
+/* Hero proof chips: add a subtle leading accent dot to each chip. Chips
+   have pointer-events: none (decorative), so no hover interaction needed;
+   the dot adds a visual anchor that aids scanning across chips. */
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 80%, transparent);
+  flex-shrink: 0;
+}
+
+/* Hero anchors: replace the static underline with an animated bottom border
+   that expands from left on hover. Matches the footer nav underline pattern
+   from commit 14f0b06. */
+body #hero.hero--homepage .hero-anchors a{
+  position: relative;
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+
+body #hero.hero--homepage .hero-anchors a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  opacity: 0.5;
+  transition: transform .25s ease, background .25s ease, opacity .25s ease;
+}
+
+body #hero.hero--homepage .hero-anchors a:hover::after{
+  background: var(--accent);
+  opacity: 1;
+  transform: scaleX(1.02);
+}
+
+/* Hero-qualifier meta-text: subtle "NOTE" eyebrow label for the
+   ".hero-institutional.hero-qualifier" SSRN metadata strip. Signals the
+   content as supplementary rather than primary. */
+body #hero.hero--homepage .hero-institutional.hero-qualifier{
+  position: relative;
+  padding-top: 1.25rem;
+}
+
+body #hero.hero--homepage .hero-institutional.hero-qualifier::before{
+  content: "Signal";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: color-mix(in srgb, var(--accent) 85%, transparent);
+  opacity: 0.8;
+}
