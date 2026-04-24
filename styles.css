@@ -15185,3 +15185,119 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier::before{
   color: color-mix(in srgb, var(--accent) 85%, transparent);
   opacity: 0.8;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer liquid refinement: soften the hard rectangular boundary between
+   content and footer via gradient fade-in, remove internal blocky separators,
+   add ambient accent glow, soften social icon edges to ghost-style.
+   Append-only. Layers over the existing footer rules from earlier cycle.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Remove the hard border-top; replace with a softer gradient fade that
+   blurs the content-to-footer transition. Use a ::before pseudo-element
+   positioned above the footer. */
+body footer.site-footer{
+  border-top: none;
+  /* Extended gradient layers: ambient accent halo at top + bottom + subtle
+     gradient running vertically through the band for depth. */
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 50% 0%,
+      color-mix(in srgb, var(--accent) 10%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 100% 60% at 50% 100%,
+      color-mix(in srgb, var(--accent) 5%, transparent) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 6%, transparent) 0%,
+      transparent 48%,
+      color-mix(in srgb, var(--accent) 2%, transparent) 100%
+    ),
+    var(--footer-strip-bg);
+}
+
+/* Gradient fade mask above the footer so the hard horizontal edge softens
+   into the content area. Applied via ::before positioned overlapping the
+   top edge. */
+body footer.site-footer::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -80px;
+  height: 80px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--footer-strip-bg) 15%, transparent) 35%,
+    color-mix(in srgb, var(--footer-strip-bg) 45%, transparent) 65%,
+    color-mix(in srgb, var(--footer-strip-bg) 85%, transparent) 100%
+  );
+  z-index: 0;
+}
+
+/* Inner footer content lives above the gradient fade. */
+body footer.site-footer > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Tagline row: soften the internal border-top separator. Replace the hard
+   1px line with a gradient underline that fades at the edges. */
+body footer.site-footer .footer-tagline{
+  border-top: none;
+  position: relative;
+}
+
+body footer.site-footer .footer-tagline::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--footer-strip-border) 95%, transparent) 15%,
+    color-mix(in srgb, var(--footer-strip-border) 95%, transparent) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Social icons: ghost treatment. Drop the visible border; let the icon
+   breathe against the ambient background. Hover retains the accent glow. */
+body footer.site-footer .footer-social{
+  border: 1px solid transparent;
+  background: transparent;
+  transition: border-color .2s ease, background .2s ease, color .2s ease,
+              transform .2s ease, box-shadow .2s ease;
+}
+
+body footer.site-footer .footer-social:hover{
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 8%, transparent),
+              0 2px 8px color-mix(in srgb, var(--accent) 15%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Footer nav: remove the box-like hover border; rely on underline animation
+   from earlier cycle + subtle bg brightening. */
+body footer.site-footer .footer-nav a:hover{
+  border-color: transparent;
+  background: transparent;
+}
+
+/* Subtle parallax-feeling backdrop-filter blur on the whole footer band.
+   Adds glass-morphism when scrolling transient content behind. */
+body footer.site-footer{
+  backdrop-filter: blur(6px) saturate(110%);
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
+}
