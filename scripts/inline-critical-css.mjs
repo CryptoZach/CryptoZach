@@ -66,6 +66,37 @@ async function findHtmlFiles(rootDir) {
   return results;
 }
 
+// Regex to strip and capture the ?v=N query string from stylesheet href
+// attributes. Critters resolves href values as filesystem paths; when the
+// href includes a query string (e.g., ?v=128 per our cache-buster
+// convention), the literal path does not exist on disk and Critters
+// silently skips inlining for that sheet. We strip ?v=N before Critters
+// runs, then restore it in both the <link rel="stylesheet"> original
+// reference AND the <link rel="preload"> Critters may add via preload
+// swap. Cache-buster discipline preserved end-to-end; Critters gets the
+// clean path it needs.
+const CACHE_BUSTER_RE = /(href="[^"]*\.css)\?v=(\d+)(")/g;
+
+function stripCacheBusters(html) {
+  const captured = [];
+  const stripped = html.replace(CACHE_BUSTER_RE, (_match, prefix, version, suffix) => {
+    captured.push(version);
+    return `${prefix}${suffix}`;
+  });
+  return { stripped, versions: captured };
+}
+
+function restoreCacheBusters(html, versions) {
+  if (versions.length === 0) return html;
+  // After Critters, there may be MORE <link> references to the same
+  // stylesheet (e.g., preload + original kept as fallback). We apply the
+  // first captured version to all .css href attributes; the site only
+  // has one stylesheet (styles.css) so a single version value is
+  // sufficient.
+  const version = versions[0];
+  return html.replace(/(href="[^"]*\.css)(")/g, `$1?v=${version}$2`);
+}
+
 async function main() {
   const { buildPath } = parseArgs();
 
@@ -97,21 +128,35 @@ async function main() {
   console.log(`Processing ${htmlFiles.length} HTML files for critical-CSS inlining...`);
 
   let successCount = 0;
+  let skippedCount = 0;
   let errorCount = 0;
+  let totalInlinedBytes = 0;
 
   for (const file of htmlFiles) {
     try {
       const html = await fs.readFile(file, 'utf-8');
-      const processed = await critters.process(html);
-      await fs.writeFile(file, processed, 'utf-8');
-      successCount++;
+      const { stripped, versions } = stripCacheBusters(html);
+      const inputSize = stripped.length;
+      const processed = await critters.process(stripped);
+      const restored = restoreCacheBusters(processed, versions);
+      const inlinedBytes = restored.length - inputSize;
+      if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
+      await fs.writeFile(file, restored, 'utf-8');
+      if (inlinedBytes > 100) {
+        successCount++;
+      } else {
+        skippedCount++;
+      }
     } catch (err) {
       console.error(`ERROR processing ${path.relative(buildPath, file)}: ${err.message}`);
       errorCount++;
     }
   }
 
-  console.log(`Processed: ${successCount} succeeded, ${errorCount} failed.`);
+  console.log(
+    `Processed: ${successCount} inlined critical CSS, ${skippedCount} no-op (no stylesheet or already processed), ${errorCount} failed. ` +
+    `Total critical CSS inlined: ~${Math.round(totalInlinedBytes / 1024)} KB.`
+  );
   return errorCount > 0 ? 2 : 0;
 }
 
