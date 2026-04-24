@@ -11,7 +11,8 @@
     "build:minify-js": "terser _site/script.js -o _site/script.js --compress --mangle",
     "build:minify-html": "html-minifier-terser --input-dir _site --output-dir _site --file-ext html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --use-short-doctype --minify-css true --minify-js true",
     "build:critical-css": "node scripts/inline-critical-css.mjs",
-    "build:postprocess": "npm run build:purge-css && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html",
+    "build:postprocess": "npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html",
+    "build:postprocess:with-purgecss": "npm run build:purge-css && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html",
     "ci:postprocess:ci": "npm run build:postprocess"
   },
   "devDependencies": {
