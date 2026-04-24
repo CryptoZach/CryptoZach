@@ -14983,3 +14983,99 @@ body.contact-page .contact-page-foreground > .contact-page .about-item .about-la
     font-size: 0.65rem;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Site footer polish: append-only refinements on top of existing full-bleed
+   footer treatment. Lands site-wide (25 HTML files; footer is shared).
+   Design choice: respect the already-tuned layout (3-col grid, full-bleed
+   dark band, italic tagline) and refine the small elements for institutional
+   polish.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Social icons: round (circle) shape + subtle hover glow. Current rule
+   renders them at 4px border-radius; pill-round matches the site's pill
+   vocabulary (card-tag-strip, filter-btn). */
+footer.site-footer .footer-social{
+  border-radius: 999px;
+  background: color-mix(in srgb, #fff 3%, transparent);
+  border-color: color-mix(in srgb, #fff 18%, transparent);
+}
+
+footer.site-footer .footer-social:hover{
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* Nav links: animated bottom accent underline on hover. Draws attention
+   via movement while preserving the subtle hover background from the
+   existing rule. */
+footer.site-footer .footer-nav a{
+  position: relative;
+  overflow: hidden;
+}
+
+footer.site-footer .footer-nav a::after{
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 5px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .25s ease;
+  pointer-events: none;
+}
+
+footer.site-footer .footer-nav a:hover::after{
+  transform: scaleX(1);
+}
+
+/* Copy line: subtle accent dot separator between year and brand. Visually
+   distinguishes "2026" from "Tokenization Systems" without relying on the
+   space-gap alone. */
+footer.site-footer .footer-copy{
+  align-items: center;
+}
+
+footer.site-footer .footer-copy__year::after{
+  content: "·";
+  display: inline-block;
+  margin-left: 0.4em;
+  color: color-mix(in srgb, var(--accent) 65%, transparent);
+  opacity: 0.7;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* Footer tagline: upgrade with eyebrow "Mission" label above, matching the
+   uppercase-eyebrow vocabulary used elsewhere. Subtle; appears as a small
+   accent-tinted line before the italic tagline text. */
+footer.site-footer .footer-tagline{
+  position: relative;
+  padding-top: calc(var(--space-md) + 1.25rem);
+}
+
+footer.site-footer .footer-tagline::before{
+  content: "Mission";
+  position: absolute;
+  top: var(--space-md);
+  left: calc(var(--space-md) + 3px);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: color-mix(in srgb, var(--accent) 90%, transparent);
+  opacity: 0.85;
+}
+
+/* Stacked-mobile: when the footer switches to single-column at < 1320px,
+   ensure the "Mission" eyebrow aligns with the tagline's text-indent start
+   (left + 3px from the accent border). */
+@media (max-width: 1320px){
+  footer.site-footer .footer-tagline::before{
+    left: calc(var(--space-md) + 3px);
+  }
+}
