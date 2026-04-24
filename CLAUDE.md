@@ -104,6 +104,17 @@ Do not write to website-lane paths from R1 / canonical-state work (and vice vers
 
 When METADATA cross-references would require inventing a finding ID (F-*), decision ID (DEC-*), unknown ID (KU-*), entity row, error code (EC-*), or outreach ID (OL-*) that does not exist in canonical state, leave the array empty and flag in the handoff-back note. Do not invent IDs. Cursor will assign them in a follow-up commit per status-tracking discipline.
 
+### Cursor-skills freeze (Phase A; 2026-04-23 to ~2026-05-21)
+
+Per the Cursor phased reduction plan at `handoff/cursor_phased_reduction_plan_2026-04-23.md` (commit `59adfd9`):
+
+- **No new `.cursor/skills/cryptozach-*/SKILL.md` files.** New operational discipline gets captured as Claude Code skills or agents instead.
+- **In-place updates allowed for the existing 36 Cursor skills.** Maintenance edits, content additions, and version bumps proceed normally. Refactoring more than 50% of an existing Cursor skill (line-count basis: lines added plus lines removed greater than half the original line count) counts as a freeze violation requiring author authorization. Borderline cases route to author for decision.
+- **Observation period: 2 to 4 weeks (target end ~2026-05-21).** Tracking ledger at `handoff/cursor_phased_reduction_observations.md` logs BOTH calibration catches (Cursor caught a Claude Code miss) AND null cycles (Claude Code shipped clean without Cursor involvement). Both are required for empirical Phase A to Phase B exit gate evaluation; without the denominator, calibration-value assessment is anecdote-driven (per author 2026-04-23 evaluation, [MEDIUM] selection-bias concern).
+- **Reversibility: high.** Remove this subsection in CLAUDE.md (and the AGENTS.md mirror) to revert Phase A. No file moves; no agent-spec changes; no canonical-state changes.
+
+Phase B (top-N migration; 4 to 12 weeks) and Phase C (full sunset; 4 to 8 weeks) are FUTURE-CONDITIONAL on each phase's empirical exit gate. The plan is a SCAFFOLD for incremental decisions, not a commitment to full deprecation.
+
 ---
 
 ## Where to find things
