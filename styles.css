@@ -15747,3 +15747,89 @@ body footer.site-footer .footer-top::before{
 body footer.site-footer .footer-top{
   padding-top: var(--space-md);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Focus-visible refinement + prose link conventions.
+   Append-only; site-wide across 25 pages. Refines the existing outline
+   pattern (2px solid accent + 2px offset) with a subtle accent glow for
+   aesthetic depth. Prose links get unified underline conventions that
+   respect content type (body paragraphs vs cards vs nav).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Universal focus-visible refinement: layered outline + soft accent glow.
+   Selector uses :where() for zero specificity so individual-element
+   focus-visible rules take precedence where they exist. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible{
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 0 0 6px color-mix(in srgb, var(--accent) 8%, transparent);
+  border-radius: var(--radius-sm);
+  transition: box-shadow .12s ease, outline-offset .12s ease;
+}
+
+/* Remove the box-shadow glow when the element is inside a rounded card
+   container that already has its own focus styling; avoids double-glow. */
+.action:focus-visible,
+.btn:focus-visible,
+.cta-primary:focus-visible,
+button.filter-btn:focus-visible{
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Prose link conventions: paragraph-body links get a refined underline
+   treatment. Scopes to content zones where prose lives (excludes nav,
+   cards with their own link styling, buttons).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Base prose link style inside content paragraphs across content zones.
+   Uses a specific union of selectors to avoid touching nav / CTA / card
+   link patterns that already have their own styling. */
+main p a:not([class]),
+main li a:not([class]),
+main .paper-thesis a,
+main .brief-problem a,
+main .brief-so-what a,
+main .brief-finding-copy a,
+main .explainer-section a:not(.action):not(.btn){
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: text-decoration-color .2s ease, color .2s ease;
+}
+
+main p a:not([class]):hover,
+main li a:not([class]):hover,
+main .paper-thesis a:hover,
+main .brief-problem a:hover,
+main .brief-so-what a:hover,
+main .brief-finding-copy a:hover,
+main .explainer-section a:not(.action):not(.btn):hover{
+  color: var(--accent-hover, var(--accent));
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+/* External link subtle indicator: prose links with target="_blank" get
+   a tiny accent-tinted dot or arrow via ::after. Only inside prose zones
+   to avoid polluting nav/CTA. */
+main p a:not([class])[target="_blank"]::after,
+main li a:not([class])[target="_blank"]::after{
+  content: " ↗";
+  display: inline-block;
+  margin-left: 1px;
+  font-size: 0.8em;
+  opacity: 0.75;
+  color: currentColor;
+  text-decoration: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+main p a:not([class])[target="_blank"]:hover::after,
+main li a:not([class])[target="_blank"]:hover::after{
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
