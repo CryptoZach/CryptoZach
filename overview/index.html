@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=185" />
+  <link rel="stylesheet" href="/styles.css?v=186" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -158,7 +158,7 @@
             <li><a href="#what-stablecoin" class="structure-nav__sublink" data-section="what-stablecoin">Stablecoin</a></li>
             <li><a href="#what-tokenization" class="structure-nav__sublink" data-section="what-tokenization">Tokenization</a></li>
             <li><a href="#what-deposit" class="structure-nav__sublink" data-section="what-deposit">Tokenized deposit</a></li>
-            <li><a href="#what-gateway" class="structure-nav__sublink" data-section="what-gateway">Gateway</a></li>
+            <li><a href="#what-operator" class="structure-nav__sublink" data-section="what-operator">Operator &amp; gateway</a></li>
             <li><a href="#what-control-layer" class="structure-nav__sublink" data-section="what-control-layer">Control layer</a></li>
             <li><a href="#what-tokenomics" class="structure-nav__sublink" data-section="what-tokenomics">Tokenomics</a></li>
           </ol>
@@ -260,10 +260,12 @@
           </article>
         </div>
 
-        <div id="what-gateway" class="frameworks-anchor-block">
+        <div id="what-operator" class="frameworks-anchor-block">
+          <span id="what-gateway" aria-hidden="true"></span>
           <article class="explainer-section">
-            <h2>What is a gateway?</h2>
-            <p>A gateway is the issuer, exchange, or protocol that routes tokenized value. The same token can inherit different compliance, routing, and stress properties depending on which gateway processes it. This is the central unit of analysis in the research program.</p>
+            <h2>What is an operator?</h2>
+            <p>An operator is the entity or entities that control a tokenized product's infrastructure: the issuer who mints the token, the exchange or custodian who holds it, the transfer agent who keeps the record of legal ownership, the validator who orders transactions, and the protocol maintainer who can upgrade the contract. The research program's central analytical move separates two questions: classify the token (what is it legally?) and regulate and audit the operator (who controls its behavior under stress?). The same token inherits different compliance obligations, stress performance, and accountability depending on who operates the stack around it.</p>
+            <p>A <strong>gateway</strong> is the specific operator that routes tokenized value at an entry or exit point: the issuer, exchange, or protocol processing a transfer. Gateway is the central unit of analysis in the stablecoin program (<a href="/papers/routing-the-dollar">Routing the Dollar</a>); operator is the broader category that <a href="/frameworks#clii">CLII</a> scores continuously and <a href="/frameworks#mvep">MVEP</a> evaluates at the product gate.</p>
           </article>
         </div>
 
@@ -513,7 +515,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=213"></script>
+  <script defer src="/script.js?v=214"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
