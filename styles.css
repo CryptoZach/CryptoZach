@@ -17068,3 +17068,121 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
   line-height: 1.4;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Button (.action) hover refinement site-wide. Base .action rules at
+   line 439 to 497 already provide a transform-based hover lift, shadow,
+   and focus-visible outline. This pass adds:
+   - Accent-tinted hover border + subtle accent background wash on the
+     default (non-primary) .action
+   - Diagonal sheen sweep on .action.primary hover (subtle; 0.4s)
+   - Scale(0.98) active state for tactile press feedback
+   - Focus-visible double-ring (outline + soft accent halo)
+   - Transition timing bumped 0.15s to 0.2s with ease for smoother feel
+   - SVG right-arrow nudge pattern applied to secondary too
+   Scoped to not disrupt existing per-surface overrides (contact
+   copy-email-btn, quick-nav buttons, etc.).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Default .action: accent-tinted hover treatment. Previously .action:hover
+   at line 485 only added translateY + generic shadow; border stayed gray.
+   Add accent-soft border + subtle accent background wash on hover. */
+.action{
+  transition:
+    transform .18s cubic-bezier(.2, .8, .2, 1),
+    box-shadow .22s ease,
+    border-color .2s ease,
+    color .2s ease,
+    background .22s ease;
+}
+
+.action:not(.primary):hover{
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  box-shadow:
+    0 4px 12px color-mix(in srgb, var(--accent) 15%, transparent),
+    0 1px 2px color-mix(in srgb, #000 12%, transparent);
+}
+
+/* Active: scale(0.98) for tactile press feel */
+.action:active{
+  transform: translateY(0) scale(0.98);
+}
+
+/* Focus-visible: preserve the outline but add a soft accent halo so the
+   focus ring feels intentional, not default */
+.action:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* Right-arrow SVG nudge on secondary buttons too (base rule at 478 to 484
+   applies only to .action.primary svg). Extend to .action.secondary so
+   right-chevron patterns ("Open paper summary →") get the same feel. */
+.action.secondary svg{
+  transition: transform .18s ease;
+}
+
+.action.secondary:hover svg{
+  transform: translateX(2px);
+}
+
+/* Primary button: subtle diagonal sheen sweep on hover. Uses ::before
+   positioned absolute with a gradient stripe that translates from left
+   to right on hover. No layout impact; reveal only on hover. */
+.action.primary{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.action.primary::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    color-mix(in srgb, #fff 22%, transparent) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left .55s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.action.primary:hover::before{
+  left: 130%;
+}
+
+/* Keep primary text and SVG above the sheen layer */
+.action.primary > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Primary: upgrade the shadow stack so hover lift reads deeper */
+.action.primary:hover{
+  box-shadow:
+    0 6px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 35%, transparent),
+    0 2px 4px color-mix(in srgb, var(--accent-cta, #2563eb) 20%, transparent);
+}
+
+/* Reduced motion: disable sheen sweep + SVG translate */
+@media (prefers-reduced-motion: reduce){
+  .action.primary::before{
+    display: none;
+  }
+  .action.primary:hover svg,
+  .action.secondary:hover svg{
+    transform: none;
+  }
+  .action:active{
+    transform: translateY(0);
+  }
+}
+
