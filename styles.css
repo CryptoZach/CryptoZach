@@ -16720,3 +16720,160 @@ main.resume-profile .resume-related-profiles a{
     0 0 14px 0 color-mix(in srgb, #7c3aed 35%, transparent);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Cross-track convergence table polish. Located on /research/ (section
+   id=cross-track-convergence). A 3x3 comparison grid: Dimension vs
+   Track A (stablecoins) vs Track B (token networks). Each body cell
+   ends with an `<em>` synthesis line that today reads as a plain
+   italic sentence. Polish turns the em lines into color-coded takeaway
+   chips and introduces Track-A-blue / Track-B-teal column tinting that
+   matches the paper track-badge vocabulary applied in commit bd266b5.
+   Skipped in earlier cycle intentionally; this is the follow-up.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Column tinting: Track A (column 2) blue; Track B (column 3) teal */
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(2),
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(2){
+  background: color-mix(in srgb, #2563eb 5%, var(--panel)) !important;
+}
+
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(3),
+.research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(3){
+  background: color-mix(in srgb, #0d9488 5%, var(--panel)) !important;
+}
+
+/* Header row: column-coded top-bar accent (subtle 2px top border per
+   column; doesn't collide with the existing 2px accent bottom border) */
+.research-library-page #cross-track-convergence .convergence-table thead th:nth-child(2){
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #2563eb 14%, var(--panel)) 0%,
+    color-mix(in srgb, #2563eb 8%, var(--panel)) 100%
+  );
+  border-bottom-color: color-mix(in srgb, #2563eb 65%, var(--line));
+}
+
+.research-library-page #cross-track-convergence .convergence-table thead th:nth-child(3){
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #0d9488 14%, var(--panel)) 0%,
+    color-mix(in srgb, #0d9488 8%, var(--panel)) 100%
+  );
+  border-bottom-color: color-mix(in srgb, #0d9488 65%, var(--line));
+}
+
+/* Row dimension labels (th[scope="row"]): bump letter-spacing, keep
+   accent-neutral (it's the pivot column). */
+.research-library-page #cross-track-convergence .convergence-table tbody th[scope="row"]{
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+/* Strong labels at the start of each body cell: bump weight + slight
+   tinting so the opening clause reads as a subhead */
+.research-library-page #cross-track-convergence .convergence-table tbody td strong{
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+/* Column-matched strong-label tint: Track A blue, Track B teal */
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) strong{
+  color: color-mix(in srgb, #2563eb 30%, var(--text));
+}
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) strong{
+  color: color-mix(in srgb, #0d9488 30%, var(--text));
+}
+
+/* Synthesis `<em>` at the end of each cell: this is the takeaway line.
+   Convert from plain italic to a bordered callout banner with
+   column-matched accent tint. Reads as "here's the bottom line." */
+.research-library-page #cross-track-convergence .convergence-table tbody td em{
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  font-style: normal;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.research-library-page #cross-track-convergence .convergence-table tbody td em::before{
+  content: "BOTTOM LINE";
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--accent) 80%, var(--muted));
+}
+
+/* Column-matched em border + eyebrow color */
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) em{
+  border-left-color: #2563eb;
+  background: color-mix(in srgb, #2563eb 6%, transparent);
+}
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) em::before{
+  color: color-mix(in srgb, #2563eb 85%, var(--muted));
+}
+
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) em{
+  border-left-color: #0d9488;
+  background: color-mix(in srgb, #0d9488 6%, transparent);
+}
+.research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) em::before{
+  color: color-mix(in srgb, #0d9488 85%, var(--muted));
+}
+
+/* Convergence synthesis paragraph below the table: currently unstyled
+   on research page (only scoped to .frameworks-2026-page). Add a
+   centered accent-tinted callout so the "two tracks, one conclusion"
+   line reads as a visual conclusion point. */
+.research-library-page #cross-track-convergence .convergence-synthesis{
+  max-width: 820px;
+  margin: var(--space-lg) auto 0;
+  padding: var(--space-md) var(--space-lg);
+  border-top: 2px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Row hover: subtle unified highlight across the 3 cells of a row for
+   scanability; respects the column tint */
+.research-library-page #cross-track-convergence .convergence-table tbody tr{
+  transition: filter .15s ease;
+}
+.research-library-page #cross-track-convergence .convergence-table tbody tr:hover{
+  filter: brightness(1.06);
+}
+
+/* Mobile: remove column tinting (cells are full-width-stacked and
+   labeled via the existing ::before pre-labels) to avoid visual
+   crowding. Retain the em banner polish. */
+@media (max-width: 768px){
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(2),
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(2),
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(3),
+  .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(3){
+    background: transparent !important;
+  }
+  .research-library-page #cross-track-convergence .convergence-synthesis{
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+  }
+}
+
