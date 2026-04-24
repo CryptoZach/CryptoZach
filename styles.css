@@ -14341,19 +14341,19 @@ header.scrolled {
 }
 
 /* Apply polish DIRECTLY to .question-block (the pre-existing card container
-   at line 6363 in frameworks-2026-page scope). Extend its padding-left and
-   add left accent border + hover; override the existing baseline by being
-   more specific via #five-questions prefix. */
+   at line 6363 in frameworks-2026-page scope). Extend its padding-left for
+   the Q# badge + hover treatment. Left accent border removed per author
+   feedback: the Q# blue circle is the sole visual accent per card; an
+   additional left bar clashed with the circles. */
 #five-questions .question-block{
   counter-increment: qa-num;
   position: relative;
   padding-left: 4.5rem;
-  border-left: 3px solid color-mix(in srgb, var(--accent) 55%, var(--line));
-  transition: border-left-color .2s ease, background .2s ease, transform .2s ease;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
 }
 
 #five-questions .question-block:hover{
-  border-left-color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
   background: color-mix(in srgb, var(--panel) 94%, transparent);
   transform: translateX(2px);
 }
