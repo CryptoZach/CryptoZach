@@ -14,6 +14,20 @@ playwright-report/
 playwright/.cache/
 .playwright-mcp/
 
+# Jekyll build output (GitHub Actions workflow path; never served from
+# repo root. GitHub Pages auto-build also produces _site/ ephemerally
+# during its own runs and never commits it).
+_site/
+
+# Ruby bundler artifacts. Gemfile.lock is gitignored because the
+# github-pages gem pins transitive deps tightly; lock-file churn in CI
+# is noisy without correctness benefit. bundler-cache in the GHA
+# workflow + the github-pages pin in Gemfile deliver reproducible
+# builds without committing the lock.
+Gemfile.lock
+.bundle/
+vendor/bundle/
+
 # R1 build artifacts (per Upgrade R1 spec amendment 2026-04-21; AD-015)
 _build/
 **/research_content/**/_build/

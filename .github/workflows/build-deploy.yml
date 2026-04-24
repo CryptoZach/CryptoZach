@@ -1,0 +1,81 @@
+name: Build and Deploy to GitHub Pages
+
+# Manual-trigger (workflow_dispatch) only during initial adoption. Once
+# validated end-to-end in a trial run, uncomment the push trigger block
+# to enable automatic deploys on every push to main. Until then, the
+# current GitHub Pages auto-build continues to serve the site, and this
+# workflow is a drop-in replacement available on demand.
+#
+# Activation checklist (author-manual):
+# 1. Run this workflow via GitHub Actions UI (workflow_dispatch).
+# 2. Verify the built _site/ matches expected output (diff vs current
+#    production; spot-check a few pages).
+# 3. Verify the deploy step successfully uploads and publishes.
+# 4. In repo Settings > Pages, change source from "Deploy from a
+#    branch" to "GitHub Actions".
+# 5. Uncomment the `push` block below.
+# 6. Commit and push the push-trigger activation as a separate commit.
+#
+# See handoff/ for the activation memo drafted alongside this workflow.
+
+on:
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deploy; skip intermediate runs that pile up
+# during rapid pushes (standard GitHub Pages pattern).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --trace
+        env:
+          JEKYLL_ENV: production
+
+      - name: Post-process (PurgeCSS + minify + critical CSS)
+        run: npm run build:postprocess
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
