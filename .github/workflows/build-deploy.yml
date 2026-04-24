@@ -60,6 +60,12 @@ jobs:
         run: bundle exec jekyll build --trace
         env:
           JEKYLL_ENV: production
+          # Pass the auto-provisioned GITHUB_TOKEN so jekyll-github-metadata
+          # can authenticate GitHub API calls (otherwise it logs "No GitHub
+          # API authentication could be found" warnings). Combined with the
+          # `repository:` config in _config.yml, this satisfies the plugin's
+          # requirements in CI.
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Post-process (PurgeCSS + minify + critical CSS)
         run: npm run build:postprocess

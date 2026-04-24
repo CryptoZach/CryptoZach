@@ -18,6 +18,15 @@
 title: Tokenization Systems
 url: https://tokenization.systems
 
+# Required by jekyll-github-metadata (bundled in github-pages gem). In CI
+# contexts where no `origin` git remote is configured (GitHub Actions
+# checkout omits remotes by default), the plugin cannot derive the repo
+# name from the git remote and will fail the build with "No repo name
+# found" unless explicitly configured here OR PAGES_REPO_NWO env var is
+# set at the workflow step level. This config is the self-documenting
+# home.
+repository: CryptoZach/CryptoZach
+
 # Keep Jekyll's defaults working for the few stub Markdown notes that do
 # live under served paths (e.g. papers/pub3_ssrn_link.md).
 markdown: kramdown
