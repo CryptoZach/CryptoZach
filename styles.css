@@ -15301,3 +15301,87 @@ body footer.site-footer{
   backdrop-filter: blur(6px) saturate(110%);
   -webkit-backdrop-filter: blur(6px) saturate(110%);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer liquid pass 2: unify tagline + top-row into a single flowing
+   composition. Remove the visible left-accent bar on tagline (was the
+   choppy-asymmetric anchor), center everything, remove horizontal
+   separators. Stack logically: tagline first (as hero statement), nav
+   + copy + socials below, all centered.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Tagline: remove the left accent border, center the content + eyebrow,
+   remove the top separator we added in the previous pass. */
+body footer.site-footer .footer-tagline{
+  border-left: none;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: calc(var(--space-md) + 1.5rem);
+  margin: 0 auto;
+  max-width: 70ch;
+  text-align: center;
+}
+
+/* Kill the gradient horizontal separator added in the last pass;
+   the tagline flows continuously with the band. */
+body footer.site-footer .footer-tagline::after{
+  display: none;
+}
+
+/* MISSION eyebrow: already centered via transform from earlier cycle;
+   ensure consistent positioning relative to the centered tagline. */
+body footer.site-footer .footer-tagline::before{
+  left: 50%;
+  transform: translateX(-50%);
+  color: color-mix(in srgb, var(--accent) 85%, transparent);
+  opacity: 0.85;
+}
+
+/* Rearrange footer internal order visually: tagline first, top-row second.
+   Uses flex reordering on the parent footer so HTML structure remains for
+   semantics + SEO. */
+body footer.site-footer{
+  display: flex;
+  flex-direction: column;
+}
+
+body footer.site-footer .footer-tagline{
+  order: 1;
+  margin-bottom: var(--space-lg);
+}
+
+body footer.site-footer .footer-top{
+  order: 2;
+}
+
+/* Top row: softer separator above (subtle gradient fade that matches the
+   tagline placement; dimmer than a visible border). */
+body footer.site-footer .footer-top{
+  position: relative;
+  padding-top: var(--space-md);
+}
+
+body footer.site-footer .footer-top::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60%, 320px);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 35%, transparent) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Mobile / stacked < 1320px: ensure the order swap remains consistent. */
+@media (max-width: 1320px){
+  body footer.site-footer .footer-tagline{
+    text-align: center;
+    padding-left: 0;
+  }
+}
