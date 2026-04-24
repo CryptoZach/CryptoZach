@@ -16877,3 +16877,194 @@ main.resume-profile .resume-related-profiles a{
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Brief finding-num badges: subtle refinement (gradient + breathing
+   pulse). Base rule at line 8660 + override at line 14243 already
+   produces a solid accent circle with shadow; this adds a diagonal
+   gradient fill for depth, a gentle breathing glow (infinite loop, 4s
+   ease-in-out), and a brightness lift on hover. Honors
+   prefers-reduced-motion.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.brief-finding-num{
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 92%, #fff 8%) 0%,
+    var(--accent) 50%,
+    color-mix(in srgb, var(--accent) 85%, #000 15%) 100%
+  );
+  position: relative;
+  z-index: 1;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  animation: brief-finding-breathe 4s ease-in-out infinite;
+}
+
+@keyframes brief-finding-breathe{
+  0%, 100%{
+    box-shadow:
+      0 2px 6px color-mix(in srgb, var(--accent) 35%, transparent),
+      0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+  50%{
+    box-shadow:
+      0 2px 8px color-mix(in srgb, var(--accent) 45%, transparent),
+      0 0 0 4px color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+}
+
+.brief-finding:hover .brief-finding-num{
+  transform: scale(1.08);
+  filter: brightness(1.08);
+  box-shadow:
+    0 4px 12px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .brief-finding-num{
+    animation: none;
+  }
+  .brief-finding:hover .brief-finding-num{
+    transform: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Contact email-row top block polish. Container gets a top-accent
+   hanging tab (matches about-card v2 + resume-closing vocabulary).
+   Copy-email button upgraded from plain bordered pill to an accent-
+   tinted chip with hover lift + focus ring. Email address gets an
+   animated underline on hover. Response-dot ring animation gets a
+   cleaner 2-ring pulse.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Container: add top accent bar and subtle accent wash */
+body.contact-page .contact-page-foreground > .contact-page .contact-email-row{
+  position: relative;
+  border-top: 3px solid color-mix(in srgb, var(--accent) 50%, var(--line));
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent) 4%, var(--panel)) 0%,
+      color-mix(in srgb, var(--panel) 55%, transparent) 40%
+    );
+}
+
+/* Email address: animated underline grow on hover */
+body.contact-page .contact-page-foreground > .contact-page .contact-email-address{
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-email-address::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-email-address:hover{
+  text-decoration: none;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .contact-email-address:hover::after{
+  transform: scaleX(1);
+}
+
+/* Copy-email button: accent chip style */
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  color: color-mix(in srgb, var(--accent) 85%, var(--text));
+  cursor: pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .12s ease,
+    box-shadow .2s ease;
+}
+
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover{
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:active{
+  transform: translateY(0);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+/* Response-time row: boost opacity so the text reads more clearly
+   (base had .5 opacity on the span which washed out the claim) */
+body.contact-page .contact-page-foreground > .contact-page .contact-response-time > span:last-child{
+  opacity: 0.75;
+  color: var(--text-soft);
+}
+
+/* Response-dot: improve the pulse to use a dual-ring expanding outward
+   so it reads as a subtle radar-blip animation. Green #16a34a kept. */
+body.contact-page .contact-page-foreground > .contact-page .response-dot{
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
+  box-shadow: 0 0 0 0 color-mix(in srgb, #16a34a 60%, transparent);
+  animation: contact-response-pulse 2.4s ease-out infinite;
+}
+
+@keyframes contact-response-pulse{
+  0%{
+    box-shadow:
+      0 0 0 0 color-mix(in srgb, #16a34a 60%, transparent),
+      0 0 0 0 color-mix(in srgb, #16a34a 30%, transparent);
+  }
+  50%{
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, #16a34a 0%, transparent),
+      0 0 0 9px color-mix(in srgb, #16a34a 0%, transparent);
+  }
+  100%{
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, #16a34a 0%, transparent),
+      0 0 0 10px color-mix(in srgb, #16a34a 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body.contact-page .contact-page-foreground > .contact-page .response-dot{
+    animation: none;
+  }
+}
+
+/* Guidance section heading: small eyebrow accent + uppercase treatment
+   so the "A useful first email includes" reads as a clear label */
+body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
+  position: relative;
+  padding-left: 0.875rem;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  line-height: 1.4;
+}
+
