@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=130" />
+  <link rel="stylesheet" href="/styles.css?v=131" />
   <style>
     #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #how-the-work-runs, #three-dollar-objects, #go-deeper { scroll-margin-top: 8rem; }
   </style>
@@ -237,25 +237,50 @@
         <p>Payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers look similar in a wallet but diverge in reserve structure, legal treatment, and crisis behavior. The frameworks below exist because each object needs different tests, different monitoring, and different escalation paths.</p>
         <p>Full definitions: <a href="/overview">Overview</a>.</p>
       </div>
-      <div class="grid grid--halves">
-        <article class="card">
+      <div class="grid grid--halves dollar-objects-grid">
+        <article class="card card--dollar-object card--accent-a">
+          <p class="card-eyebrow">Settlement object &middot; GENIUS Act perimeter</p>
           <h3>Payment stablecoins</h3>
           <p>Settlement objects designed for par redemption. Under GENIUS, the federal rulebook is built around the payment-stablecoin perimeter, with liquid reserve backing, public disclosures, and redemption obligations.</p>
+          <ul class="card-tag-strip" aria-label="Key properties">
+            <li>Fungible</li>
+            <li>Multi-issuer</li>
+            <li>Reserve-backed</li>
+          </ul>
         </article>
-        <article class="card">
+        <article class="card card--dollar-object card--accent-b">
+          <p class="card-eyebrow">Bank liability &middot; Single-bank ledger mirror</p>
           <h3>Tokenized deposits</h3>
           <p>A bank&apos;s existing deposit liability represented on a blockchain that mirrors its core banking ledger. Non-fungible, single-bank, redeemable only at the issuing institution. The supervisory and resolution framework carries over intact.</p>
+          <ul class="card-tag-strip" aria-label="Key properties">
+            <li>Non-fungible</li>
+            <li>Single-bank</li>
+            <li>Mirrors existing ledger</li>
+          </ul>
         </article>
-        <article class="card">
+        <article class="card card--dollar-object card--accent-c">
+          <p class="card-eyebrow">Bank-issued &middot; Multi-bank settlement rail</p>
           <h3>Deposit tokens</h3>
           <p>A bank-issued instrument on its own ledger, fungible across institutions. Cross-bank acceptance turns a deposit token from a digitization tool into an interbank settlement rail. If one becomes the default, settlement consolidates; if several reach fungibility, settlement becomes a competitive network.</p>
+          <ul class="card-tag-strip" aria-label="Key properties">
+            <li>Fungible</li>
+            <li>Multi-bank</li>
+            <li>Own ledger</li>
+            <li>Interbank rail</li>
+          </ul>
         </article>
-        <article class="card">
+        <article class="card card--dollar-object card--accent-d">
+          <p class="card-eyebrow">Investment product &middot; Cash management</p>
           <h3>Yield wrappers and sweeps</h3>
           <p>Tokenized money funds, Treasury wrappers, and sweep programs. These are investment or cash-management products. When the payment object stays clean, yield migrates here.</p>
+          <ul class="card-tag-strip" aria-label="Key properties">
+            <li>Yield-bearing</li>
+            <li>Disclosure-governed</li>
+            <li>Custody-sensitive</li>
+          </ul>
         </article>
       </div>
-      <p class="track-bridge"><strong>Same wallet surface, different rights, backstops, and failure sequences.</strong></p>
+      <p class="track-bridge track-bridge--pullquote"><strong>Same wallet surface, different rights, backstops, and failure sequences.</strong></p>
     </section>
 
     <section class="reveal" id="framework-stack" aria-labelledby="framework-stack-title">
