@@ -17980,3 +17980,53 @@ body.contact-page .contact-page-foreground > .contact-page .about-item p:last-ch
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Subpage hero top-padding standardization (Option A from the 2026-04-24
+   plan). Four pages (/letters, /contact, /research, /404) rendered with
+   the default main padding-xl + section-first-of-type margin-lg stack
+   (~5rem above the kicker) while the other subpages (/overview,
+   /frameworks, /speaker-and-advisory, /resume) had per-body-class
+   overrides tightening the top to padding-md + margin 0 (~1.5rem).
+   Standardizes the missing pages to the tight convention.
+
+   Prerequisite HTML edits (landed with this commit):
+   - research/index.html: added body class="research-library-page"
+     (class already used on the first section; promoted to body for
+     scoping parity with other subpages).
+   - 404.html: added body class="error-page" (matches the existing
+     main.error-page scope used for the 404 hero styling).
+
+   Out of scope: homepage (.hero-eyebrow-kicker pattern, intentionally
+   distinct), paper briefing pages (carry their own paper-detail-page
+   vocabulary), letter variant pages (carry their own paper-detail
+   briefing vocabulary).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.letters-landing main{
+  padding-top: var(--space-md);
+}
+.letters-landing main > section:first-of-type{
+  margin-top: 0;
+}
+
+.contact-page main{
+  padding-top: var(--space-md);
+}
+.contact-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.research-library-page main{
+  padding-top: var(--space-md);
+}
+.research-library-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.error-page main{
+  padding-top: var(--space-md);
+}
+.error-page main > section:first-of-type{
+  margin-top: 0;
+}
+
