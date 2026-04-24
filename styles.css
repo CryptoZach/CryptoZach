@@ -17186,3 +17186,291 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Focus-visible refinement (v2). Base universal rule at line 15740 uses
+   :where() for zero-specificity so per-surface overrides win. This
+   append adds:
+   - Explicit outline-color set to accent 70% so the outline has 3:1 contrast
+   - Smooth 0.15s transition for the whole focus treatment
+   - Exception for .skip link (keeps its own dramatic focus style)
+   - Form input/textarea focus state: accent border + soft glow
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible{
+  outline-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  transition:
+    outline-color .15s ease,
+    outline-offset .15s ease,
+    box-shadow .15s ease;
+}
+
+/* Skip-link: preserve high-contrast + accent-saturated focus; this is
+   an assistive link that needs maximum visibility on activation */
+.skip:focus-visible{
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent) !important;
+}
+
+/* Form field focus: accent border + soft halo, no double outline */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 1px;
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 1px 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Prose link conventions (v2). Base rule at line 15767 covered
+   `main p a:not([class])` + a few specific zones. This append extends
+   coverage to additional prose zones (aside, figcaption, blockquote,
+   ordered reference lists) and adds a subtle visited-link treatment so
+   research users can track what they've read. The visited treatment uses
+   a desaturated accent (lower saturation, same hue family).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+main aside a:not([class]):not(.action):not(.btn),
+main figcaption a:not([class]):not(.action):not(.btn),
+main blockquote a:not([class]):not(.action):not(.btn),
+main ol.references a:not([class]):not(.action):not(.btn){
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: text-decoration-color .2s ease, color .2s ease;
+}
+
+main aside a:not([class]):not(.action):not(.btn):hover,
+main figcaption a:not([class]):not(.action):not(.btn):hover,
+main blockquote a:not([class]):not(.action):not(.btn):hover,
+main ol.references a:not([class]):not(.action):not(.btn):hover{
+  color: var(--accent-hover, var(--accent));
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+/* Visited prose links: slight desaturation so the user can see what's
+   been read without losing the accent hue family. Applies across all
+   prose zones (main p, li, aside, figcaption, blockquote, refs). */
+main p a:not([class]):visited,
+main li a:not([class]):visited,
+main aside a:not([class]):not(.action):not(.btn):visited,
+main figcaption a:not([class]):not(.action):not(.btn):visited,
+main blockquote a:not([class]):not(.action):not(.btn):visited{
+  color: color-mix(in srgb, var(--accent) 70%, var(--muted));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   404 page hero polish. Previous version: single h1 + one-line prose +
+   inline "home page" link. This upgrade adds a decorative "404" glyph
+   (3 digits stacked in a row with subtle chromatic accent rotation
+   matching the site vocabulary), a proper hero layout, and a quick-
+   destination grid so a lost visitor lands somewhere useful.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+main.error-page{
+  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.error-hero{
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  text-align: center;
+}
+
+/* Decorative 404 glyph: three digit spans with light spacing + accent
+   tinting (blue-teal-violet matching the site rotation) */
+.error-glyph{
+  display: inline-flex;
+  gap: 0.15em;
+  font-weight: 800;
+  font-size: clamp(5rem, 18vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-md);
+  opacity: 0.92;
+}
+
+.error-digit{
+  display: inline-block;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 70%, var(--text)) 0%,
+    color-mix(in srgb, var(--accent) 40%, var(--text)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.error-digit--first{
+  background-image: linear-gradient(
+    180deg,
+    #3b82f6 0%,
+    #2563eb 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.error-digit--zero{
+  background-image: linear-gradient(
+    180deg,
+    #14b8a6 0%,
+    #0d9488 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateY(0);
+  animation: error-zero-breathe 3.2s ease-in-out infinite;
+}
+
+.error-digit--last{
+  background-image: linear-gradient(
+    180deg,
+    #8b5cf6 0%,
+    #7c3aed 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes error-zero-breathe{
+  0%, 100%{
+    transform: translateY(0) scale(1);
+  }
+  50%{
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .error-digit--zero{
+    animation: none;
+  }
+}
+
+/* Error hero heading + prose */
+.error-hero h1{
+  margin: var(--space-xs) 0 var(--space-sm);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.error-lead{
+  max-width: 520px;
+  margin: 0 auto var(--space-xl);
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Destinations grid: 2x2 on desktop, 1-col on mobile. Each link is a
+   card-like chip with accent-tinted hover and the same vocabulary as
+   the resume-hub cards + about-card v2 meta items. */
+.error-links{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.error-link{
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  text-align: left;
+  transition:
+    transform .18s cubic-bezier(.2, .8, .2, 1),
+    border-color .2s ease,
+    box-shadow .22s ease,
+    background .22s ease;
+}
+
+.error-link:hover,
+.error-link:focus-visible{
+  transform: translateY(-2px);
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  box-shadow:
+    0 6px 16px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 1px 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.error-link-label{
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+.error-link-hint{
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+/* Color-rotate the destination links so they match the site accent
+   vocabulary (overview = blue, research = teal, frameworks = violet,
+   contact = amber) */
+.error-link:nth-child(1){
+  border-left-color: color-mix(in srgb, #2563eb 55%, var(--line));
+}
+.error-link:nth-child(1):hover,
+.error-link:nth-child(1):focus-visible{
+  border-left-color: #2563eb;
+  box-shadow: 0 6px 16px color-mix(in srgb, #2563eb 22%, transparent);
+}
+.error-link:nth-child(2){
+  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+}
+.error-link:nth-child(2):hover,
+.error-link:nth-child(2):focus-visible{
+  border-left-color: #0d9488;
+  box-shadow: 0 6px 16px color-mix(in srgb, #0d9488 22%, transparent);
+}
+.error-link:nth-child(3){
+  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+}
+.error-link:nth-child(3):hover,
+.error-link:nth-child(3):focus-visible{
+  border-left-color: #7c3aed;
+  box-shadow: 0 6px 16px color-mix(in srgb, #7c3aed 22%, transparent);
+}
+.error-link:nth-child(4){
+  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+}
+.error-link:nth-child(4):hover,
+.error-link:nth-child(4):focus-visible{
+  border-left-color: #d97706;
+  box-shadow: 0 6px 16px color-mix(in srgb, #d97706 22%, transparent);
+}
+
+/* Mobile: single-column destination stack */
+@media (max-width: 640px){
+  .error-links{
+    grid-template-columns: 1fr;
+  }
+  .error-glyph{
+    font-size: clamp(4rem, 22vw, 7rem);
+  }
+}
+
