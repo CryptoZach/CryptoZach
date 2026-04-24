@@ -16750,6 +16750,28 @@ main.resume-profile .resume-related-profiles a{
     0 0 14px 0 color-mix(in srgb, #7c3aed 35%, transparent);
 }
 
+/* Framework-status badge on /frameworks card h3 (used for cards whose
+   canonical FRAMEWORK_REGISTRY entry is pending author-manual
+   literature synthesis; see Living_File_Updates_2026-04-24_0800_
+   Framework_Dedup_Audit.md D1 resolution). Small pill, tone-matched to
+   existing .badge-sm vocabulary but muted so it reads as a status tag,
+   not a CTA. */
+.framework-status-badge{
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.55rem;
+  vertical-align: middle;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 75%, var(--text-soft));
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    Cross-track convergence table polish. Located on /research/ (section
    id=cross-track-convergence). A 3x3 comparison grid: Dimension vs
