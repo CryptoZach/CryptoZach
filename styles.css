@@ -14613,3 +14613,156 @@ header.scrolled {
     font-size: 0.72rem;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Table polish: agenda-table, frameworks-routing-table, artifact-table.
+   6 tables across 5 pages (frameworks, overview, research, and 4 paper
+   briefings). Append-only; unified toolbar-style treatment.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Container polish for agenda-table (was plain overflow wrap) */
+.structure-table-wrap:not(.structure-table-wrap--dollar-objects){
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 50%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+/* agenda-table header: stronger accent tint + accent bottom-line */
+.agenda-table thead th{
+  padding: 0.9rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+/* agenda-table first column: entity-name emphasis */
+.agenda-table tbody td:first-child{
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.005em;
+}
+
+/* agenda-table row hover: subtle accent tint for scanning */
+.agenda-table tbody tr{
+  transition: background .2s ease;
+}
+.agenda-table tbody tr:hover{
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+/* agenda-table body typography refinements */
+.agenda-table tbody td{
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+/* ── frameworks-routing-table (overview #start-by-context) ── */
+
+/* Header: upgrade to eyebrow pattern */
+.frameworks-routing-table thead th{
+  padding: 0.9rem var(--space-md);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+/* Row hover for scanning */
+.frameworks-routing-table tbody tr{
+  transition: background .2s ease;
+}
+.frameworks-routing-table tbody tr:hover{
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+/* First column (the "if you are..." audience name): bold emphasis */
+.frameworks-routing-table tbody td:first-child{
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Subtle shadow on container (was flat border) */
+.frameworks-routing-table-wrap{
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── artifact-table (paper briefings: adaptive-tokenomics, who-burns,
+       operational-risk, governance-concentration) ── */
+
+.artifact-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-min);
+  margin: var(--space-md) 0;
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--panel) 50%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.artifact-table thead th{
+  padding: 0.8rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  text-align: left;
+}
+
+.artifact-table tbody td{
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  vertical-align: top;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.artifact-table tbody tr:last-child td{
+  border-bottom: none;
+}
+
+.artifact-table tbody tr:nth-child(even){
+  background: color-mix(in srgb, var(--accent) 4%, var(--panel));
+}
+
+.artifact-table tbody tr{
+  transition: background .2s ease;
+}
+
+.artifact-table tbody tr:hover{
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.artifact-table tbody td:first-child{
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.005em;
+}
+
+/* Mobile: reduce padding on all polished tables so they fit narrow viewports */
+@media (max-width: 640px){
+  .agenda-table th,
+  .agenda-table td,
+  .frameworks-routing-table th,
+  .frameworks-routing-table td,
+  .artifact-table th,
+  .artifact-table td{
+    padding: var(--space-sm);
+  }
+  .agenda-table thead th,
+  .frameworks-routing-table thead th,
+  .artifact-table thead th{
+    font-size: 0.65rem;
+  }
+}
