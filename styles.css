@@ -699,10 +699,24 @@ body main:has(footer){
 
 .kicker-dot{
   display:inline-block;
-  width:5px;
-  height:5px;
+  width:6px;
+  height:6px;
   border-radius:50%;
-  background:var(--accent);
+  /* Pseudo-3D orb: specular highlight over accent base + inset shadow.
+     Preserves per-page accent color semantics; only the lighting
+     treatment is shared across all kicker dots. */
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.08) 35%,
+      transparent 60%
+    ),
+    var(--accent);
+  box-shadow:
+    0 0 4px color-mix(in srgb, var(--accent) 35%, transparent),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.3),
+    inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.12);
   flex-shrink:0;
 }
 @keyframes kicker-pulse{
@@ -1503,10 +1517,21 @@ body.contact-page section.contact-page-detail{
 }
 .badge-dot{
   display:inline-block;
-  width:6px;
-  height:6px;
+  width:7px;
+  height:7px;
   border-radius:50%;
-  background:var(--accent);
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.08) 35%,
+      transparent 60%
+    ),
+    var(--accent);
+  box-shadow:
+    0 0 5px color-mix(in srgb, var(--accent) 40%, transparent),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.3),
+    inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.12);
   flex-shrink:0;
   animation:kicker-pulse 2.5s ease-in-out infinite;
 }
@@ -15606,27 +15631,67 @@ header .navlink.active::after{
    extra HTML. */
 header .brand a strong{
   position: relative;
-  padding-left: 14px;
+  padding-left: 16px;
 }
 
+/* Brand orb: dark rainbow aura with pseudo-3D lighting. Conic-gradient
+   sweeps muted versions of the site's 5-accent rotation (dark blue,
+   dark violet, dark rose, dark amber, dark teal) so the orb reads as a
+   "gathered program signature." Radial-gradient layers a specular
+   highlight in the top-left corner for the 3D sphere illusion. Dual
+   inset shadows (dark bottom-right + light top-left) deepen the depth
+   cue. Outer aura pulses via box-shadow animation instead of transform
+   so the specular stays anchored. */
 header .brand a strong::before{
   content: "";
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 55%, transparent);
-  opacity: 0.75;
-  animation: brandPulse 2.8s ease-in-out infinite;
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.1) 28%,
+      transparent 55%
+    ),
+    conic-gradient(
+      from 200deg,
+      #1e3a8a 0deg,
+      #4c1d95 72deg,
+      #9f1239 144deg,
+      #854d0e 216deg,
+      #0f766e 288deg,
+      #1e3a8a 360deg
+    );
+  box-shadow:
+    0 0 8px color-mix(in srgb, #7c3aed 32%, transparent),
+    0 0 16px color-mix(in srgb, #2563eb 12%, transparent),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.45),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.15);
+  opacity: 0.95;
+  animation: brandOrbPulse 3.4s ease-in-out infinite;
 }
 
-@keyframes brandPulse{
-  0%, 100%{ opacity: 0.75; transform: translateY(-50%) scale(1); }
-  50%{ opacity: 1; transform: translateY(-50%) scale(1.12); }
+@keyframes brandOrbPulse{
+  0%, 100%{
+    box-shadow:
+      0 0 8px color-mix(in srgb, #7c3aed 32%, transparent),
+      0 0 16px color-mix(in srgb, #2563eb 12%, transparent),
+      inset -1px -1px 2px rgba(0, 0, 0, 0.45),
+      inset 1px 1px 1px rgba(255, 255, 255, 0.15);
+  }
+  50%{
+    box-shadow:
+      0 0 12px color-mix(in srgb, #7c3aed 48%, transparent),
+      0 0 22px color-mix(in srgb, #2563eb 22%, transparent),
+      0 0 32px color-mix(in srgb, #0d9488 12%, transparent),
+      inset -1px -1px 2px rgba(0, 0, 0, 0.45),
+      inset 1px 1px 1px rgba(255, 255, 255, 0.15);
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -17762,10 +17827,21 @@ body.contact-page .contact-page-foreground > .contact-page .contact-response-tim
 body.contact-page .contact-page-foreground > .contact-page .response-dot{
   width: 10px;
   height: 10px;
-  background: #22c55e;
+  /* Pseudo-3D orb: specular highlight over green base + inset shadow.
+     Preserves the "availability" green semantic while adding dimension. */
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.1) 30%,
+      transparent 55%
+    ),
+    #22c55e;
   box-shadow:
     0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
-    0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+    0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.35),
+    inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   animation: contact-response-pulse-v2 2.4s ease-out infinite;
 }
 
@@ -17774,19 +17850,25 @@ body.contact-page .contact-page-foreground > .contact-page .response-dot{
     box-shadow:
       0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
       0 0 0 0 color-mix(in srgb, #22c55e 40%, transparent),
-      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      inset -1px -1px 1px rgba(0, 0, 0, 0.35),
+      inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
   50%{
     box-shadow:
       0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
       0 0 0 11px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 10px 0 color-mix(in srgb, #22c55e 55%, transparent);
+      0 0 10px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      inset -1px -1px 1px rgba(0, 0, 0, 0.35),
+      inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
   100%{
     box-shadow:
       0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
       0 0 0 12px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      inset -1px -1px 1px rgba(0, 0, 0, 0.35),
+      inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
 }
 
