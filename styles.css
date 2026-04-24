@@ -16004,73 +16004,104 @@ body #contact .about-card .about-card-followup{
 /* Landing hub: 5-color accent rotation on resume cards. Each card gets a
    left-border accent matching its nav-button position so the two surfaces
    read as a synchronized set. */
+/* Aura approach: thin 1px low-opacity border + soft inset left-edge
+   glow that fades inward. Reads as a tinted halo rather than a solid
+   stripe. */
 .resume-page #resume-policy{
-  border-left: 3px solid color-mix(in srgb, #2563eb 70%, var(--line));
+  border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
+  box-shadow:
+    inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent),
+    var(--shadow-sm);
 }
 .resume-page #resume-asset-mgmt{
-  border-left: 3px solid color-mix(in srgb, #0d9488 70%, var(--line));
+  border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
+  box-shadow:
+    inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent),
+    var(--shadow-sm);
 }
 .resume-page #resume-payments{
-  border-left: 3px solid color-mix(in srgb, #7c3aed 70%, var(--line));
+  border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
+  box-shadow:
+    inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent),
+    var(--shadow-sm);
 }
 .resume-page #resume-ai-governance{
-  border-left: 3px solid color-mix(in srgb, #d97706 70%, var(--line));
+  border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
+  box-shadow:
+    inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent),
+    var(--shadow-sm);
 }
 .resume-page #resume-risk{
-  border-left: 3px solid color-mix(in srgb, #e11d48 70%, var(--line));
+  border-left: 1px solid color-mix(in srgb, #e11d48 22%, var(--line));
+  box-shadow:
+    inset 4px 0 24px -6px color-mix(in srgb, #e11d48 14%, transparent),
+    var(--shadow-sm);
 }
 
-/* Card-icon container: tint background to match the card accent.
-   Gives each icon a subtle chromatic halo instead of a uniform neutral. */
+/* Card-icon container: gentle chromatic wash. Background drops from
+   10% to 5%; icon color drops from 85% accent to 55% so the glyph
+   reads as a soft tint rather than a bold stamp. */
 .resume-page #resume-policy .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #2563eb 10%, var(--panel));
-  color: color-mix(in srgb, #2563eb 85%, var(--text));
+  background: color-mix(in srgb, #2563eb 5%, var(--panel));
+  color: color-mix(in srgb, #2563eb 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-asset-mgmt .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #0d9488 10%, var(--panel));
-  color: color-mix(in srgb, #0d9488 85%, var(--text));
+  background: color-mix(in srgb, #0d9488 5%, var(--panel));
+  color: color-mix(in srgb, #0d9488 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-payments .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #7c3aed 10%, var(--panel));
-  color: color-mix(in srgb, #7c3aed 85%, var(--text));
+  background: color-mix(in srgb, #7c3aed 5%, var(--panel));
+  color: color-mix(in srgb, #7c3aed 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-ai-governance .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #d97706 10%, var(--panel));
-  color: color-mix(in srgb, #d97706 85%, var(--text));
+  background: color-mix(in srgb, #d97706 5%, var(--panel));
+  color: color-mix(in srgb, #d97706 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-risk .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #e11d48 10%, var(--panel));
-  color: color-mix(in srgb, #e11d48 85%, var(--text));
+  background: color-mix(in srgb, #e11d48 5%, var(--panel));
+  color: color-mix(in srgb, #e11d48 55%, var(--text));
   border-radius: 8px;
 }
 
-/* Hover: gentle lift + accent-tinted shadow keyed to each card's color */
+/* Hover: gentle lift + accent-aura lift keyed to each card's color.
+   Inset aura glow intensifies alongside the outer drop shadow for a
+   coherent "lifts with a tinted halo" effect. */
 .resume-page .resume-card{
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform .2s ease, box-shadow .22s ease, border-color .2s ease;
 }
 .resume-page #resume-policy:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, #2563eb 22%, transparent);
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
+    0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
 }
 .resume-page #resume-asset-mgmt:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, #0d9488 22%, transparent);
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
+    0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
 }
 .resume-page #resume-payments:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, #7c3aed 22%, transparent);
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
+    0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
 }
 .resume-page #resume-ai-governance:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, #d97706 22%, transparent);
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
+    0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
 }
 .resume-page #resume-risk:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, #e11d48 22%, transparent);
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #e11d48 22%, transparent),
+    0 6px 18px color-mix(in srgb, #e11d48 14%, transparent);
 }
 
 /* Bump heading size on landing hub cards so h3 doesn't get buried under
@@ -16080,23 +16111,22 @@ body #contact .about-card .about-card-followup{
   font-weight: 650;
 }
 
-/* Resume-evidence: add a subtle uppercase eyebrow accent tint matching the
-   card's color. Base rule at line 5460 sets color:var(--muted); we just
-   add accent tint per card via the parent scope. */
+/* Resume-evidence eyebrow: soften the accent tint from 80% to 50% so
+   the label reads as a muted hint rather than a saturated stamp. */
 .resume-page #resume-policy .resume-evidence strong{
-  color: color-mix(in srgb, #2563eb 80%, var(--muted));
+  color: color-mix(in srgb, #2563eb 50%, var(--muted));
 }
 .resume-page #resume-asset-mgmt .resume-evidence strong{
-  color: color-mix(in srgb, #0d9488 80%, var(--muted));
+  color: color-mix(in srgb, #0d9488 50%, var(--muted));
 }
 .resume-page #resume-payments .resume-evidence strong{
-  color: color-mix(in srgb, #7c3aed 80%, var(--muted));
+  color: color-mix(in srgb, #7c3aed 50%, var(--muted));
 }
 .resume-page #resume-ai-governance .resume-evidence strong{
-  color: color-mix(in srgb, #d97706 80%, var(--muted));
+  color: color-mix(in srgb, #d97706 50%, var(--muted));
 }
 .resume-page #resume-risk .resume-evidence strong{
-  color: color-mix(in srgb, #e11d48 80%, var(--muted));
+  color: color-mix(in srgb, #e11d48 50%, var(--muted));
 }
 
 /* Closing band: replace flat neutral panel with a centered pill-styled
