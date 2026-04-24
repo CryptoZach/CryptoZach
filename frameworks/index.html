@@ -331,6 +331,16 @@
           <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open paper summary <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
+        <article class="card" id="dollar-v3-regime-classifier">
+          <h3>Dollar v3 Regime Classifier</h3>
+          <p><strong>What it does.</strong> Classifies the current U.S. dollar operating-layer equilibrium along two axes: control-layer dominance (how much of the economic surface is captured by interfaces, routers, and sweep products that regulators attach obligations to) and issuer dominance (how much accrues to the stablecoin or deposit-token issuer layer itself). Produces one of three regime labels: Control-dominant, Issuer-dominant, or Split / Contested.</p>
+          <p><strong>What it is for.</strong> Market-structure classification over time. Which layer of the tokenized-dollar stack is capturing the economics, who bears the regulatory burden, and whether policy changes are shifting the equilibrium. Not a safety or solvency model; tracks structural power allocation.</p>
+          <p><strong>How it works.</strong> Each axis scored 0 to 6 via three measurable components. ControlScore captures obligated-interface share of flows, default sweep and wrapper penetration, and holds or freeze usage as operating norm. IssuerScore captures settlement-object concentration, reserve carry retention, and direct mint and burn authority. Classification rule uses a 3-month rolling average (updated weekly in stress): Control-dominant if ControlScore is 4 or more and exceeds IssuerScore by 2 or more; Issuer-dominant by the mirror test; Split / Contested otherwise.</p>
+          <p><strong>What should trigger re-evaluation.</strong> Three or more of five high-beta policy signposts moving in the same direction within a quarter (GENIUS implementation rulemaking; CBDC posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes); or two or more component scores flipping within a quarter.</p>
+          <p><strong>Relationship to CLII and MVEP.</strong> Complementary, not substitute. CLII scores per-gateway regulatory posture (entity-level). MVEP scores per-product institutional diligence. Regime Classifier scores the market-structure equilibrium (system-level) those entities operate in. All three can be computed for the same universe of operators; each answers a different question.</p>
+          <p class="framework-related-paper"><a href="/papers/dollar-v3">Related paper: Dollar v3</a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a></p>
+        </article>
       </div>
     </section>
 
