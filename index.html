@@ -59,7 +59,7 @@
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="/styles.css?v=175" />
+  <link rel="stylesheet" href="/styles.css?v=176" />
   <style id="homepage-sprint1-density">
     /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
     #main {
@@ -473,6 +473,69 @@
       font-size: 0.85rem;
       color: var(--muted);
       line-height: 1.5;
+    }
+
+    /* Role-pills accent rotation: matches the /resume hub 5-card
+       palette (blue Policy / teal Asset Mgmt / violet Payments / amber
+       AI Gov / rose Risk) so the two surfaces read as a synchronized
+       set. Aura vocabulary from the resume-card refinement (commit
+       37c59a4): thin 1px low-opacity left-border + inset left-edge
+       glow that fades inward. Hover intensifies the inset aura and
+       adds a color-matched outer drop. */
+    .role-pill {
+      transition: transform .22s ease, box-shadow .22s ease, border-color .2s ease;
+    }
+
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(1){
+      border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(2){
+      border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(3){
+      border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(4){
+      border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(5){
+      border-left: 1px solid color-mix(in srgb, #e11d48 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #e11d48 14%, transparent);
+    }
+
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(1):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
+        0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(2):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
+        0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(3):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
+        0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(4):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
+        0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(5):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #e11d48 22%, transparent),
+        0 6px 18px color-mix(in srgb, #e11d48 14%, transparent);
     }
 
     /* Sprint 3 Fix 7: View all link spacing and styling. */
@@ -1060,7 +1123,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=203"></script>
+  <script defer src="/script.js?v=204"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
