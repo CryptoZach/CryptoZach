@@ -16687,3 +16687,36 @@ main.resume-profile .resume-related-profiles a{
   background-color: color-mix(in srgb, var(--accent) 8%, transparent) !important;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Scroll progress bar polish. Base rule at line 201 renders a 2px solid
+   accent bar that grows via scaleX keyed to document scroll. Upgrade
+   adds: horizontal gradient fill (blue to teal to violet matching the
+   site accent rotation), height bump from 2px to 3px for a bit more
+   presence without dominating, rounded leading edge, subtle accent-
+   tinted glow for depth. Gradient scales with the bar (scaleX scales the
+   background too); that's intentional — at scroll=0.5 the bar still
+   shows the full gradient compressed, signaling continuous progression.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.scroll-progress{
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    #2563eb 0%,
+    #0d9488 55%,
+    #7c3aed 100%
+  );
+  border-radius: 0 1.5px 1.5px 0;
+  box-shadow:
+    0 0 6px 0 color-mix(in srgb, #2563eb 55%, transparent),
+    0 0 12px 0 color-mix(in srgb, #7c3aed 25%, transparent);
+}
+
+/* Dark theme: slightly boost glow opacity so the bar reads clearly
+   over the dark bg */
+:root[data-theme="dark"] .scroll-progress{
+  box-shadow:
+    0 0 6px 0 color-mix(in srgb, #2563eb 70%, transparent),
+    0 0 14px 0 color-mix(in srgb, #7c3aed 35%, transparent);
+}
+
