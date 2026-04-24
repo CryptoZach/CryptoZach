@@ -16359,4 +16359,164 @@ main.resume-profile .resume-related-profiles a{
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Mobile nav drawer polish. Applies to the hamburger menu panel used by
+   mobile visitors. All rules scoped to max-width 900px (matches the
+   existing mobile nav sheet breakpoint at line 6971). Adds: gradient
+   backdrop with accent wash at top; visual hierarchy on nav links (hover
+   + active states, chevron hint on the right); section separator between
+   linkset and social row; "Connect" eyebrow label above socials; subtle
+   slide-in animation on drawer open.
+   ───────────────────────────────────────────────────────────────────────────── */
 
+@media (max-width: 900px){
+  /* Sheet backdrop: gradient wash with accent-tinted top edge */
+  #nav-mobile.nav-links--mobile:not([hidden]){
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 6%, var(--bg)) 0%,
+        var(--bg) 22%
+      ) !important;
+    border-top: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line)) !important;
+  }
+
+  /* Subtle slide-in + fade-in when the sheet opens */
+  #nav-mobile.nav-links--mobile:not([hidden]){
+    animation: ts-mobile-nav-in .24s ease-out both;
+  }
+  @keyframes ts-mobile-nav-in{
+    from{
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #nav-mobile.nav-links--mobile:not([hidden]){
+      animation: none;
+    }
+  }
+
+  /* Mobile-nav-linkset: give the column a subtle top spacing and
+     add a chevron hint on the right of each navlink */
+  .mobile-nav-linkset{
+    gap: var(--space-2xs, 0.25rem);
+    padding-top: var(--space-xs);
+  }
+
+  /* Navlink visual upgrade: left accent strip (transparent by default,
+     visible on hover + active); subtle background tint on hover;
+     chevron → on the right to suggest tappability */
+  .nav-links--mobile .navlink{
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: calc(var(--space-md) + 8px);
+    border-left: 3px solid transparent;
+    background: transparent;
+    color: var(--text-soft);
+    font-weight: 500;
+    transition: background .2s ease, color .2s ease,
+                border-left-color .2s ease, padding-left .2s ease;
+  }
+
+  .nav-links--mobile .navlink::after{
+    content: "›";
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    line-height: 1;
+    color: color-mix(in srgb, var(--muted) 50%, transparent);
+    transition: color .2s ease, transform .2s ease, right .2s ease;
+  }
+
+  .nav-links--mobile .navlink:hover,
+  .nav-links--mobile .navlink:focus-visible{
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    color: var(--text);
+    border-left-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+
+  .nav-links--mobile .navlink:hover::after,
+  .nav-links--mobile .navlink:focus-visible::after{
+    color: var(--accent);
+    transform: translateY(-50%) translateX(2px);
+  }
+
+  /* Active ("you are here") state: stronger accent */
+  .nav-links--mobile .navlink.active,
+  .nav-links--mobile .navlink[aria-current="page"]{
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--text);
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .nav-links--mobile .navlink.active::after,
+  .nav-links--mobile .navlink[aria-current="page"]::after{
+    color: var(--accent);
+  }
+
+  /* Separator + "Connect" eyebrow before the social row */
+  #nav-mobile .nav-mobile-social{
+    position: relative;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    gap: var(--space-xs);
+  }
+
+  #nav-mobile .nav-mobile-social::before{
+    content: "Connect";
+    display: block;
+    width: 100%;
+    margin-bottom: var(--space-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 80%, var(--muted));
+  }
+
+  /* Horizontal divider above the social row, gradient fade at both ends
+     so it doesn't look like a hard cut edge */
+  #nav-mobile .nav-mobile-social::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      color-mix(in srgb, var(--line) 95%, transparent) 20%,
+      color-mix(in srgb, var(--line) 95%, transparent) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Social icons: chip-style background on hover for clearer tap feedback */
+  #nav-mobile .nav-mobile-social .header-social-link{
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: background .2s ease, border-color .2s ease,
+                color .2s ease;
+  }
+
+  #nav-mobile .nav-mobile-social .header-social-link:hover,
+  #nav-mobile .nav-mobile-social .header-social-link:focus-visible{
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+    color: var(--accent);
+  }
+}
