@@ -16750,6 +16750,59 @@ main.resume-profile .resume-related-profiles a{
     0 0 14px 0 color-mix(in srgb, #7c3aed 35%, transparent);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   /letters/ landing page polish. Author feedback:
+   - Thesis block rendered entirely in accent blue (heavy reading load
+     on a 4-sentence thesis; base rule .paper-detail .paper-thesis at
+     line 8399 sets color: var(--accent) which works for 1-sentence
+     theses on /papers/ briefings but overwhelms on /letters)
+   - Eight-letter grid renders as 5+3 asymmetric layout (auto-fit
+     220px-minmax). Author directive: "Should be 4x4" (i.e., 4 cards
+     per row, 2 rows for 8 cards).
+   Scoped via body.letters-landing so /papers/ thesis styling and
+   other companion-cards surfaces stay untouched.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+body.letters-landing .paper-thesis{
+  color: var(--text);
+  font-weight: 400;
+}
+
+body.letters-landing .paper-thesis strong{
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Reduce padding-left + tighten vertical rhythm so the thesis block
+   reads as a breathing pull-quote rather than a buried insert */
+body.letters-landing .paper-thesis{
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1.05em;
+  line-height: 1.65;
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Eight-letter grid: 4-per-row on wider viewports; 2-col tablet; 1-col
+   mobile. Overrides the base auto-fit minmax(220px) rule for the
+   landing page only. */
+body.letters-landing .companion-cards{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 1024px){
+  body.letters-landing .companion-cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px){
+  body.letters-landing .companion-cards{
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Framework-status badge on /frameworks card h3 (used for cards whose
    canonical FRAMEWORK_REGISTRY entry is pending author-manual
    literature synthesis; see Living_File_Updates_2026-04-24_0800_
