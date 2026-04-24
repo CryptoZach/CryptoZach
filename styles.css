@@ -13958,3 +13958,136 @@ header.scrolled {
     background: color-mix(in srgb, var(--panel) 96%, transparent);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dollar-objects section (overview): refined card treatment
+   - 2x2 grid via grid--halves (preserves default)
+   - Eyebrow category labels above each card title
+   - Property-tag pills replace italic subscript summaries
+   - Subtle per-card accent variation for scannability
+   - Pull-quote styling for the bridge sentence
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.dollar-objects-grid{
+  grid-auto-rows: 1fr;
+}
+
+.card--dollar-object{
+  padding: var(--space-xl);
+  gap: var(--space-sm);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card--dollar-object:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.card-eyebrow{
+  margin: 0 0 var(--space-xs);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.card--dollar-object h3{
+  margin: 0 0 var(--space-sm);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+}
+
+.card--dollar-object p{
+  margin: 0 0 var(--space-md);
+}
+
+.card-tag-strip{
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--space-sm) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.card-tag-strip li{
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-soft);
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Per-card accent variants: subtle top-border color coding for scannability.
+   Variable fallbacks ensure graceful rendering if tokens are missing. */
+.card--accent-a{
+  border-top-color: var(--accent-cta, #2563eb);
+}
+.card--accent-a .card-eyebrow{
+  color: var(--accent-cta, #2563eb);
+}
+.card--accent-b{
+  border-top-color: #0d9488; /* teal-600 */
+}
+.card--accent-b .card-eyebrow{
+  color: #2dd4bf; /* teal-400; adjusted for dark theme contrast */
+}
+:root:not([data-theme="dark"]) .card--accent-b .card-eyebrow{
+  color: #0d9488;
+}
+.card--accent-c{
+  border-top-color: #7c3aed; /* violet-600 */
+}
+.card--accent-c .card-eyebrow{
+  color: #a78bfa; /* violet-400 for dark theme */
+}
+:root:not([data-theme="dark"]) .card--accent-c .card-eyebrow{
+  color: #7c3aed;
+}
+.card--accent-d{
+  border-top-color: #d97706; /* amber-600 */
+}
+.card--accent-d .card-eyebrow{
+  color: #fbbf24; /* amber-400 for dark theme */
+}
+:root:not([data-theme="dark"]) .card--accent-d .card-eyebrow{
+  color: #b45309;
+}
+
+/* Pull-quote styling for the section bridge line. Lifts the takeaway into
+   a distinctive accent-bordered block. */
+.track-bridge--pullquote{
+  margin: var(--space-xl) 0 var(--space-2xl);
+  padding: var(--space-md) var(--space-lg);
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  text-wrap: balance;
+}
+.track-bridge--pullquote strong{
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Mobile: stack grid; reduce padding */
+@media (max-width: 767px){
+  .dollar-objects-grid .card--dollar-object{
+    grid-column: 1 / -1;
+    padding: var(--space-lg);
+  }
+  .card--dollar-object h3{
+    font-size: 1.1rem;
+  }
+}
