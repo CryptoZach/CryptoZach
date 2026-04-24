@@ -15691,3 +15691,59 @@ header .theme-toggle:hover{
   background: color-mix(in srgb, var(--accent) 10%, transparent);
   transform: translateY(-1px);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Revisions after author feedback:
+   1. About-card "ABOUT" eyebrow is redundant with the h2 "About Tokenization
+      Systems" — remove it. Bump text sizes back up. Reduce over-padding.
+   2. Footer tagline should fit on one line at desktop widths (remove 60ch
+      constraint). Gradient pip separator between tagline and top-row is
+      visually noisy — remove it too.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* About-card: remove redundant eyebrow, restore readable type, trim padding */
+body #contact .about-card h2::before{
+  content: none;
+}
+
+body #contact .about-card h2{
+  padding-top: 0;
+  font-size: 1.75rem;
+}
+
+body #contact .about-card{
+  padding: var(--space-xl) var(--space-xl);
+}
+
+body #contact .about-card > p{
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+body #contact .about-card .about-card-meta p{
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+body #contact .about-card .about-card-meta p strong{
+  font-size: 0.72rem;
+}
+
+/* Footer tagline: remove max-width constraint so it fits on one line on
+   desktop. Tagline string is ~100 chars; desktop container is wide enough
+   to accommodate without wrap. */
+body footer.site-footer .footer-tagline{
+  max-width: none;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+/* Footer top-row gradient pip separator: remove (too close to MISSION
+   eyebrow, felt cluttered). Spacing alone will do the work. */
+body footer.site-footer .footer-top::before{
+  display: none;
+}
+
+body footer.site-footer .footer-top{
+  padding-top: var(--space-md);
+}
