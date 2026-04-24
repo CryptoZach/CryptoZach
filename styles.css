@@ -16765,6 +16765,63 @@ main.resume-profile .resume-related-profiles a{
    other companion-cards surfaces stay untouched.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* P2.1: letters-timeline table (8-row Program timeline table on
+   /letters/). Extracted from inline styles; preserves prior visual
+   (padding 8px; 0.95em; 1px rgba(255,255,255,0.15) header divider;
+   1px rgba(255,255,255,0.06) body row dividers; last row no border). */
+body.letters-landing .letters-timeline{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.95em;
+}
+
+body.letters-landing .letters-timeline thead tr{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.letters-landing .letters-timeline tbody tr{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.letters-landing .letters-timeline tbody tr:last-child{
+  border-bottom: none;
+}
+
+body.letters-landing .letters-timeline th,
+body.letters-landing .letters-timeline td{
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Light-theme polish: swap rgba(255,255,255,*) dividers for
+   neutral line color so dividers remain visible against a light bg */
+:root:not([data-theme="dark"]) body.letters-landing .letters-timeline thead tr{
+  border-bottom-color: color-mix(in srgb, var(--line) 90%, transparent);
+}
+
+:root:not([data-theme="dark"]) body.letters-landing .letters-timeline tbody tr{
+  border-bottom-color: color-mix(in srgb, var(--line) 75%, transparent);
+}
+
+/* P2.2: metadata-strip family harmonization. Four classes
+   (.paper-metadata-strip, .letters-meta-strip, .card-venue,
+   .writing-meta-line) serve parallel roles (muted date + context line
+   below a heading) but diverged across cycles. Grouped selector
+   normalizes the shared visual properties (font-size, color, letter-
+   spacing) without HTML changes. Context-specific margins/display
+   retained via class-specific rules above. */
+.paper-metadata-strip,
+.letters-meta-strip,
+.card-venue,
+.writing-meta-line{
+  font-size: var(--font-size-min);
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
 /* Letters hero metadata strip: muted date + context line below the h1,
    sits between the section-title headline and the first body paragraph.
    Lighter analog of .paper-metadata-strip without the paper-briefing
@@ -16814,6 +16871,66 @@ body.letters-landing .companion-cards{
   body.letters-landing .companion-cards{
     grid-template-columns: 1fr;
   }
+}
+
+/* P2.3b: companion-cards 4-color accent rotation on /letters/ landing.
+   8 cards in a 4x4 grid (4 columns x 2 rows on desktop); each column
+   keeps a consistent color across both rows so the grid reads as a
+   scannable 4-color signature. Aura vocabulary matches resume-hub +
+   role-pills: thin 1px low-opacity left-border + inset left-edge glow
+   at 14% accent. Hover intensifies to 22% + color-matched outer drop.
+
+   Color rotation: blue (col 1) / teal (col 2) / violet (col 3) /
+   amber (col 4). Matches the site accent vocabulary (excludes rose
+   which is reserved for the 5-item /resume rotation). */
+body.letters-landing .companion-cards > .companion-card{
+  transition: transform .22s ease, box-shadow .22s ease, border-color .2s ease;
+}
+
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+1){
+  border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+2){
+  border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+3){
+  border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+4){
+  border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent);
+}
+
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+1):hover{
+  transform: translateY(-2px);
+  border-left-color: color-mix(in srgb, #2563eb 55%, var(--line));
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
+    0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+2):hover{
+  transform: translateY(-2px);
+  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
+    0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+3):hover{
+  transform: translateY(-2px);
+  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
+    0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+}
+body.letters-landing .companion-cards > .companion-card:nth-child(4n+4):hover{
+  transform: translateY(-2px);
+  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+  box-shadow:
+    inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
+    0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
 }
 
 /* Framework-status badge on /frameworks card h3 (used for cards whose
