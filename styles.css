@@ -14325,3 +14325,183 @@ header.scrolled {
     font-size: 0.85rem;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Overview "Five questions" section polish: card-like treatment for each
+   question-block with accent left border + eyebrow "Q{N}" badge.
+   Append-only; no HTML changes required.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#five-questions .explainer{
+  counter-reset: qa-num;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+#five-questions .question-block{
+  counter-increment: qa-num;
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+#five-questions .question-block::before{
+  content: "Q" counter(qa-num);
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--accent) 35%, transparent);
+  border: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  z-index: 1;
+}
+
+#five-questions .question-block .qa-item{
+  padding: var(--space-lg) var(--space-lg) var(--space-lg) var(--space-xl);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: color-mix(in srgb, var(--panel) 35%, transparent);
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+#five-questions .question-block:hover .qa-item{
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  transform: translateX(2px);
+}
+
+#five-questions .qa-item h3{
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+  /* Hide the "N. " prefix in the h3 text since the circle badge provides it.
+     Text starts with "1. ", "2. " etc; we shift those out of visual flow. */
+  text-indent: -1.4em;
+  padding-left: 1.4em;
+}
+
+#five-questions .qa-item p{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* Mobile: stack the badge above rather than float left; reduce padding */
+@media (max-width: 640px){
+  #five-questions .question-block{
+    padding-left: 0;
+  }
+  #five-questions .question-block::before{
+    position: static;
+    margin-bottom: var(--space-sm);
+    width: 1.9em;
+    height: 1.9em;
+    font-size: 0.72rem;
+  }
+  #five-questions .question-block .qa-item{
+    padding: var(--space-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Homepage role-pills polish: left accent border per pill + arrow indicator
+   that activates on hover. Works with the inline CSS in index.html (#role-paths
+   section) without overriding; adds selector specificity via combined class.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#role-paths .role-pills a.role-pill{
+  position: relative;
+  padding-right: 2.75rem;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  transition: border-left-color .2s ease, transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+#role-paths .role-pills a.role-pill::after{
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: var(--space-md);
+  transform: translate(0, -50%);
+  font-size: 1.05rem;
+  color: color-mix(in srgb, var(--accent) 70%, transparent);
+  opacity: 0.55;
+  transition: transform .2s ease, opacity .2s ease, color .2s ease;
+}
+
+#role-paths .role-pills a.role-pill:hover{
+  border-left-color: var(--accent);
+  transform: translateX(2px);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+#role-paths .role-pills a.role-pill:hover::after{
+  transform: translate(3px, -50%);
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Per-pill accent tints (matches established a/b/c/d/e rotation from earlier
+   polish cycles). 5 role pills -> 5 accent colors. */
+#role-paths .role-pills a.role-pill:nth-child(1){
+  border-left-color: color-mix(in srgb, var(--accent-cta, #2563eb) 55%, var(--line));
+}
+#role-paths .role-pills a.role-pill:nth-child(1):hover{
+  border-left-color: var(--accent-cta, #2563eb);
+}
+
+#role-paths .role-pills a.role-pill:nth-child(2){
+  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+}
+#role-paths .role-pills a.role-pill:nth-child(2):hover{
+  border-left-color: #2dd4bf;
+}
+
+#role-paths .role-pills a.role-pill:nth-child(3){
+  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+}
+#role-paths .role-pills a.role-pill:nth-child(3):hover{
+  border-left-color: #a78bfa;
+}
+
+#role-paths .role-pills a.role-pill:nth-child(4){
+  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+}
+#role-paths .role-pills a.role-pill:nth-child(4):hover{
+  border-left-color: #fbbf24;
+}
+
+#role-paths .role-pills a.role-pill:nth-child(5){
+  border-left-color: color-mix(in srgb, #e11d48 55%, var(--line));
+}
+#role-paths .role-pills a.role-pill:nth-child(5):hover{
+  border-left-color: #fb7185;
+}
+
+/* Mobile: suppress arrow indicator (pill stacks full-width; arrow looks
+   odd against the right edge on narrow viewports) */
+@media (max-width: 640px){
+  #role-paths .role-pills a.role-pill{
+    padding-right: var(--space-md);
+  }
+  #role-paths .role-pills a.role-pill::after{
+    display: none;
+  }
+}
