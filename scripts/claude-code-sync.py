@@ -48,6 +48,7 @@ CANONICAL_FILES = [
     ("ERROR_CORRECTION_LOG.md", "PM/editorial state"),
     ("SITE_STATE.md", "PM/editorial state"),
     ("KNOWLEDGE_ARCHITECTURE.md", "PM/editorial state"),
+    ("AGENT_ROSTER.md", "PM/editorial state"),
     ("DATA_REGISTRY.md", "Research content"),
     ("KEY_FINDINGS.md", "Research content"),
     ("CROSS_REFERENCE_MAP.md", "Research content"),
