@@ -88,7 +88,18 @@ case "$ROLE" in
         SCOPE="papers/ + research/ + overview/ + frameworks/ + letters/ + resume/ + resumes/ + contact/ + speaker-and-advisory/ + index.html + 404.html + _config.yml + sitemap.xml + styles.css + script.js + assets/ + icons/ + Publication-Images/ + scripts/inline-critical-css.mjs + scripts/bump-cache-buster.py + .github/ + package.json + package-lock.json + Gemfile + purgecss.config.cjs + .gitignore"
         ;;
     AUDIT-REVIEWER)
-        SCOPE="handoff/"
+        # AUDIT-REVIEWER is read-only by role design per AGENT_ROSTER Section 7
+        # (canonical: docs/AGENT_ROSTER.md once canonicalization cycle ships;
+        # source intent: handoff/agent_roster_draft_2026-04-24.md Section 2 plus 7).
+        # Write paths require same-lane re-declaration to BULK-EXECUTOR.
+        # Earlier provisional value of "handoff/" updated to empty in commit
+        # 01f9a16's hook-impl follow-on per AD-AGENT-3 alignment.
+        SCOPE=""
+        echo "[declare-session-scope] WARNING: AUDIT-REVIEWER role is read-only by role design per AGENT_ROSTER Section 7." >&2
+        echo "[declare-session-scope] All commits will require either:" >&2
+        echo "[declare-session-scope]   (a) Same-lane re-declaration to BULK-EXECUTOR (own handoff/ or .cursor/tasks/ memo committing)" >&2
+        echo "[declare-session-scope]   (b) ALLOW_CROSS_SCOPE_COMMIT=1 bypass plus 'Pre-commit bypass:' annotation" >&2
+        echo "[declare-session-scope]   (c) SESSION_ROLE_FILE override pointing at a custom scope declaration" >&2
         ;;
     AUTHOR-DIRECT)
         # AUTHOR-DIRECT is a terminal role; typically uses ALLOW_CROSS_SCOPE_COMMIT=1 bypass.
