@@ -14,9 +14,7 @@ playwright-report/
 playwright/.cache/
 .playwright-mcp/
 
-# Jekyll build output (GitHub Actions workflow path; never served from
-# repo root. GitHub Pages auto-build also produces _site/ ephemerally
-# during its own runs and never commits it).
+# Jekyll build output
 _site/
 
 # Ruby bundler artifacts. Gemfile.lock is gitignored because the
@@ -27,43 +25,6 @@ _site/
 Gemfile.lock
 .bundle/
 vendor/bundle/
-
-# R1 build artifacts (per Upgrade R1 spec amendment 2026-04-21; AD-015)
-_build/
-**/research_content/**/_build/
-
-# ── Stale working assets (audit 2026-04-18) ──────────────────────────────
-# These are working-folder assets that were never wired into the live site.
-# Tracked locations (Publication-Images/, icons/, exhibits/, ink-brand-kit/,
-# ink-logos/, assets/) are unaffected because patterns below are root-anchored.
-
-# Stale working folders (older versions of /resumes/, replication scratch)
-Resumes_TokenizationSystems/
-Resumes_v2/
-Claude/
-
-# Archived content drafts (the ARCHIVED_*.md marker file stays tracked)
-Cryptozach-site-files/*.md
-!Cryptozach-site-files/ARCHIVED_*.md
-
-# Stale duplicate resume DOCX at root (canonical location is /resumes/)
-/Zukowski_Resume_Asset_Management.docx
-/Zukowski_Resume_Operator.docx
-/Zukowski_Resume_Policy.docx
-/Zukowski_Resume_Risk.docx
-
-# Personal portfolio scratch
-/Zach Zukowski _ Digital Money & Tokenization Research.pdf
-
-# One-off scripts (sprint complete; conversion script done)
-/convert_mvep.js
-scripts/sprint5-link-rewrite.py
-
-# Local Python deps for scripts/audit_session.py (tiktoken etc.)
-scripts/.deps/
-
-# Empty stub
-.files/design-critique.md
 
 # Stale brand logos and working zips at repo root.
 # Root-only ignore by extension (the leading slash anchors to repo root,
@@ -77,11 +38,7 @@ scripts/.deps/
 
 # Whitelist root-level images that must stay at repo root (referenced as
 # absolute paths from the live site: favicon (browser tab) and
-# apple-touch-icon). Crypto brand logos previously whitelisted here moved
-# to assets/logos/ (see commit consolidating root logos, 2026-04-22).
-# og-image.png removed: site moved past the script-generated graphic;
-# replacement deferred until a company logo exists.
+# apple-touch-icon).
 !/apple-touch-icon.png
 !/favicon.png
 !/favicon.svg
-# ────────────────────────────────────────────────────────────────────────
