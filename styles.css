@@ -15833,14 +15833,14 @@ header .brand a strong:hover::before{
   animation: none;
 }
 
-/* Hover: ::after reveals as the Gargantua silhouette + flows via a
-   GPU-accelerated hue-rotate filter (cheap compositor operation, no
-   per-frame paint). The original @property approach animated the conic-
-   gradient's start angle, which forced a per-frame conic-gradient
-   recompute and rasterization; at extreme pinch-zoom that thrashed
-   neighbor text rasterization on Safari, producing visible flicker.
-   hue-rotate accomplishes the same "color flowing through the disk"
-   effect via the GPU compositor without re-painting the conic. */
+/* Hover: ::after reveals as the Gargantua silhouette. Static (no
+   animation). The hue-rotate flow animation that previously cycled the
+   disk's colors was removed because at extreme pinch-zoom on Chrome
+   the per-frame GPU filter operation on a masked conic-gradient caused
+   neighbor text rasterization pressure (visible as horizontal banding
+   on "Tokenization Systems"). The static silhouette preserves the
+   physics-faithful Gargantua shape and the dark rainbow palette;
+   only the orbital-flow effect is lost. */
 header .brand a strong:hover::after{
   opacity: 1;
   background: conic-gradient(
@@ -15864,12 +15864,6 @@ header .brand a strong:hover::after{
     radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
   -webkit-mask-composite: source-over;
   mask-composite: add;
-  animation: brandOrbDiskHueFlow 8s linear infinite;
-}
-
-@keyframes brandOrbDiskHueFlow{
-  from{ filter: hue-rotate(0deg); }
-  to{ filter: hue-rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -15877,7 +15871,6 @@ header .brand a strong:hover::after{
   header .brand a strong:hover::before,
   header .brand a strong:hover::after{
     animation: none;
-    filter: none;
   }
 }
 
