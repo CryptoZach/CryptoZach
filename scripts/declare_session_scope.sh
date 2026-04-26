@@ -81,7 +81,10 @@ case "$ROLE" in
         SCOPE="research_content/ + handoff/ + .cursor/tasks/ + tools/ + scripts/ + .claude/agents/ + .claude/skills/"
         ;;
     CANONICAL-WRITER)
-        SCOPE="docs/ + .cursor/skills/ + .cursor/rules/ + .cursor/tasks/"
+        # Default scope expanded 2026-04-25 per DEC-114 to include handoff/architecture/
+        # (architecture-doc subtree functionally canonical-state-of-record at different
+        # filesystem location). See docs/AGENT_ROSTER.md Section 2 + docs/DECISION_LOG.md DEC-114.
+        SCOPE="docs/ + .cursor/skills/ + .cursor/rules/ + .cursor/tasks/ + handoff/architecture/"
         ;;
     SITE-EDITOR)
         # 26-entry template per 2026-04-24 expansion (commit 5aacf23) post-315187d incident.
