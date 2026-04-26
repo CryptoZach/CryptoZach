@@ -15677,11 +15677,13 @@ header .brand a strong::before{
   position: absolute;
   left: 0;
   top: 50%;
-  /* translate3d for cheap GPU layer promotion. (Removed
-     will-change / backface-visibility / isolation: the combination
-     forced text within the strong's stacking context to fail to render
-     at extreme pinch-zoom on Safari.) */
-  transform: translate3d(0, -50%, 0);
+  /* Plain translateY (not translate3d) so the orb is NOT promoted to
+     its own GPU compositor layer. Translate3d forces a layer; the
+     brand text in the same strong element ends up on a separate layer
+     and at extreme pinch-zoom the two layers can re-rasterize out of
+     sync (visible as text flicker). Keeping the orb on the strong's
+     layer lets text and orb render together coherently. */
+  transform: translateY(-50%);
   width: 9px;
   height: 9px;
   border-radius: 50%;
