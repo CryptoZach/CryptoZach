@@ -1226,6 +1226,21 @@
       function reefDraw() {
         reefRaf = requestAnimationFrame(reefDraw);
 
+        // Pause heavy canvas paint at extreme pinch-zoom. The reef canvas
+        // (180 branches + 200 nodes redrawn each frame at devicePixelRatio
+        // up to 3x) is GPU-expensive at normal zoom and overwhelming at
+        // pinch-zoom levels above ~2x: under that GPU pressure the sticky
+        // header's brand text intermittently fails to render on Safari
+        // (visible flicker on the brand title and subtitle). Skipping the
+        // draw pass at extreme zoom keeps the loop scheduled (so animation
+        // resumes instantly when the user zooms back out) while removing
+        // the per-frame paint cost. visualViewport is supported in Safari
+        // 13+ and Chrome 61+; on older browsers the check no-ops and the
+        // canvas draws normally.
+        if (window.visualViewport && window.visualViewport.scale > 2) {
+          return;
+        }
+
         var r = heroContainer.getBoundingClientRect();
         var W = r.width, H = r.height;
 
