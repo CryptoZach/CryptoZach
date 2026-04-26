@@ -15715,50 +15715,112 @@ header .brand a strong::before{
   }
 }
 
-/* Hover: morph the brand orb into a slightly larger black-hole motif.
-   Event-horizon core (solid black) with a thin hot accretion ring (yellow
-   fading to orange to muted purple), seated over a slow conic sweep that
-   rotates to suggest the swirl. Size grows from 9px to 13px via width/
-   height transition (smooth morph); the conic underneath rotates via
-   keyframe so the swirl reads at any size. */
-header .brand a strong:hover::before{
-  width: 13px;
-  height: 13px;
+/* Hover: morph the brand orb into an Interstellar-style black hole that
+   keeps the program's dark rainbow palette.
+
+   Two pseudo-elements compose the visual:
+     ::before  = event horizon (solid black sphere) + photon-ring halo
+                 (thin vertical lensing arc above/below), seated over the
+                 dark rainbow conic backdrop that read as the orb pre-hover.
+                 STATIC: the halo is a gravitational lensing artifact that
+                 should not rotate, so this layer holds still.
+     ::after   = equatorial accretion disk (thin horizontal ellipse drawn
+                 in dark rainbow stops) wrapping around the sphere.
+                 SPINS: the disk is the rotating physical structure.
+
+   This separation matches the real visual logic (Interstellar's Gargantua):
+   the sphere doesn't change with rotation, the halo is a fixed lensing
+   pattern, and only the disk visibly turns. Sizes grow 9px to 16px sphere
+   plus 22px disk envelope for a "slightly larger" hover footprint that
+   still reads as the same brand element. */
+
+/* ::after = the spinning accretion disk. Hidden by default (opacity 0);
+   activated on hover. Defined in the base so the opacity transition has
+   a from-state. */
+header .brand a strong::after{
+  content: "";
+  position: absolute;
+  left: -3px;          /* center the 22px disk on the same point as ::before */
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) rotate(0deg);
   background:
+    radial-gradient(
+      ellipse 96% 11% at center,
+      transparent 28%,
+      rgba(76, 29, 149, 0.95) 35%,    /* dark violet inner edge */
+      rgba(159, 18, 57, 0.9) 46%,     /* dark rose mid */
+      rgba(133, 77, 14, 0.75) 56%,    /* dark amber outer */
+      rgba(15, 118, 110, 0.4) 66%,    /* dark teal fading */
+      transparent 78%
+    );
+  transition: opacity .35s ease;
+}
+
+/* Hover: ::before becomes the event-horizon sphere + photon-ring halo */
+header .brand a strong:hover::before{
+  width: 16px;
+  height: 16px;
+  background:
+    /* Top layer: event horizon (solid black core fading at the rim) */
     radial-gradient(
       circle at center,
       #000 0%,
       #000 32%,
-      transparent 36%,
-      rgba(251, 191, 36, 0.95) 40%,
-      rgba(249, 115, 22, 0.85) 48%,
-      rgba(124, 58, 237, 0.4) 70%,
-      transparent 95%
+      transparent 38%
     ),
+    /* Photon-ring halo: thin vertical lensing loop above and below the
+       sphere. Uses the dark teal and dark blue end of the rainbow palette
+       so the halo reads cooler than the disk's violet/rose/amber stops. */
+    radial-gradient(
+      ellipse 38% 72% at center,
+      transparent 36%,
+      rgba(15, 118, 110, 0.6) 40%,
+      rgba(30, 58, 138, 0.5) 47%,
+      transparent 54%
+    ),
+    /* Dark rainbow conic backdrop (same palette as the pre-hover orb so
+       the morph feels continuous; reads as the outer color cast of the
+       lensed light). */
     conic-gradient(
-      from 0deg,
-      #fbbf24,
-      #f97316,
-      #c026d3,
-      #4338ca,
-      #fbbf24
+      from 200deg,
+      #1e3a8a 0deg,
+      #4c1d95 72deg,
+      #9f1239 144deg,
+      #854d0e 216deg,
+      #0f766e 288deg,
+      #1e3a8a 360deg
     );
   box-shadow:
-    0 0 6px rgba(0, 0, 0, 0.85),
-    0 0 14px color-mix(in srgb, #f97316 65%, transparent),
-    0 0 26px color-mix(in srgb, #fbbf24 35%, transparent),
-    inset 0 0 4px rgba(0, 0, 0, 0.95);
-  animation: brandOrbBlackHoleSpin 2.2s linear infinite;
+    0 0 7px rgba(0, 0, 0, 0.85),
+    0 0 16px color-mix(in srgb, #4c1d95 55%, transparent),
+    0 0 28px color-mix(in srgb, #9f1239 30%, transparent),
+    0 0 40px color-mix(in srgb, #1e3a8a 18%, transparent),
+    inset 0 0 5px rgba(0, 0, 0, 0.95);
+  /* Halt the pulse; the sphere is now static. The disk (::after) carries
+     the motion. */
+  animation: none;
 }
 
-@keyframes brandOrbBlackHoleSpin{
+/* Hover: ::after reveals + spins */
+header .brand a strong:hover::after{
+  opacity: 1;
+  animation: brandOrbDiskSpin 3s linear infinite;
+}
+
+@keyframes brandOrbDiskSpin{
   from{ transform: translateY(-50%) rotate(0deg); }
   to{ transform: translateY(-50%) rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce){
   header .brand a strong::before,
-  header .brand a strong:hover::before{
+  header .brand a strong:hover::before,
+  header .brand a strong:hover::after{
     animation: none;
   }
 }
