@@ -15656,12 +15656,6 @@ header .brand a strong{
      right edge (::after extends to ~22px from strong's left) clears the
      start of "Tokenization Systems" by ~6px instead of overlapping. */
   padding-left: 28px;
-  /* Form a fresh stacking context so the orb pseudo-elements' animated
-     compositor layers don't co-rasterize with neighbor text (the title's
-     own glyphs, the subtitle below). Without this, on pinch-zoom the GPU
-     re-rasterizes the title/subtitle tiles each frame the orb's pulse
-     repaints, producing visible flicker on the text. */
-  isolation: isolate;
 }
 
 /* Brand orb: dark rainbow aura with pseudo-3D lighting. Conic-gradient
@@ -15677,15 +15671,11 @@ header .brand a strong::before{
   position: absolute;
   left: 0;
   top: 50%;
-  /* translate3d (vs translateY) promotes the pseudo-element to its own
-     GPU compositor layer. The brandOrbPulse animation continuously
-     repaints the box-shadow (a 44px-radius region that extends beyond
-     the 9px orb itself, overlapping the title/subtitle area). Without
-     a dedicated layer the text gets re-rasterized each frame, which is
-     invisible at 1x but flickers at extreme pinch-zoom levels. */
+  /* translate3d for cheap GPU layer promotion. (Removed
+     will-change / backface-visibility / isolation: the combination
+     forced text within the strong's stacking context to fail to render
+     at extreme pinch-zoom on Safari.) */
   transform: translate3d(0, -50%, 0);
-  backface-visibility: hidden;
-  will-change: box-shadow, transform;
   width: 9px;
   height: 9px;
   border-radius: 50%;
@@ -15711,7 +15701,12 @@ header .brand a strong::before{
     inset -1px -1px 2px rgba(0, 0, 0, 0.45),
     inset 1px 1px 1px rgba(255, 255, 255, 0.15);
   opacity: 0.95;
-  animation: brandOrbPulse 3.4s ease-in-out infinite;
+  /* No continuous animation in base state. The brandOrbPulse keyframe
+     (kept defined below) animated box-shadow over a 44px region that
+     overlapped the title and subtitle text. At extreme pinch-zoom,
+     re-rasterizing this region every frame caused visible flicker on
+     the text. The orb remains visually rich via its static gradients +
+     shadows; the disk activates on hover. */
   transition:
     width .35s ease,
     height .35s ease,
@@ -15786,11 +15781,10 @@ header .brand a strong::after{
   height: 26px;
   pointer-events: none;
   opacity: 0;
-  /* translate3d for GPU layer (matches ::before pattern; isolates the
-     conic-gradient + mask repaint region from neighbor text rendering). */
+  /* translate3d for cheap GPU layer promotion. (Removed
+     will-change / backface-visibility for the same Safari-extreme-zoom
+     reason as ::before above.) */
   transform: translate3d(0, -50%, 0);
-  backface-visibility: hidden;
-  will-change: opacity, transform;
   --orb-disk-angle: 0deg;
   background: conic-gradient(
     from var(--orb-disk-angle),
