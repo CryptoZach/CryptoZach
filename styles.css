@@ -15715,28 +15715,40 @@ header .brand a strong::before{
   }
 }
 
-/* Hover: morph the brand orb into an Interstellar-style black hole that
-   keeps the program's dark rainbow palette.
+/* Hover: morph the brand orb into a physics-faithful Interstellar
+   "Gargantua" black hole. Keeps the program's dark rainbow palette.
 
-   Two pseudo-elements compose the visual:
-     ::before  = event horizon (solid black sphere) + photon-ring halo
-                 (thin vertical lensing arc above/below), seated over the
-                 dark rainbow conic backdrop that read as the orb pre-hover.
-                 STATIC: the halo is a gravitational lensing artifact that
-                 should not rotate, so this layer holds still.
-     ::after   = equatorial accretion disk (thin horizontal ellipse drawn
-                 in dark rainbow stops) wrapping around the sphere.
-                 SPINS: the disk is the rotating physical structure.
+   Physics governing the visual (per Kip Thorne / Double Negative
+   rendering for Interstellar 2014):
 
-   This separation matches the real visual logic (Interstellar's Gargantua):
-   the sphere doesn't change with rotation, the halo is a fixed lensing
-   pattern, and only the disk visibly turns. Sizes grow 9px to 16px sphere
-   plus 22px disk envelope for a "slightly larger" hover footprint that
-   still reads as the same brand element. */
+   1. The accretion disk is a thin equatorial ring of orbiting matter.
+      It does NOT visibly rotate to a distant observer; the disk shape
+      is constant. What appears to "move" in the rendered footage is
+      texture drift from matter density variations, not the ring itself.
+   2. Doppler beaming makes the side of the disk approaching the camera
+      relativistically brighter (blue-shifted, intensified), and the
+      receding side dimmer (red-shifted, faded). This produces a STATIC
+      asymmetric brightness pattern across the disk — bright on one side,
+      dim on the other.
+   3. Gravitational lensing bends light from the FAR side of the disk up
+      and over (and under) the event horizon, producing a vertical
+      "halo loop" above and below the sphere. This halo is also STATIC
+      (a fixed lensing artifact, not a rotating structure).
+   4. The event horizon itself is a perfectly black sphere; rotation is
+      invariant under view (it looks the same regardless of spin angle).
 
-/* ::after = the spinning accretion disk. Hidden by default (opacity 0);
-   activated on hover. Defined in the base so the opacity transition has
-   a from-state. */
+   Compositing decisions:
+     ::before  = event horizon (solid black) + photon-ring halo (vertical
+                 lensing arc) + dark rainbow conic outer cast. STATIC.
+     ::after   = accretion disk: thin horizontal ellipse with off-center
+                 brightness peak (Doppler asymmetry). STATIC SHAPE; only
+                 a subtle brightness oscillation conveys matter flow.
+
+   No element rotates; the ring stays horizontal at all times. */
+
+/* ::after = the accretion disk. Hidden by default (opacity 0); revealed
+   on hover. The disk shape and asymmetry are static; subtle brightness
+   pulse on hover suggests matter density variations along the orbit. */
 header .brand a strong::after{
   content: "";
   position: absolute;
@@ -15747,16 +15759,28 @@ header .brand a strong::after{
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(-50%) rotate(0deg);
+  transform: translateY(-50%);    /* no rotation, ever */
   background:
+    /* Bright Doppler-beamed side: peak shifted to the left (matter on
+       this side approaching the viewer). Hot dark-rose to dark-violet
+       stops radiate outward from a point at 28% horizontal. */
     radial-gradient(
-      ellipse 96% 11% at center,
-      transparent 28%,
-      rgba(76, 29, 149, 0.95) 35%,    /* dark violet inner edge */
-      rgba(159, 18, 57, 0.9) 46%,     /* dark rose mid */
-      rgba(133, 77, 14, 0.75) 56%,    /* dark amber outer */
-      rgba(15, 118, 110, 0.4) 66%,    /* dark teal fading */
-      transparent 78%
+      ellipse 70% 11% at 28% 50%,
+      transparent 0%,
+      rgba(159, 18, 57, 0.95) 22%,    /* dark rose hot spot */
+      rgba(76, 29, 149, 0.85) 50%,    /* dark violet body */
+      rgba(133, 77, 14, 0.45) 80%,    /* dark amber tail */
+      transparent 100%
+    ),
+    /* Doppler-dimmed (receding) side: cooler dark teal and dark blue,
+       lower opacity. Peak at 75% horizontal so the right side reads as
+       a darker, more muted continuation of the disk. */
+    radial-gradient(
+      ellipse 60% 11% at 75% 50%,
+      transparent 0%,
+      rgba(15, 118, 110, 0.55) 25%,   /* dark teal cool side */
+      rgba(30, 58, 138, 0.35) 60%,    /* dark blue fading */
+      transparent 100%
     );
   transition: opacity .35s ease;
 }
@@ -15801,20 +15825,25 @@ header .brand a strong:hover::before{
     0 0 28px color-mix(in srgb, #9f1239 30%, transparent),
     0 0 40px color-mix(in srgb, #1e3a8a 18%, transparent),
     inset 0 0 5px rgba(0, 0, 0, 0.95);
-  /* Halt the pulse; the sphere is now static. The disk (::after) carries
-     the motion. */
+  /* Sphere is static; halo is a fixed lensing artifact. No rotation. */
   animation: none;
 }
 
-/* Hover: ::after reveals + spins */
+/* Hover: ::after reveals as the static asymmetric disk. Subtle brightness
+   pulse on the bright (Doppler) side suggests matter-density variations
+   flowing along the orbit (not a rotation; the ring stays horizontal). */
 header .brand a strong:hover::after{
   opacity: 1;
-  animation: brandOrbDiskSpin 3s linear infinite;
+  animation: brandOrbDopplerPulse 5s ease-in-out infinite;
 }
 
-@keyframes brandOrbDiskSpin{
-  from{ transform: translateY(-50%) rotate(0deg); }
-  to{ transform: translateY(-50%) rotate(360deg); }
+@keyframes brandOrbDopplerPulse{
+  0%, 100%{
+    filter: brightness(1) saturate(1);
+  }
+  50%{
+    filter: brightness(1.12) saturate(1.08);
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
