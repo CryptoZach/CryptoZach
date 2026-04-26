@@ -15703,9 +15703,13 @@ header .brand a strong::before{
       #0f766e 288deg,
       #1e3a8a 360deg
     );
+  /* Single outer glow + insets for 3D. Plain rgba (no color-mix) to keep
+     the box-shadow paint cheap; color-mix forces the browser to evaluate
+     the function during every paint, which made the orb's static layer
+     too slow to re-rasterize at extreme pinch-zoom and produced visible
+     flicker on the brand text rendered nearby. */
   box-shadow:
-    0 0 8px color-mix(in srgb, #7c3aed 32%, transparent),
-    0 0 16px color-mix(in srgb, #2563eb 12%, transparent),
+    0 0 8px rgba(124, 58, 237, 0.32),
     inset -1px -1px 2px rgba(0, 0, 0, 0.45),
     inset 1px 1px 1px rgba(255, 255, 255, 0.15);
   opacity: 0.95;
@@ -15826,11 +15830,12 @@ header .brand a strong:hover::before{
       rgba(15, 118, 110, 0.4),
       rgba(30, 58, 138, 0.4)
     );
+  /* Hover glow: black core shadow + single dark-violet outer glow + inset.
+     Plain rgba (no color-mix) per the same flicker-reduction rationale as
+     the base ::before box-shadow above. Reduced from 5 stops to 3. */
   box-shadow:
     0 0 7px rgba(0, 0, 0, 0.85),
-    0 0 16px color-mix(in srgb, #4c1d95 50%, transparent),
-    0 0 30px color-mix(in srgb, #9f1239 25%, transparent),
-    0 0 44px color-mix(in srgb, #1e3a8a 15%, transparent),
+    0 0 18px rgba(76, 29, 149, 0.42),
     inset 0 0 5px rgba(0, 0, 0, 0.95);
   animation: none;
 }
