@@ -323,15 +323,15 @@ You are the **execution engine** for:
 
 ### Hard constraints
 
-- **Do not write to `docs/*.md`.** Cursor is the sole canonical writer (DEC-069, 2026-04-19). When findings warrant canonical updates, produce a handoff memo for Cursor to apply.
-- **Do not write to `papers/`, `research/`, `index.html`, or other site directories** unless the author explicitly authorizes a Claude-Code-side site edit. Site implementation is Cursor's lane.
+- **Canonical-state writes route via the Claude Code CANONICAL-WRITER role** per DEC-111 (supersedes DEC-069 writer-tool assignment, 2026-04-25; per AGENT_ROSTER Section 1.2; State Manager specialization within CANONICAL-WRITER per Section 1.6). Sessions in BULK-EXECUTOR or other non-CANONICAL-WRITER roles do not write to `docs/*.md`; they capture canonical-worthy findings via `.cursor/tasks/Living_File_Updates_*.md` memos (pull-based; enumerated at session start by this script per the Pending memos section below) or via dispatch handoffs (push-based; Pattern 30 per DEC-110).
+- **Do not write to `papers/`, `research/`, `index.html`, or other site directories** unless the author explicitly authorizes a site edit. Site implementation is the SITE-EDITOR role lane per AGENT_ROSTER Section 1.3.
 - **Do not commit on behalf of the author** without explicit authorization in the same session.
 - **Editorial: zero em-dashes (\u2014) and en-dashes (\u2013)** in any output (prose, code comments, commit messages, memos). Use commas, semicolons, colons, parentheses, or sentence breaks. Structural-separator exception only for GLOSSARY-style `**Term** -- definition` patterns. See `~/.cursor/skills/no-em-dashes/SKILL.md`.
 - **Calibrated verbs** (per `docs/EDITORIAL_STANDARDS.md` section 13): forbidden "confirms / proves / establishes / we recommend"; required "evidence consistent with / indicating / is consistent with / documents / reveals."
 
 ### When canonical-worthy work happens
 
-Produce `Living_File_Updates_YYYY-MM-DD_HHMM_[Paper|Workstream]_[Summary].md` in `.cursor/tasks/` per `.cursor/skills/cryptozach-session-patch-producer/SKILL.md`. The next Cursor session applies the memo and commits."""
+Produce `Living_File_Updates_YYYY-MM-DD_HHMM_[Paper|Workstream]_[Summary].md` in `.cursor/tasks/` per `.cursor/skills/cryptozach-session-patch-producer/SKILL.md`. The next CANONICAL-WRITER session enumerates pending Living_File_Updates memos at session start (per the `## Pending memos` section in this sync output) and applies opportunistic small-surface fixes per the cryptozach-session-patch-producer SKILL decision tree; archives applied memos to `.cursor/tasks/applied/` post-application."""
 
 
 def render_freshness_table() -> str:
@@ -422,8 +422,8 @@ def render_conventions() -> str:
 ## Output conventions
 
 - **Surgery / pipeline working trees:** `/Users/zach/<paper>_surgery/` or `/Users/zach/<workstream>/` (NOT inside the CryptoZach repo). Example: `/Users/zach/b1_surgery/` for B1 manuscript surgery output.
-- **Handoff memos for Cursor:** `.cursor/tasks/Living_File_Updates_YYYY-MM-DD_HHMM_[Paper|Workstream]_[Summary].md` per `.cursor/skills/cryptozach-session-patch-producer/SKILL.md`. Cursor reads `.cursor/tasks/` at session start and moves applied memos to `.cursor/tasks/applied/`.
-- **Cursor task specs (multi-phase prompts for Cursor to execute):** `.cursor/tasks/<workstream>_<descriptor>.md`. Use the spec format in `.cursor/skills/cryptozach-spec-execution/SKILL.md`.
+- **Handoff memos for the next CANONICAL-WRITER session:** `.cursor/tasks/Living_File_Updates_YYYY-MM-DD_HHMM_[Paper|Workstream]_[Summary].md` per `.cursor/skills/cryptozach-session-patch-producer/SKILL.md`. The next CANONICAL-WRITER session reads the Pending memos enumeration in this sync output, applies opportunistic small-surface fixes per the cryptozach-session-patch-producer decision tree, and archives applied memos to `.cursor/tasks/applied/`.
+- **Multi-phase task specs (for any CANONICAL-WRITER session to execute):** `.cursor/tasks/<workstream>_<descriptor>.md`. Use the spec format in `.cursor/skills/cryptozach-spec-execution/SKILL.md`.
 - **Surgery summary memos** (per-paper EC resolution): `<Paper>_<EC-id>_Surgery.md` in the surgery working tree, alongside the corrected DOCX/PDF.
 
 ## Common workflow pointers
@@ -443,6 +443,107 @@ def render_conventions() -> str:
 ## Comprehensive memory snapshot
 
 For a longer narrative snapshot of program state (Track A/B inventory, key verified canonical values, frameworks, on-the-horizon items), see `handoff/claude_web_project_memory.md`. That document is the Claude Web equivalent; you have direct file access, so prefer reading the canonical files for ground truth and use the snapshot for orientation."""
+
+
+def _lfu_one_line_summary(memo_path: Path) -> str:
+    """Read first lines of LFU memo; extract a one-line summary for sync output."""
+    try:
+        text = memo_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return "no summary"
+    for line in text.split("\n")[:15]:
+        stripped = line.strip()
+        if stripped.lower().startswith("cycle:"):
+            return stripped.split(":", 1)[1].strip()[:120]
+        if stripped.lower().startswith("scope:"):
+            return stripped.split(":", 1)[1].strip()[:120]
+        if stripped.startswith("**Purpose:**") or stripped.startswith("purpose:"):
+            return stripped.split(":", 1)[1].strip().rstrip("*").strip()[:120]
+    for line in text.split("\n")[5:25]:
+        stripped = line.strip()
+        if stripped and not stripped.startswith("---") and not stripped.startswith("#"):
+            return stripped[:120]
+    return "no summary"
+
+
+def render_pending_memos() -> str:
+    """Enumerate pending Living_File_Updates memos and /tmp handoff-back memos with staleness signal.
+
+    Pull-based queue surfacing: this script is the canonical session-start trigger
+    that surfaces pending memos for the next CANONICAL-WRITER session per the
+    cryptozach-session-patch-producer SKILL decision tree (LFU vs Pattern 30 dispatch
+    vs handoff-back memo). Pre-DEC-111 the pull-based discovery happened naturally
+    via Cursor's session-start `.cursor/tasks/` read; post-DEC-111 the enumeration
+    needs to be explicit to prevent the pull-lane from atrophying silently. Codified
+    per SM-6 operational lifecycle preservation cycle (2026-04-25).
+    """
+    from datetime import date as _date
+    import glob
+
+    today = datetime.now().date()
+    lines = ["", "## Pending memos (pull-based queue; opportunistic application by next CANONICAL-WRITER)", ""]
+
+    # Living_File_Updates memos in .cursor/tasks/ (not in applied/)
+    lfu_dir = REPO_ROOT / ".cursor" / "tasks"
+    applied_dir = lfu_dir / "applied"
+    if lfu_dir.exists():
+        lfu_memos = sorted([
+            p for p in lfu_dir.glob("Living_File_Updates_*.md")
+            if not (applied_dir / p.name).exists()
+        ])
+        if lfu_memos:
+            oldest_filename_date = "unknown"
+            for p in lfu_memos:
+                fname = p.name
+                if len(fname) >= 30:
+                    candidate = fname[20:30]
+                    try:
+                        _date.fromisoformat(candidate)
+                        oldest_filename_date = candidate
+                        break
+                    except ValueError:
+                        continue
+            try:
+                oldest_date = _date.fromisoformat(oldest_filename_date)
+                stale_days = (today - oldest_date).days
+                stale_signal = f"oldest {oldest_filename_date} (~{stale_days} days stale)"
+            except ValueError:
+                stale_signal = f"oldest filename-date {oldest_filename_date}"
+            lines.append(f"### Living_File_Updates ({len(lfu_memos)} pending; {stale_signal})")
+            lines.append("")
+            for p in lfu_memos:
+                summary = _lfu_one_line_summary(p)
+                lines.append(f"- `{p.relative_to(REPO_ROOT)}` ({summary})")
+            lines.append("")
+            lines.append("Per `.cursor/skills/cryptozach-session-patch-producer/SKILL.md` decision tree: each memo is opportunistic; apply if scope fits (1 surface, <30 lines, mechanical); route via Pattern 30 dispatch if substantive; document deferred if author-manual lane.")
+        else:
+            lines.append("### Living_File_Updates: queue clean (zero pending)")
+
+    lines.append("")
+
+    # /tmp handoff-back memos (out-of-repo; ephemeral; mtime-based staleness)
+    tmp_handoff_backs = sorted(glob.glob("/tmp/*_handoff_back_to_*.md"))
+    if tmp_handoff_backs:
+        from os.path import getmtime
+        try:
+            mtimes = [(p, getmtime(p)) for p in tmp_handoff_backs]
+            oldest_path, oldest_mtime = min(mtimes, key=lambda t: t[1])
+            oldest_date_obj = datetime.fromtimestamp(oldest_mtime).date()
+            stale_days = (today - oldest_date_obj).days
+            lines.append(f"### /tmp handoff-back memos ({len(tmp_handoff_backs)} pending; oldest mtime {oldest_date_obj} (~{stale_days} days stale))")
+        except (OSError, ValueError):
+            lines.append(f"### /tmp handoff-back memos ({len(tmp_handoff_backs)} pending; staleness unavailable)")
+        lines.append("")
+        for p in tmp_handoff_backs[:8]:
+            lines.append(f"- `{p}`")
+        if len(tmp_handoff_backs) > 8:
+            lines.append(f"- ... and {len(tmp_handoff_backs) - 8} more")
+    else:
+        lines.append("### /tmp handoff-back memos: queue clean (zero pending)")
+
+    lines.append("")
+    lines.append("Triage these queues periodically; staleness greater than 7 days indicates the pull-lane is not being scouted (regression to pre-DEC-111 LFU-application-lifecycle gap).")
+    return "\n".join(lines)
 
 
 def render_footer(now: str) -> str:
@@ -481,6 +582,7 @@ def main(argv: list[str]) -> int:
         render_critical_kus(),
         render_outreach(args.outreach),
         render_pending_actions(args.pending),
+        render_pending_memos(),
         render_conventions(),
         render_footer(now),
     ]

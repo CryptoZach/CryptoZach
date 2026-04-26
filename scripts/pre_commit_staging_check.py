@@ -490,6 +490,52 @@ def print_subset_rejection(declared_scope: List[str], role: str, over_expansion:
     print("[pre-commit]       staged-content; CO-2/3/4 see AGENT_ROSTER once canonicalized).", file=sys.stderr)
 
 
+def subagent_suggestion_check(staged: List[str]) -> None:
+    """Surface a non-blocking stderr suggestion when 3+ docs/*.md files are staged.
+
+    Per CLAUDE.md "Observation ledger logging discipline (post-DEC-111)" subsection (added per SM-6)
+    plus AGENT_ROSTER Section 12.3 subagent dispatch standardization: cycles modifying 3+
+    canonical-state files (`docs/*.md`) SHOULD invoke at least one subagent for verification
+    (canonical-state-verifier; repo-audit; paper-drift-auditor; etc.). This check surfaces the
+    suggestion at pre-commit time as awareness; the operator may proceed if the cycle does not
+    warrant subagent verification.
+
+    Warn-only; non-blocking; never causes hook to exit non-zero. Independent of subset_check
+    plus clone_label_check plus staged-against-scope (those are HARD-FAIL; this is FYI).
+
+    Codified per SM-6 operational lifecycle preservation cycle (2026-04-25). Phase 0.5 contracts
+    of `a3a0d8a` 3-check bundle preserved (additive check; exit codes unchanged).
+    """
+    canonical_staged = [p for p in staged if p.startswith("docs/") and p.endswith(".md")]
+    if len(canonical_staged) >= 3:
+        print(file=sys.stderr)
+        print(
+            "[pre-commit] FYI: this commit stages {} docs/*.md files.".format(len(canonical_staged)),
+            file=sys.stderr,
+        )
+        print(
+            "[pre-commit] Per CLAUDE.md \"Observation ledger logging discipline (post-DEC-111)\" subsection plus",
+            file=sys.stderr,
+        )
+        print(
+            "[pre-commit] AGENT_ROSTER Section 12.3: cycles modifying 3+ canonical-state files SHOULD invoke at",
+            file=sys.stderr,
+        )
+        print(
+            "[pre-commit] least one subagent for verification (canonical-state-verifier; repo-audit; etc.).",
+            file=sys.stderr,
+        )
+        print(
+            "[pre-commit] Plus: add a row to handoff/cursor_phased_reduction_observations.md within 24 hours.",
+            file=sys.stderr,
+        )
+        print(
+            "[pre-commit] Suggestion is FYI; non-blocking; proceed if cycle does not warrant subagent verification.",
+            file=sys.stderr,
+        )
+        print(file=sys.stderr)
+
+
 def main() -> int:
     bypass = os.environ.get(BYPASS_ENV_VAR) == "1"
 
@@ -549,6 +595,12 @@ def main() -> int:
         if out_of_scope_files:
             print_rejection(scope_file, scope_entries, in_scope_files, out_of_scope_files)
             any_hard_fail = True
+
+    # --- Check 4: subagent-suggestion (warn-only; non-blocking; FYI per SM-6) ---
+    # Runs regardless of HARD-FAIL state above so the operator gets the suggestion even
+    # in a bypass cycle. Never sets any_hard_fail; never affects exit code.
+    if staged:
+        subagent_suggestion_check(staged)
 
     if any_hard_fail and not bypass:
         return 1
