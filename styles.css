@@ -15716,134 +15716,136 @@ header .brand a strong::before{
 }
 
 /* Hover: morph the brand orb into a physics-faithful Interstellar
-   "Gargantua" black hole. Keeps the program's dark rainbow palette.
+   "Gargantua" black hole with FLOWING matter through a static silhouette.
 
-   Physics governing the visual (per Kip Thorne / Double Negative
-   rendering for Interstellar 2014):
+   Per Kip Thorne / Double Negative rendering for Interstellar (2014):
 
-   1. The accretion disk is a thin equatorial ring of orbiting matter.
-      It does NOT visibly rotate to a distant observer; the disk shape
-      is constant. What appears to "move" in the rendered footage is
-      texture drift from matter density variations, not the ring itself.
-   2. Doppler beaming makes the side of the disk approaching the camera
-      relativistically brighter (blue-shifted, intensified), and the
-      receding side dimmer (red-shifted, faded). This produces a STATIC
-      asymmetric brightness pattern across the disk — bright on one side,
-      dim on the other.
-   3. Gravitational lensing bends light from the FAR side of the disk up
-      and over (and under) the event horizon, producing a vertical
-      "halo loop" above and below the sphere. This halo is also STATIC
-      (a fixed lensing artifact, not a rotating structure).
-   4. The event horizon itself is a perfectly black sphere; rotation is
-      invariant under view (it looks the same regardless of spin angle).
+   1. The disk silhouette is composed of three visible structures: an
+      equatorial accretion disk crossing in front of the sphere, a halo
+      arch ABOVE the sphere (the far side of the disk lensed up over the
+      top by gravity), and a mirror halo arch BELOW the sphere. These
+      three structures form the iconic Gargantua shape and they DO NOT
+      rotate — the silhouette is a constant gravitational-lensing pattern.
+   2. The matter inside this silhouette IS in motion: plasma orbits the
+      black hole at relativistic speeds. We perceive this as colors and
+      brightness "flowing" along the disk's orbital direction without the
+      disk shape itself changing.
+   3. A thin bright photon ring sits just outside the event horizon at
+      the boundary where light grazes the sphere before escaping.
+   4. The event horizon is a perfectly black sphere; rotation-invariant.
 
-   Compositing decisions:
-     ::before  = event horizon (solid black) + photon-ring halo (vertical
-                 lensing arc) + dark rainbow conic outer cast. STATIC.
-     ::after   = accretion disk: thin horizontal ellipse with off-center
-                 brightness peak (Doppler asymmetry). STATIC SHAPE; only
-                 a subtle brightness oscillation conveys matter flow.
+   Implementation:
+     ::before = event horizon + thin bright photon ring. STATIC.
+     ::after  = conic-gradient (dark rainbow) MASKED to the Gargantua
+                silhouette (equatorial disk + top arch + bottom arch).
+                Uses CSS Houdini @property to animate the conic's
+                starting angle, so colors flow through the static mask
+                without rotating the visible silhouette.
 
-   No element rotates; the ring stays horizontal at all times. */
+   Browser support: @property animates in Chrome 85+, Edge 85+, Safari
+   16.4+, Firefox 128+. Older browsers fall back to a static colored
+   silhouette (still on-palette and on-shape). */
 
-/* ::after = the accretion disk. Hidden by default (opacity 0); revealed
-   on hover. The disk shape and asymmetry are static; subtle brightness
-   pulse on hover suggests matter density variations along the orbit. */
+@property --orb-disk-angle{
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ::after = flowing accretion disk + halo arches. Hidden in base
+   (opacity 0); reveals + flows on hover. */
 header .brand a strong::after{
   content: "";
   position: absolute;
-  left: -3px;          /* center the 22px disk on the same point as ::before */
+  left: -10px;         /* center 32px-wide envelope on the 16px sphere */
   top: 50%;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
+  width: 32px;
+  height: 26px;
   pointer-events: none;
   opacity: 0;
   transform: translateY(-50%);    /* no rotation, ever */
-  background:
-    /* Bright Doppler-beamed side: peak shifted to the left (matter on
-       this side approaching the viewer). Hot dark-rose to dark-violet
-       stops radiate outward from a point at 28% horizontal. */
-    radial-gradient(
-      ellipse 70% 11% at 28% 50%,
-      transparent 0%,
-      rgba(159, 18, 57, 0.95) 22%,    /* dark rose hot spot */
-      rgba(76, 29, 149, 0.85) 50%,    /* dark violet body */
-      rgba(133, 77, 14, 0.45) 80%,    /* dark amber tail */
-      transparent 100%
-    ),
-    /* Doppler-dimmed (receding) side: cooler dark teal and dark blue,
-       lower opacity. Peak at 75% horizontal so the right side reads as
-       a darker, more muted continuation of the disk. */
-    radial-gradient(
-      ellipse 60% 11% at 75% 50%,
-      transparent 0%,
-      rgba(15, 118, 110, 0.55) 25%,   /* dark teal cool side */
-      rgba(30, 58, 138, 0.35) 60%,    /* dark blue fading */
-      transparent 100%
-    );
+  --orb-disk-angle: 0deg;
+  background: conic-gradient(
+    from var(--orb-disk-angle),
+    rgba(76, 29, 149, 0.95) 0deg,    /* dark violet */
+    rgba(159, 18, 57, 0.95) 72deg,   /* dark rose */
+    rgba(133, 77, 14, 0.92) 144deg,  /* dark amber */
+    rgba(15, 118, 110, 0.88) 216deg, /* dark teal */
+    rgba(30, 58, 138, 0.9) 288deg,   /* dark blue */
+    rgba(76, 29, 149, 0.95) 360deg   /* loop back to violet for seamless flow */
+  );
+  /* Composite mask: equatorial disk (thin horizontal across center) +
+     top halo arch (horizontal ellipse positioned above sphere) + bottom
+     halo arch (mirror below). The three combined silhouette is the
+     Gargantua shape; conic colors underneath flow through it. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
   transition: opacity .35s ease;
 }
 
-/* Hover: ::before becomes the event-horizon sphere + photon-ring halo */
+/* Hover: ::before becomes the event-horizon sphere with a thin bright
+   photon ring. Both static. */
 header .brand a strong:hover::before{
   width: 16px;
   height: 16px;
   background:
-    /* Top layer: event horizon (solid black core fading at the rim) */
+    /* Solid-black event horizon, fading at the very edge */
     radial-gradient(
       circle at center,
       #000 0%,
-      #000 32%,
-      transparent 38%
+      #000 38%,
+      rgba(0, 0, 0, 0.85) 42%,
+      transparent 47%
     ),
-    /* Photon-ring halo: thin vertical lensing loop above and below the
-       sphere. Uses the dark teal and dark blue end of the rainbow palette
-       so the halo reads cooler than the disk's violet/rose/amber stops. */
+    /* Thin bright photon ring just outside the event horizon. Uses a
+       warm cream tone to read as light that has grazed the sphere
+       before escaping. */
     radial-gradient(
-      ellipse 38% 72% at center,
-      transparent 36%,
-      rgba(15, 118, 110, 0.6) 40%,
-      rgba(30, 58, 138, 0.5) 47%,
+      circle at center,
+      transparent 42%,
+      rgba(255, 220, 180, 0.7) 45%,
+      rgba(159, 18, 57, 0.45) 49%,
       transparent 54%
     ),
-    /* Dark rainbow conic backdrop (same palette as the pre-hover orb so
-       the morph feels continuous; reads as the outer color cast of the
-       lensed light). */
+    /* Faint outer color cast (same dark rainbow palette as pre-hover orb)
+       so the morph feels continuous. */
     conic-gradient(
       from 200deg,
-      #1e3a8a 0deg,
-      #4c1d95 72deg,
-      #9f1239 144deg,
-      #854d0e 216deg,
-      #0f766e 288deg,
-      #1e3a8a 360deg
+      rgba(30, 58, 138, 0.4),
+      rgba(76, 29, 149, 0.4),
+      rgba(159, 18, 57, 0.4),
+      rgba(133, 77, 14, 0.4),
+      rgba(15, 118, 110, 0.4),
+      rgba(30, 58, 138, 0.4)
     );
   box-shadow:
     0 0 7px rgba(0, 0, 0, 0.85),
-    0 0 16px color-mix(in srgb, #4c1d95 55%, transparent),
-    0 0 28px color-mix(in srgb, #9f1239 30%, transparent),
-    0 0 40px color-mix(in srgb, #1e3a8a 18%, transparent),
+    0 0 16px color-mix(in srgb, #4c1d95 50%, transparent),
+    0 0 30px color-mix(in srgb, #9f1239 25%, transparent),
+    0 0 44px color-mix(in srgb, #1e3a8a 15%, transparent),
     inset 0 0 5px rgba(0, 0, 0, 0.95);
-  /* Sphere is static; halo is a fixed lensing artifact. No rotation. */
   animation: none;
 }
 
-/* Hover: ::after reveals as the static asymmetric disk. Subtle brightness
-   pulse on the bright (Doppler) side suggests matter-density variations
-   flowing along the orbit (not a rotation; the ring stays horizontal). */
+/* Hover: ::after reveals + flows. The conic angle rotates via @property,
+   making the dark rainbow colors flow through the static Gargantua
+   silhouette (matter orbiting at relativistic speeds; the ring shape
+   stays horizontal and static). */
 header .brand a strong:hover::after{
   opacity: 1;
-  animation: brandOrbDopplerPulse 5s ease-in-out infinite;
+  animation: brandOrbDiskFlow 4s linear infinite;
 }
 
-@keyframes brandOrbDopplerPulse{
-  0%, 100%{
-    filter: brightness(1) saturate(1);
-  }
-  50%{
-    filter: brightness(1.12) saturate(1.08);
-  }
+@keyframes brandOrbDiskFlow{
+  to{ --orb-disk-angle: 360deg; }
 }
 
 @media (prefers-reduced-motion: reduce){
