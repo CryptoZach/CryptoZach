@@ -36,6 +36,10 @@ concurrency:
 
 jobs:
   build:
+    # Skip on mirror repos (e.g., private archive at CryptoZach/Claude1) where
+    # GitHub Pages is not enabled. Without this guard, the deploy job 404s on
+    # any repo without Pages, producing failed-workflow noise on every push.
+    if: github.repository == 'CryptoZach/CryptoZach'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -76,6 +80,7 @@ jobs:
           path: ./_site
 
   deploy:
+    if: github.repository == 'CryptoZach/CryptoZach'
     needs: build
     runs-on: ubuntu-latest
     environment:
