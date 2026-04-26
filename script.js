@@ -2251,7 +2251,14 @@
     var mtxNextMeshNodeId = 1;
 
     var mtxMeshZoneTop = 0.82; /* bottom ~18%: persistent pad-mesh underlay */
-    var mtxSubmersionZoneTop = 0.76; /* lower ~24%: glyphs feel like they enter the mesh */
+    /* mtxSubmersionZoneTop was 0.76 (drew a blue control-layer band across
+       the lower 24% of the hero). Per author 2026-04-26: that band created
+       a visible "box cutting off hero animation" at the same horizontal
+       axis as the hero subtitle ("Eight papers across two tracks..."). Set
+       to 1.0 to push the submersion zone off-screen (the band is no longer
+       drawn; mesh interactions that gate on this threshold continue to
+       work below the visible hero). */
+    var mtxSubmersionZoneTop = 1.0;
     var mtxMeshMaxNodes = mtxReducedMotion ? 12 : (mtxIsMobile ? 25 : 60);
     var mtxMeshConnectionDist = mtxReducedMotion ? 28 : (mtxIsMobile ? 35 : 50);
     var mtxMeshReactRadius = mtxReducedMotion ? 22 : (mtxIsMobile ? 36 : 52);
@@ -4027,6 +4034,17 @@
     }
 
     function mtxDraw(ts){
+      // Pause matrix-canvas paint at extreme pinch-zoom (>2x). The matrix
+      // canvas redraws hundreds of glyph drops, mesh nodes, dollar magnets,
+      // submersion band gradients, and head-wake effects every frame. Under
+      // extreme zoom this overwhelms the GPU compositor and the sticky
+      // header's brand text intermittently fails to render on Safari. Loop
+      // continues to schedule (animation resumes instantly when the user
+      // zooms back out) but per-frame paint is skipped.
+      if (window.visualViewport && window.visualViewport.scale > 2) {
+        mtxRaf = requestAnimationFrame(mtxDraw);
+        return;
+      }
       var mtxIsActive = matrixContainer.classList.contains('active');
       if(!mtxIsActive && mtxDollarMag.length === 0){
         mtxReefIconBridge.points.length = 0;
