@@ -125,6 +125,10 @@ ROLE_DEFAULT_SCOPES: dict[str, list[str]] = {
         ".cursor/skills/",
         ".cursor/rules/",
         ".cursor/tasks/",
+        # Expanded 2026-04-25 per DEC-114 (architecture-doc subtree functionally
+        # canonical-state-of-record at a different filesystem location). Mirror of
+        # scripts/declare_session_scope.sh CANONICAL-WRITER case branch.
+        "handoff/architecture/",
     ],
     "SITE-EDITOR": [
         "papers/",
