@@ -15756,22 +15756,20 @@ header .brand a strong::before{
      ::before = event horizon + thin bright photon ring. STATIC.
      ::after  = conic-gradient (dark rainbow) MASKED to the Gargantua
                 silhouette (equatorial disk + top arch + bottom arch).
-                Uses CSS Houdini @property to animate the conic's
-                starting angle, so colors flow through the static mask
-                without rotating the visible silhouette.
+                Animated via GPU hue-rotate filter so colors cycle
+                through the static silhouette without rasterization
+                cost (avoids the conic-gradient-recompute-per-frame
+                pinch-zoom flicker that an @property animation produced
+                on Safari).
 
-   Browser support: @property animates in Chrome 85+, Edge 85+, Safari
-   16.4+, Firefox 128+. Older browsers fall back to a static colored
-   silhouette (still on-palette and on-shape). */
+   Browser support: hue-rotate filter is universal (CSS3 baseline). */
 
-@property --orb-disk-angle{
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-/* ::after = flowing accretion disk + halo arches. Hidden in base
-   (opacity 0); reveals + flows on hover. */
+/* ::after = the accretion disk + halo arches. Empty in base state (zero
+   rendering cost; no GPU layer, no conic-gradient compute, no mask
+   rasterization). All heavy rendering activates only on hover. This
+   prevents the disk's mask + conic-gradient from leaking through the
+   opacity:0 layer at extreme pinch-zoom on Safari (which was visible
+   as floating halo blobs without the central sphere). */
 header .brand a strong::after{
   content: "";
   position: absolute;
@@ -15781,34 +15779,7 @@ header .brand a strong::after{
   height: 26px;
   pointer-events: none;
   opacity: 0;
-  /* translate3d for cheap GPU layer promotion. (Removed
-     will-change / backface-visibility for the same Safari-extreme-zoom
-     reason as ::before above.) */
-  transform: translate3d(0, -50%, 0);
-  --orb-disk-angle: 0deg;
-  background: conic-gradient(
-    from var(--orb-disk-angle),
-    rgba(76, 29, 149, 0.95) 0deg,    /* dark violet */
-    rgba(159, 18, 57, 0.95) 72deg,   /* dark rose */
-    rgba(133, 77, 14, 0.92) 144deg,  /* dark amber */
-    rgba(15, 118, 110, 0.88) 216deg, /* dark teal */
-    rgba(30, 58, 138, 0.9) 288deg,   /* dark blue */
-    rgba(76, 29, 149, 0.95) 360deg   /* loop back to violet for seamless flow */
-  );
-  /* Composite mask: equatorial disk (thin horizontal across center) +
-     top halo arch (horizontal ellipse positioned above sphere) + bottom
-     halo arch (mirror below). The three combined silhouette is the
-     Gargantua shape; conic colors underneath flow through it. */
-  -webkit-mask-image:
-    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
-  mask-image:
-    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
+  transform: translateY(-50%);
   transition: opacity .35s ease;
 }
 
@@ -15856,17 +15827,43 @@ header .brand a strong:hover::before{
   animation: none;
 }
 
-/* Hover: ::after reveals + flows. The conic angle rotates via @property,
-   making the dark rainbow colors flow through the static Gargantua
-   silhouette (matter orbiting at relativistic speeds; the ring shape
-   stays horizontal and static). */
+/* Hover: ::after reveals as the Gargantua silhouette + flows via a
+   GPU-accelerated hue-rotate filter (cheap compositor operation, no
+   per-frame paint). The original @property approach animated the conic-
+   gradient's start angle, which forced a per-frame conic-gradient
+   recompute and rasterization; at extreme pinch-zoom that thrashed
+   neighbor text rasterization on Safari, producing visible flicker.
+   hue-rotate accomplishes the same "color flowing through the disk"
+   effect via the GPU compositor without re-painting the conic. */
 header .brand a strong:hover::after{
   opacity: 1;
-  animation: brandOrbDiskFlow 4s linear infinite;
+  background: conic-gradient(
+    from 0deg,
+    rgba(76, 29, 149, 0.95) 0deg,    /* dark violet */
+    rgba(159, 18, 57, 0.95) 72deg,   /* dark rose */
+    rgba(133, 77, 14, 0.92) 144deg,  /* dark amber */
+    rgba(15, 118, 110, 0.88) 216deg, /* dark teal */
+    rgba(30, 58, 138, 0.9) 288deg,   /* dark blue */
+    rgba(76, 29, 149, 0.95) 360deg   /* loop back to violet */
+  );
+  /* Composite mask: equatorial disk + top halo arch + bottom halo arch.
+     The three combined silhouette is the Gargantua shape. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  animation: brandOrbDiskHueFlow 8s linear infinite;
 }
 
-@keyframes brandOrbDiskFlow{
-  to{ --orb-disk-angle: 360deg; }
+@keyframes brandOrbDiskHueFlow{
+  from{ filter: hue-rotate(0deg); }
+  to{ filter: hue-rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -15874,6 +15871,7 @@ header .brand a strong:hover::after{
   header .brand a strong:hover::before,
   header .brand a strong:hover::after{
     animation: none;
+    filter: none;
   }
 }
 
