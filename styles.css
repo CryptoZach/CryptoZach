@@ -262,6 +262,12 @@ header.scrolled{
   min-width:0;
   color:inherit;
   border-radius:var(--radius-sm);
+  /* Breathing room on the left of the orb so the disk envelope's wing-tip
+     extension (::after at left:-10px relative to the strong) does not
+     clip against the header / brand-container boundary on hover. Subtitle
+     moves right by the same amount, preserving its alignment with the
+     orb's leftmost visible extent. */
+  padding-left:14px;
 }
 .brand a:focus-visible{
   outline:2px solid var(--accent);
@@ -15646,7 +15652,10 @@ header .navlink.active::after{
    extra HTML. */
 header .brand a strong{
   position: relative;
-  padding-left: 16px;
+  /* Padding-left holds the orb area; bumped from 16px so the disk envelope's
+     right edge (::after extends to ~22px from strong's left) clears the
+     start of "Tokenization Systems" by ~6px instead of overlapping. */
+  padding-left: 28px;
 }
 
 /* Brand orb: dark rainbow aura with pseudo-3D lighting. Conic-gradient
