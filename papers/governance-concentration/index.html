@@ -222,51 +222,51 @@
         <p><strong>Implication</strong><br />Protocol designers and DAO researchers should stop using initial allocation as the primary lever for governance health. The institutional-design variables that matter are insider retention policy, delegation architecture, and protocol-controlled treasury exclusion. Sector-level priors are real and worth instrumenting before allocation tweaks.</p>
       </aside>
 
-      <section class="paper-artifact">
-        <h2>Five-lens institutional-design framework</h2>
-        <table class="artifact-table">
-          <thead>
-            <tr>
-              <th>Lens</th>
-              <th>What it asks</th>
-              <th>Operationalized as</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Kantian publicity</strong></td>
-              <td>Are the rules public, predictable, and applied uniformly?</td>
-              <td>Disclosure quality; equal access to governance information</td>
-            </tr>
-            <tr>
-              <td><strong>Rawlsian legitimacy</strong></td>
-              <td>Do the rules protect the least advantaged participants?</td>
-              <td>Quorum design; minority-protection mechanisms; fair allocation rules</td>
-            </tr>
-            <tr>
-              <td><strong>Pettit non-domination</strong></td>
-              <td>Can any single actor dominate decisions or impose arbitrary will?</td>
-              <td>Concentration measurements (HHI, Gini); single-actor veto capacity</td>
-            </tr>
-            <tr>
-              <td><strong>Ostromian polycentricity</strong></td>
-              <td>Are governance responsibilities distributed across multiple centers?</td>
-              <td>Multi-body design; delegation patterns; jurisdictional boundaries</td>
-            </tr>
-            <tr>
-              <td><strong>Hayekian knowledge-use</strong></td>
-              <td>Does the system use local and dispersed knowledge effectively?</td>
-              <td>Information aggregation; local-decision rights; market signals</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="artifact-note">Each protocol scored 0 to 2 per dimension (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by frequency in the v5 manuscript (22 in-text citations).</p>
-      </section>
-
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p class="dropcap">Most empirical work on token-protocol governance focuses on initial token allocation as the predictive variable. The intuition: how tokens are distributed at launch determines how decisions are made later. This paper challenges that intuition with a 40-protocol cross-sectional dataset and finds the bivariate correlation between allocation design and observed governance concentration is null. The lead-finding framing is therefore "allocation design null plus four supporting findings", not the earlier "universal covariate null" framing that overgeneralized the result.</p>
         <p>The paper also operationalizes a five-lens institutional-design framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use). Each lens generates testable propositions about which design features should reduce concentration. The combined analysis is structural: the paper measures whether the design features each lens recommends actually correlate with the concentration outcomes the lens predicts.</p>
+
+        <section class="paper-artifact">
+          <h2>Five-lens institutional-design framework</h2>
+          <table class="artifact-table">
+            <thead>
+              <tr>
+                <th>Lens</th>
+                <th>What it asks</th>
+                <th>Operationalized as</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Kantian publicity</strong></td>
+                <td>Are the rules public, predictable, and applied uniformly?</td>
+                <td>Disclosure quality; equal access to governance information</td>
+              </tr>
+              <tr>
+                <td><strong>Rawlsian legitimacy</strong></td>
+                <td>Do the rules protect the least advantaged participants?</td>
+                <td>Quorum design; minority-protection mechanisms; fair allocation rules</td>
+              </tr>
+              <tr>
+                <td><strong>Pettit non-domination</strong></td>
+                <td>Can any single actor dominate decisions or impose arbitrary will?</td>
+                <td>Concentration measurements (HHI, Gini); single-actor veto capacity</td>
+              </tr>
+              <tr>
+                <td><strong>Ostromian polycentricity</strong></td>
+                <td>Are governance responsibilities distributed across multiple centers?</td>
+                <td>Multi-body design; delegation patterns; jurisdictional boundaries</td>
+              </tr>
+              <tr>
+                <td><strong>Hayekian knowledge-use</strong></td>
+                <td>Does the system use local and dispersed knowledge effectively?</td>
+                <td>Information aggregation; local-decision rights; market signals</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="artifact-note">Each protocol scored 0 to 2 per dimension (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by frequency in the v5 manuscript (22 in-text citations).</p>
+        </section>
 
         <h2>Core findings</h2>
 
@@ -354,6 +354,9 @@
           <li>External aggregator benchmarks for DePIN protocols may not always align with the paper's on-chain measurements where protocol-native fee structures are involved; the paper preserves on-chain values as the primary read for the DePIN subset.</li>
           <li>Insider-retention proxies are constructed from holder-pattern analysis; a richer dataset (off-chain governance participation, signed proposals) would sharpen the mechanism claim in finding 3.</li>
         </ul>
+
+        <h2>Related frameworks</h2>
+        <p>The five-lens institutional-design framework (Kantian publicity, Rawlsian floor protection, Pettit non-domination, Ostromian polycentricity, Hayekian dispersed knowledge) is the methodological contribution. <a href="/papers/routing-the-dollar">Routing the Dollar</a> introduces the Control Layer Intensity Index (CLII); <a href="/papers/mvep">MVEP</a> introduces the ten-category product diligence framework. Both are referenced in calibration as cross-sectional control-layer measurement instruments.</p>
 
         <h2>Related role profiles</h2>
         <p>This paper supports protocol-design and governance-research audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>

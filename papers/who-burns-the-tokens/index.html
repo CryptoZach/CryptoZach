@@ -210,50 +210,50 @@
         <p><strong>Implication</strong><br />GeoDePIN protocol designers should pick burn-mechanism architecture before network bootstrap, because it determines the fiscal-sustainability path more than network size does. Token-fund analysts evaluating a GeoDePIN should treat S2R trajectory (not S2R level) and demand-concentration HHI as separate diligence questions; demand dispersion does not extend to governance dispersion.</p>
       </aside>
 
-      <section class="paper-artifact">
-        <h2>Burn-mechanism design comparison</h2>
-        <table class="artifact-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Helium (carrier-contract burns)</th>
-              <th>GEODNET (subscription burns)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Demand-side concentration</strong></td>
-              <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
-              <td>Top-5 = 40.4% of burns; HHI 0.055</td>
-            </tr>
-            <tr>
-              <td><strong>Operating S2R</strong></td>
-              <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
-              <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
-            </tr>
-            <tr>
-              <td><strong>BME phase as of late 2025</strong></td>
-              <td>Crossed parity in November 2025; net-deflationary</td>
-              <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
-            </tr>
-            <tr>
-              <td><strong>Governance concentration</strong></td>
-              <td>Documented but not the primary focus</td>
-              <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
-            </tr>
-            <tr>
-              <td><strong>Distinctive design primitive</strong></td>
-              <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
-              <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p class="dropcap">Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
         <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It also uses the Ostromian polycentricity framing from Governance Concentration, but it is not a philosophy paper; the broader five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) is developed in Governance Concentration.</p>
+
+        <section class="paper-artifact">
+          <h2>Burn-mechanism design comparison</h2>
+          <table class="artifact-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Helium (carrier-contract burns)</th>
+                <th>GEODNET (subscription burns)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Demand-side concentration</strong></td>
+                <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
+                <td>Top-5 = 40.4% of burns; HHI 0.055</td>
+              </tr>
+              <tr>
+                <td><strong>Operating S2R</strong></td>
+                <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
+                <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
+              </tr>
+              <tr>
+                <td><strong>BME phase as of late 2025</strong></td>
+                <td>Crossed parity in November 2025; net-deflationary</td>
+                <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
+              </tr>
+              <tr>
+                <td><strong>Governance concentration</strong></td>
+                <td>Documented but not the primary focus</td>
+                <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
+              </tr>
+              <tr>
+                <td><strong>Distinctive design primitive</strong></td>
+                <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
+                <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
 
         <h2>Core findings</h2>
 
@@ -342,9 +342,10 @@
           <li>SuperHex is a novel design primitive; the paper documents it but does not evaluate it against alternative spatial-staking designs (because none currently exist at comparable scale).</li>
           <li>Demand-concentration measurements are a snapshot of the study window and may shift as either network's demand mix evolves.</li>
         </ul>
+        <p><strong>Maintenance.</strong> When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
 
-        <h2>Maintenance plan</h2>
-        <p>When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
+        <h2>Related frameworks</h2>
+        <p><a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> develops the protocol-controlled-address exclusion methodology this paper applies, and the five-lens institutional-design framework. <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a> introduces the burn-mint equilibrium framework as a long-run sustainability metric.</p>
 
         <h2>Related role profiles</h2>
         <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>

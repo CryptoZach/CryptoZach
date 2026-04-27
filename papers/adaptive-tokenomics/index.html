@@ -224,83 +224,6 @@
         <figcaption>Discipline map for adaptive tokenomics: where mechanism design, control theory, and protocol engineering intersect, and what each contributes that the others cannot.</figcaption>
       </figure>
 
-      <section class="paper-artifact">
-        <h2>Parameter calibration: MeshNet vs. real DePIN networks</h2>
-        <p class="artifact-note">MeshNet is fictional; its parameterization is drawn from operational DePIN networks. Source: Zukowski (2026), Adaptive Tokenomics, Appendix A.</p>
-        <table class="artifact-table">
-          <thead>
-            <tr><th>Parameter</th><th>MeshNet</th><th>Helium (observed)</th><th>Filecoin (observed)</th><th>Source</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Hardware CAPEX per node</td>
-              <td>$300-500</td>
-              <td>$400-600 (hotspot)</td>
-              <td>$5K-50K (sealing rig)</td>
-              <td>Manufacturer pricing, 2025</td>
-            </tr>
-            <tr>
-              <td>Network contraction</td>
-              <td>Behavioral exit probabilities</td>
-              <td>~76% decline from peak (Q1 2023 to late 2025)</td>
-              <td>~8-15% annual provider attrition</td>
-              <td>Messari; ByteTree 2025</td>
-            </tr>
-            <tr>
-              <td>Fee Revenue / Emission Value</td>
-              <td>&lt;1% (bootstrap)</td>
-              <td>&lt;5% (2024-2025)</td>
-              <td>~10-30% (2025)</td>
-              <td>Protocol dashboards</td>
-            </tr>
-            <tr>
-              <td>Governance participation</td>
-              <td>Reputation-weighted</td>
-              <td>~2-5% of HNT holders vote</td>
-              <td>~1-3% of FIL holders participate</td>
-              <td>Governance portal data</td>
-            </tr>
-            <tr>
-              <td>Token concentration (Gini)</td>
-              <td>0.89 (token-weighted)</td>
-              <td>0.91 (HNT)</td>
-              <td>0.88 (FIL)</td>
-              <td>Dune Analytics, Jan 2026</td>
-            </tr>
-            <tr>
-              <td>OU mean reversion (kappa)</td>
-              <td>2.82</td>
-              <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
-              <td>calibration.py</td>
-            </tr>
-            <tr>
-              <td>OU volatility (sigma)</td>
-              <td>0.049</td>
-              <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
-              <td>calibration.py</td>
-            </tr>
-          </tbody>
-        </table>
-        <h3>Key simulation parameters</h3>
-        <table class="artifact-table">
-          <thead>
-            <tr><th>Parameter</th><th>Baseline</th><th>Sweep range</th><th>Source</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>PID proportional gain (Kp)</td><td>0.8</td><td>[0.2, 0.4, 0.6, 0.8, 1.0]</td><td>Tuned for stability</td></tr>
-            <tr><td>PID integral gain (Ki)</td><td>0.15</td><td>[0.05, 0.10, 0.15, 0.25, 0.35]</td><td>Tuned for stability</td></tr>
-            <tr><td>PID derivative gain (Kd)</td><td>0.2</td><td>[0.05, 0.10, 0.20, 0.30, 0.40]</td><td>Tuned for stability</td></tr>
-            <tr><td>Emission Floor / Ceiling</td><td>0.25x / 3.0x base</td><td>n/a</td><td>Design choice</td></tr>
-            <tr><td>Evaluation interval</td><td>14 days</td><td>[7, 14, 21, 30]</td><td>Governance cycle</td></tr>
-            <tr><td>Downtime slashing</td><td>0.10</td><td>[0.05, 0.10, 0.15, 0.20]</td><td>Helium denylist severity</td></tr>
-            <tr><td>Fraud slashing</td><td>1.00</td><td>[0.50, 0.75, 1.00]</td><td>Full-loss design</td></tr>
-            <tr><td>Minimum stake</td><td>10,000 $MESH</td><td>n/a</td><td>DePIN CAPEX range</td></tr>
-            <tr><td>Node count target (N*)</td><td>10,000</td><td>n/a</td><td>Design choice</td></tr>
-          </tbody>
-        </table>
-        <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration source URLs (manufacturer pricing, Messari, ByteTree, Dune Analytics) pending verification with stable references; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.</p>
-      </section>
-
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p class="dropcap">Most tokenomics analysis evaluates mechanisms one at a time: staking, emissions, burns, or governance. This paper shifts the unit of analysis to the full system. MeshNet, a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET), combines five mechanism layers (productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and adaptive emissions) and measures what happens when they interact under stress.</p>
@@ -311,6 +234,83 @@
           <li>Constitutional protections affect economic resilience: the operator veto creates a deliberate split between constitutional authority and controller discretion, and the interaction between governance structure and economic mechanism is visible only in the combined system.</li>
         </ul>
         <p>These compound findings do not appear when mechanisms are analyzed in isolation.</p>
+
+        <section class="paper-artifact">
+          <h2>Parameter calibration: MeshNet vs. real DePIN networks</h2>
+          <p class="artifact-note">MeshNet is fictional; its parameterization is drawn from operational DePIN networks. Source: Zukowski (2026), Adaptive Tokenomics, Appendix A.</p>
+          <table class="artifact-table">
+            <thead>
+              <tr><th>Parameter</th><th>MeshNet</th><th>Helium (observed)</th><th>Filecoin (observed)</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hardware CAPEX per node</td>
+                <td>$300-500</td>
+                <td>$400-600 (hotspot)</td>
+                <td>$5K-50K (sealing rig)</td>
+                <td>Manufacturer pricing, 2025</td>
+              </tr>
+              <tr>
+                <td>Network contraction</td>
+                <td>Behavioral exit probabilities</td>
+                <td>~76% decline from peak (Q1 2023 to late 2025)</td>
+                <td>~8-15% annual provider attrition</td>
+                <td>Messari; ByteTree 2025</td>
+              </tr>
+              <tr>
+                <td>Fee Revenue / Emission Value</td>
+                <td>&lt;1% (bootstrap)</td>
+                <td>&lt;5% (2024-2025)</td>
+                <td>~10-30% (2025)</td>
+                <td>Protocol dashboards</td>
+              </tr>
+              <tr>
+                <td>Governance participation</td>
+                <td>Reputation-weighted</td>
+                <td>~2-5% of HNT holders vote</td>
+                <td>~1-3% of FIL holders participate</td>
+                <td>Governance portal data</td>
+              </tr>
+              <tr>
+                <td>Token concentration (Gini)</td>
+                <td>0.89 (token-weighted)</td>
+                <td>0.91 (HNT)</td>
+                <td>0.88 (FIL)</td>
+                <td>Dune Analytics, Jan 2026</td>
+              </tr>
+              <tr>
+                <td>OU mean reversion (kappa)</td>
+                <td>2.82</td>
+                <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
+                <td>calibration.py</td>
+              </tr>
+              <tr>
+                <td>OU volatility (sigma)</td>
+                <td>0.049</td>
+                <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
+                <td>calibration.py</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Key simulation parameters</h3>
+          <table class="artifact-table">
+            <thead>
+              <tr><th>Parameter</th><th>Baseline</th><th>Sweep range</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>PID proportional gain (Kp)</td><td>0.8</td><td>[0.2, 0.4, 0.6, 0.8, 1.0]</td><td>Tuned for stability</td></tr>
+              <tr><td>PID integral gain (Ki)</td><td>0.15</td><td>[0.05, 0.10, 0.15, 0.25, 0.35]</td><td>Tuned for stability</td></tr>
+              <tr><td>PID derivative gain (Kd)</td><td>0.2</td><td>[0.05, 0.10, 0.20, 0.30, 0.40]</td><td>Tuned for stability</td></tr>
+              <tr><td>Emission Floor / Ceiling</td><td>0.25x / 3.0x base</td><td>n/a</td><td>Design choice</td></tr>
+              <tr><td>Evaluation interval</td><td>14 days</td><td>[7, 14, 21, 30]</td><td>Governance cycle</td></tr>
+              <tr><td>Downtime slashing</td><td>0.10</td><td>[0.05, 0.10, 0.15, 0.20]</td><td>Helium denylist severity</td></tr>
+              <tr><td>Fraud slashing</td><td>1.00</td><td>[0.50, 0.75, 1.00]</td><td>Full-loss design</td></tr>
+              <tr><td>Minimum stake</td><td>10,000 $MESH</td><td>n/a</td><td>DePIN CAPEX range</td></tr>
+              <tr><td>Node count target (N*)</td><td>10,000</td><td>n/a</td><td>Design choice</td></tr>
+            </tbody>
+          </table>
+          <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration source URLs (manufacturer pricing, Messari, ByteTree, Dune Analytics) pending verification with stable references; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.</p>
+        </section>
 
         <hr class="section-ornament" aria-hidden="true">
 
@@ -338,7 +338,7 @@
 
         <hr class="section-ornament" aria-hidden="true">
 
-        <h2>Methods / Data</h2>
+        <h2>Methods and data</h2>
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
         <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
@@ -366,6 +366,9 @@
           <p><strong>Governance concentration (modeled setup)</strong><br>
           Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the simulated MeshNet setup. Cross-sectional empirical governance concentration patterns are addressed in the companion paper <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>; see that paper for the 40-protocol DePIN vs DeFi comparison and the exclusion methodology.</p>
         </div>
+
+        <h2>Related frameworks</h2>
+        <p><a href="/papers/operational-risk">Operational Risk in Token Economies</a> extends this simulation with a calibrated operational-risk layer (ValOS + NORS). <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> addresses the cross-sectional governance question this paper references in calibration. The MeshNet parameterization draws on Helium and Filecoin observed values.</p>
 
         <h2>Related role profiles</h2>
         <p>Track B work supports protocol and token-design audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>

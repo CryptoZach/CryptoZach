@@ -219,36 +219,6 @@
         <figcaption>ValOS and NORS operational-risk standards compared: 74 active ValOS risk vectors plus 64 testable controls, alongside 31 NORS control objectives, mapped to seven simulatable parameters.</figcaption>
       </figure>
 
-      <section class="paper-artifact">
-        <h2>Key comparison</h2>
-        <table class="artifact-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>PID emission controller</th>
-              <th>Reputation-weighted governance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Under infrastructure shock</strong></td>
-              <td>Compresses variance; overcompensation builds pre-shock buffer</td>
-              <td>Collapses when uptime threshold exceeds the operator base's operational floor</td>
-            </tr>
-            <tr>
-              <td><strong>Failure mode</strong></td>
-              <td>Integral wind-up under sustained demand contraction (from the baseline MeshNet paper)</td>
-              <td>Threshold-gated collapse: 36% of operators lose recovery eligibility per season at 0.99 uptime</td>
-            </tr>
-            <tr>
-              <td><strong>Design implication</strong></td>
-              <td>Anti-windup clamping; regime-change detection</td>
-              <td>Lower the recovery threshold (0.95 restores a workable floor); independent monitoring</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p class="dropcap">Most token simulations model why operators leave for economic reasons (price decline, insufficient rewards, competitive alternatives). This paper asks what happens when operators are still economically viable but suffer real production failures: outages, key loss, software bugs, correlated infrastructure incidents, or regulatory disruption.</p>
@@ -260,6 +230,36 @@
           <li><strong>Bull conditions:</strong> Outcomes are effectively identical.</li>
         </ul>
         <p>The beneficial effect is parameterization-dependent. At higher operational-risk levels or higher failure correlation, the buffer can erode and may eventually overshoot into the dilution loop identified in the earlier MeshNet paper.</p>
+
+        <section class="paper-artifact">
+          <h2>Key comparison</h2>
+          <table class="artifact-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>PID emission controller</th>
+                <th>Reputation-weighted governance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Under infrastructure shock</strong></td>
+                <td>Compresses variance; overcompensation builds pre-shock buffer</td>
+                <td>Collapses when uptime threshold exceeds the operator base's operational floor</td>
+              </tr>
+              <tr>
+                <td><strong>Failure mode</strong></td>
+                <td>Integral wind-up under sustained demand contraction (from the baseline MeshNet paper)</td>
+                <td>Threshold-gated collapse: 36% of operators lose recovery eligibility per season at 0.99 uptime</td>
+              </tr>
+              <tr>
+                <td><strong>Design implication</strong></td>
+                <td>Anti-windup clamping; regime-change detection</td>
+                <td>Lower the recovery threshold (0.95 restores a workable floor); independent monitoring</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
 
         <h2>Core findings</h2>
         <h3>1. Temporary outages can make adaptive emission more stabilizing</h3>
@@ -280,7 +280,7 @@
 
         <hr class="section-ornament" aria-hidden="true">
 
-        <h2>Methods / Data</h2>
+        <h2>Methods and data</h2>
         <p>The simulation battery comprises approximately 624 runs:</p>
         <ul>
           <li><strong>240 baseline runs</strong> (from the Adaptive Tokenomics paper)</li>
@@ -325,6 +325,9 @@
           <li>Cross-chain operational-risk correlation is not modeled; each chain's failure profile is tested independently.</li>
           <li>Welfare analysis (whether the operational-risk buffer is socially efficient or just stabilizing) remains an open extension.</li>
         </ul>
+
+        <h2>Related frameworks</h2>
+        <p><a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a> is the baseline MeshNet simulation this paper extends with operational risk. ValOS (Validator Operating System) and NORS (Alluvial's Node Operator Risk Standard) are the operator-risk taxonomies the paper translates into simulatable parameters. Lido V3 stVaults (Ethereum mainnet, December 2025) demonstrate ValOS-aligned risk-tier-to-collateral mapping in production.</p>
 
         <h2>Related role profiles</h2>
         <p>Track B work supports protocol and infrastructure audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
