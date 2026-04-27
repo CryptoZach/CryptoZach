@@ -205,6 +205,14 @@
         </div>
       </div>
 
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />Do adaptive emission controllers actually outperform static schedules, or is the engineering complexity unjustified?</p>
+        <p><strong>Answer</strong><br />They outperform conditionally. PID-controlled emissions compress worst-case node-count variance by 6x under competitor shock and sustain 8,880 nodes at the 5th percentile versus 1,049 under static emission. Bull markets produce identical outcomes. Sustained demand contraction can flip the result: the controller treats a demand-side problem with a supply-side lever, producing a dilution feedback loop that no single-mechanism analysis predicts.</p>
+        <p><strong>Evidence base</strong><br />240-run ensemble (30 seeds &times; 8 configurations) plus 566 sensitivity runs across PID gains, slashing, cadence, and Ki-Kd interaction. MeshNet is fictional but parameterized from Helium hardware economics, Filecoin collateral ratios, and the B2 (Governance Concentration) cohort; results are mechanism demonstrations, not deployment forecasts.</p>
+        <p><strong>Implication</strong><br />Protocol designers should treat adaptive emissions as insurance against contraction shocks, not as a universal optimizer. Anti-windup clamping with regime-change detection is the engineering fix for the demand-contraction failure mode. An alternative approach is to denominate operator rewards in a stable unit so token-price movements stop reducing real compensation, and the dilution loop cannot form. Single-seed runs mask path-dependent tail risk: in this paper, seed=42 produced a misleadingly optimistic bear outcome that only the 240-run ensemble revealed as near-total collapse on other paths. Ensemble methods are required.</p>
+      </aside>
+
       <figure class="paper-cover">
         <picture><source type="image/webp" srcset="/Publication-Images/exhibit_01_discipline_map.webp" /><img src="/Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Discipline map locating tokenomics in the design space between mechanism design, control theory, and protocol engineering" loading="lazy" /></picture>
         <figcaption>Discipline map for adaptive tokenomics: where mechanism design, control theory, and protocol engineering intersect, and what each contributes that the others cannot.</figcaption>

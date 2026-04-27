@@ -204,6 +204,14 @@
         </div>
       </div>
 
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />How does adding production-grade infrastructure failure to a token-economy simulation change which mechanisms work?</p>
+        <p><strong>Answer</strong><br />Split finding. Temporary infrastructure failures strengthen adaptive emission control (variance compression improves from 6.25x to 6.89x) because the controller misreads outages as permanent operator exits and over-rewards. Threshold-gated reputation systems collapse: at the default 99% uptime threshold over a 90-day season, average reputation decays to 0.18 on a 0-to-5 scale by simulation year 5.</p>
+        <p><strong>Evidence base</strong><br />624-configuration battery extending the MeshNet simulation. Operational-risk parameters calibrated from Ethereum, Helium, GEODNET, and Filecoin outage rates. ValOS (74 active risk vectors, 64 testable controls) and NORS (31 control objectives) collapsed into 7 simulatable parameters. Validated against Lido V3 stVaults (Ethereum mainnet, December 2025) as a production case study: stVaults set each operator's collateral requirements based on risk-tier assignment, demonstrating that ValOS-aligned risk scoring already governs economic outcomes on a live network. The paper's macro-level adaptive emissions and stVaults' micro-level capital-efficiency feedback are different layers of the same risk-to-economics chain.</p>
+        <p><strong>Implication</strong><br />Reputation-system designers must specify the recovery threshold explicitly. Lowering it from 0.99 to 0.95 restores stability; changing decay rate alone does not. The methods bridge from operator-risk standards to calibrated simulation is the reusable contribution for downstream tokenomics work.</p>
+      </aside>
+
       <figure class="paper-cover">
         <img src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Side-by-side comparison of ValOS active risk vectors and NORS control objectives" loading="lazy" />
         <figcaption>ValOS and NORS operational-risk standards compared: 74 active ValOS risk vectors plus 64 testable controls, alongside 31 NORS control objectives, mapped to seven simulatable parameters.</figcaption>
