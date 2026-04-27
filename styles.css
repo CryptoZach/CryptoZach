@@ -14223,12 +14223,12 @@ header.scrolled {
    class rules. Append-only. No existing rules modified.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Paper access block: richer CTA card treatment.
-   The block hosts the primary SSRN CTA + secondary X thread + tertiary
-   GitHub/contact links. Elevate its visual weight to match its functional
-   importance (it is the paper's action-layer call). */
+/* Paper access block: compact CTA card.
+   Hosts the primary read CTA (SSRN/Medium) + secondary actions (Discuss
+   paper, X thread, real GitHub link, companion link). Visual weight is
+   restrained: the block is functional, not a hero element. */
 .paper-access-block.access-block{
-  padding: var(--space-lg) var(--space-xl);
+  padding: 1rem 1.5rem;
   border: 1px solid color-mix(in srgb, var(--line) 120%, transparent);
   border-left: 3px solid var(--accent-cta, #2563eb);
   border-radius: 0 var(--radius) var(--radius) 0;
@@ -14243,22 +14243,27 @@ header.scrolled {
 .paper-access-block.access-block::before{
   content: "Read the paper";
   position: absolute;
-  top: 10px;
-  left: var(--space-xl);
-  font-size: 0.65rem;
+  top: 0.55rem;
+  left: 1.5rem;
+  font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-cta, #2563eb);
-  opacity: 0.9;
+  opacity: 0.85;
 }
 .paper-access-block.access-block .access-primary{
-  margin-top: var(--space-sm);
+  margin-top: 0.85rem;
   gap: var(--space-sm) var(--space-md);
 }
 .paper-access-block.access-block .access-secondary{
-  padding-top: var(--space-xs);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
   border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  font-size: 0.85rem;
+}
+.paper-access-block.access-block .access-secondary:empty{
+  display: none;
 }
 
 /* At-a-glance aside: stronger eyebrow + more generous interior breathing room. */
