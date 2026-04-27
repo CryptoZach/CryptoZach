@@ -14506,10 +14506,15 @@ header.scrolled {
 }
 
 /* Paper-thesis: tighten typography; visible "Thesis" eyebrow */
-.paper-thesis{
+.paper-thesis,
+.paper-detail .paper-thesis,
+.paper-page .paper-thesis{
   position: relative;
   /* Reserve space above the box for the Thesis eyebrow so it does
-     not overlap the .date-note line directly above. */
+     not overlap the .date-note / paper-description-note line
+     directly above. Higher-specificity selectors override the
+     `.paper-detail .paper-thesis { margin: 0 ... }` reset at
+     line 8669. */
   margin-top: var(--space-xl);
 }
 .paper-thesis::before{
