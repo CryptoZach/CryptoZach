@@ -108,6 +108,33 @@ async function checkMvepChecklist(page, viewportLabel, viewportWidth) {
   return { ok: true };
 }
 
+async function checkActionBarTapTargets(page) {
+  // iOS HIG minimum tap target is 44pt (~44px). Only meaningful at the
+  // mobile breakpoint where .paper-action-bar-btn.action gets the smaller
+  // padding (@media max-width: 600px); above that, the desktop padding
+  // already exceeds 44px naturally.
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.5));
+  await page.waitForTimeout(500); // let .visible class apply
+  return page.evaluate(() => {
+    const bar = document.querySelector(".paper-action-bar");
+    if (!bar) return { ok: true }; // no action bar on this page
+    const cs = getComputedStyle(bar);
+    if (cs.display === "none" || cs.visibility === "hidden") return { ok: true };
+    const taps = bar.querySelectorAll("a, button");
+    const small = [];
+    taps.forEach((t) => {
+      const r = t.getBoundingClientRect();
+      if (r.width < 44 || r.height < 44) {
+        small.push(`${(t.innerText || "").slice(0, 24).trim()} (${Math.round(r.width)}x${Math.round(r.height)})`);
+      }
+    });
+    if (small.length > 0) {
+      return { ok: false, msg: `action-bar tap target(s) below 44px: ${small.join(", ")}` };
+    }
+    return { ok: true };
+  });
+}
+
 async function checkResearchCardsNoOverflow(page, viewportWidth) {
   const overflow = await page.evaluate((vw) => {
     const cards = document.querySelectorAll(".writing-card");
@@ -170,6 +197,12 @@ async function run() {
           const mvep = await checkMvepChecklist(page, vp.label, vp.width);
           if (!mvep.ok) {
             failures.push({ viewport: vp.label, page: name, assertion: mvep.msg || "mvep checklist" });
+          }
+          if (vp.width <= 600) {
+            const tap = await checkActionBarTapTargets(page);
+            if (!tap.ok) {
+              failures.push({ viewport: vp.label, page: name, assertion: tap.msg });
+            }
           }
         }
       }
