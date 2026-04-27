@@ -8117,15 +8117,15 @@ footer.site-footer .footer-tagline{
 }
 
 /* In compact pill/chip/badge contexts the small-caps + tracking + weight
-   on .term reads as visual noise rather than editorial markup (and the
-   tracking compounds with chip letter-spacing to produce visible gaps
-   around the term). Suppress the typographic treatment; keep the accent
-   color so the term still reads as a defined identifier / link. */
+   on .term reads as visual noise rather than editorial markup. Suppress
+   the typographic treatment if the auto-wrapper picks up a term inside
+   one of these contexts. (The hero proof chip uses .chip-link--accent
+   directly in source for GENIUS to avoid the JS-wrap ambiguity entirely.) */
 .hero-proof-chip .term,
 .badge .term,
 .badge-sm .term{
   font-variant-caps: normal;
-  letter-spacing: inherit;
+  letter-spacing: 0;
   font-weight: inherit;
   font-size: inherit;
 }
@@ -8135,16 +8135,14 @@ footer.site-footer .footer-tagline{
   border-bottom: none;
 }
 
-/* The hero proof chip has #hero.hero--homepage .hero-proof-strip
-   .hero-proof-chip a { color: inherit } which forces every link inside
-   the chip to chip-text color (white in dark, muted in light). For our
-   .term-link inside the chip we want full accent blue so GENIUS reads
-   as a clearly distinct linked identifier. Match specificity to override. */
-#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.term.term-link{
+/* Explicit accent-color link inside hero proof chips (e.g., the GENIUS
+   link to the Medium overview article). Matches specificity of the
+   chip's existing `a { color: inherit }` rule and overrides it. */
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.chip-link--accent{
   color: var(--accent);
   text-decoration-color: var(--accent);
 }
-#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.term.term-link:hover{
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.chip-link--accent:hover{
   color: var(--accent-hover);
   text-decoration-color: var(--accent-hover);
 }
