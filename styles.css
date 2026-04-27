@@ -5934,6 +5934,13 @@ body.contact-page .speaker-hero-headshot-wrap{
 body.contact-page .speaker-headshot--hero{
   margin-inline:auto;
 }
+
+/* Tighten the gap between the header and the headshot on the speaker
+   page so it matches the contact page. The default main padding-top
+   of var(--space-xl) leaves visibly more headroom than /contact. */
+body.speaker-page main{
+  padding-top:var(--space-md);
+}
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
 #core-frameworks .grid.grid--halves > .card > .framework-related-paper{
   margin-top:auto;
