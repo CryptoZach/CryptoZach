@@ -271,7 +271,7 @@
 
         <h3>4. GEODNET governance is more concentrated than its demand profile</h3>
         <p>Despite the dispersed demand side, GEODNET's on-chain governance concentrates: HHI 0.14 across active voters. The team wallet alone accounts for 25.3% of Polygon-side voting power. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution.</p>
-        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see the Token Terminal DePIN measurement error finding documented in Governance Concentration).</p>
+        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially derived from external aggregators (see the on-chain-data-preferred methodology note in Governance Concentration).</p>
 
         <h3>5. SuperHex as a novel design primitive</h3>
         <p>GEODNET's SuperHex mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives directly to coverage geography. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as worth instrumenting as a separate design dimension worth studying in other GeoDePIN networks.</p>
@@ -317,7 +317,7 @@
           <p><strong>DIMO (post-exclusion)</strong><br>
           HHI 0.038 · GnosisSafeL2 holding ~44% excluded as protocol-controlled · 643% HHI delta if exclusion skipped</p>
           <p><strong>Filecoin S2R</strong><br>
-          0.045 (cross-section reference only; partially Token Terminal-derived; the Token Terminal DePIN measurement error is documented in Governance Concentration)</p>
+          0.045 (cross-section reference only; partially derived from external aggregators; the on-chain-data-preferred methodology note is in Governance Concentration)</p>
         </div>
 
         <hr class="section-ornament" aria-hidden="true">
@@ -326,7 +326,7 @@
         <ul>
           <li>S2R excludes vesting dilution; vesting unlocks can move the BME without changing emissions or revenue. Surfaced at first S2R mention; treated as a first-order caveat.</li>
           <li>The two-network comparison (Helium and GEODNET) is intentionally narrow. The "burn-mechanism design determines demand concentration" framing is supported by the contrast and by the size-controlled comparison; it is not a population claim across all DePIN networks.</li>
-          <li>Filecoin S2R is included for cross-section reference only and is partially Token Terminal-derived. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
+          <li>Filecoin S2R is included for cross-section reference only and is partially derived from external aggregators. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
           <li>SuperHex is a novel design primitive; the paper documents it but does not evaluate it against alternative spatial-staking designs (because none currently exist at comparable scale).</li>
           <li>Demand-concentration measurements are a snapshot of the study window and may shift as either network's demand mix evolves.</li>
         </ul>
