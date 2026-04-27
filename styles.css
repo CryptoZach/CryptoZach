@@ -18582,3 +18582,125 @@ hr.section-ornament::before{
   line-height: 1;
 }
 
+/* ────────── Editorial: Bundle A polish (kicker, measure, tables, citations) ────────── */
+
+/* Item 1. Reading-time + byline kicker. Sits between <h1> and the
+   existing .paper-metadata-strip on every paper and letter page.
+   Mono uppercase letter-spaced; reads as a small kicker line. */
+.paper-byline-kicker{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin: 0 0 var(--space-sm);
+  font-weight: 500;
+}
+.paper-byline-kicker .paper-byline-sep{
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+.paper-byline-kicker .paper-byline-author{
+  color: var(--text-soft);
+}
+
+/* Item 2. Constrain body-prose reading column. Long lines fatigue the
+   eye; 68ch is the project's existing measure token. Tables, figures,
+   takeaway cards, the thesis box, and the checklist opt out. */
+.paper-page .paper-abstract p,
+.paper-page .paper-abstract li,
+.paper-page .paper-abstract blockquote,
+.paper-page .paper-abstract dd,
+.paper-page > p:not(.paper-thesis):not(.paper-metadata-strip):not(.paper-description-note):not(.paper-byline-kicker){
+  max-width: var(--measure);
+}
+/* Opt-outs: anything inside a table, figure, takeaway, or checklist
+   should keep its container's full width. */
+.paper-page .paper-abstract table p,
+.paper-page .paper-abstract table li,
+.paper-page .paper-abstract figure p,
+.paper-page .paper-abstract .mvep-checklist-content p,
+.paper-page .paper-abstract .mvep-checklist-content li,
+.paper-page .paper-takeaways p,
+.paper-page .paper-takeaways li,
+.paper-page .callout p,
+.paper-page .callout li,
+.paper-page .paper-thesis p,
+.paper-page .paper-related p,
+.paper-page .paper-related li{
+  max-width: none;
+}
+
+/* Item 3. Journal-style table treatment for body tables in main.
+   Override .paper-abstract table's full-cell borders with top + bottom
+   rules and thin row separators. The MVEP checklist table keeps its
+   own purpose-built styling and is excluded. */
+.paper-page .paper-abstract table:not(.mvep-table){
+  border: none;
+  border-top: 1.5px solid var(--line-strong);
+  border-bottom: 1.5px solid var(--line-strong);
+  font-variant-numeric: tabular-nums;
+}
+.paper-page .paper-abstract table:not(.mvep-table) thead{
+  border-bottom: 1px solid var(--line-strong);
+}
+.paper-page .paper-abstract table:not(.mvep-table) thead th{
+  border: none;
+  background: transparent;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  padding: 0.7rem var(--space-md) 0.55rem;
+  text-align: left;
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr{
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:last-child{
+  border-bottom: none;
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody td,
+.paper-page .paper-abstract table:not(.mvep-table) tbody th{
+  border: none;
+  padding: 0.65rem var(--space-md);
+  vertical-align: top;
+  line-height: 1.55;
+}
+/* Optional alternating row tint, very low opacity (~3%) */
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:nth-child(even) td,
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:nth-child(even) th{
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+
+/* Item 4. Inline <code> and citation styling. Captures CFR / RIN /
+   SSRN / docket / regulation references with a small mono treatment
+   plus a faint tinted background. The .cite class is the explicit
+   marker for citation runs that should not be wrapped in <code>. */
+.paper-page .paper-abstract code,
+.paper-page p > code,
+.paper-page li > code,
+.paper-page td > code,
+.paper-page th > code,
+.paper-page .cite{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  padding: 0.08em 0.4em;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  color: var(--text);
+  white-space: nowrap;
+}
+:root[data-theme="light"] .paper-page .paper-abstract code,
+:root[data-theme="light"] .paper-page p > code,
+:root[data-theme="light"] .paper-page li > code,
+:root[data-theme="light"] .paper-page td > code,
+:root[data-theme="light"] .paper-page th > code,
+:root[data-theme="light"] .paper-page .cite{
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+
