@@ -18695,37 +18695,46 @@ hr.section-ornament::before{
   display: none;
 }
 
-@media (min-width: 1280px){
+@media (min-width: 1380px){
+  /* Reserve right space inside the article so prose, takeaways, tables,
+     and the breakout cover stay clear of the TOC overlay. */
   .paper-page.has-paper-toc{
-    position: relative;
-    padding-right: calc(11rem + 1.25rem + var(--page-gutter, 32px));
+    padding-right: calc(11rem + 2rem);
   }
+  /* TOC anchors to the viewport's right edge, not the article's. This
+     keeps it pinned at the far right regardless of how wide the article
+     gets or how the cover image breaks out. */
   .paper-toc{
     display: block;
-    position: absolute;
-    right: var(--page-gutter, 32px);
-    top: 0;
-    width: 11rem;
-    height: 100%;
-    pointer-events: none;
-    z-index: 4;
-  }
-  .paper-toc-nav{
-    position: sticky;
+    position: fixed;
     top: 110px;
+    right: max(1rem, env(safe-area-inset-right));
+    width: 11rem;
     max-height: calc(100vh - 140px);
     overflow-y: auto;
+    z-index: 6;
     pointer-events: auto;
+  }
+  .paper-toc-nav{
     padding-left: 0.85rem;
     border-left: 1px solid var(--line);
   }
+  /* Stop the breakout-wide cover from spanning into the TOC zone. When
+     a TOC is present, the cover stays inside the article's content box
+     (no negative-margin centering trick). */
+  .paper-page.has-paper-toc .paper-cover--wide{
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
 }
-@media (min-width: 1500px){
+@media (min-width: 1600px){
   .paper-page.has-paper-toc{
-    padding-right: calc(13rem + 1.5rem + var(--page-gutter, 32px));
+    padding-right: calc(13rem + 2.5rem);
   }
   .paper-toc{
     width: 13rem;
+    right: max(1.5rem, env(safe-area-inset-right));
   }
 }
 
