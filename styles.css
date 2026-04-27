@@ -12670,8 +12670,14 @@ main > section:first-of-type{
 /* Public / published: non-dominant neon green. Light theme uses a
    muted forest tone (#15803d on a 10%-tinted bg). Dark theme uses a
    soft neon green (#4ade80) at low opacity so it glows without
-   dominating the card. */
+   dominating the card. The .badge-sm.badge-public combo selector
+   wins over homepage.css's .badge-sm rule (loaded later); the
+   .badge.badge-public combo wins over base .badge styling and over
+   .badge.badge-status-published. */
 .badge-public,
+.badge.badge-public,
+.badge-sm.badge-public,
+.badge.badge-status-published,
 .status--published{
   border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
@@ -12679,6 +12685,9 @@ main > section:first-of-type{
 }
 
 :root[data-theme="dark"] .badge-public,
+:root[data-theme="dark"] .badge.badge-public,
+:root[data-theme="dark"] .badge-sm.badge-public,
+:root[data-theme="dark"] .badge.badge-status-published,
 :root[data-theme="dark"] .status--published{
   color: #4ade80;
   border-color: color-mix(in srgb, #4ade80 28%, var(--line));
