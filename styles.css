@@ -18958,3 +18958,97 @@ footer.site-footer .footer-credentials-body{
   }
 }
 
+/* ────────── Editorial: Bundle E premium polish ────────── */
+
+/* Item 8. Image fade-in for paper-page figures. JS adds .is-visible
+   when the img enters the viewport; CSS handles the transition. */
+.paper-page .paper-abstract img,
+.paper-page figure img,
+.paper-page .paper-figure img{
+  opacity: 0;
+  transition: opacity 280ms ease-out;
+}
+.paper-page .paper-abstract img.is-visible,
+.paper-page figure img.is-visible,
+.paper-page .paper-figure img.is-visible,
+.paper-page .paper-cover img{
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce){
+  .paper-page .paper-abstract img,
+  .paper-page figure img,
+  .paper-page .paper-figure img{
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* Item 9. Author photo placeholder: a Z-monogram in an accent gradient
+   ring. Used on /contact (hero) and on the homepage About card. */
+.author-monogram{
+  --author-monogram-size: 80px;
+  width: var(--author-monogram-size);
+  height: var(--author-monogram-size);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: calc(var(--author-monogram-size) * 0.5);
+  font-weight: 600;
+  color: #fff;
+  background:
+    radial-gradient(circle at 30% 30%,
+      color-mix(in srgb, var(--accent) 92%, #fff 8%) 0%,
+      var(--accent-cta, #2563eb) 55%,
+      color-mix(in srgb, var(--accent-cta, #2563eb) 75%, #000) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
+    0 4px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 22%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--accent-cta, #2563eb) 35%, var(--line));
+  letter-spacing: -0.02em;
+  user-select: none;
+  flex-shrink: 0;
+}
+.author-monogram--lg{
+  --author-monogram-size: 96px;
+}
+.author-monogram--sm{
+  --author-monogram-size: 56px;
+}
+
+/* Contact hero: monogram aligned with the H1 and subhead */
+.contact-hero{
+  position: relative;
+}
+.contact-hero .author-monogram{
+  margin: 0 0 var(--space-md);
+}
+
+/* Homepage about card: monogram beside the H2 */
+.about-card{
+  position: relative;
+}
+.about-card .about-card-header{
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.about-card .about-card-header h2{
+  margin: 0;
+}
+
+/* Item 10. Letterpress text-shadow on paper titles. Subtle book-cover
+   depth via a 1px shadow in currentColor at low alpha. Different
+   values for light vs dark mode for legibility. */
+.paper-page h1{
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+:root[data-theme="light"] .paper-page h1{
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+@media (prefers-reduced-motion: no-preference){
+  /* No animation; the rule above is a static text-shadow. */
+}
+

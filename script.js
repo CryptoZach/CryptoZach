@@ -5870,6 +5870,62 @@
 })();
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   Image fade-in for paper-page figures. Adds .is-visible to <img>
+   elements inside .paper-page bodies as they scroll into view. The
+   .paper-cover image is excluded (always visible). Honors
+   prefers-reduced-motion: in that case the CSS uses opacity 1 directly,
+   and we still mark images visible so any JS-dependent code stays
+   consistent.
+   ───────────────────────────────────────────────────────────────────────────── */
+(function(){
+  if(typeof document === 'undefined') return;
+
+  function init(){
+    try {
+      var paperPage = document.querySelector('.paper-page');
+      if(!paperPage) return;
+      var imgs = paperPage.querySelectorAll('.paper-abstract img, figure img, .paper-figure img');
+      if(!imgs.length) return;
+
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(reduced || typeof IntersectionObserver !== 'function'){
+        for(var k = 0; k < imgs.length; k++) imgs[k].classList.add('is-visible');
+        return;
+      }
+
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+
+      for(var i = 0; i < imgs.length; i++){
+        // Skip cover (always visible)
+        if(imgs[i].closest('.paper-cover')) continue;
+        // If already loaded and in viewport on initial paint, mark immediately
+        var rect = imgs[i].getBoundingClientRect();
+        if(rect.top < window.innerHeight && rect.bottom > 0){
+          imgs[i].classList.add('is-visible');
+          continue;
+        }
+        io.observe(imgs[i]);
+      }
+    } catch(e){
+      /* fail-soft */
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Sticky in-page TOC for paper and letter pages.
    Auto-scans .paper-page for <h2> elements, generates slug IDs where
    missing, and builds an aside with active-section highlighting via
