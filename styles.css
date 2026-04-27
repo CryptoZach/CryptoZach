@@ -829,8 +829,11 @@ h3{
 body.contact-page .contact-page-foreground > .contact-page{
   max-width:var(--max);
   margin:0 auto;
-  /* Horizontal inset comes from main; avoid double gutters */
-  padding:var(--space-xl) 0 var(--space-md);
+  /* Horizontal inset comes from main; avoid double gutters. Top
+     padding comes from main as well; this wrapper only adds bottom
+     spacing so the contact-hero sits at the same vertical position
+     as .speaker-hero on /speaker-and-advisory. */
+  padding:0 0 var(--space-md);
   box-sizing:border-box;
 }
 
