@@ -18704,3 +18704,112 @@ hr.section-ornament::before{
   border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
 }
 
+/* ────────── Editorial: Bundle B sticky in-page TOC ────────── */
+/* Hidden below 1180px viewport. Above 1180px, the TOC sits inside the
+   article container in its right gutter (prose is constrained to 68ch
+   by Bundle A, so there is empty space on the right). The TOC sticks
+   to the top of the viewport as the user scrolls. */
+
+.paper-toc{
+  display: none;
+}
+
+@media (min-width: 1180px){
+  .paper-page.has-paper-toc{
+    position: relative;
+    padding-right: calc(13rem + 2.5rem + var(--page-gutter, 32px));
+  }
+  .paper-toc{
+    display: block;
+    position: absolute;
+    right: var(--page-gutter, 32px);
+    top: 0;
+    width: 13rem;
+    height: 100%;
+    pointer-events: none;
+  }
+  .paper-toc-nav{
+    position: sticky;
+    top: 110px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    pointer-events: auto;
+    padding-left: 1rem;
+    border-left: 1px solid var(--line);
+  }
+}
+@media (min-width: 1400px){
+  .paper-page.has-paper-toc{
+    padding-right: calc(14rem + 3rem + var(--page-gutter, 32px));
+  }
+  .paper-toc{
+    width: 14rem;
+  }
+}
+
+.paper-toc-nav{
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+.paper-toc-title{
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--line);
+}
+.paper-toc-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: paper-toc;
+}
+.paper-toc-item{
+  margin: 0;
+  padding: 0;
+  counter-increment: paper-toc;
+}
+.paper-toc-link{
+  display: block;
+  padding: 0.36rem 0 0.36rem 0.85rem;
+  border-left: 2px solid transparent;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.paper-toc-link::before{
+  content: counter(paper-toc, decimal-leading-zero);
+  display: inline-block;
+  margin-right: 0.55em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68em;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.paper-toc-link:hover{
+  color: var(--text);
+  border-left-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+.paper-toc-link:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.paper-toc-link.active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+.paper-toc-link.active::before{
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .paper-toc-link{ transition: none; }
+}
+

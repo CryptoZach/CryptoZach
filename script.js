@@ -5806,3 +5806,159 @@
     init();
   }
 })();
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Sticky in-page TOC for paper and letter pages.
+   Auto-scans .paper-page for <h2> elements, generates slug IDs where
+   missing, and builds an aside with active-section highlighting via
+   IntersectionObserver. Hidden below 1100px. Only runs when the page
+   is a .paper-detail-page and has at least 3 h2 sections.
+   ───────────────────────────────────────────────────────────────────────────── */
+(function(){
+  if(typeof document === 'undefined') return;
+
+  function slugify(s){
+    return s.toLowerCase()
+      .replace(/[‘’“”]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .slice(0, 60) || null;
+  }
+
+  function init(){
+    try {
+      var main = document.querySelector('main.paper-detail-page');
+      if(!main) return;
+      var article = main.querySelector('.paper-page');
+      if(!article) return;
+
+      // Collect h2 elements that live inside the article body. Skip h2s
+      // inside .paper-takeaways, the cover image, the related rail, etc.
+      var allH2 = article.querySelectorAll('h2');
+      var headings = [];
+      var skipParents = ['.paper-takeaways', '.paper-cover', '.paper-related',
+                         '.companion-cards', '.paper-key-numbers'];
+      for(var i = 0; i < allH2.length; i++){
+        var h = allH2[i];
+        var skip = false;
+        for(var j = 0; j < skipParents.length; j++){
+          if(h.closest(skipParents[j])){ skip = true; break; }
+        }
+        if(!skip) headings.push(h);
+      }
+      if(headings.length < 3) return;
+
+      // Ensure each heading has an ID
+      var usedIds = {};
+      headings.forEach(function(h){
+        if(!h.id){
+          var base = slugify(h.textContent || '') || 'section';
+          var id = base;
+          var n = 2;
+          while(document.getElementById(id) || usedIds[id]){
+            id = base + '-' + (n++);
+          }
+          h.id = id;
+        }
+        usedIds[h.id] = true;
+      });
+
+      // Build the aside
+      var aside = document.createElement('aside');
+      aside.className = 'paper-toc';
+      aside.setAttribute('aria-label', 'In-page contents');
+      var nav = document.createElement('nav');
+      nav.className = 'paper-toc-nav';
+      var title = document.createElement('p');
+      title.className = 'paper-toc-title';
+      title.textContent = 'On this page';
+      nav.appendChild(title);
+      var list = document.createElement('ol');
+      list.className = 'paper-toc-list';
+
+      headings.forEach(function(h, idx){
+        var item = document.createElement('li');
+        item.className = 'paper-toc-item';
+        var link = document.createElement('a');
+        link.className = 'paper-toc-link';
+        link.href = '#' + h.id;
+        link.textContent = h.textContent.trim();
+        link.setAttribute('data-toc-target', h.id);
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+      nav.appendChild(list);
+      aside.appendChild(nav);
+      // Insert inside the article so it can position-absolute against
+      // the article's empty right gutter (prose is constrained to 68ch
+      // so there is plenty of room on the right).
+      article.classList.add('has-paper-toc');
+      article.insertBefore(aside, article.firstChild);
+
+      // Active-section tracking
+      var links = aside.querySelectorAll('.paper-toc-link');
+      var byId = {};
+      links.forEach(function(l){ byId[l.getAttribute('data-toc-target')] = l; });
+
+      var visible = {};
+      function setActive(){
+        var bestId = null;
+        var bestTop = -Infinity;
+        // Pick the heading whose section is currently closest to the top
+        // of the viewport (but still above the activation line).
+        var markerY = window.innerHeight * 0.25;
+        for(var i = 0; i < headings.length; i++){
+          var r = headings[i].getBoundingClientRect();
+          if(r.top <= markerY && r.top >= bestTop){
+            bestTop = r.top;
+            bestId = headings[i].id;
+          }
+        }
+        if(!bestId) bestId = headings[0].id;
+        links.forEach(function(l){
+          l.classList.toggle('active', l.getAttribute('data-toc-target') === bestId);
+        });
+      }
+
+      // Use IntersectionObserver to trigger updates without per-scroll work
+      var io = new IntersectionObserver(function(){ setActive(); }, {
+        rootMargin: '-20% 0px -65% 0px',
+        threshold: [0, 0.25, 0.5, 1]
+      });
+      headings.forEach(function(h){ io.observe(h); });
+
+      // Also reset on resize and initial paint
+      window.addEventListener('scroll', setActive, { passive: true });
+      window.addEventListener('resize', setActive, { passive: true });
+      setActive();
+
+      // Smooth scroll on click
+      var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var headerOffset = function(){
+        var hdr = document.querySelector('header');
+        return (hdr ? hdr.offsetHeight : 0) + 16;
+      };
+      links.forEach(function(l){
+        l.addEventListener('click', function(e){
+          var id = l.getAttribute('data-toc-target');
+          var t = document.getElementById(id);
+          if(!t) return;
+          e.preventDefault();
+          var top = t.getBoundingClientRect().top + window.scrollY - headerOffset();
+          window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion ? 'auto' : 'smooth' });
+          if(history.replaceState) history.replaceState(null, '', '#' + id);
+        });
+      });
+    } catch(e){
+      /* fail-soft: never break the page if TOC build fails */
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
