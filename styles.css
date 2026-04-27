@@ -5928,11 +5928,6 @@ body.contact-page .speaker-headshot{
 }
 .page-focus .speaker-hero-headshot-wrap,
 body.contact-page .speaker-hero-headshot-wrap{
-  /* Anchor both pages to the same headroom by zeroing main's top
-     padding (and any wrapper margins) and using an explicit padding
-     on the headshot wrap itself. This makes the gap above the
-     headshot identical regardless of how deeply the wrap is nested. */
-  padding-top:var(--space-md);
   margin-top:0;
   margin-bottom:var(--space-lg);
 }
@@ -5941,19 +5936,18 @@ body.contact-page .speaker-headshot--hero{
   margin-inline:auto;
 }
 
-/* Zero the top padding/margin on every element along the chain
-   between main and the .speaker-hero-headshot-wrap on both pages.
-   This guarantees the gap above the headshot equals only the wrap's
-   own padding-top, regardless of how deeply nested the wrap is. */
-body.speaker-page main,
-body.contact-page main,
+/* Zero margin-top on every wrapper between main and the
+   .speaker-hero-headshot-wrap on both pages so the gap above the
+   headshot equals exactly main's padding-top (var(--space-md)),
+   identical on both pages regardless of how deeply the wrap is
+   nested. */
 body.contact-page .contact-page-wrap,
 body.contact-page .contact-page-foreground,
 body.contact-page .reveal.contact-page,
 body.contact-page .contact-hero,
 body.speaker-page .speaker-hero{
-  padding-top:0;
   margin-top:0;
+  padding-top:0;
 }
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
 #core-frameworks .grid.grid--halves > .card > .framework-related-paper{
@@ -18383,6 +18377,24 @@ body.contact-page .contact-page-foreground > .contact-page .about-item p:last-ch
 }
 .error-page main > section:first-of-type{
   margin-top: 0;
+}
+
+.structure-page main{
+  padding-top: var(--space-md);
+}
+.structure-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.overview-page main{
+  padding-top: var(--space-md);
+}
+.overview-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.speaker-page main{
+  padding-top: var(--space-md);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
