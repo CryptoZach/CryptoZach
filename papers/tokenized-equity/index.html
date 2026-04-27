@@ -264,6 +264,28 @@
         <p><strong>xStocks:</strong> Oracle failure or manipulation, CCIP/bridge failure or exploit, custody-chain breakdown, collateral shortfall if the SPV&rsquo;s share backing becomes impaired, and off-hours liquidity gaps where token prices diverge from underlying value.</p>
         <p><strong>Both:</strong> Regulatory re-characterization risk (authorities could reclassify one or both products, forcing structural changes or withdrawal from market).</p>
         <p>The underlying tension is between continuity (Robinhood&rsquo;s single-firm, controlled environment) and openness (xStocks&rsquo; distributed, composable, multi-venue architecture). Each model concentrates risk differently.</p>
+
+        <hr class="section-ornament" aria-hidden="true">
+
+        <h2>Anchor evidence</h2>
+        <p>This is a comparative briefing on two simultaneous launches. It is anchored on:</p>
+        <ul>
+          <li><strong>Robinhood Stock Tokens launch</strong> (announced June 30, 2025; live on a closed Arbitrum instance for EU users through Robinhood Europe UAB), including disclosed product structure: closed-loop OTC derivative contracts, broker-as-principal execution, a &plusmn;0.5% price collar, no external wallet withdrawal, in-app dividend pass-through, and Lithuania&rsquo;s investor compensation scheme (&euro;22,000 cap).</li>
+          <li><strong>Backed xStocks launch</strong> (announced June 30, 2025; ERC-20 on Ethereum and SPL on Solana, distributed through Kraken, Bybit, and Solana DeFi venues), including disclosed product structure: tracker certificates issued through a Jersey SPV, backed 1:1 by segregated shares held in custody and secured by a Security Agent, Liechtenstein-approved prospectus, ISIN-bearing securities, Chainlink CCIP for cross-chain transfers, Data Streams for pricing, and Proof of Reserve for collateral visibility.</li>
+          <li><strong>Institutional structural analogs</strong> from traditional finance: American Depositary Receipts (a depositary holds foreign shares and issues U.S.-tradable receipts) as the closest analog for Backed xStocks; Contracts for Difference (a broker writes a synthetic position referencing the underlying without delivering it) as the closest analog for Robinhood Stock Tokens.</li>
+        </ul>
+        <p>Diligence categories (legal claim, custody chain, liquidity architecture, transfer mechanics, jurisdictional perimeter) are derived from the disclosed structures. No primary on-chain data analysis was conducted.</p>
+
+        <hr class="section-ornament" aria-hidden="true">
+
+        <h2>Limitations</h2>
+        <ul>
+          <li>This is a Medium-summary briefing. The full article (with figures and rights diagrams) is on Medium; the summary is current as of March 2026 and is updated when the Medium post materially changes.</li>
+          <li>The comparison is anchored on the June 30, 2025 launches and product structures disclosed at or shortly after that date. Either product can evolve structurally (chain expansion, custody-chain changes, regulatory re-characterization, perimeter shifts), in which case parts of the comparative anatomy may need revision.</li>
+          <li>The TradFi structural analogs (ADRs for Backed xStocks; CFDs for Robinhood Stock Tokens) are diligence-starting heuristics, not exact legal equivalences. Each token product carries architectural deltas (cross-chain bridge surface for xStocks; broker-as-principal counterparty surface for Robinhood) that the analogs do not cover.</li>
+          <li>Adoption scenarios for 2025 to 2027 and market-structure projections are forward-looking judgments based on the launch architectures and incumbent equity-rail patterns; they are not measured outcomes.</li>
+          <li>No primary on-chain data analysis was conducted (no order-flow, transfer-volume, or arbitrage-quality measurement). The comparison is structural and disclosure-based.</li>
+        </ul>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
