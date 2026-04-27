@@ -838,6 +838,12 @@ body.contact-page .contact-page-foreground > .contact-page{
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-hero{
+  /* Default `section { margin-top: var(--space-xl); }` does not get
+     reset because the contact-hero is nested below main (the
+     `main > section.reveal` override at line 2590 only matches direct
+     children). Zero it out so the headshot sits at the same Y as the
+     speaker-hero on /speaker-and-advisory. */
+  margin-top:0;
   margin-bottom:3rem;
 }
 
