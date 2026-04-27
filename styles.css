@@ -8096,6 +8096,26 @@ footer.site-footer .footer-tagline{
   color: color-mix(in srgb, var(--accent) 60%, currentColor);
 }
 
+/* .term-link: a .term that is also a hyperlink to the canonical reference
+   for that identifier (e.g., GENIUS Act / CLARITY Act linking to the
+   Medium overview article). Dotted underline differentiates from plain
+   .term marks without shouting; on hover, solid accent. */
+.term.term-link{
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--accent) 50%, transparent);
+  transition: border-bottom-color 0.2s ease, color 0.2s ease;
+}
+.term.term-link:hover,
+.term.term-link:focus-visible{
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+.term.term-link:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
 /* Wide: two columns so the right side is used as a trust rail (proof bar + meta). */
 .hero--homepage .hero-grid{

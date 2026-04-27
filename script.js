@@ -5713,6 +5713,15 @@
     'CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY'
   ];
 
+  // Optional cross-reference URL per term. Matched terms with an entry here
+  // get wrapped in <a class="term term-link" href="..." target="_blank"> so
+  // the inline mark is also a link to the canonical reference. Terms not
+  // listed get the default <span class="term"> treatment.
+  var TERM_LINKS = {
+    'GENIUS':  'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
+    'CLARITY': 'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f'
+  };
+
   var pattern = new RegExp('\\b(' + TERMS.join('|') + ')\\b', 'g');
 
   // Skip wrapping inside these elements (headings, code, links, buttons).
@@ -5758,11 +5767,22 @@
         if(m.index > last){
           frag.appendChild(document.createTextNode(text.slice(last, m.index)));
         }
-        var span = document.createElement('span');
-        span.className = 'term';
-        span.textContent = m[0];
-        frag.appendChild(span);
-        last = m.index + m[0].length;
+        var matched = m[0];
+        var url = TERM_LINKS[matched];
+        var node;
+        if(url){
+          node = document.createElement('a');
+          node.className = 'term term-link';
+          node.href = url;
+          node.target = '_blank';
+          node.rel = 'noopener noreferrer';
+        } else {
+          node = document.createElement('span');
+          node.className = 'term';
+        }
+        node.textContent = matched;
+        frag.appendChild(node);
+        last = m.index + matched.length;
       }
       if(last < text.length){
         frag.appendChild(document.createTextNode(text.slice(last)));
