@@ -76,6 +76,30 @@ npm run build:critical-css
 npm run check:responsive
 ```
 
+## Auto-memory backup
+
+This clone's auto-memory (Claude Code feedback / project / reference memories;
+auto-loaded at session start from `~/.claude/projects/-Users-zach-ai-research-
+CryptoZach/memory/`) has a git-tracked backup at `.claude/memory/`. Mirrors
+the auto-memory dir contents at clone-snapshot time. Refresh manually via
+`cp ~/.claude/projects/-Users-zach-ai-research-CryptoZach/memory/*.md
+.claude/memory/` when memories update. Auto-excluded from Jekyll publication
+by dot-prefix default; no `_config.yml` change needed. Em-dashes in pre-
+existing memories preserved per source-fidelity verbatim-migration exception
+(no-em-dash editorial rule applies to NEW prose; auto-memory content is
+migrated content).
+
+Workflow-clone equivalent backup at
+`/Users/zach/Tokenization_Systems_Website/.claude/memory/` mirrors the
+workflow-clone auto-memory dir.
+
+Architecture context: see
+`/Users/zach/Tokenization_Systems_Website/handoff/architecture/persistence_architecture_2026-04-27.md`
+for the 4-tier persistence model (auto-memory + handoff memos + canonical
+SKILLs + DEC entries) and 4 architectural patterns (defense-in-depth +
+correction-to-strengthening loop + empirical-validation-before-codification +
+cross-actor mirroring). Auto-memory is Tier 1 in that model.
+
 ## Recovery
 
 If you need the pre-partition full state for any reason, it is preserved at:
