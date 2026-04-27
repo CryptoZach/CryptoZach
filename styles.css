@@ -18835,6 +18835,22 @@ hr.section-ornament::before{
   -webkit-overflow-scrolling: touch;
 }
 
+/* ────────── Editorial: paper-detail top-padding standardization ──────────
+   The main + .paper-page padding stack added up to var(--space-xl) +
+   var(--space-2xl) = 112px above the breadcrumb on every paper and
+   letter detail page (plus the ~80px sticky header). Tighten both
+   tiers to a uniform footprint of var(--space-md) on main and
+   var(--space-lg) on .paper-page so all 12 paper + 8 letter pages
+   share the same headroom. */
+body.paper-detail-page main{
+  padding-top: var(--space-md);
+}
+body.paper-detail-page .paper-page,
+body.paper-detail-page .paper-page.paper-detail,
+body.paper-detail-page .paper-detail{
+  padding-top: var(--space-lg);
+}
+
 /* ────────── Editorial: homepage About card symmetry ────────── */
 /* The card body is centered (text-align center, 760px paragraph
    measure). The header (Zachcoin monogram + h2) needs to match that
