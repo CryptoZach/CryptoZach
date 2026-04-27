@@ -11897,6 +11897,17 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   border-radius: inherit;
 }
 
+/* Light mode: the matrix + reef canvases and the 45% black overlay are
+   tuned for dark backgrounds. In light mode they wash the hero into a
+   dark zone where the dark-blue text becomes unreadable. Hide all three
+   so the hero's existing light panel-gradient background carries the
+   surface, and dark-blue text reads cleanly against it. */
+:root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container,
+:root:not([data-theme="dark"]) #hero.hero--homepage .hero-reef,
+:root:not([data-theme="dark"]) #hero.hero--homepage .hero-overlay{
+  display: none;
+}
+
 #hero.hero--homepage .hero-btc-flight,
 .track-b-frameworks .hero-btc-flight {
   position: absolute;
