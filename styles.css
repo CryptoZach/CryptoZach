@@ -18403,7 +18403,10 @@ main{ counter-reset: ts-section; }
   line-height: 1.45;
   color: var(--text);
   max-width: 60ch;
-  text-wrap: pretty;
+  /* balance distributes line lengths evenly across the whole block (right
+     for short pull-quotes); pretty only fixes the last line (right for
+     body paragraphs, wrong here). */
+  text-wrap: balance;
 }
 
 /* Decorative opening quote mark; positioned to overlap the accent rail */
