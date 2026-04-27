@@ -18390,25 +18390,43 @@ main{ counter-reset: ts-section; }
    them load-bearing editorial components.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Pull-quote: thesis-statement blockquote. Restrained editorial treatment
-   (accent rail + serif italic) carries the signal; an oversized decorative
-   quote glyph was tried and abandoned because the system-serif "\201C"
-   renders inconsistently at large sizes and crowds the first text line. */
+/* Pull-quote: thesis-statement blockquote. Accent rail + serif italic +
+   short decorative rule above. Sized so a ~110-char sentence fits on one
+   line at typical paper-page container widths on desktop; mobile wraps
+   naturally via balance + viewport-sized font clamp. */
 .paper-thesis-line{
-  margin: 2.75rem auto 2.75rem 1.25rem;
-  padding: 0.4rem 0 0.4rem 2rem;
+  margin: 3rem 0 3rem 1.25rem;
+  padding: 0 0 0 2rem;
   border-left: 4px solid var(--accent);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  /* Reduced from clamp(1.15rem, 1.4vw, 1.35rem) so a 110-char sentence
+     fits on one line at ~970px text width (1024px+ desktop containers).
+     Prior size required ~1244px container before the long sentence
+     would land on one line. */
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--text);
-  max-width: 60ch;
-  /* balance distributes line lengths evenly across the whole block (right
-     for short pull-quotes); pretty only fixes the last line (right for
-     body paragraphs, wrong here). */
+  /* No fixed measure: pull-quote uses available parent width on desktop
+     so long thesis sentences can land on a single line. Narrow viewports
+     wrap naturally. */
+  max-width: none;
+  /* balance distributes line lengths evenly across wrapped lines */
   text-wrap: balance;
+}
+
+/* Decorative element: short accent rule above the quote. Block-level so
+   it stays in document flow (no overlap with first text line). Aligned
+   with the text indent (not the rail), reads as an editorial "lead-in". */
+.paper-thesis-line::before{
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
 }
 
 .paper-thesis-line p{
