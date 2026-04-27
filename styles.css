@@ -5928,6 +5928,12 @@ body.contact-page .speaker-headshot{
 }
 .page-focus .speaker-hero-headshot-wrap,
 body.contact-page .speaker-hero-headshot-wrap{
+  /* Anchor both pages to the same headroom by zeroing main's top
+     padding (and any wrapper margins) and using an explicit padding
+     on the headshot wrap itself. This makes the gap above the
+     headshot identical regardless of how deeply the wrap is nested. */
+  padding-top:var(--space-md);
+  margin-top:0;
   margin-bottom:var(--space-lg);
 }
 .page-focus .speaker-headshot--hero,
@@ -5935,13 +5941,14 @@ body.contact-page .speaker-headshot--hero{
   margin-inline:auto;
 }
 
-/* Tighten the gap between the header and the headshot on both the
-   speaker and contact pages so they match. Default main padding-top
-   is var(--space-xl) (48px); reducing to var(--space-md) (20px) for
-   both keeps the headshots visually aligned with the same headroom. */
+/* Zero the top padding on main for the two pages whose headshots
+   are anchored by the wrap rule above. Without this, main's default
+   padding-top adds on top of the wrap padding and the speaker page
+   ends up taller than the contact page (or vice versa) depending on
+   how the inner wrappers contribute. */
 body.speaker-page main,
 body.contact-page main{
-  padding-top:var(--space-md);
+  padding-top:0;
 }
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
 #core-frameworks .grid.grid--halves > .card > .framework-related-paper{
