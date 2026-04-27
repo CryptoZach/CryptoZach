@@ -210,16 +210,6 @@
       </aside>
 
       <div class="paper-abstract">
-        <h2>Methods and data</h2>
-        <p>Seven products scored across five regulatory regimes (US state money transmitter, US state trust charter, British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress events (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>
-        <p><strong>Composite eligibility (eight products, A through D tiers, manuscript table primary):</strong> USDC 0.777 (A), PYUSD 0.753 (A), USDT 0.657 (B), USDS 0.657 (B), USDe 0.604 (B), DAI 0.589 (C), USDG 0.495 (C), OUSG 0.295 (D). (Three-year USDT window sensitivity lifts USDT in robustness; see the abstract block and the Key numbers section on this page.)</p>
-
-        <figure class="paper-figure-callout" aria-label="Figure 1 caption">
-          <figcaption>
-            <strong>Figure 1.</strong> Regulatory intensity (CLII) and collateral eligibility are independent dimensions. USDC leads on eligibility despite a documented stress depeg; USDT ranks ahead of USDG on eligibility despite a lower regulatory score; OUSG has the most liquidation paths and the lowest eligibility. Contagion arrows mark the dependency chain confirmed during SVB March 2023.
-          </figcaption>
-        </figure>
-
         <h2>What this paper changes</h2>
         <p class="dropcap">The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
         <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
@@ -252,6 +242,16 @@
           <p>Seven structurally different diligence packages.</p>
           <p>The dollar denomination is the least informative thing about them.</p>
         </blockquote>
+
+        <h2>Methods and data</h2>
+        <p>Seven products scored across five regulatory regimes (US state money transmitter, US state trust charter, British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress events (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>
+        <p><strong>Composite eligibility (eight products, A through D tiers, manuscript table primary):</strong> USDC 0.777 (A), PYUSD 0.753 (A), USDT 0.657 (B), USDS 0.657 (B), USDe 0.604 (B), DAI 0.589 (C), USDG 0.495 (C), OUSG 0.295 (D). (Three-year USDT window sensitivity lifts USDT in robustness; see the abstract block and the Key numbers section on this page.)</p>
+
+        <figure class="paper-figure-callout" aria-label="Figure 1 caption">
+          <figcaption>
+            <strong>Figure 1.</strong> Regulatory intensity (CLII) and collateral eligibility are independent dimensions. USDC leads on eligibility despite a documented stress depeg; USDT ranks ahead of USDG on eligibility despite a lower regulatory score; OUSG has the most liquidation paths and the lowest eligibility. Contagion arrows mark the dependency chain confirmed during SVB March 2023.
+          </figcaption>
+        </figure>
 
         <h2>Full technical abstract</h2>
         <p><strong>Opening and claim boundary.</strong> Seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) share a denomination and a target price. Each requires a structurally different institutional diligence package. The analysis is descriptive; none of the findings should be read as causal estimates.</p>
