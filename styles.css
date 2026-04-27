@@ -8526,14 +8526,14 @@ footer.site-footer .footer-tagline{
   background: color-mix(in srgb, #7a8650 10%, transparent);
 }
 .badge-public{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  color: #15803d;
 }
 :root[data-theme="dark"] .badge-public{
-  color:#7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
 }
 .badge-request{
   border-color: color-mix(in srgb, #d97706 30%, var(--line));
@@ -12660,19 +12660,22 @@ main > section:first-of-type{
   background: color-mix(in srgb, #7a8650 10%, transparent);
 }
 
-/* Public / published */
+/* Public / published: non-dominant neon green. Light theme uses a
+   muted forest tone (#15803d on a 10%-tinted bg). Dark theme uses a
+   soft neon green (#4ade80) at low opacity so it glows without
+   dominating the card. */
 .badge-public,
 .status--published{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  color: #15803d;
 }
 
 :root[data-theme="dark"] .badge-public,
 :root[data-theme="dark"] .status--published{
-  color: #7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
 }
 
 /* Available on request / draft / requestable */
