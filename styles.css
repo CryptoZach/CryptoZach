@@ -9806,6 +9806,22 @@ footer.site-footer .footer-tagline{
   flex-direction: column;
   gap: 0.75rem;
 }
+/* Desktop: lay primary buttons + secondary access link on a single
+   row so labels like "GitHub (data + replication)" sit inline with
+   the Read buttons instead of dropping to a second line. Wraps back
+   to stacked column below 720px. */
+@media (min-width: 720px){
+  .paper-access-block.access-block{
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+  }
+  .paper-access-block.access-block > .access-secondary{
+    margin-left: auto;
+  }
+}
 .access-primary{
   display: flex;
   align-items: center;
