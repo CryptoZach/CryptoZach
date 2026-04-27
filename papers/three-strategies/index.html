@@ -47,7 +47,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=213" />
+  <link rel="stylesheet" href="/styles.css?v=214" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -201,7 +201,7 @@
 
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p>The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
+        <p class="dropcap">The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
         <p>The paper maps each strategy against the <a href="/frameworks#mvep">MVEP</a>'s ten diligence categories, develops nine stress scenarios traced through the category failure chains, and identifies the four cross-cutting findings that shape the institutional-tokenization roadmap. The analysis is prospective: the collateral circuit is live in controlled production, the yield stack is composed from operating products, and the tokenized equity rails went from SEC approval (Nasdaq, March 18, 2026) to a signed MoU (NYSE with Securitize, March 24, 2026) in the week before the paper went to draft.</p>
 
         <figure class="paper-figure-callout" aria-label="Figure 1 caption">
@@ -231,10 +231,14 @@
 
         <p class="paper-callout"><strong>Forthcoming.</strong> The pre-funded-clearing architecture extension is drafted and will be added after author verification with Ubyx. The extension is not a revision; it is additional analysis of how pre-funded DvP reshapes the binding constraints.</p>
 
+        <hr class="section-ornament" aria-hidden="true">
+
         <h2>Who should care</h2>
         <p><strong>Policymakers.</strong> If the goal is to prevent the tokenized-securities buildout from repeating the concentrated-custody failure modes of 2022 to 2023, the supervisory instrument most likely to catch it is a system-level diligence pass that names the shared dependencies across strategies, not an entity-level regulatory rating.</p>
         <p><strong>Issuers, operators, and transfer agents.</strong> What determines whether a strategy clears its MVEP profile is the independence of its shared-entity dependencies. A strategy strong on custody but weak on transfer-agent redundancy is operationally fragile in ways that entity-level scores do not reveal.</p>
         <p><strong>Investors and market-structure teams.</strong> The three strategies produce complementary MVEP profiles; the corporate-actions gap in Strategy 3 is the most novel operational risk on the roadmap; the deposit-token competition is the control-layer question for institutional settlement.</p>
+
+        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Dollar-infrastructure context</h2>
         <p>Three Tokenization Strategies is the fourth and most forward-looking paper in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and the gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. The Seven Dollars work applies both frameworks to seven dollar-denominated digital products. This paper extends the same control-layer logic to institutional settlement infrastructure: tokenized Treasuries, tokenized equities, and bank-issued deposit tokens.</p>

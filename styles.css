@@ -18459,3 +18459,69 @@ main{ counter-reset: ts-section; }
   font-weight: 700;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: drop cap (opt-in via .dropcap on a <p>)
+   Float a 3.5em serif accent letter at the start of a paragraph. Reads as
+   "this is a substantive piece of writing." Apply sparingly: once per
+   long-form piece, on the first body paragraph after the H1 / hero block.
+   ───────────────────────────────────────────────────────────────────────────── */
+.dropcap::first-letter,
+p.dropcap::first-letter{
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.6em;
+  line-height: 0.85;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0.08em 0.12em -0.05em 0;
+  padding: 0;
+  /* Subtle rendering polish: serif drop caps benefit from explicit
+     font-feature-settings to enable proper kerning of the letter form. */
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: tabular figures across body prose
+   Numerals (stats, dates, percentages) align in monospaced columns.
+   Standard editorial pattern for data-oriented writing (NYT, Bloomberg,
+   research journals). Subtle but immediately legible in stats-heavy prose.
+   ───────────────────────────────────────────────────────────────────────────── */
+main p,
+main li,
+main td,
+main th,
+main blockquote,
+main figcaption,
+main dt,
+main dd{
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: section ornament (opt-in <hr class="section-ornament">)
+   Centered three-dot accent ornament for thematic breaks between major
+   sections in long-form prose. Restrained, journal-like. Author places
+   the <hr> wherever a section break warrants visual separation.
+   ───────────────────────────────────────────────────────────────────────────── */
+hr.section-ornament{
+  border: none;
+  height: auto;
+  background: none;
+  margin: 4rem auto;
+  padding: 0;
+  text-align: center;
+  overflow: visible;
+  display: block;
+}
+
+hr.section-ornament::before{
+  content: "\B7 \B7 \B7";  /* middle dot \B7 (U+00B7) x 3 */
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.55em;
+  color: var(--accent);
+  opacity: 0.55;
+  line-height: 1;
+}
+
