@@ -15232,13 +15232,15 @@ footer.site-footer .footer-tagline::before{
 
 /* Hero proof chips: add a subtle leading accent dot to each chip. Chips
    have pointer-events: none (decorative), so no hover interaction needed;
-   the dot adds a visual anchor that aids scanning across chips. */
-body #hero.hero--homepage .hero-proof-strip .hero-proof-chip{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+   the dot adds a visual anchor that aids scanning across chips.
 
+   Note: the prior implementation used display:inline-flex + gap on the
+   chip. That worked when the chip contained a single text node, but
+   broke when chips had inline links inside (e.g., GENIUS as a link in
+   "(GENIUS and related dockets)"): every adjacent inline element became
+   a separate flex item and got 0.5rem gap inserted between them,
+   producing visible padding around inline links. Inline-block dot with
+   margin-right avoids the flex-item-explosion. */
 body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   content: "";
   display: inline-block;
@@ -15246,7 +15248,8 @@ body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   height: 5px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--accent) 80%, transparent);
-  flex-shrink: 0;
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
 /* Hero anchors: replace the static underline with an animated bottom border
