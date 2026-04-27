@@ -380,6 +380,7 @@ nav{
 .menu-toggle[aria-expanded="true"] .icon-menu{display:none}
 .menu-toggle[aria-expanded="true"] .icon-close{display:block}
 .navlink{
+  position:relative;
   font-size:var(--font-size-min);
   font-weight:500;
   text-decoration:none;
@@ -388,25 +389,44 @@ nav{
   padding:6px var(--space-sm);
   border-radius:var(--radius-sm);
   border:1px solid transparent;
-  transition:color .15s ease, background .15s ease, border-color .15s ease;
+  transition:color .2s ease;
+}
+/* Animated underline: grows in from center on hover, persists on active.
+   Single visual mechanism for both states; replaces the prior pill-on-hover
+   plus border-bottom-on-active combination, which read as two competing
+   affordances. */
+.navlink::after{
+  content:"";
+  position:absolute;
+  left:var(--space-sm);
+  right:var(--space-sm);
+  bottom:2px;
+  height:2px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .25s cubic-bezier(0.2, 0.8, 0.25, 1);
+  pointer-events:none;
 }
 .navlink:hover{
   color:var(--text);
-  background:var(--accent-muted);
-  border-color:var(--line);
+}
+.navlink:hover::after,
+.navlink.active::after{
+  transform:scaleX(1);
 }
 .navlink.active{
   color:var(--accent);
   font-weight:600;
-  background:none;
-  border-color:transparent;
-  border-bottom:2px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  border-radius:0;
-  padding-bottom:calc(var(--space-xs) - 2px);
 }
 .navlink:focus-visible{
   outline:2px solid var(--accent);
   outline-offset:2px;
+}
+@media (prefers-reduced-motion: reduce){
+  .navlink::after{
+    transition:none;
+  }
 }
 
 .header-social{
@@ -7975,6 +7995,79 @@ footer.site-footer .footer-tagline{
     word-break:break-all;
   }
   .footer-social, .footer-links, .header-social{display:none}
+
+  /* ── Print extensions: editorial elements added in the 2026-04-26 cycle ── */
+
+  /* Numbered section kickers: drop the decorative number + rule (the heading
+     alone communicates the section in print; the kicker reads as noise). */
+  .numbered-section > h2::before,
+  .numbered-section > h2::after{
+    display:none !important;
+  }
+  .numbered-section > h2{
+    padding-top:0 !important;
+  }
+
+  /* Section ornaments: keep the dot-row but desaturate to print-safe gray. */
+  hr.section-ornament{
+    margin:2em auto !important;
+  }
+  hr.section-ornament::before{
+    color:#555 !important;
+    opacity:1 !important;
+  }
+
+  /* Drop cap: render in print-friendly dark gray, not accent blue. */
+  .dropcap::first-letter,
+  p.dropcap::first-letter{
+    color:#1a1a1a !important;
+  }
+
+  /* Pull-quote: keep the rail and decorative rule; force to dark gray. */
+  .paper-thesis-line{
+    border-left-color:#555 !important;
+    color:#000 !important;
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  .paper-thesis-line::before{
+    background:#555 !important;
+  }
+
+  /* Metadata callout: simplify for print (drop tinted background, keep rule). */
+  .paper-callout{
+    background:none !important;
+    border-left-color:#555 !important;
+    color:#000 !important;
+  }
+  .paper-callout strong:first-child{
+    color:#000 !important;
+  }
+
+  /* Card decorations on the homepage: hide the accent stripe + read-arrow
+     (interactive affordances that don't translate to paper). */
+  .compact-card::before,
+  .research-card-sm::before,
+  .research-card-sm::after{
+    display:none !important;
+  }
+
+  /* Force serif on headings for journal-style print rendering. */
+  h1, h2, h3{
+    font-family:Georgia, "Times New Roman", serif !important;
+  }
+
+  /* Avoid splitting headings or short editorial blocks across pages. */
+  h1, h2, h3, h4{
+    page-break-after:avoid;
+    break-after:avoid;
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  blockquote, .paper-thesis-line, .paper-callout, figure{
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
 }
 
 /* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
