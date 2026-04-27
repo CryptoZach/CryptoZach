@@ -5935,10 +5935,12 @@ body.contact-page .speaker-headshot--hero{
   margin-inline:auto;
 }
 
-/* Tighten the gap between the header and the headshot on the speaker
-   page so it matches the contact page. The default main padding-top
-   of var(--space-xl) leaves visibly more headroom than /contact. */
-body.speaker-page main{
+/* Tighten the gap between the header and the headshot on both the
+   speaker and contact pages so they match. Default main padding-top
+   is var(--space-xl) (48px); reducing to var(--space-md) (20px) for
+   both keeps the headshots visually aligned with the same headroom. */
+body.speaker-page main,
+body.contact-page main{
   padding-top:var(--space-md);
 }
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
