@@ -4311,9 +4311,13 @@ section:has(.speaker-jump-to){
   }
   .research-library-page ul.writing-list > li > article.writing-card--has-actions:not(.research-card--dual-essays) > .writing-card-actions,
   .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
-    overflow-x:auto;
-    overscroll-behavior-x:contain;
-    scrollbar-width:thin;
+    /* Was overflow-x:auto. Combined with transform:translateX(4px) on
+       .writing-arrow hover, that clipped the right edge of the button
+       (transforms don't trigger scrollbar but still get visually clipped
+       by overflow != visible). Visible is safe here: container is
+       position:absolute right:1.25rem max-width:calc(100% - 2.5rem) with
+       at most 2-3 actions per card, so overflow is unlikely. */
+    overflow-x:visible;
   }
   .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-card-actions{
     flex-wrap:wrap;
