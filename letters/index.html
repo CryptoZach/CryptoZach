@@ -41,11 +41,12 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=216" />
+  <link rel="stylesheet" href="/styles.css?v=217" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -256,7 +257,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=223"></script>
+  <script defer src="/script.js?v=224"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

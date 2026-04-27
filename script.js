@@ -1,15 +1,25 @@
 (function(){
-  // Theme toggle (default = dark / blue accent; light only when explicitly saved)
+  // Theme toggle: explicit saved choice wins; first visit respects OS
+  // prefers-color-scheme. Toggle definitively switches light <-> dark.
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
 
   const saved = localStorage.getItem('theme');
-  if(saved === 'light'){
-    root.removeAttribute('data-theme');
-    if(toggle) toggle.setAttribute('aria-pressed','false');
+  let isDark;
+  if(saved === 'dark'){
+    isDark = true;
+  } else if(saved === 'light'){
+    isDark = false;
   } else {
+    isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  if(isDark){
     root.setAttribute('data-theme','dark');
     if(toggle) toggle.setAttribute('aria-pressed','true');
+  } else {
+    root.removeAttribute('data-theme');
+    if(toggle) toggle.setAttribute('aria-pressed','false');
   }
 
   if(toggle){
