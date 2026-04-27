@@ -18983,30 +18983,20 @@ footer.site-footer .footer-credentials-body{
   }
 }
 
-/* Item 9. Author photo placeholder: a Z-monogram in an accent gradient
-   ring. Used on /contact (hero) and on the homepage About card. */
+/* Item 9. Author photo: the Zachcoin coin in a round frame with a
+   subtle accent ring + soft drop shadow. Used on /contact (hero) and
+   on the homepage About card. */
 .author-monogram{
   --author-monogram-size: 80px;
   width: var(--author-monogram-size);
   height: var(--author-monogram-size);
   border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: calc(var(--author-monogram-size) * 0.5);
-  font-weight: 600;
-  color: #fff;
-  background:
-    radial-gradient(circle at 30% 30%,
-      color-mix(in srgb, var(--accent) 92%, #fff 8%) 0%,
-      var(--accent-cta, #2563eb) 55%,
-      color-mix(in srgb, var(--accent-cta, #2563eb) 75%, #000) 100%);
+  display: inline-block;
+  object-fit: cover;
+  background: var(--panel);
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
-    0 4px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 22%, transparent),
-    0 0 0 2px color-mix(in srgb, var(--accent-cta, #2563eb) 35%, var(--line));
-  letter-spacing: -0.02em;
+    0 4px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 18%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--accent-cta, #2563eb) 30%, var(--line));
   user-select: none;
   flex-shrink: 0;
 }
