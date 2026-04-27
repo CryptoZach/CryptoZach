@@ -18607,29 +18607,10 @@ hr.section-ornament::before{
 /* Item 2. Constrain body-prose reading column. Long lines fatigue the
    eye; 68ch is the project's existing measure token. Tables, figures,
    takeaway cards, the thesis box, and the checklist opt out. */
-.paper-page .paper-abstract p,
-.paper-page .paper-abstract li,
-.paper-page .paper-abstract blockquote,
-.paper-page .paper-abstract dd,
-.paper-page > p:not(.paper-thesis):not(.paper-metadata-strip):not(.paper-description-note):not(.paper-byline-kicker){
-  max-width: var(--measure);
-}
-/* Opt-outs: anything inside a table, figure, takeaway, or checklist
-   should keep its container's full width. */
-.paper-page .paper-abstract table p,
-.paper-page .paper-abstract table li,
-.paper-page .paper-abstract figure p,
-.paper-page .paper-abstract .mvep-checklist-content p,
-.paper-page .paper-abstract .mvep-checklist-content li,
-.paper-page .paper-takeaways p,
-.paper-page .paper-takeaways li,
-.paper-page .callout p,
-.paper-page .callout li,
-.paper-page .paper-thesis p,
-.paper-page .paper-related p,
-.paper-page .paper-related li{
-  max-width: none;
-}
+/* Reverted: the 68ch prose cap combined with the TOC right-pad
+   reservation crushed the reading column on wide viewports. Prose
+   now flows to the natural article content width. */
+
 
 /* Item 3. Journal-style table treatment for body tables in main.
    Override .paper-abstract table's full-cell borders with top + bottom
@@ -18714,19 +18695,20 @@ hr.section-ornament::before{
   display: none;
 }
 
-@media (min-width: 1180px){
+@media (min-width: 1280px){
   .paper-page.has-paper-toc{
     position: relative;
-    padding-right: calc(13rem + 2.5rem + var(--page-gutter, 32px));
+    padding-right: calc(11rem + 1.25rem + var(--page-gutter, 32px));
   }
   .paper-toc{
     display: block;
     position: absolute;
     right: var(--page-gutter, 32px);
     top: 0;
-    width: 13rem;
+    width: 11rem;
     height: 100%;
     pointer-events: none;
+    z-index: 4;
   }
   .paper-toc-nav{
     position: sticky;
@@ -18734,17 +18716,28 @@ hr.section-ornament::before{
     max-height: calc(100vh - 140px);
     overflow-y: auto;
     pointer-events: auto;
-    padding-left: 1rem;
+    padding-left: 0.85rem;
     border-left: 1px solid var(--line);
   }
 }
-@media (min-width: 1400px){
+@media (min-width: 1500px){
   .paper-page.has-paper-toc{
-    padding-right: calc(14rem + 3rem + var(--page-gutter, 32px));
+    padding-right: calc(13rem + 1.5rem + var(--page-gutter, 32px));
   }
   .paper-toc{
-    width: 14rem;
+    width: 13rem;
   }
+}
+
+/* Wide content (the MVEP checklist table, any wide journal table) can
+   exceed the article's compressed content area when the right-pad is
+   reserved for the TOC. Allow horizontal scroll inside its wrapper so
+   it never spills over the TOC column. */
+.paper-page .mvep-checklist-content,
+.paper-page .paper-abstract figure.table-wrap{
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .paper-toc-nav{
