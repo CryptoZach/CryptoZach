@@ -36,6 +36,11 @@
   --space-lg:32px;
   --space-xl:48px;
   --space-2xl:64px;
+  /* Editorial serif for display headings. ui-serif resolves to a platform-
+     native serif (New York on Apple, Cambria on Windows). Explicit fallbacks
+     cover older browsers. Zero webfont cost; swap one token to opt into a
+     hosted face later. */
+  --font-serif: ui-serif, "New York", "Iowan Old Style", "Source Serif 4", "Source Serif Pro", Charter, "Cambria", Georgia, serif;
   color-scheme:light;
 }
 
@@ -738,17 +743,35 @@ body main:has(footer){
 
 h1{
   margin:0;
-  font-size:clamp(20px, 2.4vw, 26px);
-  line-height:1.38;
+  font-family:var(--font-serif);
+  font-size:clamp(22px, 2.6vw, 30px);
+  line-height:1.28;
   font-weight:600;
-  letter-spacing:-0.015em;
+  letter-spacing:-0.005em;
   color:var(--text-soft);
   text-wrap:pretty;
 }
+/* Editorial serif for inner-page section headings; hero h1 stays sans
+   (its punchline character is tuned for weight 800 + tight tracking). */
+h2, h3{
+  font-family:var(--font-serif);
+  letter-spacing:-0.005em;
+  text-wrap:pretty;
+}
+h2{
+  font-weight:600;
+  line-height:1.22;
+}
+h3{
+  font-weight:600;
+  line-height:1.3;
+}
 .hero h1{
+  font-family:inherit;
   font-size:clamp(24px, 2.8vw, 32px);
   line-height:1.32;
   font-weight:700;
+  letter-spacing:-0.015em;
   color:var(--text);
   max-width:none;
   text-wrap:pretty;
@@ -18209,5 +18232,45 @@ body.contact-page .contact-page-foreground > .contact-page .about-item p:last-ch
 }
 .error-page main > section:first-of-type{
   margin-top: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: numbered section kickers
+   Opt-in via class="numbered-section". Renders a small mono "01" / "02" /
+   "03" with a thin rule above the section h2. Counter is scoped to <main>
+   so each page restarts at 01. Sections without the class are skipped (no
+   gaps in the visible numbering).
+   ───────────────────────────────────────────────────────────────────────────── */
+main{ counter-reset: ts-section; }
+.numbered-section{ counter-increment: ts-section; }
+
+.numbered-section > h2{
+  position: relative;
+  padding-top: 2.4rem;
+  margin-top: 0;
+}
+
+.numbered-section > h2::before{
+  content: counter(ts-section, decimal-leading-zero);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.numbered-section > h2::after{
+  content: "";
+  position: absolute;
+  top: 0.42rem;
+  left: 2.2rem;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--line-strong);
+  opacity: 0.85;
 }
 
