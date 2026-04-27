@@ -18383,3 +18383,68 @@ main{ counter-reset: ts-section; }
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: pull-quote (.paper-thesis-line) + metadata callout (.paper-callout)
+   Both classes already exist in paper-page HTML but had no CSS, so they
+   rendered as default browser blockquote / paragraph. These styles make
+   them load-bearing editorial components.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Pull-quote: thesis-statement blockquote with oversized opening mark + accent rail */
+.paper-thesis-line{
+  position: relative;
+  margin: 2.75rem auto 2.75rem 1.25rem;
+  padding: 0.4rem 0 0.4rem 2rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+/* Decorative opening quote mark; positioned to overlap the accent rail */
+.paper-thesis-line::before{
+  content: "\201C";
+  position: absolute;
+  top: -1rem;
+  left: -0.85rem;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 4.25rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.paper-thesis-line p{
+  margin: 0;
+}
+
+.paper-thesis-line p + p{
+  margin-top: 0.75rem;
+}
+
+/* Metadata callout: subtle accent-tinted block for "Forthcoming.", "Note.",
+   etc. Restrained relative to .paper-thesis-line; it is metadata, not voice. */
+.paper-callout{
+  margin: 1.75rem 0;
+  padding: 0.95rem 1.25rem;
+  background: var(--accent-muted);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.paper-callout strong:first-child{
+  color: var(--accent);
+  font-weight: 700;
+}
+
