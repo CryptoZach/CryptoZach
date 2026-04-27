@@ -3669,6 +3669,10 @@ section:has(.speaker-jump-to){
 }
 .writing-card-actions .writing-arrow{
   justify-content:flex-start;
+  /* Trailing "→" arrow needs extra right clearance: the pill curve from
+     border-radius:999px eats into the symmetric 16px right padding above,
+     visually crowding the arrow against the rounded edge. */
+  padding-right:22px;
 }
 .writing-card-actions .writing-thread{
   justify-content:center;
