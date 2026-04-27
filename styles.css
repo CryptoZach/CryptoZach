@@ -18390,17 +18390,19 @@ main{ counter-reset: ts-section; }
    them load-bearing editorial components.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Pull-quote: thesis-statement blockquote with oversized opening mark + accent rail */
+/* Pull-quote: thesis-statement blockquote. Restrained editorial treatment
+   (accent rail + serif italic) carries the signal; an oversized decorative
+   quote glyph was tried and abandoned because the system-serif "\201C"
+   renders inconsistently at large sizes and crowds the first text line. */
 .paper-thesis-line{
-  position: relative;
   margin: 2.75rem auto 2.75rem 1.25rem;
   padding: 0.4rem 0 0.4rem 2rem;
-  border-left: 3px solid var(--accent);
+  border-left: 4px solid var(--accent);
   font-family: var(--font-serif);
   font-style: italic;
   font-size: clamp(1.15rem, 1.4vw, 1.35rem);
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--text);
   max-width: 60ch;
   /* balance distributes line lengths evenly across the whole block (right
@@ -18409,28 +18411,12 @@ main{ counter-reset: ts-section; }
   text-wrap: balance;
 }
 
-/* Decorative opening quote mark; positioned to overlap the accent rail */
-.paper-thesis-line::before{
-  content: "\201C";
-  position: absolute;
-  top: -1rem;
-  left: -0.85rem;
-  font-family: var(--font-serif);
-  font-style: normal;
-  font-size: 4.25rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--accent);
-  opacity: 0.28;
-  pointer-events: none;
-}
-
 .paper-thesis-line p{
   margin: 0;
 }
 
 .paper-thesis-line p + p{
-  margin-top: 0.75rem;
+  margin-top: 0.85rem;
 }
 
 /* Metadata callout: subtle accent-tinted block for "Forthcoming.", "Note.",
