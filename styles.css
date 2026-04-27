@@ -8116,7 +8116,10 @@ footer.site-footer .footer-tagline{
    with the surrounding text in both light and dark themes.
    ───────────────────────────────────────────────────────────────────────────── */
 .term{
-  font-variant-caps: all-small-caps;
+  /* No font-variant-caps: source text is already uppercase, so all-small-caps
+     would render letters at small-cap height (visibly smaller than surrounding
+     cap-height text like "OCC"). Letter-spacing + weight + accent-tint already
+     differentiate program identifiers without size disparity. */
   letter-spacing: 0.05em;
   font-weight: 600;
   color: color-mix(in srgb, var(--accent) 60%, currentColor);
