@@ -5702,9 +5702,17 @@
    treatment defined in styles.css. Skips text inside links, code blocks,
    headings, and existing .term spans to avoid double-wrap and inappropriate
    wrap contexts. Single pass; safe to extend the TERMS list.
+
+   Build-time variant at scripts/wrap-terms-build.mjs runs the same logic
+   on _site/*.html during postprocess (eliminates the post-FCP DOM mutation
+   that delays LCP). When the build has wrapped, <html> carries the
+   data-terms-wrapped="true" attribute and this runtime variant no-ops.
+   This keeps local-dev (jekyll serve without postprocess) working while
+   prod gets build-wrapped HTML.
    ───────────────────────────────────────────────────────────────────────────── */
 (function(){
   if(typeof document === 'undefined') return;
+  if(document.documentElement && document.documentElement.hasAttribute('data-terms-wrapped')) return;
 
   // Program-specific identifiers worth marking. Case-sensitive: ALL-CAPS
   // entries match only when fully capitalized (so "GENIUS" matches the Act
