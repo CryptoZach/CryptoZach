@@ -5684,3 +5684,95 @@
     }
   })();
 })();
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: program-identifier auto-wrapper
+   Scans body prose on DOMContentLoaded and wraps known program identifiers
+   in <span class="term"> for the small-caps + tracked + accent-tint
+   treatment defined in styles.css. Skips text inside links, code blocks,
+   headings, and existing .term spans to avoid double-wrap and inappropriate
+   wrap contexts. Single pass; safe to extend the TERMS list.
+   ───────────────────────────────────────────────────────────────────────────── */
+(function(){
+  if(typeof document === 'undefined') return;
+
+  // Program-specific identifiers worth marking. Case-sensitive: ALL-CAPS
+  // entries match only when fully capitalized (so "GENIUS" matches the Act
+  // but not the lowercase word).
+  var TERMS = [
+    'CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY'
+  ];
+
+  var pattern = new RegExp('\\b(' + TERMS.join('|') + ')\\b', 'g');
+
+  // Skip wrapping inside these elements (headings, code, links, buttons).
+  var SKIP_TAGS = {
+    A:1, CODE:1, PRE:1, KBD:1, SAMP:1, VAR:1,
+    SCRIPT:1, STYLE:1, BUTTON:1, NAV:1,
+    H1:1, H2:1, H3:1, H4:1, H5:1, H6:1
+  };
+  var SKIP_CLASS = 'term';
+
+  // Only scan prose containers
+  var SCAN_SELECTORS = 'main p, main li, main td, main blockquote, main figcaption, main dt, main dd';
+
+  function shouldSkip(node){
+    var p = node.parentNode;
+    while(p && p.nodeType === 1){
+      if(SKIP_TAGS[p.tagName]) return true;
+      if(p.classList && p.classList.contains(SKIP_CLASS)) return true;
+      p = p.parentNode;
+    }
+    return false;
+  }
+
+  function wrapMatchesIn(root){
+    // Collect text nodes first; modifying DOM during walk invalidates the walker.
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var pending = [];
+    var n;
+    while((n = walker.nextNode())){
+      if(shouldSkip(n)) continue;
+      pattern.lastIndex = 0;
+      if(pattern.test(n.nodeValue)) pending.push(n);
+    }
+
+    for(var i = 0; i < pending.length; i++){
+      var textNode = pending[i];
+      var text = textNode.nodeValue;
+      var frag = document.createDocumentFragment();
+      var last = 0;
+      var m;
+      pattern.lastIndex = 0;
+      while((m = pattern.exec(text)) !== null){
+        if(m.index > last){
+          frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        }
+        var span = document.createElement('span');
+        span.className = 'term';
+        span.textContent = m[0];
+        frag.appendChild(span);
+        last = m.index + m[0].length;
+      }
+      if(last < text.length){
+        frag.appendChild(document.createTextNode(text.slice(last)));
+      }
+      textNode.parentNode.replaceChild(frag, textNode);
+    }
+  }
+
+  function init(){
+    try {
+      var roots = document.querySelectorAll(SCAN_SELECTORS);
+      for(var i = 0; i < roots.length; i++) wrapMatchesIn(roots[i]);
+    } catch(e){
+      /* fail-soft: term marks are decorative; never break the page */
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

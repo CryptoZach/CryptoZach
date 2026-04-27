@@ -8068,6 +8068,32 @@ footer.site-footer .footer-tagline{
     page-break-inside:avoid;
     break-inside:avoid;
   }
+
+  /* Program-term marks: render as plain text in print, no accent tint. */
+  .term{
+    color:inherit !important;
+    font-variant-caps:normal !important;
+    letter-spacing:normal !important;
+    font-weight:inherit !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: program-identifier inline emphasis
+   .term marks defined program identifiers (CLII, MVEP, PPSI, GENIUS, etc.)
+   with small caps + tracked + muted accent tint. Auto-applied via the
+   wrapper in script.js; can also be authored manually as
+   <span class="term">CLII</span>.
+
+   Restrained on purpose: a 60% mix of accent with currentColor gives a
+   visible tint without saturating long-form prose. Color tone scales
+   with the surrounding text in both light and dark themes.
+   ───────────────────────────────────────────────────────────────────────────── */
+.term{
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--accent) 60%, currentColor);
 }
 
 /* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
