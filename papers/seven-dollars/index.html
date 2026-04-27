@@ -207,7 +207,7 @@
         </figure>
 
         <h2>What this paper changes</h2>
-        <p>The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
+        <p class="dropcap">The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
         <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
 
         <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
@@ -224,10 +224,14 @@
         <p>Each of the seven products has since traded its SVB-era concentration for a structurally different one. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG was designed with segregation but depends on a single banking partner. OUSG diversified its underlyings but concentrated its instant-redemption path on one pool. The concentration migrated; it did not disappear. Forward risk assessment has to name the current concentration, not the last one.</p>
         <p><strong>What this means.</strong> Contagion modeling that assumes failures cascade from complex products down to their simpler components has the direction reversed. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
 
+        <hr class="section-ornament" aria-hidden="true">
+
         <h2>Who should care</h2>
         <p><strong>Policymakers.</strong> If the goal is to prevent a repeat of SVB, the instrument that would detect the condition is custody concentration at the product level, not regulatory intensity at the operator level. Both instruments are useful; they answer different questions and cannot substitute for each other.</p>
         <p><strong>Issuers and operators.</strong> What determines whether a product holds its peg under stress is the custody model, the liquidation path quality, and the upstream dependencies, not the regulatory tier. A product designed under a strong regulator with a concentrated reserve will behave worse than a product designed under a weak regulator with a diversified reserve.</p>
         <p><strong>Investors and market-structure teams.</strong> Two products trading at one dollar can require structurally different diligence packages. The four-dimension taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile) is the first-pass filter that determines which MVEP categories are binding for each product before the full ten-category assessment begins.</p>
+
+        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Dollar-infrastructure context</h2>
         <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
