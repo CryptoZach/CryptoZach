@@ -8116,6 +8116,39 @@ footer.site-footer .footer-tagline{
   border-radius: 2px;
 }
 
+/* In compact pill/chip/badge contexts the small-caps + tracking + weight
+   on .term reads as visual noise rather than editorial markup (and the
+   tracking compounds with chip letter-spacing to produce visible gaps
+   around the term). Suppress the typographic treatment; keep the accent
+   color so the term still reads as a defined identifier / link. */
+.hero-proof-chip .term,
+.badge .term,
+.badge-sm .term{
+  font-variant-caps: normal;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+.hero-proof-chip .term.term-link,
+.badge .term.term-link,
+.badge-sm .term.term-link{
+  border-bottom: none;
+}
+
+/* The hero proof chip has #hero.hero--homepage .hero-proof-strip
+   .hero-proof-chip a { color: inherit } which forces every link inside
+   the chip to chip-text color (white in dark, muted in light). For our
+   .term-link inside the chip we want full accent blue so GENIUS reads
+   as a clearly distinct linked identifier. Match specificity to override. */
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.term.term-link{
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.term.term-link:hover{
+  color: var(--accent-hover);
+  text-decoration-color: var(--accent-hover);
+}
+
 /* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
 /* Wide: two columns so the right side is used as a trust rail (proof bar + meta). */
 .hero--homepage .hero-grid{
