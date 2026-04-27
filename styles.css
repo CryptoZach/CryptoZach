@@ -14507,11 +14507,17 @@ header.scrolled {
 /* Paper-thesis: tighten typography; visible "Thesis" eyebrow */
 .paper-thesis{
   position: relative;
+  /* Reserve space above the box for the Thesis eyebrow so it does
+     not overlap the .date-note line directly above. */
+  margin-top: var(--space-xl);
 }
 .paper-thesis::before{
   content: "Thesis";
   position: absolute;
-  top: calc(-1 * var(--space-md));
+  /* Sit the eyebrow centered on the top border of the box, with
+     enough padding-top so the descenders/letter caps clear the
+     prior paragraph. */
+  top: -0.55em;
   left: var(--space-md);
   padding: 0 var(--space-xs);
   background: var(--bg);
@@ -14520,6 +14526,7 @@ header.scrolled {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent) 85%, transparent);
+  line-height: 1;
 }
 
 /* Mobile: reduce padding on polished blocks */
