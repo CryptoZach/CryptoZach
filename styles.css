@@ -13352,6 +13352,24 @@ a.writing-arrow:focus{
   max-width:none;
   text-wrap:wrap;
 }
+/* Slightly larger H1 at desktop widths. Uses container width-aware
+   sizing (vw clamp) to scale down on narrower viewports so the
+   sentence keeps fitting on a single line at typical laptop widths
+   (>= 1100px) and only wraps below that. */
+@media (min-width: 1100px){
+  .speaker-page .speaker-hero #speaker-hero-title{
+    font-size: clamp(1.4rem, 1.85vw, 1.7rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1100px) and (max-width: 1240px){
+  .speaker-page .speaker-hero #speaker-hero-title{
+    /* On the narrow desktop band let it wrap rather than overflow */
+    white-space: normal;
+  }
+}
 .speaker-page .booking-onepager-cta{
   margin:var(--space-md) 0 0;
 }
