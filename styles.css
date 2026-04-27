@@ -18412,17 +18412,25 @@ main{ counter-reset: ts-section; }
   text-wrap: balance;
 }
 
-/* Decorative element: short accent rule above the quote. Block-level so
-   it stays in document flow (no overlap with first text line). Aligned
-   with the text indent (not the rail), reads as an editorial "lead-in". */
+/* Decorative element: horizontal rule that caps the vertical rail at the
+   top-left corner, forming a single L-bracket. negative margin-left of
+   calc(-2rem - 4px) extends the rule fully over the rail's width (4px
+   border) and out 2rem to align with the start of the text. Block-level
+   stays in document flow; gradient fade gives the rule a sense of motion
+   trailing off rather than a hard stop. */
 .paper-thesis-line::before{
   content: "";
   display: block;
-  width: 2.75rem;
-  height: 2px;
-  background: var(--accent);
-  margin: 0 0 1rem 0;
-  opacity: 0.9;
+  width: 3.5rem;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent) 55%,
+    color-mix(in srgb, var(--accent) 35%, transparent) 100%
+  );
+  margin: 0 0 1.1rem calc(-2rem - 4px);
+  opacity: 1;
 }
 
 .paper-thesis-line p{
