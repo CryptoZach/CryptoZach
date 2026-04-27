@@ -18740,6 +18740,38 @@ hr.section-ornament::before{
   -webkit-overflow-scrolling: touch;
 }
 
+/* ────────── Editorial: homepage About card symmetry ────────── */
+/* The card body is centered (text-align center, 760px paragraph
+   measure). The header (Zachcoin monogram + h2) needs to match that
+   centered rhythm, and the meta grid needs to balance: three items
+   in a 2-col grid leaves an empty quadrant. Override to center the
+   header row and use a 3-col meta grid on desktop. */
+body #contact .about-card .about-card-header{
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+body #contact .about-card .about-card-header h2{
+  margin-bottom: 0;
+}
+@media (min-width: 900px){
+  body #contact .about-card .about-card-meta{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    max-width: none;
+  }
+}
+@media (max-width: 899px) and (min-width: 600px){
+  body #contact .about-card .about-card-meta{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  body #contact .about-card .about-card-meta p:nth-child(3){
+    grid-column: 1 / -1;
+    max-width: 32rem;
+    justify-self: center;
+  }
+}
+
 .paper-toc-nav{
   font-size: 0.78rem;
   line-height: 1.45;
