@@ -18813,3 +18813,65 @@ hr.section-ornament::before{
   .paper-toc-link{ transition: none; }
 }
 
+/* ────────── Editorial: Bundle C sticky bottom action bar ────────── */
+/* Slides up from the bottom once the user has scrolled past the
+   top-of-page .paper-access-block. Lives outside the article. */
+.paper-action-bar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  pointer-events: none;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform .28s ease, opacity .22s ease;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  box-shadow: 0 -4px 18px color-mix(in srgb, var(--text) 6%, transparent);
+}
+.paper-action-bar.visible{
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.paper-action-bar-inner{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.6rem max(var(--page-gutter), env(safe-area-inset-right)) calc(0.6rem + env(safe-area-inset-bottom)) max(var(--page-gutter), env(safe-area-inset-left));
+}
+.paper-action-bar-btn.action{
+  font-size: 0.85rem;
+  padding: 0.45rem 0.95rem;
+  white-space: nowrap;
+}
+.paper-action-bar-btn .icon-ssrn-inline,
+.paper-action-bar-btn .icon-x-inline{
+  width: 1em;
+  height: 1em;
+}
+
+@media (max-width: 600px){
+  .paper-action-bar-inner{
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+  .paper-action-bar-btn.action{
+    font-size: 0.78rem;
+    padding: 0.4rem 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .paper-action-bar{ transition: opacity .12s linear; transform: none; }
+  .paper-action-bar:not(.visible){ display: none; }
+}
+

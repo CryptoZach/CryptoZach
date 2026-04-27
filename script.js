@@ -5808,6 +5808,68 @@
 })();
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   Sticky bottom action bar for paper and letter pages.
+   When the user scrolls past the .paper-access-block, slide a thin bar
+   in from the bottom containing the page's primary action plus the
+   first secondary action. Hides when the access block is back in view.
+   ───────────────────────────────────────────────────────────────────────────── */
+(function(){
+  if(typeof document === 'undefined') return;
+  if(typeof IntersectionObserver !== 'function') return;
+
+  function init(){
+    try {
+      var main = document.querySelector('main.paper-detail-page');
+      if(!main) return;
+      var accessBlock = main.querySelector('.paper-access-block');
+      if(!accessBlock) return;
+      var primary = accessBlock.querySelector('.access-primary');
+      if(!primary) return;
+      var actions = primary.querySelectorAll('a.action');
+      if(actions.length === 0) return;
+
+      var bar = document.createElement('div');
+      bar.className = 'paper-action-bar';
+      bar.setAttribute('aria-label', 'Paper actions');
+      var inner = document.createElement('div');
+      inner.className = 'paper-action-bar-inner';
+      for(var i = 0; i < Math.min(2, actions.length); i++){
+        var clone = actions[i].cloneNode(true);
+        clone.classList.add('paper-action-bar-btn');
+        clone.classList.remove('cta-primary');
+        inner.appendChild(clone);
+      }
+      bar.appendChild(inner);
+      document.body.appendChild(bar);
+
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            bar.classList.remove('visible');
+          } else {
+            var r = entry.boundingClientRect;
+            if(r.top < 0){
+              bar.classList.add('visible');
+            } else {
+              bar.classList.remove('visible');
+            }
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+      io.observe(accessBlock);
+    } catch(e){
+      /* fail-soft */
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Sticky in-page TOC for paper and letter pages.
    Auto-scans .paper-page for <h2> elements, generates slug IDs where
    missing, and builds an aside with active-section highlighting via
