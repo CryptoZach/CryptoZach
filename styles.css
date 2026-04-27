@@ -18274,3 +18274,104 @@ main{ counter-reset: ts-section; }
   opacity: 0.85;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: card refinement
+   Adds three layers on top of the existing hover system (lift, border shift,
+   shadow): a thin accent stripe that scales in across the top of the card,
+   a read-arrow indicator on research cards, and a typographic upgrade for
+   the .card-venue stamp.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Positioning context + clipping for the top accent stripe */
+.compact-card,
+.research-card-sm{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top accent stripe: scales from 0 to 100% on hover or focus */
+.compact-card::before,
+.research-card-sm::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.compact-card:hover::before,
+.compact-card:focus-visible::before,
+.research-card-sm:hover::before,
+.research-card-sm:focus-visible::before{
+  transform: scaleX(1);
+}
+
+/* Card title shifts to accent on hover (transition declared on the title) */
+.compact-card h3,
+.research-card-sm h3{
+  transition: color 0.2s ease;
+}
+
+.compact-card:hover h3,
+.compact-card:focus-visible h3,
+.research-card-sm:hover h3,
+.research-card-sm:focus-visible h3{
+  color: var(--accent);
+}
+
+/* Research card read-arrow: sits in the top-right padding, slides in on hover */
+.research-card-sm::after{
+  content: "\2192";
+  position: absolute;
+  top: 1.4rem;
+  right: 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.25, 1), color 0.2s ease;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.research-card-sm:hover::after,
+.research-card-sm:focus-visible::after{
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--accent);
+}
+
+/* Editorial venue stamp. Selector specificity (.card .card-venue) beats
+   the inline .card-venue rule in the homepage <style> block. */
+.research-card-sm .card-venue,
+.compact-card .card-venue,
+.research-card .card-venue,
+.card .card-venue{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-top: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .compact-card::before,
+  .research-card-sm::before,
+  .research-card-sm::after,
+  .compact-card h3,
+  .research-card-sm h3{
+    transition: none;
+  }
+}
+
