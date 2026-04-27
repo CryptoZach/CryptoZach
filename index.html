@@ -417,7 +417,10 @@
     #frameworks.section-compact,
     #research.section-compact,
     #contact.section-compact {
-      padding: 4rem 0;
+      /* Rhythm: more air above each section so the serif h2 + numbered
+         kicker have room to breathe; slightly less below since the
+         section-link "View all" anchors visually close the section. */
+      padding: 5.5rem 0 4.5rem;
       border-top: 1px solid var(--line);
       box-sizing: border-box;
     }
@@ -435,9 +438,13 @@
 
     .section-compact h2 {
       font-size: 1.75rem;
-      font-weight: 500;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
+      /* Weight 600 reads cleanly across the system-serif stack. Weight 500
+         (the prior value, sans-tuned) falls back to 400 on Cambria/Georgia
+         which lack a true medium. -0.005em letter-spacing matches global
+         serif tuning (was -0.02em, sans-tight). */
+      font-weight: 600;
+      margin-bottom: 2rem;
+      letter-spacing: -0.005em;
       text-align: left;
     }
 
