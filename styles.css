@@ -17149,20 +17149,6 @@ body.letters-landing .companion-cards > .companion-card:nth-child(4n+4):hover{
   color: color-mix(in srgb, #0d9488 85%, var(--muted));
 }
 
-/* Row-equalize BOTTOM LINE callout: cells become flex columns so the
-   em sticks to the cell bottom, aligning callout boxes across columns
-   within each table row regardless of body length. Desktop-only;
-   mobile cells stack so alignment is unnecessary. */
-@media (min-width: 769px){
-  .research-library-page #cross-track-convergence .convergence-table tbody td{
-    display: flex;
-    flex-direction: column;
-  }
-  .research-library-page #cross-track-convergence .convergence-table tbody td em{
-    margin-top: auto;
-  }
-}
-
 /* Convergence synthesis paragraph below the table: currently unstyled
    on research page (only scoped to .overview-page). Add a
    centered accent-tinted callout so the "two tracks, one conclusion"
