@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -40,12 +39,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -139,9 +137,7 @@
 
       <h1 id="letter-title">FinCEN AML/CFT NPRM comment: AML regulation as structurally a control-layer regime</h1>
 
-      <p class="paper-byline-kicker">3 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <p class="paper-metadata-strip"><code class="cite">FINCEN-2026-0034</code> (<code class="cite">RIN 1506-AB72</code>) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+      <p class="paper-metadata-strip">FINCEN-2026-0034 (RIN 1506-AB72) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
 
       <p class="paper-thesis"><strong>AML regulation has always been control-layer regulation: the Bank Secrecy Act attaches obligations to intermediaries, not to transactions or instruments.</strong> The FinCEN NPRM is the first structural AML reform since the AML Act of 2020. In tokenized finance, intermediation can be disaggregated across several layers (issuer, custodian, interface, router, sweep, hold and freeze). The letter argues the proposed rule's risk-based resource allocation directive is structurally compatible with control-layer-level risk assessment, and will be more effective if it articulates this compatibility explicitly.</p>
 
@@ -164,7 +160,7 @@
 
       <div class="paper-abstract">
         <h2>What the rule proposes</h2>
-        <p class="dropcap">The FinCEN NPRM reforms AML/CFT programs across eleven financial-institution categories (banks, casinos, MSBs, broker-dealers, mutual funds, insurance, FCMs and IBCs, DPMSJs, credit card system operators, loan and finance companies, housing GSEs) in the first structural reform since the AML Act of 2020. It operationalizes the Act's risk-based, effectiveness-focused supervision directive, requires a US-based AML/CFT officer (31 U.S.C. 5318(h)(5)), mandates consideration of the AML/CFT Priorities, and introduces a risk assessment process requirement. The rule does not yet address PPSIs as a distinct category; PPSI-specific AML obligations live in <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>.</p>
+        <p>The FinCEN NPRM reforms AML/CFT programs across eleven financial-institution categories (banks, casinos, MSBs, broker-dealers, mutual funds, insurance, FCMs and IBCs, DPMSJs, credit card system operators, loan and finance companies, housing GSEs) in the first structural reform since the AML Act of 2020. It operationalizes the Act's risk-based, effectiveness-focused supervision directive, requires a US-based AML/CFT officer (31 U.S.C. 5318(h)(5)), mandates consideration of the AML/CFT Priorities, and introduces a risk assessment process requirement. The rule does not yet address PPSIs as a distinct category; PPSI-specific AML obligations live in <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>.</p>
 
         <h2>Gaps identified</h2>
         <ul>
@@ -186,8 +182,6 @@
               <li><strong>Apply the supervision and enforcement consultation framework beyond banks</strong>, with priority for large MSBs operating in tokenized finance.</li>
               <li><strong>Coordinate the final rule with <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a> and <a href="/letters/banking-agencies-joint-aml/">91 FR 18304</a></strong>, with specific attention to the FRB non-participation coordination gap.</li>
             </ol>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Program role</h2>
         <p>First of three AML-batch letters filed April 18, 2026. Sets out the structural control-layer observation across eleven FI categories before the PPSI-specific <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a> letter applies all three frameworks in depth.</p>
@@ -231,11 +225,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -43,12 +42,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -56,8 +54,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Dollar v3", "item": "https://tokenization.systems/papers/dollar-v3" }
+        { "@type": "ListItem", "position": 3, "name": "Dollar v3", "item": "https://tokenization.systems/papers/dollar-v3" }
       ]
     }
   </script>
@@ -136,44 +133,37 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Dollar v3
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Dollar v3
       </nav>
 
       <figure class="paper-cover paper-cover--control-layer" aria-hidden="true">
         <img src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 policy map cover" loading="eager" />
       </figure>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public">Public</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
+        <span class="badge">Public</span>
       </div>
 
-      <p class="paper-tier-kicker">MEDIUM BRIEFING · 7 min on-page</p>
-
       <h1 id="paper-title">Dollar v3: How Stablecoin Policy Is About to Re-Write the U.S. Dollar</h1>
-
-      <p class="paper-byline-kicker">7 min read<span class="paper-byline-sep" aria-hidden="true">·</span>December 2025<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
 
       <p class="paper-metadata-strip">Medium · Dec 2025 · Policy / Payments / Stablecoins</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <div class="paper-thesis">
-        <p><strong>Payment stablecoins, tokenized deposits, and yield wrappers may look interchangeable in a wallet, but diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior.</strong></p>
-        <p>This page explains why policy attaches to the control layer, not to the token label, and which regulated functions GENIUS and Interpretive Letter 1188 actually reach.</p>
-      </div>
+      <p class="paper-thesis">Dollar v3 is a market-structure map of digital dollars. Payment stablecoins, tokenized deposits, and tokenized cash-management or yield wrappers may look interchangeable in a wallet but diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior. The central claim is that policy attaches to the control layer (the operator and routing functions that govern issuance, custody, compliance, and redemption: reserve custody, settlement access, routing defaults, screening, holds, disclosures, and recordkeeping), not to the token label alone. This is a policy essay anchored on the Federal Reserve&rsquo;s December 2025 FEDS Note (Du, Sonawane, and Watsky, &ldquo;In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,&rdquo; FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958), the enacted GENIUS Act&rsquo;s payment-stablecoin perimeter, and OCC Interpretive Letter 1188 on bank activity on crypto rails; it is not an empirical study with a dataset.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Architecture redesign, not a new currency, is the policy event. Dollar v1 was cash: bearer instrument, physical, hard to surveil, hard to reverse. Dollar v2 was bank deposits plus card networks: the bank account became the unit of everyday money, the payment network became the routing layer, intermediaries controlled access and data. Dollar v3 is internet-native dollars on always-on programmable rails: stablecoins, deposit tokens, and tokenized cash-management wrappers routed through wallets, APIs, and compliance systems. Each architectural generation distributes power, captures spread, and enables surveillance differently. The policy question for v3 is not "does the dollar win" (it can win in any of these architectures) but "who wins inside v3, and who quietly subsidizes the rest." That question is decided by container design, not currency choice.</p>
+          <p class="paper-takeaway-text"><strong>Three dollar objects require three rulebooks.</strong> Payment stablecoins are par-redeemable settlement instruments with narrow reserves. Tokenized deposits are bank liabilities in token form, inside the banking perimeter. Yield wrappers are investment products (tokenized money-market funds, T-bill strategies) that only look cash-like on the surface. Regulating them as one category invites mis-selling, arbitrage, and crisis surprises.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Layer 0 is the hidden variable. Two digital-dollar products can look identical in a consumer wallet and behave very differently in a panic because reserves sit in different places, mobilize on different timetables, and carry different backstop expectations. The essay's term, deposit beta, captures how much of a stablecoin's reserve flows back into the banking system as deposits versus sits in non-bank assets. The same one-dollar token has different macroeconomic effects depending on where its reserve dollar lives.</p>
+          <p class="paper-takeaway-text"><strong>Layer 0 is the hidden variable.</strong> Two digital-dollar products can look identical in a consumer wallet and behave very differently in a panic because reserves sit in different places, mobilize on different timetables, and carry different backstop expectations. The essay&rsquo;s term &ldquo;deposit mutation&rdquo; is the author&rsquo;s synthesis of the Federal Reserve&rsquo;s December 2025 argument that stablecoins can reduce, recycle, or restructure deposits, including by shifting bank funding toward more concentrated, uninsured, wholesale balances even when aggregate deposit levels hold steadier than headline &ldquo;flight&rdquo; narratives suggest.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">The likely end state is hybrid, not monoculture. Scenario for 2030 to 2035: payment stablecoins serve as the 24/7 cash leg, yield migrates to clearly labeled wrappers, bank deposit tokens upgrade programmable bank money inside the existing perimeter, and offshore dollar coins persist at the edges. This is the architecture the GENIUS Act perimeter and the OCC Interpretive Letter 1188 framework appear designed to produce. The policy question is which container captures the consumer interface, which captures the institutional clearing layer, and which captures the offshore corridor.</p>
+          <p class="paper-takeaway-text"><strong>The likely end state is hybrid, not monoculture.</strong> Scenario: by 2030 to 2035, payment stablecoins serve as the 24/7 cash leg, yield is pushed into clearly labeled wrappers, bank deposit tokens upgrade programmable bank money, and offshore dollar coins persist at the edges. This is the essay&rsquo;s strategic judgment about market structure conditional on legislative and regulatory outcomes that remain uncertain; it is scenario architecture, not a measured forecast.</p>
         </div>
       </div>
 
@@ -192,21 +182,15 @@
           <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/1998874696893231210" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
         </div>
         <div class="access-secondary">
+          <a class="access-link" href="/contact">Request deeper memo</a>
+          <span aria-hidden="true"> · </span>
           <a class="access-link" href="/papers/control-layer-war">Read companion: The Control Layer War</a>
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Payment stablecoins, tokenized deposits, and yield wrappers may look interchangeable in a wallet. Are they?</p>
-        <p><strong>Answer</strong><br />No. They diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior. The essay locates Dollar v3 (internet-native dollars on always-on programmable rails) as the third architectural generation after v1 (cash) and v2 (bank deposits and card networks); architecture redesign, not a new currency, is the policy event. Policy attaches to the control layer (reserve custody, settlement access, routing defaults, screening, holds, disclosures, recordkeeping), not to the token label. A bank deposit token, a 1940 Act fund wrapper, and a payment stablecoin trigger different regulatory regimes regardless of how they appear in the same UI.</p>
-        <p><strong>Evidence base</strong><br />Policy essay anchored on three sources: the Federal Reserve's December 2025 FEDS Note (Du, Sonawane, Watsky, "In the Shadow of Bank Runs," DOI 10.17016/2380-7172.3958), the enacted GENIUS Act payment-stablecoin perimeter, and OCC Interpretive Letter 1188 on bank activity on crypto rails. Not an empirical study with a dataset.</p>
-        <p><strong>Implication</strong><br />Policy designers and operator counsel should map which control-layer functions trigger which regulatory regime before token-label classification debates. The token may stay the same; the regime changes when reserve composition, routing default, or settlement access changes. Regulatory perimeter follows the operator's compliance posture, not the token's denomination.</p>
-      </aside>
-
       <div class="paper-abstract">
         <h2>What this piece changes</h2>
-        <p class="dropcap">Most stablecoin commentary asks whether stablecoins are good or bad, or whether banks or crypto firms will &ldquo;win.&rdquo; This piece changes the unit of analysis. It treats the emerging system as market-structure design: who can issue, where reserves can sit, where yield is allowed to live, who owns the last-mile wallet relationship, who gets access to settlement rails, and who markets expect to be rescued when something breaks.</p>
+        <p>Most stablecoin commentary asks whether stablecoins are good or bad, or whether banks or crypto firms will &ldquo;win.&rdquo; This piece changes the unit of analysis. It treats the emerging system as market-structure design: who can issue, where reserves can sit, where yield is allowed to live, who owns the last-mile wallet relationship, who gets access to settlement rails, and who markets expect to be rescued when something breaks.</p>
         <p>It also broadens the use case beyond retail payments. One of the strongest sections argues that stablecoins are increasingly a settlement primitive: the always-on cash leg for tokenized Treasuries, money-market funds, credit, and eventually broader securities markets.</p>
 
         <h2>Core arguments</h2>
@@ -232,9 +216,10 @@
         <p>This is partly a normative piece. It proposes a rights minimum viable specification for a citizen-friendly Dollar v3: due-process freezes, data minimization, a small-value privacy zone, real portability and interoperability, and transparency obligations for systemically important issuers and wallets.</p>
         <p>The scoreboard defines practical evaluation criteria: par redemption, clear claim priority, reserve transparency, stress-tested liquidity, portability, interoperability, and macro-stability monitoring. These are core outputs of the essay, not appendices.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
+        <h2>What problem it solves</h2>
+        <p>This piece helps policy, payments, bank-strategy, and tokenization readers move past &ldquo;what is this token?&rdquo; to the questions that determine outcomes: which dollar object is being distributed, who owns the router and hold workflow, where reserves sit, who becomes the compelled operator, and who absorbs the shock under stress. It works as a control-layer operating map for the hybrid digital-dollar stack.</p>
 
-        <h2>Anchor evidence</h2>
+        <h2>Anchor evidence / policy inputs</h2>
         <p>This is a policy essay, not an empirical paper with a dataset. It is anchored on:</p>
         <ul>
           <li><strong>Federal Reserve December 2025 FEDS Note</strong> (Du, Sonawane, and Watsky, &ldquo;In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,&rdquo; FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) on stablecoin deposit effects, which frames outcomes as deposits being reduced, recycled, or restructured depending on demand source and reserve management.</li>
@@ -243,8 +228,6 @@
           <li><strong>CLARITY Act</strong> (H.R. 5403, 119th Congress), analyzed in the companion piece through its House-passed form and official section-by-section summaries as a market-structure overlay, separate from a dedicated payment-stablecoin title. As of April 2026: passed the House; Senate consideration is ongoing. Readers should check Congress.gov for current status.</li>
         </ul>
         <p>Scenario numbers (2030 to 2035 hybrid stack, deposit-shift estimates, adoption paths) are the author&rsquo;s strategic judgment within these frameworks; they are not measured outcomes.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Limitations</h2>
         <ul>
@@ -292,11 +275,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

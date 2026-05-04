@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -44,12 +43,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,8 +55,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Minimum Viable Equivalence Pack", "item": "https://tokenization.systems/papers/mvep" }
+        { "@type": "ListItem", "position": 3, "name": "Minimum Viable Equivalence Pack", "item": "https://tokenization.systems/papers/mvep" }
       ]
     }
   </script>
@@ -153,58 +150,52 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Minimum Viable Equivalence Pack
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Minimum Viable Equivalence Pack
       </nav>
 
-      <div class="paper-badges">
-        <span class="badge badge-public badge-status-published">Public</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
-      </div>
+      <figure class="paper-cover paper-cover--wide" aria-hidden="true">
+        <picture><source type="image/webp" srcset="/Publication-Images/MVEP_Cover_v2.webp" /><img src="/Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack, ten-category committee checklist cover" loading="eager" /></picture>
+      </figure>
 
-      <p class="paper-tier-kicker">FOUNDATION · 15 min on-page · 25 min full read</p>
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge badge-status-published">Public</span>
+      </div>
 
       <h1 id="paper-title">Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products</h1>
 
-      <p class="paper-byline-kicker">15 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">Asset managers</span>
-          <span class="paper-audience-tag">Risk committees</span>
-          <span class="paper-audience-tag">Tokenization platforms</span>
-          <span class="paper-audience-tag">Custodians</span>
-          <span class="paper-audience-tag">Legal / Compliance teams</span>
-          <span class="paper-audience-tag">Exchanges evaluating collateral acceptance</span>
-          <span class="paper-audience-tag">Policy designers and regulators</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">2026 · SSRN</p>
+      <p class="paper-metadata-strip">~25 min read · ~28,000 words · 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of April 2026.</p>
 
-      <aside class="brief-callout paper-thesis-pullquote" aria-label="Paper thesis pull-quote">
-        <p>The collateral framework treats them as equivalent. Legal, operational, and economic equivalence each break down in different ways under stress, and the SVB weekend broke all three at once.</p>
-      </aside>
-
-      <div class="paper-thesis">
-        <p><strong>Three tokenized Treasury products under three different regulatory regimes now serve as comparable collateral on one exchange, through one custodian. The framework treats them as equivalent. They are not.</strong></p>
-        <p>This page explains why diligence has to test legal, operational, and economic equivalence as separate dimensions, and what the ten-category MVEP checklist requires.</p>
-      </div>
+      <p class="paper-thesis">Three tokenized U.S. Treasury products governed by three different regulatory regimes now receive comparable collateral treatment on the same institutional derivatives exchange, through the same custodian. A U.S. mutual fund under the Investment Company Act of 1940 (Franklin Templeton's BENJI), a BVI limited partnership (BlackRock's BUIDL), and a Cayman Islands fund explicitly unavailable to U.S. persons (Circle's USYC) all serve as eligible collateral in Binance's Portfolio Margin framework. The collateral framework does not distinguish between them. The MVEP framework demonstrates that they are not equivalent.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The SVB cascade specifics are what the framework was built to detect. USDC's $3.3 billion exposure to one regional bank produced a 13% depeg on March 11, 2023, and the contagion reached at least four downstream products that did not bank with SVB: DAI through its Peg Stability Module's USDC reserves, USDP and GUSD through Dai's downstream PSMs (per the December 2025 FEDS Note, Du, Sonawane, and Watsky, "In the Shadow of Bank Runs"). One SVB-counterparty failure cascaded through five tokenized products in 48 hours; resolution depended on the FDIC invoking the systemic risk exception. The MVEP's three independently testable equivalence dimensions (legal, operational, economic) are designed to surface the structural conditions that produce this cascade pattern before the next event, not after.</p>
+          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the depeg (USDC trading at $0.88) broke economic equivalence. The cascade did not stop at USDC. The Federal Reserve&rsquo;s December 2025 FEDS Note (Du, Sonawane, and Watsky, &ldquo;In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,&rdquo; FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) documents that Dai&rsquo;s Peg Stability Module, designed to stabilize Dai&rsquo;s price, instead &ldquo;created a direct channel of contagion from USDC to Dai.&rdquo; The contagion then propagated through Dai&rsquo;s additional PSMs to USDP and GUSD, stablecoins with zero direct SVB exposure. A single bank failure in Santa Clara cascaded through at least five tokenized products. The depeg resolved within 48 hours only because the FDIC invoked the systemic risk exception. Per the FEDS Note and Circle&rsquo;s own disclosures, Circle&rsquo;s cash reserves fell from approximately $11.5 billion to approximately $3.7 billion over three weeks despite the intervention; the backstop stopped the depeg but did not prevent a roughly $7.8 billion net outflow. (Specific figures are pending re-verification against Circle&rsquo;s primary disclosures; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.)</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The only diagnostic dimension on which the bank deposit token and the 1940 Act fund do not produce stronger holder-protection outcomes than the stablecoin products is the Article 12 take-free defect. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a &ldquo;voluntary transaction creating an interest in property,&rdquo; and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in 2022 and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
+          <p class="paper-takeaway-text">The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass or fail test. Applied to nine major tokenized products spanning three regulatory tiers, the framework produces six findings. Products governed by purpose-built federal frameworks (banking law for the JPMorgan deposit token, the 1940 Act for BENJI) satisfy the core requirements of every category. No stablecoin product does. Bank depositors have FDIC insurance and statutory priority claims; stablecoin holders have contractual claims governed by terms of service that disclaim issuer liability across seventeen categories, characterize redemption as a revocable privilege, and (during the March 2023 SVB crisis window) limited Circle Mint direct redemption to a small institutional pool of pre-existing accounts. Stablecoin operators under the Money Transmission Modernization Act (MTMA), the model state statute drafted by the Conference of State Bank Supervisors and adopted in at least 24 states as of 2025, operate on capital cushions roughly an order of magnitude thinner than banks under Common Equity Tier 1 (CET1), illustrating the regulatory-capital gap between the two regimes before accounting for stress testing, deposit insurance, and resolution planning that banks face and money transmitters do not.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
+          <p class="paper-takeaway-text">The only diagnostic dimension on which the bank deposit token and the 1940 Act fund do not produce stronger holder-protection outcomes than the stablecoin products is the Article 12 take-free defect. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a &ldquo;voluntary transaction creating an interest in property,&rdquo; and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in 2022 and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
           <p class="paper-takeaway-text">MVEP is the entry gate; the Control Layer Intensity Index (CLII) is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance.</p>
         </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Risk committees</span>
+        <span class="paper-audience-tag">Tokenization platforms</span>
+        <span class="paper-audience-tag">Custodians</span>
+        <span class="paper-audience-tag">Legal / Compliance teams</span>
+        <span class="paper-audience-tag">Exchanges evaluating collateral acceptance</span>
+        <span class="paper-audience-tag">Policy designers and regulators</span>
       </div>
 
       <div class="paper-access-block access-block">
@@ -213,24 +204,14 @@
           <a class="action secondary" href="https://medium.com/@CryptoZach/tokenization-equivalence-packs-the-minimum-artifacts-that-clear-a-risk-committee-b415422432de" target="_blank" rel="noopener noreferrer">Read on Medium</a>
           <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/2024998578335482251?s=20" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
         </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Minimum%20Viable%20Equivalence%20Packs%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
       </div>
-
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Three tokenized Treasury products under three regulatory regimes serve as comparable collateral on one exchange. Are they actually equivalent for institutional risk purposes?</p>
-        <p><strong>Answer</strong><br />No. The collateral framework treats them as equivalent, but legal, operational, and economic equivalence break down in different ways under stress. The SVB weekend broke all three simultaneously; the depeg cascaded through five tokenized products despite divergent reserve compositions. The nine-product sample further separates into three regulatory tiers with measurably different MVEP outcomes. Tier 2 stablecoins (USDC, PYUSD, USDG) fail Categories 1 (rights parity) and 6 (settlement finality) on structural grounds independent of the regulatory regime. Category 8 (governance) emerges as the weakest link across all four major tokenized Treasury products; Categories 5 (insolvency posture) and 10 (collateral operability) carry the greatest structural divergence. The MTMA capital framework requires roughly 0.54% capital from money transmitters where banking law requires roughly 12% CET1, a 22-to-1 gap; Circle's $3.3 billion SVB exposure was approximately 15 times the MTMA minimum for an issuer of its size.</p>
-        <p><strong>Evidence base</strong><br />Ten-category diligence checklist applied to nine tokenized products spanning three regulatory tiers. Anchored on the SVB March 2023 episode, the December 2025 FEDS Note (Du, Sonawane, Watsky) documenting cascade through Dai's PSM to USDP and GUSD, and a side-by-side comparison against Basel BCBS, MiCA, and the OCC interpretive letters on stablecoin custody.</p>
-        <p><strong>Implication</strong><br />Risk committees evaluating tokenized products as collateral need legal, operational, and economic equivalence tested as separate dimensions. A vendor deck or a one-off legal memo is not enough. The committee must require an MVEP package with named owners, artifacts, and pass conditions for each of the ten categories. Tier-based regulatory scoring substitutes weakly for product-level diligence: structural failures cluster in Tier 2 regardless of the issuer's primary regulator.</p>
-      </aside>
-
-      <figure class="paper-cover paper-cover--wide">
-        <picture><source type="image/webp" srcset="/Publication-Images/MVEP_Cover_v2.webp" /><img src="/Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack ten-category committee checklist" loading="lazy" /></picture>
-        <figcaption>MVEP applied to nine tokenized products across three regulatory tiers: pass, fail, or partial across ten diligence categories.</figcaption>
-      </figure>
 
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p class="dropcap">Before an institution relies on a tokenized product, it should prove that the tokenized version maintains legal, operational, and economic equivalence, including under stress. Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and teams that build first and figure out custody, reconciliation, and exception handling later. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
+        <p>Before an institution relies on a tokenized product, it should prove that the tokenized version maintains legal, operational, and economic equivalence, including under stress. Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and teams that build first and figure out custody, reconciliation, and exception handling later. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
         <ol>
           <li>What is the authoritative record, and what happens when it disagrees with the chain?</li>
           <li>Who can freeze, rollback, or override, and what is the audit trail?</li>
@@ -240,7 +221,7 @@
         </ol>
         <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream. The emphasis across categories varies by the institution's role: an exchange evaluating collateral acceptance will focus on Category 10; a custodian will focus on Categories 4 and 5; a fund evaluating a composed product will require all ten with equal rigor.</p>
         <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation. USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity, convertibility conditions, halt triggers, reversal authority, and explicit loss allocation.</p>
-        <p>A third change is regulatory. The current manuscript applies the framework to the OCC&rsquo;s proposed implementing rule for the GENIUS Act (<code class="cite">RIN 1557-AF41</code>). The framework identifies what the proposed rule gets right (reserve composition, extension of federal supervision, Permitted Payment Stablecoin Issuer (PPSI) category differentiation), where it could be strengthened (holder-rights disclosure, interagency coordination on collateral eligibility, standardized equivalence assessments), and what remains unaddressed (the collateral eligibility boundary where instruments from different regulatory regimes receive comparable treatment without differentiation or disclosure). An OCC comment letter applying the framework to specific provisions of the proposed rule has been filed under Docket <code class="cite">OCC-2025-0372</code> (Tokenization Systems comment, March 2026).</p>
+        <p>A third change is regulatory. The current manuscript applies the framework to the OCC&rsquo;s proposed implementing rule for the GENIUS Act (RIN 1557-AF41). The framework identifies what the proposed rule gets right (reserve composition, extension of federal supervision, Permitted Payment Stablecoin Issuer (PPSI) category differentiation), where it could be strengthened (holder-rights disclosure, interagency coordination on collateral eligibility, standardized equivalence assessments), and what remains unaddressed (the collateral eligibility boundary where instruments from different regulatory regimes receive comparable treatment without differentiation or disclosure). An OCC comment letter applying the framework to specific provisions of the proposed rule has been filed under Docket OCC-2025-0372 (Tokenization Systems comment, March 2026).</p>
 
         <h2>Where the framework does its heaviest work</h2>
         <h3>The nine-product sample</h3>
@@ -280,8 +261,6 @@
         <p>State money services business law was designed to regulate wire transfer operators: firms that hold customer funds transiently while a transfer clears. Stablecoin issuers hold customer funds permanently. Under the MTMA (adopted by 31 states covering 99% of money transmission activity), a money transmitter holding $40 billion in customer funds faces a minimum tangible net worth requirement of approximately $216 million (0.54% of total assets). A bank holding the same $40 billion would be required to maintain approximately $4.8 billion in CET1 capital (12%). The illustrative gap shows stablecoin operators under MTMA reserve requirements operating on capital cushions roughly an order of magnitude thinner than banks under CET1, before accounting for the stress testing, deposit insurance, and resolution planning requirements that banks face and money transmitters do not.</p>
         <p>When Circle disclosed $3.3 billion in exposure to Silicon Valley Bank, that single exposure exceeded the issuer's total stockholders' equity. The Federal Reserve's own analysis notes that Circle faced "the possibility of a significant shortfall" without a public guarantee on uninsured deposits. The capital framework would not have absorbed the loss.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
-
         <h2>Independent corroboration</h2>
         <p>The framework's findings are independently corroborated by three scholarly sources:</p>
         <ul>
@@ -290,9 +269,8 @@
           <li>The Federal Reserve's December 2025 FEDS Note on SVB and stablecoins independently documents the PSM contagion channel, the redemption pathway concentration problem, and the two-way contagion risk between stablecoins and Treasury markets.</li>
         </ul>
 
-        <h2>Methods and data</h2>
+        <h2>How the paper is built</h2>
         <ul>
-          <li>Framework grounded in 1,000+ early-stage deal evaluations and 250 institutional investments at Borderless Capital, where the author built and led the digital asset diligence function across ~$500M AUM</li>
           <li>Three equivalence claims (legal, operational, economic) tested independently</li>
           <li>SVB episode reverse-engineered into categories one through nine; tenth derived from subsequent collateral mobility use case</li>
           <li>Nine-product worked examples across three regulatory tiers</li>
@@ -301,7 +279,7 @@
           <li>Prescriptive governance thresholds benchmarked against on-chain verification of current market leaders</li>
           <li>Collateral interoperability analysis anchored on verified Binance evidence (USYC, BUIDL, BENJI)</li>
           <li>Independent scholarly corroboration from three sources (Odinet/Tosato, Moneyness, Fed FEDS Note)</li>
-          <li>Applied test: OCC comment letter on GENIUS Act implementing rule (<code class="cite">RIN 1557-AF41</code>)</li>
+          <li>Applied test: OCC comment letter on GENIUS Act implementing rule (RIN 1557-AF41)</li>
           <li>Framework paper anchored on a failure case; the findings describe observed patterns and should be read as evidence consistent with the framework, not as proof of causal relationships</li>
         </ul>
 
@@ -474,7 +452,18 @@
           </div>
         </div>
 
-        <hr class="section-ornament" aria-hidden="true">
+        <h2>Limitations</h2>
+        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Seven predictable failure modes:</p>
+        <ul>
+          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use.</li>
+          <li><strong>Stale equivalence:</strong> Products pass at launch but drift. Mandatory periodic re-certification addresses this.</li>
+          <li><strong>Category blindness:</strong> Ten categories are comprehensive for current structures, but novel products may introduce risks that do not fit. A "residual risk" disclosure covers this gap.</li>
+          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met.</li>
+          <li><strong>Jurisdictional scope:</strong> Three categories (rights parity, insolvency posture, system of record) require jurisdiction-specific analysis for cross-border distribution.</li>
+          <li><strong>Disclosure regime dependence:</strong> An evaluator's ability to verify Category 9 independently depends on the governing regime. Products under the Investment Company Act file public reports; products under Reg D or Reg S (exemptions for private placements and offshore offerings) disclose only to onboarded investors.</li>
+          <li><strong>Structural scope:</strong> The framework is calibrated for tokenized fund shares but also applies to tokenized secured notes, where the insolvency posture is fundamentally different. A secured noteholder is a senior secured creditor, with different Category 5 evidence requirements.</li>
+        </ul>
+        <p>The framework's value is in making the standard explicit, the gaps visible, and the failure modes predictable.</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
@@ -495,19 +484,6 @@
           <p><strong>Implementation timeline</strong><br>
           10 to 14 weeks for a team with dedicated legal counsel and established custodian relationship; 16 to 24 weeks for novel structures · Category 10 re-verified quarterly or on input change</p>
         </div>
-
-        <h2>Limitations</h2>
-        <p>The framework is intentionally minimal and, in the paper's phrasing, "designed to be wrong in known ways." Seven predictable failure modes:</p>
-        <ul>
-          <li><strong>Checkbox compliance:</strong> Artifacts exist on paper but do not reflect reality. The framework requires demonstrated use.</li>
-          <li><strong>Stale equivalence:</strong> Products pass at launch but drift. Mandatory periodic re-certification addresses this.</li>
-          <li><strong>Category blindness:</strong> Ten categories are comprehensive for current structures, but novel products may introduce risks that do not fit. A "residual risk" disclosure covers this gap.</li>
-          <li><strong>False precision:</strong> Pass/fail creates an illusion of certainty when equivalence is a spectrum. An MVEP pass means the minimum standard is met.</li>
-          <li><strong>Jurisdictional scope:</strong> Three categories (rights parity, insolvency posture, system of record) require jurisdiction-specific analysis for cross-border distribution.</li>
-          <li><strong>Disclosure regime dependence:</strong> An evaluator's ability to verify Category 9 independently depends on the governing regime. Products under the Investment Company Act file public reports; products under Reg D or Reg S (exemptions for private placements and offshore offerings) disclose only to onboarded investors.</li>
-          <li><strong>Structural scope:</strong> The framework is calibrated for tokenized fund shares but also applies to tokenized secured notes, where the insolvency posture is fundamentally different. A secured noteholder is a senior secured creditor, with different Category 5 evidence requirements.</li>
-        </ul>
-        <p>The framework's value is in making the standard explicit, the gaps visible, and the failure modes predictable.</p>
 
         <h2>Related frameworks</h2>
         <p><a href="/frameworks#mvep">MVEP</a> (entry-gate diligence) · <a href="/frameworks#clii">CLII</a> (continuous monitoring and drift detection).</p>
@@ -560,11 +536,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
 (function() {

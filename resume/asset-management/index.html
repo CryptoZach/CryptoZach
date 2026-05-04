@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -48,8 +47,7 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
@@ -57,14 +55,14 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ProfilePage",
       "name": "Resume: Asset Management & Tokenization",
       "url": "https://tokenization.systems/resume/asset-management",
-      "description": "Asset management and tokenization resume profile for Zach Zukowski. Founding research hire at Borderless Capital: built the research function, led a four-analyst team, diligenced 1,000+ deals from pre-seed to Series C, and shipped 250 portfolio investments across ~$500M AUM. MVEP committee diligence and tokenized-product evaluation.",
+      "description": "Asset management and tokenization resume profile for Zach Zukowski. MVEP committee diligence, ~250 investments diligenced, and tokenized-product evaluation.",
       "isPartOf": { "@id": "https://tokenization.systems/#website" },
       "mainEntity": { "@id": "https://tokenization.systems/#person" }
     }
@@ -155,7 +153,7 @@
       <div class="section-title">
         <h1 id="hero-title">Research, diligence, and decision frameworks for tokenized products, digital-asset infrastructure, and institutional capital allocation.</h1>
         <p class="hero-subhead">For asset managers, risk committees, custodians, and tokenization teams evaluating whether a tokenized product preserves the rights, structure, and stress behavior of the traditional asset.</p>
-        <p class="proof-strip-inline">1,000+ deals diligenced (pre-seed to Series C) · 250 investments · ~$500M AUM · ~75 tokenization offerings analyzed, 18 invested · Daily mNAV monitoring</p>
+        <p class="proof-strip-inline">~250 investments diligenced · ~$500M AUM · ~75 tokenization offerings analyzed, 18 invested · Daily mNAV monitoring</p>
       </div>
       <div class="resume-downloads">
         <a class="action primary" href="/resumes/Zukowski_Resume_Asset_Management.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -186,11 +184,20 @@
           <span class="chip">Monitoring Systems</span>
         </div>
         <ul class="resume-proof-list">
+          <li>Investment track record at Borderless Capital (Dec 2019 to Feb 2026): sourced the LayerZero seed round (~80x return), led 1,000+ deal pre-seed-to-Series-C funnel, and shipped 250 portfolio investments (~25% deployment rate) at ~$500M AUM</li>
           <li>Rights parity, custody, settlement behavior, and insolvency posture framed in committee language, with named artifacts and pass/fail tests for each category</li>
           <li>MVEP evidence pack reverse-engineered from the failures that SVB weekend exposed: three equivalence claims (legal, operational, economic) tested through ten diligence categories</li>
           <li>Post-approval monitoring through the CLII: liquidity pathways, reserve and custody dependencies, reporting quality, and the thresholds that should change position size or trigger review</li>
         </ul>
         <div class="stack-list stack-list--in-preview">
+          <article class="stack-item">
+            <strong>Where do tokenized structures unlock tax or regulatory advantages?</strong>
+            <p>Digital Asset Treasury Stocks (DATs) can substitute for direct crypto exposure with materially different tax and regulatory treatment. Japan's Metaplanet DAT cuts crypto capital-gains tax from up to 55% to 20% (the equity rate; further reducible via Japan's IRA structure). Hong Kong's Southbound Connect could open a regulated channel for mainland Chinese capital into crypto exposure that is otherwise banned domestically. The mapping flows directly into committee-grade comparison of tokenized vs. native exposure paths.</p>
+          </article>
+          <article class="stack-item">
+            <strong>How do you compare DATs apples-to-apples?</strong>
+            <p>DAT issuers report Multiple on NAV (mNAV) using inconsistent conventions; some include non-crypto assets in the numerator, others exclude them. The result: cross-DAT mNAV comparisons drawn from issuer-reported figures are unreliable. The methodology developed here standardizes the numerator treatment so committee-grade ranking of DAT premium or discount is anchored on a consistent denominator and a consistent inclusion rule, not on whichever convention the issuer prefers in its disclosures.</p>
+          </article>
           <article class="stack-item">
             <strong>Does equivalence hold under stress?</strong>
             <p>A tokenized product is institution-ready only when rights parity, custody structure, settlement behavior, and auditability hold during a stress event. During the SVB weekend, USDC broke all three dimensions of equivalence at once. The MVEP defines the minimum evidence that must exist before a product reaches committee and the pass/fail tests each category must clear.</p>
@@ -303,7 +310,7 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -311,7 +318,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>

@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -42,12 +41,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,8 +53,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Tokenized Cash Principles", "item": "https://tokenization.systems/papers/mvep-tcmag-comparison" }
+        { "@type": "ListItem", "position": 3, "name": "Tokenized Cash Principles", "item": "https://tokenization.systems/papers/mvep-tcmag-comparison" }
       ]
     }
   </script>
@@ -141,40 +138,37 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Cash Principles
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Cash Principles
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public">Public</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
+        <span class="badge">Public</span>
       </div>
 
-      <p class="paper-tier-kicker">BRIEFING · 7 min on-page</p>
-
       <h1 id="paper-title">Tokenized Cash Management Principles and the Operator-Layer Diagnostic</h1>
-
-      <p class="paper-byline-kicker">7 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
 
       <p class="paper-metadata-strip">Briefing &middot; April 2026 &middot; Tokenized Cash &middot; Treasury Operations &middot; Operator Diligence</p>
       <p class="paper-description-note">Briefing version 1, current as of April 2026.</p>
 
-      <div class="paper-thesis">
-        <p><strong>TCMAG's twelve principles articulate what corporate treasurers require from tokenized cash. MVEP's ten categories evaluate whether a specific operator delivers. The frameworks are complementary, not competing.</strong></p>
-        <p>This page explains how TCMAG and MVEP map onto each other, and which three TCMAG-unique principles are gap candidates for the next MVEP cycle.</p>
-      </div>
+      <p class="paper-thesis">On April 21, 2026, the Tokenized Cash Management Advisory Group (TCMAG) published twelve principles articulating what corporate treasurers require from tokenized cash solutions. The principles operate at the requirement-articulation level: they define what corporates expect, not how to evaluate whether a specific operator delivers. This briefing maps TCMAG's twelve buyer-side requirements against the Tokenization Systems research program's Minimum Viable Equivalence Pack (MVEP), the ten-category supply-side diagnostic framework, and identifies three TCMAG-unique principles as gap candidates for any future MVEP v2 cycle. The frameworks are complementary, not competing: treasurers who adopt TCMAG as their requirements framework need MVEP-style scoring to evaluate candidate operators; operators who score well on MVEP can demonstrate compliance against TCMAG's principles with measurable evidence rather than self-declaration.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Deposit-token competition explains why Multi-Bank / Multi-Issuer is the load-bearing principle. The entity issuing the dominant deposit token captures settlement-layer rent (per Three Tokenization Strategies, F-A4-4 finding). Without cross-institution clearing infrastructure (Ubyx-style, where bank-issued deposit tokens settle against each other at par on a pre-funded basis), the deposit-token market consolidates around one or two issuers within roughly 24 months of launch. With Ubyx clearing, the market preserves competitive equilibrium across multiple issuers. TCMAG's Multi-Bank principle is operational only with the clearing layer; without it, the principle is a corporate preference the market cannot enforce.</p>
+          <p class="paper-takeaway-text"><strong>Eight of twelve TCMAG principles map directly or partially to MVEP categories.</strong> Compliance, accounting standards, security, functional equivalence, 24/7 operations, controls, settlement finality, and operational resilience all have direct or partial coverage in MVEP's ten-category framework. The two frameworks are operating on the same problem from different sides.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">GLEIF and the LEI standard provide the natural identifier-anchor layer. MVEP Categories 1 (Rights Parity) and 8 (Governance) anchor on operator entity identification. The Legal Entity Identifier per ISO 17442 is the canonical scheme for legal entities globally. GLEIF being a TCMAG sponsor signals market acceptance of LEI in the tokenized cash management context. A future MVEP v2 would benefit from explicit alignment: operator entity identification follows the LEI standard; category scoring anchors on LEI-canonical entity boundaries. The change strengthens MVEP's interoperability with global financial-system standards without paradigmatic revision.</p>
+          <p class="paper-takeaway-text"><strong>Three TCMAG principles surface genuine gap candidates for MVEP v2.</strong> Multi-Bank / Multi-Issuer architecture, Interoperability, and Confidentiality have no clean MVEP equivalents and represent operator-structural dimensions a future MVEP revision could add. The fourth TCMAG-unique principle (TMS / ERP integration) is buyer-side and appropriately outside an operator-structural diagnostic.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Supply-side and buyer-side converge on the same physical substrate. Digital Asset, the firm operating Canton Network, is one of TCMAG's sixteen sponsors. Canton is the institutional blockchain rail underneath the Three Tokenization Strategies Regulated Collateral Circuit: DTCC ComposerX, Kinexys/JPMD, and BNY tokenized deposits all settle on Canton. The same operator-layer infrastructure that the supply-side framework target (A4 Strategy 1) runs on is sponsoring the buyer-side requirements articulation (TCMAG). The cross-link is invisible if you read either framework in isolation; it surfaces when you treat them as complementary measurement layers operating on a common substrate. For corporate treasurers, this means the TCMAG sponsor list itself is informative about which operators have institutional-grade infrastructure commitments, beyond what either framework's content-level evaluation surfaces.</p>
+          <p class="paper-takeaway-text"><strong>Deposit-token competition explains why Multi-Bank / Multi-Issuer is load-bearing.</strong> The entity issuing the dominant deposit token captures settlement-layer rent (Three Tokenization Strategies, SSRN 6483198). Without cross-institution clearing infrastructure (Ubyx-style, where Ubyx is a TCMAG sponsor), the deposit-token market consolidates around one or two issuers within twenty-four months of launch. TCMAG's Multi-Bank principle is operationally enforceable only when supported by a clearing layer with the right structural properties.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text"><strong>GLEIF and the LEI standard provide the natural identifier layer.</strong> MVEP Categories 1 (Rights Parity) and 8 (Governance) anchor on operator entity identification. The Legal Entity Identifier per ISO 17442 is the canonical scheme for legal entities globally. GLEIF being a TCMAG sponsor affirms market acceptance; explicit LEI alignment in any future MVEP v2 strengthens the framework's interoperability with global financial-system standards without paradigmatic change.</p>
         </div>
       </div>
 
@@ -198,17 +192,9 @@
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />TCMAG and MVEP both address tokenized cash. Are they competing frameworks?</p>
-        <p><strong>Answer</strong><br />Complementary, not competing. TCMAG's twelve principles articulate what corporate treasurers require (buyer-side requirements). MVEP's ten categories evaluate whether a specific operator delivers (supply-side diagnostic). Operators who score well on MVEP can demonstrate compliance against TCMAG with measurable evidence rather than self-declaration. Three TCMAG principles (Multi-Bank/Multi-Issuer, Interoperability, Confidentiality) are gap candidates for the next MVEP cycle.</p>
-        <p><strong>Evidence base</strong><br />Side-by-side mapping of TCMAG's twelve principles against MVEP's ten categories. TCMAG (Tokenized Cash Management Advisory Group), chaired by Darsh Johal and supported by sixteen institutions including Barclays, HSBC, Lloyds Bank, Partior, Swift, SAP, GLEIF, and Ubyx, published its initial principles April 21, 2026. The TCMAG sponsor list also includes Digital Asset, the firm operating Canton Network, the institutional blockchain rail underneath DTCC, Kinexys/JPMD, and BNY in the Three Tokenization Strategies analysis. The same operator-layer infrastructure that the A4 (Three Tokenization Strategies) Regulated Collateral Circuit runs on is sponsoring the buyer-side requirements articulation; supply-side and buyer-side are converging on the same physical substrate. Briefing-form analysis, not empirical study.</p>
-        <p><strong>Implication</strong><br />Corporate treasurers adopting TCMAG should require MVEP-style scoring from prospective operators rather than self-declared compliance. Operators should publish the TCMAG-MVEP mapping for their product so buyers can evaluate against either framework. MVEP cycle leads should review the three gap candidates before v2 finalization. The four converging frames (TCMAG buyer-side requirements, MVEP supply-side diagnostic, A4 market-structure analysis, A1 (Routing the Dollar) regulatory-policy thesis) all locate accountability at the operator-and-router layer; diligence frameworks that score the token in isolation will miss what all four measure.</p>
-      </aside>
-
       <div class="paper-abstract">
         <h2>What this briefing changes</h2>
-        <p class="dropcap">TCMAG launched as a corporate-treasury-side voice in the tokenized cash conversation, articulating eleven principles that define what treasurers expect from tokenized solutions. The Tokenization Systems research program has been building the complementary supply-side layer: MVEP, a ten-category diagnostic framework that scores whether a specific operator clears the threshold institutional users require. This briefing maps the two frameworks and frames their relationship as complementary rather than competing. Treasurers, operators, and regulators are working different sides of the same problem; the frameworks are designed to interoperate.</p>
+        <p>TCMAG launched as a corporate-treasury-side voice in the tokenized cash conversation, articulating eleven principles that define what treasurers expect from tokenized solutions. The Tokenization Systems research program has been building the complementary supply-side layer: MVEP, a ten-category diagnostic framework that scores whether a specific operator clears the threshold institutional users require. This briefing maps the two frameworks and frames their relationship as complementary rather than competing. Treasurers, operators, and regulators are working different sides of the same problem; the frameworks are designed to interoperate.</p>
 
         <h2>Mapping table: twelve TCMAG principles to ten MVEP categories</h2>
         <table class="mvep-table">
@@ -306,8 +292,6 @@
         <p>These are flagged as analytical fuel for any future MVEP revision cycle, not immediate cause to revise the published MVEP framework. The current MVEP (v9, SSRN 6363138) is live and defensible against TCMAG's principles for the seven categories that map directly or partially. The four-category gap is the analytical opportunity, not a flaw in the current framework.</p>
         <p>The TMS / ERP Integration principle is appropriately TCMAG-side: it concerns buyer-side integration with corporate treasury management systems and enterprise resource planning platforms, not operator-structural properties.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
-
         <h2>Engagement context</h2>
         <p>The TCMAG sponsor list overlaps with several entities the Tokenization Systems research program has analyzed or engaged. Ubyx (Tony McLaughlin) is in active dialogue regarding the deposit-token clearing thesis. HSBC, Barclays, and Lloyds Bank are tokenized deposit issuers whose architectures fit naturally within MVEP scoring. Partior is a candidate Tier 1 case study for CLII (Control Layer Intensity Index) scoring. GLEIF anchors the identifier layer underlying MVEP Categories 1 and 8. SAP carries the ERP integration relevance that TCMAG's fourth principle requires.</p>
         <p>Ecosystem participants engaging with TCMAG can use the MVEP framework as the operator-side measurement layer that turns TCMAG's qualitative principles into measurable diligence outcomes. Issuers of tokenized deposits, stablecoins, and tokenized money market funds can self-assess against the ten MVEP categories alongside TCMAG's twelve principles to identify structural gaps and engagement opportunities.</p>
@@ -361,11 +345,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

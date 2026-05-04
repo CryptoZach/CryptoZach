@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -48,8 +47,7 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
@@ -57,7 +55,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -154,17 +152,17 @@
 
   <main id="main">
     <section class="reveal speaker-hero" aria-labelledby="speaker-hero-title">
+      <div class="speaker-hero-headshot-wrap">
+        <img class="speaker-headshot speaker-headshot--hero" src="/Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="187" height="187" loading="eager" decoding="async" />
+      </div>
       <div class="kicker kicker--subpage">
         <span class="kicker-dot" aria-hidden="true"></span>
         SPEAKER &amp; ADVISORY
       </div>
-      <div class="speaker-hero-headshot-wrap">
-        <img class="speaker-headshot speaker-headshot--hero" src="/Publication-Images/zach-zukowski-headshot.jpeg" alt="Portrait of Zach Zukowski" width="187" height="187" loading="eager" decoding="async" />
-      </div>
       <div class="section-title">
         <h1 id="speaker-hero-title">Talks, workshops, and advisory on digital-money infrastructure, tokenization diligence, and token-economy design.</h1>
         <p class="structure-page-lede">For policy teams, investment committees, and builders. The best conversations happen when we disagree on something, because that is where the data is most useful. The research provides the stress scenarios; you bring the operating context. I&rsquo;ll show where control sits, how stress propagates, and what decision follows.</p>
-        <p class="speaker-credentials">Eight papers across two tracks · 1,000+ deals diligenced (pre-seed to Series C) · 250 investments · ~$500M AUM · 100+ teams formally advised on tokenomic best practices · Foresight Institute AI Ethics &amp; Governance working group</p>
+        <p class="speaker-credentials">Eight papers across two tracks · ~250 investments diligenced · 100 portfolio companies advised 1-on-1 · 100 teams taught across nine accelerator programs · Foresight Institute AI Ethics &amp; Governance working group</p>
       </div>
       <div class="booking-onepager-cta" role="group" aria-label="Speaker actions">
         <a class="action primary" href="mailto:Zach@Tokenization.Systems?subject=Speaker%20one-pager%20request">Request a 1-page overview</a>
@@ -219,7 +217,7 @@
             <p class="card-eyebrow">Audience &middot; Investment committees &amp; risk leads</p>
             <h3>Institutional diligence session &middot; 45-60 minutes</h3>
             <p>For investment committees, tokenization teams, and risk leads.</p>
-            <p><strong>How do you tell whether a tokenized product is institution-ready before the first stress event proves it is not?</strong></p>
+            <p><strong>How do you tell whether a tokenized product is institution-ready before the first stress event reveals it is not?</strong></p>
             <p>Walks through the ten-category MVEP framework (three equivalence claims: legal, operational, economic), the failures that SVB weekend exposed, and the evidence gates that separate credible equivalence claims from marketing language.</p>
             <p><strong>You leave with:</strong> a usable diligence checklist, the core equivalence tests, and the three categories (system of record, reconciliation, custody) that are hardest to retrofit after launch.</p>
             <details class="talk-format-topics">
@@ -268,16 +266,12 @@
           <span>Participant in the AI Ethics &amp; Governance working group. Carries control-layer methods (CLII, MVEP) into AI infrastructure-accountability conversations. See the <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure profile</a>.</span>
         </li>
         <li>
-          <strong>Uniswap Foundation governance committee</strong>
-          <span>Invited committee participant (2024). Helped design delegate structure ahead of the protocol fee-switch implementation.</span>
+          <strong>Borderless Capital (founding research analyst, 2019 to Feb 2026)</strong>
+          <span>Sourced the LayerZero seed round (~80x return); modeled Thorchain's step-by-step collapse 13 months before the predicted scenario played out and led to $200M loss (10-step internal scenario memo, December 2023); built apples-to-apples Multiple on NAV (mNAV) methodology for Digital Asset Treasury Stocks; advised 100 portfolio companies via formal 1-on-1 sessions with founding teams across tokenomics, governance design, and market-infrastructure due diligence.</span>
         </li>
         <li>
-          <strong>Borderless Capital</strong>
-          <span>Founding research analyst. 100+ advisory engagements across tokenomics, governance design, and market infrastructure due diligence.</span>
-        </li>
-        <li>
-          <strong>Independent research program</strong>
-          <span>Eight program papers, all on SSRN. Research cited in institutional tokenization diligence and DePIN governance design.</span>
+          <strong>Tokenization Systems (founder, Feb 2026 to present)</strong>
+          <span>Independent research and partner-engagement program. Eight formal-program papers, all on SSRN. Research cited in institutional tokenization diligence and DePIN governance design.</span>
         </li>
       </ul>
     </section>
@@ -350,7 +344,7 @@
       </div>
       <div class="speaker-prose speaker-experience">
         <div class="experience-block">
-          <h3>Workshop lead · 9 accelerator programs · 200+ teams taught (2021-2025)</h3>
+          <h3>Workshop lead · 9 accelerator programs · 100 teams as a mentor (2021-2025)</h3>
           <p>Structured education on incentive design, emissions architecture, governance attack surfaces, and sustainability constraints. Format: presentations, group workshops, and 1:1 office hours aligning founders, engineering, legal, and liquidity stakeholders on token design decisions.</p>
           <p>Programs: Algorand Europe Accelerator, Algorand Miami Accelerator, Algorand x Draper University, Algorand APAC Accelerator, Moonbeam Accelerator, ElizaOS Accelerator, Lisk Accelerator. Partners: Algorand Foundation, Eterna Capital, Rokk3r, Arrington Capital, AXL Ventures, AngelHack.</p>
         </div>
@@ -389,15 +383,15 @@
         <div class="speaker-prose speaker-press-kit">
           <div class="press-bio-block">
             <h3>Full bio (~150 words)</h3>
-            <p id="pressBioFull">Zach Zukowski researches the infrastructure layer beneath digital money: the gateways, custody arrangements, settlement systems, and control infrastructure that determine how stablecoins, tokenized deposits, and token economies actually behave under stress. Eight papers across two tracks, unified by a single thesis: classify the token, but regulate and audit the operator. Senior Investment Analyst at Borderless Capital, 2019 to February 2026 (founding research hire), where he built the research function, led a four-analyst team, diligenced 1,000+ deals from pre-seed to Series C, and shipped 250 portfolio investments across ~$500M AUM. Routing the Dollar was prepared for the Federal Reserve Board / FRBNY Fifth Conference on International Roles of the U.S. Dollar, June 2026. Invited participant in the 2024 Uniswap Foundation governance committee, which designed the delegate structure ahead of the protocol fee-switch implementation. Participant in the Foresight Institute AI Ethics &amp; Governance working group.</p>
+            <p id="pressBioFull">Zach Zukowski researches the infrastructure layer beneath digital money: the gateways, custody arrangements, settlement systems, and control infrastructure that determine how stablecoins, tokenized deposits, and token economies actually behave under stress. Eight papers across two tracks, unified by a single thesis: classify the token, but regulate and audit the operator. Senior Investment Analyst at Borderless Capital, 2019 to February 2026 (founding hire), where he sourced the LayerZero seed round (~80x return), modeled Thorchain's step-by-step collapse 13 months before the predicted scenario played out and led to $200M loss (10-step internal scenario memo December 2023; protocol's token had peaked at $3.3B market cap), prevented hostile governance capture on a top-50 Layer 1 blockchain via voting-path simulation, identified ~15% misreporting of circulating supply in a top-25 Layer 1 protocol (corrected after partnering with the protocol's foundation engineers; the discrepancy had propagated to CoinMarketCap and CoinGecko), and built an apples-to-apples Multiple on NAV methodology for Digital Asset Treasury Stocks (DATs). Now founder of Tokenization Systems (Feb 2026 to present), an independent research and partner-engagement program. Routing the Dollar was prepared for the Federal Reserve Board / FRBNY Fifth Conference on International Roles of the U.S. Dollar, June 2026. Participant in the Foresight Institute AI Ethics &amp; Governance working group.</p>
           </div>
           <div class="press-bio-block">
             <h3>Medium bio (~75 words)</h3>
-            <p id="pressBioMedium">Zach Zukowski is a digital-money and tokenization researcher focused on gateway infrastructure, settlement design, and control-layer risk. Founding research hire at Borderless Capital, where he built the research function, led a four-analyst team, diligenced 1,000+ deals from pre-seed to Series C, and shipped 250 portfolio investments across ~$500M AUM. Author of eight formal-program papers, all on SSRN, including Routing the Dollar prepared for a Federal Reserve conference.</p>
+            <p id="pressBioMedium">Zach Zukowski researches digital-money infrastructure: gateways, custody, settlement, and control-layer risk. Founding research hire at Borderless Capital (2019 to Feb 2026), where he sourced the LayerZero seed round (~80x return), predicted Thorchain's $200M insolvency 13 months ahead, and led a four-analyst team across ~250 investments and ~$500M AUM. Now founder of Tokenization Systems. Author of eight formal-program papers, all on SSRN, including Routing the Dollar prepared for a Federal Reserve conference.</p>
           </div>
           <div class="press-bio-block">
             <h3>Short bio (~30 words)</h3>
-            <p id="pressBioShort">Zach Zukowski researches digital-money infrastructure, tokenization diligence, and token-economy design. Founding hire at Borderless Capital. Eight formal-program papers, all on SSRN.</p>
+            <p id="pressBioShort">Zach Zukowski researches digital-money infrastructure, tokenization diligence, and token-economy design. Founder of Tokenization Systems; founding hire at Borderless Capital (2019 to Feb 2026). Eight formal-program papers, all on SSRN.</p>
           </div>
           <div class="press-questions-block">
             <h3>Suggested moderator questions</h3>
@@ -437,7 +431,7 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -447,7 +441,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     (function(){

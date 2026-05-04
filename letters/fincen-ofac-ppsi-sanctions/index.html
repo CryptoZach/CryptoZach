@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -40,12 +39,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -139,9 +137,7 @@
 
       <h1 id="letter-title">FinCEN-OFAC PPSI comment: the first statutory control-layer mandate in U.S. financial regulation</h1>
 
-      <p class="paper-byline-kicker">3 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <p class="paper-metadata-strip"><code class="cite">FINCEN-2026-0100</code> (<code class="cite">RIN 1506-AB73</code>) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+      <p class="paper-metadata-strip">FINCEN-2026-0100 (RIN 1506-AB73) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
 
       <p class="paper-thesis"><strong>The joint FinCEN-OFAC NPRM operationalizes the first statutory control-layer mandate in U.S. financial regulation.</strong> GENIUS Act §1033.240 requires Permitted Payment Stablecoin Issuers to have technical capability to block, freeze, and reject transactions and to comply with any lawful order, applied to both primary and secondary market activity. The letter engages 50 of 58 NPRM questions (86%), applies all three program frameworks, and proposes ten specific recommendations.</p>
 
@@ -164,7 +160,7 @@
 
       <div class="paper-abstract">
         <h2>What the rule proposes</h2>
-        <p class="dropcap">Under 31 U.S.C. 5312(a)(2)(Y), FinCEN designates PPSIs as financial institutions subject to the BSA. GENIUS Act proposed <code class="cite">31 CFR 1033.240</code> requires PPSIs to have technical capability to block, freeze, and reject transactions and to comply with any lawful order, applied to both primary and secondary market activity. Proposed §502.201(b) sets out a five-element sanctions compliance program (senior management commitment, risk assessment, internal controls, testing/auditing, training). Proposed §1010.100(ff)(8)(iii) removes PPSIs from the MSB definition, creating a clean partition: PPSIs under this rule; non-PPSI stablecoins remain under <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>'s MSB framework.</p>
+        <p>Under 31 U.S.C. 5312(a)(2)(Y), FinCEN designates PPSIs as financial institutions subject to the BSA. GENIUS Act proposed 31 CFR 1033.240 requires PPSIs to have technical capability to block, freeze, and reject transactions and to comply with any lawful order, applied to both primary and secondary market activity. Proposed §502.201(b) sets out a five-element sanctions compliance program (senior management commitment, risk assessment, internal controls, testing/auditing, training). Proposed §1010.100(ff)(8)(iii) removes PPSIs from the MSB definition, creating a clean partition: PPSIs under this rule; non-PPSI stablecoins remain under <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>'s MSB framework.</p>
 
         <h2>Gaps identified</h2>
         <ul>
@@ -193,10 +189,8 @@
             </ol>
             <p><strong>MVEP mapping preamble (Questions 8-19).</strong> Five MVEP categories map to specific provisions of proposed §1033.210 and related sections: Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
-
         <h2>Program role</h2>
-        <p>Most framework-intensive letter in the program. All three program frameworks applied (CLII, MVEP, control-layer five-element). The "first statutory control-layer mandate" framing makes this letter the apex of F-A7-1. Engages 50 of 58 NPRM questions (86% coverage).</p>
+        <p>Most framework-intensive letter in the program. All three program frameworks applied (CLII, MVEP, control-layer five-element). The "first statutory control-layer mandate" framing makes this letter the apex of the program's five federal-applications control-layer synthesis. Engages 50 of 58 NPRM questions (86% coverage).</p>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
@@ -237,11 +231,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

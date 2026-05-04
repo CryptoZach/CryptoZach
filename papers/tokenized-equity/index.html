@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -43,12 +42,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -56,8 +54,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Tokenized Equity Vehicles", "item": "https://tokenization.systems/papers/tokenized-equity" }
+        { "@type": "ListItem", "position": 3, "name": "Tokenized Equity Vehicles", "item": "https://tokenization.systems/papers/tokenized-equity" }
       ]
     }
   </script>
@@ -136,44 +133,33 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Equity Vehicles
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Equity Vehicles
       </nav>
 
       <figure class="paper-cover" aria-hidden="true">
         <img class="thumb-wide" src="/Publication-Images/Tokenized-Equity-Image.png" width="1536" height="1024" alt="Tokenized equity: digital tokens and traditional stock representation" loading="eager" />
       </figure>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public">Public</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
+        <span class="badge">Public</span>
       </div>
 
-      <p class="paper-tier-kicker">MEDIUM BRIEFING · 5 min on-page</p>
-
       <h1 id="paper-title">Tokenized Equity Vehicles: Key Findings</h1>
-
-      <p class="paper-byline-kicker">5 min read<span class="paper-byline-sep" aria-hidden="true">·</span>July 2025<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
 
       <p class="paper-metadata-strip">Medium · Jul 2025 · Asset Management / Tokenization / Market Structure</p>
       <p class="paper-description-note">Summary current as of March 2026. Full article includes figures on Medium. Summary is updated when the Medium post materially changes; check the linked Medium post for the canonical current version.</p>
 
-      <div class="paper-thesis">
-        <p><strong>Two June 2025 tokenized-equity launches took different paths to the same goal. Robinhood: closed-loop OTC derivatives in an EU app. Backed xStocks: freely transferable certificates backed 1:1 by segregated shares.</strong></p>
-        <p>This page explains why the trade-off is broker-wrapped synthetic exposure with internal liquidity versus open, collateralized, multi-venue certificates with composability and more technical risk.</p>
-      </div>
+      <p class="paper-thesis">Two June 30, 2025 tokenized-equity launches in Europe took different paths to the same goal: giving users on crypto rails access to U.S. equities. <strong>Robinhood Stock Tokens</strong> are closed-loop OTC derivative contracts inside the Robinhood Europe UAB app (Arbitrum-based, EU-only, 24/5 trading). <strong>Backed xStocks</strong> are freely transferable tracker certificates issued through a Jersey special purpose vehicle (SPV) and backed 1:1 by segregated shares, distributed across Kraken, Bybit, and Solana DeFi venues (ERC-20 and SPL, 24/7 trading). The core trade-off is broker-wrapped synthetic exposure with internal liquidity versus open, collateralized, multi-venue tokenized certificates with composability and more technical risk.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The central distinction is where the investor's claim sits. Robinhood Stock Token holders hold a contractual claim on Robinhood Europe UAB (counterparty exposure; Lithuania's investor compensation scheme up to 22,000 EUR). Backed xStock holders hold tracker certificates issued through a Jersey SPV and backed 1:1 by segregated shares held in custody. The claim type changes the diligence scope: counterparty creditworthiness for the Robinhood case (broker-as-principal); SPV custody chain plus on-chain transfer-restriction enforcement for the Backed case. Same dollar of "U.S. equity exposure" through structurally different legal claims with distinct stress profiles.</p>
+          <p class="paper-takeaway-text"><strong>The central distinction is where the investor&rsquo;s claim sits.</strong> Robinhood users hold a contractual claim on Robinhood Europe (counterparty exposure, Lithuania&rsquo;s compensation scheme up to &euro;22,000). Backed holders hold tracker certificates backed by shares held through an SPV and secured through a Security Agent (stronger collateral chain if the issuer fails). Neither structure gives ordinary shareholder voting rights; both deliver economic exposure.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Transferability drives market structure. Robinhood centralizes liquidity inside one venue with a 0.5% price collar and broker-as-principal execution; users can hold positions only within the Robinhood Europe app. xStocks distribute liquidity across centralized exchanges (Kraken, Bybit) and Solana DeFi venues, where arbitrage and composability can tighten spreads or create dislocations. Centralized liquidity provides predictable execution at the cost of single-venue dependency; distributed liquidity provides composability at the cost of fragmentation risk and bridge-mediated technical surface. The trade-off determines which user base each architecture serves and how each handles stress.</p>
-        </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Tokenized equity has institutional analogs already: Backed xStocks resemble American Depositary Receipts (a Jersey SPV holds the underlying shares and issues transferable certificates representing them, the way an ADR depositary holds foreign shares and issues U.S.-tradable receipts), and Robinhood Stock Tokens resemble Contracts for Difference (a broker writes a synthetic position referencing the underlying without delivering it, with broker counterparty risk concentrated). Bridging via Chainlink CCIP (the cross-chain primitive Backed uses for ERC-20 to Solana transfers) introduces a technical risk surface ADRs do not carry; broker-as-principal on a regulated EU broker introduces a counterparty risk surface CFDs typically carry. Diligence on tokenized equity should start from the closest TradFi analog and check for the architectural deltas, rather than treat the products as novel categories.</p>
+          <p class="paper-takeaway-text"><strong>Transferability drives market structure.</strong> Robinhood centralizes liquidity inside one venue with a &plusmn;0.5% price collar and broker-as-principal execution. xStocks distribute liquidity across centralized exchanges and DeFi venues, where arbitrage and composability can tighten spreads over time, at the cost of more moving parts and more technical risk.</p>
         </div>
       </div>
 
@@ -190,17 +176,9 @@
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Two June 2025 European tokenized-equity launches give crypto-rail users access to U.S. equities. How do they differ for institutional analysis?</p>
-        <p><strong>Answer</strong><br />They differ in nearly every diligence category. Robinhood Stock Tokens are closed-loop OTC derivative contracts inside the Robinhood Europe UAB app: Arbitrum-based, EU-only, 24/5 trading, broker-wrapped synthetic exposure. Backed xStocks are freely transferable tracker certificates issued through a Jersey SPV, backed 1:1 by segregated shares, distributed across Kraken, Bybit, and Solana DeFi venues: ERC-20 and SPL, 24/7 trading, bridged via Chainlink CCIP. The trade-off is internal liquidity versus composability and technical risk.</p>
-        <p><strong>Evidence base</strong><br />Comparison anchored on the two launch announcements (June 30, 2025) and disclosed product structures: counterparty, settlement, transfer restrictions, redemption mechanics, jurisdictional perimeter. No primary on-chain data analysis.</p>
-        <p><strong>Implication</strong><br />Diligence for tokenized equity must distinguish derivative wrappers (closed-loop, internal liquidity, broker-wrapped synthetic exposure, counterparty risk concentrated at the broker) from collateralized certificates (open-venue, multi-chain, segregated-share backing, technical and bridge risk). Conflating the two architectures in a single diligence framework will under-specify the holder's actual claim.</p>
-      </aside>
-
       <div class="paper-abstract">
-        <h2>What this piece changes</h2>
-        <p class="dropcap">This article compares two tokenized-equity launch architectures from the same date: a closed-loop, OTC derivative model (Robinhood on Arbitrum) and an open, share-backed certificate model (Backed xStocks on Ethereum and Solana). The regulatory and central-bank pilots of late June and early July 2025 explain the timing; the article&rsquo;s contribution is the comparative anatomy of legal form, investor claim, liquidity architecture, and risk surface.</p>
+        <h2>Executive summary</h2>
+        <p>This article compares two tokenized-equity launch architectures from the same date: a closed-loop, OTC derivative model (Robinhood on Arbitrum) and an open, share-backed certificate model (Backed xStocks on Ethereum and Solana). The regulatory and central-bank pilots of late June and early July 2025 explain the timing; the article&rsquo;s contribution is the comparative anatomy of legal form, investor claim, liquidity architecture, and risk surface.</p>
 
         <h2>1. Product overviews: two architectures</h2>
         <p><strong>Robinhood Stock Tokens.</strong> OTC derivative contracts on a closed Arbitrum instance. Users buy inside the Robinhood app, cannot withdraw tokens to external wallets, and rely on Robinhood to quote prices, hedge exposure, and manage corporate-action adjustments. The blockchain layer exists but is largely invisible to the end user at launch. Legally closer to contract-for-difference broker contracts than to portable on-chain securities.</p>
@@ -259,35 +237,11 @@
           </tbody>
         </table>
 
-        <hr class="section-ornament" aria-hidden="true">
-
         <h2>7. Risks: continuity versus openness</h2>
         <p><strong>Robinhood:</strong> Counterparty solvency (Robinhood Europe as single point of failure), platform dependence (no external exit at launch), limited transferability, regulatory shutdown or forced cash-settlement risk.</p>
         <p><strong>xStocks:</strong> Oracle failure or manipulation, CCIP/bridge failure or exploit, custody-chain breakdown, collateral shortfall if the SPV&rsquo;s share backing becomes impaired, and off-hours liquidity gaps where token prices diverge from underlying value.</p>
         <p><strong>Both:</strong> Regulatory re-characterization risk (authorities could reclassify one or both products, forcing structural changes or withdrawal from market).</p>
         <p>The underlying tension is between continuity (Robinhood&rsquo;s single-firm, controlled environment) and openness (xStocks&rsquo; distributed, composable, multi-venue architecture). Each model concentrates risk differently.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
-
-        <h2>Anchor evidence</h2>
-        <p>This is a comparative briefing on two simultaneous launches. It is anchored on:</p>
-        <ul>
-          <li><strong>Robinhood Stock Tokens launch</strong> (announced June 30, 2025; live on a closed Arbitrum instance for EU users through Robinhood Europe UAB), including disclosed product structure: closed-loop OTC derivative contracts, broker-as-principal execution, a &plusmn;0.5% price collar, no external wallet withdrawal, in-app dividend pass-through, and Lithuania&rsquo;s investor compensation scheme (&euro;22,000 cap).</li>
-          <li><strong>Backed xStocks launch</strong> (announced June 30, 2025; ERC-20 on Ethereum and SPL on Solana, distributed through Kraken, Bybit, and Solana DeFi venues), including disclosed product structure: tracker certificates issued through a Jersey SPV, backed 1:1 by segregated shares held in custody and secured by a Security Agent, Liechtenstein-approved prospectus, ISIN-bearing securities, Chainlink CCIP for cross-chain transfers, Data Streams for pricing, and Proof of Reserve for collateral visibility.</li>
-          <li><strong>Institutional structural analogs</strong> from traditional finance: American Depositary Receipts (a depositary holds foreign shares and issues U.S.-tradable receipts) as the closest analog for Backed xStocks; Contracts for Difference (a broker writes a synthetic position referencing the underlying without delivering it) as the closest analog for Robinhood Stock Tokens.</li>
-        </ul>
-        <p>Diligence categories (legal claim, custody chain, liquidity architecture, transfer mechanics, jurisdictional perimeter) are derived from the disclosed structures. No primary on-chain data analysis was conducted.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
-
-        <h2>Limitations</h2>
-        <ul>
-          <li>This is a Medium-summary briefing. The full article (with figures and rights diagrams) is on Medium; the summary is current as of March 2026 and is updated when the Medium post materially changes.</li>
-          <li>The comparison is anchored on the June 30, 2025 launches and product structures disclosed at or shortly after that date. Either product can evolve structurally (chain expansion, custody-chain changes, regulatory re-characterization, perimeter shifts), in which case parts of the comparative anatomy may need revision.</li>
-          <li>The TradFi structural analogs (ADRs for Backed xStocks; CFDs for Robinhood Stock Tokens) are diligence-starting heuristics, not exact legal equivalences. Each token product carries architectural deltas (cross-chain bridge surface for xStocks; broker-as-principal counterparty surface for Robinhood) that the analogs do not cover.</li>
-          <li>Adoption scenarios for 2025 to 2027 and market-structure projections are forward-looking judgments based on the launch architectures and incumbent equity-rail patterns; they are not measured outcomes.</li>
-          <li>No primary on-chain data analysis was conducted (no order-flow, transfer-volume, or arbitrage-quality measurement). The comparison is structural and disclosure-based.</li>
-        </ul>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
@@ -326,11 +280,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

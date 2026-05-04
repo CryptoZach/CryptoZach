@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -44,12 +43,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,8 +55,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Seven Dollars", "item": "https://tokenization.systems/papers/seven-dollars" }
+        { "@type": "ListItem", "position": 3, "name": "Seven Dollars", "item": "https://tokenization.systems/papers/seven-dollars" }
       ]
     }
   </script>
@@ -144,108 +141,62 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Seven Dollars
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Seven Dollars
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
         <span class="badge">Public on SSRN</span>
         <span class="badge">Working paper</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
       </div>
-
-      <p class="paper-tier-kicker">WORKING PAPER · 9 min on-page</p>
 
       <h1 id="paper-title">Seven Dollars: Legal Structure, Operator Risk, and Diligence Divergence Across Dollar-Denominated Digital Products</h1>
 
-      <p class="paper-byline-kicker">9 min read<span class="paper-byline-sep" aria-hidden="true">·</span>March 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">Central banks</span>
-          <span class="paper-audience-tag">Policy designers</span>
-          <span class="paper-audience-tag">Securities regulators</span>
-          <span class="paper-audience-tag">Prime brokers</span>
-          <span class="paper-audience-tag">Asset managers</span>
-          <span class="paper-audience-tag">Stablecoin operators</span>
-          <span class="paper-audience-tag">Tokenization issuers</span>
-          <span class="paper-audience-tag">Risk committees</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">March 2026 · Working paper</p>
+      <p class="paper-metadata-strip">~12 min read · March 2026 · Working paper</p>
       <p class="paper-description-note">Manuscript dated March 2026. SSRN upload forthcoming.</p>
 
-      <div class="paper-thesis">
-        <p><strong>Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. Each requires a structurally different evidence package.</strong></p>
-        <p>This page explains why operator regulation and product equivalence are separate dimensions, and why regulation did not predict stress performance during SVB.</p>
-      </div>
+      <p class="paper-thesis"><strong>Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence.</strong> USDC, USDT, USDG, PYUSD, DAI, USDe, and OUSG. USDC, USDT, USDG, and PYUSD are payment stablecoins issued under four different regulatory regimes. DAI is an overcollateralized stablecoin maintained by smart-contract governance. USDe is a synthetic-dollar token from Ethena backed by staked ETH and offsetting short positions. OUSG is a tokenized US Treasury wrapper issued by Ondo Finance. Each requires a structurally different evidence package. Operator regulation and product equivalence are separate dimensions: regulation did not predict stress performance during SVB March 2023 because it was not designed to.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Each product traded its SVB-era concentration risk for a different one; vulnerability migrated, did not disappear. USDC moved from multi-bank deposit risk (the SVB-era exposure profile) to single-custodian operational risk: reserves now sit primarily in the BlackRock-managed Circle Reserve Fund with BNY custody (an SEC-registered 2a-7 government MMF). USDG was designed post-SVB with MAS-supervised segregated reserves at DBS Bank, but its single-banking-partner concentration remains. OUSG diversified its underlying Treasury exposure across BUIDL, BENJI, and others, but concentrated its instant-redemption path on Circle's BUIDL pool (which experienced 23 hours of limited availability March 27, 2025). Forward risk assessment must name the current concentration, not the last one.</p>
+          <p class="paper-takeaway-text"><strong>Seven products, seven structurally different diligence packages.</strong> USDC, USDT, USDG, and PYUSD are payment stablecoins issued under four different regulatory regimes; DAI is an overcollateralized stablecoin maintained by smart-contract governance; USDe is a synthetic-dollar token from Ethena backed by staked ETH and offsetting short positions; OUSG is a tokenized US Treasury wrapper issued by Ondo Finance. The institutional diligence question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Path quality, not path count, determines collateral eligibility. OUSG has the most liquidation paths in the sample (three: instant-redemption pool, secondary market, standard fund redemption) and the worst collateral eligibility score (0.46, D tier). All three paths can be constrained simultaneously because they share a single Circle-operated redemption pool: instant redemption depends on BUIDL pool depth; secondary market is whitelist-gated and thin; standard fund redemption is business-hours only. Counter to the intuition that more paths produce more resilience, the diligence question is whether the paths are independently sourced. A product with one deep, multi-counterparty redemption channel can outscore a product with three paths that share an upstream dependency.</p>
+          <p class="paper-takeaway-text"><strong>Operator regulation and product equivalence are separate dimensions.</strong> Circle scored highest on the Control Layer Intensity Index (CLII), a regulatory-intensity measure calibrated in a companion paper, and experienced a 10 to 13% depeg during the Silicon Valley Bank (SVB) weekend. Tether scored lower and maintained its peg. Regulation did not predict stress performance because it was not designed to. The CLII is the right instrument for supervising the gateway; the Minimum Viable Equivalence Pack (MVEP) is the right instrument for assessing the product.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">USDe is structurally distinct from payment stablecoins in ways that change the diligence scope. The product is a delta-neutral synthetic dollar collateralized by staked Ethereum and Bitcoin paired with corresponding short perpetual futures positions. There is no fiat redemption path; holders exit through secondary markets or by unwinding the underlying basis trade. Approximately 49% of USDe supply is staked into the yield-bearing variant sUSDe at any given time (range: 27% to 64% over the product's history). Roughly half the holder base is yield-seekers participating in the basis trade economics, not payment users seeking dollar settlement. Counterparty risk concentrates at the centralized exchanges hosting the perpetual short positions, not at a bank or custodian. The stress scenario for USDe is not bank failure; it is exchange disruption or basis-trade compression, which are different categories of event with different observable indicators.</p>
+          <p class="paper-takeaway-text"><strong>Contagion flows from simple to complex, not the other way around.</strong> During SVB (March 2023) and again during the Circle pool incident (March 27, 2025), stress propagated from payment stablecoins to the wrappers and composed products that hold them. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes. Forward risk assessment must name the current concentration, not the last one.</p>
         </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Central banks</span>
+        <span class="paper-audience-tag">Policy designers</span>
+        <span class="paper-audience-tag">Securities regulators</span>
+        <span class="paper-audience-tag">Prime brokers</span>
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Stablecoin operators</span>
+        <span class="paper-audience-tag">Tokenization issuers</span>
+        <span class="paper-audience-tag">Risk committees</span>
       </div>
 
       <div class="paper-access-block access-block">
         <div class="access-primary">
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483118" target="_blank" rel="noopener noreferrer"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read on SSRN</a>
-          <a class="action secondary" href="/contact">Discuss paper</a>
+          <a class="action secondary" href="/contact">Request preprint</a>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Seven%20Dollars%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <a class="access-link" aria-disabled="true" tabindex="-1" title="GitHub replication pending public push">GitHub replication</a>
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Seven dollar-denominated digital products share a denomination and a target price. What's left for institutional diligence?</p>
-        <p><strong>Answer</strong><br />Almost nothing. USDC, USDT, USDG, and PYUSD are payment stablecoins under four different regulatory regimes. DAI is overcollateralized smart-contract governance. USDe is a synthetic-dollar token from Ethena. OUSG is a Treasury wrapper from Ondo. Each requires a structurally different evidence package; operator regulation and product equivalence are separate dimensions. USDe is also structurally distinct on holder behavior: roughly 50% of USDe supply is staked into the yield-bearing variant (sUSDe) at any given time, with participation ranging 27% to 64%; that fraction of holders is yield-seekers, not payment users. The Paxos within-operator natural experiment isolates the distribution-partner effect from the regulator effect: BUSD (Paxos under NYDFS, distributed via Binance) wound down on NYDFS order; PYUSD (Paxos under NYDFS, distributed via PayPal) grew from $78 million to $3.9 billion in 31 months, a 50-fold increase. Same operator, same primary regulator, different distribution partner, opposite trajectory.</p>
-        <p><strong>Evidence base</strong><br />Cross-product analysis of legal structure, operator regulation, ledger authority, insolvency regime, and convertibility under stress. Two production stress events (SVB March 2023, Circle pool incident March 27, 2025) are consistent with contagion flowing from simple to complex products: payment stablecoins are upstream nodes; wrappers and composed products are downstream.</p>
-        <p><strong>Implication</strong><br />Risk committees should never treat dollar-denomination as substitutability. Operator regulation tells you where supervisory obligations attach. Product equivalence tells you what the holder actually owns and recovers. The CLII scores the operator; the MVEP scores the product. Both are required; neither substitutes for the other. The within-operator natural experiment further establishes that distribution architecture is a first-order diligence variable, not a marketing detail.</p>
-      </aside>
-
       <div class="paper-abstract">
-        <h2>What this paper changes</h2>
-        <p class="dropcap">The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
-        <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
-
-
-        <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
-        <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in Routing the Dollar, the companion paper, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
-
-        <h2>Finding 2. Collateral eligibility ranks products differently than regulation does</h2>
-        <p>The paper scores each product across eight observable metrics: secondary market depth, instant redemption availability, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, and contagion independence. Products are assigned to four tiers based on the composite score (Tier A is strongest, Tier D is most restricted; tier assignments are author-specified in the manuscript &sect;7.2 table, with cutoffs inferable from the per-product composites reported there). USDC leads at 0.777 (Tier A). PYUSD, issued by the same operator (Paxos) that wound down BUSD two years earlier, follows at 0.753 (Tier A). USDT and USDS (Sky Protocol's rebrand of DAI after the MakerDAO-to-Sky rename) tie at 0.657 (Tier B). DAI scores 0.589 (Tier C). OUSG (Ondo Finance's tokenized short-term US Treasury wrapper) ranks last at 0.295 (Tier D) despite having three liquidation paths, the most in the sample.</p>
-        <p>The OUSG result inverts the intuition that more paths means more eligibility. Path count is a flow measure; path quality, defined by depth, availability, and independence, determines what gets liquidated under stress. Three paths that all depend on a single redemption pool (Circle's instant-redemption facility for BUIDL, BlackRock's tokenized Treasury fund held as the underlying of OUSG) degrade in correlated ways.</p>
-
-        <h2>Finding 3. Contagion flows from simple to complex, and the risk migrated instead of disappearing</h2>
-        <p>During SVB, USDC depegged to about $0.87. DAI depegged to about $0.89 because its Peg Stability Module (PSM), a smart contract that lets holders swap USDC for DAI at par to keep DAI pinned to the dollar, held a large USDC position, making DAI a downstream dependent of Circle's banking exposure. On March 27, 2025, Circle's instant BUIDL redemption facility experienced 23 hours of limited availability; Ondo Finance activated backup liquidity facilities during that window, evidence consistent with the redemption pool's stress propagating to OUSG through its BUIDL holdings. In both events, the direction was simple-to-complex: payment stablecoin to wrapper.</p>
-        <p>Each of the seven products has since traded its SVB-era concentration for a structurally different one. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG was designed with segregation but depends on a single banking partner. OUSG diversified its underlyings but concentrated its instant-redemption path on one pool. The concentration migrated; it did not disappear. Forward risk assessment has to name the current concentration, not the last one.</p>
-        <hr class="section-ornament" aria-hidden="true">
-
-        <h2>Who should care</h2>
-        <p><strong>Policymakers.</strong> If the goal is to prevent a repeat of SVB, the instrument that would detect the condition is custody concentration at the product level, not regulatory intensity at the operator level. Both instruments are useful; they answer different questions and cannot substitute for each other.</p>
-        <p><strong>Issuers and operators.</strong> What determines whether a product holds its peg under stress is the custody model, the liquidation path quality, and the upstream dependencies, not the regulatory tier. A product designed under a strong regulator with a concentrated reserve will behave worse than a product designed under a weak regulator with a diversified reserve.</p>
-        <p><strong>Investors and market-structure teams.</strong> Two products trading at one dollar can require structurally different diligence packages. The four-dimension taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile) is the first-pass filter that determines which MVEP categories are binding for each product before the full ten-category assessment begins.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
-
-        <h2>Dollar-infrastructure context</h2>
-        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
-
-        <blockquote class="paper-thesis-line">
-          <p>Seven products.</p>
-          <p>Seven structurally different diligence packages.</p>
-          <p>The dollar denomination is the least informative thing about them.</p>
-        </blockquote>
-
-        <h2>Methods and data</h2>
+        <h2>Evidence base</h2>
         <p>Seven products scored across five regulatory regimes (US state money transmitter, US state trust charter, British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress events (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>
         <p><strong>Composite eligibility (eight products, A through D tiers, manuscript table primary):</strong> USDC 0.777 (A), PYUSD 0.753 (A), USDT 0.657 (B), USDS 0.657 (B), USDe 0.604 (B), DAI 0.589 (C), USDG 0.495 (C), OUSG 0.295 (D). (Three-year USDT window sensitivity lifts USDT in robustness; see the abstract block and the Key numbers section on this page.)</p>
 
@@ -255,7 +206,48 @@
           </figcaption>
         </figure>
 
-        <h2>Full technical abstract</h2>
+        <h2>What this paper changes</h2>
+        <p>The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
+        <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
+
+        <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
+        <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in Routing the Dollar, the companion paper, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
+        <p><strong>What this means.</strong> If the objective is to supervise the gateway, the CLII is the correct instrument. If the objective is to assess whether a specific product will hold its peg under a specific stress, the MVEP is the correct instrument. Supervisory practice that uses one framework to answer both questions produces false comfort.</p>
+
+        <h2>Finding 2. Collateral eligibility ranks products differently than regulation does</h2>
+        <p>The paper scores each product across eight observable metrics: secondary market depth, instant redemption availability, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, and contagion independence. Products are assigned to four tiers based on the composite score (Tier A is strongest, Tier D is most restricted; tier assignments are author-specified in the manuscript &sect;7.2 table, with cutoffs inferable from the per-product composites reported there). USDC leads at 0.777 (Tier A). PYUSD, issued by the same operator (Paxos) that wound down BUSD two years earlier, follows at 0.753 (Tier A). USDT and USDS (Sky Protocol's rebrand of DAI after the MakerDAO-to-Sky rename) tie at 0.657 (Tier B). DAI scores 0.589 (Tier C). OUSG (Ondo Finance's tokenized short-term US Treasury wrapper) ranks last at 0.295 (Tier D) despite having three liquidation paths, the most in the sample.</p>
+        <p>The OUSG result inverts the intuition that more paths means more eligibility. Path count is a flow measure; path quality, defined by depth, availability, and independence, determines what gets liquidated under stress. Three paths that all depend on a single redemption pool (Circle's instant-redemption facility for BUIDL, BlackRock's tokenized Treasury fund held as the underlying of OUSG) degrade in correlated ways.</p>
+        <p><strong>What this means.</strong> A product's collateral eligibility is not implied by its regulatory posture, its operator's market cap, or its number of redemption paths. It must be assessed directly against observable metrics, product by product.</p>
+
+        <h2>Finding 3. Contagion flows from simple to complex, and the risk migrated instead of disappearing</h2>
+        <p>During SVB, USDC depegged to about $0.87. DAI depegged to about $0.89 because its Peg Stability Module (PSM), a smart contract that lets holders swap USDC for DAI at par to keep DAI pinned to the dollar, held a large USDC position, making DAI a downstream dependent of Circle's banking exposure. On March 27, 2025, Circle's instant BUIDL redemption facility experienced 23 hours of limited availability; Ondo Finance activated backup liquidity facilities during that window, evidence consistent with the redemption pool's stress propagating to OUSG through its BUIDL holdings. In both events, the direction was simple-to-complex: payment stablecoin to wrapper.</p>
+        <p>Each of the seven products has since traded its SVB-era concentration for a structurally different one. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG was designed with segregation but depends on a single banking partner. OUSG diversified its underlyings but concentrated its instant-redemption path on one pool. The concentration migrated; it did not disappear. Forward risk assessment has to name the current concentration, not the last one.</p>
+        <p><strong>What this means.</strong> Contagion modeling that assumes failures cascade from complex products down to their simpler components has the direction reversed. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
+
+        <h2>Who should care</h2>
+        <p><strong>Policymakers.</strong> If the goal is to prevent a repeat of SVB, the instrument that would detect the condition is custody concentration at the product level, not regulatory intensity at the operator level. Both instruments are useful; they answer different questions and cannot substitute for each other.</p>
+        <p><strong>Issuers and operators.</strong> What determines whether a product holds its peg under stress is the custody model, the liquidation path quality, and the upstream dependencies, not the regulatory tier. A product designed under a strong regulator with a concentrated reserve will behave worse than a product designed under a weak regulator with a diversified reserve.</p>
+        <p><strong>Investors and market-structure teams.</strong> Two products trading at one dollar can require structurally different diligence packages. The four-dimension taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile) is the first-pass filter that determines which MVEP categories are binding for each product before the full ten-category assessment begins.</p>
+
+        <h2>Dollar-infrastructure context</h2>
+        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
+
+        <blockquote class="paper-thesis-line">
+          <p>Seven products. Seven structurally different diligence packages. The dollar denomination is the least informative thing about them.</p>
+        </blockquote>
+
+        <h2>How the paper is built</h2>
+        <ul>
+          <li>Seven products classified on four structural dimensions (legal claim, ledger, insolvency, liquidation profile).</li>
+          <li>CLII extended to five operators using the Routing the Dollar methodology.</li>
+          <li>MVEP category binding predicted from the taxonomy and checked against each product.</li>
+          <li>Eight-metric collateral eligibility framework scored across the seven products.</li>
+          <li>Two production stress events analyzed (SVB March 2023, Circle pool March 2025).</li>
+          <li>SVB counterfactual applied to current structures for each product.</li>
+          <li>Within-operator natural experiment documented (Paxos BUSD wind-down vs PYUSD scale-up under the same NYDFS trust charter).</li>
+        </ul>
+
+        <h2>Abstract</h2>
         <p><strong>Opening and claim boundary.</strong> Seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) share a denomination and a target price. Each requires a structurally different institutional diligence package. The analysis is descriptive; none of the findings should be read as causal estimates.</p>
         <p><strong>Data.</strong> Operator filings, reserve attestations, on-chain holdings, Dune Analytics queries, CoinGecko and Token Terminal market metrics, two stress episodes (SVB March 2023, Circle pool incident March 27, 2025), and a within-operator natural experiment (Paxos BUSD vs PYUSD, same issuer and NYDFS trust charter, opposite outcomes over 31 months).</p>
         <p><strong>Classification (Section 2).</strong> Four-dimension taxonomy predicts which MVEP categories are binding for each product. Payment stablecoins cluster on Categories 1, 4, 5 (rights parity, custody, insolvency). DAI clusters on Categories 2, 8, 10 (system of record, governance, collateral operability). OUSG clusters on Categories 2, 5, 10 (multi-layer records, GP concentration, constrained liquidation).</p>
@@ -279,11 +271,6 @@
           <p><strong>Within-operator natural experiment (Paxos)</strong><br>
           BUSD: wound down Feb 2023 under NYDFS order · PYUSD: $78M to $3.9B in 31 months under the same issuer and same state regulator · Collateral eligibility: PYUSD 0.753 (A), USDG 0.495 (C)</p>
         </div>
-
-        <h2>Limitations</h2>
-        <p>The taxonomy is calibrated for the current product set. Novel structures (rebasing tokens, fully algorithmic stablecoins without overcollateralization, tokenized structured notes with embedded derivatives) may introduce claim types or system-of-record architectures the four dimensions do not capture, and the taxonomy should be extended as new product types enter institutional evaluation. CLII scores for Paxos and Ondo are author-assessed from publicly available information; they have not been validated against internal compliance documentation that may be available only under NDA. The collateral-eligibility composite uses eight metrics with author-assigned weights; different institutional contexts (custodial acceptance, fund distribution, payment settlement) may weight differently.</p>
-        <p>The DAI/USDS collateral composition is shifting as the Sky Protocol migration proceeds. As of March 2026, USDS represents 64.8% of the combined DAI/USDS supply; the PSM USDC concentration figure cited in earlier analyses (32.9%, February 2026) reflects the legacy DAI architecture, and current USDS collateral composition should be verified on-chain before any institutional decision. The SVB counterfactual applies the March 2023 scenario to March 2026 structures, which cannot anticipate novel failure modes the current structures may introduce.</p>
-        <p>The contagion dependency matrix covers direct dependencies between the seven products; indirect dependencies through shared infrastructure (Ethereum congestion affecting multiple products simultaneously) are discussed but excluded from the 7x7 matrix. USDe's collateral-eligibility score treats centralized exchange counterparty risk as a qualitative factor rather than a quantified metric. USDT's 42.7% maximum depeg is historical (2018 banking disruption); under a 3-year rolling window, USDT's composite would rise to approximately 0.80 (Tier A), with the full-history specification retained as the primary result and the 3-year sensitivity available as a robustness check.</p>
 
         <h2>Related frameworks</h2>
         <p><a href="/frameworks#clii">Control Layer Intensity Index (CLII)</a>: five-dimension operator regulation score (introduced in Routing the Dollar). <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>: ten-category product diligence framework (introduced in MVEP).</p>
@@ -332,11 +319,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

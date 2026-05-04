@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -48,8 +47,7 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
@@ -57,7 +55,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -155,7 +153,7 @@
       <div class="section-title">
         <h1 id="hero-title">Strategy for stablecoins, tokenized money, reserve design, and payment infrastructure, translated into durable operating decisions.</h1>
         <p class="hero-subhead">For stablecoin issuers, tokenized-fund teams, and payments operators turning policy and infrastructure constraints into launch decisions. Connects reserve structure, redemption mechanics, and routing design to the operating thresholds that determine whether a product survives regulatory scrutiny and market stress.</p>
-        <p class="proof-strip-inline">100+ tokenization engagements · Reserves / redemption / routing / SLAs · Go-live gates before scale</p>
+        <p class="proof-strip-inline">100 portfolio companies advised 1-on-1 · Reserves / redemption / routing / SLAs · Go-live gates before scale</p>
       </div>
       <div class="resume-downloads">
         <a class="action primary" href="/resumes/Zukowski_Resume_Operator.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -186,6 +184,7 @@
           <span class="chip">Go-Live Readiness</span>
         </div>
         <ul class="resume-proof-list">
+          <li>Investment and scenario track record at Borderless Capital (Dec 2019 to Feb 2026): sourced the LayerZero seed round (~80x return; cross-chain interoperability thesis preceded the firm's Cross-Chain Ecosystem Fund by two years); predicted Thorchain's $200M insolvency 13 months ahead via 10-step scenario modeling (Dec 2023 internal memo; protocol's token had peaked at $3.3B market cap; failure materialized in Jan 2025); the firm held no exposure</li>
           <li>Reserve design, redemption logic, routing defaults, and hold authority translated into product gates and service-level agreements</li>
           <li>Maps where compliance, disclosures, and operating responsibility sit across partners, banks, and gateway operators, with GENIUS reinforcing the payment-stablecoin perimeter and CLARITY-style provisions (House-passed form) attaching compliance at the control layer</li>
           <li>Names the thresholds that should trigger redesign, slower rollout, tighter reserves, or stronger reporting before scale</li>
@@ -303,7 +302,7 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -311,7 +310,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>

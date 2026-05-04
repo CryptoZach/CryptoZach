@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -42,12 +41,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,8 +53,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track B", "item": "https://tokenization.systems/research/#track-b" },
-        { "@type": "ListItem", "position": 4, "name": "Who Burns the Tokens?", "item": "https://tokenization.systems/papers/who-burns-the-tokens" }
+        { "@type": "ListItem", "position": 3, "name": "Who Burns the Tokens?", "item": "https://tokenization.systems/papers/who-burns-the-tokens" }
       ]
     }
   </script>
@@ -140,58 +137,52 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-b">Track B</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Burns the Tokens?
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Burns the Tokens?
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--b">Track B: DePIN tokenomics</span>
       <div class="paper-badges">
         <span class="badge">Public on SSRN</span>
         <span class="badge">Working paper</span>
         <span class="badge badge-access-code">Code available</span>
-        <span class="paper-track-chip paper-track-chip--b" title="Tokenomics and Physical Network Systems (DePIN)">Track B</span>
       </div>
-
-      <p class="paper-tier-kicker">FOUNDATION · 10 min on-page</p>
 
       <h1 id="paper-title">Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks</h1>
 
-      <p class="paper-byline-kicker">10 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">DePIN protocol designers</span>
-          <span class="paper-audience-tag">GeoDePIN operators</span>
-          <span class="paper-audience-tag">Tokenomics researchers</span>
-          <span class="paper-audience-tag">Token-fund analysts</span>
-          <span class="paper-audience-tag">Helium / GEODNET ecosystem builders</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">Apr 2026 · SSRN 6483619 · DOI 10.2139/ssrn.6483619 · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
+      <p class="paper-metadata-strip">~25 min read · Apr 2026 · SSRN 6483619 · DOI 10.2139/ssrn.6483619 · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
       <p class="paper-description-note">Description current as of April 20, 2026. Manuscript and SSRN abstract are public; journal submission in progress at <em>Blockchain: Research and Applications</em> (Elsevier).</p>
 
-      <aside class="brief-callout paper-thesis-pullquote" aria-label="Paper thesis pull-quote">
-        <p>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast it reaches fiscal sustainability. Helium and GEODNET produce sharply different demand-concentration outcomes despite similar physical footprints.</p>
-      </aside>
-
-      <div class="paper-thesis">
-        <p><strong>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast it reaches fiscal sustainability.</strong></p>
-        <p>This page explains why Helium and GEODNET produce sharply different demand-concentration outcomes despite similar footprints, and what the S2R trajectory reveals about parity timing.</p>
-      </div>
+      <p class="paper-thesis"><strong>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast the network reaches fiscal sustainability.</strong> Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes: Helium's carrier-contract burn model concentrates ~90% of burn volume in the Top-5 demand sources (HHI 0.22); GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055). This paper measures fiscal sustainability through the Subsidy-to-Revenue ratio (S2R) and shows that S2R trajectory matters more than S2R level: Helium's S2R = 1.84 over a 34-month window (May 2023 to February 2026), and the burn-mint equilibrium (BME) crossed parity in November 2025 driven by 20-fold fee revenue growth, the HIP-147 emission halving in August 2025, and price decline. Fee growth alone would not have crossed parity without the halving's supply compression.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Demand dispersion does not extend to governance dispersion. GEODNET's subscription burn model spreads payment across many small RTK GPS subscribers (Top-5 = 40.4%, HHI 0.055), but its on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding 25.3% of Polygon-side voting power. The two distributions are independent design surfaces. A protocol can engineer dispersed demand and concentrated governance, dispersed governance and concentrated demand, or any combination. Token-fund analysts evaluating GeoDePIN should treat the burn-side HHI and the governance-side HHI as separate diligence questions; one tells you who pays, the other tells you who decides.</p>
+          <p class="paper-takeaway-text"><strong>Fiscal sustainability is dynamic, not static.</strong> The Subsidy-to-Revenue ratio (S2R) measures how much token emission subsidy is required per unit of protocol revenue: values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">SuperHex is a novel design primitive with no analog in digital-only token economies. GEODNET's spatial-staking system ties stake amount to specific Uber H3 hexagonal cells before stations deploy: capital flows to frontier coverage gaps before hardware does. The mechanism contrasts with Helium's early experience, where uniform global rewards systematically over-rewarded saturated urban areas. SuperHex converts the abstract principle (location-weighted rewards) into a market mechanism where the community collectively prices geographic priority. The primitive is unavailable to protocols whose service is non-geographic. For physical-infrastructure DePIN, it is a design lesson worth instrumenting: spatial-staking is a candidate solution to the frontier-coverage problem that token rewards alone cannot address.</p>
+          <p class="paper-takeaway-text"><strong>Burn-mechanism design determines demand concentration.</strong> Helium uses carrier-contract burns where a small number of mobile-network counterparties account for most demand: Top-5 ~90%, HHI 0.22. GEODNET uses subscription-style payments where many small RTK GPS subscribers each contribute small burn volumes: Top-5 = 40.4%, HHI 0.055. The two networks are comparable in physical footprint and service category, so the concentration gap is a design effect, not a network-size effect.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">BME parity is a three-driver event, not a one-driver event. Helium crossed burn-mint equilibrium in November 2025 driven by 20-fold fee revenue growth (carrier-contract maturation), the HIP-147 emission halving (August 2025 supply compression), and price decline (which raises the burn-rate relative to mint-rate at constant fee USD volume). Trailing 12-month attribution decomposes the move: fee growth +58%, price decline -25%, emission reduction -17%. Fee growth alone would not have crossed parity without the halving; parity timing is path-dependent on the supply-side compression event. The diligence implication: forward S2R trajectories require modeling both demand growth and protocol-level emission-policy events. Single-driver projections systematically miss parity timing.</p>
+          <p class="paper-takeaway-text"><strong>GEODNET governance concentration is a separate, sharper story than its demand-concentration profile.</strong> Despite the more distributed demand side, on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding 25.3% of Polygon-side voting power. Both figures are required: HHI alone undersells the team-wallet concentration. The demand-side dispersion does not extend to the governance side.</p>
         </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text"><strong>SuperHex is a novel design primitive with no analog in digital-only token economies.</strong> GEODNET's spatial staking mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">5</span>
+          <p class="paper-takeaway-text"><strong>DePIN tokenomics is a design space with at least two viable architectures.</strong> The Helium and GEODNET comparison shows two coherent and operating burn-mechanism designs producing divergent demand-concentration outcomes; both are running networks at scale. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">DePIN protocol designers</span>
+        <span class="paper-audience-tag">GeoDePIN operators</span>
+        <span class="paper-audience-tag">Tokenomics researchers</span>
+        <span class="paper-audience-tag">Token-fund analysts</span>
+        <span class="paper-audience-tag">Helium / GEODNET ecosystem builders</span>
       </div>
 
       <div class="paper-access-block access-block">
@@ -200,62 +191,56 @@
           <a class="access-link" href="https://github.com/Research-Publications-and-Data" target="_blank" rel="noopener noreferrer">GitHub (replication, tag b3-v1.0.0-bra-submission)</a>
         </div>
         <div class="access-secondary">
-          <a class="action secondary" href="/contact">Discuss paper</a>
+          <a class="action secondary" href="/contact">Request preprint</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Does network size or burn-mechanism design determine who pays for a GeoDePIN network and how fast it reaches fiscal sustainability?</p>
-        <p><strong>Answer</strong><br />Burn-mechanism design dominates. Helium's carrier-contract model concentrates ~90% of burn volume in the Top-5 demand sources (HHI 0.22). GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055). Helium's S2R = 1.84 over a 34-month window; the burn-mint equilibrium crossed parity in November 2025 driven by 20-fold fee growth, the HIP-147 emission halving, and price decline.</p>
-        <p><strong>Evidence base</strong><br />34-month observation window (May 2023 to February 2026) on Helium and GEODNET, the two operating networks roughly comparable in operator footprint and physical service category. Fiscal sustainability measured through the Subsidy-to-Revenue ratio (S2R), with trajectory analysis dominating level analysis. SuperHex spatial-staking primitive (GEODNET-specific H3-cell pre-deployment staking) treated as a separate design dimension.</p>
-        <p><strong>Implication</strong><br />GeoDePIN protocol designers should pick burn-mechanism architecture before network bootstrap, because it determines the fiscal-sustainability path more than network size does. Token-fund analysts evaluating a GeoDePIN should treat S2R trajectory (not S2R level) and demand-concentration HHI as separate diligence questions; demand dispersion does not extend to governance dispersion.</p>
-      </aside>
+      <section class="paper-artifact">
+        <h2>Burn-mechanism design comparison</h2>
+        <table class="artifact-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Helium (carrier-contract burns)</th>
+              <th>GEODNET (subscription burns)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Demand-side concentration</strong></td>
+              <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
+              <td>Top-5 = 40.4% of burns; HHI 0.055</td>
+            </tr>
+            <tr>
+              <td><strong>Operating S2R</strong></td>
+              <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
+              <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
+            </tr>
+            <tr>
+              <td><strong>BME phase as of late 2025</strong></td>
+              <td>Crossed parity in November 2025; net-deflationary</td>
+              <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
+            </tr>
+            <tr>
+              <td><strong>Governance concentration</strong></td>
+              <td>Documented but not the primary focus</td>
+              <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
+            </tr>
+            <tr>
+              <td><strong>Distinctive design primitive</strong></td>
+              <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
+              <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p class="dropcap">Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
+        <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
         <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It also uses the Ostromian polycentricity framing from Governance Concentration, but it is not a philosophy paper; the broader five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) is developed in Governance Concentration.</p>
-
-        <section class="paper-artifact">
-          <h2>Burn-mechanism design comparison</h2>
-          <table class="artifact-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Helium (carrier-contract burns)</th>
-                <th>GEODNET (subscription burns)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Demand-side concentration</strong></td>
-                <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
-                <td>Top-5 = 40.4% of burns; HHI 0.055</td>
-              </tr>
-              <tr>
-                <td><strong>Operating S2R</strong></td>
-                <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
-                <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
-              </tr>
-              <tr>
-                <td><strong>BME phase as of late 2025</strong></td>
-                <td>Crossed parity in November 2025; net-deflationary</td>
-                <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
-              </tr>
-              <tr>
-                <td><strong>Governance concentration</strong></td>
-                <td>Documented but not the primary focus</td>
-                <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
-              </tr>
-              <tr>
-                <td><strong>Distinctive design primitive</strong></td>
-                <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
-                <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
 
         <h2>Core findings</h2>
 
@@ -285,12 +270,10 @@
 
         <h3>4. GEODNET governance is more concentrated than its demand profile</h3>
         <p>Despite the dispersed demand side, GEODNET's on-chain governance concentrates: HHI 0.14 across active voters. The team wallet alone accounts for 25.3% of Polygon-side voting power. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution.</p>
-        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially derived from external aggregators (see the on-chain-data-preferred methodology note in Governance Concentration).</p>
+        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see the Token Terminal DePIN measurement error finding documented in Governance Concentration).</p>
 
         <h3>5. SuperHex as a novel design primitive</h3>
         <p>GEODNET's SuperHex mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives directly to coverage geography. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as worth instrumenting as a separate design dimension worth studying in other GeoDePIN networks.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Methods and data</h2>
 
@@ -331,23 +314,20 @@
           <p><strong>DIMO (post-exclusion)</strong><br>
           HHI 0.038 · GnosisSafeL2 holding ~44% excluded as protocol-controlled · 643% HHI delta if exclusion skipped</p>
           <p><strong>Filecoin S2R</strong><br>
-          0.045 (cross-section reference only; partially derived from external aggregators; the on-chain-data-preferred methodology note is in Governance Concentration)</p>
+          0.045 (cross-section reference only; partially Token Terminal-derived; the Token Terminal DePIN measurement error is documented in Governance Concentration)</p>
         </div>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Limitations</h2>
         <ul>
           <li>S2R excludes vesting dilution; vesting unlocks can move the BME without changing emissions or revenue. Surfaced at first S2R mention; treated as a first-order caveat.</li>
           <li>The two-network comparison (Helium and GEODNET) is intentionally narrow. The "burn-mechanism design determines demand concentration" framing is supported by the contrast and by the size-controlled comparison; it is not a population claim across all DePIN networks.</li>
-          <li>Filecoin S2R is included for cross-section reference only and is partially derived from external aggregators. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
+          <li>Filecoin S2R is included for cross-section reference only and is partially Token Terminal-derived. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
           <li>SuperHex is a novel design primitive; the paper documents it but does not evaluate it against alternative spatial-staking designs (because none currently exist at comparable scale).</li>
           <li>Demand-concentration measurements are a snapshot of the study window and may shift as either network's demand mix evolves.</li>
         </ul>
-        <p><strong>Maintenance.</strong> When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
 
-        <h2>Related frameworks</h2>
-        <p><a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> develops the protocol-controlled-address exclusion methodology this paper applies, and the five-lens institutional-design framework. <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a> introduces the burn-mint equilibrium framework as a long-run sustainability metric.</p>
+        <h2>Maintenance plan</h2>
+        <p>When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
 
         <h2>Related role profiles</h2>
         <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
@@ -371,7 +351,7 @@
         </div>
       </section>
 
-      <p class="paper-contact-strip">Want to discuss this paper? <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Discussion">Zach@Tokenization.Systems</a></p>
+      <p class="paper-contact-strip">Want to discuss this paper or request a preprint? <a href="mailto:Zach@Tokenization.Systems?subject=Who%20Burns%20the%20Tokens%20-%20Discussion">Zach@Tokenization.Systems</a></p>
     </article>
 
     <footer class="site-footer reveal">
@@ -393,11 +373,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

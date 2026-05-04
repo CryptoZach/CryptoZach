@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -40,12 +39,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -139,9 +137,7 @@
 
       <h1 id="letter-title">OCC PPSI MVEP comment: applying the Minimum Viable Equivalence Pack to the Permissible Payment Stablecoin Issuer rule</h1>
 
-      <p class="paper-byline-kicker">3 min read<span class="paper-byline-sep" aria-hidden="true">·</span>March 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <p class="paper-metadata-strip"><code class="cite">OCC-2025-0372-0057</code> (<code class="cite">RIN 1557-AF41</code>) &middot; regulations.gov &middot; Comment period: March 11, 2026 to May 10, 2026</p>
+      <p class="paper-metadata-strip">OCC-2025-0372-0057 (RIN 1557-AF41) &middot; regulations.gov &middot; Comment period: March 11, 2026 to May 10, 2026</p>
 
       <p class="paper-thesis"><strong>Three tokenized U.S. Treasury products under three regulatory regimes receive comparable collateral treatment on Binance, through Ceffu, with no counterparty disclosure about which instrument backs any given trade.</strong> The OCC's PPSI rule regulates the issuer, not the collateral pools in which PPSI-issued stablecoins circulate. This letter applies the Minimum Viable Equivalence Pack (MVEP) ten-category diligence framework to the proposed rule and identifies three implementable fixes.</p>
 
@@ -164,7 +160,7 @@
 
       <div class="paper-abstract">
         <h2>What the rule proposes</h2>
-        <p class="dropcap">The OCC's PPSI NPRM implements the GENIUS Act for payment-stablecoin issuers under OCC jurisdiction. Its headline provisions: reserve composition must be cash, demand deposits, and short-term Treasuries at federally insured institutions; federal supervision extends to PPSI issuers currently regulated as state money transmitters; three PPSI categories are differentiated (Federal qualified, State qualified with joint supervision above $10 billion, and IDI subsidiary). The rule targets the issuer, not the interfaces or the collateral pools in which PPSI-issued stablecoins circulate.</p>
+        <p>The OCC's PPSI NPRM implements the GENIUS Act for payment-stablecoin issuers under OCC jurisdiction. Its headline provisions: reserve composition must be cash, demand deposits, and short-term Treasuries at federally insured institutions; federal supervision extends to PPSI issuers currently regulated as state money transmitters; three PPSI categories are differentiated (Federal qualified, State qualified with joint supervision above $10 billion, and IDI subsidiary). The rule targets the issuer, not the interfaces or the collateral pools in which PPSI-issued stablecoins circulate.</p>
 
         <h2>Gaps identified</h2>
         <ul>
@@ -181,8 +177,6 @@
               <li><strong>Coordinate interagency on the collateral eligibility boundary.</strong> The OCC should coordinate with the SEC, Federal Reserve, FDIC, FinCEN, and Treasury on whether tokenized instruments from different regulatory regimes should receive equivalent collateral treatment without a standardized equivalence assessment.</li>
               <li><strong>Adopt a standardized equivalence assessment as a supervisory tool.</strong> MVEP or a comparable framework, producing reproducible assessments that distinguish instruments with different risk profiles. A quarterly or semiannual update cadence reviewed by OCC examiners during regular supervision; estimated cost $5,000 to $15,000 annually per PPSI.</li>
             </ol>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Program role</h2>
         <p>First filing in the eight-letter Federal Comment Letter Program. Introduces MVEP as the program's diligence vocabulary; cross-referenced by every subsequent letter via specific comment URL <code>regulations.gov/comment/OCC-2025-0372-0057</code> per DEC-089. The MVEP v9 manuscript (SSRN 6363138) is attached to the docket as an exhibit.</p>
@@ -223,11 +217,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

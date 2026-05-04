@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -44,12 +43,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,8 +55,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track B", "item": "https://tokenization.systems/research/#track-b" },
-        { "@type": "ListItem", "position": 4, "name": "Adaptive Tokenomics", "item": "https://tokenization.systems/papers/adaptive-tokenomics" }
+        { "@type": "ListItem", "position": 3, "name": "Adaptive Tokenomics", "item": "https://tokenization.systems/papers/adaptive-tokenomics" }
       ]
     }
   </script>
@@ -153,52 +150,34 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-b">Track B</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Adaptive Tokenomics
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Adaptive Tokenomics
       </nav>
 
-      <div class="paper-badges">
-        <span class="badge badge-public badge-status-published">Public</span>
-        <span class="badge badge-access-code">Code available</span>
-        <span class="paper-track-chip paper-track-chip--b" title="Tokenomics and Physical Network Systems (DePIN)">Track B</span>
-      </div>
+      <figure class="paper-cover" aria-hidden="true">
+        <picture><source type="image/webp" srcset="/Publication-Images/exhibit_01_discipline_map.webp" /><img src="/Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics discipline map" loading="eager" /></picture>
+      </figure>
 
-      <p class="paper-tier-kicker">FOUNDATION · 7 min on-page · 35 min full read</p>
+      <span class="paper-track-badge paper-track-badge--b">Track B: DePIN tokenomics</span>
+      <div class="paper-badges">
+        <span class="badge badge-status-published">Public</span>
+        <span class="badge badge-access-code">Code available</span>
+      </div>
 
       <h1 id="paper-title">Adaptive Tokenomics: A Systems Engineering Approach to Programmable Incentive Design</h1>
 
-      <p class="paper-byline-kicker">7 min read<span class="paper-byline-sep" aria-hidden="true">·</span>March 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">Protocol designers</span>
-          <span class="paper-audience-tag">Token economists</span>
-          <span class="paper-audience-tag">DePIN operators</span>
-          <span class="paper-audience-tag">Mechanism designers</span>
-          <span class="paper-audience-tag">Governance researchers</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">March 2026 · SSRN</p>
+      <p class="paper-metadata-strip">~35 min read · ~20,900 words · March 2026 · SSRN</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <aside class="brief-callout paper-thesis-pullquote" aria-label="Paper thesis pull-quote">
-        <p>PID-controlled emissions compress worst-case variance 6x under contraction shock and sustain 8,880 nodes at the 5th percentile versus 1,049 under static emission. Bull markets produce identical outcomes; the engineering premium is regime-conditional.</p>
-      </aside>
-
-      <div class="paper-thesis">
-        <p><strong>Token design is a systems-engineering problem. Stress-testing five integrated mechanisms over five simulated years reveals which earn their complexity, which fail only under stress, and where bootstrapping diverges from theory.</strong></p>
-        <p>This page explains why simulation-first methodology beats single-mechanism analysis, and what the 240-run ensemble shows about path-dependent tail risk.</p>
-      </div>
+      <p class="paper-thesis">Token design is best understood as systems engineering. MeshNet combines productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional, integral, derivative controller, a standard feedback-control architecture used in engineering to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios. The result is that integrated design reveals which mechanisms earn their complexity, which failure modes only appear under stress, and where bootstrapping economics diverge from long-run theory. Results are mechanism demonstrations under stated assumptions; they are not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used throughout this paper to illustrate the framework; it is not a real operator or deployed protocol.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The dilution feedback loop is the failure mode no single-mechanism analysis predicts. Under sustained demand contraction the PID controller's integral component accumulates error, raising emissions to chase an unreachable node-count target. Higher emissions depress price; depressed price reduces operator income in real terms; operators exit; emissions rise further. Control theory names this integral wind-up; crypto markets name it a death spiral. The mechanism is identical to UST's mint-to-defend-peg dynamics and to insurance-linked token cascades: locally rational actions that, fed back through price, become destabilizing. The proposed fix is anti-windup clamping with regime-change detection. The alternative is to denominate operator rewards in a stable unit so token-price movements stop reducing real compensation.</p>
+          <p class="paper-takeaway-text">Adaptive emissions function as insurance: PID compresses worst-case node-count variance by 6x (coefficient of variation from 0.544 to 0.087 under competitor shock), sustaining 8,880 nodes at the 5th percentile versus 1,049 under static emission. The advantage is conditional: bull markets produce identical outcomes under both approaches.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Token design is integrated systems engineering, not single-mechanism optimization. MeshNet specifies five mechanisms (productive staking, reputation-weighted governance, burn-mint value capture, conviction voting, PID-controlled adaptive emissions) and stress-tests them as a coupled system. Section 8.4 documents three compound findings invisible to single-mechanism analysis: PID interacts with staking to produce the dilution feedback loop; reputation interacts with conviction voting to amplify or dampen governance concentration; burn-mint interacts with adaptive emissions to determine fiscal-sustainability trajectory. The methodological lesson generalizes: any token economy coordinating autonomous agents under uncertainty needs simulation across the integrated mechanism stack, not analytical guarantees on individual mechanisms.</p>
+          <p class="paper-takeaway-text">Under sustained demand contraction, PID can underperform on average because the controller applies a supply-side lever to a demand-side problem: integral wind-up raises emissions, emissions dilute price, and lower token-denominated yield accelerates operator exit. The paper identifies anti-windup clamping with regime-change detection as the engineering fix. No tested parameterization produces a death spiral in the simulated scenarios.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
@@ -206,29 +185,107 @@
         </div>
       </div>
 
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Protocol designers</span>
+        <span class="paper-audience-tag">Token economists</span>
+        <span class="paper-audience-tag">DePIN operators</span>
+        <span class="paper-audience-tag">Mechanism designers</span>
+        <span class="paper-audience-tag">Governance researchers</span>
+      </div>
+
       <div class="paper-access-block access-block">
         <div class="access-primary">
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read on SSRN</a>
           <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (replication)</a>
         </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Adaptive%20Tokenomics%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Do adaptive emission controllers actually outperform static schedules, or is the engineering complexity unjustified?</p>
-        <p><strong>Answer</strong><br />They outperform conditionally. PID-controlled emissions compress worst-case node-count variance by 6x under competitor shock and sustain 8,880 nodes at the 5th percentile versus 1,049 under static emission. Bull markets produce identical outcomes. Sustained demand contraction can flip the result: the controller treats a demand-side problem with a supply-side lever, producing a dilution feedback loop that no single-mechanism analysis predicts.</p>
-        <p><strong>Evidence base</strong><br />240-run ensemble (30 seeds &times; 8 configurations) plus 566 sensitivity runs across PID gains, slashing, cadence, and Ki-Kd interaction. MeshNet is fictional but parameterized from Helium hardware economics, Filecoin collateral ratios, and the B2 (Governance Concentration) cohort; results are mechanism demonstrations, not deployment forecasts.</p>
-        <p><strong>Implication</strong><br />Protocol designers should treat adaptive emissions as insurance against contraction shocks, not as a universal optimizer. Anti-windup clamping with regime-change detection is the engineering fix for the demand-contraction failure mode. An alternative approach is to denominate operator rewards in a stable unit so token-price movements stop reducing real compensation, and the dilution loop cannot form. Single-seed runs mask path-dependent tail risk: in this paper, seed=42 produced a misleadingly optimistic bear outcome that only the 240-run ensemble revealed as near-total collapse on other paths. Ensemble methods are required.</p>
-      </aside>
-
-      <figure class="paper-cover">
-        <picture><source type="image/webp" srcset="/Publication-Images/exhibit_01_discipline_map.webp" /><img src="/Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Discipline map locating tokenomics in the design space between mechanism design, control theory, and protocol engineering" loading="lazy" /></picture>
-        <figcaption>Discipline map for adaptive tokenomics: where mechanism design, control theory, and protocol engineering intersect, and what each contributes that the others cannot.</figcaption>
-      </figure>
+      <section class="paper-artifact">
+        <h2>Parameter calibration: MeshNet vs. real DePIN networks</h2>
+        <p class="artifact-note">MeshNet is fictional; its parameterization is drawn from operational DePIN networks. Source: Zukowski (2026), Adaptive Tokenomics, Appendix A.</p>
+        <table class="artifact-table">
+          <thead>
+            <tr><th>Parameter</th><th>MeshNet</th><th>Helium (observed)</th><th>Filecoin (observed)</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hardware CAPEX per node</td>
+              <td>$300-500</td>
+              <td>$400-600 (hotspot)</td>
+              <td>$5K-50K (sealing rig)</td>
+              <td>Manufacturer pricing, 2025</td>
+            </tr>
+            <tr>
+              <td>Network contraction</td>
+              <td>Behavioral exit probabilities</td>
+              <td>~76% decline from peak (Q1 2023 to late 2025)</td>
+              <td>~8-15% annual provider attrition</td>
+              <td>Messari; ByteTree 2025</td>
+            </tr>
+            <tr>
+              <td>Fee Revenue / Emission Value</td>
+              <td>&lt;1% (bootstrap)</td>
+              <td>&lt;5% (2024-2025)</td>
+              <td>~10-30% (2025)</td>
+              <td>Protocol dashboards</td>
+            </tr>
+            <tr>
+              <td>Governance participation</td>
+              <td>Reputation-weighted</td>
+              <td>~2-5% of HNT holders vote</td>
+              <td>~1-3% of FIL holders participate</td>
+              <td>Governance portal data</td>
+            </tr>
+            <tr>
+              <td>Token concentration (Gini)</td>
+              <td>0.89 (token-weighted)</td>
+              <td>0.91 (HNT)</td>
+              <td>0.88 (FIL)</td>
+              <td>Dune Analytics, Jan 2026</td>
+            </tr>
+            <tr>
+              <td>OU mean reversion (kappa)</td>
+              <td>2.82</td>
+              <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
+              <td>calibration.py</td>
+            </tr>
+            <tr>
+              <td>OU volatility (sigma)</td>
+              <td>0.049</td>
+              <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
+              <td>calibration.py</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Key simulation parameters</h3>
+        <table class="artifact-table">
+          <thead>
+            <tr><th>Parameter</th><th>Baseline</th><th>Sweep range</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PID proportional gain (Kp)</td><td>0.8</td><td>[0.2, 0.4, 0.6, 0.8, 1.0]</td><td>Tuned for stability</td></tr>
+            <tr><td>PID integral gain (Ki)</td><td>0.15</td><td>[0.05, 0.10, 0.15, 0.25, 0.35]</td><td>Tuned for stability</td></tr>
+            <tr><td>PID derivative gain (Kd)</td><td>0.2</td><td>[0.05, 0.10, 0.20, 0.30, 0.40]</td><td>Tuned for stability</td></tr>
+            <tr><td>Emission Floor / Ceiling</td><td>0.25x / 3.0x base</td><td>n/a</td><td>Design choice</td></tr>
+            <tr><td>Evaluation interval</td><td>14 days</td><td>[7, 14, 21, 30]</td><td>Governance cycle</td></tr>
+            <tr><td>Downtime slashing</td><td>0.10</td><td>[0.05, 0.10, 0.15, 0.20]</td><td>Helium denylist severity</td></tr>
+            <tr><td>Fraud slashing</td><td>1.00</td><td>[0.50, 0.75, 1.00]</td><td>Full-loss design</td></tr>
+            <tr><td>Minimum stake</td><td>10,000 $MESH</td><td>n/a</td><td>DePIN CAPEX range</td></tr>
+            <tr><td>Node count target (N*)</td><td>10,000</td><td>n/a</td><td>Design choice</td></tr>
+          </tbody>
+        </table>
+        <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration source URLs (manufacturer pricing, Messari, ByteTree, Dune Analytics) pending verification with stable references; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.</p>
+      </section>
 
       <div class="paper-abstract">
+        <h2>What problem it solves</h2>
+        <p>Most token models are built by precedent and pattern-matching. This paper treats token design as an integrated engineering problem: how to coordinate autonomous agents under uncertainty, distribute ownership to contributors without centralized enforcement, and test whether the combined mechanism stack still works once it is exposed to adversarial conditions and macro shocks. MeshNet is the design laboratory: a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET) and whose results identify reusable failure modes and design patterns with no single mandated configuration across runs.</p>
+
         <h2>What this paper changes</h2>
-        <p class="dropcap">Most tokenomics analysis evaluates mechanisms one at a time: staking, emissions, burns, or governance. This paper shifts the unit of analysis to the full system. MeshNet, a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET), combines five mechanism layers (productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and adaptive emissions) and measures what happens when they interact under stress.</p>
+        <p>Most tokenomics analysis evaluates mechanisms one at a time: staking, emissions, burns, or governance. This paper shifts the unit of analysis to the full system. MeshNet combines five mechanism layers (productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and adaptive emissions) and measures what happens when they interact under stress.</p>
         <p>The paper's strongest contribution is a set of failure modes, tradeoffs, and reusable design patterns, with no one-size-fits-all "best" parameter set across scenarios:</p>
         <ul>
           <li>Controller design shapes governance timing: bounded automation can outrun governance voice, creating a tension between speed of response and legitimacy of decision.</li>
@@ -236,85 +293,6 @@
           <li>Constitutional protections affect economic resilience: the operator veto creates a deliberate split between constitutional authority and controller discretion, and the interaction between governance structure and economic mechanism is visible only in the combined system.</li>
         </ul>
         <p>These compound findings do not appear when mechanisms are analyzed in isolation.</p>
-
-        <section class="paper-artifact">
-          <h2>Parameter calibration: MeshNet vs. real DePIN networks</h2>
-          <p class="artifact-note">MeshNet is fictional; its parameterization is drawn from operational DePIN networks. Source: Zukowski (2026), Adaptive Tokenomics, Appendix A.</p>
-          <table class="artifact-table">
-            <thead>
-              <tr><th>Parameter</th><th>MeshNet</th><th>Helium (observed)</th><th>Filecoin (observed)</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Hardware CAPEX per node</td>
-                <td>$300-500</td>
-                <td>$400-600 (hotspot)</td>
-                <td>$5K-50K (sealing rig)</td>
-                <td>Manufacturer pricing, 2025</td>
-              </tr>
-              <tr>
-                <td>Network contraction</td>
-                <td>Behavioral exit probabilities</td>
-                <td>~76% decline from peak (Q1 2023 to late 2025)</td>
-                <td>~8-15% annual provider attrition</td>
-                <td>Messari; ByteTree 2025</td>
-              </tr>
-              <tr>
-                <td>Fee Revenue / Emission Value</td>
-                <td>&lt;1% (bootstrap)</td>
-                <td>&lt;5% (2024-2025)</td>
-                <td>~10-30% (2025)</td>
-                <td>Protocol dashboards</td>
-              </tr>
-              <tr>
-                <td>Governance participation</td>
-                <td>Reputation-weighted</td>
-                <td>~2-5% of HNT holders vote</td>
-                <td>~1-3% of FIL holders participate</td>
-                <td>Governance portal data</td>
-              </tr>
-              <tr>
-                <td>Token concentration (Gini)</td>
-                <td>0.89 (token-weighted)</td>
-                <td>0.91 (HNT)</td>
-                <td>0.88 (FIL)</td>
-                <td>Dune Analytics, Jan 2026</td>
-              </tr>
-              <tr>
-                <td>OU mean reversion (kappa)</td>
-                <td>2.82</td>
-                <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
-                <td>calibration.py</td>
-              </tr>
-              <tr>
-                <td>OU volatility (sigma)</td>
-                <td>0.049</td>
-                <td colspan="2">Fitted: HNT daily returns, May 2023 to Feb 2026</td>
-                <td>calibration.py</td>
-              </tr>
-            </tbody>
-          </table>
-          <h3>Key simulation parameters</h3>
-          <table class="artifact-table">
-            <thead>
-              <tr><th>Parameter</th><th>Baseline</th><th>Sweep range</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>PID proportional gain (Kp)</td><td>0.8</td><td>[0.2, 0.4, 0.6, 0.8, 1.0]</td><td>Tuned for stability</td></tr>
-              <tr><td>PID integral gain (Ki)</td><td>0.15</td><td>[0.05, 0.10, 0.15, 0.25, 0.35]</td><td>Tuned for stability</td></tr>
-              <tr><td>PID derivative gain (Kd)</td><td>0.2</td><td>[0.05, 0.10, 0.20, 0.30, 0.40]</td><td>Tuned for stability</td></tr>
-              <tr><td>Emission Floor / Ceiling</td><td>0.25x / 3.0x base</td><td>n/a</td><td>Design choice</td></tr>
-              <tr><td>Evaluation interval</td><td>14 days</td><td>[7, 14, 21, 30]</td><td>Governance cycle</td></tr>
-              <tr><td>Downtime slashing</td><td>0.10</td><td>[0.05, 0.10, 0.15, 0.20]</td><td>Helium denylist severity</td></tr>
-              <tr><td>Fraud slashing</td><td>1.00</td><td>[0.50, 0.75, 1.00]</td><td>Full-loss design</td></tr>
-              <tr><td>Minimum stake</td><td>10,000 $MESH</td><td>n/a</td><td>DePIN CAPEX range</td></tr>
-              <tr><td>Node count target (N*)</td><td>10,000</td><td>n/a</td><td>Design choice</td></tr>
-            </tbody>
-          </table>
-          <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration source URLs (manufacturer pricing, Messari, ByteTree, Dune Analytics) pending verification with stable references; see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>.</p>
-        </section>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Core findings</h2>
         <h3>1. Adaptive emissions cut tail risk before they chase average performance</h3>
@@ -338,9 +316,7 @@
         </ul>
         <p>These interactions are invisible when mechanisms are analyzed component by component.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
-
-        <h2>Methods and data</h2>
+        <h2>Methods / Data</h2>
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
         <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
@@ -368,14 +344,6 @@
           <p><strong>Governance concentration (modeled setup)</strong><br>
           Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the simulated MeshNet setup. Cross-sectional empirical governance concentration patterns are addressed in the companion paper <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>; see that paper for the 40-protocol DePIN vs DeFi comparison and the exclusion methodology.</p>
         </div>
-
-        <h2>Limitations</h2>
-        <p>The 240-run ensemble (30 seeds across 8 configurations) establishes confidence intervals on node counts, prices, and supply dynamics, and a 150-run Ki sensitivity test distinguishes structural sensitivity from stochastic path dependence. 30 seeds per configuration remains below the 100-plus seeds that would establish stable tail statistics, and price trajectories within each seed remain single-path realizations of an Ornstein-Uhlenbeck process. The demand model treats users as an aggregate flow rather than as individual agents with heterogeneous preferences. On the supply side, all simulated operators share the same cost structure, so heterogeneous-agent extensions would be needed to test whether penalties for poor performance disproportionately remove smaller operators from governance.</p>
-        <p>The behavioral framework introduces a different class of limitation. Every organizational behavior citation originates from laboratory experiments on identifiable individuals or field studies of traditional organizations with named employees and physical co-presence. None has been validated in contexts where participant identities are obfuscated and incentives are token-mediated. The behavioral mechanisms are well-established; what is untested is their magnitude in protocol settings. As a partial test, the simulation implements a prospect-theory exit function calibrated to the Kahneman-Tversky (1979) value-function parameters; the resulting exit curves are 5x to 300x steeper in the loss domain than the smooth baseline, particularly for mercenary operator profiles.</p>
-        <p>The simulation does not reach fee-dominance within its five-year window: fee revenue covers less than 3% of emission value in USD terms even in the bull case at year 5, and the burn-mint mechanism is empirically negligible at MeshNet's simulated scale. The dominant supply dynamic is emission versus slashing, not emission versus burns. Three findings that appear structural under the MeshNet parameterization could reverse under different assumptions: burn-versus-slashing dominance would narrow in a fee-dominant regime; the deflationary finding under PID depends on treasury acting as a net sink; and the Ki non-monotonicity observed in the bear scenario is path-dependent through 150-run multi-seed testing, indicating the spread is real but the optimal Ki value is not identifiable from simulation alone.</p>
-
-        <h2>Related frameworks</h2>
-        <p><a href="/papers/operational-risk">Operational Risk in Token Economies</a> extends this simulation with a calibrated operational-risk layer (ValOS + NORS). <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a> addresses the cross-sectional governance question this paper references in calibration. The MeshNet parameterization draws on Helium and Filecoin observed values.</p>
 
         <h2>Related role profiles</h2>
         <p>Track B work supports protocol and token-design audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
@@ -421,11 +389,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

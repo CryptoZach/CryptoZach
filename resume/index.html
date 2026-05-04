@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -16,8 +15,8 @@
   <meta name="author" content="Zach Zukowski" />
 
   <title>Resume Profiles | Zach Zukowski | Tokenization Systems</title>
-  <meta name="description" content="Five resume profiles for policy, asset management, stablecoin strategy, AI governance and infrastructure, and risk controls. Pick the lens that matches how you evaluate digital-dollar and tokenization risk." />
-  <meta name="keywords" content="resume, Zach Zukowski, stablecoin, tokenization, policy, asset management, risk controls, MVEP, CLII" />
+  <meta name="description" content="Five resume profiles for policy, asset management, stablecoin strategy, AI governance and infrastructure, and risk controls. LayerZero seed sourcing (~80x), step-by-step Thorchain collapse modeled 13 months before predicted scenario led to $200M loss, eight federal comment letters, and 14 custom Python MCP servers." />
+  <meta name="keywords" content="resume, Zach Zukowski, stablecoin, tokenization, policy, asset management, risk controls, MVEP, CLII, LayerZero, Thorchain, MCP servers" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Resume Hub | Zach Zukowski" />
@@ -48,8 +47,7 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (error) {
@@ -57,7 +55,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <style>
     .resume-page .resume-quick-nav-buttons .action.primary:nth-child(5):last-child {
       grid-column: 1 / -1;
@@ -66,6 +64,16 @@
       .resume-page .resume-quick-nav-buttons .action.primary:nth-child(5):last-child {
         grid-column: auto;
       }
+    }
+    .resume-card-credentials {
+      font-size: 0.875rem;
+      color: var(--text-muted, #8a8f99);
+      margin-top: calc(var(--space-xs, 0.5rem) * -0.5);
+      margin-bottom: var(--space-sm, 0.75rem);
+      line-height: 1.45;
+    }
+    .resume-card-credentials em {
+      font-style: italic;
     }
   </style>
   <script type="application/ld+json">
@@ -171,7 +179,6 @@
       </div>
       <div class="section-title">
         <h1 id="resume-title">Five decision contexts.</h1>
-        <p class="proof-strip-inline">1,000+ deals diligenced (pre-seed to Series C) · 250 investments · ~$500M AUM · Team of 4</p>
       </div>
 
       <p class="flagship-nudge">
@@ -193,10 +200,11 @@
 
         <article class="card resume-card" id="resume-policy">
           <div class="resume-card-heading">
-            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="4"/><path d="M8 11a4 4 0 0 1 8 0"/><line x1="4" x2="20" y1="11" y2="11"/><line x1="7" x2="7" y1="11" y2="19"/><line x1="10" x2="10" y1="11" y2="19"/><line x1="14" x2="14" y1="11" y2="19"/><line x1="17" x2="17" y1="11" y2="19"/><line x1="3" x2="21" y1="19" y2="19"/><line x1="3" x2="21" y1="22" y2="22"/></svg></span>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span>
             <h3>Policy &amp; market infrastructure</h3>
           </div>
           <p class="resume-card-opening">You assess how stablecoin and tokenized-dollar infrastructure concentrates risk, transmits monetary policy, and determines who is accountable when the system is under stress.</p>
+          <p class="resume-card-credentials"><em>Eight federal comment letters (2026); industry dialogues across Treasury, Nasdaq, NYSE, DTCC, Swift, JPM Kinexys, Securitize.</em></p>
           <div class="resume-actions resume-actions--inline">
             <a class="action primary" href="/resume/policy">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Policy.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -213,10 +221,11 @@
 
         <article class="card resume-card" id="resume-asset-mgmt">
           <div class="resume-card-heading">
-            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="3" y2="21"/><line x1="5" x2="19" y1="7" y2="7"/><line x1="5" x2="3" y1="7" y2="10"/><line x1="5" x2="7" y1="7" y2="10"/><path d="M3 10 Q 5 13 7 10"/><line x1="19" x2="17" y1="7" y2="10"/><line x1="19" x2="21" y1="7" y2="10"/><path d="M17 10 Q 19 13 21 10"/><line x1="9" x2="15" y1="21" y2="21"/></svg></span>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
             <h3>Asset management &amp; tokenization</h3>
           </div>
           <p class="resume-card-opening">You evaluate whether a tokenized product can prove legal, operational, and economic equivalence to its traditional counterpart, and what evidence should exist before commitment.</p>
+          <p class="resume-card-credentials"><em>~$500M AUM at Borderless; 250 investments across 1,000+ deal funnel (~25% deployment); LayerZero seed sourcing (~80x return).</em></p>
           <div class="resume-actions resume-actions--inline">
             <a class="action primary" href="/resume/asset-management">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Asset_Management.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -234,10 +243,11 @@
 
         <article class="card resume-card" id="resume-payments">
           <div class="resume-card-heading">
-            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" x2="12" y1="6.5" y2="17.5"/><path d="M15.5 9.5a2.75 2.75 0 0 0-2.75-2.5h-1.5a2.5 2.5 0 0 0 0 5h1.5a2.5 2.5 0 0 1 0 5h-1.5a2.75 2.75 0 0 1-2.75-2.5"/></svg></span>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span>
             <h3>Stablecoin &amp; payments strategy</h3>
           </div>
           <p class="resume-card-opening">You build products whose reserve structure, redemption mechanics, and routing design must survive regulatory scrutiny and market stress before launch.</p>
+          <p class="resume-card-credentials"><em>LayerZero seed sourcing (~80x); modeled Thorchain step-by-step collapse 13 months before predicted scenario led to $200M loss; eight SSRN papers.</em></p>
           <div class="resume-actions resume-actions--inline">
             <a class="action primary" href="/resume/stablecoin-payments">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Operator.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -254,10 +264,11 @@
 
         <article class="card resume-card" id="resume-ai-governance">
           <div class="resume-card-heading">
-            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="1.5"/><rect x="9" y="9" width="6" height="6"/><line x1="2.5" x2="5" y1="9" y2="9"/><line x1="2.5" x2="5" y1="15" y2="15"/><line x1="19" x2="21.5" y1="9" y2="9"/><line x1="19" x2="21.5" y1="15" y2="15"/><line x1="9" x2="9" y1="2.5" y2="5"/><line x1="15" x2="15" y1="2.5" y2="5"/><line x1="9" x2="9" y1="19" y2="21.5"/><line x1="15" x2="15" y1="19" y2="21.5"/></svg></span>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="2.25"/><circle cx="6" cy="17" r="2.25"/><circle cx="18" cy="17" r="2.25"/><path d="M12 8.25V11"/><path d="M7.75 15.25L10.5 12.5"/><path d="M16.25 15.25L13.5 12.5"/></svg></span>
             <h3>AI governance &amp; infrastructure</h3>
           </div>
           <p class="resume-card-opening">You translate the control-layer logic, audit trails, and equivalence evidence proven at stablecoin scale into AI governance, oversight, and infrastructure-accountability work.</p>
+          <p class="resume-card-credentials"><em>14 custom Python MCP servers; AI-assisted diligence workflows shortened review time per deal from 4hr to 1hr; Governance Concentration paper at Frontiers in Blockchain.</em></p>
           <div class="resume-actions resume-actions--inline">
             <a class="action primary" href="/resume/ai-governance-infrastructure">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_AI_Governance_Infrastructure.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -274,10 +285,11 @@
 
         <article class="card resume-card" id="resume-risk">
           <div class="resume-card-heading">
-            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17a9 9 0 0 1 18 0"/><line x1="12" x2="16.5" y1="17" y2="9.5"/><circle cx="12" cy="17" r="1.25"/><line x1="3" x2="4.5" y1="17" y2="17"/><line x1="19.5" x2="21" y1="17" y2="17"/><line x1="6.5" x2="7.5" y1="11.5" y2="12.5"/><line x1="16.5" x2="17.5" y1="12.5" y2="11.5"/><line x1="12" x2="12" y1="6" y2="7"/></svg></span>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
             <h3>Risk, controls &amp; diligence</h3>
           </div>
           <p class="resume-card-opening">You assess whether a digital-asset product&rsquo;s controls, monitoring infrastructure, and escalation paths hold up under committee review, regulatory scrutiny, and operational stress.</p>
+          <p class="resume-card-credentials"><em>Modeled Thorchain step-by-step collapse 13 months before the predicted scenario played out and led to $200M loss; 74-vector operational-risk taxonomy mapped to 64 controls / 31 program objectives.</em></p>
           <div class="resume-actions resume-actions--inline">
             <a class="action primary" href="/resume/risk-controls">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Risk.pdf" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
@@ -318,7 +330,7 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -326,7 +338,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>

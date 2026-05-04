@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -43,12 +42,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -56,8 +54,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "The Control Layer War", "item": "https://tokenization.systems/papers/control-layer-war" }
+        { "@type": "ListItem", "position": 3, "name": "The Control Layer War", "item": "https://tokenization.systems/papers/control-layer-war" }
       ]
     }
   </script>
@@ -136,44 +133,37 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> The Control Layer War
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> The Control Layer War
       </nav>
 
       <figure class="paper-cover paper-cover--control-layer" aria-hidden="true">
         <img src="/Publication-Images/Control_Layer.webp" width="1401" height="933" alt="The Control Layer War cover" loading="eager" />
       </figure>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public">Public</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
+        <span class="badge">Public / <a href="#request-memo" class="badge-link">requestable</a></span>
       </div>
 
-      <p class="paper-tier-kicker">MEDIUM BRIEFING · 6 min on-page</p>
-
       <h1 id="paper-title">CLARITY&rsquo;s Real Target: The Control Layer (Defaults, Holds, Routing)</h1>
-
-      <p class="paper-byline-kicker">6 min read<span class="paper-byline-sep" aria-hidden="true">·</span>January 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
 
       <p class="paper-metadata-strip">Medium · Jan 2026 · Policy / Payments / Compliance / Market Infrastructure</p>
       <p class="paper-description-note">Description current as of March 2026.</p>
 
-      <div class="paper-thesis">
-        <p><strong>CLARITY debate is framed as a taxonomy fight: SEC versus CFTC. That is the wrong center of gravity. Outcomes get decided at the control layer, not the token label.</strong></p>
-        <p>This page explains why interfaces, routing defaults, sweep engines, and freeze systems are where compliance actually gets encoded, and what &ldquo;compelled operator&rdquo; means in practice.</p>
-      </div>
+      <p class="paper-thesis">Most CLARITY Act (H.R. 5403, the Digital Asset Market Clarity Act, 119th Congress) debate is framed as a taxonomy fight: security versus commodity, SEC versus CFTC, &ldquo;DeFi&rdquo; versus &ldquo;CeFi.&rdquo; The essay argues that this is the wrong center of gravity. If CLARITY is implemented in anything close to its House-passed form, outcomes will be decided by where compliance gets encoded and who becomes the compelled operator of that compliance. In practice, the bottlenecks concentrate at the control layer (the operator and routing functions that govern issuance, custody, compliance, and redemption of a tokenized instrument): the interfaces people use, the routing defaults that determine where flow goes, the sweep engines that decide what balances become, and the hold and freeze systems on settlement, custody, and ledger infrastructure that turn policy intent into executable, auditable operations. As of April 2026: CLARITY passed the House; Senate consideration is ongoing. Readers should check Congress.gov for current status.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Compliance attaches where it becomes operational. The essay reads the House-passed CLARITY text through a control-layer stack: anti-fraud authority over Permitted Payment Stablecoin Issuers (PPSIs, the GENIUS Act category) and certain digital commodity transactions; alternative trading system and venue operations; modernization of recordkeeping; and registration, custody, and customer-protection requirements for digital commodity intermediaries. The pattern is functional rather than formal: the practical bottlenecks concentrate at the front ends people use, the routing defaults that determine where flow goes, the sweep engines that decide what balances become, and the hold and freeze plus logging systems that turn policy into executable, auditable operations. Token labels are the law's surface; control-layer functions are where the law actually attaches.</p>
+          <p class="paper-takeaway-text"><strong>Compliance attaches where it becomes operational.</strong> The essay reads the House-passed CLARITY text through a control-layer stack. The author&rsquo;s synthesis of relevant CLARITY Act provisions identifies anti-fraud authority over Permitted Payment Stablecoin Issuers (PPSIs, the GENIUS Act&rsquo;s statutory category for approved stablecoin operators) and certain digital commodity transactions; alternative trading system and venue operations; modernization of recordkeeping; and registration, custody, and customer-protection requirements for digital commodity intermediaries. The point is functional, not a labels-first reading: the practical bottlenecks are the front ends people use, the routing defaults that determine where flow goes, the sweep engines that decide what balances become, and the hold/freeze plus logging systems that make policy executable and auditable.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Two market-structure mechanics decide how compliance becomes value capture. First: holds turn compliance into workflow. If holds and freezes become standard plumbing, the advantage goes to whoever owns the operational machinery (reversible state transitions, case management, reviewer tooling, evidence packs, exception handling). Weak operators lose on operations, not on ideology. Second: routing defaults become the product surface. In regimes that constrain token-level yield (the GENIUS Act payment-stablecoin perimeter is one such regime), defaults become the product: stablecoin balances swept into cash wrappers, payments routed through preferred rails, "rewards" implemented at the interface through activity rules. Compliance gets implemented through routing, logs, and holds. Defaults shape flow; flow determines rents.</p>
+          <p class="paper-takeaway-text"><strong>Three enforcement equilibria will compete.</strong> Issuer-centric (issuers and custodians carry most compliance load; interfaces stay light), router-centric (interfaces, defaults, and holds become the enforceable surface; regulated routers emerge), and infrastructure-gated (custody, venues, and market infrastructure define the acceptance standard). CLARITY&rsquo;s text matters, but implementation chooses the equilibrium.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Truth-in-equivalence is the price of institutional scale. Every serious tokenized product needs a documented equivalence pack: rights mapping (legal and economic equivalence between on-chain and off-chain claims), records and reconciliation (how ledgers match; how breaks are resolved), custody and segregation (including insolvency posture), finality and exception handling (reorgs, reversals, dispute resolution), and governance and audit logs (who can change what; how changes are proven after the fact). Without documented equivalence, a tokenized product is a pilot, not an institutional offering. This is where CLW connects to MVEP: the control-layer functions CLW maps as compliance bottlenecks are the same functions MVEP scores as ten diligence categories. The two frameworks operationalize the same operator-and-router thesis from different angles.</p>
+          <p class="paper-takeaway-text"><strong>The framework is measurable.</strong> The essay defines operating metrics that turn design choices into governance problems: time-to-release (median and 95th percentile from hold to resolution), false-positive rate and appeal win rate, appeal throughput (cases per day per reviewer, backlog age), share of flows via compliant defaults, audit-log completeness (coverage, retention, tamper evidence), hold-duration distributions, case-documentation quality, repeat-offender patterns, and override governance. These metrics are proposed standards, not currently measured or standardized in production systems.</p>
         </div>
       </div>
 
@@ -192,21 +182,15 @@
           <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
         </div>
         <div class="access-secondary">
+          <a id="request-memo" class="access-link" href="/contact">Request the full 30-page memo</a>
+          <span aria-hidden="true"> · </span>
           <a class="access-link" href="/papers/dollar-v3">Read companion: Dollar v3</a>
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />If the CLARITY Act passes in close to its House form, what determines outcomes for digital-asset markets?</p>
-        <p><strong>Answer</strong><br />Not the SEC-versus-CFTC taxonomy fight. Outcomes get decided at the control layer: the operator and routing functions that govern issuance, custody, compliance, and redemption. Compliance gets encoded in interfaces, routing defaults, sweep engines, and freeze systems. Whoever becomes the compelled operator of those functions wins.</p>
-        <p><strong>Evidence base</strong><br />Manuscript anchored on the House-passed text of CLARITY (H.R. 5403, 119th Congress) as of April 2026, with Senate consideration ongoing. Essay form, not empirical study. Argument is grounded in observed market structure: how compliance has actually been encoded across stablecoin issuers, custodians, and exchanges in the GENIUS-era perimeter. Three numbered findings frame the argument: compliance attaches where it becomes operational; three enforcement equilibria will compete; the framework is measurable.</p>
-        <p><strong>Implication</strong><br />Three enforcement equilibria will compete under CLARITY: issuer-centric (issuers and custodians carry the load; interfaces stay light), router-centric (interfaces, defaults, and holds become the enforceable surface; regulated routers emerge), and infrastructure-gated (custody, venues, and market infrastructure define the acceptance standard). CLARITY's text matters; implementation chooses the equilibrium. Builders and policy designers should focus on which functions become compelled-operator territory, not which agency has primary jurisdiction. Defaults, sweep engines, and hold and freeze authority are the load-bearing decisions. Sector debates that ignore the control layer will be retrospectively wrong about which entities CLARITY actually regulates. Operating metrics (time-to-release, false-positive rate, audit-log completeness, hold-duration distributions) should be specified before implementation rules concentrate liability accidentally.</p>
-      </aside>
-
       <div class="paper-abstract">
         <h2>What this piece changes</h2>
-        <p class="dropcap">Most CLARITY analysis debates what tokens should be called. This piece shifts the question to who must do what when compliance becomes operational. The central insight is that the actor who owns the compliance primitive (the screening system, the routing engine, the hold workflow, the audit log) becomes the chokepoint, and that chokepoint determines where value capture and liability concentrate.</p>
+        <p>Most CLARITY analysis debates what tokens should be called. This piece shifts the question to who must do what when compliance becomes operational. The central insight is that the actor who owns the compliance primitive (the screening system, the routing engine, the hold workflow, the audit log) becomes the chokepoint, and that chokepoint determines where value capture and liability concentrate.</p>
 
         <h2>Core arguments</h2>
         <h3>1. The operator rule: value follows the compliance primitive</h3>
@@ -242,9 +226,10 @@
           <li>Whether you sponsor issuance, custody, routers/wrappers, or accept commoditization</li>
         </ul>
 
-        <hr class="section-ornament" aria-hidden="true">
+        <h2>What problem it solves</h2>
+        <p>CLARITY will be positioned as clarity about what things are. It will function as clarity about who must do what, and who becomes responsible when something goes wrong. Token labels matter; routers, defaults, and holds decide outcomes. This piece maps where compliance becomes code, liability becomes workflow, and value capture shifts toward regulated routers and infrastructure gatekeepers.</p>
 
-        <h2>Anchor evidence</h2>
+        <h2>Anchor evidence / policy inputs</h2>
         <p>This is a control-layer policy essay. It is anchored on:</p>
         <ul>
           <li><strong>CLARITY Act</strong> (H.R. 5403, 119th Congress), in the House-passed form analyzed here, including anti-fraud, venue, recordkeeping, intermediary-registration, custody, and customer-protection provisions that can push compliance toward interfaces, defaults, logs, and hold workflows. Public-law citation pending Senate consideration; check Congress.gov for current status.</li>
@@ -253,8 +238,6 @@
           <li><a href="/papers/mvep"><strong>MVEP</strong></a>, which supplies the institutional &ldquo;truth-in-equivalence&rdquo; standard referenced in the institutional-scale section.</li>
         </ul>
         <p>The three enforcement equilibria and operating metrics are the author&rsquo;s analytical framework. They describe where compliance could concentrate under the House-passed text analyzed here, conditional on implementation choices and later revisions.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Limitations</h2>
         <ul>
@@ -297,11 +280,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

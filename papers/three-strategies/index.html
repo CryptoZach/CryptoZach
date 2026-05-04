@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -44,12 +43,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,8 +55,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Three Tokenization Strategies", "item": "https://tokenization.systems/papers/three-strategies" }
+        { "@type": "ListItem", "position": 3, "name": "Three Tokenization Strategies", "item": "https://tokenization.systems/papers/three-strategies" }
       ]
     }
   </script>
@@ -142,78 +139,69 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Three Tokenization Strategies
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Three Tokenization Strategies
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
         <span class="badge">Public on SSRN</span>
         <span class="badge">Working paper</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
       </div>
-
-      <p class="paper-tier-kicker">WORKING PAPER · 10 min on-page</p>
 
       <h1 id="paper-title">Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk in Institutional Digital Asset Markets</h1>
 
-      <p class="paper-byline-kicker">10 min read<span class="paper-byline-sep" aria-hidden="true">·</span>March 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">Central banks</span>
-          <span class="paper-audience-tag">Policy designers</span>
-          <span class="paper-audience-tag">Securities regulators</span>
-          <span class="paper-audience-tag">Exchange operators</span>
-          <span class="paper-audience-tag">Transfer agents</span>
-          <span class="paper-audience-tag">Prime brokers</span>
-          <span class="paper-audience-tag">Clearinghouses</span>
-          <span class="paper-audience-tag">Asset managers</span>
-          <span class="paper-audience-tag">Tokenization issuers</span>
-          <span class="paper-audience-tag">Risk committees</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">2026 · Working paper</p>
+      <p class="paper-metadata-strip">~12 min read · 2026 · Working paper</p>
       <p class="paper-description-note">Infrastructure map dated March 27, 2026. Institutional tokenization is evolving rapidly; events after this date may alter sequencing and competitive dynamics.</p>
 
-      <div class="paper-thesis">
-        <p><strong>Institutional tokenization of U.S. securities is proceeding through three distinct strategies, but the same small set of regulated entities recurs in each. The system-level risk lives in the connectors.</strong></p>
-        <p>This page explains why Securitize sitting in all three strategies is the concentration risk entity-level regulatory scores miss, and what fallback the architecture lacks.</p>
-      </div>
+      <p class="paper-thesis">Institutional tokenization of US securities is proceeding through three distinct strategies: a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router, and tokenized equity rails on Nasdaq and NYSE. Each strategy synthesizes infrastructure from different combinations of regulated entities, but the same small set of entities recurs. Securitize, an SEC-registered transfer agent, sits in all three. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Securitize is the cross-strategy bottleneck that entity-level scoring misses. As SEC-registered transfer agent for BUIDL (Strategy 1), TA layer for the Strategy 2 yield stack, and first digital TA eligible to mint on NYSE's Digital Trading Platform (Strategy 3), Securitize's individual entity-level CLII score is high. The system-effective regulatory intensity is lower because the same entity's failure propagates across all three strategies. A 72-hour Securitize outage halts minting, burning, and register updates on Nasdaq and NYSE simultaneously, freezes BUIDL custody operations, and severs Strategy 2's TA-aggregation layer. As of April 2026, no fallback digital TA is documented for either NYSE or Nasdaq; no Securitize-specific stress scenario appears in BUIDL's operating documents. Risk committees must add system-of-record concentration to the diligence checklist alongside CLII.</p>
+          <p class="paper-takeaway-text">Three distinct strategies are now under construction. Strategy 1 is a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, cleared at par through Ubyx (a new clearing layer that allows different banks' deposit tokens to settle against each other). Strategy 2 is a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router. Strategy 3 is tokenized equity rails on Nasdaq and NYSE. The MVEP category profile across the three is a complementarity map, not a competitive ranking.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Strategy 3's binding constraint is the corporate-actions reconciliation gap. When the DTC operates on business-day cycles and tokens trade 24/7, a stock split announced Friday at 4pm with a Monday record date can produce different holders on-chain (where settlement is final continuously) and on the DTC register (which updates Monday). Three resolution architectures exist: (a) trading halt during corporate-action processing windows preserves DTC primacy at the cost of the 24/7 promise; (b) blockchain-as-authoritative requires DTC to accept on-chain settlement-final transfers it has not yet processed; (c) dual-record synchronization introduces reconciliation overhead and a new attack surface. Each architecture has distinct implications for MVEP Categories 2, 3, 6, and 8. Existing tokenization risk frameworks (Basel BCBS 2022, MiCA 2023, OCC interpretive letters) do not address the dimension.</p>
+          <p class="paper-takeaway-text">Securitize, an SEC-registered transfer agent (the regulated entity that maintains the authoritative holder register for a security), is transfer agent across all three strategies. Entity-level regulatory scores rate Securitize high. System-effective regulatory strength is lower, because the same entity operates across all three strategies with no documented fallback. A 72-hour Securitize operational failure would degrade all three simultaneously.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">The deposit-token market is the control-layer competition applied to institutional settlement. JPMorgan (JPMD on Canton + Base), BNY (tokenized deposits, January 2026), and Citi (RLN-derived deposit tokens) are each building bank-issued settlement instruments. Ubyx is building a clearing layer that allows them to settle against each other at par. If a single issuer wins (JPMD dominant case), the issuer captures settlement-layer rent for tokenized institutional cash; competing banks become rent-payers rather than peers. With Ubyx-style cross-institution clearing, the market preserves competitive equilibrium across multiple issuers. The market-structure outcome is determined at the clearing-infrastructure layer, not the issuer-product layer; the deposit-token consolidation prediction is testable on quarterly issuance and market-share data.</p>
+          <p class="paper-takeaway-text">Strategy 3 faces a novel reconciliation gap that current frameworks do not address. When the Depository Trust Company (DTC) operates on business-day cycles and tokens trade 24/7, record dates, ex-dates, and stock splits produce different holders on-chain and on the DTC register at the same instant. Three architectures can close the gap (trading halt, blockchain-as-authoritative, dual-record synchronization); each has distinct operational-risk implications.</p>
         </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text">The deposit-token market is control-layer competition applied to institutional settlement. JPMorgan, BNY, and Citi are each building bank-issued deposit tokens; Ubyx is building a clearing layer that allows them to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer. If multi-issuer clearing operates, the rent is competed away. Who routes the token matters more than what the token is called.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Central banks</span>
+        <span class="paper-audience-tag">Policy designers</span>
+        <span class="paper-audience-tag">Securities regulators</span>
+        <span class="paper-audience-tag">Exchange operators</span>
+        <span class="paper-audience-tag">Transfer agents</span>
+        <span class="paper-audience-tag">Prime brokers</span>
+        <span class="paper-audience-tag">Clearinghouses</span>
+        <span class="paper-audience-tag">Asset managers</span>
+        <span class="paper-audience-tag">Tokenization issuers</span>
+        <span class="paper-audience-tag">Risk committees</span>
       </div>
 
       <div class="paper-access-block access-block">
         <div class="access-primary">
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483198" target="_blank" rel="noopener noreferrer"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read on SSRN</a>
-          <a class="action secondary" href="/contact">Discuss paper</a>
+          <a class="action secondary" href="/contact">Request preprint</a>
+        </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Three%20Tokenization%20Strategies%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <span class="access-link" aria-disabled="true" title="Replication release pending">GitHub replication: forthcoming</span>
         </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Institutional tokenization of U.S. securities is proceeding through three strategies. Where does the system-level risk concentrate?</p>
-        <p><strong>Answer</strong><br />In the connectors, not in the strategies themselves. The same small set of regulated entities recurs across all three (regulated collateral circuit, multi-issuer yield stack, tokenized equity rails). Securitize, an SEC-registered transfer agent, sits in all three with no documented digital-TA fallback. A 72-hour Securitize operational failure would degrade all three simultaneously. Each strategy's MVEP profile differs: Strategy 1 strongest on custody and settlement finality; Strategy 2 strongest on collateral operability; Strategy 3 strongest on rights parity but weakest on reconciliation.</p>
-        <p><strong>Evidence base</strong><br />Infrastructure map dated March 2026 identifying entities and architectures behind each strategy: BUIDL, BENJI, FDIT, WTGXX, ULTRA (Strategy 2 yield stack); Ubyx, JPMD, BNY tokenized deposits (Strategy 1 collateral circuit); Nasdaq and NYSE digital-asset rails (Strategy 3). Cross-strategy entity recurrence verified through SEC transfer-agent registrations and operator disclosures.</p>
-        <p><strong>Implication</strong><br />Risk committees evaluating tokenization exposure should map system-of-record concentration explicitly and demand a documented digital-TA fallback before approving multi-strategy participation. Policy designers should recognize that entity-level regulatory scoring undercounts system-effective regulatory strength when the same operator sits across multiple strategies. Strategy 3 also surfaces a novel reconciliation gap (DTC business-day cycles versus 24/7 token trading) that current frameworks do not address; three architectures exist (trading halt, blockchain-as-authoritative, dual-record synchronization), each with distinct MVEP implications. Deposit-token market structure (JPMD, BNY deposits, Citi deposits) is control-layer competition applied to institutional settlement: the entity issuing the dominant deposit token captures settlement-layer rent. Ubyx-style clearing infrastructure determines whether the market consolidates around one issuer or stays competitive. Risk committees should track deposit-token concentration alongside Securitize concentration; both are system-level concerns that entity-level scoring misses.</p>
-      </aside>
-
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p class="dropcap">The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
+        <p>The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
         <p>The paper maps each strategy against the <a href="/frameworks#mvep">MVEP</a>'s ten diligence categories, develops nine stress scenarios traced through the category failure chains, and identifies the four cross-cutting findings that shape the institutional-tokenization roadmap. The analysis is prospective: the collateral circuit is live in controlled production, the yield stack is composed from operating products, and the tokenized equity rails went from SEC approval (Nasdaq, March 18, 2026) to a signed MoU (NYSE with Securitize, March 24, 2026) in the week before the paper went to draft.</p>
 
         <figure class="paper-figure-callout" aria-label="Figure 1 caption">
@@ -224,38 +212,38 @@
 
         <h2>Finding 1. Each strategy is strongest where the others are weakest</h2>
         <p>Strategy 1 (Regulated Collateral Circuit) is strongest on custody and settlement finality, because it uses DTC and Canton Network's atomic settlement, a design in which the asset leg and cash leg of a transaction either both succeed or both fail. Strategy 2 (Multi-Issuer Yield Stack) is strongest on collateral operability, because the redemption router spreads demand across multiple underlying pools, avoiding concentration in any single one. Strategy 3 (Tokenized Equity Rails) is strongest on rights parity, because SEC rules mandate identical economic and voting rights for tokenized and non-tokenized shares, and weakest on reconciliation, because 24/7 trading runs on a different clock than business-day corporate actions.</p>
+        <p><strong>What this means.</strong> An institution cannot rank the strategies on a single axis; they satisfy different diligence categories with different strength. The MVEP category profile is a complementarity map, not a competitive ranking. A portfolio that needs a strong custody profile and a strong collateral operability profile needs both strategies operating together, not a choice between them.</p>
 
         <h2>Finding 2. Securitize concentration is a system-level risk that entity-level scoring does not capture</h2>
         <p>Securitize is the transfer agent for BUIDL (BlackRock's tokenized US Treasury money-market fund and the largest on-chain institutional tokenized product), for the BUIDL layer of Strategy 2's yield stack, and for NYSE's digital-asset trading platform. It is also the first digital transfer agent approved to mint on NYSE's Digital Trading Platform and an expected broker-dealer participant there. The same entity therefore connects the collateral asset layer, the yield-stack underlying layer, and the equity-venue register.</p>
         <p>A 72-hour Securitize operational failure, from any cause, would freeze the authoritative register in all three strategies simultaneously. No fallback digital transfer agent is documented in the BUIDL operating documents or in the public NYSE Digital Trading Platform materials. Entity-level regulatory scoring rates Securitize high, consistent with its SEC registration and institutional client base. System-effective regulatory strength, measured as the degree of independent redundancy across the three strategies, is lower.</p>
+        <p><strong>What this means.</strong> Regulatory frameworks calibrated for entity-level assessment (<a href="/frameworks#clii">CLII</a>, transfer-agent licensing, cybersecurity rules) are necessary but not sufficient. A second diligence pass is required at the system level: which entities appear in more than one strategy, and what fallback infrastructure exists for each.</p>
 
         <h2>Finding 3. Strategy 3's corporate-actions gap requires an explicit architecture choice</h2>
         <p>Corporate actions are the business-day events that change share counts, ownership, or economic rights: stock splits, dividends, mergers, and the record dates and ex-dates that govern them. A stock split announced Friday at 4pm with a Monday record date (the date on which a holder must be on the register to receive the corresponding adjustment) illustrates the gap. Tokenized shares of the same CUSIP trade all weekend. If a tokenized share changes hands six times between Friday close and Monday open, the DTC register (updated Monday) and the blockchain ledger (updated continuously) show different holders at the same timestamp. This is the corporate actions reconciliation gap, and it is the most novel failure mode in the tokenized-equities strategy.</p>
         <p>Three architectures close the gap. The first halts tokenized trading during corporate-action processing windows, which removes the 24/7 trading feature that motivated tokenization. The second designates the blockchain ledger as authoritative, which requires DTC to change its record-keeping role. The third runs a dual-record synchronization protocol with a named adjudication procedure for divergences at the record date. Each architecture satisfies different MVEP categories and imposes different costs on issuers, exchanges, and holders.</p>
+        <p><strong>What this means.</strong> The corporate-actions gap is not a defect that can be patched inside the existing Nasdaq or NYSE rulebook. It is a design decision that SEC rulemaking, exchange implementation, and DTC operations will make explicitly or implicitly. The paper specifies the three options and the MVEP implications of each so the choice can be made deliberately.</p>
 
         <h2>Finding 4. The deposit-token market is control-layer competition applied to institutional settlement</h2>
         <p>JPMorgan, BNY, and Citi are each building bank-issued deposit tokens. Ubyx is building a clearing layer that allows these tokens to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer; if multi-issuer clearing operates, the settlement rent is competed away. This is the same control-layer competition the research program identifies across the dollar stack: who routes the token matters more than what the token is called.</p>
         <p>The binding constraint on multi-issuer clearing is not regulatory. It is infrastructure: the clearing function must verify funding and settle in a single atomic operation using pre-funded Delivery versus Payment (DvP, where the cash and asset legs settle simultaneously only after both sides are verified funded), each issuer must expose a settlement account visible exclusively to the clearing layer, and a named procedure must govern cascading settlement failure when an upstream payment bounces. A pre-funded architecture sidesteps the insolvency-posture divergence across issuers (a working-paper extension; see Forthcoming below).</p>
-        <p class="paper-callout"><strong>Forthcoming.</strong> The pre-funded-clearing architecture extension is drafted and will be added after author verification with Ubyx. The extension is not a revision; it is additional analysis of how pre-funded DvP reshapes the binding constraints.</p>
+        <p><strong>What this means.</strong> Whether institutional settlement becomes a competitive market or a single-issuer monopoly depends on whether Ubyx, or a successor clearing entity, achieves multi-issuer depth before one bank achieves dominant volume. Policy attention to the deposit-token layer should focus on the clearing function; absent multi-issuer clearing, supervisory attention to any one issuer has limited effect.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
+        <p class="paper-callout"><strong>Forthcoming.</strong> The pre-funded-clearing architecture extension is drafted and will be added after author verification with Ubyx. The extension is not a revision; it is additional analysis of how pre-funded DvP reshapes the binding constraints.</p>
 
         <h2>Who should care</h2>
         <p><strong>Policymakers.</strong> If the goal is to prevent the tokenized-securities buildout from repeating the concentrated-custody failure modes of 2022 to 2023, the supervisory instrument most likely to catch it is a system-level diligence pass that names the shared dependencies across strategies, not an entity-level regulatory rating.</p>
         <p><strong>Issuers, operators, and transfer agents.</strong> What determines whether a strategy clears its MVEP profile is the independence of its shared-entity dependencies. A strategy strong on custody but weak on transfer-agent redundancy is operationally fragile in ways that entity-level scores do not reveal.</p>
         <p><strong>Investors and market-structure teams.</strong> The three strategies produce complementary MVEP profiles; the corporate-actions gap in Strategy 3 is the most novel operational risk on the roadmap; the deposit-token competition is the control-layer question for institutional settlement.</p>
 
-        <hr class="section-ornament" aria-hidden="true">
-
         <h2>Dollar-infrastructure context</h2>
         <p>Three Tokenization Strategies is the fourth and most forward-looking paper in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and the gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. The Seven Dollars work applies both frameworks to seven dollar-denominated digital products. This paper extends the same control-layer logic to institutional settlement infrastructure: tokenized Treasuries, tokenized equities, and bank-issued deposit tokens.</p>
 
         <blockquote class="paper-thesis-line">
-          <p>Three strategies, one transfer agent, one clearing layer.</p>
-          <p>The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
+          <p>Three strategies, one transfer agent, one clearing layer. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
         </blockquote>
 
-        <h2>Methods and data</h2>
+        <h2>How the paper is built</h2>
         <ul>
           <li>Infrastructure map: eight operating entities supplying institutional-tokenization building blocks (DTCC, Kinexys, Nasdaq, NYSE, Securitize, BNY, JPMorgan, Ubyx), dated March 27, 2026.</li>
           <li>MVEP mapping: each of the three strategies scored across all ten diligence categories.</li>
@@ -266,7 +254,7 @@
           <li>Phase-gate structure: quantitative thresholds gating each strategy transition ($100M minted, 30 consecutive days, 2% daily volume-to-outstanding ratio).</li>
         </ul>
 
-        <h2>Full technical abstract</h2>
+        <h2>Abstract</h2>
         <p><strong>Opening and claim boundary.</strong> Institutional tokenization of US securities is proceeding through three distinct strategies. The analysis is prospective and descriptive; the stress scenarios are hypothetical, no DTC-tokenized Treasury has been used as margin collateral in production, no smart redemption router operates at institutional scale, and no tokenized equity has processed a stock split on a 24/7 trading rail. None of the findings should be read as causal estimates.</p>
         <p><strong>Data.</strong> Public regulatory filings and announcements from March 2025 through March 2026; SEC approvals (Nasdaq March 18, 2026; NYSE-Securitize MoU March 24, 2026; BNY tokenized deposits January 9, 2026; DTCC SEC no-action authorization for Canton-based Russell 1000 pilot); public technical specifications for Canton Network, Kinexys JPMD, and Ubyx clearing; author-assessed CLII scores for participant entities based on public information.</p>
         <p><strong>Strategy 1 (Section 3.1).</strong> Regulated Collateral Circuit. DTC-tokenized Treasuries as 24/7 margin collateral, asset leg on Canton, cash leg in bank-issued deposit tokens (JPMD primary; BNY, Citi optional), clearing through Ubyx. Three liquidation paths specified: secondary market, redemption, bilateral swap. Satisfies all ten MVEP categories by construction.</p>
@@ -289,11 +277,6 @@
           <p><strong>Phase-gate thresholds</strong><br>
           Phase 1 to 2: $100M Canton-minted, 30 days uninterrupted JPMD settlement, 2 deposit-token issuers live through Ubyx at par, 1 off-hours margin call completed · Phase 2 to 3: 90 days of exchange tokenized-equity trading, 1 corporate action processed, 2 product types on Securitize SEC-registered TA, 2% daily volume-to-outstanding ratio for 30 consecutive days</p>
         </div>
-
-        <h2>Limitations</h2>
-        <p>The three strategies are prospective designs based on infrastructure that is live, in controlled production, or announced as of April 2026. The stress scenarios are hypothetical: no DTC-tokenized Treasury has been used as margin collateral, no smart redemption router operates in production, and no tokenized equity has processed a stock split on a 24/7 trading rail. Each counterfactual describes a plausible failure path based on the MVEP's category framework and precedents from the stablecoin market (SVB March 2023, Circle pool March 2025, DAI Black Thursday March 2020).</p>
-        <p>CLII scores for the strategies' entities are author-assessed using publicly available information; Securitize's score in particular would require internal compliance documentation to validate. Phase-gate quantitative thresholds ($100M minted, 30 consecutive days, 2% daily volume ratio) reflect the author's assessment of minimum standards for institutional adoption; different institutional contexts may require different thresholds.</p>
-        <p>The corporate-actions analysis is forward-looking. No jurisdiction has established a regulatory framework for 24/7 tokenized equity corporate actions; the three architectures (trading halt, blockchain-authoritative, dual-record synchronization) represent the design space, but the actual architecture will depend on SEC rulemaking, exchange implementation, and DTC operational decisions. The infrastructure map is dated March 27, 2026; institutional tokenization infrastructure is evolving rapidly, and events after this date may alter feasibility, sequencing, or competitive dynamics.</p>
 
         <h2>Related frameworks</h2>
         <p><a href="/frameworks#clii">Control Layer Intensity Index (CLII)</a>: five-dimension operator regulation score (introduced in Routing the Dollar). <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>: ten-category product diligence framework (introduced in MVEP).</p>
@@ -346,11 +329,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

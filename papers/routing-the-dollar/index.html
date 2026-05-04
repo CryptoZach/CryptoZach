@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -42,12 +41,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,8 +53,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track A", "item": "https://tokenization.systems/research/#track-a" },
-        { "@type": "ListItem", "position": 4, "name": "Routing the Dollar", "item": "https://tokenization.systems/papers/routing-the-dollar" }
+        { "@type": "ListItem", "position": 3, "name": "Routing the Dollar", "item": "https://tokenization.systems/papers/routing-the-dollar" }
       ]
     }
   </script>
@@ -151,21 +148,19 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail brief-page" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-a">Track A</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Routing the Dollar
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Routing the Dollar
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public badge-status-published">Public</span>
+        <span class="badge badge-status-published">Public</span>
         <span class="badge">Code available</span>
-        <span class="paper-track-chip paper-track-chip--a" title="Digital Money, Tokenization, and Market Infrastructure">Track A</span>
       </div>
 
       <div id="brief-top">
-      <p class="paper-tier-kicker">FLAGSHIP BRIEF · ~5 min brief · ~25 min full read</p>
+      <p class="paper-flagship-kicker">FLAGSHIP BRIEF · ~5 min brief · ~25 min full read</p>
 
       <h1 id="paper-title">Routing the Dollar<br><span class="paper-subtitle-line">Gateway Infrastructure, Monetary Policy Transmission, and the Dollar&rsquo;s International Functions</span></h1>
-
-      <p class="paper-byline-kicker">14 min read<span class="paper-byline-sep" aria-hidden="true">·</span>March 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
 
       <p class="paper-metadata-strip">March 2026 · SSRN · Prepared for the Fifth Conference on International Roles of the U.S. Dollar,<br>Federal Reserve Board and Federal Reserve Bank of New York, June 2026</p>
       <!-- MAINTENANCE: After June 22-23, 2026 FRBNY conference, update to past tense and add one-line summary of reception or citation status. -->
@@ -183,6 +178,8 @@
         </div>
         <div class="access-secondary">
           <a href="https://github.com/CryptoZach/CryptoZach" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (data + replication)</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <a href="https://tokenization.systems/contact" class="access-link access-request">Request deeper memo</a>
         </div>
       </div>
 
@@ -191,10 +188,9 @@
         <p><strong>Question</strong><br />When digital dollars scale, what matters more: the token itself, or the gateway that routes it?</p>
         <p><strong>Answer</strong><br />The gateway matters more. The token may stay the same, but the routing layer changes the regulatory surface, the Fed-policy channel, and the way stress propagates. These are descriptive findings, not causal estimates.</p>
         <p><strong>Evidence base</strong><br />Daily Ethereum transfer data tracking 19 gateway entities across 51 wallet addresses (covering approximately 27.7% of total USDC and USDT on-chain transfer volume on Ethereum mainnet over the 157-week sample window, per Artemis-filtered data; specific Dune query reproducibility pending verification, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>), monthly maps of which gateways transact with each other (15 gateways, 35 months, 3,804 unique pairs), stablecoin transfer volume across nine blockchains ($60.6T cumulative from February 2023 through January 2026, filtered by Artemis Analytics to remove spam and bot activity), and two stress episodes (SVB crisis and BUSD regulatory action).</p>
-        <p><strong>Implication</strong><br />Policymakers should monitor gateway flows, banking dependencies, and settlement chokepoints rather than aggregate stablecoin supply. Issuers and operators should publish reserve composition, bank placement, and routing-default disclosures: deposit recycling varies sharply by issuer (Tether ~4%, Circle ~14%, Gemini 100%) and changes the monetary impact of issuance. Investors should treat the CLII as a compliance-posture classification, not a stress-resilience score; the two are independent dimensions. Chain-level routing structure also differs sharply: Ethereum's gateway perimeter is roughly 4% Tier 3 (permissionless protocols); Tron's is 58% Tier 3, a structural inversion at the chain level that aggregate balance analysis misses. Same dollar token, materially different regulatory exposure depending on which chain it routes through.</p>
       </aside>
 
-      <figure class="paper-cover paper-cover--data brief-figure" aria-labelledby="brief-clii-caption">
+      <figure class="paper-cover brief-figure" aria-labelledby="brief-clii-caption">
         <picture>
           <source type="image/webp" srcset="/Publication-Images/Routing_The_Dollar_CLII.webp" />
           <img src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Control Layer Intensity Index across 19 gateway entities" loading="eager" fetchpriority="high" />
@@ -204,7 +200,7 @@
 
       <section class="brief-problem" aria-labelledby="brief-problem-heading">
         <h2 id="brief-problem-heading">The problem</h2>
-        <p class="dropcap">Dollar stablecoins now move across blockchains, exchanges, protocols, and regulatory jurisdictions at meaningful scale. Most debates still treat each stablecoin as a product to classify.</p>
+        <p>Dollar stablecoins now move across blockchains, exchanges, protocols, and regulatory jurisdictions at meaningful scale. Most debates still treat each stablecoin as a product to classify.</p>
         <p>This paper argues that the more useful unit is the gateway: the issuer, exchange, or protocol that actually routes the token. Once you look at that layer, the same dollar token can behave very differently under tightening cycles, supervisory pressure, and crisis conditions.</p>
       </section>
 
@@ -240,8 +236,6 @@
           </div>
         </div>
       </section>
-
-      <hr class="section-ornament" aria-hidden="true">
 
       <section class="brief-so-what" aria-labelledby="brief-who-heading">
         <h2 id="brief-who-heading">Who should care</h2>
@@ -422,11 +416,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

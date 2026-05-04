@@ -5,8 +5,7 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+        if (savedTheme !== 'light') {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (e) {
@@ -15,7 +14,6 @@
     })();
   </script>
   <!-- Google tag (gtag.js) -->
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -61,8 +59,804 @@
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="/styles.css?v=256" />
-  <link rel="stylesheet" href="/homepage.css?v=1" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
+  <style id="homepage-sprint1-density">
+    /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
+    #main {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      max-width: none !important;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    #main #hero.hero--homepage {
+      padding-inline: 0 !important;
+    }
+
+    /* Compact sections use site --accent from styles.css (same blue as other pages). */
+    /* Matrix field uses darker olive rgb(96,108,62); mint $ stays rgba(204,251,229) in script.js. */
+    /* Sprint 2 Fix 1: hero H1 + subtitle share one 70ch column (ch matches headline scale). */
+    #hero.hero--homepage .hero-headline-stack {
+      max-width: 70ch;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      text-align: center;
+    }
+
+    #hero.hero--homepage .hero-headline-stack h1#hero-title {
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-size: 1em;
+      margin: 0;
+      max-width: none;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-headline-stack h1#hero-title {
+      color: #ffffff;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-eyebrow-kicker {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-eyebrow-kicker {
+      color: var(--text-secondary, var(--muted));
+    }
+
+    /* Homepage Sprint 1: density and compact sections (tokens from styles.css) */
+    #hero.hero--homepage .hero-headline-stack .hero-subtitle {
+      font-size: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: none;
+      width: 100%;
+      text-align: center;
+      line-height: 1.5;
+      box-sizing: border-box;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-headline-stack .hero-subtitle {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-headline-stack .hero-subtitle {
+      color: var(--text-secondary, var(--muted));
+    }
+
+    #hero.hero--homepage .hero-proof-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.5rem auto 0;
+      padding: 0;
+      list-style: none;
+      justify-content: center;
+      max-width: min(100%, 1200px);
+    }
+
+    #hero.hero--homepage .hero-institutional {
+      font-size: 0.78rem;
+      line-height: 1.5;
+      text-align: center;
+      max-width: min(100%, 1200px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional {
+      color: var(--text-secondary, #666);
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional a {
+      color: var(--text-secondary, #666);
+    }
+
+    #hero.hero--homepage .hero-institutional a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    #hero.hero--homepage .hero-institutional a:hover {
+      color: var(--accent);
+    }
+
+    #hero.hero--homepage .hero-institutional.hero-qualifier {
+      margin-top: 1rem;
+      margin-bottom: 0;
+      font-size: 0.85rem;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional.hero-qualifier,
+    :root[data-theme="dark"] #hero.hero--homepage .hero-institutional.hero-qualifier a {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional.hero-qualifier,
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-institutional.hero-qualifier a {
+      color: var(--muted-soft);
+    }
+
+    .card-venue {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-secondary, #999);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--glass-edge, color-mix(in srgb, var(--text) 14%, transparent));
+      background: var(--glass-tint, color-mix(in srgb, var(--panel) 65%, transparent));
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border-radius: 100px;
+      cursor: default;
+      pointer-events: none;
+      box-shadow: 0 1px 0 0 var(--glass-highlight, rgba(255,255,255,0.06)) inset;
+      letter-spacing: 0.005em;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
+      color: var(--muted);
+    }
+
+    /* Hyperlink inside a hero-proof chip: re-enable clicking (chip parent
+       sets pointer-events: none for the decorative pill), inherit the
+       chip's text color, add a simple underline. */
+    #hero.hero--homepage .hero-proof-strip .hero-proof-chip a {
+      color: inherit;
+      pointer-events: auto;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      text-decoration-color: currentColor;
+      transition: text-decoration-thickness 0.15s ease;
+    }
+
+    #hero.hero--homepage .hero-proof-strip .hero-proof-chip a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    /* Eyebrow accent dot */
+    #hero.hero--homepage .hero-eyebrow-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    /* H1 second-clause accent: subtle gradient on "Audit the operator." */
+    #hero.hero--homepage .hero-title-accent {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 88%, #fff) 0%,
+        var(--accent) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline;
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      #hero.hero--homepage .hero-title-accent {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: var(--accent);
+      }
+    }
+
+    #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      margin-bottom: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hero.hero--homepage .hero-anchors {
+      font-size: 0.9rem;
+      margin: 1rem 0 0;
+      text-align: center;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-anchors {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors {
+      color: var(--muted);
+    }
+
+    #hero.hero--homepage .hero-anchors a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+
+    :root[data-theme="dark"] #hero.hero--homepage .hero-anchors a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a {
+      color: var(--muted-soft);
+    }
+
+    #hero.hero--homepage .hero-anchors a:hover {
+      color: var(--accent);
+    }
+
+    /* Sprint 2 Fix 3: primary CTA, polished with subtle accent glow */
+    /* Uses --accent-cta (WCAG AA compliant) for text-on-fill contrast. */
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary {
+      display: inline-block;
+      padding: 1rem 2.25rem;
+      background: var(--accent-cta, #2563eb);
+      color: #fff;
+      border: 1px solid color-mix(in srgb, #fff 18%, var(--accent-cta, #2563eb));
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+      box-shadow:
+        0 1px 0 0 color-mix(in srgb, #fff 22%, transparent) inset,
+        0 8px 24px -8px color-mix(in srgb, var(--accent-cta, #2563eb) 55%, transparent),
+        0 1px 2px 0 rgba(0, 0, 0, 0.18);
+      filter: none;
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:hover {
+      background: var(--accent-cta-hover, #1d4ed8);
+      transform: translateY(-1px);
+      filter: none;
+      box-shadow:
+        0 1px 0 0 color-mix(in srgb, #fff 28%, transparent) inset,
+        0 12px 32px -8px color-mix(in srgb, var(--accent-cta, #2563eb) 70%, transparent),
+        0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      border-color: color-mix(in srgb, #fff 26%, var(--accent-cta, #2563eb));
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-primary:active {
+      transform: translateY(0);
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-secondary {
+      display: inline-block;
+      padding: 0.95rem 1.85rem;
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+      color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+      border-radius: 10px;
+      backdrop-filter: blur(8px) saturate(115%);
+      -webkit-backdrop-filter: blur(8px) saturate(115%);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s, transform 0.15s, border-color 0.2s;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    #hero.hero--homepage .hero-cta-cluster .btn.btn-secondary:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      #hero.hero--homepage .hero-cta-cluster.hero-cta-block {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #hero.hero--homepage .hero-cta-block .btn-primary,
+      #hero.hero--homepage .hero-cta-block .btn-secondary {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
+
+    #role-paths.section-compact,
+    #frameworks.section-compact,
+    #research.section-compact,
+    #contact.section-compact {
+      padding: 4rem 0;
+      border-top: 1px solid var(--line);
+      box-sizing: border-box;
+    }
+
+    /* Sprint 3 Fix 5: section eyebrow labels (Roles / Frameworks / Research). */
+    .section-eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-compact h2 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    .compact-card p,
+    .research-card-sm p,
+    .role-pill span {
+      font-weight: 400;
+    }
+
+    .role-pills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .role-pills > .role-pill:nth-child(5):last-child {
+      grid-column: 1 / -1;
+    }
+
+    .role-pill {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 88px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    /* Higher specificity + stronger edge: global link/card rules must not win */
+    #role-paths.section-compact .role-pills a.role-pill {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      border-style: solid;
+    }
+
+    :root[data-theme="dark"] #role-paths.section-compact .role-pills a.role-pill {
+      border-color: var(--line-strong);
+    }
+
+    .role-pill strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .role-pill span {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Role-pills accent rotation: matches the /resume hub 5-card
+       palette (blue Policy / teal Asset Mgmt / violet Payments / amber
+       AI Gov / rose Risk) so the two surfaces read as a synchronized
+       set. Aura vocabulary from the resume-card refinement (commit
+       37c59a4): thin 1px low-opacity left-border + inset left-edge
+       glow that fades inward. Hover intensifies the inset aura and
+       adds a color-matched outer drop. */
+    .role-pill {
+      transition: transform .22s ease, box-shadow .22s ease, border-color .2s ease;
+    }
+
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(1){
+      border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(2){
+      border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(3){
+      border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(4){
+      border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(5){
+      border-left: 1px solid color-mix(in srgb, #e11d48 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #e11d48 14%, transparent);
+    }
+
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(1):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
+        0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(2):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
+        0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(3):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
+        0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(4):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
+        0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(5):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, #e11d48 22%, transparent),
+        0 6px 18px color-mix(in srgb, #e11d48 14%, transparent);
+    }
+
+    /* Sprint 3 Fix 7: View all link spacing and styling. */
+    .section-link {
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      padding: 0;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .section-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .section-link a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 640px) {
+      .role-pills {
+        grid-template-columns: 1fr;
+      }
+
+      .role-pills > .role-pill:nth-child(5):last-child {
+        grid-column: auto;
+      }
+
+      .role-pill {
+        min-height: auto;
+      }
+    }
+
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .card-grid-2 > * {
+      min-width: 0;
+    }
+
+    .compact-card {
+      display: block;
+      padding: 1.75rem 2rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    #frameworks.section-compact .card-grid-2 > a.compact-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      border-style: solid;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    :root[data-theme="dark"] #frameworks.section-compact .card-grid-2 > a.compact-card {
+      border-color: var(--line-strong);
+    }
+
+    #frameworks.section-compact .compact-card img,
+    #frameworks.section-compact .compact-card picture img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      object-position: top left;
+      border-radius: 12px 12px 0 0;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      margin: 0;
+      display: block;
+    }
+
+    /* CLII diagram: trim dead space above the title, show more of the lower gateway row. */
+    #frameworks.section-compact #clii-home.compact-card img.compact-card-thumb {
+      height: 200px;
+      object-fit: cover;
+      object-position: 50% 9%;
+    }
+
+    /* MVEP cover: same thumb height as CLII */
+    #frameworks.section-compact #mvep-home.compact-card img.compact-card-thumb {
+      height: 200px;
+      object-position: center center;
+    }
+
+    .compact-card h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .compact-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    #frameworks.section-compact .compact-card h3 {
+      padding: 1.25rem 1.75rem 0;
+      margin-bottom: 0.5rem;
+    }
+
+    #frameworks.section-compact .compact-card p {
+      padding: 0 1.75rem 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .card-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .card-grid-3 > * {
+      min-width: 0;
+    }
+
+    .research-card-sm {
+      display: block;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+
+    /* Sprint 3 Fix 6: card hover, active, focus-visible. */
+    .role-pill,
+    .compact-card,
+    .research-card-sm {
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+
+    .role-pill:hover,
+    .compact-card:hover,
+    .research-card-sm:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .role-pill:active,
+    .compact-card:active,
+    .research-card-sm:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .role-pill:focus-visible,
+    .compact-card:focus-visible,
+    .research-card-sm:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    :root[data-theme="dark"] .role-pill:hover,
+    :root[data-theme="dark"] .compact-card:hover,
+    :root[data-theme="dark"] .research-card-sm:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Sprint 3 Fix 8: research card badges. */
+    .badge-sm {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      margin-bottom: 0.75rem;
+      color: #666;
+      background: transparent;
+    }
+
+    .badge-sm.badge-review {
+      border-color: #d4a017;
+      color: #8a6914;
+      background: #fdf6e3;
+    }
+
+    .research-card-sm h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .research-card-sm p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #contact .about-card {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 2rem 2.5rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 40%, transparent);
+      box-sizing: border-box;
+    }
+
+    :root[data-theme="dark"] #contact .about-card {
+      border-color: var(--line-strong, var(--line));
+    }
+
+    #contact .about-card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    #contact .about-card p {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    #contact .about-card-meta {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    #contact .about-card-meta p {
+      margin-bottom: 0.5rem;
+    }
+
+    #contact .about-card-ctas {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    #contact .about-card-ctas a.cta-primary {
+      display: inline-block;
+      padding: 1rem 2.25rem;
+      background: var(--accent-cta, #2563eb);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    #contact .about-card-ctas a.cta-primary:hover {
+      background: var(--accent-cta-hover, #1d4ed8);
+      transform: translateY(-1px);
+    }
+
+    #contact .about-card-ctas a.cta-secondary {
+      display: inline-block;
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s, transform 0.15s, border-color 0.2s;
+    }
+
+    #contact .about-card-ctas a.cta-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      #contact .about-card-ctas {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #contact .about-card-ctas a.cta-primary,
+      #contact .about-card-ctas a.cta-secondary {
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
+
+  </style>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -191,9 +985,9 @@
           </div>
           <ul class="hero-proof-strip" aria-label="Highlights" data-hero-safe="proof">
             <li class="hero-proof-chip">8 SSRN working papers</li>
-            <li class="hero-proof-chip"><a href="/letters">8 federal comment letters</a> (<a class="chip-link--accent" href="https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f" target="_blank" rel="noopener noreferrer">GENIUS</a> and related dockets)</li>
-            <li class="hero-proof-chip">100+ advisory engagements</li>
-            <li class="hero-proof-chip">1,000+ deals diligenced (pre-seed to Series C)</li>
+            <li class="hero-proof-chip"><a href="/letters">8 federal comment letters</a> (GENIUS and related dockets)</li>
+            <li class="hero-proof-chip">100 portfolio companies advised 1-on-1</li>
+            <li class="hero-proof-chip">~250 investments diligenced</li>
           </ul>
           <div class="hero-cta-cluster hero-cta-block" data-hero-safe="cta">
             <a class="btn btn-primary cta-primary matrix-hover-activator" href="/papers/routing-the-dollar">Read Routing the Dollar</a>
@@ -216,7 +1010,7 @@
     </section>
 
     <div style="max-width: 1200px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
-    <section class="section-compact reveal numbered-section" id="role-paths" aria-labelledby="audience-title">
+    <section class="section-compact reveal" id="role-paths" aria-labelledby="audience-title">
       <h2 id="audience-title">Five roles, one research program.</h2>
       <div class="role-pills">
         <a href="/resume/policy" class="role-pill">
@@ -243,7 +1037,7 @@
       <p class="section-link"><a href="/resume">View all roles and resumes <span aria-hidden="true">→</span></a></p>
     </section>
 
-    <section class="section-compact reveal numbered-section" id="frameworks" aria-labelledby="frameworks-title">
+    <section class="section-compact reveal" id="frameworks" aria-labelledby="frameworks-title">
       <h2 id="frameworks-title">Signature frameworks.</h2>
       <div class="card-grid-2">
         <a href="/papers/routing-the-dollar" class="compact-card" id="clii-home">
@@ -260,24 +1054,24 @@
       <p class="section-link"><a href="/frameworks">View all frameworks <span aria-hidden="true">→</span></a></p>
     </section>
 
-    <section class="section-compact reveal numbered-section" id="research" aria-labelledby="research-title">
+    <section class="section-compact reveal" id="research" aria-labelledby="research-title">
       <h2 id="research-title">Recent papers.</h2>
       <div class="card-grid-3">
         <a href="/papers/routing-the-dollar" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
+          <span class="badge-sm">Public</span>
           <h3>Routing the Dollar</h3>
-          <p>The same dollar token carries different regulatory obligations, different Fed-policy exposure, and different stress behavior depending on which issuer, exchange, or protocol routes it.</p>
+          <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
           <span class="card-venue">Prepared for FRBNY · March 2026</span>
         </a>
         <a href="/papers/three-strategies" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
+          <span class="badge-sm">Public</span>
           <h3>Three Tokenization Strategies</h3>
-          <p>Three institutional tokenization strategies under construction. Same regulated entities recur in each; Securitize sits in all three. The system-level risk lives in the connectors, not the strategies.</p>
+          <p>Institutional tokenization is proceeding through three distinct strategies. Securitize is transfer agent in all three: a system-level concentration risk that entity-level scores miss.</p>
         </a>
         <a href="/papers/adaptive-tokenomics" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
+          <span class="badge-sm">Public</span>
           <h3>Adaptive Tokenomics</h3>
-          <p>Adaptive emission compresses worst-case node-count variance 6x under contraction shock. Bull markets produce identical outcomes; the engineering premium is regime-conditional.</p>
+          <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
         </a>
       </div>
       <p class="section-link"><a href="/research">View all research <span aria-hidden="true">→</span></a></p>
@@ -285,16 +1079,14 @@
 
     <section class="section-compact" id="contact" style="padding: 4rem 0; border-top: 1px solid var(--border-light, #2a2a2a);">
       <section class="about-card" id="about">
-        <div class="about-card-header">
-          <img class="author-monogram" src="/Publication-Images/Zachcoin-180.png" width="80" height="80" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <h2>About Tokenization Systems</h2>
-        </div>
+        <h2>About Tokenization Systems</h2>
         <p>Tokenization Systems is an independent research, advisory, and infrastructure practice focused on digital financial systems. It produces scholarly work on stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The program serves five audiences: Federal Reserve and policy designers, institutional asset managers, stablecoin and payments strategy teams, AI governance and infrastructure programs, and risk and controls leaders.</p>
         <p>The research holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. Every claim is replicable. The work is US-focused and independent.</p>
         <div class="about-card-meta">
-          <p><strong>Researcher</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser. Built the research function, led a four-analyst team, diligenced 1,000+ deals from pre-seed to Series C, and shipped 250 portfolio investments across ~$500M AUM.</p>
+          <p><strong>Researcher</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
           <p><strong>Frameworks</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring. Minimum Viable Equivalence Pack (MVEP) for institutional tokenization diligence.</p>
-          <p><strong>Program status (April 20, 2026)</strong> Tracks A and B complete: eight working papers on SSRN, three Track A briefing pages on the site (Dollar v3, Control Layer War, Tokenized Equity), and <a href="/letters">eight federal comment letters</a> filed across seven rulemakings to five agencies on a 10-day April window.</p>
+          <p><strong>Program status (April 20, 2026)</strong> Eight working papers on SSRN and <a href="/letters">eight federal comment letters</a> filed across the GENIUS Act and related dockets, spanning seven rulemakings, six docket IDs, to six federal agencies, on a 10-day submission window. Both the SSRN and federal-comment layers of the current program are complete to date.</p>
+          <p><strong>Papers</strong> All eight program papers are available on SSRN: Track A (stablecoins, gateways, and settlement infrastructure) and Track B (tokenomics, DePIN, and protocol-network governance). Track A briefing pages (Dollar v3, Control Layer War, Tokenized Equity) are also published on the site.</p>
         </div>
         <div class="about-card-ctas">
           <a href="/contact" class="cta-primary">Get in touch <span aria-hidden="true">→</span></a>
@@ -323,7 +1115,7 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
@@ -331,7 +1123,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

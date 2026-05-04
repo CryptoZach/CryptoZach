@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -44,12 +43,11 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=256" />
+  <link rel="stylesheet" href="/styles.css?v=192" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,8 +55,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research" },
-        { "@type": "ListItem", "position": 3, "name": "Track B", "item": "https://tokenization.systems/research/#track-b" },
-        { "@type": "ListItem", "position": 4, "name": "Governance Concentration Beyond Token Allocation", "item": "https://tokenization.systems/papers/governance-concentration" }
+        { "@type": "ListItem", "position": 3, "name": "Governance Concentration Beyond Token Allocation", "item": "https://tokenization.systems/papers/governance-concentration" }
       ]
     }
   </script>
@@ -154,59 +151,53 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/#track-b">Track B</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Governance Concentration Beyond Token Allocation
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Governance Concentration Beyond Token Allocation
       </nav>
 
+      <span class="paper-track-badge paper-track-badge--b">Track B: DePIN tokenomics</span>
       <div class="paper-badges">
         <span class="badge badge-under-review">Under review</span>
         <span class="badge">Public on SSRN</span>
         <span class="badge badge-access-code">Code available</span>
-        <span class="paper-track-chip paper-track-chip--b" title="Tokenomics and Physical Network Systems (DePIN)">Track B</span>
       </div>
-
-      <p class="paper-tier-kicker">FOUNDATION · 9 min on-page · 30 min full read</p>
 
       <h1 id="paper-title">Governance Concentration Beyond Token Allocation: An Institutional Design Analysis of DePIN and DeFi</h1>
 
-      <p class="paper-byline-kicker">9 min read<span class="paper-byline-sep" aria-hidden="true">·</span>April 2026<span class="paper-byline-sep" aria-hidden="true">·</span><span class="paper-byline-author">Zach Zukowski</span></p>
-
-      <div class="paper-audience-tags-block">
-        <h2 class="paper-audience-tags-heading">Audience tags</h2>
-        <div class="paper-audience-tags" aria-label="Audience">
-          <span class="paper-audience-tag">Protocol designers</span>
-          <span class="paper-audience-tag">Governance researchers</span>
-          <span class="paper-audience-tag">DePIN operators</span>
-          <span class="paper-audience-tag">DAO researchers</span>
-          <span class="paper-audience-tag">Institutional-design scholars</span>
-          <span class="paper-audience-tag">Token economists</span>
-        </div>
-      </div>
-
-      <p class="paper-metadata-strip">April 2026 · SSRN 6599278 · DOI 10.2139/ssrn.6599278</p>
+      <p class="paper-metadata-strip">~30 min read · April 2026 · SSRN 6599278 · DOI 10.2139/ssrn.6599278</p>
       <p class="paper-description-note">Description current as of April 18, 2026. Submitted to <em>Frontiers in Blockchain</em> (Blockchain Economics specialty); editorial assignment pending.</p>
 
-      <aside class="brief-callout paper-thesis-pullquote" aria-label="Paper thesis pull-quote">
-        <p>Initial token allocation does not predict where governance concentration ends up. Across forty protocols the lead correlation is null. Institutional design, not allocation design, does the predictive work.</p>
-      </aside>
-
-      <div class="paper-thesis">
-        <p><strong>Initial token allocation does not predict where governance concentration ends up. Across 40 protocols the lead correlation is null. Institutional design, not allocation design, does the predictive work.</strong></p>
-        <p>This page explains why sector membership, insider retention, and delegation amplification are the variables that matter, and what the five-lens framework reveals.</p>
-      </div>
+      <p class="paper-thesis"><strong>Initial token allocation does not predict where governance concentration ends up.</strong> A cross-sectional analysis of 40 protocols (15 DePIN, 15 DeFi, 8 L1/L2 infrastructure, 2 social or stagnated) finds the lead correlation null: Pearson r = 0.19, p = 0.25, N = 37 between initial allocation design and observed governance concentration. The institutional-design story is what does the predictive work. Sector membership matters (Mann-Whitney p = 0.031, Cohen's d = 0.96 between DePIN and DeFi), insider retention amplifies it (Spearman rho = 0.54), subsidy correlations turn out to be entirely Livepeer-driven, and delegation amplifies token concentration into voting concentration by 3 to 6 times in DePIN. The paper applies a five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) and a Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols.</p>
 
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The methodological contribution is what makes the null finding defensible. Prior governance-concentration studies measured whale-share without excluding protocol-controlled addresses (treasuries, foundations, multisig wallets, vesting contracts, locked-token escrow). Including those addresses inflates measured concentration in protocols that hold large treasury balances. This paper's Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols (documented per protocol) corrects the systematic measurement artifact, then re-runs the bivariate tests. The lead allocation-to-concentration correlation drops to null (Pearson r = 0.19, p = 0.25) only after this correction. Without it, the result reverts to the spurious positive correlation reported in earlier work. The methodology is reusable: any protocol-comparison study with on-chain governance data should adopt the exclusion.</p>
+          <p class="paper-takeaway-text"><strong>Allocation design does not predict governance concentration.</strong> The lead bivariate correlation is null: Pearson r = 0.19, p = 0.25, N = 37; Spearman rho = 0.07, p = 0.69. Three of the 40 protocols lack initial allocation data, hence N = 37 here. The lead-finding framing is "allocation design null plus four supporting findings", not "no covariate predicts concentration."</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Five normative traditions translate into a single scoring rubric. The framework operationalizes constraints from Kant (publicity: rules must be publicly avowable; coercion must respect non-arbitrary procedure), Rawls (floor protection: distribution should not sacrifice the least advantaged), Pettit (non-domination: contestability is essential, not interference-freedom), Ostrom (polycentricity: multiple decision centers improve robustness in complex commons), and Hayek (dispersed knowledge: edge-level signals outperform centralized parameter-setting). The five lenses are not isolated frames but jointly specify legitimacy: a token system can score well on capacity to publicize rules and badly on contestability, or strongly on polycentricity and weakly on floor protection. Section 2.7 maps each lens onto observable design criteria; Table 1 operationalizes the rubric across the 40-protocol cohort. The framework is what other researchers can apply and disagree about; the empirical results are inputs to that conversation, not the verdict.</p>
+          <p class="paper-takeaway-text"><strong>Sector membership predicts concentration.</strong> Bivariate test on the 15-DePIN vs 15-DeFi subsample: Mann-Whitney p = 0.031, Cohen's d = 0.96. Multivariate regression (Table 6 Models 1-2): DePIN dummy p = 0.012. The sector effect is robust in 23 of 30 leave-one-out iterations; not driven by any single protocol.</p>
         </div>
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Delegation amplifies token concentration into voting concentration by 3 to 6 times in DePIN. Underlying token holdings are merely the upper bound on voting power; the operating mechanism is whether and how token holders delegate. When 17% of tokens are delegated yet the top five delegates routinely capture over 50% of effectively voted weight (Hall and Miyazaki 2024 across 18 DAOs), token allocation becomes a poor predictor of governance outcomes. Three protocols in the cohort show governance concentration substantially above their token concentration; one shows the inverse. The implication: protocol designers and DAO researchers should measure governance concentration on the delegation surface, not the token register. Allocation tweaks are downstream of delegation architecture.</p>
+          <p class="paper-takeaway-text"><strong>Insider retention is the operating mechanism.</strong> Spearman rho = 0.54 between insider-retention proxies and observed governance concentration. The argument: token allocation alone is a poor predictor because what concentrates voting power over time is who holds and exercises governance authority, not who received tokens at launch.</p>
         </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">4</span>
+          <p class="paper-takeaway-text"><strong>The subsidy correlation is entirely Livepeer-driven.</strong> Pearson r = 0.58, p = 0.008, N = 20 in the levels test. Excluding Livepeer (88.5x subsidy), r drops to 0.12, p = 0.63. Spearman rho = 0.16, p = 0.51 (rank-based, not outlier-sensitive). Leave-one-out: 19 of 20 iterations significant, all driven by Livepeer. Treat the subsidy result as a single-outlier observation, not a population pattern.</p>
+        </div>
+        <div class="paper-takeaway">
+          <span class="paper-takeaway-number" aria-hidden="true">5</span>
+          <p class="paper-takeaway-text"><strong>Delegation amplifies concentration 3 to 6 times in DePIN.</strong> Concentration in delegated voting power systematically exceeds concentration in underlying token holdings, because delegates aggregate voting weight from multiple holders. Infrastructure (L1/L2) protocols show heterogeneous amplification: Optimism 0.79x (delegation actually disperses), Arbitrum 4.3x. The amplification factor is itself a design parameter worth instrumenting.</p>
+        </div>
+      </div>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Protocol designers</span>
+        <span class="paper-audience-tag">Governance researchers</span>
+        <span class="paper-audience-tag">DePIN operators</span>
+        <span class="paper-audience-tag">DAO researchers</span>
+        <span class="paper-audience-tag">Institutional-design scholars</span>
+        <span class="paper-audience-tag">Token economists</span>
       </div>
 
       <div class="paper-access-block access-block">
@@ -214,61 +205,56 @@
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6599278" target="_blank" rel="noopener noreferrer"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read on SSRN</a>
           <a class="access-link" href="https://github.com/Research-Publications-and-Data/Tokenomics-As-Institutional_Design/tree/v1.0.0-frontiers-submission" target="_blank" rel="noopener noreferrer">GitHub (replication, tag v1.0.0-frontiers-submission)</a>
         </div>
+        <div class="access-secondary">
+          <a href="mailto:Zach@Tokenization.Systems?subject=Governance%20Concentration%20Beyond%20Token%20Allocation%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request deeper memo</a>
+        </div>
       </div>
 
-      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
-        <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Does initial token allocation predict where governance concentration ends up, or do other variables do the predictive work?</p>
-        <p><strong>Answer</strong><br />Allocation does not predict. The lead bivariate correlation is null (Pearson r = 0.19, p = 0.25, N = 37). Sector membership, insider retention, and delegation amplification are the variables that matter: DePIN versus DeFi (Mann-Whitney p = 0.031), Spearman rho = 0.54 on insider retention, 3-6x delegation amplification in DePIN.</p>
-        <p><strong>Evidence base</strong><br />Cross-sectional analysis of 40 protocols (15 DePIN, 15 DeFi, 8 L1/L2, 2 social or stagnated) with Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols. Five-lens institutional-design framework (Kantian publicity, Rawlsian floor protection, Pettit non-domination, Ostromian polycentricity, Hayekian dispersed knowledge). Subsidy correlation is entirely Livepeer-driven; treat as a single-outlier observation.</p>
-        <p><strong>Implication</strong><br />Protocol designers and DAO researchers should stop using initial allocation as the primary lever for governance health. The institutional-design variables that matter are insider retention policy, delegation architecture, and protocol-controlled treasury exclusion. Sector-level priors are real and worth instrumenting before allocation tweaks.</p>
-      </aside>
+      <section class="paper-artifact">
+        <h2>Five-lens institutional-design framework</h2>
+        <table class="artifact-table">
+          <thead>
+            <tr>
+              <th>Lens</th>
+              <th>What it asks</th>
+              <th>Operationalized as</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kantian publicity</strong></td>
+              <td>Are the rules public, predictable, and applied uniformly?</td>
+              <td>Disclosure quality; equal access to governance information</td>
+            </tr>
+            <tr>
+              <td><strong>Rawlsian legitimacy</strong></td>
+              <td>Do the rules protect the least advantaged participants?</td>
+              <td>Quorum design; minority-protection mechanisms; fair allocation rules</td>
+            </tr>
+            <tr>
+              <td><strong>Pettit non-domination</strong></td>
+              <td>Can any single actor dominate decisions or impose arbitrary will?</td>
+              <td>Concentration measurements (HHI, Gini); single-actor veto capacity</td>
+            </tr>
+            <tr>
+              <td><strong>Ostromian polycentricity</strong></td>
+              <td>Are governance responsibilities distributed across multiple centers?</td>
+              <td>Multi-body design; delegation patterns; jurisdictional boundaries</td>
+            </tr>
+            <tr>
+              <td><strong>Hayekian knowledge-use</strong></td>
+              <td>Does the system use local and dispersed knowledge effectively?</td>
+              <td>Information aggregation; local-decision rights; market signals</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="artifact-note">Each protocol scored 0 to 2 per dimension (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by frequency in the v5 manuscript (22 in-text citations).</p>
+      </section>
 
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p class="dropcap">Most empirical work on token-protocol governance focuses on initial token allocation as the predictive variable. The intuition: how tokens are distributed at launch determines how decisions are made later. This paper challenges that intuition with a 40-protocol cross-sectional dataset and finds the bivariate correlation between allocation design and observed governance concentration is null. The lead-finding framing is therefore "allocation design null plus four supporting findings", not the earlier "universal covariate null" framing that overgeneralized the result.</p>
+        <p>Most empirical work on token-protocol governance focuses on initial token allocation as the predictive variable. The intuition: how tokens are distributed at launch determines how decisions are made later. This paper challenges that intuition with a 40-protocol cross-sectional dataset and finds the bivariate correlation between allocation design and observed governance concentration is null. The lead-finding framing is therefore "allocation design null plus four supporting findings", not the earlier "universal covariate null" framing that overgeneralized the result.</p>
         <p>The paper also operationalizes a five-lens institutional-design framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use). Each lens generates testable propositions about which design features should reduce concentration. The combined analysis is structural: the paper measures whether the design features each lens recommends actually correlate with the concentration outcomes the lens predicts.</p>
-
-        <section class="paper-artifact">
-          <h2>Five-lens institutional-design framework</h2>
-          <table class="artifact-table">
-            <thead>
-              <tr>
-                <th>Lens</th>
-                <th>What it asks</th>
-                <th>Operationalized as</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Kantian publicity</strong></td>
-                <td>Are the rules public, predictable, and applied uniformly?</td>
-                <td>Disclosure quality; equal access to governance information</td>
-              </tr>
-              <tr>
-                <td><strong>Rawlsian legitimacy</strong></td>
-                <td>Do the rules protect the least advantaged participants?</td>
-                <td>Quorum design; minority-protection mechanisms; fair allocation rules</td>
-              </tr>
-              <tr>
-                <td><strong>Pettit non-domination</strong></td>
-                <td>Can any single actor dominate decisions or impose arbitrary will?</td>
-                <td>Concentration measurements (HHI, Gini); single-actor veto capacity</td>
-              </tr>
-              <tr>
-                <td><strong>Ostromian polycentricity</strong></td>
-                <td>Are governance responsibilities distributed across multiple centers?</td>
-                <td>Multi-body design; delegation patterns; jurisdictional boundaries</td>
-              </tr>
-              <tr>
-                <td><strong>Hayekian knowledge-use</strong></td>
-                <td>Does the system use local and dispersed knowledge effectively?</td>
-                <td>Information aggregation; local-decision rights; market signals</td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="artifact-note">Each protocol scored 0 to 2 per dimension (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by frequency in the v5 manuscript (22 in-text citations).</p>
-        </section>
 
         <h2>Core findings</h2>
 
@@ -301,10 +287,8 @@
         <h3>7. Lead-finding framing (locked)</h3>
         <p>The paper's headline result is the allocation null. The four supporting findings (sector significant in bivariate and multivariate tests; insider retention as the mechanism; subsidy LPT-driven; delegation amplification 3 to 6 times in DePIN) frame the why. Avoid the earlier "no covariate predicts governance concentration" or "universal covariate null" framings; they overgeneralized the result and have been retired.</p>
 
-        <h3>8. On-chain data preferred for DePIN protocols</h3>
-        <p>For DePIN protocols, the analysis uses direct on-chain transaction data (token burns, protocol fee flows) rather than aggregator-derived metrics. This choice favors authoritative source data for the DePIN subset: standardized cross-protocol aggregators do not always capture protocol-native fee structures (burn-and-mint equilibria, bonding-curve mechanics) that contribute meaningfully to DePIN protocol revenue. The paper uses on-chain values where they diverge from aggregator coverage.</p>
-
-        <hr class="section-ornament" aria-hidden="true">
+        <h3>8. Token Terminal DePIN measurement error</h3>
+        <p>A methodology finding surfaced during data validation: Token Terminal DePIN coverage materially underreports on-chain activity for some protocols. Two examples: Livepeer reported $0 in protocol revenue on Token Terminal while on-chain analysis shows approximately $23.8M in LPT burns; Morpheus reported $997K on Token Terminal while on-chain analysis shows approximately $9.6M. The paper's analysis uses on-chain values, not Token Terminal values, where the two diverge for DePIN protocols.</p>
 
         <h2>Methods and data</h2>
 
@@ -321,7 +305,15 @@
         <p>The paper identifies 69 protocol-controlled addresses across 20 protocols, classified through Blockscout verification, holder-pattern analysis, and known-entity matching. Exclusion corrections change affected protocols' HHI by up to 5x. The exclusion methodology is also inherited by the companion paper <a href="/papers/who-burns-the-tokens">Who Burns the Tokens?</a> for its GeoDePIN deep-dive.</p>
 
         <h3>Five-lens institutional-design framework</h3>
-        <p>The five lenses (enumerated in the framework artifact above) are operationalized through a 0-to-2 scoring rubric (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by in-text frequency in v5 (22 citations) and is also the framing inherited by the companion paper <a href="/papers/who-burns-the-tokens">Who Burns the Tokens?</a>.</p>
+        <p>The paper draws on a five-lens framework, with each lens generating testable propositions about which protocol design features should reduce concentration:</p>
+        <ul>
+          <li><strong>Kantian publicity:</strong> rules public and predictable</li>
+          <li><strong>Rawlsian legitimacy:</strong> protections for the least advantaged</li>
+          <li><strong>Pettit non-domination:</strong> no single-actor arbitrary will</li>
+          <li><strong>Ostromian polycentricity:</strong> distributed governance responsibilities</li>
+          <li><strong>Hayekian knowledge-use:</strong> use of local and dispersed knowledge</li>
+        </ul>
+        <p>Each lens is operationalized through a 0-to-2 scoring rubric (Table 3 in the manuscript). Ostromian polycentricity is the dominant lens by in-text frequency in v5 (22 citations) and is also the framing inherited by the companion paper Who Burns the Tokens?.</p>
 
         <h3>Position in the literature</h3>
         <p>The paper engages four leading research groups on DAO governance concentration: Han, Lee, and Li (Seoul National University and University of Florida); Lin William Cong (Cornell and NTU); Robin Fritsch and collaborators (ETH Zurich); and Appel and Grennan (Boston College and Emory). Section 4.5 (Position in Literature) develops the contrast between a Voshmgir-style design-as-systems framing and the institutional-design thesis the paper advances. The contrast is load-bearing for the paper's argumentative structure.</p>
@@ -343,22 +335,17 @@
           <p><strong>Concentration ranges</strong><br>
           DeFi HHI 0.003 (BAL) to 0.174 (CRV raw) · DePIN HHI 0.013 (Morpheus AI) to 0.199 (Livepeer) · framing: design-sensitive with sector as cross-check</p>
           <p><strong>Methodology finding</strong><br>
-          On-chain data preferred for DePIN protocols where aggregator coverage does not fully capture protocol-native fee structures (burn-and-mint mechanics, bonding-curve flows); paper uses on-chain values for the DePIN subset</p>
+          Token Terminal underreports DePIN protocol revenue (Livepeer $0 reported vs ~$23.8M LPT burns; Morpheus $997K reported vs ~$9.6M on-chain); paper uses on-chain values where they diverge</p>
         </div>
-
-        <hr class="section-ornament" aria-hidden="true">
 
         <h2>Limitations</h2>
         <ul>
           <li>Cross-sectional design captures concentration at a snapshot; it does not directly observe how concentration evolves through governance episodes. Time-series extension is identified as future work.</li>
           <li>The five-lens framework operationalization relies on a 0-to-2 scoring rubric (Table 3). Coding judgments are documented in the replication package, but other researchers using the same lenses might score individual protocols differently.</li>
           <li>The subsidy correlation result is single-outlier-driven; readers should treat it as a Livepeer-specific observation, not a general population pattern. The paper flags this explicitly.</li>
-          <li>External aggregator benchmarks for DePIN protocols may not always align with the paper's on-chain measurements where protocol-native fee structures are involved; the paper preserves on-chain values as the primary read for the DePIN subset.</li>
+          <li>Token Terminal coverage gaps for DePIN protocols mean some external benchmarks may not align with the paper's on-chain measurements; the paper documents the gap while preserving its on-chain results as the primary read.</li>
           <li>Insider-retention proxies are constructed from holder-pattern analysis; a richer dataset (off-chain governance participation, signed proposals) would sharpen the mechanism claim in finding 3.</li>
         </ul>
-
-        <h2>Related frameworks</h2>
-        <p>The five-lens institutional-design framework (Kantian publicity, Rawlsian floor protection, Pettit non-domination, Ostromian polycentricity, Hayekian dispersed knowledge) is the methodological contribution. <a href="/papers/routing-the-dollar">Routing the Dollar</a> introduces the Control Layer Intensity Index (CLII); <a href="/papers/mvep">MVEP</a> introduces the ten-category product diligence framework. Both are referenced in calibration as cross-sectional control-layer measurement instruments.</p>
 
         <h2>Related role profiles</h2>
         <p>This paper supports protocol-design and governance-research audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
@@ -404,11 +391,11 @@
           <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
         </div>
       </div>
-            <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind digital money.</p>
     </footer>
   </main>
 
-  <script defer src="/script.js?v=229"></script>
+  <script defer src="/script.js?v=220"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
