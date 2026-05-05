@@ -15340,6 +15340,50 @@ body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   background: color-mix(in srgb, var(--accent) 80%, transparent);
   margin-right: 0.5rem;
   vertical-align: middle;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+
+/* Proof-chip hover: cursor-driven highlight on each credential pill.
+   The chip lifts subtly, background tints accent-blue, border shifts to
+   accent, a soft 3px halo ring forms around the chip, and a deeper drop
+   shadow with accent tint reads as a spotlight engaging the credential.
+   The leading accent dot also brightens to 100% with a small inner glow.
+   Override pointer-events: none from the index.html inline style block
+   so the chip itself receives :hover (the inner <a> in chip 2 still has
+   its own underline-thicken treatment which composes naturally). */
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip{
+  pointer-events: auto;
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease,
+    box-shadow .25s ease;
+}
+
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:hover,
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:focus-within{
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 0 0 3px color-mix(in srgb, var(--accent) 8%, transparent),
+    0 6px 16px -8px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:hover::before,
+body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:focus-within::before{
+  background: var(--accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce){
+  body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:hover,
+  body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:focus-within{
+    transform: none;
+  }
 }
 
 /* Hero anchors: replace the static underline with an animated bottom border
@@ -15383,7 +15427,8 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier{
    paragraph so :hover can target the text precisely. Visual baseline
    matches the original ::before pseudo-element treatment. Hover shifts
    the text from accent-blue to warm gold with a layered text-shadow
-   glow; no rotating beam or halo pulse (intentionally restrained). */
+   glow plus a soft pulsing halo behind the text. No rotating beam
+   (removed for restraint). */
 body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal{
   position: absolute;
   top: 0;
@@ -15397,10 +15442,35 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal{
   color: color-mix(in srgb, var(--accent) 85%, transparent);
   opacity: 0.8;
   cursor: default;
+  isolation: isolate;
   transition:
     color .35s ease,
     opacity .35s ease,
     text-shadow .35s ease;
+}
+
+/* Warm rim halo: soft radial-gradient gold disk behind the text.
+   Fades in on hover and gently pulses opacity. */
+body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal::after{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(253, 224, 71, 0.35) 0%,
+    rgba(212, 160, 23, 0.18) 35%,
+    rgba(212, 160, 23, 0.04) 65%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity .35s ease;
+  z-index: -1;
 }
 
 body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover{
@@ -15411,6 +15481,22 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover{
     0 0 12px rgba(234, 179, 8, 0.7),
     0 0 22px rgba(212, 160, 23, 0.45),
     0 0 36px rgba(212, 160, 23, 0.25);
+}
+
+body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::after{
+  opacity: 1;
+  animation: heroSignalLanternPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes heroSignalLanternPulse{
+  0%, 100%{ opacity: 0.85; }
+  50%    { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::after{
+    animation: none;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
