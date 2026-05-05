@@ -18657,12 +18657,20 @@ main{ counter-reset: ts-section; }
   color: var(--accent);
 }
 
-/* Research card read-arrow: sits in the top-right padding, slides in on hover */
+/* Research card read-arrow: sits in the top-right padding, slides in on
+   hover. Bounding box matches the badge-sm pill's vertical extent (top
+   anchored to card padding-top; height matches pill height) and the
+   glyph is flex-centered inside that box, so the arrow visually aligns
+   with the PUBLIC badge across the row regardless of font/padding tweaks. */
 .research-card-sm::after{
   content: "\2192";
   position: absolute;
-  top: 1.4rem;
+  top: 1.5rem;
   right: 1.25rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--muted);
