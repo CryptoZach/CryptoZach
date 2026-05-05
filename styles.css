@@ -3055,6 +3055,12 @@ section:has(.speaker-jump-to){
 .card-thumb[src*="Zachcoin"]{
   border:0;
   background:transparent;
+  /* Clip the square image element to a circle that exactly contains
+     the round coin so the corner regions of the PNG (whether
+     transparent or baked-in dark pixels) do not paint a visible
+     rectangle around the coin. */
+  clip-path: circle(50% at 50% 50%);
+  -webkit-clip-path: circle(50% at 50% 50%);
 }
 .card-thumb.thumb-clii{
   object-fit:contain;
