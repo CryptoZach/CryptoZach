@@ -15379,18 +15379,16 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier{
   padding-top: 1.25rem;
 }
 
-/* SIGNAL eyebrow: now a real DOM span (.hero-signal) inside the qualifier
-   paragraph so :hover can target the text precisely. Visual baseline matches
-   the previous ::before pseudo-element treatment. Hover triggers a golden
-   lighthouse animation: warm gold text glow + rotating conic-gradient beam
-   sweeping around the text. */
+/* SIGNAL eyebrow: real DOM span (.hero-signal) inside the qualifier
+   paragraph so :hover can target the text precisely. Visual baseline
+   matches the original ::before pseudo-element treatment. Hover shifts
+   the text from accent-blue to warm gold with a layered text-shadow
+   glow; no rotating beam or halo pulse (intentionally restrained). */
 body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal{
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  display: inline-block;
-  padding: 0.15em 0.5em;
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -15399,73 +15397,12 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal{
   color: color-mix(in srgb, var(--accent) 85%, transparent);
   opacity: 0.8;
   cursor: default;
-  isolation: isolate;
   transition:
     color .35s ease,
     opacity .35s ease,
     text-shadow .35s ease;
 }
 
-/* Lighthouse beam: rotating narrow conic-gradient wedge of warm gold.
-   Sits behind the text (z-index: -1 within the .hero-signal isolation
-   context) and only opacity-fades in on hover. Radial mask softens the
-   beam edges so the rotation reads as a sweeping cone of light rather
-   than a hard-edged rotating disk. */
-body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: conic-gradient(
-    from 0deg,
-    rgba(253, 224, 71, 0.65) 0deg,
-    rgba(234, 179, 8, 0.45) 6deg,
-    rgba(212, 160, 23, 0.18) 14deg,
-    rgba(212, 160, 23, 0.04) 22deg,
-    transparent 30deg,
-    transparent 360deg
-  );
-  -webkit-mask: radial-gradient(circle, #000 8%, rgba(0,0,0,0.85) 25%, transparent 60%);
-          mask: radial-gradient(circle, #000 8%, rgba(0,0,0,0.85) 25%, transparent 60%);
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transition: opacity .4s ease;
-  z-index: -1;
-}
-
-/* Warm rim glow: softer radial halo that fades in on hover.
-   Sits below the beam in z-order (also z-index: -1 inside the isolation
-   context, layered via paint order: ::before then ::after, so ::after
-   paints above ::before). */
-body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal::after{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(
-    circle,
-    rgba(253, 224, 71, 0.35) 0%,
-    rgba(212, 160, 23, 0.18) 35%,
-    rgba(212, 160, 23, 0.04) 65%,
-    transparent 80%
-  );
-  opacity: 0;
-  transition: opacity .35s ease;
-  z-index: -1;
-}
-
-/* Hover: text shifts from accent-blue to warm gold; gains a layered
-   text-shadow that reads as the lighthouse light bulb glowing.
-   Beam ::before fades in and rotates; rim ::after fades in for warmth. */
 body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover{
   color: #fde68a;
   opacity: 1;
@@ -15474,33 +15411,6 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover{
     0 0 12px rgba(234, 179, 8, 0.7),
     0 0 22px rgba(212, 160, 23, 0.45),
     0 0 36px rgba(212, 160, 23, 0.25);
-}
-
-body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::before{
-  opacity: 1;
-  animation: heroSignalLighthouseSweep 4s linear infinite;
-}
-
-body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::after{
-  opacity: 1;
-  animation: heroSignalLanternPulse 2.2s ease-in-out infinite;
-}
-
-@keyframes heroSignalLighthouseSweep{
-  from{ transform: translate(-50%, -50%) rotate(0deg); }
-  to  { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes heroSignalLanternPulse{
-  0%, 100%{ opacity: 0.85; }
-  50%    { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::before,
-  body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover::after{
-    animation: none;
-  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
