@@ -16882,6 +16882,14 @@ main.resume-profile .resume-related-profiles a{
   color: var(--text-soft);
 }
 
+/* When the track badge follows the breadcrumb on paper detail pages,
+   add left margin so the pill doesn't run flush against the trailing
+   breadcrumb text (which is inline-flex; inline next-sibling collapse
+   would otherwise touch). */
+.paper-breadcrumb + .paper-track-badge{
+  margin-left: 0.75rem;
+}
+
 .paper-track-badge::before{
   content: "";
   display: inline-block;

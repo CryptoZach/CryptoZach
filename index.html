@@ -59,7 +59,7 @@
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
-  <link rel="stylesheet" href="/styles.css?v=201" />
+  <link rel="stylesheet" href="/styles.css?v=202" />
   <style id="homepage-sprint1-density">
     /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
     #main {
@@ -675,13 +675,22 @@
     }
 
     .research-card-sm {
-      display: block;
+      display: flex;
+      flex-direction: column;
       padding: 1.5rem;
       border: 1px solid var(--line);
       border-radius: 12px;
       text-decoration: none;
       color: inherit;
       background: color-mix(in srgb, var(--panel) 40%, transparent);
+    }
+    /* Vertically bottom-align the date stamp across cards of varying
+       body length: card is a flex column; .card-venue pushes itself to
+       the bottom with margin-top: auto so all three Recent Papers card
+       dates sit on the same baseline regardless of body height. */
+    .research-card-sm .card-venue {
+      margin-top: auto;
+      padding-top: 0.75rem;
     }
 
     /* Sprint 3 Fix 6: card hover, active, focus-visible. */
@@ -995,7 +1004,7 @@
           </div>
           <p class="hero-institutional hero-qualifier">
             <span class="hero-signal" aria-hidden="true">Signal</span>
-            <em>Routing the Dollar</em> distributed across 4 SSRN eJournal topics (European Economics; Monetary Economics: Central Banks) · SSRN author page: <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">per_id 10386216</a>
+            <em>Routing the Dollar</em> on SSRN, prepared for FRBNY's Fifth Conference on International Roles of the U.S. Dollar (June 2026). <em>Governance Concentration</em> on SSRN, under review at <em>Frontiers in Blockchain</em> (Blockchain Economics). · <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener">SSRN author page <span aria-hidden="true">→</span></a>
           </p>
           <p class="hero-anchors">
             <a href="/research">All research</a>
