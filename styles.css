@@ -15650,7 +15650,10 @@ header .navlink.active::after{
    extra HTML. */
 header .brand a strong{
   position: relative;
-  padding-left: 16px;
+  /* Padding-left holds the orb area; bumped from 16px so the disk envelope's
+     right edge (::after extends to ~22px from strong's left) clears the
+     start of "Tokenization Systems" by ~6px instead of overlapping. */
+  padding-left: 28px;
 }
 
 /* Brand orb: dark rainbow aura with pseudo-3D lighting. Conic-gradient
@@ -15666,6 +15669,12 @@ header .brand a strong::before{
   position: absolute;
   left: 0;
   top: 50%;
+  /* Plain translateY (not translate3d) so the orb is NOT promoted to
+     its own GPU compositor layer. Translate3d forces a layer; the
+     brand text in the same strong element ends up on a separate layer
+     and at extreme pinch-zoom the two layers can re-rasterize out of
+     sync (visible as text flicker). Keeping the orb on the strong's
+     layer lets text and orb render together coherently. */
   transform: translateY(-50%);
   width: 9px;
   height: 9px;
@@ -15686,13 +15695,28 @@ header .brand a strong::before{
       #0f766e 288deg,
       #1e3a8a 360deg
     );
+  /* Single outer glow + insets for 3D. Plain rgba (no color-mix) to keep
+     the box-shadow paint cheap; color-mix forces the browser to evaluate
+     the function during every paint, which made the orb's static layer
+     too slow to re-rasterize at extreme pinch-zoom and produced visible
+     flicker on the brand text rendered nearby. */
   box-shadow:
-    0 0 8px color-mix(in srgb, #7c3aed 32%, transparent),
-    0 0 16px color-mix(in srgb, #2563eb 12%, transparent),
+    0 0 8px rgba(124, 58, 237, 0.32),
     inset -1px -1px 2px rgba(0, 0, 0, 0.45),
     inset 1px 1px 1px rgba(255, 255, 255, 0.15);
   opacity: 0.95;
-  animation: brandOrbPulse 3.4s ease-in-out infinite;
+  /* No continuous animation in base state. The brandOrbPulse keyframe
+     (kept defined below) animated box-shadow over a 44px region that
+     overlapped the title and subtitle text. At extreme pinch-zoom,
+     re-rasterizing this region every frame caused visible flicker on
+     the text. The orb remains visually rich via its static gradients +
+     shadows; the disk activates on hover. */
+  transition:
+    width .35s ease,
+    height .35s ease,
+    transform .35s ease,
+    background .35s ease,
+    box-shadow .35s ease;
 }
 
 @keyframes brandOrbPulse{
@@ -15713,8 +15737,138 @@ header .brand a strong::before{
   }
 }
 
+/* Hover: morph the brand orb into a physics-faithful Interstellar
+   "Gargantua" black hole with FLOWING matter through a static silhouette.
+
+   Per Kip Thorne / Double Negative rendering for Interstellar (2014):
+
+   1. The disk silhouette is composed of three visible structures: an
+      equatorial accretion disk crossing in front of the sphere, a halo
+      arch ABOVE the sphere (the far side of the disk lensed up over the
+      top by gravity), and a mirror halo arch BELOW the sphere. These
+      three structures form the iconic Gargantua shape and they DO NOT
+      rotate, the silhouette is a constant gravitational-lensing pattern.
+   2. The matter inside this silhouette IS in motion: plasma orbits the
+      black hole at relativistic speeds. We perceive this as colors and
+      brightness "flowing" along the disk's orbital direction without the
+      disk shape itself changing.
+   3. A thin bright photon ring sits just outside the event horizon at
+      the boundary where light grazes the sphere before escaping.
+   4. The event horizon is a perfectly black sphere; rotation-invariant.
+
+   Implementation:
+     ::before = event horizon + thin bright photon ring. STATIC.
+     ::after  = conic-gradient (dark rainbow) MASKED to the Gargantua
+                silhouette (equatorial disk + top arch + bottom arch).
+                Animated via GPU hue-rotate filter so colors cycle
+                through the static silhouette without rasterization
+                cost (avoids the conic-gradient-recompute-per-frame
+                pinch-zoom flicker that an @property animation produced
+                on Safari).
+
+   Browser support: hue-rotate filter is universal (CSS3 baseline). */
+
+/* ::after = the accretion disk + halo arches. Empty in base state (zero
+   rendering cost; no GPU layer, no conic-gradient compute, no mask
+   rasterization). All heavy rendering activates only on hover. This
+   prevents the disk's mask + conic-gradient from leaking through the
+   opacity:0 layer at extreme pinch-zoom on Safari (which was visible
+   as floating halo blobs without the central sphere). */
+header .brand a strong::after{
+  content: "";
+  position: absolute;
+  left: -10px;         /* center 32px-wide envelope on the 16px sphere */
+  top: 50%;
+  width: 32px;
+  height: 26px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity .35s ease;
+}
+
+/* Hover: ::before becomes the event-horizon sphere with a thin bright
+   photon ring. Both static. */
+header .brand a strong:hover::before{
+  width: 16px;
+  height: 16px;
+  background:
+    /* Solid-black event horizon, fading at the very edge */
+    radial-gradient(
+      circle at center,
+      #000 0%,
+      #000 38%,
+      rgba(0, 0, 0, 0.85) 42%,
+      transparent 47%
+    ),
+    /* Thin bright photon ring just outside the event horizon. Uses a
+       warm cream tone to read as light that has grazed the sphere
+       before escaping. */
+    radial-gradient(
+      circle at center,
+      transparent 42%,
+      rgba(255, 220, 180, 0.7) 45%,
+      rgba(159, 18, 57, 0.45) 49%,
+      transparent 54%
+    ),
+    /* Faint outer color cast (same dark rainbow palette as pre-hover orb)
+       so the morph feels continuous. */
+    conic-gradient(
+      from 200deg,
+      rgba(30, 58, 138, 0.4),
+      rgba(76, 29, 149, 0.4),
+      rgba(159, 18, 57, 0.4),
+      rgba(133, 77, 14, 0.4),
+      rgba(15, 118, 110, 0.4),
+      rgba(30, 58, 138, 0.4)
+    );
+  /* Hover glow: black core shadow + single dark-violet outer glow + inset.
+     Plain rgba (no color-mix) per the same flicker-reduction rationale as
+     the base ::before box-shadow above. Reduced from 5 stops to 3. */
+  box-shadow:
+    0 0 7px rgba(0, 0, 0, 0.85),
+    0 0 18px rgba(76, 29, 149, 0.42),
+    inset 0 0 5px rgba(0, 0, 0, 0.95);
+  animation: none;
+}
+
+/* Hover: ::after reveals as the Gargantua silhouette. Static (no
+   animation). The hue-rotate flow animation that previously cycled the
+   disk's colors was removed because at extreme pinch-zoom on Chrome
+   the per-frame GPU filter operation on a masked conic-gradient caused
+   neighbor text rasterization pressure (visible as horizontal banding
+   on "Tokenization Systems"). The static silhouette preserves the
+   physics-faithful Gargantua shape and the dark rainbow palette;
+   only the orbital-flow effect is lost. */
+header .brand a strong:hover::after{
+  opacity: 1;
+  background: conic-gradient(
+    from 0deg,
+    rgba(76, 29, 149, 0.95) 0deg,    /* dark violet */
+    rgba(159, 18, 57, 0.95) 72deg,   /* dark rose */
+    rgba(133, 77, 14, 0.92) 144deg,  /* dark amber */
+    rgba(15, 118, 110, 0.88) 216deg, /* dark teal */
+    rgba(30, 58, 138, 0.9) 288deg,   /* dark blue */
+    rgba(76, 29, 149, 0.95) 360deg   /* loop back to violet */
+  );
+  /* Composite mask: equatorial disk + top halo arch + bottom halo arch.
+     The three combined silhouette is the Gargantua shape. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  mask-image:
+    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+
 @media (prefers-reduced-motion: reduce){
-  header .brand a strong::before{
+  header .brand a strong::before,
+  header .brand a strong:hover::before,
+  header .brand a strong:hover::after{
     animation: none;
   }
 }
