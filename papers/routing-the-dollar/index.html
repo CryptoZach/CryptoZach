@@ -45,7 +45,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=193" />
+  <link rel="stylesheet" href="/styles.css?v=194" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -187,7 +187,7 @@
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />When digital dollars scale, what matters more: the token itself, or the gateway that routes it?</p>
         <p><strong>Answer</strong><br />The gateway matters more. The token may stay the same, but the routing layer changes the regulatory surface, the Fed-policy channel, and the way stress propagates. These are descriptive findings, not causal estimates.</p>
-        <p><strong>Evidence base</strong><br />Daily Ethereum transfer data tracking 19 gateway entities across 51 wallet addresses (covering approximately 27.7% of total USDC and USDT on-chain transfer volume on Ethereum mainnet over the 157-week sample window, per Artemis-filtered data; specific Dune query reproducibility pending verification, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>), monthly maps of which gateways transact with each other (15 gateways, 35 months, 3,804 unique pairs), stablecoin transfer volume across nine blockchains ($60.6T cumulative from February 2023 through January 2026, filtered by Artemis Analytics to remove spam and bot activity), and two stress episodes (SVB crisis and BUSD regulatory action).</p>
+        <p><strong>Evidence base</strong><br />Daily Ethereum transfer data tracking 19 gateway entities across 51 wallet addresses (covering approximately 27.7% of total USDC and USDT on-chain transfer volume on Ethereum mainnet over the 157-week sample window, per Artemis-filtered data; specific Dune query reproducibility pending verification), monthly maps of which gateways transact with each other (15 gateways, 35 months, 3,804 unique pairs), stablecoin transfer volume across nine blockchains ($60.6T cumulative from February 2023 through January 2026, filtered by Artemis Analytics to remove spam and bot activity), and two stress episodes (SVB crisis and BUSD regulatory action).</p>
       </aside>
 
       <figure class="paper-cover brief-figure" aria-labelledby="brief-clii-caption">
@@ -240,9 +240,9 @@
       <section class="brief-so-what" aria-labelledby="brief-who-heading">
         <h2 id="brief-who-heading">Who should care</h2>
         <p><strong>For policymakers:</strong> Monitor gateway flows, banking dependencies, and settlement chokepoints, not aggregate stablecoin supply alone. The control layer is where obligations attach and where correlated exposure becomes visible. Three types of automatic rules deserve particular attention: default sweep destinations, routing preferences, and hold triggers.</p>
-        <p><strong>For issuers and operators:</strong> Reserve composition and bank placement matter, but so do routing defaults and continuity under stress. The monetary impact of stablecoin growth depends on which issuer absorbs it. Deposit recycling (a derived metric, the share of stablecoin reserves held as bank deposits) varies sharply by issuer: approximately Tether 4%, Circle 14%, Gemini 100%. Methodology documentation pending; deposit recycling is not directly reported in issuer attestations and is computed from on-chain flow analysis combined with attestation disclosures (see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>).</p>
+        <p><strong>For issuers and operators:</strong> Reserve composition and bank placement matter, but so do routing defaults and continuity under stress. The monetary impact of stablecoin growth depends on which issuer absorbs it. Deposit recycling (a derived metric, the share of stablecoin reserves held as bank deposits) varies sharply by issuer: approximately Tether 4%, Circle 14%, Gemini 100%. Methodology documentation pending; deposit recycling is not directly reported in issuer attestations and is computed from on-chain flow analysis combined with attestation disclosures.</p>
         <p><strong>For investors and market-structure teams:</strong> The CLII classifies compliance posture; stress resilience requires separate assessment. A gateway can score highly on compliance and still prove fragile if its reserve chain, banking counterparties, or routing dependencies are weak.</p>
-        <p><strong>For payments and growth teams:</strong> Per Artemis classification labels (specific time window pending verification, see <a href="/docs/DATA_REGISTRY.md">DATA_REGISTRY</a>): identified merchant payments are approximately 0% of adjusted on-chain volume as a lower bound, peer-to-peer transfers account for approximately 46%, and decentralized finance activity approximately 33%. Point estimates are directional; classification methods label part of volume, with the remainder treated as unassigned. The market is still dominated by transfer, liquidity, and settlement uses.</p>
+        <p><strong>For payments and growth teams:</strong> Per Artemis classification labels (specific time window pending verification): identified merchant payments are approximately 0% of adjusted on-chain volume as a lower bound, peer-to-peer transfers account for approximately 46%, and decentralized finance activity approximately 33%. Point estimates are directional; classification methods label part of volume, with the remainder treated as unassigned. The market is still dominated by transfer, liquidity, and settlement uses.</p>
       </section>
 
       <p class="brief-closing"><strong>Who routes the dollar matters more than which dollar is routed.</strong></p>
