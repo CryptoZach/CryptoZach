@@ -36,6 +36,11 @@
   --space-lg:32px;
   --space-xl:48px;
   --space-2xl:64px;
+  /* Editorial serif for display headings. ui-serif resolves to a platform-
+     native serif (New York on Apple, Cambria on Windows). Explicit fallbacks
+     cover older browsers. Zero webfont cost; swap one token to opt into a
+     hosted face later. */
+  --font-serif: ui-serif, "New York", "Iowan Old Style", "Source Serif 4", "Source Serif Pro", Charter, "Cambria", Georgia, serif;
   color-scheme:light;
 }
 
@@ -221,10 +226,16 @@ header{
   position:sticky;
   top:0;
   z-index:1000;
+  /* Fully opaque background; previously 92% opacity with backdrop-filter
+     blur to give a translucent-glass feel. The backdrop-filter (blur 12px
+     saturate 180% on a sticky header) was the primary cause of pinch-zoom
+     text flicker on Safari: every frame the GPU must take the content
+     behind the header, blur it 12px, saturate 180%, and composite under
+     the header. At extreme pinch-zoom this recomputes a very-high-
+     resolution background tile per frame, which thrashes neighbor text
+     rasterization (header brand + nav + the hero text below the header
+     fold). Solid background eliminates the recompute entirely. */
   background:var(--bg);
-  background:color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter:blur(12px) saturate(180%);
-  -webkit-backdrop-filter:blur(12px) saturate(180%);
   border-bottom:1px solid var(--line);
   transition:box-shadow .2s ease;
   padding-top:env(safe-area-inset-top, 0px);
@@ -262,6 +273,12 @@ header.scrolled{
   min-width:0;
   color:inherit;
   border-radius:var(--radius-sm);
+  /* Breathing room on the left of the orb so the disk envelope's wing-tip
+     extension (::after at left:-10px relative to the strong) does not
+     clip against the header / brand-container boundary on hover. Subtitle
+     moves right by the same amount, preserving its alignment with the
+     orb's leftmost visible extent. */
+  padding-left:14px;
 }
 .brand a:focus-visible{
   outline:2px solid var(--accent);
@@ -363,6 +380,7 @@ nav{
 .menu-toggle[aria-expanded="true"] .icon-menu{display:none}
 .menu-toggle[aria-expanded="true"] .icon-close{display:block}
 .navlink{
+  position:relative;
   font-size:var(--font-size-min);
   font-weight:500;
   text-decoration:none;
@@ -371,25 +389,44 @@ nav{
   padding:6px var(--space-sm);
   border-radius:var(--radius-sm);
   border:1px solid transparent;
-  transition:color .15s ease, background .15s ease, border-color .15s ease;
+  transition:color .2s ease;
+}
+/* Animated underline: grows in from center on hover, persists on active.
+   Single visual mechanism for both states; replaces the prior pill-on-hover
+   plus border-bottom-on-active combination, which read as two competing
+   affordances. */
+.navlink::after{
+  content:"";
+  position:absolute;
+  left:var(--space-sm);
+  right:var(--space-sm);
+  bottom:2px;
+  height:2px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .25s cubic-bezier(0.2, 0.8, 0.25, 1);
+  pointer-events:none;
 }
 .navlink:hover{
   color:var(--text);
-  background:var(--accent-muted);
-  border-color:var(--line);
+}
+.navlink:hover::after,
+.navlink.active::after{
+  transform:scaleX(1);
 }
 .navlink.active{
   color:var(--accent);
   font-weight:600;
-  background:none;
-  border-color:transparent;
-  border-bottom:2px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  border-radius:0;
-  padding-bottom:calc(var(--space-xs) - 2px);
 }
 .navlink:focus-visible{
   outline:2px solid var(--accent);
   outline-offset:2px;
+}
+@media (prefers-reduced-motion: reduce){
+  .navlink::after{
+    transition:none;
+  }
 }
 
 .header-social{
@@ -726,17 +763,35 @@ body main:has(footer){
 
 h1{
   margin:0;
-  font-size:clamp(20px, 2.4vw, 26px);
-  line-height:1.38;
+  font-family:var(--font-serif);
+  font-size:clamp(22px, 2.6vw, 30px);
+  line-height:1.28;
   font-weight:600;
-  letter-spacing:-0.015em;
+  letter-spacing:-0.005em;
   color:var(--text-soft);
   text-wrap:pretty;
 }
+/* Editorial serif for inner-page section headings; hero h1 stays sans
+   (its punchline character is tuned for weight 800 + tight tracking). */
+h2, h3{
+  font-family:var(--font-serif);
+  letter-spacing:-0.005em;
+  text-wrap:pretty;
+}
+h2{
+  font-weight:600;
+  line-height:1.22;
+}
+h3{
+  font-weight:600;
+  line-height:1.3;
+}
 .hero h1{
+  font-family:inherit;
   font-size:clamp(24px, 2.8vw, 32px);
   line-height:1.32;
   font-weight:700;
+  letter-spacing:-0.015em;
   color:var(--text);
   max-width:none;
   text-wrap:pretty;
@@ -774,12 +829,21 @@ h1{
 body.contact-page .contact-page-foreground > .contact-page{
   max-width:var(--max);
   margin:0 auto;
-  /* Horizontal inset comes from main; avoid double gutters */
-  padding:var(--space-xl) 0 var(--space-md);
+  /* Horizontal inset comes from main; avoid double gutters. Top
+     padding comes from main as well; this wrapper only adds bottom
+     spacing so the contact-hero sits at the same vertical position
+     as .speaker-hero on /speaker-and-advisory. */
+  padding:0 0 var(--space-md);
   box-sizing:border-box;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-hero{
+  /* Default `section { margin-top: var(--space-xl); }` does not get
+     reset because the contact-hero is nested below main (the
+     `main > section.reveal` override at line 2590 only matches direct
+     children). Zero it out so the headshot sits at the same Y as the
+     speaker-hero on /speaker-and-advisory. */
+  margin-top:0;
   margin-bottom:3rem;
 }
 
@@ -3638,6 +3702,10 @@ section:has(.speaker-jump-to){
 }
 .writing-card-actions .writing-arrow{
   justify-content:flex-start;
+  /* Trailing "→" arrow needs extra right clearance: the pill curve from
+     border-radius:999px eats into the symmetric 16px right padding above,
+     visually crowding the arrow against the rounded edge. */
+  padding-right:22px;
 }
 .writing-card-actions .writing-thread{
   justify-content:center;
@@ -4276,9 +4344,13 @@ section:has(.speaker-jump-to){
   }
   .research-library-page ul.writing-list > li > article.writing-card--has-actions:not(.research-card--dual-essays) > .writing-card-actions,
   .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
-    overflow-x:auto;
-    overscroll-behavior-x:contain;
-    scrollbar-width:thin;
+    /* Was overflow-x:auto. Combined with transform:translateX(4px) on
+       .writing-arrow hover, that clipped the right edge of the button
+       (transforms don't trigger scrollbar but still get visually clipped
+       by overflow != visible). Visible is safe here: container is
+       position:absolute right:1.25rem max-width:calc(100% - 2.5rem) with
+       at most 2-3 actions per card, so overflow is unlikely. */
+    overflow-x:visible;
   }
   .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-card-actions{
     flex-wrap:wrap;
@@ -5849,7 +5921,8 @@ main.resume-profile .resume-closing{
 .page-focus .card p.core-competencies{
   margin-bottom:var(--space-sm);
 }
-.page-focus .speaker-headshot{
+.page-focus .speaker-headshot,
+body.contact-page .speaker-headshot{
   display:block;
   width:187px;
   max-width:100%;
@@ -5857,11 +5930,28 @@ main.resume-profile .resume-closing{
   border-radius:var(--radius-sm);
   border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
 }
-.page-focus .speaker-hero-headshot-wrap{
+.page-focus .speaker-hero-headshot-wrap,
+body.contact-page .speaker-hero-headshot-wrap{
+  margin-top:0;
   margin-bottom:var(--space-lg);
 }
-.page-focus .speaker-headshot--hero{
+.page-focus .speaker-headshot--hero,
+body.contact-page .speaker-headshot--hero{
   margin-inline:auto;
+}
+
+/* Zero margin-top on every wrapper between main and the
+   .speaker-hero-headshot-wrap on both pages so the gap above the
+   headshot equals exactly main's padding-top (var(--space-md)),
+   identical on both pages regardless of how deeply the wrap is
+   nested. */
+body.contact-page .contact-page-wrap,
+body.contact-page .contact-page-foreground,
+body.contact-page .reveal.contact-page,
+body.contact-page .contact-hero,
+body.speaker-page .speaker-hero{
+  margin-top:0;
+  padding-top:0;
 }
 /* Core frameworks: bottom-align related paper + CTA so pairs line up across columns */
 #core-frameworks .grid.grid--halves > .card > .framework-related-paper{
@@ -6201,10 +6291,10 @@ main.resume-profile .resume-closing{
   color:var(--text-soft);
 }
 
-/* Structure page (Operating-Model.html): less top padding, tighter jump-to */
-.structure-page main{
-  padding-top:var(--space-sm);
-}
+/* Structure page (Operating-Model.html): tighter jump-to. Top
+   padding intentionally left at the global main default
+   var(--space-xl) so the FRAMEWORKS kicker sits at the same Y as
+   the kickers on /research, /letters, and other landing pages. */
 .structure-page main > section:first-of-type{
   margin-top:0;
   padding-bottom:var(--space-sm);
@@ -6616,7 +6706,6 @@ footer.site-footer{
   margin-right:calc(50% - 50vw);
   margin-top:var(--space-lg);
   padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
-  border-top:1px solid var(--footer-strip-border);
   background:
     linear-gradient(
       to bottom,
@@ -7936,6 +8025,159 @@ footer.site-footer .footer-tagline{
     word-break:break-all;
   }
   .footer-social, .footer-links, .header-social{display:none}
+
+  /* ── Print extensions: editorial elements added in the 2026-04-26 cycle ── */
+
+  /* Numbered section kickers: drop the decorative number + rule (the heading
+     alone communicates the section in print; the kicker reads as noise). */
+  .numbered-section > h2::before,
+  .numbered-section > h2::after{
+    display:none !important;
+  }
+  .numbered-section > h2{
+    padding-top:0 !important;
+  }
+
+  /* Section ornaments: keep the dot-row but desaturate to print-safe gray. */
+  hr.section-ornament{
+    margin:2em auto !important;
+  }
+  hr.section-ornament::before{
+    color:#555 !important;
+    opacity:1 !important;
+  }
+
+  /* Drop cap: render in print-friendly dark gray, not accent blue. */
+  .dropcap::first-letter,
+  p.dropcap::first-letter{
+    color:#1a1a1a !important;
+  }
+
+  /* Pull-quote: keep the rail and decorative rule; force to dark gray. */
+  .paper-thesis-line{
+    border-left-color:#555 !important;
+    color:#000 !important;
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  .paper-thesis-line::before{
+    background:#555 !important;
+  }
+
+  /* Metadata callout: simplify for print (drop tinted background, keep rule). */
+  .paper-callout{
+    background:none !important;
+    border-left-color:#555 !important;
+    color:#000 !important;
+  }
+  .paper-callout strong:first-child{
+    color:#000 !important;
+  }
+
+  /* Card decorations on the homepage: hide the accent stripe + read-arrow
+     (interactive affordances that don't translate to paper). */
+  .compact-card::before,
+  .research-card-sm::before,
+  .research-card-sm::after{
+    display:none !important;
+  }
+
+  /* Force serif on headings for journal-style print rendering. */
+  h1, h2, h3{
+    font-family:Georgia, "Times New Roman", serif !important;
+  }
+
+  /* Avoid splitting headings or short editorial blocks across pages. */
+  h1, h2, h3, h4{
+    page-break-after:avoid;
+    break-after:avoid;
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  blockquote, .paper-thesis-line, .paper-callout, figure{
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+
+  /* Program-term marks: render as plain text in print, no accent tint. */
+  .term{
+    color:inherit !important;
+    font-variant-caps:normal !important;
+    letter-spacing:normal !important;
+    font-weight:inherit !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: program-identifier inline emphasis
+   .term marks defined program identifiers (CLII, MVEP, PPSI, GENIUS, etc.)
+   with small caps + tracked + muted accent tint. Auto-applied via the
+   wrapper in script.js; can also be authored manually as
+   <span class="term">CLII</span>.
+
+   Restrained on purpose: a 60% mix of accent with currentColor gives a
+   visible tint without saturating long-form prose. Color tone scales
+   with the surrounding text in both light and dark themes.
+   ───────────────────────────────────────────────────────────────────────────── */
+.term{
+  /* No font-variant-caps: source text is already uppercase, so all-small-caps
+     would render letters at small-cap height (visibly smaller than surrounding
+     cap-height text like "OCC"). Letter-spacing + weight + accent-tint already
+     differentiate program identifiers without size disparity. */
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--accent) 60%, currentColor);
+}
+
+/* .term-link: a .term that is also a hyperlink to the canonical reference
+   for that identifier (e.g., GENIUS Act / CLARITY Act linking to the
+   Medium overview article). Dotted underline differentiates from plain
+   .term marks without shouting; on hover, solid accent. */
+.term.term-link{
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--accent) 50%, transparent);
+  transition: border-bottom-color 0.2s ease, color 0.2s ease;
+}
+.term.term-link:hover,
+.term.term-link:focus-visible{
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+.term.term-link:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* In compact pill/chip/badge contexts the small-caps + tracking + weight
+   on .term reads as visual noise rather than editorial markup. Suppress
+   the typographic treatment if the auto-wrapper picks up a term inside
+   one of these contexts. (The hero proof chip uses .chip-link--accent
+   directly in source for GENIUS to avoid the JS-wrap ambiguity entirely.) */
+.hero-proof-chip .term,
+.badge .term,
+.badge-sm .term{
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  font-weight: inherit;
+  font-size: inherit;
+}
+.hero-proof-chip .term.term-link,
+.badge .term.term-link,
+.badge-sm .term.term-link{
+  border-bottom: none;
+}
+
+/* Explicit accent-color link inside hero proof chips (e.g., the GENIUS
+   link to the Medium overview article). Matches specificity of the
+   chip's existing `a { color: inherit }` rule and overrides it. */
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.chip-link--accent{
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+#hero.hero--homepage .hero-proof-strip .hero-proof-chip a.chip-link--accent:hover{
+  color: var(--accent-hover);
+  text-decoration-color: var(--accent-hover);
 }
 
 /* Homepage Upgrade Brief 3: targeted homepage overrides. Keep current animations, only improve hierarchy + conversion. */
@@ -8297,14 +8539,14 @@ footer.site-footer .footer-tagline{
   background: color-mix(in srgb, #7a8650 10%, transparent);
 }
 .badge-public{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  color: #15803d;
 }
 :root[data-theme="dark"] .badge-public{
-  color:#7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
 }
 .badge-request{
   border-color: color-mix(in srgb, #d97706 30%, var(--line));
@@ -8500,7 +8742,7 @@ footer.site-footer .footer-tagline{
 .paper-breadcrumb a:hover{
   color: var(--accent);
 }
-.paper-flagship-kicker{
+.paper-tier-kicker{
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -8567,7 +8809,10 @@ footer.site-footer .footer-tagline{
   text-transform: uppercase;
 }
 .paper-audience-tags-block{
-  margin-bottom: var(--space-xl);
+  margin: var(--space-md) 0 var(--space-xl);
+}
+.paper-audience-tags-block .paper-audience-tags{
+  margin: 0;
 }
 .brief-callout{
   font-size: var(--font-size-min);
@@ -9509,13 +9754,14 @@ footer.site-footer .footer-tagline{
 .paper-audience-tags{
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.75rem;
+  gap: 0.55rem 0.85rem;
   margin: var(--space-xl) 0;
 }
 .paper-audience-tag{
   display: inline-block;
-  padding: 6px 12px;
-  font-size: var(--font-size-min);
+  padding: 8px 16px;
+  font-size: 1rem;
+  line-height: 1.35;
   border-radius: 999px;
   background: color-mix(in srgb, var(--panel) 80%, transparent);
   border: 1px solid var(--line);
@@ -9564,6 +9810,22 @@ footer.site-footer .footer-tagline{
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+/* Desktop: lay primary buttons + secondary access link on a single
+   row so labels like "GitHub (data + replication)" sit inline with
+   the Read buttons instead of dropping to a second line. Wraps back
+   to stacked column below 720px. */
+@media (min-width: 720px){
+  .paper-access-block.access-block{
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+  }
+  .paper-access-block.access-block > .access-secondary{
+    margin-left: auto;
+  }
 }
 .access-primary{
   display: flex;
@@ -11739,6 +12001,17 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   border-radius: inherit;
 }
 
+/* Light mode: the matrix + reef canvases and the 45% black overlay are
+   tuned for dark backgrounds. In light mode they wash the hero into a
+   dark zone where the dark-blue text becomes unreadable. Hide all three
+   so the hero's existing light panel-gradient background carries the
+   surface, and dark-blue text reads cleanly against it. */
+:root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container,
+:root:not([data-theme="dark"]) #hero.hero--homepage .hero-reef,
+:root:not([data-theme="dark"]) #hero.hero--homepage .hero-overlay{
+  display: none;
+}
+
 #hero.hero--homepage .hero-btc-flight,
 .track-b-frameworks .hero-btc-flight {
   position: absolute;
@@ -12420,19 +12693,31 @@ main > section:first-of-type{
   background: color-mix(in srgb, #7a8650 10%, transparent);
 }
 
-/* Public / published */
+/* Public / published: non-dominant neon green. Light theme uses a
+   muted forest tone (#15803d on a 10%-tinted bg). Dark theme uses a
+   soft neon green (#4ade80) at low opacity so it glows without
+   dominating the card. The .badge-sm.badge-public combo selector
+   wins over homepage.css's .badge-sm rule (loaded later); the
+   .badge.badge-public combo wins over base .badge styling and over
+   .badge.badge-status-published. */
 .badge-public,
+.badge.badge-public,
+.badge-sm.badge-public,
+.badge.badge-status-published,
 .status--published{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
+  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  color: #15803d;
 }
 
 :root[data-theme="dark"] .badge-public,
+:root[data-theme="dark"] .badge.badge-public,
+:root[data-theme="dark"] .badge-sm.badge-public,
+:root[data-theme="dark"] .badge.badge-status-published,
 :root[data-theme="dark"] .status--published{
-  color: #7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color: #4ade80;
+  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
+  background: color-mix(in srgb, #4ade80 10%, transparent);
 }
 
 /* Available on request / draft / requestable */
@@ -13072,6 +13357,24 @@ a.writing-arrow:focus{
   max-width:none;
   text-wrap:wrap;
 }
+/* Slightly larger H1 at desktop widths. Uses container width-aware
+   sizing (vw clamp) to scale down on narrower viewports so the
+   sentence keeps fitting on a single line at typical laptop widths
+   (>= 1100px) and only wraps below that. */
+@media (min-width: 1100px){
+  .speaker-page .speaker-hero #speaker-hero-title{
+    font-size: clamp(1.4rem, 1.85vw, 1.7rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1100px) and (max-width: 1240px){
+  .speaker-page .speaker-hero #speaker-hero-title{
+    /* On the narrow desktop band let it wrap rather than overflow */
+    white-space: normal;
+  }
+}
 .speaker-page .booking-onepager-cta{
   margin:var(--space-md) 0 0;
 }
@@ -13282,138 +13585,6 @@ details.card-expand[open] summary {
   font-size: 0.85rem;
 }
 
-/* Sprint 5: OS prefers dark while the document uses light tokens (no data-theme="dark"). */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="dark"]) {
-    --bg: #0f0f0f;
-    --panel: #1a1a1a;
-    --panel2: #151515;
-    --surface: #1e1e1e;
-    --text: #e8e8e8;
-    --text-soft: #d0d0d0;
-    --muted: #a0a0a0;
-    --muted-soft: #909090;
-    --line: rgba(255, 255, 255, 0.09);
-    --line-strong: rgba(255, 255, 255, 0.14);
-    --accent: #2ecc71;
-    --accent-hover: #27ae60;
-    --accent-soft: rgba(46, 204, 113, 0.15);
-    --accent-muted: rgba(46, 204, 113, 0.08);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.2);
-    color-scheme: dark;
-  }
-
-  :root:not([data-theme="dark"]) body {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  :root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container {
-    --matrix-trail-rgb: 22 32 28;
-    --matrix-trail-fade-alpha: 0.158;
-  }
-
-  :root:not([data-theme="dark"]) .role-pill,
-  :root:not([data-theme="dark"]) .compact-card,
-  :root:not([data-theme="dark"]) .research-card-sm {
-    background: var(--surface);
-    border-color: var(--line);
-  }
-
-  :root:not([data-theme="dark"]) .role-pill:hover,
-  :root:not([data-theme="dark"]) .compact-card:hover,
-  :root:not([data-theme="dark"]) .research-card-sm:hover {
-    border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-
-  :root:not([data-theme="dark"]) .section-compact {
-    border-top-color: var(--line);
-  }
-
-  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-proof-chip {
-    background: #1a2f1f;
-    color: var(--accent);
-    border-color: transparent;
-  }
-
-  :root:not([data-theme="dark"]) .btn-primary {
-    background: var(--accent);
-  }
-
-  :root:not([data-theme="dark"]) .btn-primary:hover {
-    background: var(--accent-hover);
-  }
-
-  :root:not([data-theme="dark"]) .badge-sm {
-    border-color: var(--line);
-    color: var(--muted);
-  }
-
-  :root:not([data-theme="dark"]) .badge-sm.badge-review {
-    border-color: #b8860b;
-    color: #daa520;
-    background: #2a2010;
-  }
-
-  :root:not([data-theme="dark"]) .site-footer {
-    border-top-color: var(--glass-edge);
-  }
-
-  :root:not([data-theme="dark"]) .section-eyebrow {
-    color: var(--accent);
-  }
-
-  :root:not([data-theme="dark"]) .role-pill strong,
-  :root:not([data-theme="dark"]) .compact-card h3,
-  :root:not([data-theme="dark"]) .research-card-sm h3 {
-    color: var(--text);
-  }
-
-  :root:not([data-theme="dark"]) .role-pill span,
-  :root:not([data-theme="dark"]) .compact-card p,
-  :root:not([data-theme="dark"]) .research-card-sm p {
-    color: var(--muted);
-  }
-
-  :root:not([data-theme="dark"]) .section-link a,
-  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a,
-  :root:not([data-theme="dark"]) .about-contact a,
-  :root:not([data-theme="dark"]) .site-footer .footer-links a,
-  :root:not([data-theme="dark"]) .footer-social a {
-    color: var(--muted);
-  }
-
-  :root:not([data-theme="dark"]) .section-link a:hover,
-  :root:not([data-theme="dark"]) #hero.hero--homepage .hero-anchors a:hover,
-  :root:not([data-theme="dark"]) .about-contact a:hover,
-  :root:not([data-theme="dark"]) .site-footer .footer-links a:hover,
-  :root:not([data-theme="dark"]) .footer-social a:hover {
-    color: var(--accent);
-  }
-
-  :root:not([data-theme="dark"]) .about-bio {
-    color: var(--text);
-  }
-
-  :root:not([data-theme="dark"]) .about-method {
-    color: var(--muted);
-  }
-
-  :root:not([data-theme="dark"]) .hero-institutional,
-  :root:not([data-theme="dark"]) .hero-institutional a {
-    color: var(--muted-soft);
-  }
-
-  :root:not([data-theme="dark"]) .hero-institutional a:hover {
-    color: var(--accent);
-  }
-
-  :root:not([data-theme="dark"]) .card-venue {
-    color: var(--muted-soft);
-  }
-}
 
 /* Sprint 5: mobile nav touch targets and footer link hit areas. */
 @media (max-width: 640px) {
@@ -13744,13 +13915,8 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover
 
 footer.site-footer {
   background: var(--glass-tint);
-  border-top: 1px solid var(--glass-edge);
   backdrop-filter: blur(var(--glass-blur)) saturate(115%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
-}
-
-footer.site-footer .footer-tagline {
-  box-shadow: 0 1px 0 0 var(--glass-highlight) inset;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-email-row {
@@ -14186,12 +14352,12 @@ header.scrolled {
    class rules. Append-only. No existing rules modified.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Paper access block: richer CTA card treatment.
-   The block hosts the primary SSRN CTA + secondary X thread + tertiary
-   GitHub/contact links. Elevate its visual weight to match its functional
-   importance (it is the paper's action-layer call). */
+/* Paper access block: compact CTA card.
+   Hosts the primary read CTA (SSRN/Medium) + secondary actions (Discuss
+   paper, X thread, real GitHub link, companion link). Visual weight is
+   restrained: the block is functional, not a hero element. */
 .paper-access-block.access-block{
-  padding: var(--space-lg) var(--space-xl);
+  padding: 1rem 1.5rem;
   border: 1px solid color-mix(in srgb, var(--line) 120%, transparent);
   border-left: 3px solid var(--accent-cta, #2563eb);
   border-radius: 0 var(--radius) var(--radius) 0;
@@ -14206,22 +14372,27 @@ header.scrolled {
 .paper-access-block.access-block::before{
   content: "Read the paper";
   position: absolute;
-  top: 10px;
-  left: var(--space-xl);
-  font-size: 0.65rem;
+  top: 0.55rem;
+  left: 1.5rem;
+  font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-cta, #2563eb);
-  opacity: 0.9;
+  opacity: 0.85;
 }
 .paper-access-block.access-block .access-primary{
-  margin-top: var(--space-sm);
+  margin-top: 0.85rem;
   gap: var(--space-sm) var(--space-md);
 }
 .paper-access-block.access-block .access-secondary{
-  padding-top: var(--space-xs);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
   border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  font-size: 0.85rem;
+}
+.paper-access-block.access-block .access-secondary:empty{
+  display: none;
 }
 
 /* At-a-glance aside: stronger eyebrow + more generous interior breathing room. */
@@ -14339,13 +14510,24 @@ header.scrolled {
 }
 
 /* Paper-thesis: tighten typography; visible "Thesis" eyebrow */
-.paper-thesis{
+.paper-thesis,
+.paper-detail .paper-thesis,
+.paper-page .paper-thesis{
   position: relative;
+  /* Reserve space above the box for the Thesis eyebrow so it does
+     not overlap the .date-note / paper-description-note line
+     directly above. Higher-specificity selectors override the
+     `.paper-detail .paper-thesis { margin: 0 ... }` reset at
+     line 8669. */
+  margin-top: var(--space-xl);
 }
 .paper-thesis::before{
   content: "Thesis";
   position: absolute;
-  top: calc(-1 * var(--space-md));
+  /* Sit the eyebrow centered on the top border of the box, with
+     enough padding-top so the descenders/letter caps clear the
+     prior paragraph. */
+  top: -0.55em;
   left: var(--space-md);
   padding: 0 var(--space-xs);
   background: var(--bg);
@@ -14354,6 +14536,7 @@ header.scrolled {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent) 85%, transparent);
+  line-height: 1;
 }
 
 /* Mobile: reduce padding on polished blocks */
@@ -15139,13 +15322,15 @@ footer.site-footer .footer-tagline::before{
 
 /* Hero proof chips: add a subtle leading accent dot to each chip. Chips
    have pointer-events: none (decorative), so no hover interaction needed;
-   the dot adds a visual anchor that aids scanning across chips. */
-body #hero.hero--homepage .hero-proof-strip .hero-proof-chip{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+   the dot adds a visual anchor that aids scanning across chips.
 
+   Note: the prior implementation used display:inline-flex + gap on the
+   chip. That worked when the chip contained a single text node, but
+   broke when chips had inline links inside (e.g., GENIUS as a link in
+   "(GENIUS and related dockets)"): every adjacent inline element became
+   a separate flex item and got 0.5rem gap inserted between them,
+   producing visible padding around inline links. Inline-block dot with
+   margin-right avoids the flex-item-explosion. */
 body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   content: "";
   display: inline-block;
@@ -15153,7 +15338,8 @@ body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   height: 5px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--accent) 80%, transparent);
-  flex-shrink: 0;
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
 /* Hero anchors: replace the static underline with an animated bottom border
@@ -15747,7 +15933,7 @@ header .brand a strong::before{
       arch ABOVE the sphere (the far side of the disk lensed up over the
       top by gravity), and a mirror halo arch BELOW the sphere. These
       three structures form the iconic Gargantua shape and they DO NOT
-      rotate, the silhouette is a constant gravitational-lensing pattern.
+      rotate — the silhouette is a constant gravitational-lensing pattern.
    2. The matter inside this silhouette IS in motion: plasma orbits the
       black hole at relativistic speeds. We perceive this as colors and
       brightness "flowing" along the disk's orbital direction without the
@@ -16629,6 +16815,45 @@ main.resume-profile .resume-related-profiles a{
   }
 }
 
+/* Paper track chip: compact color-coded variant of the track designation
+   that sits inside .paper-badges next to Public, replacing the standalone
+   .paper-track-badge row on paper pages. The full Track name lives in the
+   chip's title attribute and at the breadcrumb destination
+   (/research/#track-a or #track-b). Designed to scale to a Track C variant. */
+.paper-track-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 3px;
+  font-size: var(--font-size-min);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--text-soft);
+}
+.paper-track-chip::before{
+  content: "";
+  display: inline-block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+.paper-track-chip--a{
+  border-color: color-mix(in srgb, #2563eb 45%, var(--line));
+  background: color-mix(in srgb, #2563eb 9%, var(--panel));
+  color: color-mix(in srgb, #2563eb 78%, var(--text));
+}
+.paper-track-chip--b{
+  border-color: color-mix(in srgb, #0d9488 45%, var(--line));
+  background: color-mix(in srgb, #0d9488 9%, var(--panel));
+  color: color-mix(in srgb, #0d9488 78%, var(--text));
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    Mobile nav drawer polish. Applies to the hamburger menu panel used by
    mobile visitors. All rules scoped to max-width 900px (matches the
@@ -17307,10 +17532,10 @@ body.letters-landing .companion-cards > .companion-card:nth-child(4n+4):hover{
   color: color-mix(in srgb, #0d9488 85%, var(--muted));
 }
 
-/* Convergence synthesis paragraph below the table: currently unstyled
-   on research page (only scoped to .overview-page). Add a
-   centered accent-tinted callout so the "two tracks, one conclusion"
-   line reads as a visual conclusion point. */
+/* Convergence synthesis paragraph below the table: matches the
+   convergence-table-wrap's full container width above so the
+   "two tracks, one conclusion" line reads as a visual conclusion
+   point that aligns with the framework cards. */
 .research-library-page #cross-track-convergence .convergence-synthesis{
   max-width: min(100%, 1180px);
   margin: var(--space-lg) auto 0;
@@ -18201,5 +18426,734 @@ body.contact-page .contact-page-foreground > .contact-page .about-item p:last-ch
 }
 .error-page main > section:first-of-type{
   margin-top: 0;
+}
+
+.structure-page main{
+  padding-top: var(--space-md);
+}
+.structure-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.overview-page main{
+  padding-top: var(--space-md);
+}
+.overview-page main > section:first-of-type{
+  margin-top: 0;
+}
+
+.speaker-page main{
+  padding-top: var(--space-md);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: numbered section kickers
+   Opt-in via class="numbered-section". Renders a small mono "01" / "02" /
+   "03" with a thin rule above the section h2. Counter is scoped to <main>
+   so each page restarts at 01. Sections without the class are skipped (no
+   gaps in the visible numbering).
+   ───────────────────────────────────────────────────────────────────────────── */
+main{ counter-reset: ts-section; }
+.numbered-section{ counter-increment: ts-section; }
+
+.numbered-section > h2{
+  position: relative;
+  padding-top: 2.4rem;
+  margin-top: 0;
+}
+
+.numbered-section > h2::before{
+  content: counter(ts-section, decimal-leading-zero);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.numbered-section > h2::after{
+  content: "";
+  position: absolute;
+  top: 0.42rem;
+  left: 2.2rem;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--line-strong);
+  opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: card refinement
+   Adds three layers on top of the existing hover system (lift, border shift,
+   shadow): a thin accent stripe that scales in across the top of the card,
+   a read-arrow indicator on research cards, and a typographic upgrade for
+   the .card-venue stamp.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Positioning context + clipping for the top accent stripe */
+.compact-card,
+.research-card-sm{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top accent stripe: scales from 0 to 100% on hover or focus */
+.compact-card::before,
+.research-card-sm::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.compact-card:hover::before,
+.compact-card:focus-visible::before,
+.research-card-sm:hover::before,
+.research-card-sm:focus-visible::before{
+  transform: scaleX(1);
+}
+
+/* Card title shifts to accent on hover (transition declared on the title) */
+.compact-card h3,
+.research-card-sm h3{
+  transition: color 0.2s ease;
+}
+
+.compact-card:hover h3,
+.compact-card:focus-visible h3,
+.research-card-sm:hover h3,
+.research-card-sm:focus-visible h3{
+  color: var(--accent);
+}
+
+/* Research card read-arrow: sits in the top-right padding, slides in on hover */
+.research-card-sm::after{
+  content: "\2192";
+  position: absolute;
+  top: 1.4rem;
+  right: 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.25, 1), color 0.2s ease;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.research-card-sm:hover::after,
+.research-card-sm:focus-visible::after{
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--accent);
+}
+
+/* Editorial venue stamp. Selector specificity (.card .card-venue) beats
+   the inline .card-venue rule in the homepage <style> block. */
+.research-card-sm .card-venue,
+.compact-card .card-venue,
+.research-card .card-venue,
+.card .card-venue{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-top: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .compact-card::before,
+  .research-card-sm::before,
+  .research-card-sm::after,
+  .compact-card h3,
+  .research-card-sm h3{
+    transition: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: pull-quote (.paper-thesis-line) + metadata callout (.paper-callout)
+   Both classes already exist in paper-page HTML but had no CSS, so they
+   rendered as default browser blockquote / paragraph. These styles make
+   them load-bearing editorial components.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Pull-quote: thesis-statement blockquote. Accent rail + serif italic +
+   short decorative rule above. Sized so a ~110-char sentence fits on one
+   line at typical paper-page container widths on desktop; mobile wraps
+   naturally via balance + viewport-sized font clamp. */
+.paper-thesis-line{
+  margin: 3rem 0 3rem 1.25rem;
+  padding: 0 0 0 2rem;
+  border-left: 4px solid var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text);
+  /* No fixed measure: pull-quote uses available parent width on desktop
+     so long thesis sentences can land on a single line. Narrow viewports
+     wrap naturally. */
+  max-width: none;
+  /* balance distributes line lengths evenly across wrapped lines */
+  text-wrap: balance;
+}
+
+/* Decorative element: horizontal rule that caps the vertical rail at the
+   top-left corner, forming a single L-bracket. negative margin-left of
+   calc(-2rem - 4px) extends the rule fully over the rail's width (4px
+   border) and out 2rem to align with the start of the text. Block-level
+   stays in document flow; gradient fade gives the rule a sense of motion
+   trailing off rather than a hard stop. */
+.paper-thesis-line::before{
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent) 55%,
+    color-mix(in srgb, var(--accent) 35%, transparent) 100%
+  );
+  margin: 0 0 1.1rem calc(-2rem - 4px);
+  opacity: 1;
+}
+
+.paper-thesis-line p{
+  margin: 0;
+}
+
+.paper-thesis-line p + p{
+  margin-top: 0.85rem;
+}
+
+/* Metadata callout: subtle accent-tinted block for "Forthcoming.", "Note.",
+   etc. Restrained relative to .paper-thesis-line; it is metadata, not voice. */
+.paper-callout{
+  margin: 1.75rem 0;
+  padding: 0.95rem 1.25rem;
+  background: var(--accent-muted);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.paper-callout strong:first-child{
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: drop cap (opt-in via .dropcap on a <p>)
+   Float a 3.5em serif accent letter at the start of a paragraph. Reads as
+   "this is a substantive piece of writing." Apply sparingly: once per
+   long-form piece, on the first body paragraph after the H1 / hero block.
+   ───────────────────────────────────────────────────────────────────────────── */
+.dropcap::first-letter,
+p.dropcap::first-letter{
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.6em;
+  line-height: 0.85;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0.08em 0.12em -0.05em 0;
+  padding: 0;
+  /* Subtle rendering polish: serif drop caps benefit from explicit
+     font-feature-settings to enable proper kerning of the letter form. */
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: tabular figures across body prose
+   Numerals (stats, dates, percentages) align in monospaced columns.
+   Standard editorial pattern for data-oriented writing (NYT, Bloomberg,
+   research journals). Subtle but immediately legible in stats-heavy prose.
+   ───────────────────────────────────────────────────────────────────────────── */
+main p,
+main li,
+main td,
+main th,
+main blockquote,
+main figcaption,
+main dt,
+main dd{
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Editorial: section ornament (opt-in <hr class="section-ornament">)
+   Centered three-dot accent ornament for thematic breaks between major
+   sections in long-form prose. Restrained, journal-like. Author places
+   the <hr> wherever a section break warrants visual separation.
+   ───────────────────────────────────────────────────────────────────────────── */
+hr.section-ornament{
+  border: none;
+  height: auto;
+  background: none;
+  margin: 4rem auto;
+  padding: 0;
+  text-align: center;
+  overflow: visible;
+  display: block;
+}
+
+hr.section-ornament::before{
+  content: "\B7 \B7 \B7";  /* middle dot \B7 (U+00B7) x 3 */
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.55em;
+  color: var(--accent);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+/* ────────── Editorial: Bundle A polish (kicker, measure, tables, citations) ────────── */
+
+/* Item 1. Reading-time + byline kicker. Sits between <h1> and the
+   existing .paper-metadata-strip on every paper and letter page.
+   Mono uppercase letter-spaced; reads as a small kicker line. */
+.paper-byline-kicker{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin: 0 0 var(--space-sm);
+  font-weight: 500;
+}
+.paper-byline-kicker .paper-byline-sep{
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+.paper-byline-kicker .paper-byline-author{
+  color: var(--text-soft);
+}
+
+/* Item 2. Constrain body-prose reading column. Long lines fatigue the
+   eye; 68ch is the project's existing measure token. Tables, figures,
+   takeaway cards, the thesis box, and the checklist opt out. */
+/* Reverted: the 68ch prose cap combined with the TOC right-pad
+   reservation crushed the reading column on wide viewports. Prose
+   now flows to the natural article content width. */
+
+
+/* Item 3. Journal-style table treatment for body tables in main.
+   Override .paper-abstract table's full-cell borders with top + bottom
+   rules and thin row separators. The MVEP checklist table keeps its
+   own purpose-built styling and is excluded. */
+.paper-page .paper-abstract table:not(.mvep-table){
+  border: none;
+  border-top: 1.5px solid var(--line-strong);
+  border-bottom: 1.5px solid var(--line-strong);
+  font-variant-numeric: tabular-nums;
+}
+.paper-page .paper-abstract table:not(.mvep-table) thead{
+  border-bottom: 1px solid var(--line-strong);
+}
+.paper-page .paper-abstract table:not(.mvep-table) thead th{
+  border: none;
+  background: transparent;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  padding: 0.7rem var(--space-md) 0.55rem;
+  text-align: left;
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr{
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:last-child{
+  border-bottom: none;
+}
+.paper-page .paper-abstract table:not(.mvep-table) tbody td,
+.paper-page .paper-abstract table:not(.mvep-table) tbody th{
+  border: none;
+  padding: 0.65rem var(--space-md);
+  vertical-align: top;
+  line-height: 1.55;
+}
+/* Optional alternating row tint, very low opacity (~3%) */
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:nth-child(even) td,
+.paper-page .paper-abstract table:not(.mvep-table) tbody tr:nth-child(even) th{
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+
+/* Item 4. Inline <code> and citation styling. Captures CFR / RIN /
+   SSRN / docket / regulation references with a small mono treatment
+   plus a faint tinted background. The .cite class is the explicit
+   marker for citation runs that should not be wrapped in <code>. */
+.paper-page .paper-abstract code,
+.paper-page p > code,
+.paper-page li > code,
+.paper-page td > code,
+.paper-page th > code,
+.paper-page .cite{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  padding: 0.08em 0.4em;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  color: var(--text);
+  white-space: nowrap;
+}
+:root[data-theme="light"] .paper-page .paper-abstract code,
+:root[data-theme="light"] .paper-page p > code,
+:root[data-theme="light"] .paper-page li > code,
+:root[data-theme="light"] .paper-page td > code,
+:root[data-theme="light"] .paper-page th > code,
+:root[data-theme="light"] .paper-page .cite{
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+
+/* ────────── Editorial: Bundle B sticky in-page TOC ────────── */
+/* Hidden below 1180px viewport. Above 1180px, the TOC sits inside the
+   article container in its right gutter (prose is constrained to 68ch
+   by Bundle A, so there is empty space on the right). The TOC sticks
+   to the top of the viewport as the user scrolls. */
+
+.paper-toc{
+  display: none;
+}
+
+@media (min-width: 1380px){
+  /* Reserve right space inside the article so prose, takeaways, tables,
+     and the breakout cover stay clear of the TOC overlay. */
+  .paper-page.has-paper-toc{
+    padding-right: calc(11rem + 2rem);
+  }
+  /* TOC anchors to the viewport's right edge, not the article's. This
+     keeps it pinned at the far right regardless of how wide the article
+     gets or how the cover image breaks out. */
+  .paper-toc{
+    display: block;
+    position: fixed;
+    top: 110px;
+    right: max(1rem, env(safe-area-inset-right));
+    width: 11rem;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    z-index: 6;
+    pointer-events: auto;
+  }
+  .paper-toc-nav{
+    padding-left: 0.85rem;
+    border-left: 1px solid var(--line);
+  }
+  /* Stop the breakout-wide cover from spanning into the TOC zone. When
+     a TOC is present, the cover stays inside the article's content box
+     (no negative-margin centering trick). */
+  .paper-page.has-paper-toc .paper-cover--wide{
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
+}
+@media (min-width: 1600px){
+  .paper-page.has-paper-toc{
+    padding-right: calc(13rem + 2.5rem);
+  }
+  .paper-toc{
+    width: 13rem;
+    right: max(1.5rem, env(safe-area-inset-right));
+  }
+}
+
+/* Wide content (the MVEP checklist table, any wide journal table) can
+   exceed the article's compressed content area when the right-pad is
+   reserved for the TOC. Allow horizontal scroll inside its wrapper so
+   it never spills over the TOC column. */
+.paper-page .mvep-checklist-content,
+.paper-page .paper-abstract figure.table-wrap{
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ────────── Editorial: paper-detail top-padding standardization ──────────
+   The main + .paper-page padding stack added up to var(--space-xl) +
+   var(--space-2xl) = 112px above the breadcrumb on every paper and
+   letter detail page (plus the ~80px sticky header). Tighten both
+   tiers to a uniform footprint of var(--space-md) on main and
+   var(--space-lg) on .paper-page so all 12 paper + 8 letter pages
+   share the same headroom. */
+body.paper-detail-page main{
+  padding-top: var(--space-md);
+}
+body.paper-detail-page .paper-page,
+body.paper-detail-page .paper-page.paper-detail,
+body.paper-detail-page .paper-detail{
+  padding-top: var(--space-lg);
+}
+
+/* ────────── Editorial: homepage About card symmetry ────────── */
+/* The card body is centered (text-align center, 760px paragraph
+   measure). The header (Zachcoin monogram + h2) needs to match that
+   centered rhythm, and the meta grid needs to balance: three items
+   in a 2-col grid leaves an empty quadrant. Override to center the
+   header row and use a 3-col meta grid on desktop. */
+body #contact .about-card .about-card-header{
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+body #contact .about-card .about-card-header h2{
+  margin-bottom: 0;
+}
+@media (min-width: 900px){
+  body #contact .about-card .about-card-meta{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    max-width: none;
+  }
+}
+@media (max-width: 899px) and (min-width: 600px){
+  body #contact .about-card .about-card-meta{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  body #contact .about-card .about-card-meta p:nth-child(3){
+    grid-column: 1 / -1;
+    max-width: 32rem;
+    justify-self: center;
+  }
+}
+
+.paper-toc-nav{
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+.paper-toc-title{
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--line);
+}
+.paper-toc-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: paper-toc;
+}
+.paper-toc-item{
+  margin: 0;
+  padding: 0;
+  counter-increment: paper-toc;
+}
+.paper-toc-link{
+  display: block;
+  padding: 0.36rem 0 0.36rem 0.85rem;
+  border-left: 2px solid transparent;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.paper-toc-link::before{
+  content: counter(paper-toc, decimal-leading-zero);
+  display: inline-block;
+  margin-right: 0.55em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68em;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.paper-toc-link:hover{
+  color: var(--text);
+  border-left-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+.paper-toc-link:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.paper-toc-link.active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+.paper-toc-link.active::before{
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .paper-toc-link{ transition: none; }
+}
+
+/* ────────── Editorial: Bundle C sticky bottom action bar ────────── */
+/* Slides up from the bottom once the user has scrolled past the
+   top-of-page .paper-access-block. Lives outside the article. */
+.paper-action-bar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  pointer-events: none;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform .28s ease, opacity .22s ease;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  box-shadow: 0 -4px 18px color-mix(in srgb, var(--text) 6%, transparent);
+}
+.paper-action-bar.visible{
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.paper-action-bar-inner{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.6rem max(var(--page-gutter), env(safe-area-inset-right)) calc(0.6rem + env(safe-area-inset-bottom)) max(var(--page-gutter), env(safe-area-inset-left));
+}
+.paper-action-bar-btn.action{
+  font-size: 0.85rem;
+  padding: 0.45rem 0.95rem;
+  white-space: nowrap;
+}
+.paper-action-bar-btn .icon-ssrn-inline,
+.paper-action-bar-btn .icon-x-inline{
+  width: 1em;
+  height: 1em;
+}
+
+@media (max-width: 600px){
+  .paper-action-bar-inner{
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+  .paper-action-bar-btn.action{
+    font-size: 0.78rem;
+    padding: 0.4rem 0.95rem;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .paper-action-bar{ transition: opacity .12s linear; transform: none; }
+  .paper-action-bar:not(.visible){ display: none; }
+}
+
+/* ────────── Editorial: Bundle E premium polish ────────── */
+
+/* Item 8. Image fade-in for paper-page figures. JS adds .is-visible
+   when the img enters the viewport; CSS handles the transition. */
+.paper-page .paper-abstract img,
+.paper-page figure img,
+.paper-page .paper-figure img{
+  opacity: 0;
+  transition: opacity 280ms ease-out;
+}
+.paper-page .paper-abstract img.is-visible,
+.paper-page figure img.is-visible,
+.paper-page .paper-figure img.is-visible,
+.paper-page .paper-cover img{
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce){
+  .paper-page .paper-abstract img,
+  .paper-page figure img,
+  .paper-page .paper-figure img{
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* Item 9. Author photo: the Zachcoin coin in a round frame with a
+   subtle accent ring + soft drop shadow. Used on /contact (hero) and
+   on the homepage About card. */
+.author-monogram{
+  --author-monogram-size: 80px;
+  width: var(--author-monogram-size);
+  height: var(--author-monogram-size);
+  border-radius: 50%;
+  display: inline-block;
+  object-fit: cover;
+  background: var(--panel);
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 18%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--accent-cta, #2563eb) 30%, var(--line));
+  user-select: none;
+  flex-shrink: 0;
+}
+.author-monogram--lg{
+  --author-monogram-size: 96px;
+}
+.author-monogram--sm{
+  --author-monogram-size: 56px;
+}
+
+/* Contact hero: monogram aligned with the H1 and subhead */
+.contact-hero{
+  position: relative;
+}
+.contact-hero .author-monogram{
+  margin: 0 0 var(--space-md);
+}
+
+/* Homepage about card: monogram beside the H2 */
+.about-card{
+  position: relative;
+}
+.about-card .about-card-header{
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.about-card .about-card-header h2{
+  margin: 0;
+}
+
+/* Item 10. Letterpress text-shadow on paper titles. Subtle book-cover
+   depth via a 1px shadow in currentColor at low alpha. Different
+   values for light vs dark mode for legibility. */
+.paper-page h1{
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+:root[data-theme="light"] .paper-page h1{
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+@media (prefers-reduced-motion: no-preference){
+  /* No animation; the rule above is a static text-shadow. */
 }
 
