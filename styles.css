@@ -18928,19 +18928,14 @@ body #contact .about-card .about-card-header h2{
 }
 @media (min-width: 900px){
   body #contact .about-card .about-card-meta{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-lg);
-    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-2xl);
+    max-width: 1200px;
   }
 }
 @media (max-width: 899px) and (min-width: 600px){
   body #contact .about-card .about-card-meta{
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  body #contact .about-card .about-card-meta p:nth-child(3){
-    grid-column: 1 / -1;
-    max-width: 32rem;
-    justify-self: center;
   }
 }
 
