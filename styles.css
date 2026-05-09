@@ -17520,6 +17520,42 @@ body.letters-landing .companion-cards > .companion-card:nth-child(4n+4):hover{
     0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
 }
 
+/* Letters-landing card variants: thesis + gaps + meta stack.
+   Surfaces per-letter substantive insight on the landing page so a
+   cold reader sees the recommendation/gap from each letter without
+   clicking. Thesis = primary finding; gaps = 1-2 named gaps in muted
+   accent label; meta = date/agency/frameworks footer. */
+body.letters-landing .companion-card .card-thesis,
+body.letters-landing .companion-card .card-gaps,
+body.letters-landing .companion-card .card-meta{
+  display: block;
+}
+body.letters-landing .companion-card .card-thesis{
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+body.letters-landing .companion-card .card-gaps{
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+body.letters-landing .companion-card .card-gaps em{
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+body.letters-landing .companion-card .card-meta{
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
 /* Framework-status badge on /frameworks card h3 (used for cards whose
    canonical FRAMEWORK_REGISTRY entry is pending author-manual
    literature synthesis; see Living_File_Updates_2026-04-24_0800_
