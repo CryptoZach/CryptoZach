@@ -45,7 +45,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=206" />
+  <link rel="stylesheet" href="/styles.css?v=207" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -313,6 +313,13 @@
         <p class="brief-what-this-means"><strong>What this means:</strong> the CLII is useful for mapping where regulatory obligations attach, but compliance posture and stress fragility are separate questions. Assessing both requires measuring at the gateway level.</p>
       </section>
 
+      <section class="brief-findings" aria-labelledby="deep-cross-reference-heading">
+        <h2 id="deep-cross-reference-heading">Cross-reference: product-side US-holder axis</h2>
+        <p>The CLII scores the gateway side of the transfer. A companion classification, developed in <a href="/papers/seven-dollars">Seven Dollars</a>, scores the product side: the dollar-denominated digital product itself, across five design markers (KYC depth, redemption channel, legal-structure jurisdiction, geofencing posture, and dollar-instrument legal-character). Applied to an eleven-product sample, the markers partition stablecoins into For-US-holders, Offshore-targeted, and boundary classes at approximately 82 percent clean-classification, with a three-product PPSI-eligible anchor (USDC, PYUSD, RLUSD) under New York-regulated trust frameworks.</p>
+        <p>The two classifications are complementary, not substitutes. Tier 1 CLII gateways predominantly process For-US-holders products (Circle and USDC, Paxos and PYUSD); Tier 2 gateways process both classes including the Offshore-targeted cohort (Tether and USDT routing through Binance and OKX); Tier 3 protocols process all classes by construction.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> gateway-side and product-side scoring answer different questions about the same transfer. Reading them together identifies which user cohort a gateway primarily serves and which compliance frame applies.</p>
+      </section>
+
       <div class="paper-key-numbers">
         <h2>Key numbers</h2>
         <p><strong>Sample</strong><br>
@@ -421,7 +428,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=221"></script>
+  <script defer src="/script.js?v=222"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

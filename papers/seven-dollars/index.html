@@ -14,13 +14,13 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Seven Dollars: Dollar-denominated digital products and institutional diligence | Tokenization Systems</title>
-  <meta name="description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. Regulation does not predict stress performance." />
+  <meta name="description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. Regulation does not predict stress performance; a five-marker design scorecard sharpens the US-holder eligibility question." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="seven dollars, dollar tokens, USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG, CLII, MVEP, collateral eligibility, SVB depeg, Circle pool, Paxos, Tokenization Systems" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Seven Dollars" />
-  <meta property="og:description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence." />
+  <meta property="og:description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. Five-marker design scorecard for US-holder eligibility." />
   <meta property="og:url" content="https://tokenization.systems/papers/seven-dollars" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Zachcoin.png" />
   <meta property="og:site_name" content="Tokenization Systems" />
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Seven Dollars" />
-  <meta name="twitter:description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence." />
+  <meta name="twitter:description" content="Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. Five-marker design scorecard for US-holder eligibility." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Zachcoin.png" />
   <meta name="twitter:image:alt" content="Tokenization Systems mark" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -47,7 +47,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=206" />
+  <link rel="stylesheet" href="/styles.css?v=207" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -68,7 +68,7 @@
       "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems" },
       "datePublished": "2026-03-28",
       "inLanguage": "en",
-      "description": "Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. The CLII scores the operator; the MVEP scores the product. Two production stress events (SVB March 2023, Circle pool March 2025) confirm contagion flows simple-to-complex.",
+      "description": "Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. The CLII scores the operator; the MVEP scores the product. A complementary five-marker design scorecard partitions an eleven-product sample into For-US-holders, Offshore-targeted, and boundary classes at approximately 82 percent clean-classification. Two production stress events (SVB March 2023, Circle pool March 2025) document contagion flowing simple-to-complex.",
       "url": "https://tokenization.systems/papers/seven-dollars",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/seven-dollars" },
       "image": "https://tokenization.systems/Publication-Images/Zachcoin.png",
@@ -225,6 +225,13 @@
         <p>Each of the seven products has since traded its SVB-era concentration for a structurally different one. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG was designed with segregation but depends on a single banking partner. OUSG diversified its underlyings but concentrated its instant-redemption path on one pool. The concentration migrated; it did not disappear. Forward risk assessment has to name the current concentration, not the last one.</p>
         <p><strong>What this means.</strong> Contagion modeling that assumes failures cascade from complex products down to their simpler components has the direction reversed. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
 
+        <h2>US-holder design axis (Q2 extension)</h2>
+        <p>A complementary five-marker design scorecard classifies products by the markers that determine whether a product is built for US holders or for offshore distribution. The scorecard is additive to the structural framework that determines MVEP binding categories and is most useful for the AG19 payment-stablecoin eligibility question, where the bifurcation between For-US-holders and Offshore-targeted products is sharp.</p>
+        <p>The markers cover five design dimensions. M1 (KYC depth) measures holder-identification strength at issuance and redemption. M2 (redemption channel) records whether redemption is open to all holders or gated through verified accounts. M3 (legal-structure jurisdiction) records the issuer entity's primary regulator (NYDFS trust, OCC trust, BVI, MAS, Cayman, Hong Kong, Liechtenstein). M4 (geofencing posture) records whether the product blocks US IPs at issuance and at secondary markets. M5 (dollar-instrument legal-character) records whether the product is a payment-stablecoin candidate (AG19-eligible), a tokenized money market fund, or a synthetic yield position.</p>
+        <p>Applied across an eleven-product sample, the markers partition the landscape into three classes. Five products are For-US-holders (USDC, USDS, PYUSD, RLUSD, FRAX). Four are Offshore-targeted (USDT, USDe, USDY, USDM). Two are boundary cases (FDUSD, USD1). Clean-classification reaches approximately 82 percent.</p>
+        <p>The PPSI-eligibility intersection narrows the regulatorily-tractable design class to a three-product anchor: USDC, PYUSD, RLUSD. All three issuers operate under New York-regulated trust or limited-purpose-trust frameworks (Paxos via NYDFS trust charter; Ripple-Standard Custody via NYDFS limited-purpose trust granted December 2024; Circle via state MTLs plus the late-2025 OCC trust-bank charter pathway), making New York the de facto US PPSI-eligibility staging regulator.</p>
+        <p><strong>What this means.</strong> The structural taxonomy answers what a product is; the design-axis lens answers who the product is built for. Both must be applied for an AG19 eligibility assessment.</p>
+
         <h2>Who should care</h2>
         <p><strong>Policymakers.</strong> If the goal is to prevent a repeat of SVB, the instrument that would detect the condition is custody concentration at the product level, not regulatory intensity at the operator level. Both instruments are useful; they answer different questions and cannot substitute for each other.</p>
         <p><strong>Issuers and operators.</strong> What determines whether a product holds its peg under stress is the custody model, the liquidation path quality, and the upstream dependencies, not the regulatory tier. A product designed under a strong regulator with a concentrated reserve will behave worse than a product designed under a weak regulator with a diversified reserve.</p>
@@ -324,7 +331,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=221"></script>
+  <script defer src="/script.js?v=222"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
