@@ -47,6 +47,8 @@ const REPO_ROOT = path.resolve(__dirname, '..');
 
 const TERMS = ['CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY'];
 const TERM_LINKS = {
+  CLII:    '/papers/routing-the-dollar/',
+  MVEP:    '/papers/mvep/',
   GENIUS:  'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
   CLARITY: 'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
 };
@@ -124,7 +126,10 @@ function buildReplacementHtml(text) {
     const matched = m[0];
     const url = TERM_LINKS[matched];
     if (url) {
-      out += `<a class="term term-link" href="${url}" target="_blank" rel="noopener noreferrer">${matched}</a>`;
+      // External URLs open in a new tab; internal (same-site) navigate in place.
+      const external = /^https?:\/\//i.test(url);
+      const attrs = external ? ` target="_blank" rel="noopener noreferrer"` : '';
+      out += `<a class="term term-link" href="${url}"${attrs}>${matched}</a>`;
     } else {
       out += `<span class="term">${matched}</span>`;
     }

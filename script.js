@@ -5726,6 +5726,8 @@
   // the inline mark is also a link to the canonical reference. Terms not
   // listed get the default <span class="term"> treatment.
   var TERM_LINKS = {
+    'CLII':    '/papers/routing-the-dollar/',
+    'MVEP':    '/papers/mvep/',
     'GENIUS':  'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
     'CLARITY': 'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f'
   };
@@ -5782,8 +5784,11 @@
           node = document.createElement('a');
           node.className = 'term term-link';
           node.href = url;
-          node.target = '_blank';
-          node.rel = 'noopener noreferrer';
+          // External URLs open in a new tab; internal (same-site) navigate in place.
+          if(/^https?:\/\//i.test(url)){
+            node.target = '_blank';
+            node.rel = 'noopener noreferrer';
+          }
         } else {
           node = document.createElement('span');
           node.className = 'term';
