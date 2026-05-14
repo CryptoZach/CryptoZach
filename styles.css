@@ -18745,6 +18745,15 @@ main{ counter-reset: ts-section; }
   margin-top: 0.85rem;
 }
 
+/* Bottom-align venue stamp inside Recent Papers cards (homepage) so
+   dates anchor on a common baseline regardless of body height or
+   prefix presence. Declared after the shared rule above so it wins
+   on source order at equal specificity. */
+.research-card-sm .card-venue{
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
 @media (prefers-reduced-motion: reduce){
   .compact-card::before,
   .research-card-sm::before,
