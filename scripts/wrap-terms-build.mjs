@@ -45,12 +45,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 
-const TERMS = ['CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY'];
+// Longer docket forms before their short variants so the regex matches
+// the full form preferentially (e.g., "RIN 3064-AG19" before "AG19").
+const TERMS = [
+  'RIN 3064-AG19', 'RIN 3064-AG20',
+  'OCC-2025-0372', 'FINCEN-2026-0034', 'FINCEN-2026-0100',
+  'TREAS-DO-2026-0232', '91 FR 18304',
+  'AG19', 'AG20',
+  'CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY',
+];
 const TERM_LINKS = {
-  CLII:    '/papers/routing-the-dollar/',
-  MVEP:    '/papers/mvep/',
-  GENIUS:  'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
-  CLARITY: 'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
+  'CLII':               '/papers/routing-the-dollar/',
+  'MVEP':               '/papers/mvep/',
+  'AG19':               '/letters/fdic-ag19-ppsi-activities/',
+  'AG20':               '/letters/fdic-ag20-ppsi-application/',
+  'RIN 3064-AG19':      '/letters/fdic-ag19-ppsi-activities/',
+  'RIN 3064-AG20':      '/letters/fdic-ag20-ppsi-application/',
+  'FINCEN-2026-0034':   '/letters/fincen-aml-cft/',
+  'FINCEN-2026-0100':   '/letters/fincen-ofac-ppsi-sanctions/',
+  'OCC-2025-0372':      '/letters/occ-mvep-v4/',
+  'TREAS-DO-2026-0232': '/letters/treasury-genius-state-similarity/',
+  '91 FR 18304':        '/letters/banking-agencies-joint-aml/',
+  'GENIUS':             'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
+  'CLARITY':            'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
 };
 const PATTERN = new RegExp('\\b(' + TERMS.join('|') + ')\\b', 'g');
 const SKIP_TAGS = new Set(['a', 'code', 'pre', 'kbd', 'samp', 'var', 'script', 'style', 'button', 'nav', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']);

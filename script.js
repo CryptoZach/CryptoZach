@@ -5716,8 +5716,14 @@
 
   // Program-specific identifiers worth marking. Case-sensitive: ALL-CAPS
   // entries match only when fully capitalized (so "GENIUS" matches the Act
-  // but not the lowercase word).
+  // but not the lowercase word). Longer docket forms are listed before
+  // their short variants so the regex matches the full form preferentially
+  // (e.g., "RIN 3064-AG19" before "AG19").
   var TERMS = [
+    'RIN 3064-AG19', 'RIN 3064-AG20',
+    'OCC-2025-0372', 'FINCEN-2026-0034', 'FINCEN-2026-0100',
+    'TREAS-DO-2026-0232', '91 FR 18304',
+    'AG19', 'AG20',
     'CLII', 'MVEP', 'PPSI', 'FQPSI', 'NPRM', 'GENIUS', 'CLARITY'
   ];
 
@@ -5725,11 +5731,22 @@
   // get wrapped in <a class="term term-link" href="..." target="_blank"> so
   // the inline mark is also a link to the canonical reference. Terms not
   // listed get the default <span class="term"> treatment.
+  // External URLs (http/https) open in a new tab; internal paths navigate
+  // in place (see conditional below in wrapMatchesIn).
   var TERM_LINKS = {
-    'CLII':    '/papers/routing-the-dollar/',
-    'MVEP':    '/papers/mvep/',
-    'GENIUS':  'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
-    'CLARITY': 'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f'
+    'CLII':                '/papers/routing-the-dollar/',
+    'MVEP':                '/papers/mvep/',
+    'AG19':                '/letters/fdic-ag19-ppsi-activities/',
+    'AG20':                '/letters/fdic-ag20-ppsi-application/',
+    'RIN 3064-AG19':       '/letters/fdic-ag19-ppsi-activities/',
+    'RIN 3064-AG20':       '/letters/fdic-ag20-ppsi-application/',
+    'FINCEN-2026-0034':    '/letters/fincen-aml-cft/',
+    'FINCEN-2026-0100':    '/letters/fincen-ofac-ppsi-sanctions/',
+    'OCC-2025-0372':       '/letters/occ-mvep-v4/',
+    'TREAS-DO-2026-0232':  '/letters/treasury-genius-state-similarity/',
+    '91 FR 18304':         '/letters/banking-agencies-joint-aml/',
+    'GENIUS':              'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
+    'CLARITY':             'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f'
   };
 
   var pattern = new RegExp('\\b(' + TERMS.join('|') + ')\\b', 'g');
