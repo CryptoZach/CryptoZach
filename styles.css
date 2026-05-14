@@ -3407,6 +3407,13 @@ section:has(.speaker-jump-to){
 
 .thumb-wide{object-fit:contain;object-position:center;background:var(--panel)}
 .thumb-exhibit-center{object-position:50% 50%;object-fit:contain}
+/* Adaptive Tokenomics discipline-map thumbnail: start at title-stack row
+   (row 2) so the image top aligns with the title top, matching the
+   convention used across sibling cards. The default .writing-thumb
+   grid-row: 1 / -1 + align-self: center centers the image vertically,
+   which leaves the image visually floating above the title when the
+   image is near-square (1016 x 943) and the writing-copy body is long. */
+.thumb-discipline-map{grid-row:2 / -1;align-self:start}
 .thumb-top{object-fit:contain;object-position:center center;background:var(--panel)}
 .research-card-action{
   margin-top:var(--space-sm);
