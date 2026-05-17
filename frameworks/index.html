@@ -277,7 +277,7 @@
         <li>Custody and Customer Property</li>
         <li>Insolvency Posture</li>
         <li>Settlement Finality</li>
-        <li>Reorg and Exception Handling</li>
+        <li>Reorganization and Exception Handling</li>
         <li>Governance and Change Control</li>
         <li>Disclosures</li>
         <li>Collateral Operability</li>
@@ -294,9 +294,9 @@
         <div class="featured-framework-audience">
           <p class="featured-framework-audience-label">For regulators and policy researchers</p>
           <ul class="featured-framework-anchors">
-            <li><span class="featured-framework-anchor-label">Capital gap</span><span class="featured-framework-anchor-body">Approximately 22-to-1 between bank-chartered (~12% CET1) and money-transmitter-chartered (~0.54% tangible net worth) issuers at $40B scale.</span></li>
+            <li><span class="featured-framework-anchor-label">Capital gap</span><span class="featured-framework-anchor-body">Approximately 22-to-1 between bank-chartered (~12% Common Equity Tier 1 / CET1, the Basel bank-capital benchmark) and money-transmitter-chartered (~0.54% tangible net worth) issuers at $40B scale.</span></li>
             <li><span class="featured-framework-anchor-label">Rulemaking footprint</span><span class="featured-framework-anchor-body">Cited across four of eight federal comment letters (OCC, FDIC, Treasury).</span></li>
-            <li><span class="featured-framework-anchor-label">Production test</span><span class="featured-framework-anchor-body">Circle BUIDL-to-USDC redemption-pool incident, March 27, 2025 (23 hours of limited availability; Category 10 composed-product cascade).</span></li>
+            <li><span class="featured-framework-anchor-label">Production test</span><span class="featured-framework-anchor-body">Circle BUIDL-to-USDC redemption-pool incident, March 27, 2025 (23 hours of limited availability; Category 10 Collateral Operability composed-product cascade).</span></li>
           </ul>
         </div>
       </div>
@@ -424,7 +424,7 @@
         <article class="card card--polished card--accent-a" id="mvep">
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
           <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
-          <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorg and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
+          <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorganization and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
           <p><strong>Why it matters.</strong> A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
           <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
@@ -433,7 +433,7 @@
           <h3>MGCPT (MVEP-gated Conditional Pass-Through) <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></h3>
           <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
           <p><strong>What it does.</strong> Conditions FDIC pass-through deposit insurance eligibility on MVEP qualification across six pass-through-critical categories (Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures). Statutory anchor: 12 U.S.C. &sect; 5903(e)(1) and (e)(2); IOLTA (Interest on Lawyer Trust Accounts), Section 529 plans, and custodial brokerage accounts as direct analogies.</p>
-          <p><strong>Why it matters.</strong> The FDIC&apos;s proposed &sect; 330.11(a)(3) categorically forecloses pass-through coverage for PPSI-related deposits. AG19 letter Recommendation 7 proposes MGCPT as the substantive alternative: condition pass-through on MVEP qualification, retaining categorical foreclosure for non-qualified PPSIs. Preserves the FDIC&apos;s prudential interest while honoring the GENIUS Act&apos;s intent that qualified PPSIs be treated as bank-deposit-equivalent when their architecture supports it.</p>
+          <p><strong>Why it matters.</strong> The FDIC&apos;s proposed &sect; 330.11(a)(3) categorically forecloses pass-through coverage for deposits held by PPSIs (Permitted Payment Stablecoin Issuers under the GENIUS Act). AG19 letter Recommendation 7 proposes MGCPT as the substantive alternative: condition pass-through on MVEP qualification, retaining categorical foreclosure for non-qualified PPSIs. Preserves the FDIC&apos;s prudential interest while honoring the GENIUS Act&apos;s intent that qualified PPSIs be treated as bank-deposit-equivalent when their architecture supports it.</p>
           <p><strong>What triggers re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
           <p class="framework-card-action"><a class="action secondary" href="/letters/fdic-ag19-ppsi-activities/">Open AG19 Recommendation 7 <span aria-hidden="true">→</span></a></p>
         </article>
@@ -448,7 +448,7 @@
         <article class="card card--polished card--accent-d" id="clii">
           <h3>CLII (Control Layer Intensity Index)</h3>
           <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
-          <p><strong>What it does.</strong> Scores each gateway across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
+          <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
           <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
           <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
@@ -465,7 +465,7 @@
           <h3>Regime Dashboard</h3>
           <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
           <p><strong>What it does.</strong> Tracks who controls the operating layer right now: interface ownership, default routing, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
-          <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in routing defaults, in hold-and-release workflows, and in audit logs. The question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack.</p>
+          <p><strong>Why it matters.</strong> CLARITY Act provisions (the House-passed digital-asset market-structure bill analyzed here) attach compliance where it becomes operational: at the interface, in routing defaults, in hold-and-release workflows, and in audit logs. The question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack.</p>
           <p><strong>What triggers re-evaluation.</strong> A shift in front-end interface ownership, default routing control, where yield is allowed to live, or where hold and reporting obligations attach.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact?context=regime-dashboard">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
@@ -475,7 +475,7 @@
           <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
           <p><strong>What it does.</strong> Classifies the U.S. dollar operating-layer equilibrium along two axes, each scored 0 to 6 via three components. ControlScore = obligated-interface share of flows + default sweep and wrapper penetration + holds-or-freeze usage as operating norm. IssuerScore = settlement-object concentration + reserve carry retention + direct mint and burn authority. Classification rule (3-month rolling average, weekly in stress): Control-dominant (ControlScore &ge; 4 and beats IssuerScore by &ge; 2), Issuer-dominant (mirror test), or Split / Contested otherwise.</p>
           <p><strong>Why it matters.</strong> Names which layer captures the economics, who bears the regulatory burden, and whether policy is shifting the equilibrium. Tracks structural power allocation, not safety or solvency.</p>
-          <p><strong>What triggers re-evaluation.</strong> Three or more of five high-beta policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes), or two or more component scores flipping in a quarter.</p>
+          <p><strong>What triggers re-evaluation.</strong> Three or more of five leading policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes), or two or more component scores flipping in a quarter.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
