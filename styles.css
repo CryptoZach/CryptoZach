@@ -19649,16 +19649,45 @@ body #contact .about-card .about-card-header h2{
   color: var(--text);
 }
 .structure-page .featured-framework-lede{
-  margin: 0 0 var(--space-lg);
-  font-size: 0.9375rem;
+  margin: 0 0 var(--space-md);
+  font-size: 1rem;
   line-height: 1.6;
-  color: var(--text-soft);
+  color: var(--text);
   max-width: 70ch;
+}
+.structure-page .featured-framework-categories{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0 0 var(--space-xl);
+  padding: 0;
+  list-style: none;
+  counter-reset: cat;
+}
+.structure-page .featured-framework-categories li{
+  counter-increment: cat;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.structure-page .featured-framework-categories li::before{
+  content: counter(cat);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-feature-settings: "tnum";
 }
 .structure-page .featured-framework-audiences{
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   margin: 0 0 var(--space-lg);
 }
 @media (min-width: 769px){
@@ -19672,16 +19701,43 @@ body #contact .about-card .about-card-header h2{
   border-left: 2px solid color-mix(in srgb, var(--accent) 50%, var(--line));
 }
 .structure-page .featured-framework-audience-label{
-  margin: 0 0 4px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--text);
+  margin: 0 0 var(--space-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 80%, var(--text-soft));
 }
 .structure-page .featured-framework-audience-body{
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.55;
+  color: var(--text-soft);
+}
+.structure-page .featured-framework-anchors{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.structure-page .featured-framework-anchors li{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.structure-page .featured-framework-anchor-label{
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 65%, var(--text-soft));
+}
+.structure-page .featured-framework-anchor-body{
   color: var(--text-soft);
 }
 .structure-page .featured-framework-actions{

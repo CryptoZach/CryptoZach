@@ -56,7 +56,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=220" />
+  <link rel="stylesheet" href="/styles.css?v=221" />
   <style>
     #featured-mvep, #framework-stack, #framework-lives, #classification-frameworks, #seven-dollars-framework, #three-strategies-framework, #core-frameworks, #clii, #mvep, #mgcpt, #tcrd, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #track-b-frameworks, #operational-risk-taxonomy, #burn-mechanism-classification, #governance-concentration-diagnostic, #adaptive-tokenomics, #frameworks-in-rulemaking, #ai-extension, #how-the-work-runs, #go-deeper { scroll-margin-top: 8rem; }
   </style>
@@ -269,15 +269,35 @@
     <section class="reveal featured-framework" id="featured-mvep" aria-labelledby="featured-mvep-title">
       <p class="featured-framework-eyebrow">Featured framework</p>
       <h2 id="featured-mvep-title" class="featured-framework-title">MVEP (Minimum Viable Equivalence Pack)</h2>
-      <p class="featured-framework-lede">Ten-category institutional diligence standard for tokenized money and securities. Tests three equivalence claims (legal, operational, economic) across Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorg and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability.</p>
+      <p class="featured-framework-lede">Ten-category institutional diligence standard for tokenized money and securities. Tests three equivalence claims: legal, operational, economic.</p>
+      <ol class="featured-framework-categories" aria-label="Ten diligence categories">
+        <li>Rights Parity</li>
+        <li>System of Record</li>
+        <li>Records and Reconciliation</li>
+        <li>Custody and Customer Property</li>
+        <li>Insolvency Posture</li>
+        <li>Settlement Finality</li>
+        <li>Reorg and Exception Handling</li>
+        <li>Governance and Change Control</li>
+        <li>Disclosures</li>
+        <li>Collateral Operability</li>
+      </ol>
       <div class="featured-framework-audiences">
         <div class="featured-framework-audience">
           <p class="featured-framework-audience-label">For tokenization issuers and custodians</p>
-          <p class="featured-framework-audience-body">Pre-launch entry-gate diligence; missing artifacts or failed tests block the gate.</p>
+          <ul class="featured-framework-anchors">
+            <li><span class="featured-framework-anchor-label">Gate timing</span><span class="featured-framework-anchor-body">Pre-launch or pre-committee approval; re-runs on material product change, custodian enforcement action, or reserve-composition shift beyond pre-disclosed band.</span></li>
+            <li><span class="featured-framework-anchor-label">Artifacts</span><span class="featured-framework-anchor-body">Each category pairs to a named-owner artifact (counsel sign-off, custody agreement, bankruptcy-priority memo, scenario analysis). Missing artifacts or failed tests block the gate.</span></li>
+            <li><span class="featured-framework-anchor-label">Stress envelope</span><span class="featured-framework-anchor-body">Three liquidation paths, four path constraints, and seven stress scenarios specified per tokenized Treasury (MVEP Section 2.3).</span></li>
+          </ul>
         </div>
         <div class="featured-framework-audience">
           <p class="featured-framework-audience-label">For regulators and policy researchers</p>
-          <p class="featured-framework-audience-body">Approximately 22-to-1 prudential gap between bank-chartered (~12% CET1) and money-transmitter-chartered (~0.54% tangible net worth) issuers at $40B scale. Cited across four of eight federal comment letters (OCC, FDIC, Treasury). Production-tested by the Circle BUIDL-to-USDC redemption-pool incident, March 27, 2025 (23 hours of limited availability; Category 10 composed-product cascade).</p>
+          <ul class="featured-framework-anchors">
+            <li><span class="featured-framework-anchor-label">Capital gap</span><span class="featured-framework-anchor-body">Approximately 22-to-1 between bank-chartered (~12% CET1) and money-transmitter-chartered (~0.54% tangible net worth) issuers at $40B scale.</span></li>
+            <li><span class="featured-framework-anchor-label">Rulemaking footprint</span><span class="featured-framework-anchor-body">Cited across four of eight federal comment letters (OCC, FDIC, Treasury).</span></li>
+            <li><span class="featured-framework-anchor-label">Production test</span><span class="featured-framework-anchor-body">Circle BUIDL-to-USDC redemption-pool incident, March 27, 2025 (23 hours of limited availability; Category 10 composed-product cascade).</span></li>
+          </ul>
         </div>
       </div>
       <div class="featured-framework-actions">
@@ -381,7 +401,7 @@
           <p class="card-eyebrow">Classification &middot; Dollar-denominated products</p>
           <p><strong>What it does.</strong> Positions seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) across two independent dimensions: operator regulation and product equivalence. Each requires a structurally different evidence package.</p>
           <p><strong>Why it matters.</strong> Operator regulation and product equivalence are separate dimensions. Conflating them produces the diligence error that allowed Circle (CLII 0.92) to break during the SVB (Silicon Valley Bank) failure in March 2023 while less-regulated operators held.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A new product class, a regulatory regime change that re-positions an issuer, or a structural shift in how an existing product is collateralized or wrapped.</p>
+          <p><strong>What triggers re-evaluation.</strong> A new product class, a regulatory regime change that re-positions an issuer, or a structural shift in how an existing product is collateralized or wrapped.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/seven-dollars">Open Seven Dollars <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="three-strategies-framework">
@@ -389,7 +409,7 @@
           <p class="card-eyebrow">Classification &middot; Institutional tokenization</p>
           <p><strong>What it does.</strong> Classifies institutional US-securities tokenization as three strategies: a regulated collateral circuit (tokenized Treasuries + bank-issued deposit tokens), a multi-issuer yield stack (five fund issuers with a smart redemption router), and tokenized equity rails on Nasdaq and NYSE. Maps which entities recur across strategies.</p>
           <p><strong>Why it matters.</strong> System-level risk lives in the entities that connect the strategies, not in the strategies themselves. Securitize, an SEC-registered transfer agent, sits in all three; any new strategy that depends on the same transfer agent, custodian, or redemption router inherits that concentration by default.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A fourth strategy emerging, a structural change at a cross-strategy entity, or a regulatory change that re-partitions which entity types can participate.</p>
+          <p><strong>What triggers re-evaluation.</strong> A fourth strategy emerging, a structural change at a cross-strategy entity, or a regulatory change that re-partitions which entity types can participate.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/three-strategies">Open Three Tokenization Strategies <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
@@ -406,7 +426,7 @@
           <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
           <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorg and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
           <p><strong>Why it matters.</strong> A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
+          <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="mgcpt">
@@ -414,7 +434,7 @@
           <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
           <p><strong>What it does.</strong> Conditions FDIC pass-through deposit insurance eligibility on MVEP qualification across six pass-through-critical categories (Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures). Statutory anchor: 12 U.S.C. &sect; 5903(e)(1) and (e)(2); IOLTA (Interest on Lawyer Trust Accounts), Section 529 plans, and custodial brokerage accounts as direct analogies.</p>
           <p><strong>Why it matters.</strong> The FDIC&apos;s proposed &sect; 330.11(a)(3) categorically forecloses pass-through coverage for PPSI-related deposits. AG19 letter Recommendation 7 proposes MGCPT as the substantive alternative: condition pass-through on MVEP qualification, retaining categorical foreclosure for non-qualified PPSIs. Preserves the FDIC&apos;s prudential interest while honoring the GENIUS Act&apos;s intent that qualified PPSIs be treated as bank-deposit-equivalent when their architecture supports it.</p>
-          <p><strong>What should trigger re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
+          <p><strong>What triggers re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
           <p class="framework-card-action"><a class="action secondary" href="/letters/fdic-ag19-ppsi-activities/">Open AG19 Recommendation 7 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="tcrd">
@@ -422,7 +442,7 @@
           <p class="card-eyebrow">Derivative on MVEP &middot; Reserve disclosure</p>
           <p><strong>What it does.</strong> Customer-facing disclosure template derived from MVEP Categories 1, 4, and 5 (Rights Parity, Custody and Customer Property, Insolvency Posture). Surfaces three substantive disclosure items at the point-of-use: legal claim (the holder&apos;s claim on the reserve), reserve composition (what the reserves are made of), and reserve location and custody (where the reserves sit, with which custodian).</p>
           <p><strong>Why it matters.</strong> MVEP scores the artifact (rights-parity memo with counsel sign-off, segregation model with custody agreement, bankruptcy-priority memo with scenario analysis); TCRD is the displayable summary surfacing that artifact&apos;s substantive content where holders actually see it. MVEP without TCRD leaves the diligence content invisible to holders; TCRD without MVEP leaves the displayable summary unanchored to verifiable artifacts. Cross-letter operationalized across OCC supplemental, Treasury Section II, and FDIC AG19 Recommendations 1 to 6.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A change in the underlying MVEP Categories 1, 4, or 5 artifacts; a new disclosure rule in PPSI rulemaking; or new cross-letter operationalization that extends the template.</p>
+          <p><strong>What triggers re-evaluation.</strong> A change in the underlying MVEP Categories 1, 4, or 5 artifacts; a new disclosure rule in PPSI rulemaking; or new cross-letter operationalization that extends the template.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="clii">
@@ -430,7 +450,7 @@
           <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
           <p><strong>What it does.</strong> Scores each gateway across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
           <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
+          <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-e" id="credit-migration-model">
@@ -438,7 +458,7 @@
           <p class="card-eyebrow">Deposit analysis &middot; Funding-structure shift</p>
           <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales: which banks gain or lose funding, how funding quality changes, and whether reserves reduce, recycle, or restructure deposits.</p>
           <p><strong>Why it matters.</strong> Bank funding can become more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserves. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
+          <p><strong>What triggers re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-a" id="regime-dashboard">
@@ -446,7 +466,7 @@
           <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
           <p><strong>What it does.</strong> Tracks who controls the operating layer right now: interface ownership, default routing, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
           <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in routing defaults, in hold-and-release workflows, and in audit logs. The question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A shift in front-end interface ownership, default routing control, where yield is allowed to live, or where hold and reporting obligations attach.</p>
+          <p><strong>What triggers re-evaluation.</strong> A shift in front-end interface ownership, default routing control, where yield is allowed to live, or where hold and reporting obligations attach.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact?context=regime-dashboard">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
@@ -455,7 +475,7 @@
           <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
           <p><strong>What it does.</strong> Classifies the U.S. dollar operating-layer equilibrium along two axes, each scored 0 to 6 via three components. ControlScore = obligated-interface share of flows + default sweep and wrapper penetration + holds-or-freeze usage as operating norm. IssuerScore = settlement-object concentration + reserve carry retention + direct mint and burn authority. Classification rule (3-month rolling average, weekly in stress): Control-dominant (ControlScore &ge; 4 and beats IssuerScore by &ge; 2), Issuer-dominant (mirror test), or Split / Contested otherwise.</p>
           <p><strong>Why it matters.</strong> Names which layer captures the economics, who bears the regulatory burden, and whether policy is shifting the equilibrium. Tracks structural power allocation, not safety or solvency.</p>
-          <p><strong>What should trigger re-evaluation.</strong> Three or more of five high-beta policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes), or two or more component scores flipping in a quarter.</p>
+          <p><strong>What triggers re-evaluation.</strong> Three or more of five high-beta policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes), or two or more component scores flipping in a quarter.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
@@ -472,7 +492,7 @@
           <p class="card-eyebrow">Diligence &middot; Operational resilience</p>
           <p><strong>What it does.</strong> Maps 74 risk vectors to 64 testable controls and 31 program objectives across a 624-scenario simulation battery. Calibrated from Ethereum, Helium, GEODNET, and Filecoin production data using ValOS (Validator Operating System) and NORS (Node Operator Risk Standard) frameworks.</p>
           <p><strong>Why it matters.</strong> Economic-only simulations miss the infrastructure failures that change token-economy behavior. Reputation systems gated by hard thresholds can become unworkable under routine operational risk; adaptive emission control can be more resilient than static designs under the same stress.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A new failure pattern, a node-operator concentration shift, a reputation-system threshold crossing, or a previously unmodeled correlation between economic and operational stress.</p>
+          <p><strong>What triggers re-evaluation.</strong> A new failure pattern, a node-operator concentration shift, a reputation-system threshold crossing, or a previously unmodeled correlation between economic and operational stress.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/operational-risk">Open Operational Risk in Token Economies <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="burn-mechanism-classification">
@@ -480,7 +500,7 @@
           <p class="card-eyebrow">Classification &middot; Fiscal sustainability</p>
           <p><strong>What it does.</strong> Classifies token networks by payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates carrier-contract burn models from subscription models.</p>
           <p><strong>Why it matters.</strong> Burn-mechanism design, not network size, drives sustainability. Helium's carrier-contract model: HHI 0.22, Top-5 demand sources roughly 90% of burn volume. GEODNET's subscription model: HHI 0.055, Top-5 = 40.4%. The burn-mint equilibrium (BME) crossing requires both fee growth and supply compression, not either alone.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A change in S2R trajectory (not just level), an emission halving or other supply-compression event, a shift in demand concentration, or BME parity crossing.</p>
+          <p><strong>What triggers re-evaluation.</strong> A change in S2R trajectory (not just level), an emission halving or other supply-compression event, a shift in demand concentration, or BME parity crossing.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="governance-concentration-diagnostic">
@@ -488,7 +508,7 @@
           <p class="card-eyebrow">Diagnostic &middot; Governance design</p>
           <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 40-protocol cross-section (15 DePIN, 15 DeFi (decentralized finance), 8 L1/L2 (Layer 1 and Layer 2 blockchain infrastructure) protocols, 2 social or stagnated). Lead correlation is null (Pearson r = 0.18, p = 0.28).</p>
           <p><strong>Why it matters.</strong> Sector membership predicts concentration (Mann-Whitney p = 0.014); insider retention amplifies it (Spearman rho = 0.54); delegation amplifies token concentration into voting concentration by 3 to 6 times in DePIN. Applies a five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) with a Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
+          <p><strong>What triggers re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="adaptive-tokenomics">
@@ -496,7 +516,7 @@
           <p class="card-eyebrow">Stress design &middot; Mechanism demonstration</p>
           <p><strong>What it does.</strong> Integrates productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional-integral-derivative feedback controller, a standard control architecture used to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios.</p>
           <p><strong>Why it matters.</strong> Integrated design surfaces structural properties that no single-mechanism analysis can. Results are mechanism demonstrations under stated assumptions, not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used to illustrate the framework.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A new stress scenario, a parameter range not previously modeled, or a real-deployment data point that contradicts the simulation.</p>
+          <p><strong>What triggers re-evaluation.</strong> A new stress scenario, a parameter range not previously modeled, or a real-deployment data point that contradicts the simulation.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/adaptive-tokenomics">Open Adaptive Tokenomics <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
