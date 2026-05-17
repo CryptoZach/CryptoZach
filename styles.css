@@ -16688,19 +16688,19 @@ body #contact .about-card .about-card-followup{
 
 /* ── Variant pages (resume-profile) ────────────────────────────────── */
 
-/* Proof strip: promote from muted inline text to a pill badge group. The
-   dot separator `·` acts as item delimiter; wrap visually by giving each
-   segment a subtle panel-tinted pill. */
+/* Proof strip: muted inline prose. Rendered as a normal block paragraph
+   so the auto-wrapped <a class="term"> (CLII, MVEP, etc.) flows inline
+   with surrounding text; an earlier inline-flex layout caused each text
+   segment around the term-link to become an anonymous flex item and
+   break to its own line on narrow viewports (e.g., "... CLII" stranded
+   on one line, "across N gateways · ..." starting on the next). */
 main.resume-profile .proof-strip-inline{
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  align-items: center;
   margin-top: var(--space-md);
   padding: 0;
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--text-soft);
+  text-wrap: pretty;
 }
 
 /* Decision-lens summary card: uppercase eyebrow on the h3 title so it
