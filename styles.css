@@ -19336,3 +19336,353 @@ body #contact .about-card .about-card-header h2{
   /* No animation; the rule above is a static text-shadow. */
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks Framework-stack: side-by-side track sequences.
+   Two parallel research tracks (A = 5 steps, B = 4 steps) render as columns
+   at desktop and stack at narrow viewports. Each step is a numbered-circle
+   prefix + step title + 1-sentence description. The visual rhythm comes
+   from typography and the numbered badge, not from card framing — the
+   earlier card pattern made compressed 1-sentence steps look flat and
+   visually noisy. Scoped to .structure-page #framework-stack.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page #framework-stack .stack-tracks{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin: 0;
+}
+@media (min-width: 769px){
+  .structure-page #framework-stack .stack-tracks{
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl, 3rem);
+  }
+}
+.structure-page #framework-stack .stack-track{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.structure-page #framework-stack .stack-track .track-heading{
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+}
+.structure-page #framework-stack .stack-steps{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.structure-page #framework-stack .stack-step{
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: var(--space-md);
+  align-items: start;
+}
+.structure-page #framework-stack .stack-step-num{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.structure-page #framework-stack .stack-step-body{
+  min-width: 0;
+}
+.structure-page #framework-stack .stack-step-title{
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.structure-page #framework-stack .stack-step-desc{
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.structure-page #framework-stack .stack-step-desc strong{
+  color: var(--text);
+  font-weight: 600;
+}
+/* Paper-page links inside step descriptions (Seven Dollars, Three Strategies,
+   Credit Migration Model, Regime Dashboard, Burn Mechanism Classification,
+   Adaptive-Tokenomics, Operational Risk Taxonomy, Governance-Concentration
+   Diagnostic). Subtle dotted underline to match .term-link visual; bold text
+   from the inner <strong> is preserved. The :not(.term) guard avoids
+   overriding the auto-wrapped CLII / MVEP term-link styling. */
+.structure-page #framework-stack .stack-step-desc a:not(.term){
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: border-bottom-color 0.2s ease, color 0.2s ease;
+}
+.structure-page #framework-stack .stack-step-desc a:not(.term):hover,
+.structure-page #framework-stack .stack-step-desc a:not(.term):focus-visible{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks directory table: row groups + hover.
+   The 11-row directory previously read as a monotone block. Group rows
+   (Classification / Track A / Track B) split it into scannable chunks.
+   Subtle row-hover makes the table feel interactive.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page .agenda-table tbody tr.agenda-table-group{
+  background: transparent;
+}
+.structure-page .agenda-table tbody tr.agenda-table-group td{
+  padding: var(--space-md) 1rem var(--space-xs);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 75%, var(--text-soft));
+  background: transparent;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-top: none;
+}
+.structure-page .agenda-table tbody:first-child tr.agenda-table-group td{
+  padding-top: var(--space-sm);
+}
+.structure-page .agenda-table tbody tr:not(.agenda-table-group){
+  transition: background 0.18s ease;
+}
+.structure-page .agenda-table tbody tr:not(.agenda-table-group):hover{
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+}
+.structure-page .agenda-table tbody tr:not(.agenda-table-group):hover td:last-child a{
+  color: var(--accent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks "How the work runs" cards: lighter framing.
+   Drop the heavy border for a soft panel-tinted bg, slightly larger eyebrow,
+   reduced padding. Pull-quote below switched from left-bordered callout to
+   centered italic with a thin accent rule above.
+   ───────────────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks polished cards: name-first visual hierarchy.
+   HTML order is now <h3> framework name first, <p class="card-eyebrow">
+   category/eyebrow second. The h3 carries the primary visual weight; the
+   eyebrow drops to small-caps supporting metadata. The base .card--polished
+   > h3 rule (used elsewhere on the site) adds a border-bottom underline
+   that would split the card mid-content under the flipped order — override
+   here. Scoped to .structure-page so other pages keep their original look.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page .card--polished > h3{
+  margin: 0 0 6px;
+  padding-bottom: 0;
+  border-bottom: none;
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--text);
+}
+.structure-page .card--polished .card-eyebrow{
+  margin: 0 0 var(--space-md);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.structure-page #how-the-work-runs .card--polished{
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+  background: color-mix(in srgb, var(--panel) 40%, transparent);
+}
+.structure-page #how-the-work-runs .card--polished > h3{
+  font-size: 1.0625rem;
+}
+.structure-page #how-the-work-runs .card--polished > p{
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+.structure-page #how-the-work-runs .track-bridge--pullquote{
+  margin: var(--space-2xl, 4rem) auto 0;
+  padding: var(--space-lg) 0 0;
+  max-width: 56ch;
+  border-left: none;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: transparent;
+  border-radius: 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks "Go deeper" card grid.
+   Replaces the prior <ul> of plain bullets with a 2 / 3-column grid of
+   small horizontal cards (title + short description). The last card
+   (Request access) gets an accent treatment as the primary CTA.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page .go-deeper-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin: 0;
+}
+@media (min-width: 640px){
+  .structure-page .go-deeper-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 980px){
+  .structure-page .go-deeper-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.structure-page .go-deeper-card{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 35%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+.structure-page .go-deeper-card:hover,
+.structure-page .go-deeper-card:focus-visible{
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  transform: translateY(-1px);
+}
+.structure-page .go-deeper-card-title{
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.structure-page .go-deeper-card-desc{
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks rulemaking table: tag + qualifier styling for the
+   "Framework invoked" column. Framework name stays prominent, qualifier
+   (control-layer / compliance / freeze / licensing) renders as a smaller
+   muted secondary, replacing the noisy parenthetical pattern.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page .agenda-table td.framework-invoked{
+  white-space: nowrap;
+}
+.structure-page .framework-invoked-name{
+  font-weight: 600;
+  color: var(--text);
+}
+.structure-page .framework-invoked-qualifier{
+  display: inline-block;
+  margin-left: 0.45em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+}
+.structure-page .framework-invoked-plus{
+  margin: 0 0.15em;
+  color: var(--text-soft);
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   /frameworks "Where each framework lives" intro as a definition list.
+   Three rows (MVEP / CLII / Tokenized Dollar Regime Classifier), each
+   showing term + role + clarifying question, replacing the prior dense
+   prose paragraph. Aligned dt/dd at desktop for scannability.
+   ───────────────────────────────────────────────────────────────────────────── */
+.structure-page .framework-relations{
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.structure-page .framework-relations-row{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+.structure-page .framework-relations-row:first-child{
+  border-top: none;
+  padding-top: 0;
+}
+@media (min-width: 769px){
+  .structure-page .framework-relations-row{
+    grid-template-columns: minmax(220px, 18rem) 1fr;
+    gap: var(--space-md);
+    align-items: baseline;
+  }
+}
+.structure-page .framework-relations dt{
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.structure-page .framework-relations dt a{
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+.structure-page .framework-relations dt a:hover,
+.structure-page .framework-relations dt a:focus-visible{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.structure-page .framework-relations dd{
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.structure-page .framework-relations-role{
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--accent) 80%, var(--text));
+  white-space: nowrap;
+}
+.structure-page .framework-relations-q{
+  font-style: italic;
+  color: var(--text-soft);
+}
+

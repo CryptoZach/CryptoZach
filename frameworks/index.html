@@ -14,14 +14,14 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>CLII &amp; MVEP: Stablecoin Risk Frameworks | TS</title>
-  <meta name="description" content="The CLII scores how heavily an operator is regulated. The MVEP tests whether its product is safe to hold. Circle scored 0.92 on the CLII and broke during SVB. The two frameworks measure independent dimensions." />
+  <title>Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools | TS</title>
+  <meta name="description" content="Thirteen frameworks for tokenized infrastructure: two classification frameworks (Seven Dollars, Three Strategies), seven Track A frameworks for digital money (CLII, MVEP, MGCPT, TCRD, Credit Migration, Regime Dashboard, Tokenized Dollar Regime Classifier), and four Track B frameworks for token economies (Operational Risk, Burn Mechanism, Governance Concentration, Adaptive Tokenomics). Applied across eight federal comment letters." />
   <meta name="author" content="Zach Zukowski" />
-  <meta name="keywords" content="CLII, MVEP, stablecoin risk framework, institutional diligence, control layer, digital asset regulation, operator risk scoring" />
+  <meta name="keywords" content="CLII, MVEP, stablecoin risk framework, tokenomics framework, operational risk taxonomy, burn mechanism, governance concentration, adaptive tokenomics, institutional diligence, control layer, digital asset regulation, operator risk scoring" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="CLII &amp; MVEP: Stablecoin Risk Frameworks" />
-  <meta property="og:description" content="CLII measures regulation intensity. MVEP measures product resilience. They diverge: the most regulated operator produced the largest depeg." />
+  <meta property="og:title" content="Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools" />
+  <meta property="og:description" content="Thirteen frameworks across classification, diligence, and monitoring: two classification frameworks (Seven Dollars, Three Strategies), seven Track A frameworks for digital money, four Track B frameworks for token economies. Applied in eight federal comment letters, with AI-operator extensions." />
   <meta property="og:url" content="https://tokenization.systems/frameworks" />
   <meta property="og:site_name" content="Tokenization Systems" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
@@ -30,8 +30,8 @@
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@CryptoZach" />
-  <meta name="twitter:title" content="CLII &amp; MVEP: Stablecoin Risk Frameworks" />
-  <meta name="twitter:description" content="CLII measures regulation intensity. MVEP measures product resilience. They diverge: the most regulated operator produced the largest depeg." />
+  <meta name="twitter:title" content="Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools" />
+  <meta name="twitter:description" content="Thirteen frameworks across classification, diligence, and monitoring: two classification frameworks (Seven Dollars, Three Strategies), seven Track A frameworks for digital money, four Track B frameworks for token economies. Applied in eight federal comment letters, with AI-operator extensions." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta name="twitter:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -56,9 +56,9 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=210" />
+  <link rel="stylesheet" href="/styles.css?v=219" />
   <style>
-    #framework-stack, #framework-lives, #core-frameworks, #clii, #mvep, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #how-the-work-runs, #dollar-objects-pointer, #go-deeper { scroll-margin-top: 8rem; }
+    #framework-stack, #framework-lives, #classification-frameworks, #seven-dollars-framework, #three-strategies-framework, #core-frameworks, #clii, #mvep, #mgcpt, #tcrd, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #track-b-frameworks, #operational-risk-taxonomy, #burn-mechanism-classification, #governance-concentration-diagnostic, #adaptive-tokenomics, #frameworks-in-rulemaking, #ai-extension, #how-the-work-runs, #go-deeper { scroll-margin-top: 8rem; }
   </style>
   <script type="application/ld+json">
     {
@@ -74,9 +74,9 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Frameworks: decision tools for digital-dollar infrastructure",
+      "name": "Frameworks: decision tools for tokenized infrastructure and token economies",
       "url": "https://tokenization.systems/frameworks",
-      "description": "CLII, MVEP, Credit Migration Model, Regime Dashboard, and Tokenized Dollar Regime Classifier: what each measures, what changes the view, and who acts on the result.",
+      "description": "Thirteen frameworks for tokenized financial infrastructure. Classification frameworks (Comparative Framework for Dollar Products from Seven Dollars; Tokenization Infrastructure Map from Three Strategies). Track A (digital money and market infrastructure): CLII, MVEP, MGCPT (preliminary derivative on MVEP), TCRD (derivative on MVEP), Credit Migration Model, Regime Dashboard, Tokenized Dollar Regime Classifier. Track B (tokenomics and DePIN): Operational Risk Taxonomy, Burn Mechanism Classification, Governance-Concentration Diagnostic, Adaptive-Tokenomics Pattern Map. Applied in eight federal comment letters and extended to AI operators via CLII-AI and MVEP-AI.",
       "isPartOf": { "@id": "https://tokenization.systems/#website" },
       "author": { "@id": "https://tokenization.systems/#person" },
       "speakable": {
@@ -157,26 +157,53 @@
       </div>
       <ol class="structure-nav__links" role="list">
         <li>
-          <a href="#dollar-objects-pointer" class="structure-nav__link" data-section="dollar-objects-pointer">
-            Four dollar objects
-          </a>
-        </li>
-        <li>
           <a href="#framework-stack" class="structure-nav__link" data-section="framework-stack">
             Framework stack
           </a>
         </li>
         <li class="structure-nav__group">
-          <a href="#core-frameworks" class="structure-nav__link" data-section="core-frameworks">
-            Core frameworks
+          <a href="#classification-frameworks" class="structure-nav__link" data-section="classification-frameworks">
+            Classification frameworks
           </a>
-          <ol class="structure-nav__sub" role="list" aria-label="Frameworks">
+          <ol class="structure-nav__sub" role="list" aria-label="Classification frameworks">
+            <li><a href="#seven-dollars-framework" class="structure-nav__sublink" data-section="seven-dollars-framework">Seven Dollars</a></li>
+            <li><a href="#three-strategies-framework" class="structure-nav__sublink" data-section="three-strategies-framework">Three Strategies</a></li>
+          </ol>
+        </li>
+        <li class="structure-nav__group">
+          <a href="#core-frameworks" class="structure-nav__link" data-section="core-frameworks">
+            Track A frameworks
+          </a>
+          <ol class="structure-nav__sub" role="list" aria-label="Track A frameworks">
             <li><a href="#clii" class="structure-nav__sublink" data-section="clii">CLII</a></li>
             <li><a href="#mvep" class="structure-nav__sublink" data-section="mvep">MVEP</a></li>
+            <li><a href="#mgcpt" class="structure-nav__sublink" data-section="mgcpt">MGCPT</a></li>
+            <li><a href="#tcrd" class="structure-nav__sublink" data-section="tcrd">TCRD</a></li>
             <li><a href="#credit-migration-model" class="structure-nav__sublink" data-section="credit-migration-model">Credit migration</a></li>
             <li><a href="#regime-dashboard" class="structure-nav__sublink" data-section="regime-dashboard">Regime Dashboard</a></li>
             <li><a href="#dollar-v3-regime-classifier" class="structure-nav__sublink" data-section="dollar-v3-regime-classifier">Tokenized Dollar Regime Classifier</a></li>
           </ol>
+        </li>
+        <li class="structure-nav__group">
+          <a href="#track-b-frameworks" class="structure-nav__link" data-section="track-b-frameworks">
+            Track B frameworks
+          </a>
+          <ol class="structure-nav__sub" role="list" aria-label="Track B frameworks">
+            <li><a href="#operational-risk-taxonomy" class="structure-nav__sublink" data-section="operational-risk-taxonomy">Operational Risk Taxonomy</a></li>
+            <li><a href="#burn-mechanism-classification" class="structure-nav__sublink" data-section="burn-mechanism-classification">Burn Mechanism</a></li>
+            <li><a href="#governance-concentration-diagnostic" class="structure-nav__sublink" data-section="governance-concentration-diagnostic">Governance Concentration</a></li>
+            <li><a href="#adaptive-tokenomics" class="structure-nav__sublink" data-section="adaptive-tokenomics">Adaptive Tokenomics</a></li>
+          </ol>
+        </li>
+        <li>
+          <a href="#frameworks-in-rulemaking" class="structure-nav__link" data-section="frameworks-in-rulemaking">
+            Frameworks in rulemaking
+          </a>
+        </li>
+        <li>
+          <a href="#ai-extension" class="structure-nav__link" data-section="ai-extension">
+            AI-operator extension
+          </a>
         </li>
         <li>
           <a href="#framework-lives" class="structure-nav__link" data-section="framework-lives">
@@ -204,22 +231,20 @@
         FRAMEWORKS
       </div>
       <div class="section-title">
-        <h1 id="focus-title">Five frameworks for classifying, testing, and monitoring digital-dollar infrastructure.</h1>
-        <p class="structure-page-lede">The Overview page answers what these products are, this page answers what to test, what to monitor, what should change the view, and who acts when conditions deteriorate.</p>
+        <h1 id="focus-title">Frameworks for tokenized infrastructure: classification, diligence, and monitoring.</h1>
+        <p class="structure-page-lede">Thirteen frameworks across two research tracks. Each names what to test, what should change the view, and who acts when conditions deteriorate. Applied in eight federal comment letters, with AI-operator extensions.</p>
       </div>
       <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Frameworks jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
-          <a class="page-toc-link" href="#dollar-objects-pointer">Four dollar objects</a>
           <a class="page-toc-link" href="#framework-stack">Framework stack</a>
-          <a class="page-toc-link" href="#core-frameworks">Core frameworks</a>
-          <a class="page-toc-link" href="#clii">CLII</a>
-          <a class="page-toc-link" href="#mvep">MVEP</a>
-          <a class="page-toc-link" href="#credit-migration-model">Credit Migration Model</a>
-          <a class="page-toc-link" href="#regime-dashboard">Regime Dashboard</a>
-          <a class="page-toc-link" href="#dollar-v3-regime-classifier">Tokenized Dollar Regime Classifier</a>
-          <a class="page-toc-link" href="#framework-lives">Where each framework lives</a>
-          <a class="page-toc-link" href="#how-the-work-runs">How the work runs</a>
+          <a class="page-toc-link" href="#classification-frameworks">Classification</a>
+          <a class="page-toc-link" href="#core-frameworks">Track A</a>
+          <a class="page-toc-link" href="#track-b-frameworks">Track B</a>
+          <a class="page-toc-link" href="#frameworks-in-rulemaking">Rulemaking</a>
+          <a class="page-toc-link" href="#ai-extension">AI extension</a>
+          <a class="page-toc-link" href="#framework-lives">Directory</a>
+          <a class="page-toc-link" href="#how-the-work-runs">Principles</a>
           <a class="page-toc-link" href="#go-deeper">Go deeper</a>
         </div>
       </div>
@@ -235,138 +260,390 @@
       <p class="track-bridge"><a href="/research">View research library <span aria-hidden="true">→</span></a></p>
     </div>
 
-    <section class="reveal" id="dollar-objects-pointer" aria-labelledby="objects-pointer-title">
-      <div class="section-title">
-        <h2 id="objects-pointer-title">Four dollar objects</h2>
-        <p>Payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers look similar in a wallet but diverge in reserve structure, legal treatment, and crisis behavior. The frameworks below exist because each object needs different tests, different monitoring, and different escalation paths.</p>
-      </div>
-      <p class="track-bridge"><a class="action secondary" href="/overview#dollar-objects">See object definitions on Overview <span aria-hidden="true">&rarr;</span></a></p>
-    </section>
-
     <section class="reveal" id="framework-stack" aria-labelledby="framework-stack-title">
       <div class="section-title">
         <h2 id="framework-stack-title">Framework stack</h2>
-        <p>The frameworks work in sequence.</p>
+        <p>Two parallel sequences. Both share control-layer and stress-first logic; the diligence artifacts differ.</p>
       </div>
-      <div class="explainer">
-        <article class="explainer-section">
-          <h3>1. Define the object</h3>
-          <p>Is this a payment stablecoin, a tokenized deposit, or a yield wrapper? The answer determines the starting rulebook.</p>
+
+      <div class="stack-tracks">
+        <div class="stack-track stack-track--a">
+          <h3 class="track-heading"><span class="track-heading-prefix">Track A</span><span class="track-heading-desc">Digital money sequence</span></h3>
+          <ol class="stack-steps">
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">1</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Define the object</h4>
+                <p class="stack-step-desc">Payment stablecoin, tokenized deposit, deposit token, or yield wrapper. Each starts a different rulebook (<a href="/papers/seven-dollars/"><strong>Seven Dollars</strong></a>).</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">2</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Test the product at launch</h4>
+                <p class="stack-step-desc"><strong>MVEP</strong>. Ten diligence categories, each with a named artifact and a pass-or-fail test.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">3</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Monitor the control layer after approval</h4>
+                <p class="stack-step-desc"><strong>CLII</strong>. Approval starts the monitoring cycle; CLII is the drift detector.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">4</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Map balance-sheet and system-level consequences</h4>
+                <p class="stack-step-desc"><a href="/papers/dollar-v3/"><strong>Credit Migration Model</strong></a>. Where deposits move, how funding quality changes, which banks absorb the shift.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">5</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Identify who controls the operating layer</h4>
+                <p class="stack-step-desc"><a href="/papers/control-layer-war/"><strong>Regime Dashboard</strong></a>. Routing defaults, sweep ownership, hold authority, and which entities recur across strategies (<a href="/papers/three-strategies/"><strong>Three Strategies</strong></a>).</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="stack-track stack-track--b">
+          <h3 class="track-heading"><span class="track-heading-prefix">Track B</span><span class="track-heading-desc">Token-economy sequence</span></h3>
+          <ol class="stack-steps">
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">1</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Classify the payer base</h4>
+                <p class="stack-step-desc"><a href="/papers/who-burns-the-tokens/"><strong>Burn Mechanism Classification</strong></a>. S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure) separate carrier-contract from subscription designs.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">2</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Demonstrate the integrated mechanism</h4>
+                <p class="stack-step-desc"><a href="/papers/adaptive-tokenomics/"><strong>Adaptive-Tokenomics Pattern Map</strong></a>. Stress-tests the full stack (staking, governance, burn-mint, and emissions controlled by a PID loop, the proportional-integral-derivative feedback architecture used to stabilize systems against disturbance) across multi-year scenarios.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">3</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Test operational resilience under stress</h4>
+                <p class="stack-step-desc"><a href="/papers/operational-risk/"><strong>Operational Risk Taxonomy</strong></a>. 74 vectors mapped to 64 controls across a 624-scenario battery. Economic-only simulations miss what infrastructure failures actually change.</p>
+              </div>
+            </li>
+            <li class="stack-step">
+              <span class="stack-step-num" aria-hidden="true">4</span>
+              <div class="stack-step-body">
+                <h4 class="stack-step-title">Diagnose realized governance concentration</h4>
+                <p class="stack-step-desc"><a href="/papers/governance-concentration/"><strong>Governance-Concentration Diagnostic</strong></a>. Sector, insider retention, and delegation patterns predict concentration; initial allocation alone does not.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal" id="classification-frameworks" aria-labelledby="classification-title">
+      <div class="section-title">
+        <h2 id="classification-title">Classification frameworks</h2>
+        <p>Two frameworks for naming what you are looking at before testing it. Classification precedes diligence: a Seven Dollars product profile or a Three Strategies position determines which diligence pack and monitoring posture apply downstream.</p>
+      </div>
+      <div class="grid grid--halves">
+        <article class="card card--polished card--accent-a" id="seven-dollars-framework">
+          <h3>Comparative Framework for Dollar Products</h3>
+          <p class="card-eyebrow">Classification &middot; Dollar-denominated products</p>
+          <p><strong>What it does.</strong> Positions seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) across two independent dimensions: operator regulation and product equivalence. Each requires a structurally different evidence package.</p>
+          <p><strong>Why it matters.</strong> Operator regulation and product equivalence are separate dimensions. Conflating them produces the diligence error that allowed Circle (CLII 0.92) to break during the SVB (Silicon Valley Bank) failure in March 2023 while less-regulated operators held.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A new product class, a regulatory regime change that re-positions an issuer, or a structural shift in how an existing product is collateralized or wrapped.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/seven-dollars">Open Seven Dollars <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="explainer-section">
-          <h3>2. Test the product at launch</h3>
-          <p>MVEP asks whether legal, operational, and economic equivalence are actually proven now. Ten diligence categories, each with a named artifact and a pass/fail test.</p>
-        </article>
-        <article class="explainer-section">
-          <h3>3. Monitor the control layer after approval</h3>
-          <p>CLII tracks whether the gateway layer&apos;s compliance posture is degrading over time. Approval starts the monitoring cycle; CLII is the drift detector.</p>
-        </article>
-        <article class="explainer-section">
-          <h3>4. Map balance-sheet and system-level consequences</h3>
-          <p>The Credit Migration Model asks where deposits move, how reserve growth changes funding quality, and which bank balance sheets absorb the shift. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of the Federal Reserve&apos;s December 2025 argument that stablecoins can reduce, recycle, or restructure deposits, including by shifting bank funding toward more concentrated, uninsured, wholesale balances.</p>
-        </article>
-        <article class="explainer-section">
-          <h3>5. Identify who controls the operating layer right now</h3>
-          <p>The Regime Dashboard tracks routing defaults, sweep ownership, hold authority, disclosure burden, and where compliance has actually attached. CLARITY-style provisions (House-passed form analyzed here) are the current policy input.</p>
+        <article class="card card--polished card--accent-b" id="three-strategies-framework">
+          <h3>Tokenization Infrastructure Map</h3>
+          <p class="card-eyebrow">Classification &middot; Institutional tokenization</p>
+          <p><strong>What it does.</strong> Classifies institutional US-securities tokenization as three strategies: a regulated collateral circuit (tokenized Treasuries + bank-issued deposit tokens), a multi-issuer yield stack (five fund issuers with a smart redemption router), and tokenized equity rails on Nasdaq and NYSE. Maps which entities recur across strategies.</p>
+          <p><strong>Why it matters.</strong> System-level risk lives in the entities that connect the strategies, not in the strategies themselves. Securitize, an SEC-registered transfer agent, sits in all three; any new strategy that depends on the same transfer agent, custodian, or redemption router inherits that concentration by default.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A fourth strategy emerging, a structural change at a cross-strategy entity, or a regulatory change that re-partitions which entity types can participate.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/three-strategies">Open Three Tokenization Strategies <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
 
     <section class="reveal" id="core-frameworks" aria-labelledby="frameworks-title">
       <div class="section-title">
-        <h2 id="frameworks-title">Core frameworks</h2>
+        <h2 id="frameworks-title">Track A frameworks: digital money and market infrastructure</h2>
+        <p>Seven frameworks for testing stablecoin issuers, tokenized deposits, deposit tokens, yield wrappers, and the control-layer operators that sit above them. Includes MGCPT and TCRD as derivative frameworks operationalizing MVEP categories.</p>
       </div>
       <div class="grid grid--halves">
         <article class="card card--polished card--accent-a" id="clii">
-          <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
           <h3>CLII (Control Layer Intensity Index)</h3>
-          <p><strong>What it does.</strong> Measures how heavily regulated each gateway is across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Each gateway receives a weighted score from 0 to 1.</p>
-          <p><strong>What it is for.</strong> Ongoing monitoring after a product is approved. Tracks whether a gateway&apos;s custody arrangements, transaction screening, reconciliation practices, or volume concentration are changing in ways that should trigger review.</p>
-          <p><strong>Stress performance is a separate question.</strong> A high CLII score means a gateway faces more regulatory obligations. Stress performance depends on reserve-bank exposure, counterparty concentration, and other entity-specific conditions that sit outside what the CLII measures. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A gateway crossing from one tier to another (for example Tier 1 to Tier 2), a significant drop in any single dimension score, a jump in volume concentration through one gateway, or a new dependency where traffic that previously spread across multiple gateways now routes through one.</p>
-          <p><strong>Re-evaluation outcomes.</strong> Reaffirmation (no change needed), conditional continuation (with a defined remediation timeline), or suspension of new issuance until the issue is resolved.</p>
+          <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
+          <p><strong>What it does.</strong> Scores each gateway across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
+          <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="mvep">
-          <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
-          <p><strong>What it does.</strong> Tests whether a tokenized product preserves three equivalence claims: legal (does the holder have the same rights?), operational (does the infrastructure perform the same functions?), and economic (does the product behave the same way under stress?).</p>
-          <p><strong>What it is for.</strong> Entry-gate diligence before launch or committee approval. A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption.</p>
-          <p><strong>How it works.</strong> A ten-category diligence pack for testing whether a tokenized product preserves the legal rights, operational resilience, and economic behavior of the traditional asset under stress. Covers rights parity, system of record, reconciliation, custody, insolvency posture, settlement finality, exception handling, governance, disclosures, and collateral operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or a situation where it is unclear who absorbs losses if the product fails.</p>
-          <p><strong>Relationship to CLII.</strong> MVEP is the entry gate (is equivalence proven now?). CLII is the drift detector (is the control layer degrading over time?). A product can pass MVEP at launch and subsequently fail one of its categories; CLII flags that drift.</p>
+          <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
+          <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: rights parity, system of record, reconciliation, custody, insolvency posture, settlement finality, exception handling, governance, disclosures, and collateral operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
+          <p><strong>Why it matters.</strong> A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-c" id="mgcpt">
+          <h3>MGCPT (MVEP-gated Conditional Pass-Through) <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></h3>
+          <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
+          <p><strong>What it does.</strong> Conditions FDIC pass-through deposit insurance eligibility on MVEP qualification across six pass-through-critical categories (rights parity, custody, insolvency posture, settlement finality, governance, disclosures). Statutory anchor: 12 U.S.C. &sect; 5903(e)(1) and (e)(2); IOLTA (Interest on Lawyer Trust Accounts), Section 529 plans, and custodial brokerage accounts as direct analogies.</p>
+          <p><strong>Why it matters.</strong> The FDIC&apos;s proposed &sect; 330.11(a)(3) categorically forecloses pass-through coverage for PPSI-related deposits. AG19 letter Recommendation 7 proposes MGCPT as the substantive alternative: condition pass-through on MVEP qualification, retaining categorical foreclosure for non-qualified PPSIs. Preserves the FDIC&apos;s prudential interest while honoring the GENIUS Act&apos;s intent that qualified PPSIs be treated as bank-deposit-equivalent when their architecture supports it.</p>
+          <p><strong>What should trigger re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
+          <p class="framework-card-action"><a class="action secondary" href="/letters/fdic-ag19-ppsi-activities/">Open AG19 Recommendation 7 <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-d" id="tcrd">
+          <h3>TCRD (Three-Category Reserve Disclosure)</h3>
+          <p class="card-eyebrow">Derivative on MVEP &middot; Reserve disclosure</p>
+          <p><strong>What it does.</strong> Customer-facing disclosure template derived from MVEP Categories 1, 4, and 5. Surfaces three substantive disclosure items at the point-of-use: legal claim (the holder&apos;s claim on the reserve), reserve composition (what the reserves are made of), and reserve location and custody (where the reserves sit, with which custodian).</p>
+          <p><strong>Why it matters.</strong> MVEP scores the artifact (rights-parity memo with counsel sign-off, segregation model with custody agreement, bankruptcy-priority memo with scenario analysis); TCRD is the displayable summary surfacing that artifact&apos;s substantive content where holders actually see it. MVEP without TCRD leaves the diligence content invisible to holders; TCRD without MVEP leaves the displayable summary unanchored to verifiable artifacts. Cross-letter operationalized across OCC supplemental, Treasury Section II, and FDIC AG19 Recommendations 1 to 6.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A change in the underlying MVEP Categories 1, 4, or 5 artifacts; a new disclosure rule in PPSI rulemaking; or new cross-letter operationalization that extends the template.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="credit-migration-model">
-          <p class="card-eyebrow">Deposit analysis &middot; Funding-structure shift</p>
           <h3>Credit Migration Model <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></h3>
-          <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales.</p>
-          <p><strong>What it is for.</strong> Understanding whether reserve growth reduces, recycles, or restructures deposits; which banks gain or lose funding; and how funding quality changes even when aggregate deposits hold steady.</p>
-          <p><strong>Why it matters.</strong> The policy question is whether bank funding becomes more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserve balances. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis of that argument; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
+          <p class="card-eyebrow">Deposit analysis &middot; Funding-structure shift</p>
+          <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales: which banks gain or lose funding, how funding quality changes, and whether reserves reduce, recycle, or restructure deposits.</p>
+          <p><strong>Why it matters.</strong> Bank funding can become more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserves. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
           <p><strong>What should trigger re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="regime-dashboard">
-          <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
           <h3>Regime Dashboard</h3>
-          <p><strong>What it does.</strong> Classifies who controls the operating layer right now: who owns the interface, who sets the default routing, who holds the authority to freeze or delay transactions, and who bears the compliance obligations.</p>
-          <p><strong>What it is for.</strong> Tracking where value capture, liability, and compliance actually sit in a live product: routing defaults, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
-          <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in the routing defaults, in the hold and release workflows, and in the audit logs. The question is which entity becomes the one that regulators hold accountable for compliance, and whether that entity also captures the economics (fees, float, data) or whether compliance obligations and economic benefits end up at different points in the stack.</p>
-          <p><strong>What should trigger re-evaluation.</strong> A shift in who owns the front-end interface, who controls default routing, where yield is allowed to live, or where hold and reporting obligations attach.</p>
+          <p class="card-eyebrow">Control layer &middot; Operating-regime mapping</p>
+          <p><strong>What it does.</strong> Tracks who controls the operating layer right now: interface ownership, default routing, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
+          <p><strong>Why it matters.</strong> CLARITY-style provisions (House-passed form analyzed here) attach compliance where it becomes operational: at the interface, in routing defaults, in hold-and-release workflows, and in audit logs. The question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A shift in front-end interface ownership, default routing control, where yield is allowed to live, or where hold and reporting obligations attach.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
           <p class="framework-card-action"><a class="action secondary" href="/contact">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-e" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
-          <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
           <h3>Tokenized Dollar Regime Classifier</h3>
-          <p><strong>What it does.</strong> Classifies the current U.S. dollar operating-layer equilibrium along two axes: control-layer dominance (how much of the economic surface is captured by interfaces, routers, and sweep products that regulators attach obligations to) and issuer dominance (how much accrues to the stablecoin or deposit-token issuer layer itself). Produces one of three regime labels: Control-dominant, Issuer-dominant, or Split / Contested.</p>
-          <p><strong>What it is for.</strong> Market-structure classification over time. Which layer of the tokenized-dollar stack is capturing the economics, who bears the regulatory burden, and whether policy changes are shifting the equilibrium. Not a safety or solvency model; tracks structural power allocation.</p>
-          <p><strong>How it works.</strong> Each axis scored 0 to 6 via three measurable components. ControlScore captures obligated-interface share of flows, default sweep and wrapper penetration, and holds or freeze usage as operating norm. IssuerScore captures settlement-object concentration, reserve carry retention, and direct mint and burn authority. Classification rule uses a 3-month rolling average (updated weekly in stress): Control-dominant if ControlScore is 4 or more and exceeds IssuerScore by 2 or more; Issuer-dominant by the mirror test; Split / Contested otherwise.</p>
-          <p><strong>What should trigger re-evaluation.</strong> Three or more of five high-beta policy signposts moving in the same direction within a quarter (GENIUS implementation rulemaking; CBDC posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes); or two or more component scores flipping within a quarter.</p>
-          <p><strong>Relationship to CLII and MVEP.</strong> Complementary, not substitute. CLII scores per-gateway regulatory posture (entity-level). MVEP scores per-product institutional diligence. Regime Classifier scores the market-structure equilibrium (system-level) those entities operate in. All three can be computed for the same universe of operators; each answers a different question.</p>
+          <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
+          <p><strong>What it does.</strong> Classifies the U.S. dollar operating-layer equilibrium along two axes, each scored 0 to 6 via three components. ControlScore = obligated-interface share of flows + default sweep and wrapper penetration + holds-or-freeze usage as operating norm. IssuerScore = settlement-object concentration + reserve carry retention + direct mint and burn authority. Classification rule (3-month rolling average, weekly in stress): Control-dominant (ControlScore &ge; 4 and beats IssuerScore by &ge; 2), Issuer-dominant (mirror test), or Split / Contested otherwise.</p>
+          <p><strong>Why it matters.</strong> Names which layer captures the economics, who bears the regulatory burden, and whether policy is shifting the equilibrium. Tracks structural power allocation, not safety or solvency.</p>
+          <p><strong>What should trigger re-evaluation.</strong> Three or more of five high-beta policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes), or two or more component scores flipping in a quarter.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
 
+    <section class="reveal" id="track-b-frameworks" aria-labelledby="track-b-title">
+      <div class="section-title">
+        <h2 id="track-b-title">Track B frameworks: tokenomics and DePIN</h2>
+        <p>Four frameworks for testing token-economy mechanism design, operational resilience, governance concentration, and burn-driven fiscal sustainability across DePIN (Decentralized Physical Infrastructure Networks, where token incentives coordinate real-world hardware deployment) and adjacent token systems. They extend the same control-layer and stress-first logic from Track A to the protocol layer.</p>
+      </div>
+      <div class="grid grid--halves">
+        <article class="card card--polished card--accent-a" id="operational-risk-taxonomy">
+          <h3>Operational Risk Taxonomy</h3>
+          <p class="card-eyebrow">Diligence &middot; Operational resilience</p>
+          <p><strong>What it does.</strong> Maps 74 risk vectors to 64 testable controls and 31 program objectives across a 624-scenario simulation battery. Calibrated from Ethereum, Helium, GEODNET, and Filecoin production data using ValOS (Validator Operating System) and NORS (Node Operator Risk Standard) frameworks.</p>
+          <p><strong>Why it matters.</strong> Economic-only simulations miss the infrastructure failures that change token-economy behavior. Reputation systems gated by hard thresholds can become unworkable under routine operational risk; adaptive emission control can be more resilient than static designs under the same stress.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A new failure pattern, a node-operator concentration shift, a reputation-system threshold crossing, or a previously unmodeled correlation between economic and operational stress.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/operational-risk">Open Operational Risk in Token Economies <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-b" id="burn-mechanism-classification">
+          <h3>Burn Mechanism Classification</h3>
+          <p class="card-eyebrow">Classification &middot; Fiscal sustainability</p>
+          <p><strong>What it does.</strong> Classifies token networks by payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates carrier-contract burn models from subscription models.</p>
+          <p><strong>Why it matters.</strong> Burn-mechanism design, not network size, drives sustainability. Helium's carrier-contract model: HHI 0.22, Top-5 demand sources roughly 90% of burn volume. GEODNET's subscription model: HHI 0.055, Top-5 = 40.4%. The burn-mint equilibrium (BME) crossing requires both fee growth and supply compression, not either alone.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A change in S2R trajectory (not just level), an emission halving or other supply-compression event, a shift in demand concentration, or BME parity crossing.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-c" id="governance-concentration-diagnostic">
+          <h3>Governance-Concentration Diagnostic</h3>
+          <p class="card-eyebrow">Diagnostic &middot; Governance design</p>
+          <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 40-protocol cross-section (15 DePIN, 15 DeFi (decentralized finance), 8 L1/L2 (Layer 1 and Layer 2 blockchain infrastructure) protocols, 2 social or stagnated). Lead correlation is null (Pearson r = 0.18, p = 0.28).</p>
+          <p><strong>Why it matters.</strong> Sector membership predicts concentration (Mann-Whitney p = 0.014); insider retention amplifies it (Spearman rho = 0.54); delegation amplifies token concentration into voting concentration by 3 to 6 times in DePIN. Applies a five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) with a Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-d" id="adaptive-tokenomics">
+          <h3>Adaptive-Tokenomics Pattern Map</h3>
+          <p class="card-eyebrow">Stress design &middot; Mechanism demonstration</p>
+          <p><strong>What it does.</strong> Integrates productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional-integral-derivative feedback controller, a standard control architecture used to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios.</p>
+          <p><strong>Why it matters.</strong> Integrated design surfaces structural properties that no single-mechanism analysis can. Results are mechanism demonstrations under stated assumptions, not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used to illustrate the framework.</p>
+          <p><strong>What should trigger re-evaluation.</strong> A new stress scenario, a parameter range not previously modeled, or a real-deployment data point that contradicts the simulation.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/adaptive-tokenomics">Open Adaptive Tokenomics <span aria-hidden="true">→</span></a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal" id="frameworks-in-rulemaking" aria-labelledby="rulemaking-title">
+      <div class="section-title">
+        <h2 id="rulemaking-title">Frameworks in active rulemaking</h2>
+        <p>Eight federal comment letters apply these frameworks to live OCC, FDIC, FinCEN, Treasury, and joint banking-agency dockets. Each letter ties a framework primitive to a specific regulatory question.</p>
+      </div>
+      <div class="structure-table-wrap" role="region" aria-label="Federal comment letter program">
+        <table class="agenda-table">
+          <thead>
+            <tr>
+              <th scope="col">Letter</th>
+              <th scope="col">Docket</th>
+              <th scope="col">Framework invoked</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="/letters/occ-mvep-v4/">OCC PPSI MVEP comment</a></td>
+              <td>OCC-2025-0372</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">MVEP</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/occ-supplemental/">OCC PPSI supplemental comment</a></td>
+              <td><a class="term term-link" href="/letters/occ-supplemental/">OCC NPRM supplement</a></td>
+              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">TCRD</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fdic-ag20-ppsi-application/">FDIC AG20 PPSI application-rule comment</a></td>
+              <td>RIN 3064-AG20</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">control-layer</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fdic-ag19-ppsi-activities/">FDIC AG19 PPSI activities comment</a></td>
+              <td>RIN 3064-AG19</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">MGCPT</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fincen-aml-cft/">FinCEN AML/CFT comment</a></td>
+              <td>FINCEN-2026-0034</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fincen-ofac-ppsi-sanctions/">FinCEN-OFAC PPSI sanctions comment</a></td>
+              <td>FINCEN-2026-0100</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">freeze</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/treasury-genius-state-similarity/">Treasury GENIUS state-similarity comment</a></td>
+              <td>TREAS-DO-2026-0232</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">TCRD</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">licensing</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/banking-agencies-joint-aml/">Banking agencies joint AML/CFT comment</a></td>
+              <td>91 FR 18304</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="track-bridge"><a class="action secondary" href="/letters">View all letters <span aria-hidden="true">→</span></a></p>
+    </section>
+
+    <section class="reveal" id="ai-extension" aria-labelledby="ai-extension-title">
+      <div class="section-title">
+        <h2 id="ai-extension-title">Extending the frameworks to AI operators</h2>
+        <p>CLII and MVEP carry from stablecoin gateways to AI deployments without losing their structure. The <strong>CLII-AI</strong> and <strong>MVEP-AI</strong> extension tracks transfer the control-layer vocabulary (routing defaults, hold authority, monitoring hooks, exception handling) to AI infrastructure and governance questions.</p>
+      </div>
+      <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure">View AI Governance profile <span aria-hidden="true">→</span></a></p>
+    </section>
+
     <section class="reveal" id="framework-lives" aria-labelledby="framework-lives-title">
       <div class="section-title">
         <h2 id="framework-lives-title">Where each framework lives</h2>
+        <dl class="framework-relations">
+          <div class="framework-relations-row">
+            <dt>MVEP</dt>
+            <dd><span class="framework-relations-role">Entry gate</span><span class="framework-relations-q">Is equivalence proven now?</span></dd>
+          </div>
+          <div class="framework-relations-row">
+            <dt>CLII</dt>
+            <dd><span class="framework-relations-role">Drift detector</span><span class="framework-relations-q">Is the control layer degrading over time?</span></dd>
+          </div>
+          <div class="framework-relations-row">
+            <dt><a href="/papers/dollar-v3/">Tokenized Dollar Regime Classifier</a></dt>
+            <dd><span class="framework-relations-role">Market-structure equilibrium</span><span class="framework-relations-q">Sits above both; system-level view.</span></dd>
+          </div>
+        </dl>
       </div>
       <div class="structure-table-wrap" role="region" aria-label="Framework primary paper home">
         <table class="agenda-table">
           <thead>
             <tr>
               <th scope="col">Framework</th>
-              <th scope="col">Primary use</th>
-              <th scope="col">Current home</th>
+              <th scope="col">What it measures</th>
+              <th scope="col">Home</th>
             </tr>
           </thead>
           <tbody>
+            <tr class="agenda-table-group"><td colspan="3">Classification frameworks</td></tr>
+            <tr>
+              <td>Comparative Framework for Dollar Products</td>
+              <td>Regulation-vs-equivalence position (7 products)</td>
+              <td><a href="/papers/seven-dollars/"><em>Seven Dollars</em></a></td>
+            </tr>
+            <tr>
+              <td>Tokenization Infrastructure Map</td>
+              <td>3-strategy taxonomy with cross-strategy entity overlap</td>
+              <td><a href="/papers/three-strategies/"><em>Three Tokenization Strategies</em></a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="agenda-table-group"><td colspan="3">Track A &middot; Digital money</td></tr>
             <tr>
               <td>CLII</td>
-              <td>Gateway monitoring after approval</td>
+              <td>Gateway regulatory intensity, 0 to 1 across 5 dimensions</td>
               <td><a href="/papers/routing-the-dollar/"><em>Routing the Dollar</em></a></td>
             </tr>
             <tr>
               <td>MVEP</td>
-              <td>Entry-gate diligence before launch</td>
+              <td>10-category equivalence pass or fail (legal, operational, economic)</td>
               <td><a href="/papers/mvep/"><em>Minimum Viable Equivalence Pack</em></a></td>
             </tr>
             <tr>
-              <td>Credit Migration Model</td>
-              <td>Deposit and funding-structure analysis</td>
+              <td>MGCPT <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></td>
+              <td>FDIC pass-through gating on 6 MVEP categories</td>
+              <td><a href="/letters/fdic-ag19-ppsi-activities/"><em>AG19 Recommendation 7</em></a></td>
+            </tr>
+            <tr>
+              <td>TCRD</td>
+              <td>Customer-facing reserve disclosure (MVEP Categories 1, 4, 5)</td>
+              <td><a href="/papers/mvep/"><em>Minimum Viable Equivalence Pack</em></a></td>
+            </tr>
+            <tr>
+              <td>Credit Migration Model <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></td>
+              <td>Deposit concentration and funding-quality shift</td>
               <td><a href="/papers/dollar-v3/"><em>Dollar v3</em></a></td>
             </tr>
             <tr>
               <td>Regime Dashboard</td>
-              <td>Control-layer and operating-regime analysis</td>
+              <td>Routing defaults, sweep ownership, hold authority</td>
               <td><a href="/papers/control-layer-war/"><em>The Control Layer War</em></a></td>
             </tr>
             <tr>
               <td>Tokenized Dollar Regime Classifier</td>
-              <td>Market-structure equilibrium classification</td>
+              <td>ControlScore vs IssuerScore (0 to 6 each)</td>
               <td><a href="/papers/dollar-v3/"><em>Dollar v3</em></a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="agenda-table-group"><td colspan="3">Track B &middot; Token economies</td></tr>
+            <tr>
+              <td>Operational Risk Taxonomy</td>
+              <td>74 vectors, 64 controls, 624-scenario battery</td>
+              <td><a href="/papers/operational-risk/"><em>Operational Risk in Token Economies</em></a></td>
+            </tr>
+            <tr>
+              <td>Burn Mechanism Classification</td>
+              <td>S2R ratio and HHI on demand concentration</td>
+              <td><a href="/papers/who-burns-the-tokens/"><em>Who Burns the Tokens?</em></a></td>
+            </tr>
+            <tr>
+              <td>Governance-Concentration Diagnostic</td>
+              <td>Token-vs-voting concentration ratio (five-lens framework)</td>
+              <td><a href="/papers/governance-concentration/"><em>Governance Concentration</em></a></td>
+            </tr>
+            <tr>
+              <td>Adaptive-Tokenomics Pattern Map</td>
+              <td>PID-controlled emissions across 5-year stress battery</td>
+              <td><a href="/papers/adaptive-tokenomics/"><em>Adaptive Tokenomics</em></a></td>
             </tr>
           </tbody>
         </table>
@@ -380,23 +657,23 @@
       </div>
       <div class="grid grid--halves">
         <article class="card card--polished card--accent-a">
-          <p class="card-eyebrow">Principle &middot; Source discipline</p>
           <h3>Evidence-led</h3>
+          <p class="card-eyebrow">Principle &middot; Source discipline</p>
           <p>Every claim ties to a source, a threshold, or a tested condition. No claim ships without one.</p>
         </article>
         <article class="card card--polished card--accent-b">
-          <p class="card-eyebrow">Principle &middot; Stress-first orientation</p>
           <h3>Stress-first design</h3>
+          <p class="card-eyebrow">Principle &middot; Stress-first orientation</p>
           <p>Each framework names where stress enters first, which thresholds force re-evaluation, and what evidence should change the view.</p>
         </article>
         <article class="card card--polished card--accent-c">
-          <p class="card-eyebrow">Principle &middot; Accountability</p>
           <h3>Named decision owners</h3>
+          <p class="card-eyebrow">Principle &middot; Accountability</p>
           <p>Every framework points to who approves, who monitors, who escalates, and what event forces action.</p>
         </article>
         <article class="card card--polished card--accent-d">
-          <p class="card-eyebrow">Principle &middot; Reproducibility</p>
           <h3>Versioned and replicable</h3>
+          <p class="card-eyebrow">Principle &middot; Reproducibility</p>
           <p>Frameworks publish when the evidence is strong enough to support real operating decisions. Manuscripts and code travel with them when possible.</p>
         </article>
       </div>
@@ -407,13 +684,28 @@
       <div class="section-title">
         <h2 id="go-deeper-title">Go deeper</h2>
       </div>
-      <ul class="structure-go-deeper-list">
-        <li>Start with <a href="/overview">Overview</a> for definitions and entry points</li>
-        <li>Go to <a href="/research">Research Library</a> for papers and summaries</li>
-        <li>View <a href="/resume">Resume</a> for decision-context versions, including the new <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a> profile</li>
-        <li><a href="/contact">Request access</a> to the dashboard and memo set</li>
-        <li>View <a href="/research#track-b">Tokenomics &amp; DePIN track</a> for mechanism design and operational failure research</li>
-      </ul>
+      <div class="go-deeper-grid">
+        <a class="go-deeper-card" href="/overview">
+          <span class="go-deeper-card-title">Overview</span>
+          <span class="go-deeper-card-desc">Definitions and entry points</span>
+        </a>
+        <a class="go-deeper-card" href="/research">
+          <span class="go-deeper-card-title">Research Library</span>
+          <span class="go-deeper-card-desc">Papers and summaries</span>
+        </a>
+        <a class="go-deeper-card" href="/resume">
+          <span class="go-deeper-card-title">Resume</span>
+          <span class="go-deeper-card-desc">Decision-context versions, including AI Governance &amp; Infrastructure</span>
+        </a>
+        <a class="go-deeper-card" href="/research#track-b">
+          <span class="go-deeper-card-title">Tokenomics &amp; DePIN track</span>
+          <span class="go-deeper-card-desc">Mechanism design and operational failure research</span>
+        </a>
+        <a class="go-deeper-card" href="/contact">
+          <span class="go-deeper-card-title">Request access</span>
+          <span class="go-deeper-card-desc">Dashboard and memo set</span>
+        </a>
+      </div>
     </section>
 
     <footer class="site-footer reveal">
