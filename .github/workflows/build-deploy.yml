@@ -72,7 +72,7 @@ jobs:
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Post-process (PurgeCSS + minify + critical CSS)
-        run: npm run build:postprocess
+        run: npm run build:postprocess:with-purgecss
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3

@@ -13,13 +13,29 @@
       }
     })();
   </script>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
   </script>
     <meta charset="utf-8" />
   <meta name="robots" content="noindex" />

@@ -27,6 +27,22 @@ module.exports = {
       // Matrix-hover/scroll classes toggled in script.js at runtime.
       /^matrix-/,
       /^mtx-/,
+      // Paper TOC + action-bar elements built dynamically by script.js.
+      /^paper-toc/,
+      /^paper-action-bar/,
+      // Term-wrap nodes built by wrap-terms-build.mjs + script.js.
+      'term',
+      'term-link',
+      // Reveal + state-toggle classes (string literals in script.js, but
+      // explicit safelist guards against any future content-scan miss).
+      'active',
+      'visible',
+      'is-visible',
+      'expanded',
+      'open',
+      'nav-mobile-open',
+      'newsletter-submitted',
+      'role-paths-flash',
       // Hover and focus state variants (PurgeCSS generally handles these
       // but an explicit safelist prevents false positives).
       /:hover$/,
