@@ -6111,42 +6111,50 @@
   }
 })();
 
-/* Newsletter forms: post to Substack via hidden iframe, swap inline "Thanks
-   for subscribing" confirmation. Removes the new-tab redirect to substack.com
-   on submit. Applies to every form whose action targets the Substack free-
-   subscribe endpoint. */
+/* Newsletter forms: fire the Substack subscribe POST via fetch (no-cors) so
+   the request lands deterministically, then swap inline "Thanks for
+   subscribing" confirmation. Removes the new-tab redirect to substack.com.
+   no-cors yields an opaque response we cannot read, but Substack still
+   receives and processes the subscription (same as the original form POST
+   to action=substack/api/v1/free with target=_blank). */
 (function(){
   if(typeof document === 'undefined') return;
+  if(typeof window.fetch !== 'function') return;
 
   function init(){
     try {
       var forms = document.querySelectorAll('form[action*="tokenizationsystems.substack.com"]');
       if(!forms.length) return;
 
-      var sinkName = 'newsletter-sink';
-      var sink = document.querySelector('iframe[name="' + sinkName + '"]');
-      if(!sink){
-        sink = document.createElement('iframe');
-        sink.name = sinkName;
-        sink.title = 'Newsletter submission sink';
-        sink.setAttribute('aria-hidden', 'true');
-        sink.setAttribute('tabindex', '-1');
-        sink.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
-        document.body.appendChild(sink);
-      }
-
       forms.forEach(function(form){
-        form.setAttribute('target', sinkName);
-        form.removeAttribute('rel');
-        form.addEventListener('submit', function(){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+
+          var params = new URLSearchParams();
+          try {
+            var fd = new FormData(form);
+            fd.forEach(function(v, k){ params.append(k, String(v)); });
+          } catch(_){
+            var inputs = form.querySelectorAll('input[name]');
+            for(var i = 0; i < inputs.length; i++){
+              params.append(inputs[i].name, inputs[i].value || '');
+            }
+          }
+
+          try {
+            fetch(form.action, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: params
+            }).catch(function(){ /* opaque response; ignore */ });
+          } catch(_){ /* fail-soft */ }
+
           var thanks = document.createElement('div');
           thanks.className = 'newsletter-thanks';
           thanks.setAttribute('role', 'status');
           thanks.setAttribute('aria-live', 'polite');
           thanks.textContent = 'Thanks for subscribing';
-          requestAnimationFrame(function(){
-            form.replaceWith(thanks);
-          });
+          form.replaceWith(thanks);
         });
       });
     } catch(e){
