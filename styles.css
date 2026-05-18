@@ -20043,6 +20043,13 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   }
 }
 
+/* Newsletter post-submit: hide the form (kept in DOM so the browser's
+   default form submission to the hidden iframe sink completes uninterrupted)
+   and let .newsletter-thanks take its place. */
+.newsletter-submitted{
+  display:none !important;
+}
+
 /* Newsletter post-submit confirmation: replaces the form inline (no new tab
    to substack.com). Fade-in green; sized to roughly the form footprint so
    layout does not jump when the form is swapped out. */
