@@ -20042,3 +20042,31 @@ footer.site-footer .footer-newsletter__privacy a:hover{
     width:100%;
   }
 }
+
+/* Newsletter post-submit confirmation: replaces the form inline (no new tab
+   to substack.com). Fade-in green; sized to roughly the form footprint so
+   layout does not jump when the form is swapped out. */
+.newsletter-thanks{
+  color:#16a34a;
+  font-weight:600;
+  font-size:1rem;
+  line-height:1.4;
+  padding:0.75rem 0;
+  opacity:0;
+  animation:newsletter-thanks-fade-in 420ms ease-out forwards;
+}
+.hero-newsletter-band .newsletter-thanks{
+  font-size:1.0625rem;
+  padding:0.85rem 0;
+}
+@keyframes newsletter-thanks-fade-in{
+  from{ opacity:0; transform:translateY(4px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .newsletter-thanks{
+    animation:none;
+    opacity:1;
+    transform:none;
+  }
+}

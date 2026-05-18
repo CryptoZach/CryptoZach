@@ -6110,3 +6110,53 @@
     init();
   }
 })();
+
+/* Newsletter forms: post to Substack via hidden iframe, swap inline "Thanks
+   for subscribing" confirmation. Removes the new-tab redirect to substack.com
+   on submit. Applies to every form whose action targets the Substack free-
+   subscribe endpoint. */
+(function(){
+  if(typeof document === 'undefined') return;
+
+  function init(){
+    try {
+      var forms = document.querySelectorAll('form[action*="tokenizationsystems.substack.com"]');
+      if(!forms.length) return;
+
+      var sinkName = 'newsletter-sink';
+      var sink = document.querySelector('iframe[name="' + sinkName + '"]');
+      if(!sink){
+        sink = document.createElement('iframe');
+        sink.name = sinkName;
+        sink.title = 'Newsletter submission sink';
+        sink.setAttribute('aria-hidden', 'true');
+        sink.setAttribute('tabindex', '-1');
+        sink.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
+        document.body.appendChild(sink);
+      }
+
+      forms.forEach(function(form){
+        form.setAttribute('target', sinkName);
+        form.removeAttribute('rel');
+        form.addEventListener('submit', function(){
+          var thanks = document.createElement('div');
+          thanks.className = 'newsletter-thanks';
+          thanks.setAttribute('role', 'status');
+          thanks.setAttribute('aria-live', 'polite');
+          thanks.textContent = 'Thanks for subscribing';
+          requestAnimationFrame(function(){
+            form.replaceWith(thanks);
+          });
+        });
+      });
+    } catch(e){
+      /* fail-soft: never break the page on newsletter init */
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
