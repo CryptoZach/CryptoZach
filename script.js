@@ -6111,40 +6111,42 @@
   }
 })();
 
-/* Newsletter forms: redirect the Substack subscribe POST from a new tab
-   (target=_blank) to a hidden iframe (target=newsletter-sink) so the user
-   never leaves the page. The form itself is submitted natively by the
-   browser (no preventDefault, no fetch) so the request is identical to the
-   prior working flow that Substack accepts. After submit, the form is
-   visually hidden (kept in DOM so the default submission completes) and
-   the inline "Thanks for subscribing" confirmation is inserted in its
-   place. */
+/* Newsletter forms: subscribe via Buttondown's embed-subscribe endpoint,
+   which publishes Access-Control-Allow-Origin: * so a cross-origin fetch
+   from tokenization.systems works without a redirect. preventDefault on
+   submit, POST email with fetch, swap the form for the inline green
+   "Thanks for subscribing" confirmation. (Previously this site posted to
+   Substack with target=_blank; Substack rejected cross-origin iframe POSTs
+   with 403 + X-Frame-Options: SAMEORIGIN, so the no-new-tab UX was only
+   reachable by switching providers.) */
 (function(){
   if(typeof document === 'undefined') return;
+  if(typeof window.fetch !== 'function') return;
 
   function init(){
     try {
-      var forms = document.querySelectorAll('form[action*="tokenizationsystems.substack.com"]');
+      var forms = document.querySelectorAll('form[action*="buttondown.email"]');
       if(!forms.length) return;
 
-      var sinkName = 'newsletter-sink';
-      var sink = document.querySelector('iframe[name="' + sinkName + '"]');
-      if(!sink){
-        sink = document.createElement('iframe');
-        sink.name = sinkName;
-        sink.title = 'Newsletter submission sink';
-        sink.setAttribute('aria-hidden', 'true');
-        sink.setAttribute('tabindex', '-1');
-        sink.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
-        document.body.appendChild(sink);
-      }
-
       forms.forEach(function(form){
-        form.setAttribute('target', sinkName);
-        form.removeAttribute('rel');
-        form.addEventListener('submit', function(){
-          var existingThanks = form.parentNode && form.parentNode.querySelector(':scope > .newsletter-thanks');
-          if(existingThanks) return;
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+
+          var emailInput = form.querySelector('input[type="email"]');
+          var email = emailInput && emailInput.value ? emailInput.value.trim() : '';
+          if(!email) return;
+
+          var params = new URLSearchParams();
+          params.append('email', email);
+
+          try {
+            fetch(form.action, {
+              method: 'POST',
+              mode: 'cors',
+              body: params
+            }).catch(function(){ /* network failure; thanks shown optimistically */ });
+          } catch(_){ /* fail-soft */ }
+
           var thanks = document.createElement('div');
           thanks.className = 'newsletter-thanks';
           thanks.setAttribute('role', 'status');
