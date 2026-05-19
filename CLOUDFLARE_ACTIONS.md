@@ -67,15 +67,14 @@ The injected content also includes AI-crawler `Disallow` rules
 (GPTBot, ClaudeBot, Google-Extended, Bytespider, etc.), which may or may
 not be intended.
 
-### Decision needed first
+### Decision already made
 
-- **If the AI-crawler blocks ARE intended**: keep them but disable the
-  `Content-Signal` directive only. Cloudflare may not offer this granularity;
-  in that case, disable Managed Robots and replicate the desired blocks
-  directly in this repo's `robots.txt`.
-- **If the AI-crawler blocks are NOT intended** (you want AI crawlers to
-  see the site for training, retrieval, etc.): disable Managed Robots
-  entirely.
+The repo's `robots.txt` now includes explicit Disallow rules for 29
+AI-training and scraping crawlers (GPTBot, ClaudeBot, Google-Extended,
+CCBot, Bytespider, Meta-ExternalAgent, PerplexityBot, etc.). Disabling
+Cloudflare Managed Robots is therefore safe: the protective blocks
+survive because they ship from this repo. The only thing that disappears
+is the invalid `Content-Signal` directive that Lighthouse flags.
 
 ### Steps (Cloudflare dashboard)
 
@@ -88,31 +87,6 @@ not be intended.
 
 Alternative path: **Caching** > **Configuration** > look for **Crawler
 Hints** or **AI Crawl Control**.
-
-### If you want to keep some of the AI blocks
-
-After disabling Managed Robots, append the desired AI-crawler blocks to
-this repo's `robots.txt` (without the invalid `Content-Signal` directive):
-
-```
-# Block AI training crawlers
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
-```
-
-(Add or omit per your preference.)
 
 ### Verification
 
