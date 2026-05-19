@@ -1751,175 +1751,175 @@
     var mtxFiatNonUsd = { '€': 1, '£': 1, '¥': 1, '₩': 1, '₹': 1, '₣': 1, '₴': 1, '\uFDFC': 1 };
 
     var iconDefs = [
-      { src: '/icons/matrix/btc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/eth.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/sol.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdt2.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/dai.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/busd.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wlfi.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/usdp.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hnt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/fil.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/uni.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/build-sources/aave.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/xrp.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ada.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ada.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/avax.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/dot.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/atom.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ltc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/link.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/xlm.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/doge.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/trx.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/bnb.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/op.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/arb.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/near.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/apt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/sui.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/inj.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hyperliquid.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/tia.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/tia.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/xmr.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/zec.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/crv.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/crv.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ldo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/stx.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/mkr.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/xtz.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/algo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hbar.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ton.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ton.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/sei.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/sei.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wld.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/rndr.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/tao.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/kraken.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/layerzero.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wormhole.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ondo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/zrx.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/base.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ink.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/arc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/m0.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/stripe.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/circle.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/1inch.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/gemini.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/bitgo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/compound.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/okx.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/chainalysis.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/fireblocks.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wintermute.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/grayscale.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/binance.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/binance.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/paxos.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/aapl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/msft.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/jpm.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/jpmorgan.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/citi.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/gs.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/coinbase.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/sq.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/visa.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/kinexys.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/fednow.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ma.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/googl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/amzn.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/meta.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/x.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/facebook.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wmt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/nvda.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/tsla.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/amd.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/btc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/eth.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sol.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt2.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdt2.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dai.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/busd.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wlfi.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/usdp.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hnt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fil.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/uni.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/uni.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/build-sources/aave.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xrp.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xrp.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ada.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ada.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/avax.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dot.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/atom.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ltc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/link.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xlm.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/doge.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/trx.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bnb.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/op.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/arb.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/near.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/apt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sui.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/inj.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hyperliquid.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tia.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tia.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xmr.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/zec.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/crv.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/crv.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ldo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ldo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stx.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mkr.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/xtz.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/algo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hbar.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ton.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ton.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sei.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sei.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wld.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/rndr.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tao.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kraken.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/layerzero.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wormhole.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wormhole.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ondo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/zrx.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/base.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ink.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/arc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/m0.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stripe.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/circle.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/1inch.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/gemini.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bitgo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/compound.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/okx.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/chainalysis.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fireblocks.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wintermute.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/grayscale.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/binance.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/binance.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/paxos.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/paxos.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/aapl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/msft.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpm.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/jpmorgan.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/citi.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/gs.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/coinbase.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/coinbase.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/sq.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/visa.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/kinexys.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fednow.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ma.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/googl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/amzn.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/meta.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/x.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/facebook.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wmt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nvda.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/tsla.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/amd.webp', loaded: false, img: null, tinted: null },
       /* nflx removed: file not present */
-      { src: '/icons/matrix/bac.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wordmark-option-1/wfc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/schw.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/pypl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/venmo.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/cashapp.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/clearstreet.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wu.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/moneygram.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wise.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wise.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/intc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/csco.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/orcl.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/dis.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/mstr.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hood.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hood.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ibm.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bac.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wordmark-option-1/wfc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wordmark-option-1/wfc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/schw.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/pypl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/venmo.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/cashapp.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/clearstreet.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wu.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/moneygram.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wise.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wise.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/intc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/csco.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/orcl.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dis.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mstr.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/mstr.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hood.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hood.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ibm.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nasdaq.webp', loaded: false, img: null, tinted: null },
       /* Second Nasdaq slot: former NDX text ticker (macro index) now uses Nasdaq logo PNG only. */
-      { src: '/icons/matrix/nasdaq.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/nyse.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ice.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/revolut.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/block.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/blk.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/blk.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/securitize.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/bakkt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/fidelity.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/broadridge.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/franklin.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/wisdomtree.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/ubs.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/bnymellon.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/dtcc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/hsbc.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/stt.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/plaid.png', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/bybit.png', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nasdaq.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/nyse.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ice.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/revolut.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/block.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/blk.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/blk.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/securitize.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bakkt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/fidelity.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/broadridge.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/franklin.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/wisdomtree.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/ubs.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bnymellon.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/dtcc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/hsbc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/stt.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/plaid.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/bybit.webp', loaded: false, img: null, tinted: null },
       /* Fed removed: seal reads as ambiguous blob at matrix size. */
     ];
 
@@ -1930,7 +1930,7 @@
     });
 
     var mtxStockIconIdx = iconDefs.findIndex(function(d){
-      return /\/aapl\.png$/.test(d.src) || d.src.indexOf('aapl.png') >= 0;
+      return /\/aapl\.webp$/.test(d.src) || d.src.indexOf('aapl.webp') >= 0;
     });
     if(mtxStockIconIdx < 0){
       mtxStockIconIdx = iconDefs.length;
@@ -1939,16 +1939,16 @@
     var mtxStockIconDefs = iconDefs.slice(mtxStockIconIdx);
 
     var mtxCryptoPool = mtxCryptoTextList.map(function(v){ return { type: 'text', value: v }; });
-    var mtxCoreStableSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png'];
-    var mtxStablecoinSlugs = ['usdc.png', 'usdt.png', 'usdt2.png', 'dai.png', 'mkr.png', 'm0.png', 'circle.png'];
-    var mtxTopL1Slugs = ['btc.png', 'eth.png', 'sol.png'];
-    var mtxMajorL1Slugs = ['xrp.png', 'ada.png', 'avax.png', 'dot.png', 'bnb.png'];
+    var mtxCoreStableSlugs = ['usdc.webp', 'usdt.webp', 'usdt2.webp', 'dai.webp'];
+    var mtxStablecoinSlugs = ['usdc.webp', 'usdt.webp', 'usdt2.webp', 'dai.webp', 'mkr.webp', 'm0.webp', 'circle.webp'];
+    var mtxTopL1Slugs = ['btc.webp', 'eth.webp', 'sol.webp'];
+    var mtxMajorL1Slugs = ['xrp.webp', 'ada.webp', 'avax.webp', 'dot.webp', 'bnb.webp'];
     mtxCryptoIconDefs.forEach(function(def){
       var isCoreStable = mtxCoreStableSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isStable = mtxStablecoinSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isTopL1 = mtxTopL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var isMajorL1 = mtxMajorL1Slugs.some(function(s){ return def.src.indexOf(s) >= 0; });
-      var mtxInfraSlugs = ['chainalysis.png', 'fireblocks.png', 'wintermute.png', 'bitgo.png', 'compound.png', 'gemini.png', '1inch.png', 'okx.png', 'securitize.png', 'layerzero.png', 'coinbase.png', 'kraken.png', 'aave.png', 'crv.png', 'grayscale.png', 'binance.png', 'paxos.png'];
+      var mtxInfraSlugs = ['chainalysis.webp', 'fireblocks.webp', 'wintermute.webp', 'bitgo.webp', 'compound.webp', 'gemini.webp', '1inch.webp', 'okx.webp', 'securitize.webp', 'layerzero.webp', 'coinbase.webp', 'kraken.webp', 'aave.webp', 'crv.webp', 'grayscale.webp', 'binance.webp', 'paxos.webp'];
       var isInfra = mtxInfraSlugs.some(function(s){ return def.src.indexOf(s) >= 0; });
       var n = isCoreStable ? 8 : (isStable ? 5 : (isTopL1 ? 5 : (isMajorL1 ? 4 : (isInfra ? 4 : 3))));
       for(var k = 0; k < n; k++){
@@ -1959,15 +1959,15 @@
     var mtxTradPool = mtxTradTextChars.map(function(v){ return { type: 'text', value: v }; });
     /* Weight company logos in the trad stream so they read alongside fiat and macro tickers */
     mtxStockIconDefs.forEach(function(def){
-      var isAapl = def.src.indexOf('aapl.png') >= 0;
-      var n = (def.src.indexOf('visa.png') >= 0 || def.src.indexOf('tsla.png') >= 0) ? 7 : (isAapl ? 5 : 4);
+      var isAapl = def.src.indexOf('aapl.webp') >= 0;
+      var n = (def.src.indexOf('visa.webp') >= 0 || def.src.indexOf('tsla.webp') >= 0) ? 7 : (isAapl ? 5 : 4);
       var k;
       for(k = 0; k < n; k++){
         mtxTradPool.push({ type: 'icon', def: def });
       }
     });
     /* Former WTI text ticker: show Wormhole mark in trad stream (same def as crypto pool). */
-    var mtxWormholeTradDef = mtxCryptoIconDefs.find(function(d){ return d.src.indexOf('wormhole.png') >= 0; });
+    var mtxWormholeTradDef = mtxCryptoIconDefs.find(function(d){ return d.src.indexOf('wormhole.webp') >= 0; });
     if(mtxWormholeTradDef){
       mtxTradPool.push({ type: 'icon', def: mtxWormholeTradDef });
     }
@@ -2450,7 +2450,7 @@
 
     function mtxIsFranklinMatrixIcon(item){
       var src = item && item.def && item.def.src;
-      return !!(src && src.indexOf('franklin.png') >= 0);
+      return !!(src && src.indexOf('franklin.webp') >= 0);
     }
 
     /* Drop head-wake samples and mesh ripples so glow trails do not outlive the fast trail purge. */
@@ -2785,7 +2785,7 @@
     }
 
     function mtxIsBitcoinItem(item) {
-      if (item.type === 'icon' && item.def && item.def.src && item.def.src.indexOf('btc.png') >= 0) return true;
+      if (item.type === 'icon' && item.def && item.def.src && item.def.src.indexOf('btc.webp') >= 0) return true;
       if (item.type === 'text' && item.value === '₿') return true;
       return false;
     }
@@ -2823,54 +2823,54 @@
           var dMin = mtxIconDrawSizeMin;
           var dMax = mtxIconDrawSizeMax;
           /* USDT + Coinbase: +2pt min/max so these marks read slightly larger in the trail */
-          if(srcKey2.indexOf('usdt2.png') >= 0 || srcKey2.indexOf('usdt.png') >= 0 || srcKey2.indexOf('coinbase.png') >= 0){
+          if(srcKey2.indexOf('usdt2.webp') >= 0 || srcKey2.indexOf('usdt.webp') >= 0 || srcKey2.indexOf('coinbase.webp') >= 0){
             dMin += 2;
             dMax += 2;
           }
           ds = dMin + Math.random() * (dMax - dMin);
         }
-        if(item.def && item.def.src && item.def.src.indexOf('franklin.png') >= 0){
+        if(item.def && item.def.src && item.def.src.indexOf('franklin.webp') >= 0){
           ds = 44 + Math.random() * 20;
-        } else if(item.def && item.def.src && item.def.src.indexOf('blk.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('blk.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('layerzero.webp') >= 0){
           ds = mtxIconLZDrawSizeMin + Math.random() * (mtxIconLZDrawSizeMax - mtxIconLZDrawSizeMin);
-        } else if(item.def && item.def.src && item.def.src.indexOf('uni.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('uni.webp') >= 0){
           ds = mtxIconLZUniDrawSizeMin + Math.random() * (mtxIconLZUniDrawSizeMax - mtxIconLZUniDrawSizeMin);
-        } else if(item.def && item.def.src && item.def.src.indexOf('crv.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('crv.webp') >= 0){
           ds = Math.min(ds + 6, 38);
-        } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('hyperliquid.webp') >= 0){
           ds = Math.min(ds + 4, 34);
-        } else if(item.def && item.def.src && item.def.src.indexOf('link.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('link.webp') >= 0){
           ds = Math.max(ds, 24);
-        } else if(item.def && item.def.src && item.def.src.indexOf('wintermute.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('wintermute.webp') >= 0){
           /* Wireframe mark: keep above default min so strokes stay visible in the trail */
           ds = Math.max(ds, 30);
-        } else if(item.def && item.def.src && item.def.src.indexOf('okx.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('okx.webp') >= 0){
           /* Wide thin-stroke wordmark: needs enough px when drawn square */
           ds = Math.max(ds, 32);
-        } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('fidelity.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('mstr.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('mstr.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('m0.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('m0.webp') >= 0){
           ds = Math.min(ds + 6, 32);
-        } else if(item.def && item.def.src && (item.def.src.indexOf('csco.png') >= 0 || item.def.src.indexOf('amd.png') >= 0 || item.def.src.indexOf('ink.png') >= 0 || item.def.src.indexOf('mkr.png') >= 0)){
+        } else if(item.def && item.def.src && (item.def.src.indexOf('csco.webp') >= 0 || item.def.src.indexOf('amd.webp') >= 0 || item.def.src.indexOf('ink.webp') >= 0 || item.def.src.indexOf('mkr.webp') >= 0)){
           /* Thin-line marks: Maker, Cisco, AMD, Ink need more px or they wash out */
           ds = Math.max(ds, 34);
-        } else if(item.def && item.def.src && item.def.src.indexOf('gs.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('gs.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('wfc.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('wfc.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('jpmorgan.png') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('jpmorgan.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && (item.def.src.indexOf('visa.png') >= 0 || item.def.src.indexOf('jpm.png') >= 0 || item.def.src.indexOf('citi.png') >= 0 || item.def.src.indexOf('bac.png') >= 0 || item.def.src.indexOf('ma.png') >= 0)){
+        } else if(item.def && item.def.src && (item.def.src.indexOf('visa.webp') >= 0 || item.def.src.indexOf('jpm.webp') >= 0 || item.def.src.indexOf('citi.webp') >= 0 || item.def.src.indexOf('bac.webp') >= 0 || item.def.src.indexOf('ma.webp') >= 0)){
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.png') >= 0 || item.def.src.indexOf('kinexys.png') >= 0 || item.def.src.indexOf('mstr.png') >= 0 || item.def.src.indexOf('fidelity.png') >= 0 || item.def.src.indexOf('gs.png') >= 0 || item.def.src.indexOf('wfc.png') >= 0 || item.def.src.indexOf('blk.png') >= 0 || item.def.src.indexOf('jpmorgan.png') >= 0 || item.def.src.indexOf('okx.png') >= 0 || item.def.src.indexOf('wisdomtree.png') >= 0 || item.def.src.indexOf('ubs.png') >= 0 || item.def.src.indexOf('dtcc.png') >= 0 || item.def.src.indexOf('bybit.png') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.webp') >= 0 || item.def.src.indexOf('kinexys.webp') >= 0 || item.def.src.indexOf('mstr.webp') >= 0 || item.def.src.indexOf('fidelity.webp') >= 0 || item.def.src.indexOf('gs.webp') >= 0 || item.def.src.indexOf('wfc.webp') >= 0 || item.def.src.indexOf('blk.webp') >= 0 || item.def.src.indexOf('jpmorgan.webp') >= 0 || item.def.src.indexOf('okx.webp') >= 0 || item.def.src.indexOf('wisdomtree.webp') >= 0 || item.def.src.indexOf('ubs.webp') >= 0 || item.def.src.indexOf('dtcc.webp') >= 0 || item.def.src.indexOf('bybit.webp') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */
@@ -2921,7 +2921,7 @@
         if(isBtc && item.drawSize > mtxIconDrawSizeMax){
           mtxColOpacity[i] = Math.min(0.95, mtxColOpacity[i] + 0.12);
         }
-        if(srcKey2 && /mkr\.png|wintermute\.png|okx\.png|ink\.png|csco\.png|amd\.png|blk\.png|securitize\.png|broadridge\.png|plaid\.png|chainalysis\.png/i.test(srcKey2)){
+        if(srcKey2 && /mkr\.webp|wintermute\.webp|okx\.webp|ink\.webp|csco\.webp|amd\.webp|blk\.webp|securitize\.webp|broadridge\.webp|plaid\.webp|chainalysis\.webp/i.test(srcKey2)){
           mtxColOpacity[i] = Math.min(0.93, mtxColOpacity[i] + 0.08);
         }
         var baseSpeed = 0.15 + Math.random() * 0.04;
@@ -4341,10 +4341,10 @@
             ix = Math.max(0, Math.min(ix, Math.max(0, w - iw)));
             /* Matte removed: destination-out caused visible dark rectangles. */
             /* Queue the sprite draw for pass 2. */
-            var isHollowHex = item.def.src && /\/(link|hnt)\.png(\?|$)/.test(item.def.src);
-            var isCrispLine = item.def.src && /\/(franklin|mkr|ink|csco|amd)\.png(\?|$)/.test(item.def.src);
-            var isBtcGlow = item.def.src && item.def.src.indexOf('btc.png') >= 0 && item.drawSize > mtxIconDrawSizeMax;
-            var iconDollarTint = !!(item.def.src && /\/(usdc|usdt2?|dai|m0)\.png/i.test(item.def.src));
+            var isHollowHex = item.def.src && /\/(link|hnt)\.webp(\?|$)/.test(item.def.src);
+            var isCrispLine = item.def.src && /\/(franklin|mkr|ink|csco|amd)\.webp(\?|$)/.test(item.def.src);
+            var isBtcGlow = item.def.src && item.def.src.indexOf('btc.webp') >= 0 && item.drawSize > mtxIconDrawSizeMax;
+            var iconDollarTint = !!(item.def.src && /\/(usdc|usdt2?|dai|m0)\.webp/i.test(item.def.src));
             iconQueue.push({
               tint: tint,
               tintAccent: tintAccent,
