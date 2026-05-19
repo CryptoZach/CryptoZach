@@ -16,6 +16,15 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
     gtag('js', new Date());
     gtag('config', 'G-QZ4811E5F6');
     (function(){
@@ -156,6 +165,7 @@
 
       <h2 style="margin-top:var(--space-lg);font-size:1.25rem;">Site analytics</h2>
       <p style="color:var(--text-soft);font-size:var(--font-size-min);line-height:1.6;">This site uses Google Analytics (gtag.js) to measure visitor traffic and page popularity. Google Analytics collects aggregate data about page views, referrers, and approximate location (country level). It does not collect personally identifiable information. Google's privacy policy is available at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+      <p style="color:var(--text-soft);font-size:var(--font-size-min);line-height:1.6;">The site implements Google Consent Mode v2. By default, advertising-related signals (ad_storage, ad_user_data, ad_personalization, personalization_storage) are set to denied because the site runs no ads and performs no remarketing. Analytics, functionality, and security storage are granted by default to support visitor measurement and basic site features. The site does not display a cookie banner; if you visit from a jurisdiction that requires explicit consent for analytics cookies, you may disable cookies in your browser settings to prevent analytics collection.</p>
 
       <h2 style="margin-top:var(--space-lg);font-size:1.25rem;">Contact for privacy questions</h2>
       <p style="color:var(--text-soft);font-size:var(--font-size-min);line-height:1.6;">For questions about this policy or to request deletion of any data we hold, write to <a href="mailto:zach@tokenization.systems">zach@tokenization.systems</a>.</p>
