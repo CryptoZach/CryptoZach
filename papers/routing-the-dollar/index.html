@@ -169,6 +169,30 @@
       ]
     }
   </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Control Layer Intensity Index (CLII) gateway scores",
+      "description": "Weighted 0-to-1 regulatory-intensity scores for 19 stablecoin gateway entities (issuers and major distributors routing dollars between on-chain and off-chain rails) across five dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Computed per gateway and reported in the Routing the Dollar paper.",
+      "url": "https://tokenization.systems/papers/routing-the-dollar/",
+      "identifier": "10.2139/ssrn.6267698",
+      "creator": { "@id": "https://tokenization.systems/#person" },
+      "publisher": { "@id": "https://tokenization.systems/#organization" },
+      "datePublished": "2026-04-21",
+      "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "keywords": ["stablecoin gateway", "Control Layer Intensity Index", "CLII", "regulatory intensity", "stablecoin diligence", "gateway risk", "tokenized dollar infrastructure"],
+      "variableMeasured": [
+        { "@type": "PropertyValue", "name": "Regulatory licensing", "description": "Score reflecting jurisdictional licensing posture of the gateway", "minValue": 0, "maxValue": 1 },
+        { "@type": "PropertyValue", "name": "Reserve transparency", "description": "Score reflecting disclosure and audit cadence of reserve composition", "minValue": 0, "maxValue": 1 },
+        { "@type": "PropertyValue", "name": "Freeze capability", "description": "Score reflecting technical and legal capability to freeze or block transactions", "minValue": 0, "maxValue": 1 },
+        { "@type": "PropertyValue", "name": "Compliance infrastructure", "description": "Score reflecting AML/CFT, sanctions, and OFAC compliance posture", "minValue": 0, "maxValue": 1 },
+        { "@type": "PropertyValue", "name": "Geographic restrictions", "description": "Score reflecting jurisdictional access policy of the gateway", "minValue": 0, "maxValue": 1 }
+      ],
+      "isAccessibleForFree": true,
+      "isPartOf": { "@type": "ScholarlyArticle", "@id": "https://tokenization.systems/papers/routing-the-dollar/" }
+    }
+  </script>
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"></div>

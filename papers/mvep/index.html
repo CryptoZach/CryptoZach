@@ -171,6 +171,86 @@
       ]
     }
   </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Evaluate a Tokenized Product: the Minimum Viable Equivalence Pack (MVEP) Ten-Category Diligence Procedure",
+      "description": "Step-by-step institutional diligence procedure for tokenized stablecoins, tokenized deposits, deposit tokens, tokenized money-market funds, and other tokenized products. Tests three equivalence claims (legal, operational, economic) across ten categories. Used as the entry gate before product launch or committee approval.",
+      "url": "https://tokenization.systems/papers/mvep/",
+      "image": "https://tokenization.systems/Publication-Images/MVEP_Cover_v2.png",
+      "totalTime": "PT4H",
+      "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+      "tool": [
+        { "@type": "HowToTool", "name": "Tokenized product offering documents" },
+        { "@type": "HowToTool", "name": "Issuer reserve attestation reports" },
+        { "@type": "HowToTool", "name": "Custody agreements and bankruptcy-priority memos" },
+        { "@type": "HowToTool", "name": "System-of-record and reconciliation policy" }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Rights Parity",
+          "text": "Verify the tokenized representation preserves legal rights equivalent to the underlying instrument. Output artifact: rights-parity memo with counsel sign-off. Pass test: claim holder enjoys the same redemption, recourse, and information rights as a holder of the underlying. Fail trigger: any right is degraded, gated, or contingent on operator discretion."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "System of Record",
+          "text": "Identify the authoritative ledger of ownership and the procedure that reconciles on-chain state with off-chain books. Output artifact: system-of-record designation memo plus reconciliation cadence policy. Pass test: a single authoritative record exists with a documented reconciliation procedure. Fail trigger: conflicting records or undefined reconciliation."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Records and Reconciliation",
+          "text": "Verify mechanism for reconciling the on-chain token supply against the off-chain reserve or underlying. Output artifact: reconciliation procedure document plus attestation cadence. Pass test: continuous or daily reconciliation with auditor sign-off. Fail trigger: reconciliation gap, manual override path, or missing attestation."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Custody and Customer Property",
+          "text": "Verify segregation model for reserves or underlying, custody agreement terms, and customer-property characterization under stress. Output artifact: segregation model plus custody agreement plus customer-property memo. Pass test: reserves are bankruptcy-remote and segregated under enforceable agreement. Fail trigger: commingling, undocumented custody chain, or customer-property uncertainty."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Insolvency Posture",
+          "text": "Verify what happens to token holders if the issuer, custodian, or operator enters insolvency. Output artifact: bankruptcy-priority memo with scenario analysis. Pass test: clear priority class for holders, with worked stress scenarios. Fail trigger: undefined priority, subordination risk, or no scenario analysis."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Settlement Finality",
+          "text": "Identify when a token transfer is final under the chain's consensus and under applicable law. Output artifact: settlement-finality memo addressing both layers. Pass test: documented finality at both layers with reorganization handling. Fail trigger: finality gap between layers, or chain-reorg risk without recovery plan."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Reorganization and Exception Handling",
+          "text": "Verify procedures for chain reorganizations, smart-contract exploits, validator collusion, custody breach, and other exception conditions. Output artifact: exception-handling runbook with decision authority. Pass test: documented runbook covering material exception classes. Fail trigger: any failure mode with no documented recovery path."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 8,
+          "name": "Governance and Change Control",
+          "text": "Verify governance authority for protocol upgrades, parameter changes, and emergency interventions. Output artifact: governance charter plus change-control procedure plus emergency-pause documentation. Pass test: clear authority chain with procedural gates. Fail trigger: undocumented upgrade authority or unilateral emergency power."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 9,
+          "name": "Disclosures",
+          "text": "Verify substantive disclosure of reserve composition, custody, redemption rights, governance, and stress posture at the point-of-use. Output artifact: disclosure register mapped to MVEP categories. Pass test: holder can answer the key diligence questions from disclosed materials. Fail trigger: critical fact buried, omitted, or only available on request."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 10,
+          "name": "Collateral Operability",
+          "text": "If the tokenized product will serve as collateral on derivatives venues or repo markets, verify collateral framework treats the token equivalently to its underlying. Output artifact: collateral acceptance documentation per venue. Pass test: collateral haircuts and acceptance criteria are transparent and equivalent. Fail trigger: opaque eligibility or differential haircuts across functionally-equivalent tokenized products."
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"></div>
