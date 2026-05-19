@@ -116,7 +116,59 @@
       ],
       "image": "https://tokenization.systems/Publication-Images/exhibit_01_discipline_map.png",
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track B: Tokenomics and Decentralized Physical Infrastructure (DePIN)", "url": "https://tokenization.systems/research/#track-b", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Tokenomics", "DePIN", "Token economy design", "Stress-tested token mechanics"],
+    "mentions": ["Adaptive Tokenomics Stress Audit", "supply schedule design", "token issuance", "staking mechanics", "token economy stress testing", "mechanism failure modes"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/adaptive-tokenomics/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Adaptive Tokenomics Stress Audit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A framework treating token design as systems engineering. It stress-tests token economies by modeling supply schedules, staking and burn mechanics, governance rules, and value capture paths under disturbance, then surfacing failure modes economic-only simulations miss."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is MeshNet in this paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MeshNet is the worked example: a token network combining productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions. The paper stress-tests MeshNet across the framework's failure modes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is PID-controlled adaptive emission?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A token-issuance schedule controlled by a Proportional-Integral-Derivative feedback controller, a standard engineering architecture for stabilizing systems against disturbance. Applied to token emissions, it adjusts issuance dynamically based on network state rather than a fixed schedule."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why treat tokenomics as systems engineering rather than economic theory?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Infrastructure failures, secondary-market dynamics, and burn-concentration outcomes shape what a design actually does in production, often in ways economic-only simulations miss. Engineering frameworks (state, control, feedback) capture failure modes that pure economic models miss."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the named mechanisms in the Adaptive Tokenomics framework?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Productive staking (rewards conditioned on network-useful work), reputation-weighted governance (vote weight scaled by historical contribution), burn-mint value capture (fee burns balanced by minted rewards), constitutional governance (changes gated by procedural rules), and PID-controlled adaptive emissions."
+          }
+        }
+      ]
     }
   </script>
 </head>

@@ -99,7 +99,59 @@
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/dollar-v3/" },
       "image": "https://tokenization.systems/Publication-Images/Dollarv3.webp",
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Digital Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Stablecoin regulation", "Tokenization", "Digital money infrastructure", "Institutional diligence"],
+    "mentions": ["payment stablecoins", "tokenized deposits", "deposit tokens", "GENIUS Act", "OCC Interpretive Letter 1188", "Federal Reserve FEDS Note December 2025"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/dollar-v3/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Dollar v3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dollar v3 is a market-structure map of digital dollars. Payment stablecoins, tokenized deposits, and tokenized cash-management or yield wrappers may look interchangeable in a wallet but diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the control layer in digital dollar regulation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The control layer is the set of operator and routing functions that govern issuance, custody, compliance, and redemption: reserve custody, settlement access, routing defaults, screening, holds, disclosures, and recordkeeping. Policy attaches to the control layer, not to the token label."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the GENIUS Act fit into Dollar v3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The enacted GENIUS Act establishes the payment-stablecoin perimeter and creates the Permitted Payment Stablecoin Issuer category. Combined with OCC Interpretive Letter 1188 and the Federal Reserve December 2025 FEDS Note (Du, Sonawane, Watsky), it positions banks to become execution, custody, and compliant-distribution layers for tokenized economy without a retail CBDC."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a tokenized deposit and a deposit token?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A tokenized deposit mirrors the bank's core banking ledger: non-fungible, single-bank, redeemable only at the issuing institution. A deposit token operates on its own ledger: fungible across institutions, with potential to settle at any accepting bank. Both stay inside the banking perimeter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the choice of operator matter more than the token label?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The same token inherits different compliance obligations, stress performance, and accountability depending on who operates the stack around it. Classification answers what the token is legally; regulation and audit must address who controls its behavior under stress."
+          }
+        }
+      ]
     }
   </script>
 </head>

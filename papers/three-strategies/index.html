@@ -105,7 +105,59 @@
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
       "creativeWorkStatus": "Working paper",
       "keywords": "Track A: Stablecoin and dollar infrastructure, tokenization, Securitize, Ubyx, JPMD, Canton Network, BUIDL, MVEP, CLII",
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Digital Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Stablecoin regulation", "Tokenization", "Digital money infrastructure", "Institutional diligence"],
+    "mentions": ["Tokenization Infrastructure Map", "native tokenization", "wrapped tokenization", "synthetic tokenization", "settlement architecture", "institutional tokenization"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/three-strategies/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the three institutional tokenization strategies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three distinct strategies for tokenizing U.S. securities: a regulated collateral circuit using tokenized Treasuries and bank-issued deposit tokens; a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router; and tokenized equity rails on Nasdaq and NYSE."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Tokenization Infrastructure Map?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A classification framework distinguishing native, wrapped, and synthetic tokenization across custody, settlement, and control layers. It positions any tokenized object within its operating-layer dependencies before applying MVEP or CLII."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which institutional participants appear across the three strategies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each strategy synthesizes infrastructure from different participants: regulated collateral involves bank-chartered deposit-token issuers and tokenized Treasury fund issuers; the multi-issuer yield stack composes from five Treasury fund issuers; tokenized equity rails involve Nasdaq, NYSE, and supporting custody and clearing infrastructure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do the three strategies differ in settlement architecture?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Native tokenization issues on-chain from inception. Wrapped tokenization issues off-chain then mints an on-chain representation. Synthetic tokenization uses derivatives or contracts to mirror exposure without holding the underlying. Settlement finality and counterparty exposure diverge accordingly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the regulated collateral circuit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A circuit composing tokenized U.S. Treasuries with bank-issued deposit tokens to support institutional collateral movement. It targets settlement, margin, and clearing use cases inside the bank-supervised perimeter."
+          }
+        }
+      ]
     }
   </script>
 </head>

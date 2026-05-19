@@ -99,7 +99,59 @@
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/control-layer-war/" },
       "image": "https://tokenization.systems/Publication-Images/Control_Layer.webp",
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Digital Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Stablecoin regulation", "Tokenization", "Digital money infrastructure", "Institutional diligence"],
+    "mentions": ["CLARITY Act", "control layer regulation", "tokenized rails", "interface ownership", "routing defaults", "hold authority"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/control-layer-war/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the CLARITY Act and why does it matter for tokenization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The CLARITY Act (H.R. 5403, Digital Asset Market Clarity Act, 119th Congress) is the House-passed digital-asset market structure bill. If implemented close to its House-passed form, outcomes will be decided by where compliance gets encoded and which interface or routing entity is responsible, not by security-versus-commodity classification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is the security-vs-commodity debate the wrong center of gravity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most CLARITY Act debate is framed as taxonomy: security versus commodity, SEC versus CFTC, DeFi versus CeFi. The essay argues the real outcomes depend on where compliance attaches in practice: interface ownership, routing defaults, sweep logic, hold authority, fee structures, and disclosure obligations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the control layer in this paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The control layer is interfaces, routing defaults, sweep logic, holds and freezes, disclosures, and audit trails: the operational layer where policy becomes executable. Liability, concentration, and value capture often attach at the control layer, not the token level."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Regime Dashboard framework?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Regime Dashboard tracks who controls the operating layer right now: interface ownership, default routing, sweep ownership, hold authority, fee structures, and disclosure obligations. It is the monitoring counterpart to CLII for control-layer drift detection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who bears compliance versus who captures economics under CLARITY?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The central question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack. If they diverge, value migrates while liability stays elsewhere."
+          }
+        }
+      ]
     }
   </script>
 </head>

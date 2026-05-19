@@ -116,7 +116,59 @@
       ],
       "image": "https://tokenization.systems/Publication-Images/Table3_ValOS-NORS.png",
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track B: Tokenomics and Decentralized Physical Infrastructure (DePIN)", "url": "https://tokenization.systems/research/#track-b", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Tokenomics", "DePIN", "Token economy design", "Stress-tested token mechanics"],
+    "mentions": ["Operational Risk Taxonomy", "DePIN networks", "ValOS", "NORS", "decentralized physical infrastructure", "token network operations"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/operational-risk/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Operational Risk Taxonomy for DePIN networks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A categorization of operational failure modes specific to token economies and decentralized physical infrastructure (DePIN). It extends pure economic simulation with an operational-risk layer calibrated from Ethereum, Helium, GEODNET, and Filecoin operating data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are ValOS and NORS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ValOS (Validator Operating System) and NORS (Alluvial's Node Operator Risk Standard) are emerging frameworks for measuring node-operator risk in proof-of-stake and DePIN networks. The paper uses ValOS-NORS as the calibration axis for operational-risk modeling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do infrastructure failures change token-economy behavior?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Validator downtime, network partitions, hardware failures, and operator collusion change which agents earn rewards, which transactions clear, and which token balances appear available. Economic-only simulations treat operations as frictionless and miss these failure modes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which DePIN networks does the operational-risk layer draw calibration from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ethereum (proof-of-stake validator behavior), Helium (wireless infrastructure with hotspot operators), GEODNET (precision GNSS network with rover operators), and Filecoin (decentralized storage with storage providers). Each contributes operational-failure data to the simulation layer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who should care about the Operational Risk Taxonomy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Protocol teams designing DePIN tokenomics, allocator committees evaluating DePIN exposure, infrastructure operators planning failover, and policy makers assessing systemic risk in decentralized-infrastructure markets."
+          }
+        }
+      ]
     }
   </script>
 </head>

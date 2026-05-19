@@ -103,7 +103,59 @@
       "identifier": "6483619",
       "sameAs": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619",
       "creativeWorkStatus": "Working paper",
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track B: Tokenomics and Decentralized Physical Infrastructure (DePIN)", "url": "https://tokenization.systems/research/#track-b", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Tokenomics", "DePIN", "Token economy design", "Stress-tested token mechanics"],
+    "mentions": ["Burn Mechanism Classification", "token burn mechanics", "Subsidy-to-Revenue Ratio", "demand concentration HHI", "fee revenue", "token deflation"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/who-burns-the-tokens/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Burn Mechanism Classification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A taxonomy of token burn mechanics: how burns are triggered, who funds them, and what they produce. Paired with the Subsidy-to-Revenue Ratio (S2R) and demand-concentration HHI to assess sustainability of token deflation under stress."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is burn mechanism design more predictive than network size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes. Helium's carrier-contract burn model concentrates roughly 90% of burn volume in the Top-5 demand sources. Burn-mechanism design, not network size, determines who pays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Subsidy-to-Revenue Ratio (S2R)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "S2R measures token emissions (subsidy paid to operators) divided by demand-side revenue (burns or fees from users). An S2R above 1 means the network pays operators more than users pay; below 1 means user demand exceeds emission cost. S2R trajectory toward 1 indicates fiscal sustainability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does demand-concentration HHI reveal about DePIN sustainability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A high HHI means burn volume is concentrated in a few sources; a low HHI means it is spread across many. High concentration is fragile: if a top demand source departs, the network revenue model collapses. Helium and GEODNET diverge sharply on this axis despite similar network footprints."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which DePIN networks does the paper analyze?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Helium and GEODNET as the primary comparison pair (both GeoDePIN networks with physical operator deployment). The paper uses Helium's carrier-contract burn model as the contrast case against GEODNET's alternative demand-aggregation pattern."
+          }
+        }
+      ]
     }
   </script>
 </head>

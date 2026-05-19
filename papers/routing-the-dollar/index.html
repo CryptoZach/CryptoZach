@@ -114,7 +114,59 @@
       ],
       "image": "https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png",
       "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Digital Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Stablecoin regulation", "Tokenization", "Digital money infrastructure", "Institutional diligence"],
+    "mentions": ["Control Layer Intensity Index", "stablecoin gateways", "Circle USDC", "Tether USDT", "Coinbase", "Silicon Valley Bank stress event", "monetary policy transmission"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/routing-the-dollar/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Control Layer Intensity Index (CLII)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CLII is a weighted 0-to-1 score per stablecoin gateway across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. It scores 19 gateway entities in the Routing the Dollar analysis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do two stablecoins with the same denomination behave differently under stress?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The same dollar token carries different regulatory obligations, different Federal Reserve policy exposure, and different crisis behavior depending on which issuer, exchange, or protocol routes it. The gateway, not the token denomination, is the unit of analysis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What did SVB stress testing reveal about Circle versus Coinbase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical regulatory-intensity scores but showed sharply different stress retention during the Silicon Valley Bank failure. CLII measures regulatory obligations, not stress resilience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does it mean to route the dollar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Routing the dollar refers to the gateway-level decisions that determine which issuer, exchange, custodian, or protocol moves tokenized value between on-chain and off-chain rails. Different routes produce different stress behavior, different policy transmission, and different counterparty concentration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a stablecoin gateway?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A gateway is the specific operator that routes tokenized value at an entry or exit point: the issuer who mints, the exchange or custodian who holds, the transfer agent who keeps record, the validator who orders transactions, or the protocol maintainer who can upgrade the contract."
+          }
+        }
+      ]
     }
   </script>
 </head>
