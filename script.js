@@ -54,7 +54,7 @@
     updateScrollProgress();
   }
 
-  // Scroll reveal: add .visible when .reveal / .stagger-item enter viewport
+  // Scroll reveal: add .visible when .reveal elements enter viewport
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!prefersReducedMotion){
     const observer = new IntersectionObserver((entries) => {
@@ -62,9 +62,9 @@
         if(entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { rootMargin: '0px 0px -40px 0px', threshold: 0.01 });
-    document.querySelectorAll('.reveal, .stagger-item').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   } else {
-    document.querySelectorAll('.reveal, .stagger-item').forEach(el => el.classList.add('visible'));
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
   }
 
   // Set by homepage matrix init so hero-wide touch release can call mtxStop (capture target is #hero).
@@ -3330,20 +3330,26 @@
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
       var canvasW = w > 0 ? w : 1;
+      /* Gradient endpoints flip by theme. Dark: light mint (left) to accent blue (right), tuned to glow on the dark hero. Light: saturated teal-green to brand blue, dark enough to read on the white panel; the dark-mode mint washes out to gray on white. */
+      var mtxDmLight = document.documentElement.getAttribute('data-theme') !== 'dark';
+      var dmGL = mtxDmLight ? [5, 200, 122] : [204, 251, 229];
+      var dmGR = mtxDmLight ? [29, 102, 255] : [91, 156, 245];
+      var dmShL = mtxDmLight ? [5, 200, 122] : [167, 243, 208];
+      var dmShR = mtxDmLight ? [29, 102, 255] : [91, 156, 245];
       for(var i = 0; i < mtxDollarMag.length; i++){
         var p = mtxDollarMag[i];
         ctx.font = '700 ' + Math.round(p.sz) + 'px ' + fontFamily;
         ctx.globalAlpha = p.alpha;
-        /* Horizontal gradient: mint green (left) to accent blue (right), matching matrix text/icons. */
+        /* Horizontal gradient across the hero width: green (left) to blue (right). */
         var dmMix = Math.max(0, Math.min(1, p.x / canvasW));
         var dmInv = 1 - dmMix;
-        var dmFR = Math.round(204 * dmInv + 91 * dmMix);
-        var dmFG = Math.round(251 * dmInv + 156 * dmMix);
-        var dmFB = Math.round(229 * dmInv + 245 * dmMix);
+        var dmFR = Math.round(dmGL[0] * dmInv + dmGR[0] * dmMix);
+        var dmFG = Math.round(dmGL[1] * dmInv + dmGR[1] * dmMix);
+        var dmFB = Math.round(dmGL[2] * dmInv + dmGR[2] * dmMix);
         ctx.fillStyle = 'rgba(' + dmFR + ',' + dmFG + ',' + dmFB + ',' + Math.min(0.99, p.alpha + 0.1) + ')';
-        var dmSR = Math.round(167 * dmInv + 91 * dmMix);
-        var dmSG = Math.round(243 * dmInv + 156 * dmMix);
-        var dmSB = Math.round(208 * dmInv + 245 * dmMix);
+        var dmSR = Math.round(dmShL[0] * dmInv + dmShR[0] * dmMix);
+        var dmSG = Math.round(dmShL[1] * dmInv + dmShR[1] * dmMix);
+        var dmSB = Math.round(dmShL[2] * dmInv + dmShR[2] * dmMix);
         ctx.shadowColor = 'rgba(' + dmSR + ',' + dmSG + ',' + dmSB + ', 0.45)';
         ctx.fillText('$', Math.round(p.x), Math.round(p.y));
       }
@@ -3534,7 +3540,7 @@
         if (a0 < 0.002) {
           return;
         }
-        var col = isDollarFamily ? '204, 251, 229' : '96, 108, 62';
+        var col = isDollarFamily ? (document.documentElement.getAttribute('data-theme') !== 'dark' ? '5, 200, 122' : '204, 251, 229') : '96, 108, 62';
         mtxCtx.save();
         mtxCtx.translate(px + drift, py);
         mtxCtx.rotate(rot + Math.sin(nd.padPhase * 0.7) * 0.04);
@@ -3557,6 +3563,10 @@
         mtxCtx.restore();
       }
 
+      /* Tendrils (mesh connection lines between the logos): greener and more opaque in light mode, where the dark-mode olive reads as faint gray on white. Unchanged in dark. */
+      var mtxMeshLight = document.documentElement.getAttribute('data-theme') !== 'dark';
+      var meshLineRGB = mtxMeshLight ? '5, 178, 116' : '96, 108, 62';
+      var meshLineBoost = mtxMeshLight ? 2.6 : 1;
       var drawnEdges = {};
       var ma;
       for (ma = 0; ma < mtxMeshNodes.length; ma++) {
@@ -3592,7 +3602,7 @@
             mtxCtx.beginPath();
             mtxCtx.moveTo(ndA.x + (ndA.partOx || 0), ndA.y + (ndA.partOy || 0));
             mtxCtx.lineTo(ndB.x + (ndB.partOx || 0), ndB.y + (ndB.partOy || 0));
-            mtxCtx.strokeStyle = 'rgba(96, 108, 62, ' + lineAlpha + ')';
+            mtxCtx.strokeStyle = 'rgba(' + meshLineRGB + ', ' + Math.min(0.72, lineAlpha * meshLineBoost) + ')';
             mtxCtx.lineWidth = 1.0;
             mtxCtx.stroke();
           }

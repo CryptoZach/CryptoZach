@@ -12,13 +12,44 @@
   --text-soft:#1a1d26;
   --muted:#4b5260;
   --muted-soft:#5c6370;
-  --font-size-min:12pt;
+  /* Body text size. Was 12pt (a print unit, equal to 16px at 96dpi); now 1rem so it scales with the user's browser font-size for accessibility while rendering identically at the default 16px root. --font-size-body is an alias for clarity (also resolves three older references that named it). */
+  --font-size-min:1rem;
+  --font-size-body:var(--font-size-min);
+  /* Type scale (UI / meta / body band). The display headings keep their fluid clamp() sizing per role; this scale tames the small-text band that previously drifted across ~14 near-identical values. */
+  --text-2xs:0.72rem;
+  --text-xs:0.8125rem;
+  --text-sm:0.875rem;
+  --text-base:1rem;
+  --text-md:1.0625rem;
+  /* Leading set: four intents to collapse the nine line-heights in use. Defined for incremental routing; current values sit within rounding of these. */
+  --leading-tight:1.25;
+  --leading-snug:1.4;
+  --leading-body:1.6;
+  --leading-loose:1.7;
+  /* Heading scale (fluid), calibrated to the existing dominant heading sizes so the drifted per-component clamp() formulas collapse to a shared, tunable set. Bespoke display type (homepage hero, 404 numerals, decorative ::before counters) keeps its own sizing on purpose. */
+  --h-display:clamp(26px, 4vw, 36px);
+  --h-page:clamp(24px, 2.8vw, 32px);
+  --h-section:clamp(22px, 2.6vw, 30px);
+  --h-compact:clamp(20px, 2.2vw, 24px);
   --line:rgba(12,14,20,.12);
   --line-strong:rgba(12,14,20,.18);
   --accent:#0f4c9e;
   --accent-hover:#0a3a7a;
   --accent-soft:rgba(15,76,158,.12);
   --accent-muted:rgba(15,76,158,.06);
+  /* CTA accent: a darker blue than --accent so white text on filled buttons meets WCAG AA 4.5:1 (the brand --accent is too light for text-on-fill). Identical in both themes, so defined once here rather than duplicated in the dark block. */
+  --accent-cta:var(--brand-blue);
+  --accent-cta-hover:#1d4ed8;
+  /* Semantic aliases. Previously referenced but never defined, so they fell through to light-only literals and rendered dark-on-dark in the default dark theme. Resolving via theme primitives lets them track data-theme automatically. */
+  --text-secondary:var(--muted);
+  --border-subtle:var(--line);
+  --border-color:var(--line);
+  /* Brand spectrum. These five accents were hardcoded as literals 180+ times (often inside color-mix expressions); promoting them to tokens makes the palette tunable from one place. Same value in both themes today; per-theme contrast tuning for teal and violet can be added here later. */
+  --brand-blue:#2563eb;
+  --brand-teal:#0d9488;
+  --brand-violet:#7c3aed;
+  --brand-amber:#d97706;
+  --brand-rose:#e11d48;
   --shadow-sm:0 1px 4px rgba(0,0,0,.08);
   --shadow:0 4px 24px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
   --shadow-lg:0 12px 48px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
@@ -41,6 +72,13 @@
      cover older browsers. Zero webfont cost; swap one token to opt into a
      hosted face later. */
   --font-serif: ui-serif, "New York", "Iowan Old Style", "Source Serif 4", "Source Serif Pro", Charter, "Cambria", Georgia, serif;
+  /* Motion system: one duration ladder plus a small, intentional easing set. The browser default `ease` (an unconsidered curve) is routed to --ease-standard so the whole site's interaction feel can be retuned from one place. --ease-out is the research-card curve; --ease-spring is the CTA dollar-bounce overshoot. */
+  --dur-fast:0.15s;
+  --dur-base:0.25s;
+  --dur-slow:0.35s;
+  --ease-standard:cubic-bezier(0.2, 0.8, 0.25, 1);
+  --ease-out:cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
   color-scheme:light;
 }
 
@@ -59,9 +97,6 @@
   --accent-hover:#7ab0ff;
   --accent-soft:rgba(91,156,245,.15);
   --accent-muted:rgba(91,156,245,.08);
-  /* CTA-specific accents: darker blues to meet WCAG AA 4.5:1 contrast with white text on filled buttons (brand --accent above is too light for text-on-fill). */
-  --accent-cta:#2563eb;
-  --accent-cta-hover:#1d4ed8;
   --shadow-sm:0 1px 3px rgba(0,0,0,.2);
   --shadow:0 4px 24px rgba(0,0,0,.25), 0 1px 3px rgba(0,0,0,.15);
   --shadow-lg:0 12px 48px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.2);
@@ -147,7 +182,7 @@ body::after{
   0%, 100%{opacity:0.72;}
   50%{opacity:1;}
 }
-@media (max-width: 767px){
+@media (max-width: 768px){
   body::after{
     height:160px;
   }
@@ -221,6 +256,15 @@ a{color:inherit}
   .scroll-progress{transition:transform .12s ease-out, opacity .12s ease-out}
 }
 
+/* ── View Transitions (cross-document, progressive enhancement) ── */
+/* Same-origin navigations cross-fade instead of hard-cutting, and the persistent header and footer morph rather than flash. Unsupported browsers get today's instant navigation with no penalty. Disabled under reduced-motion, consistent with the rest of the motion system. */
+@view-transition{ navigation: auto; }
+header{ view-transition-name: site-header; }
+footer.site-footer{ view-transition-name: site-footer; }
+@media (prefers-reduced-motion: reduce){
+  ::view-transition-group(*){ animation: none !important; }
+}
+
 /* ── Header ── */
 header{
   position:sticky;
@@ -237,7 +281,7 @@ header{
      fold). Solid background eliminates the recompute entirely. */
   background:var(--bg);
   border-bottom:1px solid var(--line);
-  transition:box-shadow .2s ease;
+  transition:box-shadow .2s var(--ease-standard);
   padding-top:env(safe-area-inset-top, 0px);
 }
 
@@ -289,7 +333,7 @@ header.scrolled{
   font-weight:700;
   letter-spacing:-0.01em;
   color:var(--text);
-  transition:color .15s ease;
+  transition:color .15s var(--ease-standard);
   /* Keep the brand title on a single line; the brand container holds its
      full intrinsic width thanks to flex-shrink:0 above. */
   white-space:nowrap;
@@ -389,7 +433,7 @@ nav{
   padding:6px var(--space-sm);
   border-radius:var(--radius-sm);
   border:1px solid transparent;
-  transition:color .2s ease;
+  transition:color .2s var(--ease-standard);
 }
 /* Animated underline: grows in from center on hover, persists on active.
    Single visual mechanism for both states; replaces the prior pill-on-hover
@@ -443,7 +487,7 @@ nav{
   border-radius:50%;
   border:1px solid var(--line);
   color:var(--text-soft);
-  transition:border-color .15s ease, color .15s ease, background .15s ease;
+  transition:border-color .15s var(--ease-standard), color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
 .header-social-link:hover{
   border-color:var(--accent);
@@ -458,7 +502,7 @@ nav{
   width:12px;
   height:12px;
   opacity:.8;
-  transition:opacity .15s ease;
+  transition:opacity .15s var(--ease-standard);
 }
 .header-social-link:hover svg{
   opacity:1;
@@ -488,7 +532,7 @@ nav{
   gap:8px;
   align-items:center;
   cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease, border-color .15s, color .15s, background .15s;
+  transition:transform .15s var(--ease-standard), box-shadow .15s var(--ease-standard), border-color .15s, color .15s, background .15s;
 }
 nav .action{
   border-color:color-mix(in srgb, var(--accent) 40%, var(--line));
@@ -501,9 +545,9 @@ nav .action:hover{
   background:var(--accent-soft);
 }
 .action.primary{
-  background:var(--accent-cta, #2563eb);
+  background:var(--accent-cta, var(--brand-blue));
   color:#fff;
-  border-color:var(--accent-cta, #2563eb);
+  border-color:var(--accent-cta, var(--brand-blue));
   box-shadow:0 1px 3px rgba(15,76,158,.25);
 }
 .action.primary:hover{
@@ -514,7 +558,7 @@ nav .action:hover{
 }
 .action.primary svg{
   opacity:.85;
-  transition:transform .15s ease;
+  transition:transform .15s var(--ease-standard);
 }
 .action.primary:hover svg{
   transform:translate(1px, -1px);
@@ -534,9 +578,9 @@ nav .action:hover{
 }
 
 .cta-primary {
-  background: var(--accent-cta, #2563eb);
+  background: var(--accent-cta, var(--brand-blue));
   color: #fff;
-  border-color: var(--accent-cta, #2563eb);
+  border-color: var(--accent-cta, var(--brand-blue));
 }
 .cta-primary:hover {
   background: var(--accent-cta-hover, #1d4ed8);
@@ -563,7 +607,7 @@ nav .action:hover{
   font-weight: 500;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   padding-bottom: 1px;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 0.15s var(--ease-standard), color 0.15s var(--ease-standard);
 }
 .about-card-followup a:hover {
   color: var(--accent-hover, var(--accent));
@@ -581,7 +625,7 @@ nav .action:hover{
   margin: 0.75rem 0;
 }
 .flagship-nudge a {
-  color: var(--accent, #2563eb);
+  color: var(--accent, var(--brand-blue));
   text-decoration: none;
   font-weight: 500;
 }
@@ -704,7 +748,7 @@ body main:has(footer){
   display:flex;
   align-items:center;
   gap:7px;
-  font-size:0.7rem;
+  font-size:var(--text-2xs);
   font-weight:600;
   color:var(--accent);
   letter-spacing:0.1em;
@@ -726,7 +770,7 @@ body main:has(footer){
 
 .hero-name{
   margin:0;
-  font-size:clamp(26px, 4vw, 36px);
+  font-size:var(--h-display);
   line-height:.96;
   font-weight:700;
   letter-spacing:-0.04em;
@@ -764,7 +808,7 @@ body main:has(footer){
 h1{
   margin:0;
   font-family:var(--font-serif);
-  font-size:clamp(22px, 2.6vw, 30px);
+  font-size:var(--h-section);
   line-height:1.28;
   font-weight:600;
   letter-spacing:-0.005em;
@@ -788,7 +832,7 @@ h3{
 }
 .hero h1{
   font-family:inherit;
-  font-size:clamp(24px, 2.8vw, 32px);
+  font-size:var(--h-page);
   line-height:1.32;
   font-weight:700;
   letter-spacing:-0.015em;
@@ -894,7 +938,7 @@ body.contact-page .contact-page-foreground > .contact-page .contact-email-addres
 }
 
 body.contact-page .contact-page-foreground > .contact-page .copy-email-btn{
-  font-size:0.8rem;
+  font-size:var(--text-xs);
   padding:0.25rem 0.75rem;
   border:1px solid var(--line-strong);
   border-radius:4px;
@@ -938,7 +982,7 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li{
   font-size:0.95rem;
   line-height:1.5;
   opacity:0.85;
-  transition:opacity 0.2s ease;
+  transition:opacity 0.2s var(--ease-standard);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .guidance-list li:hover{
@@ -952,7 +996,7 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li::be
   opacity:0.4;
   color:inherit;
   text-shadow:none;
-  transition:color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+  transition:color 0.2s var(--ease-standard), opacity 0.2s var(--ease-standard), text-shadow 0.2s var(--ease-standard);
 }
 
 @keyframes contactArrowPulse{
@@ -1022,7 +1066,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item{
 
 body.contact-page .contact-page-foreground > .contact-page .about-label{
   margin:0;
-  font-size:0.7rem;
+  font-size:var(--text-2xs);
   text-transform:uppercase;
   letter-spacing:0.08em;
   font-weight:600;
@@ -1349,7 +1393,7 @@ body.contact-page section.contact-page-detail{
   letter-spacing:0.02em;
   color:var(--accent);
 }
-@media (min-width: 768px){
+@media (min-width: 769px){
   .contact-body-grid{
     display:grid;
     grid-template-columns:minmax(0, 1fr) minmax(160px, 200px);
@@ -1425,7 +1469,7 @@ body.contact-page section.contact-page-detail{
   line-height:1.52;
   color:var(--text);
   background:transparent;
-  transition:background .15s ease, border-left-color .15s ease;
+  transition:background .15s var(--ease-standard), border-left-color .15s var(--ease-standard);
 }
 .hero-point:last-child{
   border-right:none;
@@ -1465,7 +1509,7 @@ body.contact-page section.contact-page-detail{
   padding:12px 28px;
   min-width:140px;
   justify-content:center;
-  transition:border-color .15s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
+  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard), color .15s var(--ease-standard), box-shadow .15s var(--ease-standard);
 }
 .hero-actions .action.primary{
   padding:13px 30px;
@@ -1545,7 +1589,7 @@ body.contact-page section.contact-page-detail{
   letter-spacing:.04em;
   font-size:var(--font-size-min);
   text-transform:uppercase;
-  transition:border-color .15s ease, background .15s ease;
+  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
 .badge:hover{
   border-color:var(--line-strong);
@@ -1561,7 +1605,7 @@ body.contact-page section.contact-page-detail{
   text-underline-offset:2px;
   text-decoration-thickness:1px;
   text-decoration-color:color-mix(in srgb, currentColor 50%, transparent);
-  transition:text-decoration-color .15s ease;
+  transition:text-decoration-color .15s var(--ease-standard);
 }
 .badge-link:hover,
 .badge-link:focus-visible{
@@ -1633,7 +1677,7 @@ body.contact-page section.contact-page-detail{
 .process-point{
   padding:var(--space-lg) var(--space-xl);
   border-right:1px solid var(--line);
-  transition:background .15s ease;
+  transition:background .15s var(--ease-standard);
 }
 .process-point:last-child{border-right:none}
 .process-point:hover{background:var(--accent-muted)}
@@ -1920,7 +1964,7 @@ body.contact-page section.contact-page-detail{
   display:block;
   margin:0;
 }
-@media (min-width: 640px){
+@media (min-width: 641px){
   .operating-model-stack__row:not(.operating-model-stack__row--thesis){
     grid-template-columns:8.5rem 1fr;
     gap:0 var(--space-lg);
@@ -1948,7 +1992,7 @@ body.contact-page section.contact-page-detail{
 .start-here-card { padding: 1.25rem; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 0.75rem; }
 .start-here-card h3 { font-size: 0.85rem; opacity: 0.5; margin-bottom: 0.5rem; }
 .start-here-card a { font-weight: 600; }
-.start-here-card p { font-size: 0.875rem; opacity: 0.65; margin-top: 0.4rem; }
+.start-here-card p { font-size:var(--text-sm); opacity: 0.65; margin-top: 0.4rem; }
 @media (max-width: 768px) { .start-here-grid { grid-template-columns: 1fr; } }
 .start-here-list{
   list-style:none;
@@ -2258,7 +2302,7 @@ main > section.research-library-page:first-of-type{
   padding:12px var(--space-md) 12px calc(var(--space-md) + 2px);
   border-bottom:1px solid var(--line);
   border-left:3px solid var(--accent);
-  transition:background .2s ease, border-left-color .2s ease;
+  transition:background .2s var(--ease-standard), border-left-color .2s var(--ease-standard);
 }
 .rail-card:last-of-type{
   border-bottom:none;
@@ -2282,7 +2326,7 @@ main > section.research-library-page:first-of-type{
   letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--accent);
-  transition:color .15s ease;
+  transition:color .15s var(--ease-standard);
 }
 
 .rail-stat{
@@ -2394,7 +2438,7 @@ footer{
   backdrop-filter:blur(10px) saturate(180%);
   -webkit-backdrop-filter:blur(10px) saturate(180%);
   border-bottom:1px solid var(--line);
-  transition:opacity 0.25s ease, transform 0.25s ease;
+  transition:opacity 0.25s var(--ease-standard), transform 0.25s var(--ease-standard);
 }
 
 .structure-nav[hidden]{
@@ -2506,7 +2550,7 @@ footer{
   color:var(--muted);
   text-decoration:none;
   border-bottom:2px solid transparent;
-  transition:color 0.15s ease, border-color 0.15s ease;
+  transition:color 0.15s var(--ease-standard), border-color 0.15s var(--ease-standard);
   border-radius:var(--radius-sm) var(--radius-sm) 0 0;
 }
 
@@ -2552,7 +2596,7 @@ footer{
   color:var(--muted);
   text-decoration:none;
   border-bottom:2px solid transparent;
-  transition:color 0.15s ease, border-color 0.15s ease;
+  transition:color 0.15s var(--ease-standard), border-color 0.15s var(--ease-standard);
   border-radius:var(--radius-sm) var(--radius-sm) 0 0;
 }
 
@@ -2613,7 +2657,7 @@ main > section.reveal{
 .section-title h1,
 .section-title h2{
   margin:0;
-  font-size:clamp(20px, 2.2vw, 24px);
+  font-size:var(--h-compact);
   font-weight:700;
   letter-spacing:-0.022em;
   padding-left:0;
@@ -2736,7 +2780,7 @@ section:has(.speaker-jump-to){
   word-break:break-word;
 }
 @media (prefers-reduced-motion: no-preference){
-  .speaker-jump-to__link{transition:color .15s ease, background .15s ease}
+  .speaker-jump-to__link{transition:color .15s var(--ease-standard), background .15s ease}
 }
 .speaker-jump-to__link:hover{
   color:var(--accent);
@@ -2811,7 +2855,7 @@ section:has(.speaker-jump-to){
   word-break:break-word;
 }
 @media (prefers-reduced-motion: no-preference){
-  .page-toc-link{transition:color .15s ease, background .15s ease}
+  .page-toc-link{transition:color .15s var(--ease-standard), background .15s ease}
 }
 .page-toc-link:hover{
   color:var(--accent);
@@ -2856,7 +2900,7 @@ section:has(.speaker-jump-to){
 }
 @media (prefers-reduced-motion: no-preference){
   .page-toc.structure-jump-to .page-toc-link{
-    transition:color .15s ease, text-decoration-color .15s ease;
+    transition:color .15s var(--ease-standard), text-decoration-color .15s var(--ease-standard);
   }
 }
 .page-toc.structure-jump-to .page-toc-link:hover{
@@ -2922,7 +2966,7 @@ section:has(.speaker-jump-to){
 }
 @media (prefers-reduced-motion: no-preference){
   .jump-chip{
-    transition:color .15s ease, background .15s ease, border-color .15s ease;
+    transition:color .15s var(--ease-standard), background .15s var(--ease-standard), border-color .15s var(--ease-standard);
   }
 }
 .jump-chip:hover{
@@ -2934,7 +2978,7 @@ section:has(.speaker-jump-to){
   outline:2px solid var(--accent);
   outline-offset:2px;
 }
-@media (max-width:767px){
+@media (max-width:768px){
   .jump-bar{
     flex-direction:column;
     align-items:flex-start;
@@ -2989,8 +3033,9 @@ section:has(.speaker-jump-to){
   border-radius:var(--radius);
   background:var(--panel);
   background:color-mix(in srgb, var(--panel) 95%, transparent);
-  box-shadow:var(--shadow-sm);
-  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  /* Resting depth: base shadow plus a faint inset top highlight for a lit-from-above edge (reads mainly on the dark theme; invisible on the light panel). */
+  box-shadow:var(--shadow-sm), inset 0 1px 0 color-mix(in srgb, #ffffff 7%, transparent);
+  transition:transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
   position:relative;
   overflow:hidden;
 }
@@ -3003,11 +3048,11 @@ section:has(.speaker-jump-to){
   width:3px;
   background:var(--accent);
   opacity:0;
-  transition:opacity .2s ease;
+  transition:opacity .2s var(--ease-standard);
 }
 .card:hover{
   transform:translateY(-2px);
-  box-shadow:var(--shadow);
+  box-shadow:var(--shadow), inset 0 1px 0 color-mix(in srgb, #ffffff 9%, transparent);
   border-color:var(--line-strong);
   border-top-color:var(--accent);
 }
@@ -3027,7 +3072,7 @@ section:has(.speaker-jump-to){
   color:var(--accent);
   margin-bottom:var(--space-sm);
   flex-shrink:0;
-  transition:background .2s ease, border-color .2s ease;
+  transition:background .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .card-icon svg{
   width:18px;
@@ -3072,7 +3117,7 @@ section:has(.speaker-jump-to){
   border-color:var(--line-strong);
 }
 :root[data-theme="dark"] .card:hover{
-  box-shadow:var(--shadow);
+  box-shadow:var(--shadow), inset 0 1px 0 color-mix(in srgb, #ffffff 9%, transparent);
   border-color:rgba(255,255,255,.18);
 }
 :root[data-theme="dark"] .response-dot{
@@ -3108,7 +3153,7 @@ section:has(.speaker-jump-to){
   border-bottom:1px solid var(--line);
   letter-spacing:-0.01em;
   color:var(--text);
-  transition:color .15s ease;
+  transition:color .15s var(--ease-standard);
 }
 .card:hover h3{
   color:var(--accent);
@@ -3185,7 +3230,7 @@ section:has(.speaker-jump-to){
   border-radius:999px;
   background:color-mix(in srgb, var(--panel) 80%, transparent);
   text-decoration:none;
-  transition:color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
+  transition:color .2s var(--ease-standard), border-color .2s var(--ease-standard), background .2s var(--ease-standard), transform .2s var(--ease-standard);
 }
 #supporting-research .resume-section-grid .card:hover .research-card-action,
 #supporting-research .resume-section-grid .card:hover .research-card-actions .research-card-action,
@@ -3226,7 +3271,7 @@ section:has(.speaker-jump-to){
 .writing-card:has(a.writing-link),
 .writing-card:has(.writing-link--dual),
 .writing-card--linked{
-  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition:transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .writing-card:has(a.writing-link):hover,
 .writing-card:has(.writing-link--dual):hover,
@@ -3514,7 +3559,7 @@ section:has(.speaker-jump-to){
   padding:4px 12px;
   min-height:28px;
   letter-spacing:.01em;
-  transition:background .15s ease, border-color .15s ease, color .15s ease;
+  transition:background .15s var(--ease-standard), border-color .15s var(--ease-standard), color .15s var(--ease-standard);
 }
 .writing-expand::after{
   content:"";
@@ -3524,7 +3569,7 @@ section:has(.speaker-jump-to){
   border-right:1.5px solid var(--accent);
   border-bottom:1.5px solid var(--accent);
   transform:rotate(45deg) translateY(-2px);
-  transition:transform .2s ease;
+  transition:transform .2s var(--ease-standard);
   flex-shrink:0;
 }
 .writing-item.expanded .writing-expand::after{
@@ -3552,7 +3597,7 @@ section:has(.speaker-jump-to){
   border:1px solid var(--line-strong);
   border-radius:999px;
   background:color-mix(in srgb, var(--panel) 80%, transparent);
-  transition:color .2s ease, transform .2s ease, border-color .2s ease, background .2s ease;
+  transition:color .2s var(--ease-standard), transform .2s var(--ease-standard), border-color .2s var(--ease-standard), background .2s var(--ease-standard);
 }
 .writing-card:has(a.writing-link):hover .writing-title,
 .writing-card:has(.writing-link--dual):hover .writing-title,
@@ -3917,7 +3962,7 @@ section:has(.speaker-jump-to){
 .research-library-page ul.writing-list > li > article.writing-card.research-card--earlier-work{
   padding:1rem 1.5rem;
 }
-@media (min-width:768px) and (max-width:1023px){
+@media (min-width:769px) and (max-width:1023px){
   .research-library-page ul.writing-list > li > article.writing-card:not(.research-card--earlier-work),
   .featured-research .featured-paper-card.writing-card--has-actions{
     padding:1.25rem;
@@ -4007,7 +4052,7 @@ section:has(.speaker-jump-to){
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 55%, transparent);
   box-shadow:0 2px 12px color-mix(in srgb, var(--bg) 40%, #000);
-  transition:transform 0.2s ease, filter 0.2s ease;
+  transition:transform 0.2s var(--ease-standard), filter 0.2s var(--ease-standard);
   filter:saturate(0.88) brightness(0.96);
 }
 .featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-copy{
@@ -4121,7 +4166,7 @@ section:has(.speaker-jump-to){
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 50%, transparent);
   box-shadow:0 2px 8px color-mix(in srgb, #000 25%, transparent);
-  transition:transform 0.2s ease, filter 0.2s ease;
+  transition:transform 0.2s var(--ease-standard), filter 0.2s var(--ease-standard);
   filter:saturate(0.85) brightness(0.95);
 }
 .research-library-page ul.writing-list > li > article:not(.research-card--earlier-work) > .writing-link.writing-link--thumb > .writing-title-stack,
@@ -4181,7 +4226,7 @@ section:has(.speaker-jump-to){
   display:block;
   border:1px solid color-mix(in srgb, var(--line) 45%, transparent);
   box-shadow:0 2px 8px color-mix(in srgb, #000 25%, transparent);
-  transition:transform 0.2s ease, filter 0.2s ease;
+  transition:transform 0.2s var(--ease-standard), filter 0.2s var(--ease-standard);
   filter:saturate(0.85) brightness(0.95);
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work .writing-title-stack{
@@ -4231,7 +4276,7 @@ section:has(.speaker-jump-to){
   justify-content:center;
   text-align:center;
   padding:var(--space-sm);
-  font-size:0.72rem;
+  font-size:var(--text-2xs);
   font-weight:600;
   line-height:1.35;
   letter-spacing:0.04em;
@@ -4307,7 +4352,7 @@ section:has(.speaker-jump-to){
   cursor:pointer;
   font-size:0.75rem;
   opacity:0.55;
-  transition:opacity 0.15s ease;
+  transition:opacity 0.15s var(--ease-standard);
 }
 .research-library-page ul.writing-list > li > article > .card-expand.card-expand--inline > summary:hover{
   opacity:0.85;
@@ -4438,10 +4483,10 @@ section:has(.speaker-jump-to){
 .featured-research .featured-paper-card{
   position:relative;
   transform-origin:center center;
-  transition:transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
-             box-shadow 0.28s ease,
-             border-color 0.28s ease;
-  will-change:transform;
+  transition:transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+             box-shadow 0.5s var(--ease-standard),
+             border-color 0.28s var(--ease-standard);
+  /* No will-change here: a hover scale self-promotes to a composited layer on demand. A static will-change held an idle layer for every card (20+ on /research/) for the page lifetime. Kept on .scroll-progress and .hero-dollar-flight where motion is continuous. */
 }
 .research-library-page ul.writing-list > li > article.writing-card:hover,
 .research-library-page ul.writing-list > li > article.writing-card:focus-within,
@@ -4640,7 +4685,7 @@ section:has(.speaker-jump-to){
 .writing-list .card-expand .research-companion,
 .writing-list .card-expand .research-why,
 .writing-list .card-expand .research-audience{
-  max-width: none !important;
+  max-width: none;
   width: 100%;
   box-sizing: border-box;
 }
@@ -4671,9 +4716,9 @@ section:has(.speaker-jump-to){
   color:var(--accent);
 }
 .status--draft{
-  border:1px solid color-mix(in srgb, #d97706 30%, var(--line));
-  background:color-mix(in srgb, #d97706 8%, transparent);
-  color:#d97706;
+  border:1px solid color-mix(in srgb, var(--brand-amber) 30%, var(--line));
+  background:color-mix(in srgb, var(--brand-amber) 8%, transparent);
+  color:var(--brand-amber);
 }
 :root[data-theme="dark"] .status--draft{
   border-color:color-mix(in srgb, #fbbf24 30%, var(--line));
@@ -4721,7 +4766,7 @@ section:has(.speaker-jump-to){
   background:color-mix(in srgb, var(--panel) 80%, transparent);
   white-space:nowrap;
   text-decoration:none;
-  transition:color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+  transition:color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard), transform .15s var(--ease-standard);
 }
 .writing-thread:hover{
   color:var(--accent);
@@ -4855,7 +4900,7 @@ section:has(.speaker-jump-to){
   align-items:center;
   justify-content:space-between;
   gap:var(--space-xl);
-  transition:border-color .2s ease, box-shadow .2s ease;
+  transition:border-color .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
 }
 .cta-strip > div{
   flex:1 1 0;
@@ -5035,7 +5080,7 @@ section:has(.speaker-jump-to){
   text-decoration:none;
   min-width:0;
   color:var(--text);
-  transition:color .15s ease;
+  transition:color .15s var(--ease-standard);
 }
 .contact-box .left a:hover{
   color:var(--accent);
@@ -5117,7 +5162,7 @@ section:has(.speaker-jump-to){
   background:linear-gradient(145deg, color-mix(in srgb, var(--accent-muted) 85%, var(--panel)), var(--panel));
   box-shadow:var(--shadow-sm);
   margin-bottom:var(--space-xl);
-  transition:border-color .2s ease, box-shadow .2s ease;
+  transition:border-color .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
 }
 .resume-quick-nav:focus-within{
   border-color:color-mix(in srgb, var(--accent) 55%, var(--line));
@@ -5158,12 +5203,21 @@ section:has(.speaker-jump-to){
 .resume-quick-nav-buttons .action.primary:hover{
   box-shadow:0 4px 14px color-mix(in srgb, var(--accent) 30%, transparent);
 }
-@media (max-width:767px){
+@media (max-width:768px){
   .resume-quick-nav-buttons{
     grid-template-columns:1fr;
   }
   .resume-quick-nav-label{
     max-width:none;
+  }
+}
+
+/* Container-query enhancement: the quick-nav buttons reflow by the width of their own container (.resume-quick-nav) rather than the viewport, so they stay two-up wherever the container has room and collapse to one column only when the container itself is narrow. Progressive enhancement, placed after the @media rule so it wins in supporting browsers; browsers without container queries keep the viewport fallback above. */
+@supports (container-type: inline-size){
+  .resume-quick-nav{ container-type: inline-size; }
+  .resume-quick-nav-buttons{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  @container (max-width: 34rem){
+    .resume-quick-nav-buttons{ grid-template-columns:1fr; }
   }
 }
 
@@ -5592,7 +5646,7 @@ main.resume-profile .resume-closing{
   min-width:0;
   border:1px solid color-mix(in srgb, var(--line) 88%, transparent);
   background:color-mix(in srgb, var(--text) 4%, transparent);
-  transition:background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition:background 0.15s var(--ease-standard), border-color 0.15s var(--ease-standard), color 0.15s var(--ease-standard);
 }
 .resume-evidence a:hover{
   background:color-mix(in srgb, var(--text) 8%, transparent);
@@ -5670,10 +5724,10 @@ main.resume-profile .resume-closing{
 .grid--quick{
   grid-template-columns:repeat(3, 1fr);
 }
-@media(max-width:768px){
+@media (max-width:768px){
   .grid--quick{grid-template-columns:repeat(2, 1fr)}
 }
-@media(max-width:480px){
+@media (max-width:480px){
   .grid--quick{grid-template-columns:1fr}
 }
 
@@ -6000,7 +6054,7 @@ body.speaker-page .speaker-hero{
   padding:var(--space-lg);
   min-height:100px;
   border-top:3px solid var(--accent);
-  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition:transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .card--link:hover{
   transform:translateY(-2px);
@@ -6025,7 +6079,7 @@ body.speaker-page .speaker-hero{
   font-size:var(--font-size-min);
   color:var(--muted);
   font-weight:400;
-  transition:color .15s ease;
+  transition:color .15s var(--ease-standard);
 }
 .card--link-detail:hover p{
   color:var(--text-soft);
@@ -6035,7 +6089,7 @@ body.speaker-page .speaker-hero{
   font-size:16px;
   color:var(--accent);
   opacity:.5;
-  transition:opacity .15s ease, transform .15s ease;
+  transition:opacity .15s var(--ease-standard), transform .15s var(--ease-standard);
 }
 .card--link:hover .card-link-arrow{
   opacity:1;
@@ -6066,7 +6120,7 @@ body.speaker-page .speaker-hero{
   border-radius:var(--radius);
   background:var(--panel);
   background:color-mix(in srgb, var(--panel) 95%, transparent);
-  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition:transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .audience-panel > .audience-panel-actions{
   margin-top:auto;
@@ -6265,7 +6319,7 @@ body.speaker-page .speaker-hero{
   text-wrap:pretty;
 }
 .explainer-intro{
-  padding-top:var(--space-lg) !important;
+  padding-top:var(--space-lg);
 }
 
 /* ── 2026 Frameworks page: hero rhythm, jump nav, definition / question panels ── */
@@ -6367,7 +6421,7 @@ body.speaker-page .speaker-hero{
 }
 .resume-page .resume-quick-nav-buttons .action.primary{
   padding:0.625rem 1rem;
-  font-size:0.8125rem;
+  font-size:var(--text-xs);
   min-height:40px;
   line-height:1.35;
   border-radius:6px;
@@ -6390,7 +6444,7 @@ body.speaker-page .speaker-hero{
 .resume-page .section-title + .resume-quick-nav{
   margin-top:var(--space-sm);
 }
-@media (max-width:767px){
+@media (max-width:768px){
   .resume-page .resume-card{
     padding:1rem;
   }
@@ -6448,7 +6502,7 @@ body.speaker-page .speaker-hero{
 
 /* Definitions: card-like blocks, no double rules */
 .overview-page #definitions.explainer-intro{
-  padding-top:var(--space-sm) !important;
+  padding-top:var(--space-sm);
   margin-top:var(--space-xs);
   border-top:none;
 }
@@ -6789,7 +6843,7 @@ footer.site-footer .footer-links a{
   text-decoration:none;
   min-width:0;
   color:var(--footer-strip-muted);
-  transition:color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+  transition:color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard), transform .15s var(--ease-standard);
   border-radius:2px;
 }
 footer.site-footer .footer-links a:hover{color:var(--accent)}
@@ -6805,7 +6859,7 @@ footer.site-footer .footer-nav a{
   display:inline-flex;
   align-items:center;
   min-height:var(--interactive-height-sm);
-  transition:color .15s ease, border-color .15s ease, background .15s ease;
+  transition:color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
 footer.site-footer .footer-nav a:hover{
   color:var(--footer-strip-text);
@@ -6833,7 +6887,7 @@ footer.site-footer .footer-social{
   border:1px solid rgba(255, 255, 255, 0.22);
   background:rgba(255, 255, 255, 0.04);
   color:var(--footer-strip-text);
-  transition:border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease;
+  transition:border-color .15s var(--ease-standard), color .15s var(--ease-standard), background .15s var(--ease-standard), transform .15s var(--ease-standard);
 }
 footer.site-footer .footer-social:hover{
   border-color:var(--accent);
@@ -6845,7 +6899,7 @@ footer.site-footer .footer-social svg{
   width:14px;
   height:14px;
   opacity:.85;
-  transition:opacity .15s ease;
+  transition:opacity .15s var(--ease-standard);
 }
 footer.site-footer .footer-social:hover svg{
   opacity:1;
@@ -6941,7 +6995,7 @@ footer.site-footer .footer-tagline{
   opacity:0;
   pointer-events:none;
   transform:translateY(8px);
-  transition:opacity .25s ease, transform .25s ease, border-color .15s, color .15s, background .15s, box-shadow .15s;
+  transition:opacity .25s var(--ease-standard), transform .25s var(--ease-standard), border-color .15s, color .15s, background .15s, box-shadow .15s;
   z-index:100;
   box-shadow:var(--shadow-sm);
 }
@@ -6979,7 +7033,7 @@ footer.site-footer .footer-tagline{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:transform .15s ease, border-color .15s ease, color .15s ease, background .15s ease;
+  transition:transform .15s var(--ease-standard), border-color .15s var(--ease-standard), color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
 .theme-toggle:hover{
   color:var(--accent);
@@ -7004,20 +7058,9 @@ footer.site-footer .footer-tagline{
 .reveal{
   opacity:0;
   transform:translateY(12px);
-  transition:opacity .5s ease, transform .5s ease;
+  transition:opacity .5s var(--ease-standard), transform .5s var(--ease-standard);
 }
 .reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* Staggered card reveals */
-.stagger-item{
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity .45s cubic-bezier(.25,.46,.45,.94), transform .45s cubic-bezier(.25,.46,.45,.94);
-}
-.stagger-item.visible{
   opacity:1;
   transform:translateY(0);
 }
@@ -7027,11 +7070,6 @@ footer.site-footer .footer-tagline{
     scroll-behavior:auto;
   }
   .reveal{
-    opacity:1;
-    transform:none;
-    transition:none;
-  }
-  .stagger-item{
     opacity:1;
     transform:none;
     transition:none;
@@ -7090,7 +7128,7 @@ footer.site-footer .footer-tagline{
 
 /* Header at tablet landscape and narrower: drop the brand subtitle so the
    brand title (now nowrap) stays compact next to the nav. */
-@media (max-width: 1100px){
+@media (max-width: 1099px){
   header .brand span{display:none}
 }
 
@@ -7121,8 +7159,8 @@ footer.site-footer .footer-tagline{
     background:var(--bg);
     background-color:var(--bg);
     z-index:11000;
-    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
     min-height:calc(100vh - var(--header-h) - env(safe-area-inset-top, 0px));
+    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
     box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
   }
   #nav-mobile.nav-links--mobile:not([hidden]){
@@ -7246,8 +7284,8 @@ footer.site-footer .footer-tagline{
     background:var(--bg);
     background-color:var(--bg);
     z-index:11000;
-    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
     min-height:calc(100vh - var(--header-h) - env(safe-area-inset-top, 0px));
+    min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
     box-shadow:0 16px 48px color-mix(in srgb, #000 22%, transparent);
   }
 
@@ -8149,7 +8187,7 @@ footer.site-footer .footer-tagline{
 .term.term-link{
   text-decoration: none;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 50%, transparent);
-  transition: border-bottom-color 0.2s ease, color 0.2s ease;
+  transition: border-bottom-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
 }
 .term.term-link:hover,
 .term.term-link:focus-visible{
@@ -8409,7 +8447,7 @@ footer.site-footer .footer-tagline{
   letter-spacing:0.02em;
   color:var(--accent);
   text-decoration:none;
-  transition:border-color .15s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
+  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard), color .15s var(--ease-standard), box-shadow .15s var(--ease-standard);
 }
 .contact-strip-simple .contact-speaker-cta a:hover{
   border-color:var(--accent);
@@ -8562,9 +8600,9 @@ footer.site-footer .footer-tagline{
   background: color-mix(in srgb, #4ade80 10%, transparent);
 }
 .badge-request{
-  border-color: color-mix(in srgb, #d97706 30%, var(--line));
-  background: color-mix(in srgb, #d97706 10%, transparent);
-  color: #d97706;
+  border-color: color-mix(in srgb, var(--brand-amber) 30%, var(--line));
+  background: color-mix(in srgb, var(--brand-amber) 10%, transparent);
+  color: var(--brand-amber);
 }
 :root[data-theme="dark"] .badge-request{
   color:#fbbf24;
@@ -8572,9 +8610,9 @@ footer.site-footer .footer-tagline{
   background: color-mix(in srgb, #fbbf24 10%, transparent);
 }
 .badge-draft{
-  border-color: color-mix(in srgb, #d97706 30%, var(--line));
-  background: color-mix(in srgb, #d97706 10%, transparent);
-  color: #d97706;
+  border-color: color-mix(in srgb, var(--brand-amber) 30%, var(--line));
+  background: color-mix(in srgb, var(--brand-amber) 10%, transparent);
+  color: var(--brand-amber);
 }
 :root[data-theme="dark"] .badge-draft{
   color:#fbbf24;
@@ -8756,7 +8794,7 @@ footer.site-footer .footer-tagline{
   color: var(--accent);
 }
 .paper-tier-kicker{
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -9168,7 +9206,7 @@ footer.site-footer .footer-tagline{
   color: var(--accent);
   text-decoration: none;
   border-top: 1px solid var(--line);
-  transition: color 0.15s ease, opacity 0.15s ease;
+  transition: color 0.15s var(--ease-standard), opacity 0.15s var(--ease-standard);
 }
 .next-card > a:hover{
   color: var(--accent-hover, var(--accent));
@@ -9355,7 +9393,7 @@ footer.site-footer .footer-tagline{
 }
 #signature-frameworks .track-b-card p{
   width: 100%;
-  max-width: none !important;
+  max-width: none;
   min-width: 0;
   white-space: normal;
   text-wrap: pretty;
@@ -9510,7 +9548,7 @@ footer.site-footer .footer-tagline{
   border: 1px solid rgba(96, 165, 250, 0.15);
   border-radius: 999px;
   padding: 0.3rem 0.75rem;
-  font-size: 0.8rem;
+  font-size:var(--text-xs);
   cursor: default;
   transition: none;
   color: var(--text);
@@ -9572,7 +9610,7 @@ footer.site-footer .footer-tagline{
   font-size: 1rem;
   font-weight: 600;
   color: inherit;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s var(--ease-standard);
 }
 .mvep-checklist-toggle:hover{
   background-color: rgba(0, 0, 0, 0.03);
@@ -9582,8 +9620,8 @@ footer.site-footer .footer-tagline{
   outline-offset: 2px;
 }
 .mvep-checklist-toggle .toggle-icon{
-  transition: transform 0.2s ease;
-  font-size: 0.875rem;
+  transition: transform 0.2s var(--ease-standard);
+  font-size:var(--text-sm);
   opacity: 0.5;
 }
 .mvep-checklist-wrapper.open .mvep-checklist-toggle .toggle-icon{
@@ -9606,7 +9644,7 @@ footer.site-footer .footer-tagline{
 .mvep-table{
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   line-height: 1.5;
 }
 .mvep-table th{
@@ -9614,7 +9652,7 @@ footer.site-footer .footer-tagline{
   text-align: left;
   padding: 0.75rem 1rem;
   font-weight: 600;
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   border-bottom: 2px solid var(--border-color, #d1d5db);
@@ -9685,7 +9723,7 @@ footer.site-footer .footer-tagline{
   margin-bottom: 0.75rem;
 }
 .mvep-ref-note{
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   line-height: 1.6;
   margin-bottom: 1rem;
   color: var(--muted);
@@ -9699,7 +9737,7 @@ footer.site-footer .footer-tagline{
 }
 @media (max-width: 768px){
   .mvep-table{
-    font-size: 0.8125rem;
+    font-size:var(--text-xs);
   }
   .mvep-table th,
   .mvep-table td{
@@ -9852,7 +9890,7 @@ footer.site-footer .footer-tagline{
   }
   .access-primary .action{
     padding: var(--space-sm) var(--space-sm);
-    font-size: 0.8rem;
+    font-size:var(--text-xs);
   }
 }
 .access-secondary{
@@ -10133,7 +10171,7 @@ footer.site-footer .footer-tagline{
   padding: var(--space-lg);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s var(--ease-standard), background 0.2s var(--ease-standard);
 }
 .paper-related-card-wrap:hover{
   border-color: var(--accent);
@@ -10339,7 +10377,7 @@ footer.site-footer .footer-tagline{
   border-radius: 999px;
   color: var(--text);
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard), background 0.2s var(--ease-standard);
 }
 .filter-chip:hover{
   border-color: var(--accent);
@@ -10578,9 +10616,9 @@ footer.site-footer .footer-tagline{
 }
 
 .badge-request{
-  border-color: color-mix(in srgb, #d97706 30%, var(--line));
-  background: color-mix(in srgb, #d97706 10%, transparent);
-  color: #d97706;
+  border-color: color-mix(in srgb, var(--brand-amber) 30%, var(--line));
+  background: color-mix(in srgb, var(--brand-amber) 10%, transparent);
+  color: var(--brand-amber);
 }
 
 :root[data-theme="dark"] .badge-request{
@@ -11354,7 +11392,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 .featured-paper-card h3{
   margin-top:0;
   margin-bottom:var(--space-sm);
-  font-size:clamp(22px, 2.2vw, 30px);
+  font-size:var(--h-section);
   font-weight:700;
   letter-spacing:-0.025em;
   line-height:1.15;
@@ -11799,7 +11837,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   border-radius: var(--radius);
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s var(--ease-standard);
   pointer-events: none;
   z-index: 1;
 }
@@ -11846,10 +11884,10 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 @media (pointer: coarse){
   #hero.hero--homepage a.cta-primary.matrix-hover-activator.mtx-flagship-lp-arming{
     transform: scale(0.97);
-    transition: transform 0.15s ease;
+    transition: transform 0.15s var(--ease-standard);
   }
   #hero.hero--homepage a.cta-primary.matrix-hover-activator.mtx-flagship-lp-done{
-    animation: mtx-flagship-lp-pop 0.38s ease;
+    animation: mtx-flagship-lp-pop 0.38s var(--ease-standard);
   }
 }
 @keyframes mtx-flagship-lp-pop{
@@ -11923,7 +11961,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   );
   mix-blend-mode: screen;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s var(--ease-standard);
 }
 
 #hero.hero--homepage .hero-eyebrow:hover::after,
@@ -11984,7 +12022,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 @media (max-width: 768px){
   #hero.hero--homepage .hero-dollar-flight{
-    font-size: 0.7rem;
+    font-size:var(--text-2xs);
   }
 }
 
@@ -12014,15 +12052,21 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   border-radius: inherit;
 }
 
-/* Light mode: the matrix + reef canvases and the 45% black overlay are
-   tuned for dark backgrounds. In light mode they wash the hero into a
-   dark zone where the dark-blue text becomes unreadable. Hide all three
-   so the hero's existing light panel-gradient background carries the
-   surface, and dark-blue text reads cleanly against it. */
-:root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container,
-:root:not([data-theme="dark"]) #hero.hero--homepage .hero-reef,
+/* Light mode: the matrix + reef $ glyphs are recolored in script.js to a
+   saturated teal-to-blue gradient for light backgrounds (the dark-mode mint
+   washes out to gray on white), and the 45% black overlay would darken the
+   hero into a zone where the dark-blue headline turns unreadable. So in light
+   mode: drop the overlay entirely, and hold the canvases at moderate opacity
+   so the animation reads on the light panel while the headline stays legible.
+   No darkening filter here: it desaturated the recolored glyphs back to gray. */
 :root:not([data-theme="dark"]) #hero.hero--homepage .hero-overlay{
   display: none;
+}
+:root:not([data-theme="dark"]) #hero.hero--homepage .matrix-container{
+  opacity: 0.72;
+}
+:root:not([data-theme="dark"]) #hero.hero--homepage .hero-reef{
+  opacity: 0.72;
 }
 
 #hero.hero--homepage .hero-btc-flight,
@@ -12156,7 +12200,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   box-sizing: border-box;
   text-decoration: none;
   border: 1px solid transparent;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s var(--ease-standard), background 0.2s var(--ease-standard), color 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard);
 }
 
 #hero.hero--homepage .hero-cta-cluster .btn-primary{
@@ -12295,7 +12339,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 
 #hero.hero--homepage .hero-proof-label{
   opacity: 0.92;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 500;
   color: var(--text-soft);
   line-height: 1.35;
@@ -12474,7 +12518,6 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 :root{
   --section-gap: clamp(36px, 4.5vw, 56px);
   --section-gap-tight: clamp(18px, 2.4vw, 28px);
-  --section-gap-loose: clamp(72px, 8vw, 108px);
 }
 
 /* Normalize vertical rhythm between top-level sections */
@@ -12736,9 +12779,9 @@ main > section:first-of-type{
 /* Available on request / draft / requestable */
 .badge-request,
 .status--draft{
-  border-color: color-mix(in srgb, #d97706 34%, var(--line));
-  background: color-mix(in srgb, #d97706 10%, transparent);
-  color: #d97706;
+  border-color: color-mix(in srgb, var(--brand-amber) 34%, var(--line));
+  background: color-mix(in srgb, var(--brand-amber) 10%, transparent);
+  color: var(--brand-amber);
 }
 
 :root[data-theme="dark"] .badge-request,
@@ -12845,8 +12888,6 @@ main > section:first-of-type{
   --interactive-height-sm: 30px;
   --nav-radius: 10px;
   --chip-radius: 999px;
-  --surface-elevated: color-mix(in srgb, var(--panel) 94%, transparent);
-  --surface-subtle: color-mix(in srgb, var(--panel) 86%, transparent);
   --card-border-accent: color-mix(in srgb, var(--accent) 26%, var(--line));
 }
 
@@ -13275,7 +13316,7 @@ a.writing-arrow:focus{
 .featured-talk-thumbnail{
   width:100%;
   border-radius:var(--radius-sm);
-  transition:opacity .2s ease;
+  transition:opacity .2s var(--ease-standard);
 }
 .featured-talk-thumbnail:hover{
   opacity:.85;
@@ -13493,15 +13534,15 @@ a.writing-arrow:focus{
 }
 
 /* Per-accent variable for downstream effects (hover shadow tint, etc.) */
-.card--accent-a{ --card-accent: var(--accent-cta, #2563eb); }
-.card--accent-b{ --card-accent: #0d9488; }
-.card--accent-c{ --card-accent: #7c3aed; }
-.card--accent-d{ --card-accent: #d97706; }
-.card--accent-e{ --card-accent: #e11d48; }
+.card--accent-a{ --card-accent: var(--accent-cta, var(--brand-blue)); }
+.card--accent-b{ --card-accent: var(--brand-teal); }
+.card--accent-c{ --card-accent: var(--brand-violet); }
+.card--accent-d{ --card-accent: var(--brand-amber); }
+.card--accent-e{ --card-accent: var(--brand-rose); }
 
 /* Advisory card hover: accent-tinted shadow + stronger lift; preserves per-card top stripe */
 .speaker-page .advisory-card{
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transition:transform .25s var(--ease-standard), box-shadow .25s var(--ease-standard), border-color .25s var(--ease-standard);
 }
 .speaker-page .advisory-card:hover{
   transform:translateY(-3px);
@@ -13678,7 +13719,7 @@ details.card-expand[open] summary {
 }
 
 .companions h3 {
-  font-size: 0.8rem;
+  font-size:var(--text-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -13715,7 +13756,7 @@ details.card-expand[open] summary {
 }
 
 .companion-card span {
-  font-size: 0.82rem;
+  font-size:var(--text-xs);
   color: var(--muted);
   line-height: 1.5;
 }
@@ -13756,7 +13797,7 @@ details.card-expand[open] summary {
 
 .section-eyebrow {
   display: block;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -14092,7 +14133,7 @@ header {
   border-bottom-color: var(--glass-edge, color-mix(in srgb, var(--text) 12%, transparent));
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard);
 }
 
 header.scrolled {
@@ -14219,7 +14260,7 @@ header.scrolled {
 .card--dollar-object{
   padding: var(--space-xl);
   gap: var(--space-sm);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .card--dollar-object:hover{
   transform: translateY(-2px);
@@ -14228,7 +14269,7 @@ header.scrolled {
 
 .card-eyebrow{
   margin: 0 0 var(--space-xs);
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -14275,7 +14316,7 @@ header.scrolled {
   justify-content: center;
   height: 1.75rem;
   padding: 0 0.75rem;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -14290,31 +14331,31 @@ header.scrolled {
 /* Per-card accent variants: subtle top-border color coding for scannability.
    Variable fallbacks ensure graceful rendering if tokens are missing. */
 .card--accent-a{
-  border-top-color: var(--accent-cta, #2563eb);
+  border-top-color: var(--accent-cta, var(--brand-blue));
 }
 .card--accent-a .card-eyebrow{
-  color: var(--accent-cta, #2563eb);
+  color: var(--accent-cta, var(--brand-blue));
 }
 .card--accent-b{
-  border-top-color: #0d9488; /* teal-600 */
+  border-top-color: var(--brand-teal); /* teal-600 */
 }
 .card--accent-b .card-eyebrow{
   color: #2dd4bf; /* teal-400; adjusted for dark theme contrast */
 }
 :root:not([data-theme="dark"]) .card--accent-b .card-eyebrow{
-  color: #0d9488;
+  color: var(--brand-teal);
 }
 .card--accent-c{
-  border-top-color: #7c3aed; /* violet-600 */
+  border-top-color: var(--brand-violet); /* violet-600 */
 }
 .card--accent-c .card-eyebrow{
   color: #a78bfa; /* violet-400 for dark theme */
 }
 :root:not([data-theme="dark"]) .card--accent-c .card-eyebrow{
-  color: #7c3aed;
+  color: var(--brand-violet);
 }
 .card--accent-d{
-  border-top-color: #d97706; /* amber-600 */
+  border-top-color: var(--brand-amber); /* amber-600 */
 }
 .card--accent-d .card-eyebrow{
   color: #fbbf24; /* amber-400 for dark theme */
@@ -14341,7 +14382,7 @@ header.scrolled {
 }
 
 /* Mobile: stack grid; reduce padding */
-@media (max-width: 767px){
+@media (max-width: 768px){
   .dollar-objects-grid .card--dollar-object{
     grid-column: 1 / -1;
     padding: var(--space-lg);
@@ -14359,7 +14400,7 @@ header.scrolled {
 
 /* Accent-e: rose-600 (institutional tone; lands between amber and violet) */
 .card--accent-e{
-  border-top-color: #e11d48; /* rose-600 */
+  border-top-color: var(--brand-rose); /* rose-600 */
 }
 .card--accent-e .card-eyebrow{
   color: #fb7185; /* rose-400 for dark theme */
@@ -14373,7 +14414,7 @@ header.scrolled {
    structure, like the core-frameworks cards). */
 .card--polished{
   padding: var(--space-xl);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .card--polished:hover{
   transform: translateY(-2px);
@@ -14408,7 +14449,7 @@ header.scrolled {
 .paper-access-block.access-block{
   padding: 1rem 1.5rem;
   border: 1px solid color-mix(in srgb, var(--line) 120%, transparent);
-  border-left: 3px solid var(--accent-cta, #2563eb);
+  border-left: 3px solid var(--accent-cta, var(--brand-blue));
   border-radius: 0 var(--radius) var(--radius) 0;
   background: linear-gradient(
     180deg,
@@ -14427,7 +14468,7 @@ header.scrolled {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-cta, #2563eb);
+  color: var(--accent-cta, var(--brand-blue));
   opacity: 0.85;
 }
 .paper-access-block.access-block .access-primary{
@@ -14461,7 +14502,7 @@ header.scrolled {
 }
 .brief-at-a-glance p strong{
   display: inline-block;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -14495,7 +14536,7 @@ header.scrolled {
   border-radius: var(--radius-sm);
   border: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
   background: color-mix(in srgb, var(--panel) 40%, transparent);
-  transition: border-color .2s ease, background .2s ease;
+  transition: border-color .2s var(--ease-standard), background .2s var(--ease-standard);
 }
 .brief-finding + .brief-finding{
   margin-top: var(--space-md);
@@ -14589,7 +14630,7 @@ header.scrolled {
 }
 
 /* Mobile: reduce padding on polished blocks */
-@media (max-width: 767px){
+@media (max-width: 768px){
   .paper-access-block.access-block,
   .brief-at-a-glance,
   .brief-finding{
@@ -14625,7 +14666,7 @@ header.scrolled {
   counter-increment: qa-num;
   position: relative;
   padding-left: 4.5rem;
-  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  transition: border-color .2s var(--ease-standard), background .2s var(--ease-standard), transform .2s var(--ease-standard);
 }
 
 #five-questions .question-block:hover{
@@ -14646,7 +14687,7 @@ header.scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size:var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.02em;
   background: var(--accent);
@@ -14691,7 +14732,7 @@ header.scrolled {
     margin-bottom: var(--space-sm);
     width: 1.9em;
     height: 1.9em;
-    font-size: 0.72rem;
+    font-size:var(--text-2xs);
   }
 }
 
@@ -14707,7 +14748,7 @@ header.scrolled {
   border-left-width: 3px;
   border-left-style: solid;
   border-left-color: color-mix(in srgb, var(--accent) 40%, var(--line));
-  transition: border-left-color .2s ease, transform .15s ease, box-shadow .2s ease, background .2s ease;
+  transition: border-left-color .2s var(--ease-standard), transform .15s var(--ease-standard), box-shadow .2s var(--ease-standard), background .2s var(--ease-standard);
 }
 
 #role-paths .role-pills a.role-pill::after{
@@ -14719,7 +14760,7 @@ header.scrolled {
   font-size: 1.05rem;
   color: color-mix(in srgb, var(--accent) 70%, transparent);
   opacity: 0.55;
-  transition: transform .2s ease, opacity .2s ease, color .2s ease;
+  transition: transform .2s var(--ease-standard), opacity .2s var(--ease-standard), color .2s var(--ease-standard);
 }
 
 #role-paths .role-pills a.role-pill:hover{
@@ -14737,35 +14778,35 @@ header.scrolled {
 /* Per-pill accent tints (matches established a/b/c/d/e rotation from earlier
    polish cycles). 5 role pills -> 5 accent colors. */
 #role-paths .role-pills a.role-pill:nth-child(1){
-  border-left-color: color-mix(in srgb, var(--accent-cta, #2563eb) 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(1):hover{
-  border-left-color: var(--accent-cta, #2563eb);
+  border-left-color: var(--accent-cta, var(--brand-blue));
 }
 
 #role-paths .role-pills a.role-pill:nth-child(2){
-  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(2):hover{
   border-left-color: #2dd4bf;
 }
 
 #role-paths .role-pills a.role-pill:nth-child(3){
-  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-violet) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(3):hover{
   border-left-color: #a78bfa;
 }
 
 #role-paths .role-pills a.role-pill:nth-child(4){
-  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(4):hover{
   border-left-color: #fbbf24;
 }
 
 #role-paths .role-pills a.role-pill:nth-child(5){
-  border-left-color: color-mix(in srgb, #e11d48 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-rose) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(5):hover{
   border-left-color: #fb7185;
@@ -14801,7 +14842,7 @@ header.scrolled {
 /* Filter-group label: uppercase eyebrow style matches the design vocabulary
    from other polish cycles. */
 .research-filters-js .filter-label{
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -14886,7 +14927,7 @@ header.scrolled {
   }
   .research-filters-js .filter-btn{
     padding: 0.3rem 0.75rem;
-    font-size: 0.72rem;
+    font-size:var(--text-2xs);
   }
 }
 
@@ -14907,7 +14948,7 @@ header.scrolled {
 /* agenda-table header: stronger accent tint + accent bottom-line */
 .agenda-table thead th{
   padding: 0.9rem 1rem;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -14925,7 +14966,7 @@ header.scrolled {
 
 /* agenda-table row hover: subtle accent tint for scanning */
 .agenda-table tbody tr{
-  transition: background .2s ease;
+  transition: background .2s var(--ease-standard);
 }
 .agenda-table tbody tr:hover{
   background: color-mix(in srgb, var(--accent) 8%, transparent);
@@ -14942,7 +14983,7 @@ header.scrolled {
 /* Header: upgrade to eyebrow pattern */
 .frameworks-routing-table thead th{
   padding: 0.9rem var(--space-md);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
@@ -14952,7 +14993,7 @@ header.scrolled {
 
 /* Row hover for scanning */
 .frameworks-routing-table tbody tr{
-  transition: background .2s ease;
+  transition: background .2s var(--ease-standard);
 }
 .frameworks-routing-table tbody tr:hover{
   background: color-mix(in srgb, var(--accent) 6%, transparent);
@@ -14986,7 +15027,7 @@ header.scrolled {
 
 .artifact-table thead th{
   padding: 0.8rem 1rem;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -15013,7 +15054,7 @@ header.scrolled {
 }
 
 .artifact-table tbody tr{
-  transition: background .2s ease;
+  transition: background .2s var(--ease-standard);
 }
 
 .artifact-table tbody tr:hover{
@@ -15066,10 +15107,10 @@ body.contact-page .contact-page-foreground > .contact-page .route-card{
   border-left-color: color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--panel) 40%, transparent);
-  transition: border-color .2s ease,
-              background .2s ease,
-              transform .15s ease,
-              box-shadow .2s ease;
+  transition: border-color .2s var(--ease-standard),
+              background .2s var(--ease-standard),
+              transform .15s var(--ease-standard),
+              box-shadow .2s var(--ease-standard);
 }
 
 /* Arrow indicator */
@@ -15082,7 +15123,7 @@ body.contact-page .contact-page-foreground > .contact-page .route-card::after{
   font-size: 1.1rem;
   color: color-mix(in srgb, var(--accent) 70%, transparent);
   opacity: 0.55;
-  transition: transform .2s ease, opacity .2s ease, color .2s ease;
+  transition: transform .2s var(--ease-standard), opacity .2s var(--ease-standard), color .2s var(--ease-standard);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .route-card:hover{
@@ -15101,28 +15142,28 @@ body.contact-page .contact-page-foreground > .contact-page .route-card:hover::af
 
 /* Per-card accent variation (a/b/c/d rotation matching earlier cycles) */
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(1){
-  border-left-color: color-mix(in srgb, var(--accent-cta, #2563eb) 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(1):hover{
-  border-left-color: var(--accent-cta, #2563eb);
+  border-left-color: var(--accent-cta, var(--brand-blue));
 }
 
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(2){
-  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(2):hover{
   border-left-color: #2dd4bf;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(3){
-  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-violet) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(3):hover{
   border-left-color: #a78bfa;
 }
 
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(4){
-  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(4):hover{
   border-left-color: #fbbf24;
@@ -15168,7 +15209,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item{
   border-left: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   background: color-mix(in srgb, var(--panel) 25%, transparent);
-  transition: border-left-color .2s ease, background .2s ease;
+  transition: border-left-color .2s var(--ease-standard), background .2s var(--ease-standard);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item:hover{
@@ -15177,7 +15218,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item:hover{
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item .about-label{
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -15221,7 +15262,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item .about-la
   display: inline-block;
   margin-top: var(--space-xs);
   padding-right: var(--space-sm);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -15253,7 +15294,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item .about-la
     padding: var(--space-md) var(--space-lg);
   }
   .paper-key-numbers > h2{
-    font-size: 0.7rem;
+    font-size:var(--text-2xs);
   }
   .paper-key-numbers p strong{
     font-size: 0.65rem;
@@ -15300,7 +15341,7 @@ footer.site-footer .footer-nav a::after{
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform .25s ease;
+  transition: transform .25s var(--ease-standard);
   pointer-events: none;
 }
 
@@ -15389,7 +15430,7 @@ body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
   background: color-mix(in srgb, var(--accent) 80%, transparent);
   margin-right: 0.5rem;
   vertical-align: middle;
-  transition: background .25s ease, box-shadow .25s ease;
+  transition: background .25s var(--ease-standard), box-shadow .25s var(--ease-standard);
 }
 
 /* Proof-chip hover: cursor-driven highlight on each credential pill.
@@ -15403,11 +15444,11 @@ body #hero.hero--homepage .hero-proof-strip .hero-proof-chip::before{
 body #hero.hero--homepage .hero-proof-strip .hero-proof-chip{
   pointer-events: auto;
   transition:
-    transform .25s ease,
-    background .25s ease,
-    border-color .25s ease,
-    color .25s ease,
-    box-shadow .25s ease;
+    transform .25s var(--ease-standard),
+    background .25s var(--ease-standard),
+    border-color .25s var(--ease-standard),
+    color .25s var(--ease-standard),
+    box-shadow .25s var(--ease-standard);
 }
 
 body #hero.hero--homepage .hero-proof-strip .hero-proof-chip:hover,
@@ -15455,7 +15496,7 @@ body #hero.hero--homepage .hero-anchors a::after{
   transform: scaleX(1);
   transform-origin: left center;
   opacity: 0.5;
-  transition: transform .25s ease, background .25s ease, opacity .25s ease;
+  transition: transform .25s var(--ease-standard), background .25s var(--ease-standard), opacity .25s var(--ease-standard);
 }
 
 body #hero.hero--homepage .hero-anchors a:hover::after{
@@ -15493,9 +15534,9 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal{
   cursor: default;
   isolation: isolate;
   transition:
-    color .35s ease,
-    opacity .35s ease,
-    text-shadow .35s ease;
+    color .35s var(--ease-standard),
+    opacity .35s var(--ease-standard),
+    text-shadow .35s var(--ease-standard);
 }
 
 /* Warm rim halo: soft radial-gradient gold disk behind the text.
@@ -15518,7 +15559,7 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal::after
     transparent 80%
   );
   opacity: 0;
-  transition: opacity .35s ease;
+  transition: opacity .35s var(--ease-standard);
   z-index: -1;
 }
 
@@ -15638,8 +15679,8 @@ body footer.site-footer .footer-tagline::after{
 body footer.site-footer .footer-social{
   border: 1px solid transparent;
   background: transparent;
-  transition: border-color .2s ease, background .2s ease, color .2s ease,
-              transform .2s ease, box-shadow .2s ease;
+  transition: border-color .2s var(--ease-standard), background .2s var(--ease-standard), color .2s var(--ease-standard),
+              transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
 }
 
 body footer.site-footer .footer-social:hover{
@@ -15789,7 +15830,7 @@ body #contact .about-card h2::before{
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -15841,7 +15882,7 @@ body #contact .about-card .about-card-meta p{
   line-height: 1.6;
   color: var(--text-soft);
   font-size: 0.9rem;
-  transition: border-left-color .2s ease;
+  transition: border-left-color .2s var(--ease-standard);
 }
 
 body #contact .about-card .about-card-meta p:hover{
@@ -15876,7 +15917,7 @@ body #contact .about-card .about-card-followup a{
   font-weight: 500;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   padding-bottom: 1px;
-  transition: border-color .2s ease, color .2s ease;
+  transition: border-color .2s var(--ease-standard), color .2s var(--ease-standard);
 }
 
 body #contact .about-card .about-card-followup a:hover{
@@ -15887,7 +15928,7 @@ body #contact .about-card .about-card-followup a:hover{
 /* Primary CTA in the about card: lift + accent shadow on hover, matching
    the vocabulary used on other CTAs across the site (b91564c, f9c9f55). */
 body #contact .about-card .about-card-ctas a.cta-primary:hover{
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent-cta, #2563eb) 30%, transparent);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 30%, transparent);
 }
 
 /* Mobile: reduce padding, remove meta left-border to avoid crowding */
@@ -15965,7 +16006,7 @@ header .navlink::after{
   bottom: 3px;
   height: 1px;
   background: var(--accent);
-  transition: left .22s ease, right .22s ease, opacity .22s ease;
+  transition: left .22s var(--ease-standard), right .22s var(--ease-standard), opacity .22s var(--ease-standard);
   opacity: 0;
 }
 
@@ -16045,36 +16086,18 @@ header .brand a strong::before{
     inset -1px -1px 2px rgba(0, 0, 0, 0.45),
     inset 1px 1px 1px rgba(255, 255, 255, 0.15);
   opacity: 0.95;
-  /* No continuous animation in base state. The brandOrbPulse keyframe
-     (kept defined below) animated box-shadow over a 44px region that
-     overlapped the title and subtitle text. At extreme pinch-zoom,
+  /* No continuous animation in base state. A former brandOrbPulse keyframe
+     (since removed, it was never assigned) animated box-shadow over a 44px
+     region that overlapped the title and subtitle text. At extreme pinch-zoom,
      re-rasterizing this region every frame caused visible flicker on
      the text. The orb remains visually rich via its static gradients +
      shadows; the disk activates on hover. */
   transition:
-    width .35s ease,
-    height .35s ease,
-    transform .35s ease,
-    background .35s ease,
-    box-shadow .35s ease;
-}
-
-@keyframes brandOrbPulse{
-  0%, 100%{
-    box-shadow:
-      0 0 8px color-mix(in srgb, #7c3aed 32%, transparent),
-      0 0 16px color-mix(in srgb, #2563eb 12%, transparent),
-      inset -1px -1px 2px rgba(0, 0, 0, 0.45),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.15);
-  }
-  50%{
-    box-shadow:
-      0 0 12px color-mix(in srgb, #7c3aed 48%, transparent),
-      0 0 22px color-mix(in srgb, #2563eb 22%, transparent),
-      0 0 32px color-mix(in srgb, #0d9488 12%, transparent),
-      inset -1px -1px 2px rgba(0, 0, 0, 0.45),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.15);
-  }
+    width .35s var(--ease-standard),
+    height .35s var(--ease-standard),
+    transform .35s var(--ease-standard),
+    background .35s var(--ease-standard),
+    box-shadow .35s var(--ease-standard);
 }
 
 /* Hover: morph the brand orb into a physics-faithful Interstellar
@@ -16124,7 +16147,7 @@ header .brand a strong::after{
   pointer-events: none;
   opacity: 0;
   transform: translateY(-50%);
-  transition: opacity .35s ease;
+  transition: opacity .35s var(--ease-standard);
 }
 
 /* Hover: ::before becomes the event-horizon sphere with a thin bright
@@ -16218,8 +16241,8 @@ header .brand a strong:hover::after{
 header .header-social-link{
   border-color: transparent;
   background: transparent;
-  transition: border-color .2s ease, color .2s ease, background .2s ease,
-              transform .2s ease, box-shadow .2s ease;
+  transition: border-color .2s var(--ease-standard), color .2s var(--ease-standard), background .2s var(--ease-standard),
+              transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
 }
 
 header .header-social-link:hover{
@@ -16239,7 +16262,7 @@ header.scrolled{
 
 /* Theme toggle button: subtle hover refinement matching social icons */
 header .theme-toggle{
-  transition: color .2s ease, background .2s ease, transform .2s ease;
+  transition: color .2s var(--ease-standard), background .2s var(--ease-standard), transform .2s var(--ease-standard);
 }
 
 header .theme-toggle:hover{
@@ -16282,7 +16305,7 @@ body #contact .about-card .about-card-meta p{
 }
 
 body #contact .about-card .about-card-meta p strong{
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
 }
 
 /* Footer tagline: remove max-width constraint so it fits on one line on
@@ -16321,7 +16344,7 @@ body footer.site-footer .footer-top{
     0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent),
     0 0 0 6px color-mix(in srgb, var(--accent) 8%, transparent);
   border-radius: var(--radius-sm);
-  transition: box-shadow .12s ease, outline-offset .12s ease;
+  transition: box-shadow .12s var(--ease-standard), outline-offset .12s var(--ease-standard);
 }
 
 /* Remove the box-shadow glow when the element is inside a rounded card
@@ -16354,7 +16377,7 @@ main .explainer-section a:not(.action):not(.btn){
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  transition: text-decoration-color .2s ease, color .2s ease;
+  transition: text-decoration-color .2s var(--ease-standard), color .2s var(--ease-standard);
 }
 
 main p a:not([class]):hover,
@@ -16381,7 +16404,7 @@ main li a:not([class])[target="_blank"]::after{
   opacity: 0.75;
   color: currentColor;
   text-decoration: none;
-  transition: opacity .2s ease, transform .2s ease;
+  transition: opacity .2s var(--ease-standard), transform .2s var(--ease-standard);
 }
 
 main p a:not([class])[target="_blank"]:hover::after,
@@ -16399,7 +16422,7 @@ main li a:not([class])[target="_blank"]:hover::after{
    ───────────────────────────────────────────────────────────────────────────── */
 
 body footer.site-footer .footer-tagline::before{
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.14em;
   top: 0.25rem;
 }
@@ -16437,7 +16460,7 @@ body #hero.hero--homepage{
   padding-top: 1.25rem;
 }
 
-@media (min-width: 768px){
+@media (min-width: 769px){
   body #hero.hero--homepage{
     padding-top: 1.5rem;
   }
@@ -16536,7 +16559,7 @@ body #contact .about-card .about-card-meta p strong{
   display: block;
   margin-right: 0;
   margin-bottom: 0.375rem;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.16em;
   text-align: left;
 }
@@ -16608,33 +16631,33 @@ body #contact .about-card .about-card-followup{
    glow that fades inward. Reads as a tinted halo rather than a solid
    stripe. */
 .resume-page #resume-policy{
-  border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
+  border-left: 1px solid color-mix(in srgb, var(--brand-blue) 22%, var(--line));
   box-shadow:
-    inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent),
+    inset 4px 0 24px -6px color-mix(in srgb, var(--brand-blue) 14%, transparent),
     var(--shadow-sm);
 }
 .resume-page #resume-asset-mgmt{
-  border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
+  border-left: 1px solid color-mix(in srgb, var(--brand-teal) 22%, var(--line));
   box-shadow:
-    inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent),
+    inset 4px 0 24px -6px color-mix(in srgb, var(--brand-teal) 14%, transparent),
     var(--shadow-sm);
 }
 .resume-page #resume-payments{
-  border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
+  border-left: 1px solid color-mix(in srgb, var(--brand-violet) 22%, var(--line));
   box-shadow:
-    inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent),
+    inset 4px 0 24px -6px color-mix(in srgb, var(--brand-violet) 14%, transparent),
     var(--shadow-sm);
 }
 .resume-page #resume-ai-governance{
-  border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
+  border-left: 1px solid color-mix(in srgb, var(--brand-amber) 22%, var(--line));
   box-shadow:
-    inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent),
+    inset 4px 0 24px -6px color-mix(in srgb, var(--brand-amber) 14%, transparent),
     var(--shadow-sm);
 }
 .resume-page #resume-risk{
-  border-left: 1px solid color-mix(in srgb, #e11d48 22%, var(--line));
+  border-left: 1px solid color-mix(in srgb, var(--brand-rose) 22%, var(--line));
   box-shadow:
-    inset 4px 0 24px -6px color-mix(in srgb, #e11d48 14%, transparent),
+    inset 4px 0 24px -6px color-mix(in srgb, var(--brand-rose) 14%, transparent),
     var(--shadow-sm);
 }
 
@@ -16642,28 +16665,28 @@ body #contact .about-card .about-card-followup{
    10% to 5%; icon color drops from 85% accent to 55% so the glyph
    reads as a soft tint rather than a bold stamp. */
 .resume-page #resume-policy .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #2563eb 5%, var(--panel));
-  color: color-mix(in srgb, #2563eb 55%, var(--text));
+  background: color-mix(in srgb, var(--brand-blue) 5%, var(--panel));
+  color: color-mix(in srgb, var(--brand-blue) 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-asset-mgmt .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #0d9488 5%, var(--panel));
-  color: color-mix(in srgb, #0d9488 55%, var(--text));
+  background: color-mix(in srgb, var(--brand-teal) 5%, var(--panel));
+  color: color-mix(in srgb, var(--brand-teal) 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-payments .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #7c3aed 5%, var(--panel));
-  color: color-mix(in srgb, #7c3aed 55%, var(--text));
+  background: color-mix(in srgb, var(--brand-violet) 5%, var(--panel));
+  color: color-mix(in srgb, var(--brand-violet) 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-ai-governance .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #d97706 5%, var(--panel));
-  color: color-mix(in srgb, #d97706 55%, var(--text));
+  background: color-mix(in srgb, var(--brand-amber) 5%, var(--panel));
+  color: color-mix(in srgb, var(--brand-amber) 55%, var(--text));
   border-radius: 8px;
 }
 .resume-page #resume-risk .resume-card-heading .card-icon{
-  background: color-mix(in srgb, #e11d48 5%, var(--panel));
-  color: color-mix(in srgb, #e11d48 55%, var(--text));
+  background: color-mix(in srgb, var(--brand-rose) 5%, var(--panel));
+  color: color-mix(in srgb, var(--brand-rose) 55%, var(--text));
   border-radius: 8px;
 }
 
@@ -16671,37 +16694,37 @@ body #contact .about-card .about-card-followup{
    Inset aura glow intensifies alongside the outer drop shadow for a
    coherent "lifts with a tinted halo" effect. */
 .resume-page .resume-card{
-  transition: transform .2s ease, box-shadow .22s ease, border-color .2s ease;
+  transition: transform .2s var(--ease-standard), box-shadow .22s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 .resume-page #resume-policy:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
-    0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-blue) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-blue) 14%, transparent);
 }
 .resume-page #resume-asset-mgmt:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
-    0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-teal) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-teal) 14%, transparent);
 }
 .resume-page #resume-payments:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
-    0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-violet) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-violet) 14%, transparent);
 }
 .resume-page #resume-ai-governance:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
-    0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-amber) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-amber) 14%, transparent);
 }
 .resume-page #resume-risk:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #e11d48 22%, transparent),
-    0 6px 18px color-mix(in srgb, #e11d48 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-rose) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-rose) 14%, transparent);
 }
 
 /* Bump heading size on landing hub cards so h3 doesn't get buried under
@@ -16714,19 +16737,19 @@ body #contact .about-card .about-card-followup{
 /* Resume-evidence eyebrow: soften the accent tint from 80% to 50% so
    the label reads as a muted hint rather than a saturated stamp. */
 .resume-page #resume-policy .resume-evidence strong{
-  color: color-mix(in srgb, #2563eb 50%, var(--muted));
+  color: color-mix(in srgb, var(--brand-blue) 50%, var(--muted));
 }
 .resume-page #resume-asset-mgmt .resume-evidence strong{
-  color: color-mix(in srgb, #0d9488 50%, var(--muted));
+  color: color-mix(in srgb, var(--brand-teal) 50%, var(--muted));
 }
 .resume-page #resume-payments .resume-evidence strong{
-  color: color-mix(in srgb, #7c3aed 50%, var(--muted));
+  color: color-mix(in srgb, var(--brand-violet) 50%, var(--muted));
 }
 .resume-page #resume-ai-governance .resume-evidence strong{
-  color: color-mix(in srgb, #d97706 50%, var(--muted));
+  color: color-mix(in srgb, var(--brand-amber) 50%, var(--muted));
 }
 .resume-page #resume-risk .resume-evidence strong{
-  color: color-mix(in srgb, #e11d48 50%, var(--muted));
+  color: color-mix(in srgb, var(--brand-rose) 50%, var(--muted));
 }
 
 /* Closing band: replace flat neutral panel with a centered pill-styled
@@ -16753,7 +16776,7 @@ body #contact .about-card .about-card-followup{
 main.resume-profile .proof-strip-inline{
   margin-top: var(--space-md);
   padding: 0;
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   line-height: 1.5;
   color: var(--text-soft);
   text-wrap: pretty;
@@ -16763,7 +16786,7 @@ main.resume-profile .proof-strip-inline{
    matches the scannable-label vocabulary used on key-number blocks,
    evidence chips, and the about-card meta labels. */
 main.resume-profile .resume-summary-card h3{
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -16775,24 +16798,24 @@ main.resume-profile .resume-summary-card h3{
    / "Where does control concentrate?" — three items read as a scannable
    set when color-keyed. */
 main.resume-profile .stack-list .stack-item:nth-child(3n+1){
-  border-left-color: color-mix(in srgb, #2563eb 70%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-blue) 70%, var(--line));
 }
 main.resume-profile .stack-list .stack-item:nth-child(3n+2){
-  border-left-color: color-mix(in srgb, #0d9488 70%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-teal) 70%, var(--line));
 }
 main.resume-profile .stack-list .stack-item:nth-child(3n){
-  border-left-color: color-mix(in srgb, #7c3aed 70%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-violet) 70%, var(--line));
 }
 
 /* Stack-item strong label: color-match the left border for scannability */
 main.resume-profile .stack-list .stack-item:nth-child(3n+1) strong{
-  color: color-mix(in srgb, #2563eb 82%, var(--text));
+  color: color-mix(in srgb, var(--brand-blue) 82%, var(--text));
 }
 main.resume-profile .stack-list .stack-item:nth-child(3n+2) strong{
-  color: color-mix(in srgb, #0d9488 82%, var(--text));
+  color: color-mix(in srgb, var(--brand-teal) 82%, var(--text));
 }
 main.resume-profile .stack-list .stack-item:nth-child(3n) strong{
-  color: color-mix(in srgb, #7c3aed 82%, var(--text));
+  color: color-mix(in srgb, var(--brand-violet) 82%, var(--text));
 }
 
 /* Related profiles: convert dot-separated text links to tappable pill
@@ -16814,10 +16837,10 @@ main.resume-profile .resume-related-profiles a{
   border-radius: 999px;
   background: color-mix(in srgb, var(--panel) 55%, transparent);
   color: var(--text-soft);
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   text-decoration: none;
-  transition: border-color .2s ease, color .2s ease,
-              background .2s ease, transform .15s ease;
+  transition: border-color .2s var(--ease-standard), color .2s var(--ease-standard),
+              background .2s var(--ease-standard), transform .15s var(--ease-standard);
 }
 main.resume-profile .resume-related-profiles a:hover{
   border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
@@ -16833,7 +16856,7 @@ main.resume-profile .resume-related-profiles{
   font-size: 0;
 }
 main.resume-profile .resume-related-profiles a{
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
 }
 
 /* Supporting-research heading eyebrow on landing hub (resume-evidence
@@ -16846,10 +16869,10 @@ main.resume-profile .resume-related-profiles a{
   }
   main.resume-profile .resume-related-profiles a{
     padding: 0.4375rem 0.75rem;
-    font-size: 0.8125rem;
+    font-size:var(--text-xs);
   }
   main.resume-profile .proof-strip-inline{
-    font-size: 0.8125rem;
+    font-size:var(--text-xs);
   }
 }
 
@@ -16876,7 +16899,7 @@ main.resume-profile .resume-related-profiles a{
   flex-wrap: wrap;
   align-items: center;
   gap: 0.375rem;
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   color: var(--muted);
   margin-bottom: var(--space-md);
   letter-spacing: 0.01em;
@@ -16887,7 +16910,7 @@ main.resume-profile .resume-related-profiles a{
   color: var(--text-soft);
   text-decoration: none;
   padding: 0.125rem 0.125rem;
-  transition: color .2s ease;
+  transition: color .2s var(--ease-standard);
 }
 
 .paper-breadcrumb a::after{
@@ -16901,7 +16924,7 @@ main.resume-profile .resume-related-profiles a{
   opacity: 0;
   transform: scaleX(0.4);
   transform-origin: left;
-  transition: opacity .2s ease, transform .2s ease;
+  transition: opacity .2s var(--ease-standard), transform .2s var(--ease-standard);
 }
 
 .paper-breadcrumb a:hover{
@@ -16946,7 +16969,7 @@ main.resume-profile .resume-related-profiles a{
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--panel) 60%, transparent);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.12em;
   color: var(--text-soft);
 }
@@ -16972,17 +16995,17 @@ main.resume-profile .resume-related-profiles a{
 
 /* Track A variant: blue accent (dollar / stablecoin infrastructure) */
 .paper-track-badge--a{
-  border-color: color-mix(in srgb, #2563eb 45%, var(--line));
-  background: color-mix(in srgb, #2563eb 9%, var(--panel));
-  color: color-mix(in srgb, #2563eb 78%, var(--text));
+  border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--line));
+  background: color-mix(in srgb, var(--brand-blue) 9%, var(--panel));
+  color: color-mix(in srgb, var(--brand-blue) 78%, var(--text));
 }
 
 /* Track B variant: teal accent (DePIN / tokenomics) — contrasts Track A
    without colliding with the policy / blue rotation on other surfaces. */
 .paper-track-badge--b{
-  border-color: color-mix(in srgb, #0d9488 45%, var(--line));
-  background: color-mix(in srgb, #0d9488 9%, var(--panel));
-  color: color-mix(in srgb, #0d9488 78%, var(--text));
+  border-color: color-mix(in srgb, var(--brand-teal) 45%, var(--line));
+  background: color-mix(in srgb, var(--brand-teal) 9%, var(--panel));
+  color: color-mix(in srgb, var(--brand-teal) 78%, var(--text));
 }
 
 /* Mobile: tighten padding + reduce badge text size */
@@ -17026,14 +17049,14 @@ main.resume-profile .resume-related-profiles a{
   flex-shrink: 0;
 }
 .paper-track-chip--a{
-  border-color: color-mix(in srgb, #2563eb 45%, var(--line));
-  background: color-mix(in srgb, #2563eb 9%, var(--panel));
-  color: color-mix(in srgb, #2563eb 78%, var(--text));
+  border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--line));
+  background: color-mix(in srgb, var(--brand-blue) 9%, var(--panel));
+  color: color-mix(in srgb, var(--brand-blue) 78%, var(--text));
 }
 .paper-track-chip--b{
-  border-color: color-mix(in srgb, #0d9488 45%, var(--line));
-  background: color-mix(in srgb, #0d9488 9%, var(--panel));
-  color: color-mix(in srgb, #0d9488 78%, var(--text));
+  border-color: color-mix(in srgb, var(--brand-teal) 45%, var(--line));
+  background: color-mix(in srgb, var(--brand-teal) 9%, var(--panel));
+  color: color-mix(in srgb, var(--brand-teal) 78%, var(--text));
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -17097,8 +17120,8 @@ main.resume-profile .resume-related-profiles a{
     background: transparent;
     color: var(--text-soft);
     font-weight: 500;
-    transition: background .2s ease, color .2s ease,
-                border-left-color .2s ease, padding-left .2s ease;
+    transition: background .2s var(--ease-standard), color .2s var(--ease-standard),
+                border-left-color .2s var(--ease-standard), padding-left .2s var(--ease-standard);
   }
 
   .nav-links--mobile .navlink::after{
@@ -17115,7 +17138,7 @@ main.resume-profile .resume-related-profiles a{
     font-size: 1.25rem;
     line-height: 1;
     color: color-mix(in srgb, var(--muted) 50%, transparent);
-    transition: color .2s ease, transform .2s ease, right .2s ease;
+    transition: color .2s var(--ease-standard), transform .2s var(--ease-standard), right .2s var(--ease-standard);
   }
 
   .nav-links--mobile .navlink:hover,
@@ -17158,7 +17181,7 @@ main.resume-profile .resume-related-profiles a{
     display: block;
     width: 100%;
     margin-bottom: var(--space-sm);
-    font-size: 0.7rem;
+    font-size:var(--text-2xs);
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -17191,8 +17214,8 @@ main.resume-profile .resume-related-profiles a{
     border-radius: 999px;
     background: transparent;
     border: 1px solid transparent;
-    transition: background .2s ease, border-color .2s ease,
-                color .2s ease;
+    transition: background .2s var(--ease-standard), border-color .2s var(--ease-standard),
+                color .2s var(--ease-standard);
   }
 
   #nav-mobile .nav-mobile-social .header-social-link:hover,
@@ -17234,14 +17257,14 @@ main.resume-profile .resume-related-profiles a{
   );
   border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, var(--line));
   color: var(--text);
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.12em;
 }
 
 /* Row hover: subtle accent tint for scanability on long tables.
    Applies to both checklist-main and ref-table variants. */
 .mvep-table tbody tr{
-  transition: background-color .15s ease;
+  transition: background-color .15s var(--ease-standard);
 }
 .mvep-table tbody tr:hover{
   background-color: color-mix(in srgb, var(--accent) 5%, transparent) !important;
@@ -17279,7 +17302,7 @@ main.resume-profile .resume-related-profiles a{
   border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
   color: color-mix(in srgb, var(--accent) 85%, var(--text));
   font-weight: 700;
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   line-height: 1;
 }
 
@@ -17308,13 +17331,13 @@ main.resume-profile .resume-related-profiles a{
 }
 
 /* Pass condition column (4th col): success-green left-tinted border +
-   tiny "target state" eyebrow cue. Uses #0d9488 (teal) to match the
+   tiny "target state" eyebrow cue. Uses var(--brand-teal) (teal) to match the
    site's success/positive vocabulary without introducing a net-new
    color. */
 .mvep-table.checklist-main td:nth-child(4){
   position: relative;
   padding-left: 1.25rem;
-  color: color-mix(in srgb, #0d9488 15%, var(--text));
+  color: color-mix(in srgb, var(--brand-teal) 15%, var(--text));
 }
 
 .mvep-table.checklist-main td:nth-child(4)::before{
@@ -17324,7 +17347,7 @@ main.resume-profile .resume-related-profiles a{
   bottom: 1rem;
   left: 0.5rem;
   width: 2px;
-  background: color-mix(in srgb, #0d9488 50%, var(--line));
+  background: color-mix(in srgb, var(--brand-teal) 50%, var(--line));
   border-radius: 1px;
 }
 
@@ -17357,7 +17380,7 @@ main.resume-profile .resume-related-profiles a{
     padding-left: 0.875rem;
   }
   .mvep-table.checklist-main td:nth-child(2) strong{
-    font-size: 0.875rem;
+    font-size:var(--text-sm);
   }
 }
 
@@ -17384,22 +17407,22 @@ main.resume-profile .resume-related-profiles a{
   height: 3px;
   background: linear-gradient(
     90deg,
-    #2563eb 0%,
-    #0d9488 55%,
-    #7c3aed 100%
+    var(--brand-blue) 0%,
+    var(--brand-teal) 55%,
+    var(--brand-violet) 100%
   );
   border-radius: 0 1.5px 1.5px 0;
   box-shadow:
-    0 0 6px 0 color-mix(in srgb, #2563eb 55%, transparent),
-    0 0 12px 0 color-mix(in srgb, #7c3aed 25%, transparent);
+    0 0 6px 0 color-mix(in srgb, var(--brand-blue) 55%, transparent),
+    0 0 12px 0 color-mix(in srgb, var(--brand-violet) 25%, transparent);
 }
 
 /* Dark theme: slightly boost glow opacity so the bar reads clearly
    over the dark bg */
 :root[data-theme="dark"] .scroll-progress{
   box-shadow:
-    0 0 6px 0 color-mix(in srgb, #2563eb 70%, transparent),
-    0 0 14px 0 color-mix(in srgb, #7c3aed 35%, transparent);
+    0 0 6px 0 color-mix(in srgb, var(--brand-blue) 70%, transparent),
+    0 0 14px 0 color-mix(in srgb, var(--brand-violet) 35%, transparent);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -17511,7 +17534,7 @@ body.letters-landing .companion-cards{
   gap: var(--space-md);
 }
 
-@media (max-width: 1024px){
+@media (max-width: 1023px){
   body.letters-landing .companion-cards{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -17534,53 +17557,53 @@ body.letters-landing .companion-cards{
    amber (col 4). Matches the site accent vocabulary (excludes rose
    which is reserved for the 5-item /resume rotation). */
 body.letters-landing .companion-cards > .companion-card{
-  transition: transform .22s ease, box-shadow .22s ease, border-color .2s ease;
+  transition: transform .22s var(--ease-standard), box-shadow .22s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+1){
-  border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-blue) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-blue) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+2){
-  border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-teal) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-teal) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+3){
-  border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-violet) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-violet) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+4){
-  border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-amber) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-amber) 14%, transparent);
 }
 
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+1):hover{
   transform: translateY(-2px);
-  border-left-color: color-mix(in srgb, #2563eb 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-blue) 55%, var(--line));
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
-    0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-blue) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-blue) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+2):hover{
   transform: translateY(-2px);
-  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
-    0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-teal) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-teal) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+3):hover{
   transform: translateY(-2px);
-  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-violet) 55%, var(--line));
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
-    0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-violet) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-violet) 14%, transparent);
 }
 body.letters-landing .companion-cards > .companion-card:nth-child(4n+4):hover{
   transform: translateY(-2px);
-  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
-    0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-amber) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-amber) 14%, transparent);
 }
 
 /* Letters-landing card variants: thesis + gaps + meta stack.
@@ -17595,7 +17618,7 @@ body.letters-landing .companion-card .card-meta{
 }
 body.letters-landing .companion-card .card-thesis{
   margin-top: 0.35rem;
-  font-size: 0.82rem;
+  font-size:var(--text-xs);
   color: var(--muted);
   line-height: 1.5;
 }
@@ -17613,7 +17636,7 @@ body.letters-landing .companion-card .card-gaps em{
 }
 body.letters-landing .companion-card .card-meta{
   margin-top: 0.5rem;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   color: var(--muted);
   letter-spacing: 0.02em;
   opacity: 0.85;
@@ -17655,12 +17678,12 @@ body.letters-landing .companion-card .card-meta{
 /* Column tinting: Track A (column 2) blue; Track B (column 3) teal */
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(2),
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(2){
-  background: color-mix(in srgb, #2563eb 5%, var(--panel)) !important;
+  background: color-mix(in srgb, var(--brand-blue) 5%, var(--panel)) !important;
 }
 
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(3),
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(3){
-  background: color-mix(in srgb, #0d9488 5%, var(--panel)) !important;
+  background: color-mix(in srgb, var(--brand-teal) 5%, var(--panel)) !important;
 }
 
 /* Header row: column-coded top-bar accent (subtle 2px top border per
@@ -17668,25 +17691,25 @@ body.letters-landing .companion-card .card-meta{
 .research-library-page #cross-track-convergence .convergence-table thead th:nth-child(2){
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, #2563eb 14%, var(--panel)) 0%,
-    color-mix(in srgb, #2563eb 8%, var(--panel)) 100%
+    color-mix(in srgb, var(--brand-blue) 14%, var(--panel)) 0%,
+    color-mix(in srgb, var(--brand-blue) 8%, var(--panel)) 100%
   );
-  border-bottom-color: color-mix(in srgb, #2563eb 65%, var(--line));
+  border-bottom-color: color-mix(in srgb, var(--brand-blue) 65%, var(--line));
 }
 
 .research-library-page #cross-track-convergence .convergence-table thead th:nth-child(3){
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, #0d9488 14%, var(--panel)) 0%,
-    color-mix(in srgb, #0d9488 8%, var(--panel)) 100%
+    color-mix(in srgb, var(--brand-teal) 14%, var(--panel)) 0%,
+    color-mix(in srgb, var(--brand-teal) 8%, var(--panel)) 100%
   );
-  border-bottom-color: color-mix(in srgb, #0d9488 65%, var(--line));
+  border-bottom-color: color-mix(in srgb, var(--brand-teal) 65%, var(--line));
 }
 
 /* Row dimension labels (th[scope="row"]): bump letter-spacing, keep
    accent-neutral (it's the pivot column). */
 .research-library-page #cross-track-convergence .convergence-table tbody th[scope="row"]{
-  font-size: 0.82rem;
+  font-size:var(--text-xs);
   letter-spacing: 0.04em;
   color: var(--text);
   font-weight: 650;
@@ -17705,10 +17728,10 @@ body.letters-landing .companion-card .card-meta{
 
 /* Column-matched strong-label tint: Track A blue, Track B teal */
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) strong{
-  color: color-mix(in srgb, #2563eb 30%, var(--text));
+  color: color-mix(in srgb, var(--brand-blue) 30%, var(--text));
 }
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) strong{
-  color: color-mix(in srgb, #0d9488 30%, var(--text));
+  color: color-mix(in srgb, var(--brand-teal) 30%, var(--text));
 }
 
 /* Synthesis `<em>` at the end of each cell: this is the takeaway line.
@@ -17722,7 +17745,7 @@ body.letters-landing .companion-card .card-meta{
   border-radius: 0 4px 4px 0;
   background: color-mix(in srgb, var(--accent) 5%, transparent);
   font-style: normal;
-  font-size: 0.82rem;
+  font-size:var(--text-xs);
   line-height: 1.5;
   color: var(--text);
   font-weight: 500;
@@ -17740,19 +17763,19 @@ body.letters-landing .companion-card .card-meta{
 
 /* Column-matched em border + eyebrow color */
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) em{
-  border-left-color: #2563eb;
-  background: color-mix(in srgb, #2563eb 6%, transparent);
+  border-left-color: var(--brand-blue);
+  background: color-mix(in srgb, var(--brand-blue) 6%, transparent);
 }
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) em::before{
-  color: color-mix(in srgb, #2563eb 85%, var(--muted));
+  color: color-mix(in srgb, var(--brand-blue) 85%, var(--muted));
 }
 
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) em{
-  border-left-color: #0d9488;
-  background: color-mix(in srgb, #0d9488 6%, transparent);
+  border-left-color: var(--brand-teal);
+  background: color-mix(in srgb, var(--brand-teal) 6%, transparent);
 }
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) em::before{
-  color: color-mix(in srgb, #0d9488 85%, var(--muted));
+  color: color-mix(in srgb, var(--brand-teal) 85%, var(--muted));
 }
 
 /* Convergence synthesis paragraph below the table: matches the
@@ -17776,7 +17799,7 @@ body.letters-landing .companion-card .card-meta{
 /* Row hover: subtle unified highlight across the 3 cells of a row for
    scanability; respects the column tint */
 .research-library-page #cross-track-convergence .convergence-table tbody tr{
-  transition: filter .15s ease;
+  transition: filter .15s var(--ease-standard);
 }
 .research-library-page #cross-track-convergence .convergence-table tbody tr:hover{
   filter: brightness(1.06);
@@ -17816,7 +17839,7 @@ body.letters-landing .companion-card .card-meta{
   );
   position: relative;
   z-index: 1;
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  transition: transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard), filter .2s var(--ease-standard);
   animation: brief-finding-breathe 4s ease-in-out infinite;
 }
 
@@ -17889,7 +17912,7 @@ body.contact-page .contact-page-foreground > .contact-page .contact-email-addres
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .25s ease;
+  transition: transform .25s var(--ease-standard);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .contact-email-address:hover{
@@ -17906,7 +17929,7 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn{
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.85rem;
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   font-weight: 500;
   border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
   border-radius: 999px;
@@ -17914,11 +17937,11 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn{
   color: color-mix(in srgb, var(--accent) 85%, var(--text));
   cursor: pointer;
   transition:
-    background .2s ease,
-    border-color .2s ease,
-    color .2s ease,
-    transform .12s ease,
-    box-shadow .2s ease;
+    background .2s var(--ease-standard),
+    border-color .2s var(--ease-standard),
+    color .2s var(--ease-standard),
+    transform .12s var(--ease-standard),
+    box-shadow .2s var(--ease-standard);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover{
@@ -17944,40 +17967,6 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:focus
 body.contact-page .contact-page-foreground > .contact-page .contact-response-time > span:last-child{
   opacity: 0.75;
   color: var(--text-soft);
-}
-
-/* Response-dot: improve the pulse to use a dual-ring expanding outward
-   so it reads as a subtle radar-blip animation. Green #16a34a kept. */
-body.contact-page .contact-page-foreground > .contact-page .response-dot{
-  width: 8px;
-  height: 8px;
-  background: #16a34a;
-  box-shadow: 0 0 0 0 color-mix(in srgb, #16a34a 60%, transparent);
-  animation: contact-response-pulse 2.4s ease-out infinite;
-}
-
-@keyframes contact-response-pulse{
-  0%{
-    box-shadow:
-      0 0 0 0 color-mix(in srgb, #16a34a 60%, transparent),
-      0 0 0 0 color-mix(in srgb, #16a34a 30%, transparent);
-  }
-  50%{
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, #16a34a 0%, transparent),
-      0 0 0 9px color-mix(in srgb, #16a34a 0%, transparent);
-  }
-  100%{
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, #16a34a 0%, transparent),
-      0 0 0 10px color-mix(in srgb, #16a34a 0%, transparent);
-  }
-}
-
-@media (prefers-reduced-motion: reduce){
-  body.contact-page .contact-page-foreground > .contact-page .response-dot{
-    animation: none;
-  }
 }
 
 /* Guidance section heading: small eyebrow accent + uppercase treatment
@@ -18010,10 +17999,10 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
 .action{
   transition:
     transform .18s cubic-bezier(.2, .8, .2, 1),
-    box-shadow .22s ease,
-    border-color .2s ease,
-    color .2s ease,
-    background .22s ease;
+    box-shadow .22s var(--ease-standard),
+    border-color .2s var(--ease-standard),
+    color .2s var(--ease-standard),
+    background .22s var(--ease-standard);
 }
 
 .action:not(.primary):hover{
@@ -18041,7 +18030,7 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
    applies only to .action.primary svg). Extend to .action.secondary so
    right-chevron patterns ("Open paper summary →") get the same feel. */
 .action.secondary svg{
-  transition: transform .18s ease;
+  transition: transform .18s var(--ease-standard);
 }
 
 .action.secondary:hover svg{
@@ -18071,7 +18060,7 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
     transparent 100%
   );
   transform: skewX(-20deg);
-  transition: left .55s ease;
+  transition: left .55s var(--ease-standard);
   pointer-events: none;
   z-index: 0;
 }
@@ -18089,8 +18078,8 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
 /* Primary: upgrade the shadow stack so hover lift reads deeper */
 .action.primary:hover{
   box-shadow:
-    0 6px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 35%, transparent),
-    0 2px 4px color-mix(in srgb, var(--accent-cta, #2563eb) 20%, transparent);
+    0 6px 16px color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 35%, transparent),
+    0 2px 4px color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 20%, transparent);
 }
 
 /* Reduced motion: disable sheen sweep + SVG translate */
@@ -18120,9 +18109,9 @@ body.contact-page .contact-page-foreground > .contact-page .contact-guidance h2{
 :where(a, button, input, textarea, select, [tabindex]):focus-visible{
   outline-color: color-mix(in srgb, var(--accent) 70%, transparent);
   transition:
-    outline-color .15s ease,
-    outline-offset .15s ease,
-    box-shadow .15s ease;
+    outline-color .15s var(--ease-standard),
+    outline-offset .15s var(--ease-standard),
+    box-shadow .15s var(--ease-standard);
 }
 
 /* Skip-link: preserve high-contrast + accent-saturated focus; this is
@@ -18145,6 +18134,27 @@ select:focus-visible{
     0 1px 3px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
+/* Windows High Contrast / forced-colors: the structural surfaces lean on low-alpha color-mix() hairlines that the system palette flattens, so card, panel, and chip boundaries can vanish. Restore explicit system-color borders and a visible focus ring. Active only in forced-colors mode; no effect otherwise. */
+@media (forced-colors: active){
+  .card,
+  .writing-card,
+  .featured-paper-card,
+  .audience-panel,
+  .page-toc,
+  .hero-proof-chip,
+  .badge,
+  input,
+  textarea,
+  select,
+  button{
+    border:1px solid ButtonBorder;
+  }
+  :focus-visible{
+    outline:2px solid Highlight;
+    outline-offset:2px;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    Prose link conventions (v2). Base rule at line 15767 covered
    `main p a:not([class])` + a few specific zones. This append extends
@@ -18163,7 +18173,7 @@ main ol.references a:not([class]):not(.action):not(.btn){
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  transition: text-decoration-color .2s ease, color .2s ease;
+  transition: text-decoration-color .2s var(--ease-standard), color .2s var(--ease-standard);
 }
 
 main aside a:not([class]):not(.action):not(.btn):hover,
@@ -18236,7 +18246,7 @@ main.error-page{
   background-image: linear-gradient(
     180deg,
     #3b82f6 0%,
-    #2563eb 100%
+    var(--brand-blue) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -18246,7 +18256,7 @@ main.error-page{
   background-image: linear-gradient(
     180deg,
     #14b8a6 0%,
-    #0d9488 100%
+    var(--brand-teal) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -18258,7 +18268,7 @@ main.error-page{
   background-image: linear-gradient(
     180deg,
     #8b5cf6 0%,
-    #7c3aed 100%
+    var(--brand-violet) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -18321,9 +18331,9 @@ main.error-page{
   text-align: left;
   transition:
     transform .18s cubic-bezier(.2, .8, .2, 1),
-    border-color .2s ease,
-    box-shadow .22s ease,
-    background .22s ease;
+    border-color .2s var(--ease-standard),
+    box-shadow .22s var(--ease-standard),
+    background .22s var(--ease-standard);
 }
 
 .error-link:hover,
@@ -18353,36 +18363,36 @@ main.error-page{
    vocabulary (overview = blue, research = teal, frameworks = violet,
    contact = amber) */
 .error-link:nth-child(1){
-  border-left-color: color-mix(in srgb, #2563eb 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-blue) 55%, var(--line));
 }
 .error-link:nth-child(1):hover,
 .error-link:nth-child(1):focus-visible{
-  border-left-color: #2563eb;
-  box-shadow: 0 6px 16px color-mix(in srgb, #2563eb 22%, transparent);
+  border-left-color: var(--brand-blue);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand-blue) 22%, transparent);
 }
 .error-link:nth-child(2){
-  border-left-color: color-mix(in srgb, #0d9488 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 .error-link:nth-child(2):hover,
 .error-link:nth-child(2):focus-visible{
-  border-left-color: #0d9488;
-  box-shadow: 0 6px 16px color-mix(in srgb, #0d9488 22%, transparent);
+  border-left-color: var(--brand-teal);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand-teal) 22%, transparent);
 }
 .error-link:nth-child(3){
-  border-left-color: color-mix(in srgb, #7c3aed 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-violet) 55%, var(--line));
 }
 .error-link:nth-child(3):hover,
 .error-link:nth-child(3):focus-visible{
-  border-left-color: #7c3aed;
-  box-shadow: 0 6px 16px color-mix(in srgb, #7c3aed 22%, transparent);
+  border-left-color: var(--brand-violet);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand-violet) 22%, transparent);
 }
 .error-link:nth-child(4){
-  border-left-color: color-mix(in srgb, #d97706 55%, var(--line));
+  border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
 }
 .error-link:nth-child(4):hover,
 .error-link:nth-child(4):focus-visible{
-  border-left-color: #d97706;
-  box-shadow: 0 6px 16px color-mix(in srgb, #d97706 22%, transparent);
+  border-left-color: var(--brand-amber);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand-amber) 22%, transparent);
 }
 
 /* Mobile: single-column destination stack */
@@ -18531,7 +18541,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-item{
   padding: 1.25rem 1.4rem;
   background: color-mix(in srgb, var(--panel) 45%, transparent);
   border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
-  transition: border-color .2s ease, background .22s ease,
+  transition: border-color .2s var(--ease-standard), background .22s var(--ease-standard),
               transform .18s cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -18542,41 +18552,41 @@ body.contact-page .contact-page-foreground > .contact-page .about-item:hover{
 /* Accent-rotation per item: Background blue / Research program teal /
    Frameworks violet. Left-accent border (3px) keyed to each position. */
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1){
-  border-left: 3px solid color-mix(in srgb, #2563eb 55%, var(--line));
+  border-left: 3px solid color-mix(in srgb, var(--brand-blue) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1):hover{
-  border-left-color: #2563eb;
-  background: color-mix(in srgb, #2563eb 5%, var(--panel));
+  border-left-color: var(--brand-blue);
+  background: color-mix(in srgb, var(--brand-blue) 5%, var(--panel));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1) .about-label{
-  color: color-mix(in srgb, #2563eb 80%, var(--text-soft));
+  color: color-mix(in srgb, var(--brand-blue) 80%, var(--text-soft));
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2){
-  border-left: 3px solid color-mix(in srgb, #0d9488 55%, var(--line));
+  border-left: 3px solid color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2):hover{
-  border-left-color: #0d9488;
-  background: color-mix(in srgb, #0d9488 5%, var(--panel));
+  border-left-color: var(--brand-teal);
+  background: color-mix(in srgb, var(--brand-teal) 5%, var(--panel));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2) .about-label{
-  color: color-mix(in srgb, #0d9488 80%, var(--text-soft));
+  color: color-mix(in srgb, var(--brand-teal) 80%, var(--text-soft));
 }
 
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3){
-  border-left: 3px solid color-mix(in srgb, #7c3aed 55%, var(--line));
+  border-left: 3px solid color-mix(in srgb, var(--brand-violet) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3):hover{
-  border-left-color: #7c3aed;
-  background: color-mix(in srgb, #7c3aed 5%, var(--panel));
+  border-left-color: var(--brand-violet);
+  background: color-mix(in srgb, var(--brand-violet) 5%, var(--panel));
 }
 body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3) .about-label{
-  color: color-mix(in srgb, #7c3aed 80%, var(--text-soft));
+  color: color-mix(in srgb, var(--brand-violet) 80%, var(--text-soft));
 }
 
 /* About label: slightly larger + tighter spacing */
 body.contact-page .contact-page-foreground > .contact-page .about-label{
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.12em;
   margin-bottom: 0.125rem;
 }
@@ -18691,7 +18701,7 @@ main{ counter-reset: ts-section; }
   top: 0;
   left: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--muted);
@@ -18751,7 +18761,7 @@ main{ counter-reset: ts-section; }
 /* Card title shifts to accent on hover (transition declared on the title) */
 .compact-card h3,
 .research-card-sm h3{
-  transition: color 0.2s ease;
+  transition: color 0.2s var(--ease-standard);
 }
 
 .compact-card:hover h3,
@@ -18770,7 +18780,7 @@ main{ counter-reset: ts-section; }
   content: "\2192";
   position: absolute;
   top: 1.5rem;
-  right: 1.25rem;
+  right: 1.75rem;
   height: 1.5rem;
   display: inline-flex;
   align-items: center;
@@ -18780,7 +18790,7 @@ main{ counter-reset: ts-section; }
   color: var(--muted);
   opacity: 0;
   transform: translateX(-4px);
-  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.25, 1), color 0.2s ease;
+  transition: opacity 0.2s var(--ease-standard), transform 0.25s cubic-bezier(0.2, 0.8, 0.25, 1), color 0.2s var(--ease-standard);
   pointer-events: none;
   line-height: 1;
 }
@@ -18976,7 +18986,7 @@ hr.section-ornament::before{
    Mono uppercase letter-spaced; reads as a small kicker line. */
 .paper-byline-kicker{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--muted);
@@ -19015,7 +19025,7 @@ hr.section-ornament::before{
 .paper-page .paper-abstract table:not(.mvep-table) thead th{
   border: none;
   background: transparent;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -19210,7 +19220,7 @@ body #contact .about-card .about-card-header h2{
   border-left: 2px solid transparent;
   color: var(--text-soft);
   text-decoration: none;
-  transition: color .15s ease, border-color .15s ease, background .15s ease;
+  transition: color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard);
   font-size: 0.78rem;
   line-height: 1.4;
 }
@@ -19257,7 +19267,7 @@ body #contact .about-card .about-card-header h2{
   pointer-events: none;
   transform: translateY(110%);
   opacity: 0;
-  transition: transform .28s ease, opacity .22s ease;
+  transition: transform .28s var(--ease-standard), opacity .22s var(--ease-standard);
   background: color-mix(in srgb, var(--panel) 92%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -19345,8 +19355,8 @@ body #contact .about-card .about-card-header h2{
   object-fit: cover;
   background: var(--panel);
   box-shadow:
-    0 4px 16px color-mix(in srgb, var(--accent-cta, #2563eb) 18%, transparent),
-    0 0 0 2px color-mix(in srgb, var(--accent-cta, #2563eb) 30%, var(--line));
+    0 4px 16px color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 18%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--accent-cta, var(--brand-blue)) 30%, var(--line));
   user-select: none;
   flex-shrink: 0;
 }
@@ -19445,7 +19455,7 @@ body #contact .about-card .about-card-header h2{
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 16%, transparent);
   color: var(--accent);
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   font-weight: 700;
   font-feature-settings: "tnum";
   flex-shrink: 0;
@@ -19481,7 +19491,7 @@ body #contact .about-card .about-card-header h2{
   color: inherit;
   text-decoration: none;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 45%, transparent);
-  transition: border-bottom-color 0.2s ease, color 0.2s ease;
+  transition: border-bottom-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
 }
 .structure-page #framework-stack .stack-step-desc a:not(.term):hover,
 .structure-page #framework-stack .stack-step-desc a:not(.term):focus-visible{
@@ -19500,7 +19510,7 @@ body #contact .about-card .about-card-header h2{
 }
 .structure-page .agenda-table tbody tr.agenda-table-group td{
   padding: var(--space-md) 1rem var(--space-xs);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -19513,7 +19523,7 @@ body #contact .about-card .about-card-header h2{
   padding-top: var(--space-sm);
 }
 .structure-page .agenda-table tbody tr:not(.agenda-table-group){
-  transition: background 0.18s ease;
+  transition: background 0.18s var(--ease-standard);
 }
 .structure-page .agenda-table tbody tr:not(.agenda-table-group):hover{
   background: color-mix(in srgb, var(--accent) 8%, var(--panel));
@@ -19549,7 +19559,7 @@ body #contact .about-card .about-card-header h2{
 }
 .structure-page .card--polished .card-eyebrow{
   margin: 0 0 var(--space-md);
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -19594,12 +19604,12 @@ body #contact .about-card .about-card-header h2{
   gap: var(--space-md);
   margin: 0;
 }
-@media (min-width: 640px){
+@media (min-width: 641px){
   .structure-page .go-deeper-grid{
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (min-width: 980px){
+@media (min-width: 981px){
   .structure-page .go-deeper-grid{
     grid-template-columns: repeat(3, 1fr);
   }
@@ -19614,7 +19624,7 @@ body #contact .about-card .about-card-header h2{
   background: color-mix(in srgb, var(--panel) 35%, transparent);
   color: var(--text);
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  transition: border-color 0.2s var(--ease-standard), background 0.2s var(--ease-standard), transform 0.15s var(--ease-standard);
 }
 .structure-page .go-deeper-card:hover,
 .structure-page .go-deeper-card:focus-visible{
@@ -19629,7 +19639,7 @@ body #contact .about-card .about-card-header h2{
   color: var(--text);
 }
 .structure-page .go-deeper-card-desc{
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   line-height: 1.5;
   color: var(--text-soft);
 }
@@ -19690,7 +19700,7 @@ body #contact .about-card .about-card-header h2{
 }
 .structure-page .featured-framework-eyebrow{
   margin: 0 0 var(--space-sm);
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -19729,13 +19739,13 @@ body #contact .about-card .about-card-header h2{
   border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 6%, transparent);
-  font-size: 0.8125rem;
+  font-size:var(--text-xs);
   font-weight: 500;
   color: var(--text);
 }
 .structure-page .featured-framework-categories li::before{
   content: counter(cat);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   color: var(--accent);
   font-feature-settings: "tnum";
@@ -19758,7 +19768,7 @@ body #contact .about-card .about-card-header h2{
 }
 .structure-page .featured-framework-audience-label{
   margin: 0 0 var(--space-sm);
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -19782,12 +19792,12 @@ body #contact .about-card .about-card-header h2{
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 0.875rem;
+  font-size:var(--text-sm);
   line-height: 1.5;
   color: var(--text-soft);
 }
 .structure-page .featured-framework-anchor-label{
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -19845,7 +19855,7 @@ body #contact .about-card .about-card-header h2{
   color: inherit;
   text-decoration: none;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 45%, transparent);
-  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+  transition: color 0.2s var(--ease-standard), border-bottom-color 0.2s var(--ease-standard);
 }
 .structure-page .framework-relations dt a:hover,
 .structure-page .framework-relations dt a:focus-visible{
@@ -19933,12 +19943,14 @@ footer.site-footer .footer-newsletter__input{
   border-radius:var(--radius-sm);
   font-size:var(--font-size-min);
   min-width:240px;
-  transition:border-color .15s ease, background .15s ease;
+  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
-footer.site-footer .footer-newsletter__input:focus{
-  outline:none;
+footer.site-footer .footer-newsletter__input:focus-visible{
   border-color:var(--accent);
   background:rgba(255,255,255,0.1);
+  outline:2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset:1px;
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 footer.site-footer .footer-newsletter__input::placeholder{
   color:var(--footer-strip-muted);
@@ -19954,7 +19966,7 @@ footer.site-footer .footer-newsletter__button{
   font-weight:600;
   font-size:var(--font-size-min);
   cursor:pointer;
-  transition:background .15s ease, transform .15s ease;
+  transition:background .15s var(--ease-standard), transform .15s var(--ease-standard);
 }
 footer.site-footer .footer-newsletter__button:hover{
   background:var(--accent-hover);
@@ -20033,11 +20045,13 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   padding:10px 14px;
   border-radius:var(--radius-sm);
   font-size:var(--font-size-min);
-  transition:border-color .15s ease, background .15s ease;
+  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard);
 }
-.hero-newsletter-band__input:focus{
-  outline:none;
+.hero-newsletter-band__input:focus-visible{
   border-color:var(--accent);
+  outline:2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset:1px;
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 .hero-newsletter-band__input::placeholder{
   color:var(--text-soft);
@@ -20053,7 +20067,7 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   font-weight:600;
   font-size:var(--font-size-min);
   cursor:pointer;
-  transition:transform .15s ease, background .15s ease;
+  transition:transform .15s var(--ease-standard), background .15s var(--ease-standard);
 }
 .hero-newsletter-band__button:hover{
   background:var(--accent-hover);

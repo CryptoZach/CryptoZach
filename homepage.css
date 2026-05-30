@@ -146,7 +146,7 @@
 
 .card-venue {
   display: block;
-  font-size: 0.72rem;
+  font-size:var(--text-2xs);
   color: var(--text-secondary, #999);
   margin-top: 0.5rem;
   font-style: italic;
@@ -160,7 +160,7 @@
    tint custom properties already pre-resolve color-mix at :root, so
    referencing them via var() is cheap (no per-frame recompute). */
 #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
-  font-size: 0.8rem;
+  font-size:var(--text-xs);
   padding: 0.4rem 0.95rem;
   border: 1px solid var(--glass-edge, rgba(255,255,255,0.14));
   background: var(--glass-tint, rgba(17,19,24,0.65));
@@ -189,7 +189,7 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   text-decoration-color: currentColor;
-  transition: text-decoration-thickness 0.15s ease;
+  transition: text-decoration-thickness 0.15s var(--ease-standard);
 }
 
 #hero.hero--homepage .hero-proof-strip .hero-proof-chip a:hover {
@@ -284,7 +284,7 @@
 #hero.hero--homepage .hero-cta-cluster .btn.btn-primary {
   display: inline-block;
   padding: 1rem 2.25rem;
-  background: var(--accent-cta, #2563eb);
+  background: var(--accent-cta, var(--brand-blue));
   color: #fff;
   border: 1px solid rgba(82, 124, 235, 1);
   border-radius: 10px;
@@ -381,7 +381,7 @@
 /* Sprint 3 Fix 5: section eyebrow labels (Roles / Frameworks / Research). */
 .section-eyebrow {
   display: block;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -463,59 +463,59 @@
    glow that fades inward. Hover intensifies the inset aura and
    adds a color-matched outer drop. */
 .role-pill {
-  transition: transform .22s ease, box-shadow .22s ease, border-color .2s ease;
+  transition: transform .22s var(--ease-standard), box-shadow .22s var(--ease-standard), border-color .2s var(--ease-standard);
 }
 
 #role-paths.section-compact .role-pills > .role-pill:nth-child(1){
-  border-left: 1px solid color-mix(in srgb, #2563eb 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #2563eb 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-blue) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-blue) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(2){
-  border-left: 1px solid color-mix(in srgb, #0d9488 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #0d9488 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-teal) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-teal) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(3){
-  border-left: 1px solid color-mix(in srgb, #7c3aed 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #7c3aed 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-violet) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-violet) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(4){
-  border-left: 1px solid color-mix(in srgb, #d97706 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #d97706 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-amber) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-amber) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(5){
-  border-left: 1px solid color-mix(in srgb, #e11d48 22%, var(--line));
-  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, #e11d48 14%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--brand-rose) 22%, var(--line));
+  box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-rose) 14%, transparent);
 }
 
 #role-paths.section-compact .role-pills > .role-pill:nth-child(1):hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #2563eb 22%, transparent),
-    0 6px 18px color-mix(in srgb, #2563eb 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-blue) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-blue) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(2):hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #0d9488 22%, transparent),
-    0 6px 18px color-mix(in srgb, #0d9488 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-teal) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-teal) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(3):hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #7c3aed 22%, transparent),
-    0 6px 18px color-mix(in srgb, #7c3aed 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-violet) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-violet) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(4):hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #d97706 22%, transparent),
-    0 6px 18px color-mix(in srgb, #d97706 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-amber) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-amber) 14%, transparent);
 }
 #role-paths.section-compact .role-pills > .role-pill:nth-child(5):hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 4px 0 28px -5px color-mix(in srgb, #e11d48 22%, transparent),
-    0 6px 18px color-mix(in srgb, #e11d48 14%, transparent);
+    inset 4px 0 28px -5px color-mix(in srgb, var(--brand-rose) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--brand-rose) 14%, transparent);
 }
 
 /* Sprint 3 Fix 7: View all link spacing and styling. */
@@ -531,7 +531,7 @@
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.15s ease;
+  transition: color 0.15s var(--ease-standard);
 }
 
 .section-link a:hover {
@@ -669,7 +669,7 @@
 .compact-card,
 .research-card-sm {
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  transition: border-color 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), transform 0.15s var(--ease-standard);
 }
 
 .role-pill:hover,
@@ -703,7 +703,7 @@
 /* Sprint 3 Fix 8: research card badges. */
 .badge-sm {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size:var(--text-2xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -787,7 +787,7 @@
 #contact .about-card-ctas a.cta-primary {
   display: inline-block;
   padding: 1rem 2.25rem;
-  background: var(--accent-cta, #2563eb);
+  background: var(--accent-cta, var(--brand-blue));
   color: #fff;
   border: none;
   border-radius: 8px;
