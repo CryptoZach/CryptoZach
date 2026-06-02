@@ -17463,9 +17463,51 @@ body.letters-landing .letters-timeline tbody tr:last-child{
 
 body.letters-landing .letters-timeline th,
 body.letters-landing .letters-timeline td{
-  padding: 8px;
+  padding: 10px 14px;
   text-align: left;
   vertical-align: top;
+}
+body.letters-landing .letters-timeline th:first-child,
+body.letters-landing .letters-timeline td:first-child{
+  padding-left: 2px;
+}
+
+/* P2.1b: letters-timeline polish (2026-06-01). Header de-emphasis +
+   monospace alignment for the Filed and Docket reference columns + row
+   hover affordance + responsive horizontal scroll. Docket cells are now
+   uniform external government links (regulations.gov / federalregister.
+   gov); the prior plain-text RIN cells were being hijacked by the term
+   auto-wrap into mismatched internal links. */
+body.letters-landing .letters-timeline-table{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body.letters-landing .letters-timeline thead th{
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+/* Filed dates and Docket IDs: tabular monospace so the columns align and
+   read as reference identifiers. nth-child tracks the five-column header
+   order (Filed, Letter, Agency, Docket, Frameworks). */
+body.letters-landing .letters-timeline td:nth-child(1),
+body.letters-landing .letters-timeline td:nth-child(4){
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+body.letters-landing .letters-timeline tbody tr{
+  transition: background-color 0.15s ease;
+}
+body.letters-landing .letters-timeline tbody tr:hover{
+  background-color: rgba(255, 255, 255, 0.04);
+}
+:root:not([data-theme="dark"]) body.letters-landing .letters-timeline tbody tr:hover{
+  background-color: color-mix(in srgb, var(--line) 30%, transparent);
 }
 
 /* Light-theme polish: swap rgba(255,255,255,*) dividers for
