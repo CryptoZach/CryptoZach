@@ -40,7 +40,7 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools | TS</title>
-  <meta name="description" content="Featured framework: MVEP, the ten-category institutional diligence standard for tokenized money and securities. Thirteen frameworks across two research tracks." />
+  <meta name="description" content="MVEP: the ten-category institutional diligence standard for tokenized money and securities. Thirteen frameworks across two research tracks." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="CLII, MVEP, stablecoin risk framework, tokenomics framework, operational risk taxonomy, burn mechanism, governance concentration, adaptive tokenomics, institutional diligence, control layer, digital asset regulation, operator risk scoring" />
 
@@ -118,9 +118,9 @@
         "numberOfItems": 13,
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "MVEP (Minimum Viable Equivalence Pack)", "item": "https://tokenization.systems/frameworks/#mvep" },
-          { "@type": "ListItem", "position": 2, "name": "MGCPT (MVEP-gated Conditional Pass-Through)", "item": "https://tokenization.systems/frameworks/#mgcpt" },
-          { "@type": "ListItem", "position": 3, "name": "3CRD (Three-Category Reserve Disclosure)", "item": "https://tokenization.systems/frameworks/#3crd" },
-          { "@type": "ListItem", "position": 4, "name": "CLII (Control Layer Intensity Index)", "item": "https://tokenization.systems/frameworks/#clii" },
+          { "@type": "ListItem", "position": 2, "name": "CLII (Control Layer Intensity Index)", "item": "https://tokenization.systems/frameworks/#clii" },
+          { "@type": "ListItem", "position": 3, "name": "MGCPT (MVEP-gated Conditional Pass-Through)", "item": "https://tokenization.systems/frameworks/#mgcpt" },
+          { "@type": "ListItem", "position": 4, "name": "3CRD (Three-Category Reserve Disclosure)", "item": "https://tokenization.systems/frameworks/#3crd" },
           { "@type": "ListItem", "position": 5, "name": "Credit Migration Model", "item": "https://tokenization.systems/frameworks/#credit-migration-model" },
           { "@type": "ListItem", "position": 6, "name": "Regime Dashboard", "item": "https://tokenization.systems/frameworks/#regime-dashboard" },
           { "@type": "ListItem", "position": 7, "name": "Tokenized Dollar Regime Classifier (TDRC)", "item": "https://tokenization.systems/frameworks/#regime-classifier" },
@@ -432,9 +432,9 @@
           </a>
           <ol class="structure-nav__sub" role="list" aria-label="Track A frameworks">
             <li><a href="#mvep" class="structure-nav__sublink" data-section="mvep">MVEP</a></li>
+            <li><a href="#clii" class="structure-nav__sublink" data-section="clii">CLII</a></li>
             <li><a href="#mgcpt" class="structure-nav__sublink" data-section="mgcpt">MGCPT</a></li>
             <li><a href="#3crd" class="structure-nav__sublink" data-section="3crd">3CRD</a></li>
-            <li><a href="#clii" class="structure-nav__sublink" data-section="clii">CLII</a></li>
             <li><a href="#credit-migration-model" class="structure-nav__sublink" data-section="credit-migration-model">Credit migration</a></li>
             <li><a href="#regime-dashboard" class="structure-nav__sublink" data-section="regime-dashboard">Regime Dashboard</a></li>
             <li><a href="#dollar-v3-regime-classifier" class="structure-nav__sublink" data-section="dollar-v3-regime-classifier">Tokenized Dollar Regime Classifier</a></li>
@@ -680,7 +680,15 @@
           <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card card--polished card--accent-b" id="mgcpt">
+        <article class="card card--polished card--accent-b" id="clii">
+          <h3>CLII (Control Layer Intensity Index)</h3>
+          <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
+          <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
+          <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
+          <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-c" id="mgcpt">
           <h3>MGCPT (MVEP-gated Conditional Pass-Through) <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></h3>
           <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
           <p><strong>What it does.</strong> Conditions FDIC pass-through deposit insurance eligibility on MVEP qualification across six pass-through-critical categories (Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures). Statutory anchor: 12 U.S.C. &sect; 5903(e)(1) and (e)(2); IOLTA (Interest on Lawyer Trust Accounts), Section 529 plans, and custodial brokerage accounts as direct analogies.</p>
@@ -688,7 +696,7 @@
           <p><strong>What triggers re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
           <p class="framework-card-action"><a class="action secondary" href="/letters/fdic-ag19-ppsi-activities/">Open AG19 Recommendation 7 <span aria-hidden="true">→</span></a></p>
         </article>
-        <article class="card card--polished card--accent-c" id="3crd">
+        <article class="card card--polished card--accent-d" id="3crd">
           <span id="tcrd" class="anchor-legacy" aria-hidden="true"></span>
           <h3>3CRD (Three-Category Reserve Disclosure)</h3>
           <p class="card-eyebrow">Derivative on MVEP &middot; Reserve disclosure</p>
@@ -696,14 +704,6 @@
           <p><strong>Why it matters.</strong> MVEP scores the artifact (rights-parity memo with counsel sign-off, segregation model with custody agreement, bankruptcy-priority memo with scenario analysis); 3CRD is the displayable summary surfacing that artifact&apos;s substantive content where holders actually see it. MVEP without 3CRD leaves the diligence content invisible to holders; 3CRD without MVEP leaves the displayable summary unanchored to verifiable artifacts. Cross-letter operationalized across OCC supplemental, Treasury Section II, and FDIC AG19 Recommendations 1 to 6.</p>
           <p><strong>What triggers re-evaluation.</strong> A change in the underlying MVEP Categories 1, 4, or 5 artifacts; a new disclosure rule in PPSI rulemaking; or new cross-letter operationalization that extends the template.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
-        </article>
-        <article class="card card--polished card--accent-d" id="clii">
-          <h3>CLII (Control Layer Intensity Index)</h3>
-          <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
-          <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
-          <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
-          <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-e" id="credit-migration-model">
           <h3>Credit Migration Model <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></h3>
@@ -758,8 +758,8 @@
         <article class="card card--polished card--accent-c" id="governance-concentration-diagnostic">
           <h3>Governance-Concentration Diagnostic</h3>
           <p class="card-eyebrow">Diagnostic &middot; Governance design</p>
-          <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 40-protocol cross-section (15 DePIN, 15 DeFi (decentralized finance), 8 L1/L2 (Layer 1 and Layer 2 blockchain infrastructure) protocols, 2 social or stagnated). Lead correlation is null (Pearson r = 0.18, p = 0.28).</p>
-          <p><strong>Why it matters.</strong> Sector membership predicts concentration (Mann-Whitney p = 0.014); insider retention amplifies it (Spearman rho = 0.54); delegation amplifies token concentration into voting concentration by 3 to 6 times in DePIN. Applies a five-lens framework (Kantian publicity, Rawlsian legitimacy, Pettit non-domination, Ostromian polycentricity, Hayekian knowledge-use) with a Blockscout-verified exclusion of 69 protocol-controlled addresses across 20 protocols.</p>
+          <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 52-protocol PCA (principal component analysis)-corrected cross-section across DePIN, DeFi (decentralized finance), L1/L2 (Layer 1 and Layer 2) infrastructure, and social tokens. Lead correlation is null: insider allocation does not predict post-distribution concentration (Pearson r = 0.07, p = 0.68, N = 37).</p>
+          <p><strong>Why it matters.</strong> Sector membership predicts concentration (DePIN more concentrated than DeFi after correction, Mann-Whitney p = 0.011, Cohen's d = 1.05); insider-wallet retention is the operating mechanism (Spearman rho = 0.48, p = 0.003); delegation amplifies voting concentration above holdings in 13 of 18 protocols. The methodological core is a generalizable five-class protocol-controlled-address exclusion typology that removes 133 addresses across 38 protocols and corrects a median 2.3x (maximum roughly 18x) inflation in prior holder-list studies.</p>
           <p><strong>What triggers re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
         </article>
@@ -935,7 +935,7 @@
             </tr>
             <tr>
               <td>Governance-Concentration Diagnostic</td>
-              <td>Token-vs-voting concentration ratio (five-lens framework)</td>
+              <td>Allocation-vs-realized concentration (52-protocol cross-section)</td>
               <td><a href="/papers/governance-concentration/"><em>Governance Concentration</em></a></td>
             </tr>
             <tr>
