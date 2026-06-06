@@ -4055,6 +4055,15 @@ section:has(.speaker-jump-to){
   transition:transform 0.2s var(--ease-standard), filter 0.2s var(--ease-standard);
   filter:saturate(0.88) brightness(0.96);
 }
+/* Near-square chart thumbs (e.g., the B2 sector boxplot at 2643x2400): the
+   260px x 10.5rem featured thumb box is tuned for wide 16:9-ish images and
+   letterboxes near-square figures with side bars. width:auto lets the box
+   hug the image at the fixed height; the white background blends any
+   residual bar with the white chart canvas. */
+.featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-thumb.thumb-square{
+  width:auto;
+  background:#fff;
+}
 .featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-copy{
   display:block;
   width:auto;
@@ -7695,6 +7704,17 @@ footer.site-footer .footer-tagline{
     margin-bottom:1rem;
     object-fit:contain;
     object-position:center top;
+  }
+  /* Near-square chart thumbs: the desktop rule's fixed height:10.5rem is
+     inherited here (this block overrides max-height only), so near-square
+     figures letterbox inside a wide centered box. Release the fixed height
+     and width cap so the figure fills the card width at natural ratio. */
+  .featured-research .featured-paper-card .writing-link.writing-link--thumb .writing-thumb.thumb-square{
+    width:100%;
+    max-width:100%;
+    height:auto;
+    min-height:0;
+    max-height:none;
   }
   .featured-research .featured-paper-card .writing-title{
     font-size:clamp(24px, 6.2vw, 34px);
