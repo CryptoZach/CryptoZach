@@ -260,20 +260,33 @@
         <p><strong>Evidence base</strong><br />A five-year agent-based simulation of MeshNet's full token economy across four scenarios (bull, bear, competitor entry, regulatory shock), built on a 240-run core ensemble (30 seeds across 8 configurations) with token price modeled as an Ornstein-Uhlenbeck process fitted to HNT daily returns from May 2023 to February 2026.</p>
       </aside>
 
-      <div class="paper-takeaways">
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Adaptive emissions function as insurance: PID compresses worst-case node-count variance by 6x (coefficient of variation from 0.544 to 0.087 under competitor shock), sustaining 8,880 nodes at the 5th percentile versus 1,049 under static emission. The advantage is conditional: bull markets produce identical outcomes under both approaches.</p>
-        </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Under sustained demand contraction, PID can underperform on average because the controller applies a supply-side lever to a demand-side problem: integral wind-up raises emissions, emissions dilute price, and lower token-denominated yield accelerates operator exit. The paper identifies anti-windup clamping with regime-change detection as the engineering fix. No tested parameterization produces a death spiral in the simulated scenarios.</p>
-        </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">During bootstrapping, slashing dominates supply dynamics; burns remain negligible (burn-mint equilibrium peaks at 0.0061 over the five-year horizon). Burn-mint equilibrium is the right long-run framework, but the model does not reach that horizon within five years. The 240-run ensemble (30 seeds across 8 configurations) reveals path dependence that single-seed results mask.</p>
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+      <h2 id="brief-findings-heading" class="brief-findings-section-title">Three findings</h2>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">1</span>
+        <div class="brief-finding-copy">
+          <h3>Adaptive emissions function as insurance</h3>
+          <p>PID compresses worst-case node-count variance by 6x (coefficient of variation from 0.544 to 0.087 under competitor shock), sustaining <strong>8,880 nodes</strong> at the 5th percentile versus 1,049 under static emission. The advantage is conditional: bull markets produce identical outcomes under both approaches.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> Designers should justify adaptive control by the tail risk it removes under stress, not by any gain it promises in calm or rising markets.</p>
         </div>
       </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">2</span>
+        <div class="brief-finding-copy">
+          <h3>Under sustained demand contraction, PID can underperform on average</h3>
+          <p>because the controller applies a supply-side lever to a demand-side problem: integral wind-up raises emissions, emissions dilute price, and lower token-denominated yield accelerates operator exit. The paper identifies anti-windup clamping with regime-change detection as the engineering fix. No tested parameterization produces a death spiral in the simulated scenarios.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> A controller that cannot tell a supply shortfall from a demand collapse needs guardrails, so teams should ship anti-windup and regime detection before relying on adaptive emissions in a downturn.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">3</span>
+        <div class="brief-finding-copy">
+          <h3>During bootstrapping, slashing dominates supply dynamics</h3>
+          <p>burns remain negligible (burn-mint equilibrium peaks at 0.0061 over the five-year horizon). Burn-mint equilibrium is the right long-run framework, but the model does not reach that horizon within five years. The 240-run ensemble (30 seeds across 8 configurations) reveals path dependence that single-seed results mask.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> Early-stage protocols should treat burn-mint equilibrium as a maturity target rather than a health gauge, and read economic behavior from the full seed ensemble instead of any single run.</p>
+        </div>
+      </div>
+    </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Protocol designers</span>

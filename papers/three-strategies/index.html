@@ -245,24 +245,41 @@
         <p><strong>Evidence base</strong><br />The findings rest on an infrastructure map of ten participating entities (a March 27, 2026 snapshot) assessed against the MVEP framework's ten diligence categories, traced through nine stress scenarios, and distilled into four cross-cutting findings.</p>
       </aside>
 
-      <div class="paper-takeaways">
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Three distinct strategies are now under construction. Strategy 1 is a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, cleared at par through Ubyx (a new clearing layer that allows different banks' deposit tokens to settle against each other). Strategy 2 is a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router. Strategy 3 is tokenized equity rails on Nasdaq and NYSE. The MVEP category profile across the three is a complementarity map, not a competitive ranking.</p>
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Four findings</h2>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>Three distinct strategies are now under construction</h3>
+            <p>Strategy 1 is a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, cleared at par through Ubyx (a new clearing layer that allows different banks' deposit tokens to settle against each other). Strategy 2 is a multi-issuer yield stack composing tokenized Treasuries from <strong>five</strong> fund issuers with a smart redemption router. Strategy 3 is tokenized equity rails on Nasdaq and NYSE. The MVEP category profile across the three is a complementarity map, not a competitive ranking.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Institutions should treat the three strategies as complementary building blocks to combine, not rival options to rank against each other.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">Securitize, an SEC-registered transfer agent (the regulated entity that maintains the authoritative holder register for a security), is transfer agent across all three strategies. Entity-level regulatory scores rate Securitize high. System-effective regulatory strength is lower, because the same entity operates across all three strategies with no documented fallback. A 72-hour Securitize operational failure would degrade all three simultaneously.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>Securitize concentration is a system-level risk entity scoring misses</h3>
+            <p>Securitize, an SEC-registered transfer agent (the regulated entity that maintains the authoritative holder register for a security), is transfer agent across all three strategies. Entity-level regulatory scores rate Securitize high. System-effective regulatory strength is lower, because the same entity operates across all three strategies with no documented fallback. A <strong>72-hour</strong> Securitize operational failure would degrade all three simultaneously.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Diligence needs a second pass at the system level that names which entities recur across strategies and what fallback exists for each, because clean entity-level ratings can still mask a single point of failure.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">Strategy 3 faces a novel reconciliation gap that current frameworks do not address. When the Depository Trust Company (DTC) operates on business-day cycles and tokens trade 24/7, record dates, ex-dates, and stock splits produce different holders on-chain and on the DTC register at the same instant. Three architectures can close the gap (trading halt, blockchain-as-authoritative, dual-record synchronization); each has distinct operational-risk implications.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>Strategy 3 faces a novel reconciliation gap current frameworks do not address</h3>
+            <p>When the Depository Trust Company (DTC) operates on business-day cycles and tokens trade 24/7, record dates, ex-dates, and stock splits produce different holders on-chain and on the DTC register at the same instant. Three architectures can close the gap (trading halt, blockchain-as-authoritative, dual-record synchronization); each has distinct operational-risk implications.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> The corporate-actions gap is a deliberate architecture choice that regulators, exchanges, and DTC must make explicitly, not a defect that can be patched inside the existing rulebook.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">4</span>
-          <p class="paper-takeaway-text">The deposit-token market is control-layer competition applied to institutional settlement. JPMorgan, BNY, and Citi are each building bank-issued deposit tokens; Ubyx is building a clearing layer that allows them to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer. If multi-issuer clearing operates, the rent is competed away. Who routes the token matters more than what the token is called.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">4</span>
+          <div class="brief-finding-copy">
+            <h3>The deposit-token market is control-layer competition applied to institutional settlement</h3>
+            <p>JPMorgan, BNY, and Citi are each building bank-issued deposit tokens; Ubyx is building a clearing layer that allows them to settle against each other at par. If a single issuer wins, settlement-layer rent concentrates with that issuer. If multi-issuer clearing operates, the rent is competed away. Who routes the token matters more than what the token is called.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Whether institutional settlement stays competitive or tips into a single-issuer monopoly hinges on the clearing function, so that is where policy attention should focus.</p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Central banks</span>

@@ -339,24 +339,45 @@
         <p><strong>Evidence base</strong><br />The findings rest on ten diligence categories applied to a nine-product worked-example sample across three regulatory tiers, with the SVB episode reverse-engineered into the categories, the Binance Portfolio Margin collateral case (July 2025 to February 2026), and independent corroboration from three scholarly sources including the Federal Reserve's December 2025 FEDS Note.</p>
       </aside>
 
-      <div class="paper-takeaways">
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the depeg (USDC trading at $0.88) broke economic equivalence. The cascade did not stop at USDC. The Federal Reserve&rsquo;s December 2025 FEDS Note (Du, Sonawane, and Watsky, &ldquo;In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,&rdquo; FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) documents that Dai&rsquo;s Peg Stability Module, designed to stabilize Dai&rsquo;s price, instead &ldquo;created a direct channel of contagion from USDC to Dai.&rdquo; The contagion then propagated through Dai&rsquo;s additional PSMs to USDP and GUSD, stablecoins with zero direct SVB exposure. A single bank failure in Santa Clara cascaded through at least five tokenized products. The depeg resolved within 48 hours only because the FDIC invoked the systemic risk exception. Per the FEDS Note and Circle&rsquo;s own disclosures, Circle&rsquo;s cash reserves fell from approximately $11.5 billion to approximately $3.7 billion over three weeks despite the intervention; the backstop stopped the depeg but did not prevent a roughly $7.8 billion net outflow.</p>
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Four findings</h2>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>The SVB weekend broke all three equivalence dimensions at once</h3>
+            <p>The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the depeg (USDC trading at $0.88) broke economic equivalence. The cascade did not stop at USDC. The Federal Reserve’s December 2025 FEDS Note (Du, Sonawane, and Watsky, “In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,” FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) documents that Dai’s Peg Stability Module, designed to stabilize Dai’s price, instead “created a direct channel of contagion from USDC to Dai.” The contagion then propagated through Dai’s additional PSMs to USDP and GUSD, stablecoins with zero direct SVB exposure. A single bank failure in Santa Clara cascaded through at least five tokenized products. The depeg resolved within 48 hours only because the FDIC invoked the systemic risk exception. Per the FEDS Note and Circle’s own disclosures, Circle’s cash reserves fell from approximately $11.5 billion to approximately $3.7 billion over three weeks despite the intervention; the backstop stopped the depeg but did not prevent a roughly <strong>$7.8 billion</strong> net outflow.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Equivalence can fail on every axis simultaneously and spread to products that never touched the failed bank, so an institution cannot treat a tokenized dollar as a safe substitute just because it held par yesterday.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass or fail test. Applied to nine major tokenized products spanning three regulatory tiers, the framework produces six findings. Products governed by purpose-built federal frameworks (banking law for the JPMorgan deposit token, the 1940 Act for BENJI) satisfy the core requirements of every category. No stablecoin product does. Bank depositors have FDIC insurance and statutory priority claims; stablecoin holders have contractual claims governed by terms of service that disclaim issuer liability across seventeen categories, characterize redemption as a revocable privilege, and (during the March 2023 SVB crisis window) limited Circle Mint direct redemption to a small institutional pool of pre-existing accounts. Stablecoin operators under the Money Transmission Modernization Act (MTMA), the model state statute drafted by the Conference of State Bank Supervisors and adopted in at least 24 states as of 2025, operate on capital cushions roughly an order of magnitude thinner than banks under Common Equity Tier 1 (CET1), illustrating the regulatory-capital gap between the two regimes before accounting for stress testing, deposit insurance, and resolution planning that banks face and money transmitters do not.</p>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>No stablecoin product satisfies every diligence category, while bank and 1940-Act products do</h3>
+            <p>The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass or fail test. Applied to nine major tokenized products spanning three regulatory tiers, the framework produces six findings. Products governed by purpose-built federal frameworks (banking law for the JPMorgan deposit token, the 1940 Act for BENJI) satisfy the core requirements of every category. No stablecoin product does. Bank depositors have FDIC insurance and statutory priority claims; stablecoin holders have contractual claims governed by terms of service that disclaim issuer liability across <strong>seventeen categories</strong>, characterize redemption as a revocable privilege, and (during the March 2023 SVB crisis window) limited Circle Mint direct redemption to a small institutional pool of pre-existing accounts. Stablecoin operators under the Money Transmission Modernization Act (MTMA), the model state statute drafted by the Conference of State Bank Supervisors and adopted in at least 24 states as of 2025, operate on capital cushions roughly an order of magnitude thinner than banks under Common Equity Tier 1 (CET1), illustrating the regulatory-capital gap between the two regimes before accounting for stress testing, deposit insurance, and resolution planning that banks face and money transmitters do not.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> The regulatory regime a tokenized product sits under, not its marketing, determines whether it can clear diligence, so a risk committee should treat stablecoins and bank or fund products as categorically different rather than interchangeable collateral.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">The only diagnostic dimension on which the bank deposit token and the 1940 Act fund do not produce stronger holder-protection outcomes than the stablecoin products is the Article 12 take-free defect. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a &ldquo;voluntary transaction creating an interest in property,&rdquo; and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in 2022 and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>The Article 12 take-free defect is the one dimension where the stronger products do not pull ahead</h3>
+            <p>The only diagnostic dimension on which the bank deposit token and the 1940 Act fund do not produce stronger holder-protection outcomes than the stablecoin products is the Article 12 take-free defect. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a “voluntary transaction creating an interest in property,” and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in <strong>2022</strong> and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> A holder who buys a stolen tokenized instrument in good faith may not get the clean title the statute appears to promise, and because no issuer discloses this, buyers should not assume the take-free rule will protect them in a theft scenario.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">4</span>
-          <p class="paper-takeaway-text">MVEP is the entry gate; the Control Layer Intensity Index (CLII) is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance.</p>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">4</span>
+          <div class="brief-finding-copy">
+            <h3>MVEP is the entry gate and CLII is the drift detector</h3>
+            <p>MVEP is the entry gate; the Control Layer Intensity Index (CLII) is the drift detector. A product can clear diligence at launch and still degrade through enforcement actions, reconciliation failures, custody issues, or governance drift. The framework pairs approval with trigger-based re-evaluation, with outcomes ranging from reaffirmation to conditional continuation to suspension of new issuance.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Clearing diligence once is not a permanent verdict, so an institution should pair an approval decision with ongoing monitoring that can downgrade or suspend a product when its control posture drifts.</p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Asset managers</span>

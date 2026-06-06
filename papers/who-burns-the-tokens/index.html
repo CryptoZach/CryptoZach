@@ -244,28 +244,49 @@
         <p><strong>Evidence base</strong><br />The analysis rests on Helium's measured Subsidy-to-Revenue ratio of 1.84 over a 34-month on-chain window (May 2023 to February 2026) alongside demand-concentration and governance HHI measurements for GEODNET and other DePIN protocols, with protocol-controlled addresses excluded before concentration is measured.</p>
       </aside>
 
-      <div class="paper-takeaways">
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text"><strong>Fiscal sustainability is dynamic, not static.</strong> The Subsidy-to-Revenue ratio (S2R) measures how much token emission subsidy is required per unit of protocol revenue: values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Five findings</h2>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>Fiscal sustainability is dynamic, not static</h3>
+            <p>The Subsidy-to-Revenue ratio (S2R) measures how much token emission subsidy is required per unit of protocol revenue: values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Judging a network's fiscal health requires watching where its subsidy ratio is heading over time, not snapshotting a single S2R reading.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text"><strong>Burn-mechanism design determines demand concentration.</strong> Helium uses carrier-contract burns where a small number of mobile-network counterparties account for most demand: Top-5 ~90%, HHI 0.22. GEODNET uses subscription-style payments where many small RTK GPS subscribers each contribute small burn volumes: Top-5 = 40.4%, HHI 0.055. The two networks are comparable in physical footprint and service category, so the concentration gap is a design effect, not a network-size effect.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>Burn-mechanism design determines demand concentration</h3>
+            <p>Helium uses carrier-contract burns where a small number of mobile-network counterparties account for most demand: Top-5 ~90%, HHI 0.22. GEODNET uses subscription-style payments where many small RTK GPS subscribers each contribute small burn volumes: Top-5 = 40.4%, HHI 0.055. The two networks are comparable in physical footprint and service category, so the concentration gap is a design effect, not a network-size effect.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> A network can broaden or narrow who drives its token demand by choosing how burns are triggered, independent of how large the network is.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text"><strong>GEODNET governance concentration is a separate, sharper story than its demand-concentration profile.</strong> Despite the more distributed demand side, on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding 25.3% of Polygon-side voting power. Both figures are required: HHI alone undersells the team-wallet concentration. The demand-side dispersion does not extend to the governance side.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>GEODNET governance concentration is a separate, sharper story than its demand-concentration profile</h3>
+            <p>Despite the more distributed demand side, on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding <strong>25.3%</strong> of Polygon-side voting power. Both figures are required: HHI alone undersells the team-wallet concentration. The demand-side dispersion does not extend to the governance side.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> A widely distributed demand base offers no assurance that voting power is equally dispersed, so governance concentration has to be measured on its own.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">4</span>
-          <p class="paper-takeaway-text"><strong>SuperHex is a novel design primitive with no analog in digital-only token economies.</strong> GEODNET's spatial staking mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">4</span>
+          <div class="brief-finding-copy">
+            <h3>SuperHex is a novel design primitive with no analog in digital-only token economies</h3>
+            <p>GEODNET's spatial staking mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Networks whose work is tied to physical geography need their own tokenomics dimension, since incentive tools borrowed from digital-only economies do not capture spatial staking.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">5</span>
-          <p class="paper-takeaway-text"><strong>DePIN tokenomics is a design space with at least two viable architectures.</strong> The Helium and GEODNET comparison shows two coherent and operating burn-mechanism designs producing divergent demand-concentration outcomes; both are running networks at scale. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">5</span>
+          <div class="brief-finding-copy">
+            <h3>DePIN tokenomics is a design space with at least two viable architectures</h3>
+            <p>The Helium and GEODNET comparison shows two coherent and operating burn-mechanism designs producing divergent demand-concentration outcomes; both are running networks at scale. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Evaluating a DePIN token economy means looking at its specific mechanism design rather than treating every network in the sector as interchangeable.</p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">DePIN protocol designers</span>

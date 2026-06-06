@@ -260,20 +260,36 @@
         <p><strong>Evidence base</strong><br />The findings rest on a roughly 624-configuration simulation battery (240 baseline runs, 240 operational-risk ensemble runs, 84 per-parameter sweeps, 12 protocol-specific runs, 40 correlated-shock runs, 8 interaction tests) calibrated from Ethereum validator data, Helium network contraction, GEODNET station uptime, and Filecoin sector fault rates, with the operational-risk layer built by mapping 74 ValOS risk vectors, 64 testable controls, and 31 NORS control objectives into seven simulatable parameters.</p>
       </aside>
 
-      <div class="paper-takeaways">
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">1</span>
-          <p class="paper-takeaway-text">Under the tested parameterization, operational failures strengthen PID emission control. When temporary outages are misread as permanent departures, the controller overcompensates with higher rewards, building a financial buffer before the next economic shock. Under competitor shock, variance compression improves from 6.25x to 6.89x once operational risk is added. The result is counterintuitive and parameterization-dependent: at higher failure intensity, the buffer can erode.</p>
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Three findings</h2>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>Operational failures strengthen PID emission control under the tested parameterization</h3>
+            <p>When temporary outages are misread as permanent departures, the controller overcompensates with higher rewards, building a financial buffer before the next economic shock. Under competitor shock, variance compression improves from <strong>6.25x to 6.89x</strong> once operational risk is added. The result is counterintuitive and parameterization-dependent: at higher failure intensity, the buffer can erode.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> A failure that looks like noise can quietly harden a reward controller, so operators cannot assume outages only ever degrade emission stability.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">2</span>
-          <p class="paper-takeaway-text">The reputation system does not gradually drift; it collapses. Model parameters: uptime threshold (0.99), season length (90 days). The recovery threshold is the proportion of pre-shock reputation an operator must regain before re-entering full rotation. At the default 99% uptime threshold over a 90-day season, average reputation decays to 0.18 on a 0-to-5 scale by year 5 of simulation clock (not calendar time), effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by simulation year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>The reputation system does not gradually drift; it collapses</h3>
+            <p>Model parameters: uptime threshold (0.99), season length (90 days). The recovery threshold is the proportion of pre-shock reputation an operator must regain before re-entering full rotation. At the default 99% uptime threshold over a 90-day season, average reputation decays to <strong>0.18</strong> on a 0-to-5 scale by year 5 of simulation clock (not calendar time), effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by simulation year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Reputation-weighted governance can fail abruptly rather than degrade, so the recovery threshold has to be tuned deliberately instead of left at a strict default.</p>
+          </div>
         </div>
-        <div class="paper-takeaway">
-          <span class="paper-takeaway-number" aria-hidden="true">3</span>
-          <p class="paper-takeaway-text">The paper is as much a methods contribution as a findings paper. It maps 74 active ValOS risk vectors and 64 testable controls, plus 31 NORS control objectives, into seven simulatable parameters and stress-tests the result across a 624-configuration battery. That bridge from operator-risk standards to calibrated simulation is the reusable contribution.</p>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>The paper is as much a methods contribution as a findings paper</h3>
+            <p>It maps 74 active ValOS risk vectors and 64 testable controls, plus 31 NORS control objectives, into seven simulatable parameters and stress-tests the result across a <strong>624-configuration battery</strong>. That bridge from operator-risk standards to calibrated simulation is the reusable contribution.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> The translation from operator-risk standards into a calibrated simulation is reusable, so future studies can stress-test other protocols without rebuilding the bridge from scratch.</p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Protocol designers</span>
