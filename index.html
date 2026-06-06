@@ -711,6 +711,24 @@
       min-width: 0;
     }
 
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .card-grid-4 > * {
+      min-width: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .card-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     .research-card-sm {
       display: flex;
       flex-direction: column;
@@ -781,10 +799,13 @@
       background: transparent;
     }
 
+    /* Peer review: theme-aware accent tint matching styles.css
+       .badge-under-review; two-class combo wins over the later
+       single-class .badge-sm rule (same pattern as .badge-sm.badge-public). */
     .badge-sm.badge-review {
-      border-color: #d4a017;
-      color: #8a6914;
-      background: #fdf6e3;
+      border-color: color-mix(in srgb, var(--accent) 34%, var(--line));
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
     }
 
     .research-card-sm h3 {
@@ -801,7 +822,8 @@
     }
 
     @media (max-width: 768px) {
-      .card-grid-3 {
+      .card-grid-3,
+      .card-grid-4 {
         grid-template-columns: 1fr;
       }
     }
@@ -1168,7 +1190,13 @@
 
     <section class="section-compact reveal" id="research" aria-labelledby="research-title">
       <h2 id="research-title">Recent papers.</h2>
-      <div class="card-grid-3">
+      <div class="card-grid-4">
+        <a href="/papers/governance-concentration" class="research-card-sm">
+          <span class="badge-sm badge-review">Peer review</span>
+          <h3>Auditing Governance Concentration</h3>
+          <p>Launch allocation is uninformative about governance concentration; post-distribution structure is. A 52-protocol live-governance audit.</p>
+          <span class="card-venue"><span class="card-venue-context">Frontiers in Blockchain</span><span class="card-date">April 2026</span></span>
+        </a>
         <a href="/papers/routing-the-dollar" class="research-card-sm">
           <span class="badge-sm badge-public">Public</span>
           <h3>Routing the Dollar</h3>
