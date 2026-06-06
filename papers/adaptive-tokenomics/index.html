@@ -253,6 +253,13 @@
 
       <p class="paper-thesis">Token design is best understood as systems engineering. MeshNet combines productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional, integral, derivative controller, a standard feedback-control architecture used in engineering to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios. The result is that integrated design reveals which mechanisms earn their complexity, which failure modes only appear under stress, and where bootstrapping economics diverge from long-run theory. Results are mechanism demonstrations under stated assumptions; they are not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used throughout this paper to illustrate the framework; it is not a real operator or deployed protocol.</p>
 
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />When a token economy is stress-tested as an engineered system rather than evaluated mechanism by mechanism, which design choices actually earn their complexity under adverse conditions?</p>
+        <p><strong>Answer</strong><br />Adaptive emissions behave like insurance: PID control compresses worst-case node-count variance by 6x (coefficient of variation from 0.544 to 0.087 under competitor shock) and sustains 8,880 nodes at the 5th percentile versus 1,049 under a static schedule. The advantage is conditional, since bull markets produce effectively identical outcomes under both approaches, and under sustained demand contraction PID can even underperform on average. These are mechanism demonstrations under stated assumptions, not deployment forecasts.</p>
+        <p><strong>Evidence base</strong><br />A five-year agent-based simulation of MeshNet's full token economy across four scenarios (bull, bear, competitor entry, regulatory shock), built on a 240-run core ensemble (30 seeds across 8 configurations) with token price modeled as an Ornstein-Uhlenbeck process fitted to HNT daily returns from May 2023 to February 2026.</p>
+      </aside>
+
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
