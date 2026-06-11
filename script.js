@@ -77,7 +77,9 @@
   // Mobile menu (toggle, Escape to close, close when viewport is desktop width)
   const menuToggle = document.getElementById('menuToggle');
   const navMobile = document.getElementById('nav-mobile');
-  const MOBILE_NAV_MQ = window.matchMedia('(max-width: 768px)');
+  // Must match the CSS nav-collapse breakpoint (styles.css @media max-width: 900px),
+  // otherwise the focus trap is inert in the 769-900px band where the hamburger shows.
+  const MOBILE_NAV_MQ = window.matchMedia('(max-width: 900px)');
   function setMobileNavOpen(isOpen){
     if(!menuToggle || !navMobile) return;
     menuToggle.setAttribute('aria-expanded', String(isOpen));

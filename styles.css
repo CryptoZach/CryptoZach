@@ -44,12 +44,13 @@
   --text-secondary:var(--muted);
   --border-subtle:var(--line);
   --border-color:var(--line);
-  /* Brand spectrum. These five accents were hardcoded as literals 180+ times (often inside color-mix expressions); promoting them to tokens makes the palette tunable from one place. Same value in both themes today; per-theme contrast tuning for teal and violet can be added here later. */
+  /* Brand spectrum. These accents were hardcoded as literals 180+ times (often inside color-mix expressions); promoting them to tokens makes the palette tunable from one place. Same value in both themes today; per-theme contrast tuning for teal and violet can be added here later. --brand-cyan added 2026-06-11 to complete the six-role accent rotation (sixth homepage role pill). */
   --brand-blue:#2563eb;
   --brand-teal:#0d9488;
   --brand-violet:#7c3aed;
   --brand-amber:#d97706;
   --brand-rose:#e11d48;
+  --brand-cyan:#0891b2;
   --shadow-sm:0 1px 4px rgba(0,0,0,.08);
   --shadow:0 4px 24px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
   --shadow-lg:0 12px 48px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
@@ -1987,12 +1988,12 @@ body.contact-page section.contact-page-detail{
 
 /* Start-here rail */
 .start-here-rail { margin-bottom: 2.5rem; }
-.start-here-rail h2 { font-size: 1.1rem; opacity: 0.5; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.start-here-rail h2 { font-size: 1.1rem; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
 .start-here-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .start-here-card { padding: 1.25rem; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 0.75rem; }
-.start-here-card h3 { font-size: 0.85rem; opacity: 0.5; margin-bottom: 0.5rem; }
+.start-here-card h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
 .start-here-card a { font-weight: 600; }
-.start-here-card p { font-size:var(--text-sm); opacity: 0.65; margin-top: 0.4rem; }
+.start-here-card p { font-size:var(--text-sm); color: var(--muted); margin-top: 0.4rem; }
 @media (max-width: 768px) { .start-here-grid { grid-template-columns: 1fr; } }
 .start-here-list{
   list-style:none;
@@ -10347,6 +10348,9 @@ footer.site-footer .footer-tagline{
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 0.25rem 0.75rem;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
   font-size: var(--font-size-min);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
@@ -15378,7 +15382,6 @@ footer.site-footer .footer-copy{
 
 footer.site-footer .footer-copy__year::after{
   content: "·";
-  display: inline-block;
   margin-left: 0.4em;
   color: color-mix(in srgb, var(--accent) 65%, transparent);
   opacity: 0.7;

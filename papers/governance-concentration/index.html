@@ -39,13 +39,13 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Governance Concentration Beyond Token Allocation | TS</title>
+  <title>Auditing Governance Concentration Beyond Token Allocation | TS</title>
   <meta name="description" content="A live-governance audit of 52 token protocols after protocol-controlled-address correction. Launch allocation is uninformative about governance concentration; post-distribution insider retention, sector, and delegation design are the operative correlates." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="governance concentration, live-governance audit, DePIN, DeFi, protocol-controlled addresses, PCA exclusion, token allocation, delegation amplification, vote-escrow, insider retention, Herfindahl-Hirschman Index, voting power, republican non-domination" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Governance Concentration Beyond Token Allocation" />
+  <meta property="og:title" content="Auditing Governance Concentration Beyond Token Allocation" />
   <meta property="og:description" content="Launch allocation is uninformative about governance concentration; insider retention, sector, and delegation design are. 52 protocols, 133 protocol-controlled addresses excluded across 38, a generalizable five-class PCA-exclusion typology. Companion to Who Burns the Tokens?" />
   <meta property="og:url" content="https://tokenization.systems/papers/governance-concentration/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/B2_Sector_Concentration_N52.png" />
@@ -57,7 +57,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
-  <meta name="twitter:title" content="Governance Concentration Beyond Token Allocation" />
+  <meta name="twitter:title" content="Auditing Governance Concentration Beyond Token Allocation" />
   <meta name="twitter:description" content="52 protocols, 133 protocol-controlled addresses excluded across 38. Launch allocation is uninformative; insider retention, sector, and delegation are. DePIN > DeFi after correction: Mann-Whitney p = 0.028, Cohen's d = 0.65." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/B2_Sector_Concentration_N52.png" />
   <meta name="twitter:image:alt" content="Governance concentration by architecture across the 52-protocol cross-section: post-exclusion governance HHI is higher for DePIN (mean 0.067) than for DeFi (0.026) and L1/Infra (Kruskal-Wallis p = 0.005)" />
@@ -76,7 +76,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=246" />
+  <link rel="stylesheet" href="/styles.css?v=247" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -84,7 +84,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems/" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research/" },
-        { "@type": "ListItem", "position": 3, "name": "Governance Concentration Beyond Token Allocation", "item": "https://tokenization.systems/papers/governance-concentration/" }
+        { "@type": "ListItem", "position": 3, "name": "Auditing Governance Concentration Beyond Token Allocation", "item": "https://tokenization.systems/papers/governance-concentration/" }
       ]
     }
   </script>
@@ -93,7 +93,7 @@
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
       "name": "Auditing Governance Concentration Beyond Token Allocation: A Live-Governance Study of 52 Token Protocols",
-      "headline": "Governance Concentration Beyond Token Allocation",
+      "headline": "Auditing Governance Concentration Beyond Token Allocation",
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-04-11",
       "dateModified": "2026-06-03",
@@ -242,7 +242,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Governance Concentration Beyond Token Allocation
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Auditing Governance Concentration Beyond Token Allocation
       </nav>
 
       <span class="paper-track-badge paper-track-badge--b">Track B: DePIN tokenomics</span>
@@ -265,7 +265,7 @@
 
       <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
         <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />Does how a token launched, its allocation table, tell you who controls its governance today?</p>
+        <p><strong>Question</strong><br />Does a token's initial allocation table, who received what at launch, predict who controls its governance today?</p>
         <p><strong>Answer</strong><br />No. Initial allocation is uninformative (insider allocation r = 0.09, p = 0.55, N = 50). What concentrates governance power is post-launch structure: insider retention (Spearman rho = 0.44), architectural sector (DePIN more concentrated than DeFi, Cohen's d = 0.65), and delegation design (13 of 18 protocols amplify it). These are descriptive associations, not causal estimates.</p>
         <p><strong>Evidence base</strong><br />A cross-section of 52 protocols (DePIN, DeFi, L1/L2 infrastructure, social tokens), top-1,000 holders, snapshots collected March to May 2026, after removing 133 protocol-controlled addresses across 38 protocols that hold tokens but structurally cannot vote (a five-class exclusion typology).</p>
       </aside>
@@ -357,6 +357,7 @@
       <section class="paper-artifact">
         <h2>The five-class PCA exclusion typology</h2>
         <p class="artifact-intro">Before any covariate can be tested, the holder list has to be cleaned of addresses that hold tokens but structurally cannot vote. A protocol-controlled address (PCA) is one of five classes. The methodology is sample-independent: the specific addresses depend on the protocol, but the typology applies uniformly to any ERC-20 or SPL governance dataset.</p>
+        <div class="structure-table-wrap" tabindex="0" role="region" aria-label="Five-class PCA exclusion typology">
         <table class="artifact-table">
           <thead>
             <tr>
@@ -393,6 +394,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
         <p class="artifact-note">133 PCA exclusions across 38 protocols (125 unique addresses; some recur, such as a Binance hot wallet across four tokens). Class 3 versus Class 5 is disambiguated by transaction-pattern signatures where entity labels are unavailable. Median HHI inflation 2.3x; maximum roughly 18x (the RENDER case).</p>
       </section>
 
@@ -545,7 +547,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=234"></script>
+  <script defer src="/script.js?v=235"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

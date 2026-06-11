@@ -87,7 +87,7 @@
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-  <link rel="stylesheet" href="/styles.css?v=246" />
+  <link rel="stylesheet" href="/styles.css?v=247" />
   <style id="homepage-sprint1-density">
     /* Homepage main: horizontal padding comes from body (0) and content wrapper (1.5rem). */
     #main {
@@ -472,10 +472,6 @@
       margin-bottom: 0;
     }
 
-    .role-pills > .role-pill:nth-child(5):last-child {
-      grid-column: 1 / -1;
-    }
-
     .role-pill {
       display: flex;
       flex-direction: column;
@@ -512,10 +508,11 @@
       line-height: 1.5;
     }
 
-    /* Role-pills accent rotation: matches the /resume hub 5-card
-       palette (blue Policy / teal Asset Mgmt / violet Payments / amber
-       AI Gov / rose Risk) so the two surfaces read as a synchronized
-       set. Aura vocabulary from the resume-card refinement (commit
+    /* Role-pills accent rotation: a six-hue spectrum keyed to pill order
+       (blue / teal / violet / amber / rose / cyan), echoing the /resume hub
+       palette so the two surfaces read as a synchronized set. Accents are
+       positional (nth-child), so reordering pills reassigns hues.
+       Aura vocabulary from the resume-card refinement (commit
        37c59a4): thin 1px low-opacity left-border + inset left-edge
        glow that fades inward. Hover intensifies the inset aura and
        adds a color-matched outer drop. */
@@ -542,6 +539,10 @@
     #role-paths.section-compact .role-pills > .role-pill:nth-child(5){
       border-left: 1px solid color-mix(in srgb, var(--brand-rose) 22%, var(--line));
       box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-rose) 14%, transparent);
+    }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(6){
+      border-left: 1px solid color-mix(in srgb, var(--brand-cyan) 22%, var(--line));
+      box-shadow: inset 4px 0 24px -6px color-mix(in srgb, var(--brand-cyan) 14%, transparent);
     }
 
     #role-paths.section-compact .role-pills > .role-pill:nth-child(1):hover{
@@ -574,6 +575,12 @@
         inset 4px 0 28px -5px color-mix(in srgb, var(--brand-rose) 22%, transparent),
         0 6px 18px color-mix(in srgb, var(--brand-rose) 14%, transparent);
     }
+    #role-paths.section-compact .role-pills > .role-pill:nth-child(6):hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 0 28px -5px color-mix(in srgb, var(--brand-cyan) 22%, transparent),
+        0 6px 18px color-mix(in srgb, var(--brand-cyan) 14%, transparent);
+    }
 
     /* Sprint 3 Fix 7: View all link spacing and styling. */
     .section-link {
@@ -600,10 +607,6 @@
     @media (max-width: 640px) {
       .role-pills {
         grid-template-columns: 1fr;
-      }
-
-      .role-pills > .role-pill:nth-child(5):last-child {
-        grid-column: auto;
       }
 
       .role-pill {
@@ -924,6 +927,100 @@
       }
     }
 
+    /* ===== 2026-06-11 visual cycle: stat band, card thumbnails, letters strip, About headshot ===== */
+
+    /* Homepage stat band (between hero and content) */
+    .home-stat-band {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel) 35%, transparent);
+    }
+    .home-stat-band__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.25rem 1.5rem;
+      box-sizing: border-box;
+    }
+    .home-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      margin: 0;
+    }
+    .home-stat { text-align: center; display: flex; flex-direction: column; }
+    .home-stat__num {
+      margin: 0;
+      font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .home-stat__label {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    @media (max-width: 960px) {
+      .home-stat-grid { grid-template-columns: repeat(3, 1fr); row-gap: 1.75rem; }
+    }
+    @media (max-width: 560px) {
+      .home-stat-grid { grid-template-columns: repeat(2, 1fr); row-gap: 1.5rem; }
+    }
+
+    /* Recent Papers cards: full-bleed cover thumbnail (scoped to #research) */
+    #research .research-card-sm { padding: 0; overflow: hidden; }
+    #research .research-card-thumb {
+      width: 100%;
+      height: 188px;
+      object-fit: contain;
+      object-position: center;
+      background: #ffffff;
+      padding: 10px;
+      box-sizing: border-box;
+      display: block;
+      border-bottom: 1px solid var(--line);
+      border-radius: 12px 12px 0 0;
+    }
+    #research .research-card-sm__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      padding: 1.5rem;
+    }
+
+    /* Homepage letters strip */
+    .letters-home-lead {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin: 0 0 0.25rem;
+      max-width: 70ch;
+      line-height: 1.6;
+    }
+
+    /* About card: headshot + head layout */
+    .about-card-head {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .about-headshot {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+    .about-card-head__text h2 { margin-top: 0; }
+    .about-card-head__text p { margin-bottom: 0; }
+    @media (max-width: 560px) {
+      .about-card-head { flex-direction: column; gap: 1rem; }
+      .about-headshot { width: 88px; height: 88px; }
+    }
+
   </style>
   <script type="application/ld+json">
     {
@@ -935,7 +1032,7 @@
           "name": "Tokenization Systems",
           "alternateName": ["Tokenization Systems Research", "tokenization.systems"],
           "url": "https://tokenization.systems",
-          "description": "Tokenization Systems is the independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Eight SSRN papers and eight federal comment letters as the evidence base.",
+          "description": "Tokenization Systems is the independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Eight SSRN papers and ten federal comment letters as the evidence base.",
           "inLanguage": "en",
           "publisher": { "@id": "https://tokenization.systems/#organization" },
           "author": { "@id": "https://tokenization.systems/#person" }
@@ -948,7 +1045,7 @@
           "url": "https://tokenization.systems",
           "logo": "https://tokenization.systems/Publication-Images/Zachcoin.png",
           "image": "https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png",
-          "description": "Independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Publisher of eight SSRN papers and eight federal comment letters; home of the Minimum Viable Equivalence Pack (MVEP) and Control Layer Intensity Index (CLII) frameworks. Patent-pending Canonical-State Architecture for multi-agent AI research (USPTO provisionals 64/071,767 and 19/693,448, filed May 2026).",
+          "description": "Independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Publisher of eight SSRN papers and ten federal comment letters; home of the Minimum Viable Equivalence Pack (MVEP) and Control Layer Intensity Index (CLII) frameworks. Patent-pending Canonical-State Architecture for multi-agent AI research (USPTO provisionals 64/071,767 and 19/693,448, filed May 2026).",
           "foundingDate": "2025",
           "founder": { "@id": "https://tokenization.systems/#person" },
           "sameAs": [
@@ -972,7 +1069,7 @@
           "@type": "WebPage",
           "name": "Tokenization Systems | Stablecoin & Digital Asset Research",
           "url": "https://tokenization.systems",
-          "description": "Tokenization Systems is the independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Eight SSRN papers and eight federal comment letters as the evidence base.",
+          "description": "Tokenization Systems is the independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Eight SSRN papers and ten federal comment letters as the evidence base.",
       "accessibilityFeature": ["alternativeText", "readingOrder", "structuralNavigation", "highContrastDisplay"],
           "isPartOf": { "@id": "https://tokenization.systems/#website" },
           "author": { "@id": "https://tokenization.systems/#person" },
@@ -1101,7 +1198,7 @@
           </div>
           <ul class="hero-proof-strip" aria-label="Highlights" data-hero-safe="proof">
             <li class="hero-proof-chip"><a class="chip-link--accent" href="/research">8 SSRN working papers</a></li>
-            <li class="hero-proof-chip"><a class="chip-link--accent" href="/letters">8 federal comment letters (GENIUS and related dockets)</a></li>
+            <li class="hero-proof-chip"><a class="chip-link--accent" href="/letters">10 federal comment letters (GENIUS and related dockets)</a></li>
             <li class="hero-proof-chip">100 portfolio companies advised</li>
             <li class="hero-proof-chip">~250 investments backed</li>
           </ul>
@@ -1112,7 +1209,7 @@
           <p class="hero-institutional hero-qualifier">
             <span class="hero-signal" aria-hidden="true">Signal</span>
             <em>Routing the Dollar</em>, prepared for FRBNY's Fifth Conference on International Roles of the U.S. Dollar (June 2026).<br />
-            <em>Governance Concentration Beyond Token Allocation</em>, in peer review at <em>Frontiers in Blockchain</em> (Blockchain Economics).
+            <em>Auditing Governance Concentration Beyond Token Allocation</em>, in peer review at <em>Frontiers in Blockchain</em> (Blockchain Economics).
           </p>
           <p class="hero-anchors">
             <a href="/research">All research</a>
@@ -1136,6 +1233,18 @@
           <input id="hero-newsletter-email" class="hero-newsletter-band__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="hero-newsletter-band__button" type="submit">Subscribe</button>
         </form>
+      </div>
+    </section>
+
+    <section class="home-stat-band reveal" aria-label="Program at a glance">
+      <div class="home-stat-band__inner">
+        <div class="home-stat-grid">
+          <div class="home-stat"><span class="home-stat__num">52</span><span class="home-stat__label">Governance protocols audited</span></div>
+          <div class="home-stat"><span class="home-stat__num">19</span><span class="home-stat__label">Stablecoin gateways mapped</span></div>
+          <div class="home-stat"><span class="home-stat__num">$60.6T</span><span class="home-stat__label">Transfer volume analyzed</span></div>
+          <div class="home-stat"><span class="home-stat__num">13</span><span class="home-stat__label">DePIN networks studied</span></div>
+          <div class="home-stat"><span class="home-stat__num">34</span><span class="home-stat__label">Months of on-chain data</span></div>
+        </div>
       </div>
     </section>
 
@@ -1192,44 +1301,85 @@
       <h2 id="research-title">Recent papers.</h2>
       <div class="card-grid-4">
         <a href="/papers/governance-concentration" class="research-card-sm">
-          <span class="badge-sm badge-review">Peer review</span>
-          <h3>Auditing Governance Concentration</h3>
-          <p>Launch allocation is uninformative about governance concentration; post-distribution structure is. A 52-protocol live-governance audit.</p>
-          <span class="card-venue"><span class="card-venue-context">Frontiers in Blockchain</span><span class="card-date">April 2026</span></span>
+          <picture><source type="image/webp" srcset="/Publication-Images/B2_Sector_Concentration_N52.webp" /><img class="research-card-thumb" src="/Publication-Images/B2_Sector_Concentration_N52.png" width="2643" height="2400" alt="Boxplots of governance concentration by architecture across 52 protocols: DePIN more concentrated than DeFi and L1" loading="lazy" style="object-position:center" /></picture>
+          <div class="research-card-sm__body">
+            <span class="badge-sm badge-review">Peer review</span>
+            <h3>Auditing Governance Concentration</h3>
+            <p>Launch allocation is uninformative about governance concentration; post-distribution structure is. A 52-protocol live-governance audit.</p>
+            <span class="card-venue"><span class="card-venue-context">Frontiers in Blockchain</span><span class="card-date">April 2026</span></span>
+          </div>
         </a>
-        <a href="/papers/routing-the-dollar" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
-          <h3>Routing the Dollar</h3>
-          <p>Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data.</p>
-          <span class="card-venue"><span class="card-venue-context">Prepared for FRBNY</span><span class="card-date">March 2026</span></span>
+        <a href="/papers/seven-dollars" class="research-card-sm">
+          <picture><source type="image/webp" srcset="/Publication-Images/Seven_Dollars_Regulation_Equivalence.webp" /><img class="research-card-thumb" src="/Publication-Images/Seven_Dollars_Regulation_Equivalence.png" width="1950" height="1300" alt="Seven Dollars: scatter plot of regulatory intensity (CLII) versus collateral eligibility across seven dollar-denominated products" loading="lazy" /></picture>
+          <div class="research-card-sm__body">
+            <span class="badge-sm badge-public">Public</span>
+            <h3>Seven Dollars</h3>
+            <p>A comparative framework for seven major dollar-denominated digital products. Regulatory intensity does not predict equivalence.</p>
+            <span class="card-venue"><span class="card-date">March 2026</span></span>
+          </div>
         </a>
         <a href="/papers/three-strategies" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
-          <h3>Three Tokenization Strategies</h3>
-          <p>Institutional tokenization is proceeding through three distinct strategies. Securitize is transfer agent in all three: a system-level concentration risk that entity-level scores miss.</p>
-          <span class="card-venue"><span class="card-date">March 2026</span></span>
+          <picture><source type="image/webp" srcset="/Publication-Images/Three_Strategies_Infrastructure_Map.webp" /><img class="research-card-thumb" src="/Publication-Images/Three_Strategies_Infrastructure_Map.png" width="1814" height="1196" alt="Three tokenization strategies infrastructure map" loading="lazy" /></picture>
+          <div class="research-card-sm__body">
+            <span class="badge-sm badge-public">Public</span>
+            <h3>Three Tokenization Strategies</h3>
+            <p>Institutional tokenization is proceeding through three distinct strategies. Securitize is transfer agent in all three: a system-level concentration risk that entity-level scores miss.</p>
+            <span class="card-venue"><span class="card-date">March 2026</span></span>
+          </div>
         </a>
         <a href="/papers/adaptive-tokenomics" class="research-card-sm">
-          <span class="badge-sm badge-public">Public</span>
-          <h3>Adaptive Tokenomics</h3>
-          <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
-          <span class="card-venue"><span class="card-date">January 2026</span></span>
+          <picture><source type="image/webp" srcset="/Publication-Images/exhibit_01_discipline_map.webp" /><img class="research-card-thumb" src="/Publication-Images/exhibit_01_discipline_map.png" width="3129" height="2546" alt="Adaptive Tokenomics discipline map" loading="lazy" /></picture>
+          <div class="research-card-sm__body">
+            <span class="badge-sm badge-public">Public</span>
+            <h3>Adaptive Tokenomics</h3>
+            <p>240-run Monte Carlo simulation: adaptive emission sustains participation where static schedules mask tail risk.</p>
+            <span class="card-venue"><span class="card-date">January 2026</span></span>
+          </div>
         </a>
       </div>
       <p class="section-link"><a href="/research">View all research <span aria-hidden="true">→</span></a></p>
     </section>
 
+    <section class="section-compact reveal" id="letters-home" aria-labelledby="letters-home-title">
+      <span class="section-eyebrow">Federal comment letters</span>
+      <h2 id="letters-home-title">Regulatory engagement.</h2>
+      <p class="letters-home-lead">Ten comment letters across the GENIUS Act implementation cycle (April to June 2026), applying CLII, MVEP, and the control-layer framework.</p>
+      <div class="card-grid-3">
+        <a href="/letters/occ-mvep-v4/" class="research-card-sm letter-card-sm">
+          <span class="badge-sm">OCC</span>
+          <h3>PPSI: the MVEP anchor</h3>
+          <p>Introduces the ten-category equivalence pack; cited by five subsequent filings.</p>
+          <span class="card-venue"><span class="card-venue-context">MVEP · Docket OCC-2025-0372</span><span class="card-date">April 10, 2026</span></span>
+        </a>
+        <a href="/letters/treasury-genius-state-similarity/" class="research-card-sm letter-card-sm">
+          <span class="badge-sm">Treasury</span>
+          <h3>GENIUS state-similarity standard</h3>
+          <p>Applies all three frameworks to the state-similarity determination under the GENIUS Act.</p>
+          <span class="card-venue"><span class="card-venue-context">CLII · MVEP · control-layer</span><span class="card-date">April 15, 2026</span></span>
+        </a>
+        <a href="/letters/fdic-ag19-ppsi-activities/" class="research-card-sm letter-card-sm">
+          <span class="badge-sm">FDIC</span>
+          <h3>PPSI activities (closing filing)</h3>
+          <p>The program-closing letter on permitted payment stablecoin activities under RIN 3064-AG19.</p>
+          <span class="card-venue"><span class="card-venue-context">MVEP · CLII · RIN 3064-AG19</span><span class="card-date">April 20, 2026</span></span>
+        </a>
+      </div>
+      <p class="section-link"><a href="/letters">View all 10 letters <span aria-hidden="true">→</span></a></p>
+    </section>
+
     <section class="section-compact" id="contact" style="padding: 4rem 0; border-top: 1px solid var(--border-light, #2a2a2a);">
       <section class="about-card" id="about">
-        <h2>About Tokenization Systems</h2>
-        <p>Tokenization Systems is an independent research, advisory, and infrastructure practice focused on digital financial systems. It produces scholarly work on stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The program serves five audiences: Federal Reserve and policy designers, institutional asset managers, stablecoin and payments strategy teams, AI governance and infrastructure programs, and risk and controls leaders.</p>
-        <p>The research holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly. Every claim is replicable. The work is US-focused and independent.</p>
+        <div class="about-card-head">
+          <img class="about-headshot" src="/Publication-Images/zach-zukowski-headshot.jpeg" width="187" height="187" alt="Zach Zukowski, founder of Tokenization Systems" loading="lazy" />
+          <div class="about-card-head__text">
+            <h2>About Tokenization Systems</h2>
+            <p>An independent research, advisory, and infrastructure practice for digital financial systems: stablecoins, tokenized deposits, settlement infrastructure, and token-economy design. The work holds itself to the standard it applies to the systems it studies: claims trace to sources, frameworks are tested against adversarial conditions, and boundaries are named explicitly.</p>
+          </div>
+        </div>
         <div class="about-card-meta">
           <p><strong>Researcher</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
-          <p><strong>Frameworks</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring. Minimum Viable Equivalence Pack (MVEP) for institutional tokenization diligence.</p>
-          <p><strong>Program status (April 20, 2026)</strong> Eight working papers on SSRN and <a href="/letters">eight federal comment letters</a> filed across the GENIUS Act and related dockets, spanning seven rulemakings, six docket IDs, to six federal agencies, over a 10-day submission window. Both the SSRN and federal-comment layers of the current program are complete to date.</p>
-          <p><strong>Papers</strong> The program spans two tracks: Track A (stablecoins, gateways, and settlement infrastructure) and Track B (tokenomics, DePIN, and protocol-network governance). Track A briefing pages (Dollar v3, Control Layer War, Tokenized Equity) are also published on the site.</p>
-          <p><strong>Infrastructure</strong> Every published claim traces to a primary source through the graph. The system runs nine AI-integration patterns over a knowledge graph of hundreds of primary sources, spanning paper drafting, synthesis, revision-impact analysis, and verbatim quote retrieval. Its multi-session coordination layer, the Canonical-State Architecture, is patent-pending (USPTO provisionals 64/071,767 and 19/693,448, filed May 2026).</p>
+          <p><strong>Frameworks</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring; Minimum Viable Equivalence Pack (MVEP) for institutional tokenization diligence.</p>
+          <p><strong>Program</strong> Eight working papers on SSRN and <a href="/letters">ten federal comment letters</a> across the GENIUS Act and related dockets, organized in two tracks: Track A (stablecoins, gateways, and settlement) and Track B (tokenomics, DePIN, and protocol-network governance). The multi-agent research system behind the work, the Canonical-State Architecture, is patent-pending (USPTO provisionals 64/071,767 and 19/693,448).</p>
         </div>
         <div class="about-card-ctas">
           <a href="mailto:Zach@Tokenization.Systems?subject=Consulting%20%2F%20advisory%20intro%20call%20request" class="cta-primary">Book a consulting or advisory intro call <span aria-hidden="true">→</span></a>
@@ -1275,7 +1425,7 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=234"></script>
+  <script defer src="/script.js?v=235"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

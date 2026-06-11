@@ -309,6 +309,7 @@
 
       <section class="paper-artifact">
         <h2>Burn-mechanism design comparison</h2>
+        <div class="structure-table-wrap" tabindex="0" role="region" aria-label="Burn-mechanism design comparison">
         <table class="artifact-table">
           <thead>
             <tr>
@@ -345,6 +346,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <figure class="paper-cover brief-figure" aria-labelledby="brief-who-burns-caption">
@@ -358,12 +360,16 @@
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
-        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
+        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
 
         <h2>Core findings</h2>
 
         <h3>1. Helium's S2R = 1.84 across the 34-month window; the BME crossed parity in November 2025</h3>
         <p>Subsidy-to-Revenue ratio measures how much subsidy (token emission) is needed per unit of protocol revenue. The 34-month window (May 2023 to February 2026) yields S2R = 1.84 for Helium, indicating net deflationary pressure on average across the window: revenue grew faster than subsidies.</p>
+        <figure class="brief-figure" aria-labelledby="brief-helium-s2r-caption">
+          <picture><source type="image/webp" srcset="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.webp" /><img src="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.png" width="2971" height="1619" alt="Line chart of Helium's monthly subsidy-to-revenue ratio (burns only) from May 2023 to early 2026, rising from near zero through subsidy-dependent, transitional, and net-deflationary regimes and crossing the S2R = 1.0 fiscal-parity line in November 2025." loading="lazy" /></picture>
+          <figcaption id="brief-helium-s2r-caption">Helium's monthly subsidy-to-revenue ratio (burns only), from the April 2023 migration to Solana through early 2026. The ratio held far below fiscal parity (S2R = 1.0) through the subsidy-dependent era, then crossed parity in November 2025 (driven by the HIP-147 emission halving of August 2025 and fee-revenue growth) and posted net-deflationary monthly readings in the months through February 2026. Markers note the Solana migration and the HIP-147 governance reform.</figcaption>
+        </figure>
         <p>The Burn-Mint Equilibrium (BME) is a related but distinct metric: the ratio of token burns to token emissions over a given period. BME above 1.0 indicates net token supply contraction. Helium's BME phases over the study window:</p>
         <ul>
           <li><strong>Subsidy-dependent:</strong> BME &lt; 0.1 (May 2023 to May 2025)</li>
@@ -412,10 +418,10 @@
         <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, with limitations handled in the limitations section, not only there.</p>
 
         <h3>Exclusion methodology (inherited from Governance Concentration)</h3>
-        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
+        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
 
         <h3>Philosophy disposition</h3>
-        <p>This is not a philosophy paper. It uses Ostromian self-governance as the framing for governance distribution and draws its measurement methodology from Governance Concentration Beyond Token Allocation (reference [34]); the broader normative apparatus is developed in companion theory papers, not in either empirical study. Scope is narrowed to the empirical Helium/GEODNET focus.</p>
+        <p>This is not a philosophy paper. It uses Ostromian self-governance as the framing for governance distribution and draws its measurement methodology from Auditing Governance Concentration Beyond Token Allocation (reference [34]); the broader normative apparatus is developed in companion theory papers, not in either empirical study. Scope is narrowed to the empirical Helium/GEODNET focus.</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
@@ -455,7 +461,7 @@
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
           <a href="/papers/governance-concentration" class="companion-card">
-            <strong>Governance Concentration Beyond Token Allocation</strong>
+            <strong>Auditing Governance Concentration Beyond Token Allocation</strong>
             <span>Cross-sectional empirical foundation (52 protocols across DePIN and DeFi) for this paper's within-sector GeoDePIN vertical. Source of the protocol-controlled-address exclusion methodology.</span>
           </a>
           <a href="/papers/adaptive-tokenomics" class="companion-card">
