@@ -962,11 +962,20 @@
       line-height: 1.35;
       color: var(--muted);
     }
+    /* Below 5-across, switch to wrapping flex so the orphan row
+       (13 / 34 stats) centers instead of left-aligning in a grid. */
     @media (max-width: 960px) {
-      .home-stat-grid { grid-template-columns: repeat(3, 1fr); row-gap: 1.75rem; }
+      .home-stat-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.75rem 0;
+      }
+      .home-stat { flex: 0 0 33.333%; }
     }
     @media (max-width: 560px) {
-      .home-stat-grid { grid-template-columns: repeat(2, 1fr); row-gap: 1.5rem; }
+      .home-stat-grid { gap: 1.5rem 0; }
+      .home-stat { flex: 0 0 50%; }
     }
 
     /* Recent Papers cards: full-bleed cover thumbnail (scoped to #research) */
@@ -988,6 +997,12 @@
       flex-direction: column;
       flex: 1 1 auto;
       padding: 1.5rem;
+    }
+    /* Single-column mobile: cards are full-width, so a fixed 188px
+       contain-box letterboxes each chart into a white strip. Let the
+       image keep its natural aspect ratio at full card width instead. */
+    @media (max-width: 768px) {
+      #research .research-card-thumb { height: auto; }
     }
 
     /* Homepage letters strip */
