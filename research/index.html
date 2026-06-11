@@ -372,6 +372,32 @@
           </article>
         </li>
 
+        <li id="agentic-payments-control-layer" data-audience="policy market-infrastructure stablecoin central-bank" data-track="track-a" data-status="public">
+          <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
+            <a class="writing-link" href="/papers/agentic-payments-control-layer">
+              <div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-public">Public</span>
+                  <span class="badge">New memo</span>
+                </div>
+                <span class="writing-meta-line">Jun 2026 &middot; Tokenization Systems research memo &middot; Agentic&nbsp;Payments&nbsp;/&nbsp;Market&nbsp;Structure&nbsp;/&nbsp;AI&nbsp;Accountability</span>
+                <p class="writing-evidence-type">Evidence type: On-chain settlement census + payment-level validation across three chains</p>
+              </div>
+              <div class="writing-copy">
+                <h3 class="writing-title">The Control Layer of Agentic Payments</h3>
+                <p class="writing-thesis"><strong>Nobody measures who agentic payments route through. Measured: settlement is more concentrated than the stablecoin gateway layer it sits on, and the count and value layers have different monopolists.</strong></p>
+                <p class="writing-teaser">First facilitator-concentration measurement of x402 across Base, Polygon, and Solana: HHI 6,009 by count, subsidized and proxy pipelines exposed by buyer cardinality, irreversible settlement, and a composition chain with no accountable layer.</p>
+                <p class="writing-excerpt">
+                  <strong>What it is:</strong> Control-layer measurement memo covering the facilitators that settle x402 agentic payments. May 2026 concentration exceeds the 2,500 highly-concentrated threshold on every reading (Base count HHI 6,009 / corrected volume HHI 4,040; Solana 4,203 / 4,915; Polygon effectively single-operator), and the dominant operator differs by layer on two chains independently. The largest count contributor is a chain operator's official facilitator under a public gas-rebate program (5.04 million May payments from 35 buyer wallets); the largest value contributor is a proxy facilitator with 17 buyers and a directly observable 0.99 percent fee. Corrected cross-chain May volume is $940,323 across 8.87 million payments: 2.83 percent of USDC transfer events and 0.0000376 percent of USDC transfer value on the same rails. Introduces buyer cardinality (payments per distinct buyer) as a structural classifier that separates pipeline activity from organic usage without wash-trading heuristics, and maps the composition chain (agent runtime, authorization protocol, facilitator, token issuer, chain) at which no layer holds reversal authority or committed remediation.
+                </p>
+              </div>
+            </a>
+            <div class="writing-card-actions">
+              <a class="writing-arrow" href="/papers/agentic-payments-control-layer">Open memo <span aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+        </li>
+
         <li id="mvep-tcmag-comparison" data-audience="treasury asset-management risk-committee policy market-infrastructure tokenization" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/mvep-tcmag-comparison">
@@ -650,17 +676,17 @@
                   <span class="badge badge-public">Public</span>
                 </div>
                 <span class="writing-meta-line">Apr 2026 · SSRN · Targeting Blockchain: Research and Applications (Elsevier) · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-                <p class="writing-evidence-type">Evidence type: 34-month Helium panel + GEODNET design comparison + on-chain concentration measurements</p>
+                <p class="writing-evidence-type">Evidence type: 34-month Helium panel + 13-protocol cross-section + on-chain concentration measurements</p>
               </div>
-              <img class="writing-thumb thumb-wide" src="/Publication-Images/Who_Burns_S2R_HHI.webp" width="2949" height="2082" alt="Who Burns the Tokens: Subsidy-to-Revenue Ratio (S2R) vs demand-concentration HHI scatter across five DePIN protocols (DIMO, Helium, GEODNET, Livepeer, Hivemapper)" loading="lazy" />
+              <img class="writing-thumb thumb-wide" src="/Publication-Images/Who_Burns_S2R_HHI.webp" width="2949" height="2068" alt="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI; Helium (HHI 0.27) and Livepeer (HHI 0.31) at measured concentration, GEODNET, DIMO, and Hivemapper in the off-axis lane (demand off-chain, not measurable)" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Who Burns the Tokens?</h3>
-                <p class="writing-thesis"><strong>Burn-mechanism design, not network size, determines demand concentration in GeoDePIN.</strong></p>
+                <p class="writing-thesis"><strong>Payment architecture determines whether GeoDePIN demand concentration is observable on-chain; where measurable, it is high.</strong></p>
               </div>
               <div class="writing-copy">
-                <p class="writing-teaser">Helium S2R = 1.84 (34-month). BME crossed parity Nov 2025. GEODNET subscription model spreads burn demand across many small payers; Helium carrier-contract model concentrates it in five.</p>
+                <p class="writing-teaser">Helium's monthly S2R rose from 0.013 to a 1.84 peak over 34 months, crossing parity in October 2025. Demand concentration is measurable only for direct-payment protocols (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31, both high); GEODNET's Foundation buy-and-burn relocates demand off-chain.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> GeoDePIN deep-dive into fiscal sustainability and demand concentration. Helium's Subsidy-to-Revenue ratio (S2R) is 1.84 over a 34-month window (May 2023 to February 2026); the burn-mint equilibrium crossed parity in November 2025 driven by 20-fold fee revenue growth, the HIP-147 emission halving in August 2025, and price decline. Fee growth alone would not have crossed parity without the halving's supply compression. Helium's carrier-contract burn model concentrates Top-5 demand at ~90% (HHI 0.22); GEODNET's subscription burn model spreads it (Top-5 = 40.4%, HHI 0.055). GEODNET governance separately concentrates: HHI 0.14 with team wallet 25.3% Polygon-side. Applies the Governance Concentration protocol-controlled-address exclusion methodology (133 addresses across 38 protocols) and Ostromian self-governance framing.
+                  <strong>What it is:</strong> GeoDePIN deep-dive into fiscal sustainability and demand concentration across 13 protocols. Helium's monthly Subsidy-to-Revenue ratio (S2R) rose from 0.013 to a peak of 1.84 over a 34-month window (May 2023 to February 2026), crossing monthly fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy (not separable on-chain without a formal event study). Demand concentration is measurable only for direct-payment protocols: Helium's burn-signer HHI is 0.27 (Top-5 ~90% of burns) and Livepeer's fee-payer HHI is 0.31; GEODNET's Foundation buy-and-burn relocates its demand base off-chain. GEODNET's Polygon-side token distribution separately concentrates: holdings HHI 0.14 with the team wallet at 25.3% of non-burned supply. Inherits the Governance Concentration protocol-controlled-address exclusion methodology (52-protocol companion cross-section) and Ostromian self-governance framing.
                 </p>
               </div>
             </a>
@@ -823,7 +849,7 @@
               <tr>
                 <th scope="row">Where the economics sit</th>
                 <td><strong>Stablecoin supply cointegrates with Fed balance-sheet variables during tightening regimes only.</strong> Trace statistic rejects at 48.18 (cv95 = 29.80) during tightening; fails at 17.71 during easing. After the September 2024 rate cut, supply nearly doubled from $162B to $305B. The relationship is dollar-specific: Bitcoin and Ethereum produce a null. The yield prohibition in recent U.S. stablecoin legislation reinforces the issuer-side transmission channel. <em>Economics sit on the operator balance sheet, transmitted through reserve yield.</em></td>
-                <td><strong>Subsidy-to-revenue ratios vary 266x across DePIN protocols; S2R captures demand-side fundamentals independently of token price.</strong> Helium's S2R rose from 0.013 to 1.84 over 34 months (fee growth 58%, price decline 25%, emission halving 17%). Revenue grew 8x while HNT declined 77%. Across DePIN, DIMO earns 3x more in revenue than rewards paid (0.33x); Livepeer pays 88.5x more in rewards than earned. Helium's crossover is fragile: ~5 purchasers account for 90% of burns (burn-signer HHI = 0.22). <em>Economics sit in the burn mechanism and service delivery layer.</em></td>
+                <td><strong>DePIN fiscal sustainability is a three-tier hierarchy; S2R captures demand-side fundamentals independently of token price.</strong> Helium's monthly S2R rose from 0.013 to a 1.84 peak over 34 months, driven by the August 2025 emission halving and the full carrier-revenue burn policy (not separable on-chain without a formal event study). Industry data report revenue growing roughly eightfold while HNT declined 77%. GEODNET (0.219) and Hivemapper (0.183) hold a growth-phase middle tier; DIMO posted a single elevated month at 4.24; most protocols cluster near S2R zero. Helium's crossover is fragile: ~5 purchasers account for 90% of burns (burn-signer HHI = 0.27). <em>Economics sit in the burn mechanism and service delivery layer.</em></td>
               </tr>
             </tbody>
           </table>
