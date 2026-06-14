@@ -40,27 +40,27 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Who Burns the Tokens? Burn Mechanism Analysis | TS</title>
-  <meta name="description" content="GeoDePIN study: Helium S2R = 1.84 over 34 months. Burn-mechanism design, not network size, drives demand concentration (Helium HHI 0.22 vs GEODNET 0.055)." />
+  <meta name="description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols and is high where measurable (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31). Helium's monthly S2R rose from 0.013 to a 1.84 peak." />
   <meta name="author" content="Zach Zukowski" />
-  <meta name="keywords" content="DePIN, GeoDePIN, Subsidy-to-Revenue ratio, burn-and-mint equilibrium, demand concentration, Helium, GEODNET, service verification, token velocity, HIP-147, SuperHex" />
+  <meta name="keywords" content="DePIN, GeoDePIN, Subsidy-to-Revenue ratio, burn-and-mint equilibrium, demand concentration, Helium, GEODNET, Livepeer, service verification, token velocity, HIP-147, SuperHex" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Who Burns the Tokens? Burn Mechanism Analysis" />
-  <meta property="og:description" content="Fiscal sustainability and demand concentration in GeoDePIN. Helium S2R = 1.84 (34-month window). Burn-mechanism design, not network size, determines who pays for the network: Helium ~90% Top-5 vs GEODNET 40.4% Top-5." />
+  <meta property="og:description" content="Fiscal sustainability and demand concentration in GeoDePIN. Helium's monthly S2R rose from 0.013 to a 1.84 peak (May 2023 to February 2026). Payment architecture determines whether demand concentration is observable: it is measurable only for direct-payment protocols (Helium HHI 0.27, Livepeer 0.31), and high in both." />
   <meta property="og:url" content="https://tokenization.systems/papers/who-burns-the-tokens/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Who_Burns_S2R_HHI.png" />
   <meta property="og:image:width" content="2949" />
-  <meta property="og:image:height" content="2082" />
+  <meta property="og:image:height" content="2068" />
   <meta property="og:site_name" content="Tokenization Systems" />
-  <meta property="og:image:alt" content="Who Burns the Tokens: Subsidy-to-Revenue Ratio (S2R) vs demand-concentration HHI scatter across five DePIN protocols (DIMO, Helium, GEODNET, Livepeer, Hivemapper); subscription / license models cluster low-HHI while carrier / enterprise models concentrate at higher HHI" />
+  <meta property="og:image:alt" content="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI. Helium (burn-signer HHI 0.27) and Livepeer (fee-payer HHI 0.31) plotted at measured concentration; GEODNET, DIMO, and Hivemapper shown in a shaded off-axis lane where demand is off-chain and not measurable. Horizontal line marks S2R = 1.0 fiscal parity" />
   <link rel="canonical" href="https://tokenization.systems/papers/who-burns-the-tokens/" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Who Burns the Tokens? Burn Mechanism Analysis" />
-  <meta name="twitter:description" content="Helium S2R = 1.84 (34-month). BME crossed parity Nov 2025. Three drivers: 20x fee growth, HIP-147 emission halving, price decline. Fee growth alone insufficient without halving's supply compression." />
+  <meta name="twitter:description" content="Helium's monthly S2R rose from 0.013 to a 1.84 peak; parity crossed October 2025. Two drivers: the August 2025 emission halving and the full carrier-revenue burn policy. Demand concentration is measurable only for direct-payment protocols; high where measurable." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Who_Burns_S2R_HHI.png" />
-  <meta name="twitter:image:alt" content="Who Burns the Tokens: Subsidy-to-Revenue Ratio (S2R) vs demand-concentration HHI scatter across five DePIN protocols (DIMO, Helium, GEODNET, Livepeer, Hivemapper); subscription / license models cluster low-HHI while carrier / enterprise models concentrate at higher HHI" />
+  <meta name="twitter:image:alt" content="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI. Helium (burn-signer HHI 0.27) and Livepeer (fee-payer HHI 0.31) plotted at measured concentration; GEODNET, DIMO, and Hivemapper shown in a shaded off-axis lane where demand is off-chain and not measurable. Horizontal line marks S2R = 1.0 fiscal parity" />
   <meta name="twitter:creator" content="@CryptoZach" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
@@ -74,7 +74,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=246" />
+  <link rel="stylesheet" href="/styles.css?v=247" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -94,7 +94,7 @@
       "headline": "Who Burns the Tokens?",
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-03-28",
-      "description": "GeoDePIN study of fiscal sustainability (Subsidy-to-Revenue ratio, S2R) and demand concentration. Helium S2R = 1.84 over 34 months (May 2023 to February 2026); BME crossed parity in November 2025 driven by 20x fee growth, HIP-147 emission halving, and price decline. Burn-mechanism design determines demand concentration: Helium carrier-contract Top-5 ~90% versus GEODNET subscription Top-5 = 40.4%.",
+      "description": "GeoDePIN study of fiscal sustainability (Subsidy-to-Revenue ratio, S2R) and demand concentration across 13 protocols. Helium's monthly S2R rose from 0.013 (May 2023) to a peak of 1.84 (February 2026), crossing monthly fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy. Payment architecture determines whether demand concentration is observable on-chain: Helium (burn-signer HHI 0.27) and Livepeer (fee-payer HHI 0.31) are the two measurable cases, both highly concentrated; GEODNET's Foundation buy-and-burn relocates demand off-chain.",
       "url": "https://tokenization.systems/papers/who-burns-the-tokens/",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/who-burns-the-tokens/" },
       "image": "https://tokenization.systems/Publication-Images/Who_Burns_S2R_HHI.png",
@@ -120,15 +120,15 @@
           "name": "What is the Burn Mechanism Classification?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A taxonomy of token burn mechanics: how burns are triggered, who funds them, and what they produce. Paired with the Subsidy-to-Revenue Ratio (S2R) and demand-concentration HHI to assess sustainability of token deflation under stress."
+            "text": "A taxonomy of token burn and fee mechanics: how burns are triggered, who funds them, and whether the paying customer is observable on-chain. Direct-payment architectures (Helium, Livepeer) expose the customer base on-chain; buy-and-burn, single-relayer, and credit-intermediated architectures (GEODNET, Hivemapper, DIMO) relocate it off-chain. Paired with the Subsidy-to-Revenue ratio (S2R) to assess fiscal sustainability."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is burn mechanism design more predictive than network size?",
+          "name": "Why does payment architecture determine whether demand concentration can be measured?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes. Helium's carrier-contract burn model concentrates roughly 90% of burn volume in the Top-5 demand sources. Burn-mechanism design, not network size, determines who pays."
+            "text": "Demand concentration is measurable on-chain only where customers pay the protocol directly, by burning tokens or paying fees. Helium's Data Credit purchasers sign their own burns (burn-signer HHI 0.27, Top-5 roughly 90% of burn volume) and Livepeer's broadcasters pay transcoding fees directly (fee-payer HHI 0.31); both are highly concentrated. GEODNET runs a Foundation buy-and-burn, so its burn signer is the treasury, not the customer, and its demand base is off-chain."
           }
         },
         {
@@ -136,7 +136,7 @@
           "name": "What is the Subsidy-to-Revenue Ratio (S2R)?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "S2R measures token emissions (subsidy paid to operators) divided by demand-side revenue (burns or fees from users). An S2R above 1 means the network pays operators more than users pay; below 1 means user demand exceeds emission cost. S2R trajectory toward 1 indicates fiscal sustainability."
+            "text": "S2R measures demand-side token burns divided by supply-side issuance within a time window. S2R above 1.0 means the network burns more tokens than it issues (net deflationary); below 1.0 means issuance exceeds burns (subsidy dependence). The trajectory matters more than the level: Helium's monthly S2R rose from 0.013 in May 2023 to a peak of 1.84 in February 2026."
           }
         },
         {
@@ -144,7 +144,7 @@
           "name": "What does demand-concentration HHI reveal about DePIN sustainability?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A high HHI means burn volume is concentrated in a few sources; a low HHI means it is spread across many. High concentration is fragile: if a top demand source departs, the network revenue model collapses. Helium and GEODNET diverge sharply on this axis despite similar network footprints."
+            "text": "A high direct-payer HHI means demand is concentrated in a few payers, which is fragile: if a top demand source departs, the revenue model collapses. The measure is valid only for direct-payment protocols. In both measurable cases (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31) demand is highly concentrated, while buy-and-burn and relayer-mediated architectures leave it unobservable on-chain."
           }
         },
         {
@@ -152,7 +152,7 @@
           "name": "Which DePIN networks does the paper analyze?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Helium and GEODNET as the primary comparison pair (both GeoDePIN networks with physical operator deployment). The paper uses Helium's carrier-contract burn model as the contrast case against GEODNET's alternative demand-aggregation pattern."
+            "text": "Thirteen DePIN protocols, with Helium as the 34-month longitudinal case and GEODNET as the leading growth-phase comparison. Helium and Livepeer are the two direct-payment protocols where demand concentration is measurable on-chain; GEODNET, Hivemapper, and DIMO illustrate the buy-and-burn, single-relayer, and credit-intermediated architectures that relocate demand off-chain."
           }
         }
       ]
@@ -233,15 +233,15 @@
       <h1 id="paper-title">Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks</h1>
 
       <p class="paper-metadata-strip">~25 min read · SSRN 6483619 · DOI 10.2139/ssrn.6483619 · Targeting <em>Blockchain: Research and Applications</em> (Elsevier)</p>
-      <p class="paper-description-note">Description current as of April 20, 2026. Manuscript and SSRN abstract are public; journal submission in progress at <em>Blockchain: Research and Applications</em> (Elsevier).</p>
+      <p class="paper-description-note">Description current as of June 9, 2026. Manuscript and SSRN abstract are public; journal submission in progress at <em>Blockchain: Research and Applications</em> (Elsevier).</p>
 
-      <p class="paper-thesis"><strong>Burn-mechanism design, not network size, determines who pays for a GeoDePIN network and how fast the network reaches fiscal sustainability.</strong> Helium and GEODNET are roughly comparable in operator footprint and physical service category but produce sharply different demand-concentration outcomes: Helium's carrier-contract burn model concentrates ~90% of burn volume in the Top-5 demand sources (HHI 0.22); GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055). This paper measures fiscal sustainability through the Subsidy-to-Revenue ratio (S2R) and shows that S2R trajectory matters more than S2R level: Helium's S2R = 1.84 over a 34-month window (May 2023 to February 2026), and the burn-mint equilibrium (BME) crossed parity in November 2025 driven by 20-fold fee revenue growth, the HIP-147 emission halving in August 2025, and price decline. Fee growth alone would not have crossed parity without the halving's supply compression.</p>
+      <p class="paper-thesis"><strong>Payment architecture determines whether a GeoDePIN network's demand concentration can be observed on-chain at all.</strong> Demand concentration is measurable only for direct-payment protocols, where customers pay the protocol directly on-chain by burning tokens or paying fees: among the networks studied, two qualify, Helium (Data Credit burns, burn-signer HHI 0.27) and Livepeer (transcoding fees, fee-payer HHI 0.31), and in both the demand side is highly concentrated. GEODNET runs a Foundation buy-and-burn, so its on-chain burn signer is the treasury, not the customer; its demand base is off-chain and not measurable from burn data. The applicability boundary is itself the finding. The paper measures fiscal sustainability through the Subsidy-to-Revenue ratio (S2R) and shows that trajectory matters more than level: Helium's monthly S2R rose from 0.013 (May 2023) to a peak of 1.84 (February 2026), crossing monthly fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy; on a trailing-twelve-month basis the network remained net inflationary (S2R approximately 0.51).</p>
 
       <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
         <h2 id="at-a-glance-heading">At a glance</h2>
-        <p><strong>Question</strong><br />In GeoDePIN networks, what determines who pays for the network and how fast it reaches fiscal sustainability: burn-mechanism design or network size?</p>
-        <p><strong>Answer</strong><br />Burn-mechanism design, not network size, determines demand concentration and the path to fiscal sustainability. Helium's carrier-contract model concentrates roughly 90% of burn volume in its Top-5 demand sources (HHI 0.22) while GEODNET's subscription model spreads it across many small payers (Top-5 = 40.4%, HHI 0.055), and Helium's burn-mint equilibrium crossed parity in November 2025 driven by 20-fold fee growth, the HIP-147 emission halving, and price decline. These are descriptive, within-sector findings comparing two operating networks, not causal estimates.</p>
-        <p><strong>Evidence base</strong><br />The analysis rests on Helium's measured Subsidy-to-Revenue ratio of 1.84 over a 34-month on-chain window (May 2023 to February 2026) alongside demand-concentration and governance HHI measurements for GEODNET and other DePIN protocols, with protocol-controlled addresses excluded before concentration is measured.</p>
+        <p><strong>Question</strong><br />In GeoDePIN networks, when can outsiders even observe who pays for the network on-chain, and what does the path to fiscal sustainability look like where they can?</p>
+        <p><strong>Answer</strong><br />Payment architecture determines whether demand concentration is observable on-chain. Helium's direct-burn model exposes it (burn-signer HHI 0.27, Top-5 roughly 90% of burns) and Livepeer's direct-fee model does the same (fee-payer HHI 0.31); both are highly concentrated. GEODNET's Foundation buy-and-burn relocates demand off-chain, where it is not measurable. Helium's monthly S2R crossed fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy. These are descriptive, within-sector findings, not causal estimates.</p>
+        <p><strong>Evidence base</strong><br />The analysis rests on Helium's 34-month monthly S2R series (May 2023 to February 2026, rising from 0.013 to a peak of 1.84 in the final month) alongside demand-concentration measurements for the two direct-payment protocols (Helium, Livepeer) and governance-concentration measurements across the GeoDePIN cross-section, with post-exclusion corrections drawn from the companion cross-sectional study.</p>
       </aside>
 
       <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
@@ -250,39 +250,39 @@
           <span class="brief-finding-num" aria-hidden="true">1</span>
           <div class="brief-finding-copy">
             <h3>Fiscal sustainability is dynamic, not static</h3>
-            <p>The Subsidy-to-Revenue ratio (S2R) measures how much token emission subsidy is required per unit of protocol revenue: values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
+            <p>The Subsidy-to-Revenue ratio (S2R) measures demand-side burns against supply-side issuance (tokens burned divided by tokens issued): values above 1.0 indicate net deflationary pressure, below 1.0 indicate subsidy dependence. The S2R <em>trajectory</em> beats S2R level for assessing fiscal sustainability. A network can be subsidy-dependent for years and still be on a defensible trajectory; a network at temporary parity can be on a deteriorating one. (Important methodology disclosure: S2R measures burns versus mining emissions only and excludes vesting dilution; see Methods below.)</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Judging a network's fiscal health requires watching where its subsidy ratio is heading over time, not snapshotting a single S2R reading.</p>
           </div>
         </div>
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">2</span>
           <div class="brief-finding-copy">
-            <h3>Burn-mechanism design determines demand concentration</h3>
-            <p>Helium uses carrier-contract burns where a small number of mobile-network counterparties account for most demand: Top-5 ~90%, HHI 0.22. GEODNET uses subscription-style payments where many small RTK GPS subscribers each contribute small burn volumes: Top-5 = 40.4%, HHI 0.055. The two networks are comparable in physical footprint and service category, so the concentration gap is a design effect, not a network-size effect.</p>
-            <p class="brief-what-this-means"><strong>What this means:</strong> A network can broaden or narrow who drives its token demand by choosing how burns are triggered, independent of how large the network is.</p>
+            <h3>Payment architecture determines whether demand concentration is observable</h3>
+            <p>Demand concentration is measurable only where customers pay the protocol directly on-chain. Helium's Data Credit purchasers sign their own burns: Top-5 roughly 90% of burn volume, burn-signer HHI 0.27. Livepeer's broadcasters pay transcoding fees directly in ETH: the top two broadcasters fund 75% of fees, fee-payer HHI 0.31. GEODNET runs a Foundation buy-and-burn: the burn signer is the treasury, not the customer, so its demand concentration is not measurable on-chain.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Whether outsiders can see who funds a network's token demand is itself a design property: direct-payment architectures expose the customer base on-chain, while buy-and-burn, single-relayer, and credit-intermediated architectures relocate it off-chain.</p>
           </div>
         </div>
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">3</span>
           <div class="brief-finding-copy">
-            <h3>GEODNET governance concentration is a separate, sharper story than its demand-concentration profile</h3>
-            <p>Despite the more distributed demand side, on-chain governance concentrates: HHI 0.14 across active voters, with the team wallet alone holding <strong>25.3%</strong> of Polygon-side voting power. Both figures are required: HHI alone undersells the team-wallet concentration. The demand-side dispersion does not extend to the governance side.</p>
-            <p class="brief-what-this-means"><strong>What this means:</strong> A widely distributed demand base offers no assurance that voting power is equally dispersed, so governance concentration has to be measured on its own.</p>
+            <h3>GEODNET governance concentration is measurable on-chain even though its demand base is not</h3>
+            <p>While GEODNET's demand base sits off-chain, its Polygon-side token distribution is observable and concentrated: holdings HHI 0.14, with the team wallet alone holding <strong>25.3%</strong> of non-burned supply. Both figures are required: HHI alone undersells the team-wallet concentration. The paper cautions that this distribution-level reading overstates true governance concentration where a bridge contract aggregates many individual holders into a single address.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Governance concentration and demand concentration are independent dimensions that have to be measured separately, and for buy-and-burn architectures the token-distribution side is the one on-chain data can actually reach.</p>
           </div>
         </div>
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">4</span>
           <div class="brief-finding-copy">
             <h3>SuperHex is a novel design primitive with no analog in digital-only token economies</h3>
-            <p>GEODNET's spatial staking mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
+            <p>GEODNET's spatial staking mechanism: token holders stake GEOD on specific hexagonal geographic cells (H3 cells) before stations are deployed, tying token incentives to coverage geography. Spatial staking has no clean analog in DeFi or DePIN networks where the unit of work is purely digital. The paper treats SuperHex as worth instrumenting as a separate design dimension for GeoDePIN networks.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Networks whose work is tied to physical geography need their own tokenomics dimension, since incentive tools borrowed from digital-only economies do not capture spatial staking.</p>
           </div>
         </div>
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">5</span>
           <div class="brief-finding-copy">
-            <h3>DePIN tokenomics is a design space with at least two viable architectures</h3>
-            <p>The Helium and GEODNET comparison shows two coherent and operating burn-mechanism designs producing divergent demand-concentration outcomes; both are running networks at scale. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
+            <h3>DePIN tokenomics is a design space, not a single architecture</h3>
+            <p>The 13-protocol sample separates into a three-tier sustainability hierarchy: Helium posted the first net-deflationary monthly readings (peak S2R 1.84) and DIMO a single elevated month (4.24); GEODNET (0.219) and Hivemapper (0.183) occupy a growth-phase middle tier with confirmed burn activity; the remaining protocols cluster near S2R zero. Payment architectures split further into direct-payment, buy-and-burn, single-relayer, and credit-intermediated designs with different on-chain visibility. The result counters monolithic-sector framings of "DePIN tokenomics" as a single thing. The relevant level of analysis is design choice, not sector membership.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Evaluating a DePIN token economy means looking at its specific mechanism design rather than treating every network in the sector as interchangeable.</p>
           </div>
         </div>
@@ -299,7 +299,7 @@
       <div class="paper-access-block access-block">
         <div class="access-primary">
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619" target="_blank" rel="noopener noreferrer"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read on SSRN</a>
-          <a class="access-link" href="https://github.com/Research-Publications-and-Data" target="_blank" rel="noopener noreferrer">GitHub (replication, tag b3-v1.0.0-bra-submission)</a>
+          <a class="access-link" href="https://github.com/Research-Publications-and-Data" target="_blank" rel="noopener noreferrer">GitHub (replication)</a>
         </div>
         <div class="access-secondary">
           <span class="access-sep" aria-hidden="true">·</span>
@@ -308,41 +308,41 @@
       </div>
 
       <section class="paper-artifact">
-        <h2>Burn-mechanism design comparison</h2>
-        <div class="structure-table-wrap" tabindex="0" role="region" aria-label="Burn-mechanism design comparison">
+        <h2>Payment-architecture comparison: Helium vs GEODNET</h2>
+        <div class="structure-table-wrap" tabindex="0" role="region" aria-label="Payment-architecture comparison: Helium vs GEODNET">
         <table class="artifact-table">
           <thead>
             <tr>
               <th></th>
-              <th>Helium (carrier-contract burns)</th>
-              <th>GEODNET (subscription burns)</th>
+              <th>Helium (direct Data Credit burns)</th>
+              <th>GEODNET (Foundation buy-and-burn)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Demand-side concentration</strong></td>
-              <td>Top-5 demand sources ~90% of burns; HHI 0.22</td>
-              <td>Top-5 = 40.4% of burns; HHI 0.055</td>
+              <td>Top-5 demand sources ~90% of burns; burn-signer HHI 0.27</td>
+              <td>Not measurable on-chain (Foundation buy-and-burn; the burn signer is the treasury, not the customer)</td>
             </tr>
             <tr>
               <td><strong>Operating S2R</strong></td>
-              <td>1.84 over 34-month window (May 2023 to Feb 2026)</td>
-              <td>Trajectory observable; vesting unlocks materially affect short-run BME</td>
+              <td>Monthly S2R rose from 0.013 to a 1.84 peak (May 2023 to Feb 2026); trailing-twelve-month approximately 0.51</td>
+              <td>0.219 (February 2026), meaning burns offset 21.9% of issuance</td>
             </tr>
             <tr>
-              <td><strong>BME phase as of late 2025</strong></td>
-              <td>Crossed parity in November 2025; net-deflationary</td>
-              <td>Q2 2025 vesting unlocks (60% increase, 23M to 30M per month) collapsed near-term burn absorption despite SuperHex revenue trajectory</td>
+              <td><strong>Fiscal phase as of February 2026</strong></td>
+              <td>Monthly parity crossed October 2025; net-deflationary in four of five months through February 2026 (November 2025 the exception)</td>
+              <td>Growth-phase tier: burn absorption (burns as a share of issuance) ramped after the June 30, 2025 GEODNET halving to a 52.5% peak (October 2025), easing to 21.9% by February 2026</td>
             </tr>
             <tr>
               <td><strong>Governance concentration</strong></td>
               <td>Documented but not the primary focus</td>
-              <td>HHI 0.14 across active voters; team wallet 25.3% Polygon-side</td>
+              <td>Polygon-side holdings HHI 0.14; team wallet 25.3% of non-burned supply</td>
             </tr>
             <tr>
               <td><strong>Distinctive design primitive</strong></td>
               <td>HNT to Data Credit conversion at oracle-reported HNT/USD price</td>
-              <td>SuperHex spatial staking on Uber H3 hexes (no DeFi analog)</td>
+              <td>SuperHex spatial staking on H3 cells (absent from all other protocols in the 13-protocol sample)</td>
             </tr>
           </tbody>
         </table>
@@ -352,73 +352,69 @@
       <figure class="paper-cover brief-figure" aria-labelledby="brief-who-burns-caption">
         <picture>
           <source type="image/webp" srcset="/Publication-Images/Who_Burns_S2R_HHI.webp" />
-          <img src="/Publication-Images/Who_Burns_S2R_HHI.png" width="2949" height="2082" alt="Who Burns the Tokens: Subsidy-to-Revenue Ratio (S2R) vs demand-concentration HHI scatter across five DePIN protocols (DIMO, Helium, GEODNET, Livepeer, Hivemapper)" loading="eager" fetchpriority="high" />
+          <img src="/Publication-Images/Who_Burns_S2R_HHI.png" width="2949" height="2068" alt="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI. Helium (burn-signer HHI 0.27) and Livepeer (fee-payer HHI 0.31) plotted at measured concentration; GEODNET, DIMO, and Hivemapper shown in the off-axis lane where demand is off-chain and not measurable" loading="eager" fetchpriority="high" />
         </picture>
-        <figcaption id="brief-who-burns-caption">Figure 4. Subsidy-to-Revenue Ratio (S2R) plotted against demand-concentration HHI across five DePIN protocols. Subscription / license models (DIMO, GEODNET) cluster low on the HHI axis; carrier / enterprise models (Helium, Livepeer) concentrate higher. The 4-5x gap on the HHI axis separates the two design archetypes; the S2R = 1.0 horizontal line marks fiscal parity (burns equal emissions). Hivemapper excluded: 96.1 percent of burns from a single relayer contract, so on-chain demand-concentration is a proxy artifact.</figcaption>
+        <figcaption id="brief-who-burns-caption">Figure 4. Burn and fee-architecture observability and S2R. Direct-payer HHI is a valid demand-concentration measure only for protocols whose customers pay the protocol directly on-chain: Helium (burn-signer HHI 0.27, S2R 1.84 at the February 2026 monthly peak) and Livepeer (fee-payer HHI 0.31, S2R near zero), both highly concentrated. GEODNET (Foundation buy-and-burn), Hivemapper (single relayer, roughly 96% of burns through one signer), and DIMO (prepaid-credit purchases one step removed from end customers) sit in the shaded off-axis lane: their demand bases are off-chain or not reliably mapped by burn wallets. The S2R = 1.0 horizontal line marks fiscal parity (burns equal emissions).</figcaption>
       </figure>
 
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
-        <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design and macro inputs than by current revenue absolute size. The paper is a within-sector study of two GeoDePIN networks, Helium and GEODNET, that share a physical-services category but diverge sharply on demand concentration and on the path to fiscal sustainability.</p>
-        <p>The paper applies the exclusion methodology developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>: protocol-controlled addresses are filtered out before concentration measurements. It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
+        <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design than by the absolute size of current revenue. The paper is a study of 13 DePIN protocols (10 GeoDePIN plus 3 DeVIN comparison cases) anchored by a 34-month Helium longitudinal case, and its distinctive empirical contribution is a measurability boundary: payment architecture determines whether a network's demand concentration can be observed on-chain at all.</p>
+        <p>The paper inherits the protocol-controlled-address exclusion methodology developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>: its own GeoDePIN governance readings are reported pre-exclusion (HHI 0.034 to 0.593), with post-exclusion corrections drawn from that companion cross-section where available (most prominently for DIMO). It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
 
         <h2>Core findings</h2>
 
-        <h3>1. Helium's S2R = 1.84 across the 34-month window; the BME crossed parity in November 2025</h3>
-        <p>Subsidy-to-Revenue ratio measures how much subsidy (token emission) is needed per unit of protocol revenue. The 34-month window (May 2023 to February 2026) yields S2R = 1.84 for Helium, indicating net deflationary pressure on average across the window: revenue grew faster than subsidies.</p>
+        <h3>1. Helium's monthly S2R rose from 0.013 to a peak of 1.84 across the 34-month window; monthly parity crossed in October 2025</h3>
+        <p>The Subsidy-to-Revenue ratio measures demand-side burns against supply-side issuance: monthly S2R = tokens burned divided by tokens issued. Across the 34-month window (May 2023 to February 2026), Helium's monthly S2R rose from 0.013 to a peak of 1.84 in the final month, posting net-deflationary monthly readings in four of the five months from October 2025 (November 2025 the lone exception).</p>
         <figure class="brief-figure" aria-labelledby="brief-helium-s2r-caption">
-          <picture><source type="image/webp" srcset="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.webp" /><img src="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.png" width="2971" height="1619" alt="Line chart of Helium's monthly subsidy-to-revenue ratio (burns only) from May 2023 to early 2026, rising from near zero through subsidy-dependent, transitional, and net-deflationary regimes and crossing the S2R = 1.0 fiscal-parity line in November 2025." loading="lazy" /></picture>
-          <figcaption id="brief-helium-s2r-caption">Helium's monthly subsidy-to-revenue ratio (burns only), from the April 2023 migration to Solana through early 2026. The ratio held far below fiscal parity (S2R = 1.0) through the subsidy-dependent era, then crossed parity in November 2025 (driven by the HIP-147 emission halving of August 2025 and fee-revenue growth) and posted net-deflationary monthly readings in the months through February 2026. Markers note the Solana migration and the HIP-147 governance reform.</figcaption>
+          <picture><source type="image/webp" srcset="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.webp" /><img src="/Publication-Images/Who_Burns_Helium_S2R_Trajectory.png" width="2971" height="1619" alt="Line chart of Helium's monthly subsidy-to-revenue ratio (burns only) from May 2023 to early 2026, rising from near zero through subsidy-dependent, transitional, and net-deflationary regimes and crossing the S2R = 1.0 fiscal-parity line in late 2025." loading="lazy" /></picture>
+          <figcaption id="brief-helium-s2r-caption">Helium's monthly subsidy-to-revenue ratio (burns only), from the April 2023 migration to Solana through early 2026. The ratio held far below fiscal parity (S2R = 1.0) through the subsidy-dependent era, then crossed parity for the first time in late 2025 (following the August 2025 emission halving and the full carrier-revenue burn policy) and posted net-deflationary monthly readings in four of the five months through February 2026. Markers note the Solana migration and the HIP-147 governance reform.</figcaption>
         </figure>
-        <p>The Burn-Mint Equilibrium (BME) is a related but distinct metric: the ratio of token burns to token emissions over a given period. BME above 1.0 indicates net token supply contraction. Helium's BME phases over the study window:</p>
+        <p>S2R operationalizes the burn-and-mint equilibrium: readings above 1.0 mean net token supply contraction. Three fiscal regimes emerge over the study window:</p>
         <ul>
-          <li><strong>Subsidy-dependent:</strong> BME &lt; 0.1 (May 2023 to May 2025)</li>
-          <li><strong>Transitional:</strong> BME 0.1 to 1.0 (June to October 2025)</li>
-          <li><strong>Net-deflationary:</strong> BME &gt; 1.0 (November 2025 onward)</li>
+          <li><strong>Post-migration baseline:</strong> S2R 0.01 to 0.04 (May 2023 to early 2024); burns minimal, issuance dominant</li>
+          <li><strong>Demand ramp:</strong> S2R 0.15 to 0.67 (mid-2025), as Mobile subscriber growth and IoT data transfer increased burn volume; full carrier-revenue burns lifted the ratio to 0.38 by June 2025, before the halving</li>
+          <li><strong>Fiscal parity and beyond:</strong> monthly S2R 0.88 to 1.84 (late 2025 to February 2026), with burns exceeding issuance in four of five months</li>
         </ul>
-        <p>Across the 12-month window from January 2025 to January 2026, BME ranged from 0.006 to 1.103.</p>
+        <p>Because monthly readings are volatile, the paper also sums burns and issuance over trailing windows: the trailing-three-month ratio crossed 1.0 in December 2025 and reached 1.50 by February 2026; the trailing-six-month ratio crossed in January 2026 (1.24 by February); the trailing-twelve-month ratio remained below parity throughout, at approximately 0.51 as of February 2026.</p>
 
-        <h3>2. Three drivers explain the BME crossover (each necessary; fee growth alone insufficient)</h3>
-        <p>Three drivers all moved together to cross BME parity:</p>
-        <ol>
-          <li><strong>20-fold fee revenue growth.</strong> Weekly Data Credit burns grew from approximately $10,700 to approximately $217,000 across the study window.</li>
-          <li><strong>HIP-147 emission halving.</strong> The Helium Improvement Proposal passed in August 2025 halved the network's emission rate.</li>
-          <li><strong>Price decline.</strong> The HNT price decline reduced the absolute USD value of the unburned subsidy, contributing to the BME crossover from the supply side.</li>
-        </ol>
-        <p>The counterfactual is load-bearing: <strong>fee growth alone would not have crossed parity without the halving's supply compression.</strong> Each of the three drivers contributed; HIP-147 is what tipped the system across.</p>
+        <h3>2. Two drivers explain the parity crossover (not separable on-chain without a formal event study)</h3>
+        <p>Two drivers moved the system across fiscal parity: the August 2025 emission halving (issuance dropped roughly 58%) and the full carrier-revenue burn policy. The on-chain data cannot separate their contributions without a formal event study, but the pre-halving jump in the Subsidy-to-Revenue ratio to 0.38 in June 2025 (carrier burn only, no halving) shows that demand-side burns alone moved S2R substantially.</p>
+        <p>Demand-coupled fee growth is large in absolute terms: by December 2025, annualized Data Credit burn reached an approximately $20.9M run-rate (trailing three-month annualized, October to December 2025; industry-reported and consistent with on-chain data). The same industry data report a roughly eightfold year-over-year revenue increase even as the HNT price declined 77%. The related governance reform, HIP-147 (approved Q3 2025), shifted reward distribution from coverage-based proof-of-coverage to service-based metrics weighted by actual data transfer and subscriber usage.</p>
 
-        <h3>3. Helium and GEODNET produce different demand-concentration outcomes from different burn-mechanism designs</h3>
-        <p>Helium uses a carrier-contract model: a small number of mobile-network counterparties (telcos, MVNOs, IoT customers) commit to large burn volumes in exchange for service. Result: Top-5 demand sources account for ~90% of burns; HHI 0.22.</p>
-        <p>GEODNET uses a subscription-style model: many small RTK GPS subscribers each contribute small burn volumes for high-precision positioning service. Result: Top-5 demand sources account for 40.4% of burns; HHI 0.055.</p>
-        <p>The two networks are roughly comparable on physical footprint and service category. The concentration gap is a design effect, not a network-size effect. The framing is: <strong>burn-mechanism design, not network size, determines demand concentration.</strong></p>
+        <h3>3. Payment architecture determines whether demand concentration can be observed on-chain</h3>
+        <p>Helium's customers pay the protocol directly: Data Credit purchasers sign their own HNT burns, so the demand side is visible on-chain. Result: Top-5 demand sources account for ~90% of burns; burn-signer HHI 0.27, with the top two addresses at 70.1%. Livepeer's broadcasters pay transcoding fees directly in ETH and are visible the same way: the top two broadcasters fund 75% of fees; fee-payer HHI 0.31 across 28 paying broadcasters.</p>
+        <p>GEODNET collects subscription revenue off-chain and runs a Foundation buy-and-burn: the Foundation buys and burns GEOD, so the burn signer is the treasury, not the customer, and the demand base is not measurable from burn data. Hivemapper routes roughly 96% of burns through a single credit-purchase relayer. DIMO's burns come from roughly one hundred distinct purchaser wallets, but each burn is a prepaid-credit purchase one step removed from end-customer consumption, so the burn-wallet distribution does not reliably map to end-customer concentration.</p>
+        <p>Demand concentration is measurable precisely for the direct-payment protocols, and wherever it is measurable it is high. The framing is: <strong>payment architecture determines whether a network's customer base is visible on-chain at all; the applicability boundary is itself the finding.</strong> This is a measurability result resting on two observed protocols, not a claim that all GeoDePIN demand is concentrated.</p>
 
-        <h3>4. GEODNET governance is more concentrated than its demand profile</h3>
-        <p>Despite the dispersed demand side, GEODNET's on-chain governance concentrates: HHI 0.14 across active voters. The team wallet alone accounts for 25.3% of Polygon-side voting power. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution.</p>
-        <p>Beyond GEODNET, DIMO HHI is 0.038 post-exclusion (the GnosisSafeL2 holding ~44% of supply is excluded as protocol-controlled, per the inherited exclusion methodology). Filecoin S2R is 0.045, included for cross-section comparison only and not foregrounded; on-chain data quality for Filecoin is partially Token Terminal-derived (see the Token Terminal DePIN measurement error finding documented in Governance Concentration).</p>
+        <h3>4. Governance concentration is measurable where demand concentration is not</h3>
+        <p>GEODNET's Polygon-side token distribution concentrates: holdings HHI 0.14, with the team wallet alone holding 25.3% of non-burned supply. Both figures are needed to read the result correctly: HHI alone undersells the team-wallet concentration; team-wallet share alone misses the rest of the distribution. The paper cautions that this distribution-level reading overstates true governance concentration where a bridge contract aggregates many individual holders into a single address.</p>
+        <p>Beyond GEODNET, DIMO governance HHI is 0.025 post-exclusion: excluding the DIMO Foundation address reduces the measured HHI from 0.305, roughly an order of magnitude, per the inherited exclusion methodology.</p>
 
         <h3>5. SuperHex as a novel design primitive</h3>
-        <p>GEODNET's SuperHex mechanism: operators stake MINER tokens on specific hexagonal geographic cells (Uber H3 hexes), tying token incentives directly to coverage geography. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as worth instrumenting as a separate design dimension worth studying in other GeoDePIN networks.</p>
+        <p>GEODNET's SuperHex mechanism: token holders stake GEOD to designate high-value geographic hexagons (H3 cells) before stations are deployed, creating a market signal for where coverage is most valuable so capital flows to frontier regions before hardware does. There is no clean analog in digital-only token economies: in DeFi, the unit of work is software state changes; in non-spatial DePIN, work is bandwidth, storage, or compute. SuperHex bundles the work unit (high-precision GPS reference signal) with a geographic location proof and a stake commitment. The paper treats SuperHex as a separate design dimension worth instrumenting in other GeoDePIN networks; it is absent from all other protocols in the 13-protocol sample.</p>
 
         <h2>Methods and data</h2>
 
         <h3>Definitions (first-use)</h3>
-        <p><strong>DePIN:</strong> Decentralized Physical Infrastructure Network. <strong>GeoDePIN:</strong> the DePIN subset where service verification is location-dependent (coverage proofs, location proofs). The paper studies GeoDePIN specifically.</p>
-        <p><strong>Subsidy-to-Revenue ratio (S2R):</strong> how much token emission subsidy is required per unit of protocol revenue. Values above 1.0 indicate net deflationary pressure; below 1.0 indicate subsidy dependence.</p>
-        <p><strong>Burn-Mint Equilibrium (BME):</strong> the ratio of token burns to token emissions over a given period. BME above 1.0 indicates net token supply contraction. S2R compares subsidy to revenue (a flow comparison); BME compares burns to mints (a token-supply flow comparison). They can diverge when vesting unlocks are active, because vesting adds to token supply without going through emission accounting.</p>
-        <p><strong>HIP-147:</strong> Helium Improvement Proposal passed August 2025 that halved Helium's emission rate.</p>
-        <p><strong>SuperHex:</strong> GEODNET's spatial staking mechanism. Operators stake MINER tokens on specific hexagonal cells (Uber H3 hexes), tying token incentives to coverage geography.</p>
-        <p><strong>Fiscal sustainability:</strong> protocol revenue sufficient to sustain token emissions without external capital injection. The paper-specific term is distinct from corporate fiscal sustainability, where the analogous concept involves sovereign or debt rollover dynamics.</p>
-        <p><strong>Demand concentration:</strong> the distribution of protocol revenue sources, measuring who pays for the network's services. Distinct from governance concentration (who controls the protocol) and supply concentration (who holds the tokens). The paper's distinctive empirical contribution is the measurement of demand concentration as a separate axis.</p>
+        <p><strong>DePIN:</strong> Decentralized Physical Infrastructure Network. <strong>GeoDePIN:</strong> the DePIN subset whose value depends on where hardware is deployed: geographic distribution across many unique locations is essential to the service. The paper studies GeoDePIN specifically, with three DeVIN (virtual-infrastructure) comparison cases.</p>
+        <p><strong>HHI (Herfindahl-Hirschman Index):</strong> the standard market-concentration measure; the sum of squared participant shares, ranging from near 0 (dispersed) to 1.0 (a single entity).</p>
+        <p><strong>Subsidy-to-Revenue ratio (S2R):</strong> demand-side burns divided by supply-side issuance within a time window (monthly S2R = tokens burned / tokens issued). Values above 1.0 indicate net deflationary pressure (burns exceed issuance); below 1.0 indicate subsidy dependence.</p>
+        <p><strong>Burn-and-mint equilibrium:</strong> the condition where token burns offset token issuance (parity at S2R = 1.0). The paper's S2R metric operationalizes it; because monthly readings are volatile, trailing three-, six-, and twelve-month window ratios are reported alongside.</p>
+        <p><strong>HIP-147:</strong> Helium Improvement Proposal approved Q3 2025 that shifted reward distribution from coverage-based proof-of-coverage to service-based metrics weighted by actual data transfer and subscriber usage. Distinct from the August 2025 emission halving, which cut issuance roughly 58%.</p>
+        <p><strong>SuperHex:</strong> GEODNET's spatial staking mechanism. Token holders stake GEOD on specific hexagonal cells (H3 cells) before stations are deployed, tying token incentives to coverage geography.</p>
+        <p><strong>Fiscal sustainability:</strong> protocol revenue sufficient to sustain token emissions without external capital injection. The paper-specific term is narrower than fiscal sustainability in public finance, where the analogous concept involves sovereign budget and debt dynamics.</p>
+        <p><strong>Demand concentration:</strong> the distribution of protocol revenue sources, measuring who pays for the network's services. Distinct from governance concentration (who controls the protocol) and supply concentration (who holds the tokens). The paper's distinctive empirical contribution is the demand-concentration measurability boundary: the measure is valid only for direct-payment protocols, where customers pay the protocol directly on-chain.</p>
         <p><strong>Service verification:</strong> the protocol-specific mechanism for confirming that a node delivered the physical service it claims (location proof, coverage proof, data integrity proof). Critical for GeoDePIN because services are physical and not directly observable on-chain without an oracle bridge.</p>
 
         <h3>HNT versus Data Credits (Helium architecture)</h3>
-        <p>HNT (the Helium Network Token) is the speculative and tradeable token. Data Credits are non-speculative, USD-pegged utility credits that customers burn to pay for network services. Data Credits are produced by burning HNT at the oracle-reported HNT/USD price. This separation is critical for BME intuition: the burn side of the BME is denominated in Data Credit demand (real network usage); the mint side is denominated in HNT emissions (operator subsidies).</p>
+        <p>HNT (the Helium Network Token) is the speculative and tradeable token. Data Credits are non-speculative, USD-pegged utility credits that customers burn to pay for network services. Data Credits are produced by burning HNT at the oracle-reported HNT/USD price. This separation is critical for burn-and-mint intuition: the burn side is denominated in Data Credit demand (real network usage); the mint side is denominated in HNT emissions (operator subsidies).</p>
 
         <h3>Methodology blind spot (non-negotiable disclosure)</h3>
-        <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat. GEODNET's Q2 2025 burn-absorption collapse, for example, was driven by vesting unlocks (Q2 2025 unlocks jumped 60%, from approximately 23M to approximately 30M per month; 54% of supply unlocked by Q2; 62.3% by Q3), not by emission changes. S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, with limitations handled in the limitations section, not only there.</p>
+        <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat: vesting unlocks from team, investor, and ecosystem allocations add to circulating supply without passing through emission accounting, so S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, not only in the limitations section.</p>
 
         <h3>Exclusion methodology (inherited from Governance Concentration)</h3>
-        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the GnosisSafeL2 holding (~44% of supply) reduces HHI from 0.305 / 0.681 (pre-exclusion) to 0.038 (post-exclusion); a 643% HHI delta if exclusion is skipped.</p>
+        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the DIMO Foundation address reduces governance HHI from 0.305 (pre-exclusion) to 0.025 (post-exclusion, per the companion cross-section); skipping the exclusion overstates DIMO's governance concentration by roughly an order of magnitude.</p>
 
         <h3>Philosophy disposition</h3>
         <p>This is not a philosophy paper. It uses Ostromian self-governance as the framing for governance distribution and draws its measurement methodology from Auditing Governance Concentration Beyond Token Allocation (reference [34]); the broader normative apparatus is developed in companion theory papers, not in either empirical study. Scope is narrowed to the empirical Helium/GEODNET focus.</p>
@@ -426,32 +422,33 @@
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
           <p><strong>Helium S2R</strong><br>
-          1.84 over 34-month window (May 2023 to February 2026)</p>
-          <p><strong>Helium BME phases</strong><br>
-          Subsidy-dependent &lt; 0.1 (May 2023 to May 2025) · Transitional 0.1 to 1.0 (June to October 2025) · Net-deflationary &gt; 1.0 (November 2025 onward)</p>
-          <p><strong>Helium 12-month BME (January 2025 to January 2026)</strong><br>
-          0.006 to 1.103 · Three necessary drivers: 20-fold fee growth ($10,700 to $217,000 weekly Data Credit burns) · HIP-147 emission halving (August 2025) · price decline · Fee growth alone insufficient without halving's supply compression</p>
-          <p><strong>Demand concentration (design effect, not size effect)</strong><br>
-          Helium carrier-contract: Top-5 ~90%, HHI 0.22 · GEODNET subscription: Top-5 = 40.4%, HHI 0.055</p>
+          Monthly S2R rose from 0.013 (May 2023) to a peak of 1.84 (February 2026) · trailing-twelve-month approximately 0.51</p>
+          <p><strong>Helium fiscal regimes</strong><br>
+          Post-migration baseline 0.01 to 0.04 (May 2023 to early 2024) · Demand ramp 0.15 to 0.67 (mid-2025), reaching 0.38 by June 2025 pre-halving · Monthly parity crossed October 2025; net-deflationary in four of five months through February 2026</p>
+          <p><strong>Helium trailing-window ratios (February 2026)</strong><br>
+          Trailing-3-month 1.50 (crossed parity December 2025) · trailing-6-month 1.24 (crossed January 2026) · Two drivers, not separable on-chain: the August 2025 emission halving and the full carrier-revenue burn policy · Annualized Data Credit burn reached an approximately $20.9M run-rate by December 2025 (trailing three-month annualized; industry-reported, consistent with on-chain data)</p>
+          <p><strong>Demand concentration (measurable only for direct-payment protocols)</strong><br>
+          Helium (direct burn): Top-5 ~90%, burn-signer HHI 0.27 · Livepeer (direct fee): top-2 = 75%, fee-payer HHI 0.31 · GEODNET (buy-and-burn): demand off-chain, not measurable</p>
           <p><strong>GEODNET governance</strong><br>
-          HHI 0.14 across active voters · team wallet 25.3% Polygon-side voting power · Q2 2025 vesting unlocks +60% (23M to 30M per month) · 54% of supply unlocked by Q2 · 62.3% by Q3</p>
+          Polygon-side holdings HHI 0.14 · team wallet 25.3% of non-burned supply · S2R 0.219 (February 2026) with a single-peaked absorption trajectory (52.5% peak, October 2025)</p>
           <p><strong>DIMO (post-exclusion)</strong><br>
-          HHI 0.038 · GnosisSafeL2 holding ~44% excluded as protocol-controlled · 643% HHI delta if exclusion skipped</p>
+          Governance HHI 0.025 (0.305 pre-exclusion) · DIMO Foundation address excluded as protocol-controlled · S2R 4.24 in a single elevated month (developer-license purchases), not a sustained equilibrium</p>
           <p><strong>Filecoin S2R</strong><br>
-          0.045 (cross-section reference only; partially Token Terminal-derived; the Token Terminal DePIN measurement error is documented in Governance Concentration)</p>
+          Approximately 0.045 (cross-section reference only; not foregrounded)</p>
         </div>
 
         <h2>Limitations</h2>
         <ul>
-          <li>S2R excludes vesting dilution; vesting unlocks can move the BME without changing emissions or revenue. Surfaced at first S2R mention; treated as a first-order caveat.</li>
-          <li>The two-network comparison (Helium and GEODNET) is intentionally narrow. The "burn-mechanism design determines demand concentration" framing is supported by the contrast and by the size-controlled comparison; it is not a population claim across all DePIN networks.</li>
-          <li>Filecoin S2R is included for cross-section reference only and is partially Token Terminal-derived. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
+          <li>S2R excludes vesting dilution; vesting unlocks can expand circulating supply without changing emissions or revenue. Surfaced at first S2R mention; treated as a first-order caveat.</li>
+          <li>Helium's monthly S2R peak (1.84, February 2026) reflects a temporary post-HIP-147 Mobile burn allocation and WiFi-offload pricing effects, and overstates steady-state equilibrium by an estimated 2-5x; on a trailing-twelve-month basis the network remained net inflationary (approximately 0.51).</li>
+          <li>The direct-payment measurement rests on two protocols (Helium and Livepeer), so the finding that demand concentration is high wherever observable is conditional on a small observed set; it is a measurability result about on-chain visibility, not a population claim across all DePIN networks.</li>
+          <li>Filecoin S2R is included for cross-section reference only. The paper de-emphasizes Filecoin in favor of Helium and GEODNET, where on-chain data is authoritative.</li>
           <li>SuperHex is a novel design primitive; the paper documents it but does not evaluate it against alternative spatial-staking designs (because none currently exist at comparable scale).</li>
-          <li>Demand-concentration measurements are a snapshot of the study window and may shift as either network's demand mix evolves.</li>
+          <li>Demand-concentration measurements are a snapshot of the study window and may shift as the demand mix evolves; the dominant burn signer itself changed during the window (the February 2026 leader was not active before November 2025).</li>
         </ul>
 
         <h2>Maintenance plan</h2>
-        <p>When the SSRN abstract publishes, this briefing page is updated with the SSRN URL and the status badge moves from "Submission pending" to "Under review". DATA_REGISTRY.md and CROSS_REFERENCE_MAP.md are updated in the same commit to keep the cross-reference identifiers consistent.</p>
+        <p>This briefing tracks the manuscript of record (currently the journal-submission version). When the editorial decision lands, the badges, description note, and key numbers are refreshed in the same update.</p>
 
         <h2>Related role profiles</h2>
         <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
@@ -462,7 +459,7 @@
         <div class="companion-cards">
           <a href="/papers/governance-concentration" class="companion-card">
             <strong>Auditing Governance Concentration Beyond Token Allocation</strong>
-            <span>Cross-sectional empirical foundation (52 protocols across DePIN and DeFi) for this paper's within-sector GeoDePIN vertical. Source of the protocol-controlled-address exclusion methodology.</span>
+            <span>Cross-sectional empirical foundation (52 protocols across DePIN, DeFi, L1/L2 infrastructure, and social tokens) for this paper's within-sector GeoDePIN vertical. Source of the protocol-controlled-address exclusion methodology.</span>
           </a>
           <a href="/papers/adaptive-tokenomics" class="companion-card">
             <strong>Adaptive Tokenomics</strong>
@@ -510,7 +507,7 @@
     </footer>
   </main>
 
-  <script defer src="/script.js?v=234"></script>
+  <script defer src="/script.js?v=235"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
