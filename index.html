@@ -943,7 +943,7 @@
     }
     .home-stat-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 1.5rem;
       margin: 0;
     }
@@ -962,8 +962,8 @@
       line-height: 1.35;
       color: var(--muted);
     }
-    /* Below 5-across, switch to wrapping flex so the orphan row
-       (13 / 34 stats) centers instead of left-aligning in a grid. */
+    /* Below 6-across, switch to wrapping flex so the rows center
+       instead of left-aligning in a grid (3-up, then 2-up). */
     @media (max-width: 960px) {
       .home-stat-grid {
         display: flex;
@@ -1257,6 +1257,7 @@
           <div class="home-stat"><span class="home-stat__num">52</span><span class="home-stat__label">Governance protocols audited</span></div>
           <div class="home-stat"><span class="home-stat__num">19</span><span class="home-stat__label">Stablecoin gateways mapped</span></div>
           <div class="home-stat"><span class="home-stat__num">$60.6T</span><span class="home-stat__label">Transfer volume analyzed</span></div>
+          <div class="home-stat"><span class="home-stat__num">14</span><span class="home-stat__label">Tokenized dollar products mapped</span></div>
           <div class="home-stat"><span class="home-stat__num">13</span><span class="home-stat__label">DePIN networks studied</span></div>
           <div class="home-stat"><span class="home-stat__num">34</span><span class="home-stat__label">Months of on-chain data</span></div>
         </div>
