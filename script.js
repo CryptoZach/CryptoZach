@@ -5576,7 +5576,12 @@
           var linkRect = activeLink.getBoundingClientRect();
           var containerRect = container.getBoundingClientRect();
           if(linkRect.left < containerRect.left || linkRect.right > containerRect.right){
-            activeLink.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
+            // Center the active link by adjusting the rail's own scrollLeft only.
+            // scrollIntoView walked every scrollable ancestor and fought the page's
+            // global smooth scroll, which left the link stuck clipped at the rail
+            // edge; scrollBy keeps the motion contained inside the horizontal rail.
+            var delta = (linkRect.left + linkRect.width / 2) - (containerRect.left + containerRect.width / 2);
+            container.scrollBy({ left: delta, behavior: reducedMotion ? 'auto' : 'smooth' });
           }
         }
       }
