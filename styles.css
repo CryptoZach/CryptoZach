@@ -7145,15 +7145,13 @@ footer.site-footer .footer-tagline{
   header .brand span{display:none}
 }
 
-/* Collapse the desktop nav to the hamburger menu until the full row fits.
-   The brand wordmark (held at its natural width, never squeezed) plus the 7
-   nav links plus the theme toggle measure ~1157px intrinsic, so below ~1180px
-   the row cannot fit without either squeezing the brand (wordmark then overflows
-   on top of the nav) or overflowing the theme toggle off the right edge. The
-   earlier ~900px boundary was miscalibrated for the 7-link nav and produced
-   exactly that breakage in the 900-1180px range. Mirrors the navigation rules
-   in the <=768px block so the sheet renders identically across the range. */
-@media (max-width: 1180px){
+/* Collapse to the hamburger menu only at true mobile widths (<=900px), where the
+   full-screen mobile sheet is styled. Above 900px the desktop nav stays INLINE and
+   wraps to a second row when the 7 links cannot fit beside the brand (see the
+   flex-wrap:wrap in the >=769px block), so no link is ever hidden behind a hamburger
+   at desktop widths and the brand wordmark is never squeezed (flex-shrink:0).
+   Mirrors the navigation rules in the <=768px block so the sheet renders identically. */
+@media (max-width: 900px){
   .header-inner{flex-wrap:nowrap}
   .header-inner .menu-toggle{margin-left:auto; flex-shrink:0}
   .header-inner > nav.nav-desktop,
@@ -14206,8 +14204,16 @@ header.scrolled {
 @media (min-width: 769px) {
   header > .header-inner > nav,
   header > .header-inner > nav.nav-desktop {
-    flex-wrap: nowrap;
+    /* Allow the inline nav to wrap to a second row at squeezed desktop widths
+       (~900-1180px) instead of overflowing the right edge or forcing a hamburger.
+       Self-regulating: at widths where the row fits, it stays on one line. */
+    flex-wrap: wrap;
     gap: var(--space-sm);
+  }
+  /* Keep each link intact as a wrap unit (no mid-label break). */
+  .nav-links--desktop .navlink {
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   .header-inner {
     gap: var(--space-md);
