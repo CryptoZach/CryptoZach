@@ -20225,60 +20225,77 @@ footer.site-footer .footer-newsletter__privacy a:hover{
 }
 
 
-/* Structured directory layout for the #nav-mobile drawer (programmable-money cycle, 2026-06-20).
-   Groups the menu links into labeled columns (Research / Navigate / Connect), centered and
-   balanced, instead of one sparse left-aligned row. Reuses .mobile-nav-linkset + .navlink styling. */
+/* Structured directory layout for the #nav-mobile drawer (programmable-money cycle, 2026-06-20; v2).
+   Centers a compact 3-column directory (Research / Navigate / Connect) with vertical link lists,
+   replacing the sparse top-clustered layout. Reuses .mobile-nav-linkset + .navlink styling. */
+#nav-mobile.nav-links--mobile:not([hidden]){
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  overflow-y:auto !important;
+}
 #nav-mobile .nav-directory{
   display:flex;
-  flex-wrap:wrap;
+  flex-flow:row wrap;
   justify-content:center;
   align-items:flex-start;
-  gap:2.25rem 3.5rem;
+  gap:2.75rem 4.5rem;
   width:100%;
   max-width:760px;
-  margin:0 auto;
-  padding:var(--space-lg, 1.5rem) var(--space-md, 1rem);
+  margin:auto;
+  padding:3rem 1.5rem;
   box-sizing:border-box;
 }
 #nav-mobile .nav-directory__col{
   display:flex;
   flex-direction:column;
-  align-items:stretch;
-  min-width:170px;
-  flex:0 1 auto;
+  align-items:flex-start;
+  gap:.1rem;
+  min-width:150px;
 }
 #nav-mobile .nav-directory__label{
-  margin:0 0 .35rem;
+  margin:0 0 .65rem;
   padding-left:calc(var(--space-md) + 8px);
   font-size:.7rem;
   font-weight:600;
-  letter-spacing:.1em;
+  letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--text-soft, #888);
-  opacity:.7;
+  opacity:.6;
 }
 #nav-mobile .nav-directory .mobile-nav-linkset{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
   width:100%;
-  padding-top:0;
   gap:.1rem;
+  padding-top:0;
+}
+#nav-mobile .nav-directory .mobile-nav-linkset .navlink{
+  width:100%;
+  min-height:40px;
+  padding:.45rem .5rem .45rem calc(var(--space-md) + 8px);
+  font-size:1.05rem;
 }
 #nav-mobile .nav-directory .nav-mobile-social{
-  margin-top:.35rem;
-  padding-top:0;
+  margin:.25rem 0 0;
+  padding:0 0 0 calc(var(--space-md) + 8px);
   border-top:0;
-  padding-left:calc(var(--space-md) + 8px);
-  gap:.6rem;
+  gap:.65rem;
 }
 @media (max-width:600px){
   #nav-mobile .nav-directory{
     flex-direction:column;
     flex-wrap:nowrap;
     align-items:center;
-    gap:1.75rem;
+    gap:2rem;
     max-width:340px;
+    padding:2rem 1rem;
   }
   #nav-mobile .nav-directory__col{ width:100%; min-width:0; align-items:center; }
   #nav-mobile .nav-directory__label{ padding-left:0; text-align:center; }
   #nav-mobile .nav-directory .mobile-nav-linkset{ align-items:center; }
+  #nav-mobile .nav-directory .mobile-nav-linkset .navlink{ text-align:center; padding-left:.5rem; }
   #nav-mobile .nav-directory .nav-mobile-social{ justify-content:center; padding-left:0; }
 }
