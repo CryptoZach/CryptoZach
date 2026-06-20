@@ -7130,9 +7130,12 @@ footer.site-footer .footer-tagline{
   h1{max-width:none}
 }
 
-/* Header at narrower desktops: hide social cluster so the 6 nav links fit
-   without crowding the brand. Tagline links live in the footer regardless. */
-@media (max-width: 1180px){
+/* Hide the social cluster until there is room for it alongside the brand
+   wordmark, subtitle, the 7 nav links, and the theme toggle. Measured intrinsic
+   width of that full row is ~1341px, so the cluster only appears at >1360px;
+   below that it would push the theme toggle off the right edge. Tagline links
+   live in the footer regardless. */
+@media (max-width: 1360px){
   header .header-social{display:none}
 }
 
@@ -7142,12 +7145,15 @@ footer.site-footer .footer-tagline{
   header .brand span{display:none}
 }
 
-/* Tablet portrait and narrower: collapse the desktop nav to the hamburger
-   menu. With 6 nav links plus the theme toggle, the desktop layout cannot
-   fit below ~900px without the brand being squeezed and the nav overflowing
-   the right edge. Mirrors the navigation rules in the <=768px block so the
-   sheet renders identically across the 769 to 900px range. */
-@media (max-width: 900px){
+/* Collapse the desktop nav to the hamburger menu until the full row fits.
+   The brand wordmark (held at its natural width, never squeezed) plus the 7
+   nav links plus the theme toggle measure ~1157px intrinsic, so below ~1180px
+   the row cannot fit without either squeezing the brand (wordmark then overflows
+   on top of the nav) or overflowing the theme toggle off the right edge. The
+   earlier ~900px boundary was miscalibrated for the 7-link nav and produced
+   exactly that breakage in the 900-1180px range. Mirrors the navigation rules
+   in the <=768px block so the sheet renders identically across the range. */
+@media (max-width: 1180px){
   .header-inner{flex-wrap:nowrap}
   .header-inner .menu-toggle{margin-left:auto; flex-shrink:0}
   .header-inner > nav.nav-desktop,
@@ -14191,7 +14197,12 @@ header.scrolled {
 }
 
 /* Desktop layout: prevent nav wrap so social icons stay on the same row.
-   Keep flex-shrink so brand can compress, and ensure brand subtitle never wraps. */
+   The brand holds its natural width (flex-shrink:0); the nav column gives way
+   under the squeeze instead. With flex-shrink:1 + min-width:0 the brand box
+   compressed below its nowrap wordmark in the ~900-1099px range, so the
+   wordmark overflowed and rendered on top of the nav links. Brand compression
+   is handled by dropping the subtitle (<=1099px block below), not by squeezing
+   the wordmark. Subtitle still never wraps. */
 @media (min-width: 769px) {
   header > .header-inner > nav,
   header > .header-inner > nav.nav-desktop {
@@ -14203,7 +14214,7 @@ header.scrolled {
   }
   .brand {
     min-width: 0;
-    flex-shrink: 1;
+    flex-shrink: 0;
   }
   .brand a {
     min-width: 0;
