@@ -30,6 +30,7 @@
 
 import Beasties from 'beasties';
 import { promises as fs } from 'fs';
+import { createHash } from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -86,15 +87,33 @@ function stripCacheBusters(html) {
   return { stripped, versions: captured };
 }
 
-function restoreCacheBusters(html, versions) {
-  if (versions.length === 0) return html;
-  // After Beasties, there may be MORE <link> references to the same
-  // stylesheet (e.g., preload + original kept as fallback). We apply the
-  // first captured version to all .css href attributes; the site only
-  // has one stylesheet (styles.css) so a single version value is
-  // sufficient.
-  const version = versions[0];
+function restoreCacheBusters(html, versions, preferredVersion) {
+  // Prefer the content-hash version derived from the final styles.css
+  // (preferredVersion); fall back to the integer captured from source only if
+  // the stylesheet could not be hashed. After Beasties there may be MORE <link>
+  // references to the same stylesheet (e.g., preload + original kept as
+  // fallback); we apply one version to all .css href attributes (the site has a
+  // single stylesheet, styles.css).
+  const version = preferredVersion || versions[0];
+  if (!version) return html;
   return html.replace(/(href="[^"]*\.css)(")/g, `$1?v=${version}$2`);
+}
+
+// Content-hash cache-buster: derive ?v= from the final (post-PurgeCSS, post-
+// minify) styles.css so the version changes if and only if the shipped CSS
+// content changes. This eliminates manual ?v= integer bumps in source HTML and
+// the drift/leak they cause (stale CSS served when a bump is forgotten; a stray
+// bump leaked when an unrelated change is propagated). Source HTML may keep an
+// integer ?v= for local-dev convenience; this build step overrides it on the
+// _site output. Returns null if the stylesheet is absent (callers then keep the
+// source's captured integer, preserving prior behavior).
+async function computeCssVersion(buildPath) {
+  try {
+    const css = await fs.readFile(path.join(buildPath, 'styles.css'));
+    return createHash('sha256').update(css).digest('hex').slice(0, 8);
+  } catch {
+    return null;
+  }
 }
 
 // Beasties 0.4.2 with preload: 'swap' (and most other preload modes)
@@ -216,6 +235,13 @@ async function main() {
     logLevel: 'silent',
   });
 
+  const cssVersion = await computeCssVersion(buildPath);
+  console.log(
+    cssVersion
+      ? `Cache-buster: content-hash ?v=${cssVersion} (sha256 of ${path.relative(REPO_ROOT, path.join(buildPath, 'styles.css'))})`
+      : 'Cache-buster: styles.css not found at build path; preserving source ?v= integers'
+  );
+
   const htmlFiles = await findHtmlFiles(buildPath);
   console.log(`Processing ${htmlFiles.length} HTML files for critical-CSS inlining...`);
 
@@ -231,7 +257,7 @@ async function main() {
       const inputSize = stripped.length;
       const processed = await beasties.process(stripped);
       const deduped = removeRedundantStylesheetLink(processed);
-      const restored = restoreCacheBusters(deduped, versions);
+      const restored = restoreCacheBusters(deduped, versions, cssVersion);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
       await fs.writeFile(file, restored, 'utf-8');

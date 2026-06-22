@@ -76,6 +76,46 @@ npm run build:critical-css
 npm run check:responsive
 ```
 
+## Deploy runbook (site to live)
+
+Every push to `origin/main` deploys to the live site via GitHub Actions.
+Sibling agents (Claude Code `.claude/worktrees/`, Cursor `.cursor/worktrees/`)
+push to the same `origin/main`, so this clone's local `main` drifts behind.
+Deploy flow:
+
+```bash
+# 1. Sync first (sibling sessions push to the same origin; do not skip).
+git fetch origin main
+git pull --rebase --autostash origin main   # pull.rebase + autoStash preconfigured
+
+# 2. Edit, then verify the rendered output locally before deploying.
+bundle exec jekyll serve                     # visually verify the changed page
+
+# 3. Commit and push (pushing IS deploying; it is irreversible and public).
+git push origin main
+
+# 4. Verify live after the Pages build (about 2 minutes).
+gh run list --repo CryptoZach/CryptoZach --limit 1
+curl -s "https://tokenization.systems/<changed-page>/?nc=$(date +%s)" | grep "<expected text>"
+```
+
+Guards in place (local-only; not git-tracked):
+
+- SessionStart hook warns if `main` is behind origin at session start
+  (`~/.claude/hooks/cz-fetch-warn-stale-main.sh`, wired in `.claude/settings.local.json`).
+- `.git/hooks/pre-push` blocks an origin push when behind origin/main
+  (intentional force: `ALLOW_FORCE_PUSH_ORIGIN=1`).
+- `.git/hooks/pre-commit` blocks em/en-dash additions and workflow-path leaks.
+
+Cache-buster: derived automatically. `scripts/inline-critical-css.mjs` rewrites
+`styles.css?v=<sha256[:8]>` from the built `_site/styles.css` at build time, so a
+`styles.css` change needs no manual `?v=` bump (the URL changes only when the CSS
+content changes).
+
+Canonical-value drift: canonical figures live in the workflow clone's
+`scripts/value_drift_registry.json`; treat this site clone as derived, and run
+the workflow clone's drift checker before propagating a value change.
+
 ## Auto-memory backup
 
 This clone's auto-memory (Claude Code feedback / project / reference memories;
