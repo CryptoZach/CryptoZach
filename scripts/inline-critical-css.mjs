@@ -100,20 +100,32 @@ function restoreCacheBusters(html, versions, preferredVersion) {
 }
 
 // Content-hash cache-buster: derive ?v= from the final (post-PurgeCSS, post-
-// minify) styles.css so the version changes if and only if the shipped CSS
-// content changes. This eliminates manual ?v= integer bumps in source HTML and
-// the drift/leak they cause (stale CSS served when a bump is forgotten; a stray
+// minify) asset so the version changes if and only if the shipped asset content
+// changes. This eliminates manual ?v= integer bumps in source HTML and the
+// drift/leak they cause (stale asset served when a bump is forgotten; a stray
 // bump leaked when an unrelated change is propagated). Source HTML may keep an
 // integer ?v= for local-dev convenience; this build step overrides it on the
-// _site output. Returns null if the stylesheet is absent (callers then keep the
-// source's captured integer, preserving prior behavior).
-async function computeCssVersion(buildPath) {
+// _site output. Used for both styles.css and script.js. Returns null if the
+// asset is absent (callers then keep the source's captured integer, preserving
+// prior behavior).
+async function computeAssetVersion(buildPath, assetRelPath) {
   try {
-    const css = await fs.readFile(path.join(buildPath, 'styles.css'));
-    return createHash('sha256').update(css).digest('hex').slice(0, 8);
+    const buf = await fs.readFile(path.join(buildPath, assetRelPath));
+    return createHash('sha256').update(buf).digest('hex').slice(0, 8);
   } catch {
     return null;
   }
+}
+
+// Apply a content-hash cache-buster to the external script.js reference. Unlike
+// the stylesheet, script.js needs no strip-before-Beasties (Beasties resolves
+// only CSS hrefs), so a single post-process rewrite suffices. The pattern is
+// anchored to a path-segment "/script.js" (or the bare quote) so it cannot match
+// look-alike filenames such as transcript.js; it sets ?v=<hash>, replacing any
+// existing ?v=.
+function applyJsCacheBuster(html, jsVersion) {
+  if (!jsVersion) return html;
+  return html.replace(/(src="(?:[^"]*\/)?script\.js)(?:\?v=[^"]*)?(")/g, `$1?v=${jsVersion}$2`);
 }
 
 // Beasties 0.4.2 with preload: 'swap' (and most other preload modes)
@@ -235,11 +247,17 @@ async function main() {
     logLevel: 'silent',
   });
 
-  const cssVersion = await computeCssVersion(buildPath);
+  const cssVersion = await computeAssetVersion(buildPath, 'styles.css');
+  const jsVersion = await computeAssetVersion(buildPath, 'script.js');
   console.log(
     cssVersion
-      ? `Cache-buster: content-hash ?v=${cssVersion} (sha256 of ${path.relative(REPO_ROOT, path.join(buildPath, 'styles.css'))})`
-      : 'Cache-buster: styles.css not found at build path; preserving source ?v= integers'
+      ? `Cache-buster (CSS): content-hash ?v=${cssVersion} (sha256 of _site/styles.css)`
+      : 'Cache-buster (CSS): styles.css not found; preserving source ?v= integers'
+  );
+  console.log(
+    jsVersion
+      ? `Cache-buster (JS):  content-hash ?v=${jsVersion} (sha256 of _site/script.js)`
+      : 'Cache-buster (JS):  script.js not found; preserving source ?v= integers'
   );
 
   const htmlFiles = await findHtmlFiles(buildPath);
@@ -257,7 +275,7 @@ async function main() {
       const inputSize = stripped.length;
       const processed = await beasties.process(stripped);
       const deduped = removeRedundantStylesheetLink(processed);
-      const restored = restoreCacheBusters(deduped, versions, cssVersion);
+      const restored = applyJsCacheBuster(restoreCacheBusters(deduped, versions, cssVersion), jsVersion);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
       await fs.writeFile(file, restored, 'utf-8');
