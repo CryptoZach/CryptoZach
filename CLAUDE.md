@@ -107,10 +107,10 @@ Guards in place (local-only; not git-tracked):
   (intentional force: `ALLOW_FORCE_PUSH_ORIGIN=1`).
 - `.git/hooks/pre-commit` blocks em/en-dash additions and workflow-path leaks.
 
-Cache-buster: derived automatically. `scripts/inline-critical-css.mjs` rewrites
-`styles.css?v=<sha256[:8]>` from the built `_site/styles.css` at build time, so a
-`styles.css` change needs no manual `?v=` bump (the URL changes only when the CSS
-content changes).
+Cache-buster: derived automatically for both assets. `scripts/inline-critical-css.mjs`
+rewrites `styles.css?v=<sha256[:8]>` and `script.js?v=<sha256[:8]>` from the built
+`_site/styles.css` and `_site/script.js` at build time, so neither needs a manual
+`?v=` bump (each URL changes only when that asset's content changes).
 
 Canonical-value drift: canonical figures live in the workflow clone's
 `scripts/value_drift_registry.json`; treat this site clone as derived, and run
