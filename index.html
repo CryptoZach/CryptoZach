@@ -61,7 +61,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
-  <meta property="og:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and twelve federal comment letters across programmable money, tokenization, and tokenomics. Patent-pending Canonical-State Architecture for multi-agent AI research (USPTO provisionals 64/071,767, 19/693,448, 64/095,598, and 64/095,603), alongside a separate provisional (64/095,597) for evidence-grounding in AI-generated assessments." />
+  <meta property="og:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and twelve federal comment letters across programmable money, tokenization, and tokenomics. Six USPTO applications pending across Canonical-State Architecture for multi-agent AI research (64/071,767, 19/693,448, 64/095,598, 64/095,603, and 64/096,039) and evidence-grounding for AI-generated assessments (64/095,597)." />
   <meta property="og:url" content="https://tokenization.systems/" />
   <meta property="og:site_name" content="Tokenization Systems" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
@@ -75,7 +75,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
-  <meta name="twitter:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and twelve federal comment letters across programmable money, tokenization, and tokenomics. Patent-pending Canonical-State Architecture for multi-agent AI research (USPTO provisionals 64/071,767, 19/693,448, 64/095,598, and 64/095,603), alongside a separate provisional (64/095,597) for evidence-grounding in AI-generated assessments." />
+  <meta name="twitter:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and twelve federal comment letters across programmable money, tokenization, and tokenomics. Six USPTO applications pending across Canonical-State Architecture for multi-agent AI research (64/071,767, 19/693,448, 64/095,598, 64/095,603, and 64/096,039) and evidence-grounding for AI-generated assessments (64/095,597)." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta name="twitter:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -169,6 +169,14 @@
       max-width: min(100%, 1200px);
     }
 
+    @media (min-width: 1024px) {
+      #hero.hero--homepage .hero-proof-strip {
+        display: grid;
+        width: min(100%, 760px);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
     #hero.hero--homepage .hero-institutional {
       font-size: 0.78rem;
       line-height: 1.5;
@@ -238,7 +246,10 @@
 
     #hero.hero--homepage .hero-proof-strip .hero-proof-chip {
       font-size: 0.8rem;
-      padding: 0.4rem 0.95rem;
+      width: fit-content;
+      max-width: 100%;
+      justify-self: center;
+      padding: 0.4rem 0.72rem;
       border: 1px solid var(--glass-edge, color-mix(in srgb, var(--text) 14%, transparent));
       background: var(--glass-tint, color-mix(in srgb, var(--panel) 65%, transparent));
       backdrop-filter: blur(10px) saturate(120%);
@@ -1060,7 +1071,7 @@
           "url": "https://tokenization.systems",
           "logo": "https://tokenization.systems/Publication-Images/Zachcoin.png",
           "image": "https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png",
-          "description": "Independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Publisher of eight SSRN papers and twelve federal comment letters; home of the Minimum Viable Equivalence Pack (MVEP) and Control Layer Intensity Index (CLII) frameworks. Patent-pending Canonical-State Architecture for multi-agent AI research (USPTO provisionals 64/071,767, 19/693,448, 64/095,598, and 64/095,603, filed in 2026), alongside a separate provisional (64/095,597) covering evidence-grounding for AI-generated assessments.",
+          "description": "Independent research program for stablecoin infrastructure, tokenized-product diligence, and token-economy design. Publisher of eight SSRN papers and twelve federal comment letters; home of the Minimum Viable Equivalence Pack (MVEP) and Control Layer Intensity Index (CLII) frameworks. Six USPTO applications pending across Canonical-State Architecture for multi-agent AI research (64/071,767, 19/693,448, 64/095,598, 64/095,603, and 64/096,039) and evidence-grounding for AI-generated assessments (64/095,597).",
           "foundingDate": "2025",
           "founder": { "@id": "https://tokenization.systems/#person" },
           "sameAs": [
@@ -1226,7 +1237,8 @@
           </div>
           <ul class="hero-proof-strip" aria-label="Highlights" data-hero-safe="proof">
             <li class="hero-proof-chip"><a class="chip-link--accent" href="/research">8 SSRN working papers</a></li>
-            <li class="hero-proof-chip"><a class="chip-link--accent" href="/letters">12 federal comment letters (GENIUS and related dockets)</a></li>
+            <li class="hero-proof-chip"><a class="chip-link--accent" href="/letters">12 federal comment letters</a></li>
+            <li class="hero-proof-chip"><a class="chip-link--accent" href="#about">6 patents pending</a></li>
             <li class="hero-proof-chip">100 portfolio companies advised</li>
             <li class="hero-proof-chip">~250 investments backed</li>
             <li class="hero-proof-chip">~$500M deployed</li>
@@ -1409,7 +1421,8 @@
         <div class="about-card-meta">
           <p><strong>Researcher</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
           <p><strong>Frameworks</strong> Control Layer Intensity Index (CLII) for gateway regulatory scoring; Minimum Viable Equivalence Pack (MVEP) for institutional tokenization diligence.</p>
-          <p><strong>Program</strong> Eight working papers on SSRN and <a href="/letters">twelve federal comment letters</a> across the GENIUS Act and related dockets, organized in two tracks: Track A (stablecoins, gateways, and settlement) and Track B (tokenomics, DePIN, and protocol-network governance). The multi-agent research system behind the work, the Canonical-State Architecture, is patent-pending (USPTO provisionals 64/071,767, 19/693,448, 64/095,598, and 64/095,603), alongside a separate provisional (64/095,597) covering evidence-grounding for AI-generated assessments.</p>
+          <p><strong>Program</strong> Eight working papers on SSRN and <a href="/letters">twelve federal comment letters</a> across the GENIUS Act and related dockets, organized in two tracks: Track A (stablecoins, gateways, and settlement) and Track B (tokenomics, DePIN, and protocol-network governance). The multi-agent research system behind the work is patent-pending across six USPTO applications spanning coordination and evidence-grounding infrastructure.</p>
+          <p><strong>Patent-pending systems</strong> Multi-session staging isolation and multi-mode verification (64/071,767); role-routed coordination and self-describing verification registries (19/693,448); push-time and landing concurrency control (64/095,598); unsupervised autonomous-agent write integrity (64/095,603); conflict-halting concurrent publication (64/096,039); and evidence-grounding for AI-generated assessments (64/095,597).</p>
         </div>
         <div class="about-card-ctas">
           <a href="mailto:Zach@Tokenization.Systems?subject=Consulting%20%2F%20advisory%20intro%20call%20request" class="cta-primary">Book a consulting or advisory intro call <span aria-hidden="true">→</span></a>
