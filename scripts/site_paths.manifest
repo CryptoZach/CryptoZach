@@ -1,0 +1,85 @@
+# site_paths.manifest
+# Single source of truth for "what is a site path" on Tokenization.Systems.
+#
+# Consumed by (so the definition can never drift between them):
+#   - the workflow-clone .gitignore + pre-commit guard (the untrack floor)
+#   - scripts/reconcile_site_clones.sh        (the only sanctioned cross-clone transfer; scope)
+#   - scripts/check_site_divergence.sh        (the divergence detector)
+#   - scripts/materialize-site-for-preview.sh (local-preview restore in the WF clone)
+#   - scripts/claude-code-sync.py             (session-start divergence advisory)
+#
+# CANONICAL clone for all SERVED paths: the site-only clone
+#   /Users/zach/ai-research/CryptoZach  (origin = github.com/CryptoZach/CryptoZach,
+#   served at https://tokenization.systems). Per the 2026-06-24 author decision
+#   (Q1 "local only is private"; Q2 "all served paths"): the workflow clone's copies
+#   of SERVED paths are LOCAL-ONLY working artifacts, untracked (gitignored) there and
+#   materialized on demand for local preview; they are never published from the WF clone.
+#
+# Format: sections [SERVED] / [BUILD-AFFECTING] / [EXCLUDE]; one path or trailing-slash
+# dir-glob per line; '#' comments; sections are disjoint. Verified against the site
+# clone's tracked set on 2026-06-24. NOTE: before the untrack cutover (build step 4)
+# consumes the SERVED set, validate it line-by-line against the WF clone's tracked set
+# (`git ls-files`) so the `git rm --cached` floor untracks exactly the site content and
+# never a workflow-shared path.
+
+[SERVED]
+# Deployed site content. Post-cutover: gitignored + uncommittable in the workflow clone;
+# the reconcile/transfer tool's scope; the guard's reject set. (scripts/ is deliberately
+# ABSENT: the two clones have different scripts/ trees and untracking it would destroy the
+# workflow automation suite. Site build scripts live under [BUILD-AFFECTING].)
+papers/
+letters/
+research/
+overview/
+privacy/
+speaker-and-advisory/
+resume/
+resumes/
+assets/
+icons/
+ink-brand-kit/
+ink-logos/
+Publication-Images/
+styles.css
+homepage.css
+script.js
+sitemap.xml
+robots.txt
+llms.txt
+_config.yml
+_redirects
+CNAME
+favicon.png
+favicon.svg
+apple-touch-icon.png
+index.html
+404.html
+2026-frameworks.html
+contact.html
+frameworks.html
+Operating-Model.html
+research-program.html
+resume.html
+selected-research.html
+speaker.html
+speaker-advisory.html
+start-here.html
+three-strategies.html
+tokenomics-research.html
+
+[BUILD-AFFECTING]
+# Build tooling that changes deployed output. WATCHED by the divergence detector, but
+# NOT gitignored/untracked (the WF clone keeps these for local build; they may legitimately
+# differ between clones, a surfaced residual risk, not auto-synced).
+package.json
+package-lock.json
+purgecss.config.cjs
+Gemfile
+scripts/inline-critical-css.mjs
+scripts/bump-cache-buster.py
+
+[EXCLUDE]
+# Workflow-only paths nested under SERVED-looking dirs that are NOT served. The detector's
+# false-positive sources (the current detector wrongly reports resumes/_render/*.py).
+# Never treated as SERVED; never gitignored; never in transfer scope.
+resumes/_render/

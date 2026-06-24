@@ -1,0 +1,90 @@
+#!/bin/sh
+# Site-only clone pre-push hook (committed source; installed by
+# scripts/install-site-hooks.sh). This clone is canonical for served site
+# paths and concentrates all site editing, so it needs the strongest
+# intra-clone stale-overwrite protection.
+#
+# Layers:
+#   (1) publications-remote warn.
+#   (2) staleness guard: refuse if local main is behind origin/main (a sibling
+#       worktree/agent session pushed) so a stale base never lands.
+#   (3) force-push block (non-fast-forward) unless ALLOW_FORCE_PUSH_ORIGIN=1.
+#   (4) SERVED-path content-ancestry guard (2026-06-24 cutover step 7): refuse
+#       if any SERVED path in the push range has an origin/main version that is
+#       content-newer than what is being pushed. This is the hazard untracking
+#       the WF clone does NOT remove: two SITE-clone sessions can stale-overwrite
+#       styles.css via `pull --rebase --autostash` re-applying an older hunk over
+#       a newer one. ?v= is normalized so a cache-buster integer never trips it.
+#
+# CAUTION (operator discipline the hook cannot fully enforce): do NOT
+# `git pull --rebase --autostash` a SERVED-path change blindly. Autostash can
+# silently re-apply an older hunk; after any rebase touching a SERVED path,
+# re-verify on localhost and diff against origin/main before pushing. Layer (4)
+# is the backstop that blocks the bad outcome at push time.
+# See docs/SITE_REPO_SAFETY.md.
+
+remote="$1"
+url="$2"
+zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+push_refs=$(cat)
+
+if test "$remote" = "publications"; then
+	echo >&2 "pre-push: 'publications' (meshnet-depin-simulation) is not the website. See docs/SITE_REPO_SAFETY.md."
+fi
+
+# (2) staleness guard
+if test "$remote" = "origin" && test -z "$ALLOW_FORCE_PUSH_ORIGIN"; then
+	git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=8 fetch --quiet origin main 2>/dev/null
+	behind=$(git rev-list --count HEAD..origin/main 2>/dev/null || echo 0)
+	if test "${behind:-0}" -gt 0; then
+		echo >&2 "pre-push: local main is ${behind} commit(s) BEHIND origin/main (a sibling session pushed)."
+		echo >&2 "  Sync, re-verify on localhost, then push:  git pull --rebase --autostash origin main"
+		echo >&2 "  (override only if intentional: ALLOW_FORCE_PUSH_ORIGIN=1 git push origin ...)"
+		exit 1
+	fi
+fi
+
+# (3) force-push block + (4) SERVED content-ancestry
+if test "$remote" = "origin" && test -z "$ALLOW_FORCE_PUSH_ORIGIN"; then
+	root=$(git rev-parse --show-toplevel 2>/dev/null)
+	manifest="$root/scripts/site_paths.manifest"
+	served_pat=""
+	if test -f "$manifest"; then
+		served_pat=$(awk '
+			/^\[.*\]$/ { sec=substr($0,2,length($0)-2); next }
+			/^[[:space:]]*#/ { next } /^[[:space:]]*$/ { next }
+			sec=="SERVED" { sub(/[[:space:]]+$/,""); if (length($0)) { gsub(/[.]/,"\\."); printf "^%s\n", $0 } }' "$manifest")
+	fi
+	sp_main=$(git rev-parse origin/main 2>/dev/null)
+	echo "$push_refs" | while read local_ref local_oid remote_ref remote_oid; do
+		test -z "$local_ref" && continue
+		test "$local_oid" = "$zero" && continue
+		# (3) force-push / non-ff block
+		if test "$remote_oid" != "$zero"; then
+			if ! git merge-base --is-ancestor "$remote_oid" "$local_oid" 2>/dev/null; then
+				echo >&2 "pre-push: Push to origin is not fast-forward. Force-push is blocked."
+				echo >&2 "  Override only with a clear revert plan: ALLOW_FORCE_PUSH_ORIGIN=1 git push origin ..."
+				exit 1
+			fi
+		fi
+		# (4) SERVED content-ancestry
+		test -z "$served_pat" && continue
+		test -z "$sp_main" && continue
+		mb=$(git merge-base "$sp_main" "$local_oid" 2>/dev/null)
+		test -z "$mb" && continue
+		git diff --name-only "$mb" "$local_oid" 2>/dev/null | grep -E "$served_pat" 2>/dev/null | while read f; do
+			test -z "$f" && continue
+			norm='s/?v=[A-Za-z0-9._-]*//g'
+			push_v=$(git show "$local_oid:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
+			sp_v=$(git show "$sp_main:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
+			base_v=$(git show "$mb:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
+			if test -n "$sp_v" && test "$sp_v" != "$base_v" && test "$push_v" != "$sp_v"; then
+				echo >&2 "pre-push: BLOCKED (content-ancestry): SERVED path '$f' is content-newer on origin/main than in this push."
+				echo >&2 "  A sibling session changed it; do not overwrite. Re-verify on localhost and reconcile the hunk before pushing."
+				exit 1
+			fi
+		done || exit 1
+	done || exit 1
+fi
+
+exit 0

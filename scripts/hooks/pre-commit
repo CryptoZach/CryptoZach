@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Layer 2 site-clone safeguard against workflow-content commits per partition 2026-04-26.
+# COMMITTED SOURCE (2026-06-24 cutover step 11): the body now lives in-repo at
+# scripts/hooks/pre-commit and is installed into .git/hooks by
+# scripts/install-site-hooks.sh, so a fresh clone is protected (it was
+# previously local-only and stranded). Hard-reject; no env-var bypass (intentional).
+# Per CLAUDE.md (post-partition; site-only orientation): workflow content lives
+# in CryptoZach/Claude1 (clone at /Users/zach/Tokenization_Systems_Website/).
+#
+# 2026-04-27: .claude/memory/ exception (auto-memory mirror is tracked here).
+# 2026-06-24: AGENTS.md is NO LONGER blocked; the site clone now intentionally
+# carries its own AGENTS.md (site-canonical rules + localhost-always) per the
+# cross-clone cutover step 15.
+
+WORKFLOW_PATHS='^(docs/|handoff/|research_content/|tools/|\.cursor/|scripts/(audit_session|bump-cache-buster|claude-code-sync|commit_msg_bypass|declare_session_scope|gen-hyperliquid-webp|generate-sprint4|migrate_email_domain|pre_commit_staging|push-to-github|remove-meshnet|serve-debug|sprint5-link)|R1_README\.md$|CITATION\.cff$|requirements\.txt$|playwright\.config\.js$|^tests/)'
+
+BLOCKED=$(git diff --cached --name-only | grep -E "$WORKFLOW_PATHS" | grep -vE '^\.claude/memory/')
+
+if [ -n "$BLOCKED" ]; then
+  echo "[pre-commit] ERROR: workflow-content paths staged in site clone." >&2
+  echo "[pre-commit] This is the public site clone (~/cryptozach/; CryptoZach/CryptoZach)." >&2
+  echo "[pre-commit] Workflow content lives in /Users/zach/Tokenization_Systems_Website/ (CryptoZach/Claude1)." >&2
+  echo "[pre-commit] Staged workflow-content paths:" >&2
+  echo "$BLOCKED" | sed 's/^/  - /' >&2
+  echo "[pre-commit] Switch to workflow clone for these commits." >&2
+  echo "[pre-commit] Exception: .claude/memory/ is allowed per CLAUDE.md auto-memory backup section." >&2
+  exit 1
+fi
+
+# === Editorial guard: no em/en-dashes in newly added prose (CLAUDE.md rule). ===
+if [ "${ALLOW_EMDASH:-}" != "1" ]; then
+  DASH_FILES=""
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    case "$f" in .claude/memory/*) continue ;; esac
+    if git diff --cached --unified=0 --no-color -- "$f" \
+         | grep -E '^\+' | grep -vE '^\+\+\+' | grep -q '[—–]'; then
+      DASH_FILES="$DASH_FILES $f"
+    fi
+  done < <(git diff --cached --name-only --diff-filter=ACM)
+  if [ -n "$DASH_FILES" ]; then
+    echo "[pre-commit] ERROR: em/en-dash in staged additions; CLAUDE.md forbids them in new prose." >&2
+    for f in $DASH_FILES; do echo "  - $f" >&2; done
+    echo "[pre-commit] Use comma/parens/colon/period/semicolon. Verbatim-migrated source: ALLOW_EMDASH=1 git commit." >&2
+    exit 1
+  fi
+fi
+
+# === Cache-buster: content-hash-derived at build; manual ?v= bump not required. ===
+if git diff --cached --name-only --diff-filter=ACM | grep -Fxq 'styles.css'; then
+  echo "[pre-commit] FYI: styles.css changed; the cache-buster is derived at build time (content hash), so no manual ?v= bump is needed." >&2
+fi
+
+exit 0
