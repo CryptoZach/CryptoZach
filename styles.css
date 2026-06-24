@@ -9493,6 +9493,14 @@ footer.site-footer .footer-tagline{
   font-weight: 500;
   white-space: nowrap;
 }
+/* On phones, let a long status pill (such as a journal-acceptance badge) wrap to
+   multiple lines so its border matches the text instead of overflowing the viewport.
+   white-space:normal is a no-op for short badges that already fit on one line.
+   Placed after the nowrap rule (equal specificity) so it wins inside the media query. */
+@media (max-width: 640px){
+  .paper-badges .badge,
+  .card-badges .badge{ white-space: normal; }
+}
 .badge-status-submitted{ background: #e8f0fe; color: #1a56db; }
 .badge-status-published{ background: #e6f4ea; color: #137333; }
 .badge-status-draft{ background: #fef7e0; color: #b45309; }
