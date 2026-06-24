@@ -20303,3 +20303,20 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   #nav-mobile .nav-directory .mobile-nav-linkset .navlink{ text-align:center; padding-left:.5rem; }
   #nav-mobile .nav-directory .nav-mobile-social{ justify-content:center; padding-left:0; }
 }
+
+/* Mobile nav drawer overlay fix (2026-06-24): force a fixed, opaque, full-height
+   overlay below the header whenever the drawer is open, so it never renders in
+   normal document flow on narrow phones (which let the sticky scorecard table
+   show above the menu and the footer show below it). The open-state selector
+   self-scopes to mobile, since the drawer only opens via the mobile menu toggle. */
+#nav-mobile.nav-links--mobile:not([hidden]){
+  position:fixed !important;
+  top:calc(var(--header-h) + env(safe-area-inset-top, 0px)) !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  z-index:11000 !important;
+  background:var(--bg) !important;
+  background-color:var(--bg) !important;
+  overflow-y:auto !important;
+}
