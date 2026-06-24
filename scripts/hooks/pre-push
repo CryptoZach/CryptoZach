@@ -74,10 +74,13 @@ if test "$remote" = "origin" && test -z "$ALLOW_FORCE_PUSH_ORIGIN"; then
 		test -z "$mb" && continue
 		git diff --name-only "$mb" "$local_oid" 2>/dev/null | grep -E "$served_pat" 2>/dev/null | while read f; do
 			test -z "$f" && continue
+			# ?v= normalization is text-only; skip binaries (no cache-buster to
+			# normalize, and sed on binary errors "illegal byte sequence").
+			case "$f" in *.webp|*.png|*.jpg|*.jpeg|*.gif|*.ico|*.pdf|*.woff|*.woff2|*.ttf|*.eot) continue;; esac
 			norm='s/?v=[A-Za-z0-9._-]*//g'
-			push_v=$(git show "$local_oid:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
-			sp_v=$(git show "$sp_main:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
-			base_v=$(git show "$mb:$f" 2>/dev/null | sed "$norm" | git hash-object --stdin 2>/dev/null)
+			push_v=$(git show "$local_oid:$f" 2>/dev/null | LC_ALL=C sed "$norm" | git hash-object --stdin 2>/dev/null)
+			sp_v=$(git show "$sp_main:$f" 2>/dev/null | LC_ALL=C sed "$norm" | git hash-object --stdin 2>/dev/null)
+			base_v=$(git show "$mb:$f" 2>/dev/null | LC_ALL=C sed "$norm" | git hash-object --stdin 2>/dev/null)
 			if test -n "$sp_v" && test "$sp_v" != "$base_v" && test "$push_v" != "$sp_v"; then
 				echo >&2 "pre-push: BLOCKED (content-ancestry): SERVED path '$f' is content-newer on origin/main than in this push."
 				echo >&2 "  A sibling session changed it; do not overwrite. Re-verify on localhost and reconcile the hunk before pushing."
