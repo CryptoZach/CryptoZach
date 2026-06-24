@@ -71,10 +71,19 @@ case "$rel" in
   *)            url_path="/$rel" ;;
 esac
 
-# (d) Probe the listening server (8080 first: verified up; then 4000 jekyll).
+# (d) Probe the listening server (8080 first: the verified-up port; then 4000
+# jekyll). CZ_HOOK_PORTS overrides the probe list (space-separated) so the
+# no-server path is deterministically testable (point it at a closed port).
+# Two passes per port: the single-threaded python http.server has a tiny listen
+# backlog, so one probe can spuriously get connection-refused under load; a
+# second try removes that flakiness (the verified cause of an earlier
+# "ports down but a URL emitted" reading was a real :8080 server the first
+# probe missed once).
 port=""
-for p in 8080 4000; do
-  if (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null; then exec 3>&- 3<&-; port="$p"; break; fi
+for p in ${CZ_HOOK_PORTS:-8080 4000}; do
+  if (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null || (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null; then
+    exec 3>&- 3<&- 2>/dev/null || true; port="$p"; break
+  fi
 done
 
 if [ -z "$port" ]; then
