@@ -93,6 +93,12 @@ rc=0
 install_one pre-push   || rc=1
 install_one pre-commit || rc=1
 rewire_settings        || rc=1
+# Permanent localhost:8080 preview server (launchd agent; KeepAlive). The edit
+# hook opens pages on it; loading it here makes "open localhost on a site edit"
+# always land on a live server on a fresh clone.
+if [ "$MODE" != check ] && [ -f scripts/serve-site.sh ]; then
+  bash scripts/serve-site.sh --install 2>&1 | sed 's/^/  /' || echo "  (serve-site --install returned non-zero; non-fatal)"
+fi
 if [ "$MODE" = check ]; then
   [ "$rc" -eq 0 ] && echo "All site hooks installed and in sync." || echo "Site hooks NOT fully installed (see above)." >&2
   exit "$rc"

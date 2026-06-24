@@ -71,39 +71,25 @@ case "$rel" in
   *)            url_path="/$rel" ;;
 esac
 
-# (d) Probe the listening server (8080 first: the verified-up port; then 4000
-# jekyll). CZ_HOOK_PORTS overrides the probe list (space-separated) so the
-# no-server path is deterministically testable (point it at a closed port).
-# Two passes per port: the single-threaded python http.server has a tiny listen
-# backlog, so one probe can spuriously get connection-refused under load; a
-# second try removes that flakiness (the verified cause of an earlier
-# "ports down but a URL emitted" reading was a real :8080 server the first
-# probe missed once).
-port=""
-for p in ${CZ_HOOK_PORTS:-8080 4000}; do
-  if (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null || (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null; then
-    exec 3>&- 3<&- 2>/dev/null || true; port="$p"; break
-  fi
-done
-
-if [ -z "$port" ]; then
-  # Nothing listening.
-  if [ "${CZ_HOOK_DRYRUN:-}" = "1" ]; then
-    printf 'would start: ( cd %q && python3 -m http.server 8080 ) then open http://localhost:8080%s\n' "$REPO" "$url_path"
-    exit 0
-  fi
-  ( cd "$REPO" && nohup python3 -m http.server 8080 >/tmp/cz-http-8080.log 2>&1 & ) || true
-  sleep 1
-  port=8080
-fi
-
-url="http://localhost:${port}${url_path}"
-printf '%s  %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$url" >> /tmp/cz-open-localhost.log 2>/dev/null || true
+# (d) Ensure the always-on site preview is up, then open the edited page on it.
+# The PERMANENT server is the launchd agent (com.tokenizationsystems.site-preview,
+# KeepAlive + RunAtLoad, serving the site clone on :8080); scripts/serve-site.sh
+# is the idempotent ensure-path (kickstarts the agent, or manual-starts as a
+# fallback). This replaces the old fragile inline `nohup ... http.server &` that
+# did not persist past the hook process (the verified "8080 still isn't running"
+# failure).
+SITE_CLONE="${CZ_SITE_REPO:-/Users/zach/ai-research/CryptoZach}"
+PORT="${CZ_PREVIEW_PORT:-8080}"
+url="http://localhost:${PORT}${url_path}"
 
 if [ "${CZ_HOOK_DRYRUN:-}" = "1" ]; then
   printf '%s\n' "$url"
   exit 0
 fi
+
+# Bring the preview up if it is not already serving (no-op when it is).
+bash "$SITE_CLONE/scripts/serve-site.sh" >/dev/null 2>&1 || true
+printf '%s  %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$url" >> /tmp/cz-open-localhost.log 2>/dev/null || true
 
 # Open via LaunchServices (`open`), not AppleScript: `open` only asks Chrome to
 # open a URL, needing no Automation permission.
