@@ -42,7 +42,7 @@
   <title>MVEP: Minimum Viable Equivalence Pack Diligence | TS</title>
   <meta name="description" content="Three tokenized US Treasury products under three regulatory regimes. MVEP shows they are not equivalent: ten diligence categories with pass/fail tests." />
   <meta name="author" content="Zach Zukowski" />
-  <meta name="keywords" content="MVEP, institutional diligence, tokenized securities, tokenized equities, DAI, collateral operability, settlement finality, custody, insolvency, stablecoin risk, Silicon Valley Bank, GENIUS Act, portfolio margin, equivalence" />
+  <meta name="keywords" content="MVEP, institutional diligence, tokenized securities, collateral operability, settlement finality, custody, insolvency, stablecoin risk, Silicon Valley Bank, GENIUS Act, portfolio margin, equivalence" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="MVEP: Minimum Viable Equivalence Pack Diligence" />
@@ -76,7 +76,7 @@
       } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=254" />
+  <link rel="stylesheet" href="/styles.css?v=253" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -341,26 +341,26 @@
 
       <h1 id="paper-title">Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products</h1>
 
-      <p class="paper-metadata-strip">111-page PDF · ~55,800 words · SSRN</p>
-      <p class="paper-description-note">Description current as of June 24, 2026 (SSRN v2).</p>
+      <p class="paper-metadata-strip">107-page PDF · ~55,800 words · SSRN</p>
+      <p class="paper-description-note">Description current as of June 2026 (SSRN v2).</p>
 
       <p class="paper-thesis">Three tokenized U.S. Treasury products governed by three different regulatory regimes now receive comparable collateral treatment on the same institutional derivatives exchange, through the same custodian. A U.S. mutual fund under the Investment Company Act of 1940 (Franklin Templeton's BENJI), a BVI limited company (BlackRock's BUIDL), and a Cayman Islands fund explicitly unavailable to U.S. persons (Circle's USYC) all serve as eligible collateral in Binance's Portfolio Margin framework. The collateral framework does not distinguish between them, and no counterparty on the exchange, institutional or otherwise, receives disclosure of which instrument backs a position. The MVEP framework demonstrates that they are not equivalent.</p>
 
       <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />When three tokenized Treasury products under three different regulatory regimes receive the same collateral treatment on the same exchange, can an institution treat them as equivalent?</p>
-        <p><strong>Answer</strong><br />No: the framework demonstrates the three products are not equivalent across legal, operational, and economic dimensions, and tested against nine major tokenized products it finds that bank and 1940-Act-fund products satisfy the core requirements of nearly every category (BENJI fails only collateral operability, and the token-level Article 12 statutory defect reaches every product) while no stablecoin product approaches them. The SVB weekend broke all three equivalence dimensions at once, with USDC trading at $0.87 and contagion cascading through at least five tokenized products. These are descriptive diligence findings: the framework is an entry gate that surfaces equivalence gaps before launch or committee approval, not a causal estimate.</p>
-        <p><strong>Evidence base</strong><br />The findings rest on ten diligence categories applied to a nine-product worked-example sample across three regulatory tiers, with the SVB episode reverse-engineered into the categories, the Binance Portfolio Margin collateral case (July 2025 to February 2026), a jurisdiction-differentiated Category 5 insolvency matrix (twenty regimes, twelve product-sample plus eight international comparators, by seven dimensions, each cell carrying a primary-source evidence basis), a consolidated fourteen-product scorecard, and independent corroboration from scholarly sources, the Federal Reserve's December 2025 FEDS Note, and Moody's first formal stablecoin rating methodology (March 2026).</p>
+        <p><strong>Answer</strong><br />No: the framework demonstrates the three products are not equivalent across legal, operational, and economic dimensions, and tested against a nine-product sample it finds that bank and 1940-Act-fund products satisfy the core requirements of nearly every category (BENJI fails only collateral operability, and the token-level Article 12 statutory defect reaches every product) while no stablecoin product does. The SVB weekend broke all three equivalence dimensions at once, with USDC trading at $0.87 and contagion cascading through at least five tokenized products. These are descriptive diligence findings: the framework is an entry gate that surfaces equivalence gaps before launch or committee approval, not a causal estimate.</p>
+        <p><strong>Evidence base</strong><br />The findings rest on ten diligence categories applied to a nine-product sample across three regulatory tiers, extended by five comparators that test the framework's reach (a consolidated fourteen-product scorecard), with the SVB episode reverse-engineered into the categories, the Binance Portfolio Margin collateral case (July 2025 to February 2026), a jurisdiction-differentiated Category 5 insolvency matrix (twenty regimes, twelve product-sample rows plus eight international comparators, scored across seven dimensions with each cell carrying a primary-source evidence basis), and independent corroboration from scholarly sources, the Federal Reserve's December 2025 FEDS Note, and Moody's first formal stablecoin rating methodology (March 2026).</p>
       </aside>
 
       <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
-        <h2 id="brief-findings-heading" class="brief-findings-section-title">Core findings</h2>
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Seven findings</h2>
 
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">1</span>
           <div class="brief-finding-copy">
             <h3>The SVB weekend broke all three equivalence dimensions at once</h3>
-            <p>The SVB weekend broke all three dimensions of equivalence at once: rights parity and claim priority broke legal equivalence, the system of record broke operational equivalence, and the depeg (USDC trading at $0.87) broke economic equivalence. The cascade did not stop at USDC. The Federal Reserve’s December 2025 FEDS Note (Du, Sonawane, and Watsky, “In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,” FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) documents that Dai’s Peg Stability Module, designed to stabilize Dai’s price, instead “created a direct channel of contagion from USDC to Dai.” The contagion then propagated through Dai’s additional PSMs to USDP and GUSD, stablecoins with zero direct SVB exposure. A single bank failure in Santa Clara cascaded through at least five tokenized products. The depeg resolved within 48 hours only because the FDIC invoked the systemic risk exception. Per the FEDS Note and Circle’s own disclosures, Circle’s cash reserves fell from approximately $11.5 billion to approximately $3.7 billion over three weeks despite the intervention; the backstop stopped the depeg but did not prevent a roughly <strong>$7.8 billion</strong> net outflow.</p>
+            <p>Rights parity and claim priority broke legal equivalence; the system of record broke operational equivalence; and the depeg, with USDC trading at $0.87, broke economic equivalence. The cascade did not stop at USDC. The Federal Reserve’s December 2025 FEDS Note (Du, Sonawane, and Watsky, “In the Shadow of Bank Runs: Lessons from the Silicon Valley Bank Failure and Its Impact on Stablecoins,” FEDS Notes, December 17, 2025, DOI 10.17016/2380-7172.3958) documents that Dai’s Peg Stability Module, designed to stabilize Dai’s price, instead “created a direct channel of contagion from USDC to Dai.” The contagion then propagated through Dai’s additional PSMs to USDP and GUSD, stablecoins with zero direct SVB exposure. A single bank failure in Santa Clara cascaded through at least five tokenized products. The depeg resolved within 48 hours only because the FDIC invoked the systemic risk exception. Per the FEDS Note and Circle’s own disclosures, Circle’s cash reserves fell from approximately $11.5 billion to approximately $3.7 billion over three weeks despite the intervention; the backstop stopped the depeg but did not prevent a roughly <strong>$7.8 billion</strong> net outflow.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Equivalence can fail on every axis simultaneously and spread to products that never touched the failed bank, so an institution cannot treat a tokenized dollar as a safe substitute just because it held par yesterday.</p>
           </div>
         </div>
@@ -368,8 +368,8 @@
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">2</span>
           <div class="brief-finding-copy">
-            <h3>Purpose-built federal frameworks satisfy nearly every diligence category; no stablecoin product approaches them</h3>
-            <p>The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass or fail test. Applied to a nine-product sample and five comparators spanning three regulatory tiers, the framework produces seven findings across the paper. Products governed by purpose-built federal frameworks (banking law for the JPMorgan deposit token, the 1940 Act for BENJI) satisfy the core requirements of nearly every category: BENJI fails only collateral operability, and the token-level Article 12 statutory defect reaches every product. No stablecoin product approaches them. Bank depositors have FDIC insurance and statutory priority claims; stablecoin holders have contractual claims governed by terms of service that disclaim issuer liability across <strong>seventeen categories</strong>, characterize redemption as a revocable privilege, and (during the March 2023 SVB crisis window) limit direct redemption rights to fewer than 2,000 accounts per issuer (882 verified accounts at Tether, 1,834 at Circle). Stablecoin operators under the Money Transmission Modernization Act (MTMA), the model state statute drafted by the Conference of State Bank Supervisors and adopted in 31 states covering 99% of money transmission activity, operate on capital cushions roughly an order of magnitude thinner than banks under Common Equity Tier 1 (CET1), illustrating the regulatory-capital gap between the two regimes before accounting for stress testing, deposit insurance, and resolution planning that banks face and money transmitters do not.</p>
+            <h3>Purpose-built federal frameworks satisfy nearly every diligence category; no stablecoin product does</h3>
+            <p>The framework tests equivalence through ten diligence categories, each tied to a required artifact and an explicit pass or fail test. Applied to a nine-product sample and five comparators spanning three regulatory tiers, the framework produces seven findings. Products governed by purpose-built federal frameworks (banking law for the JPMorgan deposit token, the 1940 Act for BENJI) satisfy the core requirements of nearly every category. Bank depositors have FDIC insurance and statutory priority claims; stablecoin holders have contractual claims governed by terms of service that disclaim issuer liability across <strong>seventeen categories</strong> and characterize redemption as a revocable privilege. Stablecoin operators under the Money Transmission Modernization Act (MTMA), the model state statute drafted by the Conference of State Bank Supervisors and adopted in 31 states covering 99% of money transmission activity, operate on capital cushions roughly an order of magnitude thinner than banks under Common Equity Tier 1 (CET1). That regulatory-capital gap holds before accounting for the stress testing, deposit insurance, and resolution planning that banks face and money transmitters do not.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> The regulatory regime a tokenized product sits under, not its marketing, determines whether it can clear diligence, so a risk committee should treat stablecoins and bank or fund products as categorically different rather than interchangeable collateral.</p>
           </div>
         </div>
@@ -378,7 +378,7 @@
           <span class="brief-finding-num" aria-hidden="true">3</span>
           <div class="brief-finding-copy">
             <h3>The Article 12 take-free defect is the one dimension where the stronger products do not pull ahead</h3>
-            <p>The only diagnostic dimension on which the bank deposit token and the 1940 Act fund do not produce stronger holder-protection outcomes than the stablecoin products is the Article 12 take-free defect. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a “voluntary transaction creating an interest in property,” and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in <strong>2022</strong> and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
+            <p>On every other diagnostic dimension the bank deposit token and the 1940 Act fund outperform the stablecoin products; the take-free defect is the exception. Under UCC Article 12, a good-faith buyer of a tokenized instrument should acquire clean title even if a prior holder was a thief. But the statute requires the buyer to qualify through a “voluntary transaction creating an interest in property,” and a thief cannot create such an interest. The protection fails when it matters most. The defect was identified in <strong>2022</strong> and, consistent with the drafting history of UCC Article 12 as reflected in publicly available Uniform Law Commission meeting summaries, has been left unrepaired because the same defect would surface in UCC Article 8. No stablecoin issuer currently discloses it to holders.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> A holder who buys a stolen tokenized instrument in good faith may not get the clean title the statute appears to promise, and because no issuer discloses this, buyers should not assume the take-free rule will protect them in a theft scenario.</p>
           </div>
         </div>
@@ -409,6 +409,15 @@
             <p class="brief-what-this-means"><strong>What this means:</strong> Reserve attestations tell you what backs the token; they do not tell you who can actually redeem it, and in a stress event the second question is the one that determines whether the peg holds.</p>
           </div>
         </div>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">7</span>
+          <div class="brief-finding-copy">
+            <h3>Federal charters relocate the claim, not the defect</h3>
+            <p>The two federally chartered stablecoin structures the GENIUS Act anticipates, USD1 (issued through an OCC-chartered national trust bank) and SoFiUSD (the first stablecoin from an FDIC-insured national bank), each earn zero passing equivalence cells. The charter relocates the claim, to OCC receivership for the trust bank and to FDIC receivership for the insured bank, without curing the token-level rights-parity and settlement-finality defects that fail every fiat-backed stablecoin in the sample. SoFiUSD is expressly not a deposit, so deposit insurance and depositor preference never reach the holder; the insured charter relocates the claim-class question rather than resolving it.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> A bank or trust charter changes where a holder stands in line if the issuer fails; it does not give a stablecoin holder the claim a depositor or fund shareholder has, so a charter is not a proxy for equivalence.</p>
+          </div>
+        </div>
       </section>
 
       <div class="paper-audience-tags" aria-label="Audience">
@@ -432,6 +441,43 @@
         </div>
       </div>
 
+      <section class="paper-exhibit-navigator" aria-labelledby="mvep-exhibits-heading">
+        <div class="paper-exhibit-navigator__intro">
+          <p class="kicker kicker--subpage">Exhibits</p>
+          <h2 id="mvep-exhibits-heading">Read the artifacts first.</h2>
+          <p>The MVEP paper is built around three visual artifacts: the category verdict matrix, the insolvency-law matrix behind Category 5, and the non-compensatory product rating derived from the scorecard.</p>
+        </div>
+        <div class="paper-exhibit-grid">
+          <a class="paper-exhibit-card" href="#mvep-exhibit-1">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-01-scorecard.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-01-scorecard.png" width="3555" height="2198" alt="Fourteen-product MVEP scorecard showing verdicts across eleven diligence rows" loading="lazy" />
+            </picture>
+            <span class="paper-exhibit-card__label">Exhibit 1</span>
+            <strong>Which products fail which diligence categories?</strong>
+            <span>The fourteen-product scorecard is the fastest way to see that every product remains Non-Equivalent, but for different reasons.</span>
+          </a>
+          <a class="paper-exhibit-card" href="#mvep-exhibit-2">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png" width="4739" height="1722" alt="Twenty-regime Category 5 jurisdiction matrix scored across seven insolvency dimensions" loading="lazy" />
+            </picture>
+            <span class="paper-exhibit-card__label">Exhibit 2</span>
+            <strong>Which insolvency regimes actually protect holders?</strong>
+            <span>The jurisdiction matrix replaces the generic offshore label with regime-by-regime holder-protection evidence.</span>
+          </a>
+          <a class="paper-exhibit-card" href="#mvep-exhibit-3">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png" width="3291" height="2305" alt="MVEP composite rating table showing legal, operational, economic, and overall profiles" loading="lazy" />
+            </picture>
+            <span class="paper-exhibit-card__label">Exhibit 3</span>
+            <strong>Why does strength not buy equivalence?</strong>
+            <span>The composite rating ranks products inside a Non-Equivalent market without letting strong cells offset fatal failures.</span>
+          </a>
+        </div>
+      </section>
+
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Before an institution relies on a tokenized product, it should prove that the tokenized version maintains legal, operational, and economic equivalence, including under stress. Most tokenization diligence today is improvised: vendor decks standing in for diligence, one-off legal memos that are valuable but impossible to compare across proposals, and teams that build first and figure out custody, reconciliation, and exception handling later. MVEP replaces that with a versioned, comparable checklist centered on five committee questions:</p>
@@ -454,11 +500,23 @@
         <p><strong>Tier 3 (unregulated or decentralized):</strong> USDT (Tether) and DAI (MakerDAO). Both fail most categories. DAI inverts the pattern by passing the System of Record and monitoring categories (because its system of record is the blockchain itself) while failing the legal, redemption, and insolvency categories more acutely than any centralized product.</p>
         <p><strong>Additional worked examples:</strong> BUIDL (BlackRock/Securitize) and OUSG (Ondo Finance) are analyzed as composed products whose equivalence degrades to the weakest layer.</p>
 
+        <figure class="paper-exhibit-figure paper-exhibit-figure--scorecard" id="mvep-exhibit-1">
+          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-01-scorecard.png" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 1 scorecard image in a new tab">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-01-scorecard.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-01-scorecard.png" width="3555" height="2198" alt="Fourteen-product MVEP scorecard with category verdicts for stablecoins, tokenized funds, a deposit token, and comparators" loading="lazy" />
+            </picture>
+          </a>
+          <figcaption><strong>Exhibit 1: consolidated MVEP scorecard.</strong> What to notice: every product is capped by at least one independent failure mode, even where the strength profile separates the bank and fund products from the stablecoins.</figcaption>
+        </figure>
+
         <h3>Tokenized Treasury bills and money market fund shares</h3>
         <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, Circle's USYC, and Ondo's OUSG and USDY. The primary use case is collateral mobility: posting a tokenized fund share as margin without liquidating the underlying position.</p>
         <p><strong>Three liquidation paths.</strong> Each has different availability, speed, and capacity. Path 1: an instant-redemption pool (Circle's smart contract exchanging BUIDL for USDC at par, 24/7, with a finite and fluctuating balance). Path 2: secondary market sale to another approved party via the transfer agent's alternative trading system. Path 3: standard fund redemption processed by the fund administrator against daily NAV, unavailable on weekends and holidays.</p>
         <p><strong>Four constraints</strong> determine which path is available and when. Pool capacity (the instant-redemption pool closes when depleted). Whitelist requirements (the instant-redemption and secondary market paths require the receiving wallet to be on the transfer agent's approved list). Cross-chain bridge risk (an exploit could create phantom balances that corrupt collateral valuations). Transfer restriction model (whitelist products exclude DeFi liquidation venues; blocklist products enable permissionless liquidation paths).</p>
-        <p><strong>The collateral interoperability problem.</strong> Between approximately July 2025 and February 2026, Binance&rsquo;s non-U.S. entities expanded the set of accepted off-exchange collateral to include three tokenized Treasury instruments: Circle&rsquo;s USYC (a Cayman Islands fund, CIMA-licensed, issued by Circle International Bermuda Limited under BMA regulation, explicitly unavailable to U.S. persons under Regulation S), BlackRock&rsquo;s BUIDL (a BVI limited company whose redemption routes primarily through Circle&rsquo;s USDC facility), and Franklin Templeton&rsquo;s BENJI (a 1940 Act mutual fund with statutory asset segregation). All three are yield-bearing, NAV-priced, and held through the same custodian (Ceffu). A counterparty on the other side of a collateralized trade cannot observe which instrument backs their position, receives no yield premium for the additional risk, and has no contractual right to specify which instrument is posted. Only the posting side of the arrangement is institutional: the other side of a futures trade can be any participant on the same order book, including non-institutional traders who receive no disclosure that off-exchange collateral is involved at all. (Binance.US operates under different U.S.-specific policies; the broader market-direction signal is relevant to U.S. institutional diligence even where direct counterparty exposure is limited to offshore entities.)</p>
+        <p><strong>The collateral interoperability problem.</strong> Between approximately July 2025 and February 2026, Binance&rsquo;s non-U.S. entities expanded the set of accepted off-exchange collateral to include three tokenized Treasury instruments: Circle&rsquo;s USYC (a Cayman Islands fund, CIMA-licensed, issued by Circle International Bermuda Limited under BMA regulation, explicitly unavailable to U.S. persons under Regulation S), BlackRock&rsquo;s BUIDL (a BVI limited company whose redemption routes primarily through Circle&rsquo;s USDC facility), and Franklin Templeton&rsquo;s BENJI (a 1940 Act mutual fund with statutory asset segregation). All three are yield-bearing, NAV-priced, and held through the same custodian (Ceffu).</p>
+        <p>A counterparty on the other side of a collateralized trade cannot observe which instrument backs their position, receives no yield premium for the additional risk, and has no contractual right to specify which instrument is posted. Only the posting side of the arrangement is institutional: the other side of a futures trade can be any participant on the same order book, including non-institutional traders who receive no disclosure that off-exchange collateral is involved at all.</p>
+        <p>(Binance.US operates under different U.S.-specific policies; the broader market-direction signal is relevant to U.S. institutional diligence even where direct counterparty exposure is limited to offshore entities.)</p>
         <p>No current or proposed federal regulation addresses this boundary. The OCC regulates PPSIs. The SEC regulates 1940 Act funds. Banking law regulates deposits. The CFTC regulates derivatives. Nobody supervises the seam where these instruments are combined in the same collateral pool.</p>
         <p><strong>Four distinct legal structures.</strong> Products in this asset class span at least four: a BVI-domiciled limited company under Reg D (BUIDL), a 1940 Act money market fund with statutory redemption rights (BENJI), a Delaware limited partnership with single-point-of-failure risk (OUSG), and a tokenized secured note where holders are senior secured creditors (USDY). Each structure requires a different evidence package for Rights Parity, Insolvency Posture, and Collateral Operability.</p>
         <p><strong>Seven stress scenarios</strong> test the constraints against specific liquidation triggers: margin call escalation, counterparty default, fund redemption cascade, regulatory seizure or sanctions, collateral substitution, cross-chain bridge incident, and operational NAV risk. Three scenario interaction chains show how scenarios compound.</p>
@@ -472,11 +530,39 @@
         <p>Each layer of a composed product requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" falls short. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
 
         <h3>The Category 5 jurisdiction matrix (new in v2)</h3>
-        <p>The v2 revision replaces domicile-level insolvency characterization ("offshore") with a jurisdiction-differentiated scoring matrix: twenty regimes, the twelve product-sample regimes (the 1940 Act; the Federal Deposit Insurance Act; the U.S. trust-company and money-transmitter stack with the dormant GENIUS Act layer; Delaware LP / UCC Article 9; BVI; Cayman; Bermuda; El Salvador; Singapore; and no-entity protocols, plus the FDIC-insured-bank J2S and OCC-trust-bank J3F sub-rows) and eight international comparators (EU MiCA; the UK; Hong Kong; the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones; Switzerland; and Japan) scored across seven insolvency-posture dimensions, each cell carrying a verdict and a primary-source evidence basis verified against fetched primary texts. Product-level Category 5 verdicts derive from regime rows under a fixed aggregation rule, and fail-by-structural-inapplicability (a bank deposit presents no customer asset to segregate; a no-entity protocol presents no debtor, claim, or forum) is distinguished from fail-by-weak-regime so an inapplicability row reads as no regime rather than a weak one. The full matrix ships as Exhibit 2 alongside the consolidated fourteen-product scorecard (Exhibit 1). The scorecard's twelfth column is USD1, the largest dollar stablecoin classified under the GENIUS Act framework by platform taxonomy (approximately $4.5 billion, issued through BitGo Bank &amp; Trust, N.A., an OCC-chartered uninsured national trust bank): a fully graded GENIUS-era comparator scored against the product's primary documents and on-chain contract state, sitting alongside the offshore USYC comparator. The thirteenth column is SoFiUSD, the first stablecoin issued by an FDIC-insured full-service U.S. national bank (SoFi Bank, N.A.): the insured charter relocates rather than resolves the holder's claim-class question, because SoFiUSD is expressly not a deposit, so deposit insurance and depositor preference do not reach the holder and Category 5 is scored on a dedicated insured-bank non-deposit sub-row (J2S) of the jurisdiction matrix. The fourteenth column is RLUSD, the NYDFS-trust-chartered stablecoin from Ripple: a comparator carried as a candidate read, whose headline Non-Equivalent verdict holds on the same Category 1 rights-parity defect as the rest of the matrix. The same revision also re-derives PYUSD onto the federal-layer-only trust-bank stack: its issuer's OCC conversion is now consummated, so the New York custody and rehypothecation anchors no longer reach it and its custody and insolvency verdicts move off the state-supervised basis.</p>
+        <p>The v2 revision replaces domicile-level insolvency characterization ("offshore") with a jurisdiction-differentiated scoring matrix: twenty regimes, the twelve product-sample regimes (the 1940 Act; the Federal Deposit Insurance Act; the U.S. trust-company and money-transmitter stack with the dormant GENIUS Act layer; Delaware LP / UCC Article 9; BVI; Cayman; Bermuda; El Salvador; Singapore; and no-entity protocols, plus the FDIC-insured-bank J2S and OCC-trust-bank J3F sub-rows) and eight international comparators (EU MiCA; the UK; Hong Kong; the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones; Switzerland; and Japan) scored across seven insolvency-posture dimensions, each cell carrying a verdict and a primary-source evidence basis verified against fetched primary texts. Product-level Category 5 verdicts derive from regime rows under a fixed aggregation rule, and fail-by-structural-inapplicability (a bank deposit presents no customer asset to segregate; a no-entity protocol presents no debtor, claim, or forum) is distinguished from fail-by-weak-regime so an inapplicability row reads as no regime rather than a weak one.</p>
+        <p>The full matrix ships as Exhibit 2, alongside the consolidated fourteen-product scorecard (Exhibit 1). Three of the scorecard's columns are GENIUS-era and charter comparators:</p>
+        <ul>
+          <li><strong>USD1 (column twelve):</strong> the largest dollar stablecoin classified under the GENIUS Act framework by platform taxonomy (approximately $4.36 billion, issued through BitGo Bank &amp; Trust, N.A., an OCC-chartered uninsured national trust bank), a fully graded GENIUS-era comparator scored against the product's primary documents and on-chain contract state, sitting alongside the offshore USYC comparator.</li>
+          <li><strong>SoFiUSD (column thirteen):</strong> the first stablecoin issued by an FDIC-insured full-service U.S. national bank (SoFi Bank, N.A.). The insured charter relocates rather than resolves the holder's claim-class question, because SoFiUSD is expressly not a deposit, so deposit insurance and depositor preference do not reach the holder, and Category 5 is scored on a dedicated insured-bank non-deposit sub-row (J2S) of the jurisdiction matrix.</li>
+          <li><strong>RLUSD (column fourteen):</strong> the NYDFS-trust-chartered stablecoin from Ripple, a comparator carried as a candidate read, whose headline Non-Equivalent verdict holds on the same Category 1 rights-parity defect as the rest of the matrix.</li>
+        </ul>
+        <p>The same revision also re-derives PYUSD onto the federal-layer-only trust-bank stack: its issuer's OCC conversion is now consummated, so the New York custody and rehypothecation anchors no longer reach it and its custody and insolvency verdicts move off the state-supervised basis.</p>
+
+        <figure class="paper-exhibit-figure paper-exhibit-figure--wide" id="mvep-exhibit-2">
+          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 2 jurisdiction matrix image in a new tab">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png" width="4739" height="1722" alt="Category 5 jurisdiction matrix with twenty legal regimes scored across seven insolvency-posture dimensions" loading="lazy" />
+            </picture>
+          </a>
+          <figcaption><strong>Exhibit 2: Category 5 jurisdiction matrix.</strong> What to notice: BENJI's 1940 Act row clears all seven dimensions, while broad labels like offshore split into materially different protection profiles.</figcaption>
+        </figure>
 
         <h3>The composite rating (Exhibit 3)</h3>
-        <p>The scorecard aggregates into a per-product rating, presented as Exhibit 3. It is deliberately not a weighted score. Averaging the categories would be compensatory: a strong custody score could buy back a failed rights-parity cell, which is exactly the inference the framework rejects, because the categories measure independent failure modes and a composed product's equivalence is the minimum across its layers. The rating is therefore non-compensatory. Each of the three equivalence dimensions (legal, operational, economic) is graded on its weakest cell, so a fatal failure caps the dimension and cannot be offset elsewhere; a separate strength score from 1.0 to 5.0 (the average cell quality within the dimension) orders products inside a tier without ever lifting the tier, the way a credit rating's notch works under its letter. The headline is the weakest of the three.</p>
-        <p>Every product rates Non-Equivalent at the headline, and that is the finding, not a flaw in the rating: the market-wide UCC Article 12 rights-parity defect fails Category 1 for every product except JPMD, so no tokenized dollar product clears legal equivalence. The discrimination lives in the strength score and in the operational and economic profiles. Read that way the rating reproduces the three regulatory tiers the paper identifies: the tokenized funds are strongest, the regulated stablecoins sit in the middle, and USDT is weakest. Two products show instructive splits: DAI is operationally strong but legally floored (its protocol state is an authoritative record while it has no legal entity to hold a claim against), and JPMD is the only product whose legal and economic equivalence escape Non-Equivalent (Indeterminate, the bank deposit token closest to passing), held back at the headline only by an on-chain governance failure.</p>
+        <p>The scorecard aggregates into a per-product rating, presented as Exhibit 3. It is deliberately not a weighted score. Averaging the categories would be compensatory: a strong custody score could buy back a failed rights-parity cell, which is exactly the inference the framework rejects, because the categories measure independent failure modes. The rating is therefore non-compensatory. Each of the three equivalence dimensions (legal, operational, economic) is graded on its weakest cell, so a fatal failure caps the dimension and cannot be offset elsewhere. A separate strength score from 1.0 to 5.0 (the average cell quality within the dimension) orders products inside a tier without ever lifting the tier, the way a credit rating's notch works under its letter grade. The headline is the weakest of the three.</p>
+        <p>Every product rates Non-Equivalent at the headline, and that is the finding, not a flaw in the rating: the market-wide UCC Article 12 rights-parity defect fails Category 1 for every product except JPMD, so no tokenized dollar product clears legal equivalence. The discrimination lives in the strength score and in the operational and economic profiles. Read that way the rating reproduces the three regulatory tiers the paper identifies: the tokenized funds are strongest, the regulated stablecoins sit in the middle, and USDT is weakest. Two products show instructive splits. DAI is operationally strong but legally floored: its protocol state is an authoritative record, yet it has no legal entity to hold a claim against. JPMD is the only product whose legal and economic dimensions escape Non-Equivalent, both landing at Indeterminate, which makes the bank deposit token the closest to passing; it is held back at the headline only by an on-chain governance failure.</p>
+
+        <figure class="paper-exhibit-figure" id="mvep-exhibit-3">
+          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 3 composite rating image in a new tab">
+            <picture>
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp" />
+              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png" width="3291" height="2305" alt="MVEP composite rating showing each product's legal, operational, economic, and overall equivalence profile" loading="lazy" />
+            </picture>
+          </a>
+          <figcaption><strong>Exhibit 3: non-compensatory composite rating.</strong> What to notice: the strength score orders products inside the market-wide Non-Equivalent result, but it never lets one strong dimension offset a binding failure elsewhere.</figcaption>
+        </figure>
+
         <table class="mvep-table ref-table">
           <colgroup>
             <col><col><col><col><col>
@@ -507,7 +593,7 @@
             <tr><td>USDT (Tether)</td><td>Non-Equivalent (1.0)</td><td>Non-Equivalent (2.5)</td><td>Non-Equivalent (2.0)</td><td>2.1</td></tr>
           </tbody>
         </table>
-        <p class="mvep-ref-note">Tiers run Equivalent, Substantially Equivalent, Indeterminate, Opaque (a documented category with nothing published), Non-Equivalent; the parenthetical is the dimension strength score (1.0 to 5.0). Products are ordered by overall strength. The rating is a deterministic function of the scorecard. Every product now carries full assessed coverage (all eleven cells; BENJI's Category 8 is now graded Fail rather than treated as not applicable); the operational and settlement cells the paper left ungraded were closed in a June 2026 coverage-completion pass at a lighter rigor than the adversarially audited comparator columns. SoFiUSD's Category 5 letter carries an open author question (Ambiguous versus Fail) that, if resolved to Fail, lowers its economic strength.</p>
+        <p class="mvep-ref-note">Tiers run Equivalent, Substantially Equivalent, Indeterminate, Opaque (a documented category with nothing published), Non-Equivalent; the parenthetical is the dimension strength score (1.0 to 5.0). Products are ordered by overall strength. The rating is a deterministic function of the scorecard. Every product now carries full assessed coverage (all eleven cells; BENJI's Category 8 is now graded Fail rather than treated as not applicable). The operational and settlement cells the paper left ungraded were closed in a June 2026 coverage-completion pass, at a lighter rigor than the adversarially audited comparator columns. SoFiUSD's Category 5 letter carries an open author question (Ambiguous versus Fail) that, if resolved to Fail, lowers its legal strength.</p>
 
         <h2>Governance and monitoring</h2>
         <h3>Governance and change control</h3>
@@ -516,16 +602,16 @@
         <p>These thresholds represent a proposed institutional standard, not observed market practice. On-chain verification of the four largest tokenized Treasury products reveals no timelocks in any admin chain. Operators approximating partial compliance (multisig but no timelocks; or timelocks on logic but not parameters) include selected Tier 1 and Tier 2 issuers.</p>
 
         <h3>Continuous monitoring: CLII as the drift detector</h3>
-        <p>Where MVEP answers "is equivalence proven now?", the CLII answers "is the control layer degrading over time?" Three outcomes from re-evaluation: reaffirmation, conditional continuation, or suspension.</p>
+        <p>Where MVEP answers "is equivalence proven now?", the CLII answers "is the control layer degrading over time?" The CLII scores each gateway on five weighted control dimensions (regulatory licensing, reserve transparency, freeze and blacklist capability, compliance infrastructure, and geographic restrictions); when a gateway's score drops below a defined threshold, the product is flagged for review, and counterparties must be notified within 24 hours of initiating that review.</p>
 
         <h3>The MSB capital framework</h3>
         <p>State money services business law was designed to regulate wire transfer operators: firms that hold customer funds transiently while a transfer clears. Stablecoin issuers hold customer funds permanently. Under the MTMA (adopted by 31 states covering 99% of money transmission activity), a money transmitter holding $40 billion in customer funds faces a minimum tangible net worth requirement of approximately $216 million (0.54% of total assets). A bank holding the same $40 billion would be required to maintain approximately $4.8 billion in CET1 capital (12%). The gap is approximately 22 to 1, before accounting for the stress testing, deposit insurance, and resolution planning requirements that banks face and money transmitters do not.</p>
         <p>When Circle disclosed $3.3 billion in exposure to Silicon Valley Bank, that single exposure exceeded the issuer's total stockholders' equity. The Federal Reserve's own analysis notes that Circle faced "the possibility of a significant shortfall" without a public guarantee on uninsured deposits. The capital framework would not have absorbed the loss.</p>
 
         <h2>Independent corroboration</h2>
-        <p>The framework's findings are independently corroborated by three scholarly sources:</p>
+        <p>The framework's findings are independently corroborated by five lines of external work:</p>
         <ul>
-          <li>Odinet and Tosato identify four critical private law deficiencies in stablecoin governance through their study of Tether's and Circle's contractual frameworks: asymmetrical terms of service, ambiguous customer rights, tenuous redemption systems, and perilous standing in issuer bankruptcy. These four deficiencies correspond to MVEP Categories 8, 1, 4, and 5.</li>
+          <li>Odinet and Tosato identify four critical private law deficiencies in centralized stablecoin governance: asymmetrical terms of service, ambiguous customer rights, tenuous redemption systems, and perilous standing in issuer bankruptcy. Separately, the foundational private-law treatment by Bruce, Odinet, and Tosato builds an original dataset of the leading issuers' terms of service and shows that holders' contractual and reserve-asset claims are typically weaker than front-facing materials represent. These four deficiencies correspond to MVEP Categories 8, 1, 4, and 5.</li>
           <li>The Moneyness paper's five targeted reforms map one-to-one onto five MVEP categories. Five reforms, five categories, developed independently by different researchers using different methodologies, arriving at the same five structural deficiencies.</li>
           <li>The Federal Reserve's December 2025 FEDS Note on SVB and stablecoins independently documents the PSM contagion channel, the redemption pathway concentration problem, and the two-way contagion risk between stablecoins and Treasury markets.</li>
           <li>Moody's first formal stablecoin rating methodology (Klotz and Hu, March 2026) converges on the framework from an independent starting point: its effective-segregation rating-eligibility threshold tracks Category 5, its operational-risk gate and advance-rate appendix track Categories 4 and 10, and its liquidation-trigger haircut differential quantifies the value of the collateral-operability architecture the framework tests.</li>
@@ -543,7 +629,7 @@
           <li>Collateral interoperability analysis anchored on verified Binance evidence (USYC, BUIDL, BENJI)</li>
           <li>Jurisdiction-differentiated Category 5 scoring matrix: twenty regimes by seven dimensions, every cell primary-source based (Exhibit 2)</li>
           <li>Consolidated fourteen-product, eleven-row verdict scorecard (Exhibit 1), including the offshore USYC, GENIUS-era USD1, insured-national-bank SoFiUSD, and NYDFS-trust-chartered RLUSD comparators</li>
-          <li>Independent corroboration from four sources (Odinet/Tosato, Moneyness, Fed FEDS Note, Moody's rating methodology)</li>
+          <li>Independent corroboration from five sources (Odinet and Tosato on private-law deficiencies; the Moneyness paper's five reforms; the Fed FEDS Note; Moody's rating methodology; and the macro-financial channel in Ahmed and Aldasoro, the Council of Economic Advisers, and the American Bankers Association)</li>
           <li>Applied test: OCC comment letter on GENIUS Act implementing rule (RIN 1557-AF41)</li>
           <li>Framework paper anchored on a failure case; the findings describe observed patterns and should be read as evidence consistent with the framework, not as proof of causal relationships</li>
         </ul>
@@ -735,9 +821,9 @@
           <p><strong>SVB anchor case</strong><br>
           Circle $3.3B exposure at SVB · USDC depegged to $0.87 · Three dimensions of equivalence broken simultaneously · At least five stablecoins depegged · FDIC systemic risk exception resolved the depeg · Circle cash fell from $11.5B to $3.7B over three weeks despite intervention · Circle's equity ($0.34B) was one-tenth of its SVB exposure</p>
           <p><strong>Nine-product sample</strong><br>
-          3 regulatory tiers · 9 products · 6 findings · Tier 1 (banking law + 1940 Act) satisfies nearly every category · No stablecoin product approaches them · Capital gap approximately 22 to 1 (bank CET1 vs. MTMA tangible net worth)</p>
+          3 regulatory tiers · 9 products · 7 findings · Tier 1 (banking law + 1940 Act) satisfies nearly every category · No stablecoin product does · Capital gap approximately 22 to 1 (bank CET1 vs. MTMA tangible net worth)</p>
           <p><strong>Category 5 jurisdiction matrix</strong><br>
-          19 legal regimes &times; 7 insolvency dimensions · Every cell primary-source based · BENJI&rsquo;s regime the only full pass · USDT fails 6 of 7 · USYC: largest product (~$3.0B) held by 47 holders · Direct redemption: 882 accounts (Tether), 1,834 (Circle)</p>
+          20 regimes &times; 7 insolvency dimensions · Every cell primary-source based · BENJI&rsquo;s regime the only full pass · USDT fails 6 of 7 · USYC: largest product (~$3.0B) held by 47 holders · Direct redemption: 882 accounts (Tether), 1,834 (Circle)</p>
           <p><strong>Collateral interoperability</strong><br>
           3 tokenized Treasury products · 3 regulatory regimes (1940 Act, BVI, Cayman/Bermuda) · 1 custodian (Ceffu) · Comparable collateral treatment · No federal regulator has jurisdiction over the boundary · Tokenized Treasury market grew from approximately $1B (early 2024) to approximately $15B (mid-2026)</p>
           <p><strong>Framework structure</strong><br>
