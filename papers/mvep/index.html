@@ -341,7 +341,7 @@
 
       <h1 id="paper-title">Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products<br><span class="paper-subtitle-line">The diligence floor for tokenized instruments used as collateral and cash</span></h1>
 
-      <p class="paper-metadata-strip">107-page PDF · ~55,800 words · SSRN</p>
+      <p class="paper-metadata-strip">111-page PDF · ~55,800 words · SSRN</p>
       <p class="paper-description-note">Description current as of June 2026 (SSRN v2).</p>
 
       <p class="paper-thesis">Three tokenized U.S. Treasury products governed by three different regulatory regimes now receive comparable collateral treatment on the same institutional derivatives exchange, through the same custodian. A U.S. mutual fund under the Investment Company Act of 1940 (Franklin Templeton's BENJI), a BVI limited company (BlackRock's BUIDL), and a Cayman Islands fund explicitly unavailable to U.S. persons (Circle's USYC) all serve as eligible collateral in Binance's Portfolio Margin framework. The collateral framework does not distinguish between them, and no counterparty on the exchange, institutional or otherwise, receives disclosure of which instrument backs a position. The MVEP framework demonstrates that they are not equivalent.</p>
@@ -490,7 +490,7 @@
         </ol>
         <p>If a proposal cannot answer all five with documented evidence, it goes back to the workstream. The emphasis across categories varies by the institution's role: an exchange evaluating collateral acceptance will focus on Category 10; a custodian will focus on Categories 4 and 5; a fund evaluating a composed product will require all ten with equal rigor.</p>
         <p>A second change is definitional. The paper argues that settlement finality is broader than technical block confirmation. USDC kept settling on-chain during the SVB weekend, but the market value of those settlements diverged from par by 13%. Finality therefore has to include value integrity, convertibility conditions, halt triggers, reversal authority, and explicit loss allocation.</p>
-        <p>A third change is regulatory. The paper applies the framework to the OCC&rsquo;s proposed implementing rule for the GENIUS Act (RIN 1557-AF41). The framework identifies what the proposed rule gets right (reserve composition, extension of federal supervision, Permitted Payment Stablecoin Issuer (PPSI) category differentiation), where it could be strengthened (holder-rights disclosure, interagency coordination on collateral eligibility, standardized equivalence assessments), and what remains unaddressed (the collateral eligibility boundary where instruments from different regulatory regimes receive comparable treatment without differentiation or disclosure). An OCC comment letter applying the framework to specific provisions of the proposed rule has been filed under Docket OCC-2025-0372 (Tokenization Systems comment, March 2026).</p>
+        <p>A third change is regulatory. The paper applies the framework to the OCC&rsquo;s proposed implementing rule for the GENIUS Act (<a href="/letters/occ-mvep-v4/">RIN 1557-AF41</a>). The framework identifies what the proposed rule gets right (reserve composition, extension of federal supervision, Permitted Payment Stablecoin Issuer (PPSI) category differentiation), where it could be strengthened (holder-rights disclosure, interagency coordination on collateral eligibility, standardized equivalence assessments), and what remains unaddressed (the collateral eligibility boundary where instruments from different regulatory regimes receive comparable treatment without differentiation or disclosure). An OCC comment letter applying the framework to specific provisions of the proposed rule has been filed under Docket OCC-2025-0372 (Tokenization Systems comment, March 2026).</p>
 
         <h2>Where the framework does its heaviest work</h2>
         <h3>The nine-product sample</h3>
@@ -507,7 +507,7 @@
               <img src="/Publication-Images/a2-mvep-exhibit-01-scorecard.png" width="3555" height="2198" alt="Fourteen-product MVEP scorecard with category verdicts for stablecoins, tokenized funds, a deposit token, and comparators" loading="lazy" />
             </picture>
           </a>
-          <figcaption><strong>Exhibit 1: consolidated MVEP scorecard.</strong> What to notice: every product is capped by at least one independent failure mode, even where the strength profile separates the bank and fund products from the stablecoins.</figcaption>
+          <figcaption><strong>Exhibit 1: consolidated MVEP scorecard.</strong> What to notice: every product is capped by at least one independent failure mode, even where the strength profile sets the bank and fund products above the stablecoins.</figcaption>
         </figure>
 
         <h3>Tokenized Treasury bills and money market fund shares</h3>
@@ -546,24 +546,14 @@
               <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png" width="4739" height="1722" alt="Category 5 jurisdiction matrix with twenty legal regimes scored across seven insolvency-posture dimensions" loading="lazy" />
             </picture>
           </a>
-          <figcaption><strong>Exhibit 2: Category 5 jurisdiction matrix.</strong> What to notice: BENJI's 1940 Act row clears all seven dimensions, while broad labels like offshore split into materially different protection profiles.</figcaption>
+          <figcaption><strong>Exhibit 2: Category 5 jurisdiction matrix.</strong> What to notice: BENJI's 1940 Act row clears all seven dimensions, while the broad &lsquo;offshore&rsquo; label splits into materially different protection profiles.</figcaption>
         </figure>
 
         <h3>The composite rating (Exhibit 3)</h3>
         <p>The scorecard aggregates into a per-product rating, presented as Exhibit 3. It is deliberately not a weighted score. Averaging the categories would be compensatory: a strong custody score could buy back a failed rights-parity cell, which is exactly the inference the framework rejects, because the categories measure independent failure modes. The rating is therefore non-compensatory. Each of the three equivalence dimensions (legal, operational, economic) is graded on its weakest cell, so a fatal failure caps the dimension and cannot be offset elsewhere. A separate strength score from 1.0 to 5.0 (the average cell quality within the dimension) orders products inside a tier without ever lifting the tier, the way a credit rating's notch works under its letter grade. The headline is the weakest of the three.</p>
         <p>Every product rates Non-Equivalent at the headline, and that is the finding, not a flaw in the rating: the market-wide UCC Article 12 rights-parity defect fails Category 1 for every product except JPMD, so no tokenized dollar product clears legal equivalence. The discrimination lives in the strength score and in the operational and economic profiles. Read that way the rating reproduces the three regulatory tiers the paper identifies: the tokenized funds are strongest, the regulated stablecoins sit in the middle, and USDT is weakest. Two products show instructive splits. DAI is operationally strong but legally floored: its protocol state is an authoritative record, yet it has no legal entity to hold a claim against. JPMD is the only product whose legal and economic dimensions escape Non-Equivalent, both landing at Indeterminate, which makes the bank deposit token the closest to passing; it is held back at the headline only by an on-chain governance failure.</p>
 
-        <figure class="paper-exhibit-figure" id="mvep-exhibit-3">
-          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 3 composite rating image in a new tab">
-            <picture>
-              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp" />
-              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png" width="3291" height="2305" alt="MVEP composite rating showing each product's legal, operational, economic, and overall equivalence profile" loading="lazy" />
-            </picture>
-          </a>
-          <figcaption><strong>Exhibit 3: non-compensatory composite rating.</strong> What to notice: the strength score orders products inside the market-wide Non-Equivalent result, but it never lets one strong dimension offset a binding failure elsewhere.</figcaption>
-        </figure>
-
-        <table class="mvep-table ref-table">
+        <table class="mvep-table ref-table" id="mvep-exhibit-3">
           <colgroup>
             <col><col><col><col><col>
           </colgroup>
@@ -630,7 +620,7 @@
           <li>Jurisdiction-differentiated Category 5 scoring matrix: twenty regimes by seven dimensions, every cell primary-source based (Exhibit 2)</li>
           <li>Consolidated fourteen-product, eleven-row verdict scorecard (Exhibit 1), including the offshore USYC, GENIUS-era USD1, insured-national-bank SoFiUSD, and NYDFS-trust-chartered RLUSD comparators</li>
           <li>Independent corroboration from five sources (Odinet and Tosato on private-law deficiencies; the Moneyness paper's five reforms; the Fed FEDS Note; Moody's rating methodology; and the macro-financial channel in Ahmed and Aldasoro, the Council of Economic Advisers, and the American Bankers Association)</li>
-          <li>Applied test: OCC comment letter on GENIUS Act implementing rule (RIN 1557-AF41)</li>
+          <li>Applied test: OCC comment letter on GENIUS Act implementing rule (<a href="/letters/occ-mvep-v4/">RIN 1557-AF41</a>)</li>
           <li>Framework paper anchored on a failure case; the findings describe observed patterns and should be read as evidence consistent with the framework, not as proof of causal relationships</li>
         </ul>
 
