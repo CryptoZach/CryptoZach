@@ -13,8 +13,9 @@
     "build:critical-css": "node scripts/inline-critical-css.mjs",
     "lint:css": "stylelint \"styles.css\" \"homepage.css\"",
     "build:wrap-terms": "node scripts/wrap-terms-build.mjs",
-    "build:postprocess": "npm run build:wrap-terms && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html",
-    "build:postprocess:with-purgecss": "npm run build:wrap-terms && npm run build:purge-css && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html",
+    "build:cache-bust-images": "node scripts/cache-bust-images.mjs _site",
+    "build:postprocess": "npm run build:wrap-terms && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html && npm run build:cache-bust-images",
+    "build:postprocess:with-purgecss": "npm run build:wrap-terms && npm run build:purge-css && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html && npm run build:cache-bust-images",
     "ci:postprocess:ci": "npm run build:postprocess"
   },
   "devDependencies": {

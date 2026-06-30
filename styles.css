@@ -10216,6 +10216,12 @@ footer.site-footer .footer-tagline{
   background: var(--panel2);
   border-bottom: 1px solid var(--line);
 }
+/* Wide exhibits (e.g. the 20-column jurisdiction matrix) are far wider than the
+   card box, so object-fit: cover crops the left/right columns. contain shows the
+   whole table (all columns) with a slim top/bottom letterbox instead of clipping. */
+.paper-exhibit-card--wide img{
+  object-fit: contain;
+}
 .paper-exhibit-card__label{
   display: inline-block;
   margin: var(--space-md) var(--space-md) 0;
