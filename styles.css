@@ -12912,12 +12912,11 @@ main > section:first-of-type{
    soft neon green (#4ade80) at low opacity so it glows without
    dominating the card. The .badge-sm.badge-public combo selector
    wins over homepage.css's .badge-sm rule (loaded later); the
-   .badge.badge-public combo wins over base .badge styling and over
-   .badge.badge-status-published. */
+   .badge.badge-public combo wins over base .badge styling. The passed-peer-review
+   pill is split into its own (brighter) green block below. */
 .badge-public,
 .badge.badge-public,
 .badge-sm.badge-public,
-.badge.badge-status-published,
 .status--published{
   border-color: color-mix(in srgb, #16a34a 32%, var(--line));
   background: color-mix(in srgb, #16a34a 10%, transparent);
@@ -12927,11 +12926,30 @@ main > section:first-of-type{
 :root[data-theme="dark"] .badge-public,
 :root[data-theme="dark"] .badge.badge-public,
 :root[data-theme="dark"] .badge-sm.badge-public,
-:root[data-theme="dark"] .badge.badge-status-published,
 :root[data-theme="dark"] .status--published{
   color: #4ade80;
   border-color: color-mix(in srgb, #4ade80 28%, var(--line));
   background: color-mix(in srgb, #4ade80 10%, transparent);
+}
+
+/* Passed peer review: deliberately a BRIGHTER, more vivid green than the
+   .badge-public pill, so the strongest status signal reads strongest. Split out
+   of the shared public block above. Covers the bare, .badge, and .badge-sm forms
+   so the homepage badge-sm pill matches the paper/research/resume pills. */
+.badge-status-published,
+.badge.badge-status-published,
+.badge-sm.badge-status-published{
+  border-color: color-mix(in srgb, #16c60c 42%, var(--line));
+  background: color-mix(in srgb, #16c60c 16%, transparent);
+  color: #0d910a;
+}
+
+:root[data-theme="dark"] .badge-status-published,
+:root[data-theme="dark"] .badge.badge-status-published,
+:root[data-theme="dark"] .badge-sm.badge-status-published{
+  color: #5cf08a;
+  border-color: color-mix(in srgb, #5cf08a 34%, var(--line));
+  background: color-mix(in srgb, #5cf08a 14%, transparent);
 }
 
 /* Available on request / draft / requestable */
