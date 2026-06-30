@@ -40,13 +40,13 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Routing the Dollar: Control Layer Intensity Index (CLII) | TS</title>
-  <meta name="description" content="Stablecoin supply nearly doubled after September 2024 rate cut. 19 gateway operators scored across five regulatory dimensions. 34 months of on-chain data." />
+  <meta name="description" content="Stablecoin supply nearly doubled after September 2024 rate cut. 19 gateway operators scored across five regulatory dimensions. 35 months of on-chain data." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="stablecoin, dollar internationalization, monetary policy transmission, gateway infrastructure, control layer, USDC, Silicon Valley Bank, Federal Reserve, CLII" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Routing the Dollar: Control Layer Intensity Index (CLII)" />
-  <meta property="og:description" content="Three descriptive findings from 34 months of on-chain data across 19 gateway entities. Stress performance varies by gateway, not by token. Prepared for the FRBNY Dollar Conference." />
+  <meta property="og:description" content="Three descriptive findings from 35 months of on-chain data across 19 gateway entities. Stress performance varies by gateway, not by token. Prepared for the FRBNY Dollar Conference." />
   <meta property="og:url" content="https://tokenization.systems/papers/routing-the-dollar/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta property="og:image:width" content="3200" />
@@ -93,7 +93,7 @@
       "name": "Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar's International Functions",
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-02-18",
-      "description": "Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 34 months of on-chain data across 19 gateway entities.",
+      "description": "Stablecoin stress performance varies by gateway, not by token. Three descriptive findings from 35 months of on-chain data across 19 gateway entities.",
       "url": "https://tokenization.systems/papers/routing-the-dollar/",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/routing-the-dollar/" },
       "isBasedOn": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698",
@@ -415,7 +415,7 @@
       <section class="brief-findings" aria-labelledby="deep-finding2-heading">
         <h2 id="deep-finding2-heading">2. Concentration sits in the routing layer</h2>
         <p>The CLII classifies regulatory intensity across 19 gateway entities. On Ethereum, the monitored routing surface breaks down as: Tier 2 at 55% of gross volume, Tier 1 at 41%, and Tier 3 at 4%. After netting out internal rebalancing transfers (where gateways move funds between their own wallets, inflating gross volume), Tier 2 falls to 50% and Tier 1 rises to 47%, so the market is closer to regulated/offshore near-parity than the gross numbers suggest.</p>
-        <p>Tier 1 is effectively a two-firm market: Coinbase accounts for 56% of Tier 1 volume and Circle 44%. Concentration at the tier level (HHI = 5,021, where the Herfindahl-Hirschman Index measures market concentration and values above 2,500 indicate a highly concentrated market by U.S. Department of Justice standards) and entity level (HHI = 2,742 gross, 2,583 net) both exceed the threshold for "highly concentrated."</p>
+        <p>Tier 1 is effectively a two-firm market: Coinbase accounts for 56% of Tier 1 volume and Circle 44%. Concentration at the tier level (HHI = 5,021, where the Herfindahl-Hirschman Index measures market concentration and values above 1,800 indicate a highly concentrated market under the 2023 DOJ/FTC Merger Guidelines) and entity level (HHI = 2,742 gross, 2,583 net) both exceed the threshold for "highly concentrated."</p>
         <p>That concentration extends below the gateway layer. In the monthly counterparty network, unique counterparties fell 25% and cross-gateway transaction-pairs dropped from 5.8% to 2.6% even as volume doubled. One market-making firm (Wintermute) saw its share of identified counterparty volume rise from 1.4% to 19.9%, making intermediary concentration part of the control-layer story alongside gateway concentration.</p>
         <p>The same token also routes through materially different control environments by chain. Tier 1 presence is 41% on Ethereum, approximately 11% on Solana, and zero on Tron, where Tier 3 protocols account for 58% of monitored gateway volume. Even USDT routes 10.8% of its monitored Ethereum gateway volume through Tier 1.</p>
         <p class="brief-what-this-means"><strong>What this means:</strong> token-level supply tells you who issued the dollar. Gateway-level flow data tell you who routed it, where risk is concentrating, and which control environment applies.</p>
@@ -424,7 +424,7 @@
       <section class="brief-findings" aria-labelledby="deep-finding3-heading">
         <h2 id="deep-finding3-heading">3. Stress outcomes are gateway-contingent</h2>
         <p>Two stress episodes bracket the range of gateway-level reallocation.</p>
-        <p><strong>SVB (March 2023).</strong> Capital rotated across dollar gateways, without a broad exit from dollar-pegged instruments. Tier 1 share of monitored gateway volume moved from 63% to 13% and then back to 57% after banking-sector interventions. USDC lost $5.1B in five days while USDT gained roughly $3B.</p>
+        <p><strong>SVB (March 2023).</strong> Capital rotated across dollar gateways, without a broad exit from dollar-pegged instruments. Tier 1 share of monitored gateway volume moved from 63% to 13% and then back to 57% after banking-sector interventions. USDC lost $5.1B in five days while USDT gained roughly $1.7B.</p>
         <p>In relative-intensity terms (multiples of each gateway's normal-period volume), Curve 3pool retained 12.35x baseline volume, Coinbase 2.63x, and Circle 1.39x. The sharpest contrast is within Tier 1: Circle and Coinbase had similar CLII scores but very different stress retention, consistent with entity-specific banking exposure mattering more than regulatory tier. Three gateways with zero SVB exposure (MakerDAO, Paxos, Gemini) saw their issued stablecoins depeg through reserve-chain contagion.</p>
         <p>The paper is careful about how far to push the SVB result. Those retention ratios are not pure capital-substitution measures (every major gateway saw more gross activity during the stress window), and SVB alone cannot cleanly separate whether users fled Circle's banking exposure or USDC's 12% peg deviation. The event-time placebo analysis (running the same test on non-stress periods) still shows the episode was statistically extreme: the Tier 1 swing was 51.8 percentage points, with a nadir 2.7 standard deviations below normal.</p>
         <p><strong>BUSD wind-down (February 2023 onward).</strong> This is the cleaner routing test because there was no peg pressure. The New York Department of Financial Services ordered Paxos to stop minting BUSD. Paxos guaranteed 1:1 redemption throughout. Despite that guarantee, $16.1 billion in stablecoin value migrated mainly toward USDT and Binance-adjacent routing, choosing uninterrupted trading access over stronger regulatory protections. Wintermute&rsquo;s role expanded materially during the migration; the main wallet (<code>0xDBF5E9c5206d0dB70a90108bf936DA60221dC080</code>, Blockscout-verified) concentrated a growing share of post-BUSD routing volume.</p>
