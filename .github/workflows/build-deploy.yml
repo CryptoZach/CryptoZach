@@ -60,6 +60,17 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: CSS duplicate-selector lint (stylelint; warn-only)
+        # no-duplicate-selectors surfaces accidentally repeated selectors in the
+        # source CSS. WARN-ONLY (continue-on-error): the hand-maintained CSS uses
+        # many deliberate later-rule cascade overrides, so this rule reports a
+        # large mixed set (intentional overrides + genuine dups). It is an
+        # informational signal pending a dedup-triage cycle, not a deploy blocker.
+        # Flip to a hard gate only after the legitimate-override findings are
+        # triaged out (e.g. via per-line stylelint-disable or rule narrowing).
+        continue-on-error: true
+        run: npm run lint:css
+
       - name: Build Jekyll site
         run: bundle exec jekyll build --trace
         env:
@@ -73,6 +84,125 @@ jobs:
 
       - name: Post-process (PurgeCSS + minify + critical CSS)
         run: npm run build:postprocess:with-purgecss
+
+      - name: Broken-image-ref deploy gate (built _site/)
+        # Self-contained 404 guard: blocks the upload+deploy if any built page
+        # references an image file missing from _site/. Mirrors
+        # scripts/orphan_figure_guard.py --broken-only, which cannot run in the
+        # site-only deploy repo (it carries no scripts/). python3 is preinstalled.
+        run: |
+          python3 - <<'PY'
+          # Inline broken-image-ref deploy gate (self-contained; stdlib only).
+          # Scans the BUILT _site/ for img src / og:image content / icon href / srcset /
+          # CSS url() / JSON-LD image refs that point at a file missing from _site/.
+          # Root-relative refs resolve from _site/ (the site is served from the site root;
+          # _config.yml has no baseurl). Same-site absolute URLs (canonical hosts) are
+          # resolved locally; foreign hosts, data:, protocol-relative, and template tokens
+          # are skipped. Exit non-zero on any broken ref so the upload+deploy is blocked.
+          # Mirrors scripts/orphan_figure_guard.py --broken-only (which cannot run in the
+          # site-only CI repo, which carries no scripts/).
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          SITE = Path(os.environ.get("CI_SITE_DIR", "_site")).resolve()
+          IMG_EXT = ("png", "jpg", "jpeg", "webp", "svg", "gif", "ico")
+          EXT_ALT = "|".join(IMG_EXT)
+          CANON_HOSTS = (
+              "tokenization.systems", "www.tokenization.systems",
+              "cryptozach.com", "www.cryptozach.com",
+          )
+
+          ATTR_RE = re.compile(
+              r'''(?:src|content|href|data-src)\s*=\s*["']([^"']+\.(?:%s)(?:\?[^"']*)?(?:\#[^"']*)?)["']''' % EXT_ALT,
+              re.I)
+          SRCSET_RE = re.compile(r'''srcset\s*=\s*["']([^"']+)["']''', re.I)
+          URL_RE = re.compile(
+              r'''url\(\s*["']?([^"')]+\.(?:%s)(?:\?[^"')]*)?)["']?\s*\)''' % EXT_ALT, re.I)
+          JSONLD_RE = re.compile(
+              r'''"(?:image|logo|thumbnailUrl|contentUrl)"\s*:\s*"([^"]+\.(?:%s)(?:\?[^"]*)?)"''' % EXT_ALT, re.I)
+
+
+          def is_external(ref):
+              r = ref.strip()
+              return (r.startswith("http://") or r.startswith("https://") or r.startswith("//")
+                      or r.startswith("data:") or r.startswith("mailto:") or "{{" in r or "{%" in r
+                      or r.startswith("$") or r == "")
+
+
+          def strip_suffix(ref):
+              return ref.split("?", 1)[0].split("#", 1)[0].strip()
+
+
+          def canonicalize_local(ref):
+              m = re.match(r'https?://([^/]+)(/[^\s]*)?$', ref.strip(), re.I)
+              if m and m.group(1).lower() in CANON_HOSTS:
+                  return m.group(2) or "/"
+              return ref
+
+
+          def extract_refs(text):
+              refs = set()
+              for rx in (ATTR_RE, URL_RE, JSONLD_RE):
+                  refs.update(m.group(1) for m in rx.finditer(text))
+              for m in SRCSET_RE.finditer(text):
+                  for cand in m.group(1).split(","):
+                      url = cand.strip().split()[0] if cand.strip() else ""
+                      if re.search(r"\.(?:%s)(?:[?#]|$)" % EXT_ALT, url, re.I):
+                          refs.add(url)
+              return refs
+
+
+          def resolve(ref, html_path):
+              ref = canonicalize_local(strip_suffix(ref))
+              if is_external(ref) or not ref:
+                  return None
+              if ref.startswith("/"):
+                  return (SITE / ref.lstrip("/")).resolve()
+              return (html_path.parent / ref).resolve()
+
+
+          def rel(p):
+              try:
+                  return str(p.relative_to(SITE))
+              except ValueError:
+                  return str(p)
+
+
+          def main():
+              if not SITE.is_dir():
+                  print("::error::broken-ref gate: built site dir %s not found" % SITE)
+                  return 1
+              broken = []
+              for dirpath, _dirnames, filenames in os.walk(SITE):
+                  for fn in filenames:
+                      if not fn.lower().endswith(".html"):
+                          continue
+                      html = Path(dirpath) / fn
+                      try:
+                          text = html.read_text(encoding="utf-8", errors="replace")
+                      except Exception:
+                          continue
+                      for ref in extract_refs(text):
+                          target = resolve(ref, html)
+                          if target is None:
+                              continue
+                          if not target.exists():
+                              broken.append((rel(html), ref, rel(target)))
+              broken = sorted(set(broken))
+              if broken:
+                  print("::error::broken image ref(s) in built _site/ (%d) -- deploy blocked:" % len(broken))
+                  for page, ref, target in broken:
+                      print("  %s: %s  ->  MISSING %s" % (page, ref, target))
+                  return 1
+              print("[ci-broken-ref-gate] clean: no broken image refs in built _site/")
+              return 0
+
+
+          if __name__ == "__main__":
+              sys.exit(main())
+          PY
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
