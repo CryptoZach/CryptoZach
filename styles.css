@@ -2795,6 +2795,16 @@ section:has(.speaker-jump-to){
 .speaker-jump-to--compact{
   gap:0.25em 0.35em;
 }
+@media (min-width: 769px){
+  /* Fit the compact speaker sub-nav on a single line on desktop */
+  .speaker-jump-to--compact .speaker-jump-to__link,
+  .speaker-jump-to--compact .speaker-jump-to__sep{
+    font-size:0.8rem;
+  }
+  .speaker-jump-to--compact{
+    gap:0.25em 0.55em;
+  }
+}
 .speaker-jump-to__sep{
   color:var(--muted-soft);
   user-select:none;
