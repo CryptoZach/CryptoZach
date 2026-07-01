@@ -2770,7 +2770,11 @@ section:has(.speaker-jump-to){
 }
 .speaker-jump-to__link{
   text-decoration:none;
-  color:var(--text-soft);
+  /* Accent-tinted pill at rest (was muted-grey text): soft --accent fill + accent
+     text so the sub-nav reads as branded pills, not drab text. Subtle enough not to
+     compete with the solid-blue primary CTA above; theme-adaptive via --accent. */
+  color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 9%, transparent);
   font-size:var(--font-size-min);
   font-weight:500;
   line-height:1.5;
@@ -2786,7 +2790,7 @@ section:has(.speaker-jump-to){
 }
 .speaker-jump-to__link:hover{
   color:var(--accent);
-  background:var(--accent-muted);
+  background:color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .speaker-jump-to__link:focus-visible{
   outline:2px solid var(--accent);
@@ -2806,6 +2810,8 @@ section:has(.speaker-jump-to){
   }
 }
 .speaker-jump-to__sep{
+  /* Redundant now that each link is a filled pill; the flex gap provides spacing. */
+  display:none;
   color:var(--muted-soft);
   user-select:none;
   font-weight:400;
