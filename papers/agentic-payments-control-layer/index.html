@@ -333,6 +333,7 @@
 
         <h2>Facilitator concentration: the monthly series</h2>
         <p>Base, registry-facilitator submitted USDC transfers (counts and dollars):</p>
+        <div class="structure-table-wrap">
         <table class="mvep-table">
           <thead>
             <tr><th>Month</th><th>Payments</th><th>USD (raw)</th><th>Distinct buyers</th><th>Avg $/payment</th></tr>
@@ -349,11 +350,13 @@
             <tr><td>2026-06 (11d)</td><td>2,524,990</td><td>335,006</td><td>40,636</td><td>0.13</td></tr>
           </tbody>
         </table>
+        </div>
         <p>The shape documents a boom, bust, and rebuild: an October to December 2025 spike (the memecoin and leaderboard era; November peaked at 541 events per buyer, a machine-grind signature), a February 2026 trough, then monotonic count growth February through May with the buyer base re-expanding to 110,766 (events per buyer down to 26.7, consistent with broader and less grindy usage). Cumulative Base since May 2025: roughly 134.3 million payments; cumulative raw transfer-sum 43.97 million US dollars, which corrects to approximately 42.55 million after removing the proxy-settlement double-count described below.</p>
         <p>Polygon is one story: the official Polygon Facilitator fleet ramps from 376,000 payments (November 2025) to 5.04 million (May 2026), with all other facilitators on the chain summing to hundreds of payments and tens of dollars per month. Solana inverts across the sample: December 2025 carries 26.9 million transfers from 2,261 buyers to 396 sellers (consistent with the published estimate that 86 percent of all-time Solana x402 activity was leaderboard-gamed), while May 2026 carries 799,769 transfers from 78,922 buyers at 0.17 US dollars average, a profile consistent with organic usage.</p>
 
         <h2>May 2026 snapshot: two layers, two monopolists</h2>
         <p>Base, corrected (Meridian at its external-seller leg):</p>
+        <div class="structure-table-wrap">
         <table class="mvep-table">
           <thead>
             <tr><th>Facilitator</th><th>Payments</th><th>Count share</th><th>USD</th><th>Value share</th></tr>
@@ -367,8 +370,10 @@
             <tr><td>all others</td><td>49,952</td><td>1.6%</td><td>14,110</td><td>2.2%</td></tr>
           </tbody>
         </table>
+        </div>
         <p>Count HHI 6,009; volume HHI 4,040 (raw, pre-correction: 5,965 and 5,621). Coinbase owns the message layer at 0.07 US dollars average payment; Meridian owns the value layer at 33.86 US dollars average. The two operators' rank positions swap entirely between metrics.</p>
         <p>Solana, May 2026 (registry signer set):</p>
+        <div class="structure-table-wrap">
         <table class="mvep-table">
           <thead>
             <tr><th>Facilitator</th><th>Payments</th><th>Count share</th><th>USDC</th><th>Value share</th><th>Buyers</th><th>Sellers</th></tr>
@@ -381,6 +386,7 @@
             <tr><td>relai</td><td>15,639</td><td>2.0%</td><td>22,066</td><td>16.4%</td><td>19</td><td>18</td></tr>
           </tbody>
         </table>
+        </div>
         <p>Count HHI 4,203; volume HHI 4,915. The count-versus-value flip replicates with different operators (Dexter counts, Coinbase dollars), which is evidence the flip is structural to the market rather than an artifact of one operator's design. Note relai: 19 buyers, 18 sellers, 22,000 US dollars. Small-cardinality, higher-value clusters now appear on two chains.</p>
         <p>Cross-chain May (Base corrected plus Polygon plus Solana): 8,868,390 payments, 940,323 US dollars. The Polygon Facilitator fleet alone is 56.8 percent of cross-chain counts (from 35 buyer wallets); Meridian alone is 39.7 percent of cross-chain dollars (from 17 buyer wallets); Coinbase is 29.3 percent of cross-chain counts and 27.4 percent of cross-chain dollars. Whichever layer one measures, settlement currently routes majority-through one operator, and the operator differs by layer.</p>
         <p>The porting frame: Routing the Dollar documented Tier 1 stablecoin routing as a Coinbase-Circle duopoly at 56/44 with the framing "usage expanded, control consolidated." The agentic settlement layer measures more concentrated than that on every reading above, at a market age of under 14 months. The same operator (Coinbase) holds structural positions at both layers: gateway-layer stablecoin routing and message-layer agentic settlement, plus protocol authorship (x402 originated at Coinbase and is now under the Linux Foundation x402 Foundation with Cloudflare and Stripe as co-developers).</p>
@@ -406,6 +412,7 @@
 
         <h2>Denominator discipline</h2>
         <p>x402 against total USDC transfer activity, identical May 2026 windows and tables:</p>
+        <div class="structure-table-wrap">
         <table class="mvep-table">
           <thead>
             <tr><th>Chain</th><th>All USDC transfers (May)</th><th>All USDC value (May)</th><th>x402 count share</th><th>x402 value share</th></tr>
@@ -417,10 +424,12 @@
             <tr><td>Cross-chain</td><td>313.6M</td><td>$2.503T</td><td>2.83%</td><td>0.0000376%</td></tr>
           </tbody>
         </table>
+        </div>
         <p>Two readings. At the event layer, x402 is already non-trivial: roughly 1 in 36 USDC transfer events on Base, and roughly 1 in 6 on Polygon, where the subsidized fleet's footprint is large enough to distort chain-level USDC activity statistics (an externality of count subsidies worth noting for anyone using raw transfer counts as a chain-adoption metric). At the value layer, x402 is four ten-millionths of the USDC economy it settles on. Denominators are raw Transfer events (including DEX and contract flows), an upper-bound activity base; the discipline claim is count-against-count and value-against-value on identical bases.</p>
 
         <h2>Anchor evidence: reconciliation against existing measurement</h2>
         <p>Every external anchor was recomputed or explained rather than cited forward:</p>
+        <div class="structure-table-wrap">
         <table class="mvep-table">
           <thead>
             <tr><th>Anchor</th><th>Their figure</th><th>This memo's recompute</th><th>Resolution</th></tr>
@@ -458,6 +467,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
         <p>The meta-finding: in a market this young, measurement infrastructure is itself concentrated and unaudited. The dominant community dashboard's attribution map carries a typo that silently drops a chain's rows from per-chain joins, misses the largest value-layer operator, and is nonetheless the de facto public record. Divergent published figures are not competing estimates of one quantity; they are different quantities wearing the same name.</p>
 
         <h2>The composition chain and the weakest layer</h2>
