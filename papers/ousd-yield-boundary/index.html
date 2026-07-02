@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+
+  <title>OUSD &amp; the GENIUS Yield Boundary | TS</title>
+  <meta name="description" content="Where OUSD's distributor revenue-share sits under the GENIUS Act yield prohibition: an ex-ante structural read published before the July 18, 2026 final rules." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="OUSD, Open USD, Open Standard, stablecoin, GENIUS Act, yield prohibition, Section 4(a)(11), stablecoin yield, distributor revenue share, OCC, FDIC, CLARITY Act, USDC rewards, stablecoin regulation" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Open USD and the GENIUS Yield Boundary" />
+  <meta property="og:description" content="The announced OUSD design occupies the one cell of the stablecoin yield-routing matrix that the statute, both implementing proposals, and the pending amendment all leave open. Four moves the final rules could make." />
+  <meta property="og:url" content="https://tokenization.systems/papers/ousd-yield-boundary/" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="675" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Routing the Dollar cover art" />
+  <link rel="canonical" href="https://tokenization.systems/papers/ousd-yield-boundary/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Open USD and the GENIUS Yield Boundary" />
+  <meta name="twitter:description" content="OUSD routes stablecoin reserve revenue to 140 or more distribution partners, not holders. An ex-ante read on where that design sits under GENIUS Section 4(a)(11), before final rules land July 18, 2026." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.webp" />
+  <meta name="twitter:image:alt" content="Routing the Dollar cover art" />
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=255" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems/" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research/" },
+        { "@type": "ListItem", "position": 3, "name": "OUSD Yield Boundary", "item": "https://tokenization.systems/papers/ousd-yield-boundary/" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "name": "Open USD and the Yield Boundary: Distributor Revenue-Share Under the GENIUS Act",
+      "headline": "Open USD and the Yield Boundary: Distributor Revenue-Share Under the GENIUS Act",
+      "author": { "@id": "https://tokenization.systems/#person" },
+      "datePublished": "2026-07-02",
+      "description": "Ex-ante structural briefing on the Open USD (OUSD) consortium stablecoin announced June 30, 2026: where its distributor revenue-share design sits relative to the GENIUS Act Section 4(a)(11) yield prohibition, the OCC and FDIC implementing proposals, and the pending CLARITY Act amendment, with four scoreable moves the final rules due July 18, 2026 could make.",
+      "url": "https://tokenization.systems/papers/ousd-yield-boundary/",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/ousd-yield-boundary/" },
+      "image": "https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.webp",
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
+      "isBasedOn": [
+        { "@type": "ScholarlyArticle", "name": "Routing the Dollar", "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" },
+        { "@type": "ScholarlyArticle", "name": "Minimum Viable Equivalence Pack", "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" }
+      ],
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Programmable Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+    "about": ["Stablecoin regulation", "GENIUS Act", "Payment stablecoins", "Market structure"],
+    "mentions": ["Open USD", "Open Standard", "GENIUS Act Section 4(a)(11)", "stablecoin yield prohibition", "USDC", "distributor revenue share", "CLARITY Act"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/ousd-yield-boundary/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Open USD (OUSD)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open USD (OUSD) is a dollar stablecoin announced June 30, 2026 by Open Standard, a consortium governance entity with more than 140 launch partners including Visa, Mastercard, Stripe, BlackRock, Coinbase, and BNY. It charges zero minting and redemption fees, and reserve revenue, minus a management fee, is returned to the partners who adopt and distribute the token. Launch is stated for later in 2026; the regulated issuer of record has not been disclosed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the GENIUS Act ban stablecoin yield?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The GENIUS Act's Section 4(a)(11) prohibits a permitted payment stablecoin issuer from paying the holder any form of interest or yield solely in connection with holding, using, or retaining the stablecoin. The prohibition binds issuers paying holders. During Senate consideration, amendments that would have extended it to third parties such as distributors were considered and not adopted, so payments that terminate at businesses in the distribution layer are not facially reached by the statute as enacted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does OUSD's partner revenue-share violate the GENIUS Act yield prohibition?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As announced, the design sits outside the statute, outside both agencies' implementing proposals, and outside the pending CLARITY Act amendment, because the revenue share terminates at partner businesses and no holder-facing payment has been announced. Two contested questions could change that: whether the revenue share is calibrated to partner-held balances, and whether a custodial partner counts as the holder of the tokens it custodies. Neither is settled by any current text, and this analysis is structural, not a legal conclusion about any party."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What could the GENIUS Act final rules due July 18, 2026 change?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Four plausible moves: finalize the OCC's two-prong presumption as proposed, which leaves the announced OUSD design outside it; broaden the trigger to balance-calibrated distributor compensation, which could reach it but invites statutory-authority challenge on the Senate amendment record; codify a definition of holder, which decides the custodial-partner question in either direction; or track the statute and leave the third-party question to Congress. The design as announced survives every move except a broad second or a control-based third."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Tokenization Systems</strong>
+          <span>Digital Asset Research &amp; Advisory</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <div class="nav-directory">
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Research</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/letters">Letters</a>
+        </div>
+      </div>
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Navigate</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+      </div>
+      <div class="nav-directory__col nav-directory__col--connect">
+        <p class="nav-directory__label">Connect</p>
+        <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> OUSD Yield Boundary
+      </nav>
+
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge badge-public">Public</span>
+        <span class="badge">July 2, 2026</span>
+        <span class="badge">Written before the July 18 final rules</span>
+      </div>
+
+      <h1 id="paper-title">Open USD and the Yield Boundary: Distributor Revenue-Share Under the GENIUS Act</h1>
+
+      <p class="paper-metadata-strip">Briefing &middot; Stablecoin Regulation &middot; GENIUS Act &middot; Dollar Infrastructure</p>
+      <p class="paper-description-note">Briefing version 1, published July 2, 2026, sixteen days before the GENIUS Act final implementing rules are due. A post-rule addendum will score the four-move section against the actual rule text.</p>
+
+      <p class="paper-thesis">On June 30, 2026, Open Standard, a consortium of more than 140 companies including Visa, Mastercard, Stripe, BlackRock, Coinbase, and BNY, announced Open USD (OUSD): a dollar stablecoin with zero minting and redemption fees whose reserve revenue, minus a management fee, is returned to the partners who adopt and distribute it. Per every source reviewed, that revenue flows to partner businesses, not to end holders. The GENIUS Act prohibits stablecoin issuers from paying holders interest or yield, and distributor revenue-share is the nearest legal-design neighbor to holder yield that the prohibition does not facially reach. This briefing maps where the announced design sits relative to the statute, the two pending implementing proposals, and the pending legislative amendment, and states four moves the final rules, due July 18, 2026, could make, each with its consequence, so the analysis can be scored against the actual rule text when it lands.</p>
+
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />Does the announced OUSD design, where reserve revenue is shared with distribution partners rather than paid to holders, sit inside or outside the GENIUS Act's yield prohibition?</p>
+        <p><strong>Answer</strong><br />As announced, outside every text currently on the table. The statute reaches issuer-to-holder payments; the OCC's proposed presumption requires a holder-facing second hop that OUSD lacks; the FDIC's broader formulation still runs through the issuer-pays-yield characterization; and the pending CLARITY amendment prohibits distributor-to-customer payments, not issuer-to-distributor shares. The design's viability turns on two unresolved parameters: whether the revenue share is calibrated to partner-held balances, and who counts as the holder of custodied tokens. Both are contested; neither is settled by any current text.</p>
+        <p><strong>Evidence base</strong><br />The enacted GENIUS Act text; the OCC's proposed implementing rule (91 Fed. Reg. 10199, March 2, 2026) and the FDIC's parallel proposal (91 Fed. Reg. 18534, April 10, 2026); the Senate-stage CLARITY Act Section 404 print; the Senate floor record on the Warren and Hickenlooper amendments; Circle's S-1 distribution-economics disclosures; the Council of Economic Advisers' April 2026 white paper on the yield prohibition; and contemporaneous public reporting on the June 30 announcement.</p>
+      </aside>
+
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+      <h2 id="brief-findings-heading" class="brief-findings-section-title">Four findings</h2>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">1</span>
+        <div class="brief-finding-copy">
+          <h3>The announced design occupies the one cell every current text leaves open</h3>
+          <p>Decompose the yield path into two hops: issuer to distributor (hop one), distributor to holder (hop two). The statute reaches issuer-to-holder payments. The OCC's proposed presumption requires both hops. The pending CLARITY amendment reaches hop two only. Announced OUSD is hop one alone: a business revenue-share with no holder-facing payment. The Senate considered extending the prohibition to distributors and declined.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> A consortium can route reserve economics to its distribution layer without facially triggering the yield prohibition as written, as proposed by either agency, or as amended by the pending bill.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">2</span>
+        <div class="brief-finding-copy">
+          <h3>Two undisclosed or unsettled parameters decide whether that holds</h3>
+          <p>First, the calibration basis: no source discloses whether a partner's share is proportional to the OUSD balances it holds or custodies, to transaction volume, or to a flat participation tier. Second, the holder definition: a published custody-law argument holds that an exchange, not its customer, is the holder of tokens in its omnibus wallets, in which case a balance-proportional share to a custodying partner is literally a payment to a holder measured by its holdings. The statutory word "solely" then cuts both ways: conditioning payment on distribution activity defeats a narrow reading and invites an anti-evasion reading.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> Watch the consortium agreements and the final rules' definitions, not the marketing.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">3</span>
+        <div class="brief-finding-copy">
+          <h3>The incumbent arrangement is more exposed than the challenger's</h3>
+          <p>The closest live analog is the Circle and Coinbase USDC arrangement: Circle paid Coinbase $907.9 million in distribution fees in 2024, and Coinbase pays advertised rewards to customers holding USDC on its platform. That is a two-hop structure with a holder-facing payment, the shape the pending rule texts actually target. Announced OUSD is one hop shorter. The same firm sits on both sides: Coinbase is simultaneously Circle's USDC distribution counterparty and an OUSD launch partner.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> A rule that squeezes holder-facing rewards while leaving business revenue-share open would push distribution economics from the rewards model toward the consortium model.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">4</span>
+        <div class="brief-finding-copy">
+          <h3>The final rules have four plausible moves; the design survives three of them</h3>
+          <p>Finalize the OCC presumption as proposed (OUSD stays outside it); broaden the trigger to balance-calibrated distributor compensation (reaches OUSD only on one calibration, and invites statutory-authority challenge on the Senate amendment record); codify a holder definition (decides the custody question in either direction); or track the statute and refer the gap to Congress (undisturbed). Each move has a stated consequence in the body below.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> This briefing is written to be scored: check the four moves against the rule text due July 18, 2026.</p>
+        </div>
+      </div>
+    </section>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Policy designers and rule-writers</span>
+        <span class="paper-audience-tag">Stablecoin issuers and distributors</span>
+        <span class="paper-audience-tag">Bank strategists</span>
+        <span class="paper-audience-tag">Payments and exchange operators</span>
+        <span class="paper-audience-tag">Risk and diligence committees</span>
+        <span class="paper-audience-tag">Financial journalists</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer" aria-label="Read Routing the Dollar on SSRN" title="Read Routing the Dollar on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read Routing the Dollar</a>
+          <a class="action secondary" href="/letters" aria-label="Federal comment letters" title="Federal comment letters">Federal comment letters</a>
+        </div>
+        <div class="access-secondary">
+          <a class="access-link" href="mailto:zach@tokenization.systems?subject=OUSD%20yield%20boundary%20briefing">Discuss this briefing</a>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>What Open Standard announced</h2>
+        <p>Four design facts matter. First, zero minting and redemption fees, with no volume limits: the issuer-side fee surface is set to zero. Second, reserve revenue routed to distribution: most revenue generated from reserves, minus a management fee, is returned to participants who adopt and distribute the token, and the payees are the consortium's partner businesses, not end holders. Third, consortium governance: Open Standard describes itself as an independent company whose board is drawn from partner businesses. Fourth, the regulated issuer of record is undisclosed: Open Standard states reserves will be held at major financial institutions in compliance with US regulatory requirements, but no source discloses which entity will hold permitted payment stablecoin issuer status, under what charter or license, or under which supervisor. Launch is stated for later in 2026, which lands near the GENIUS Act's effective date (eighteen months after enactment, January 2027, or 120 days after final rules, whichever is earlier).</p>
+        <p>One further design parameter is undisclosed and load-bearing: the calibration basis of the revenue share. Whether a partner's share is proportional to the OUSD balances it holds or custodies, to the transaction volume it originates, to a flat participation tier, or to some blend is stated nowhere in the reviewed sources. Most of the legal analysis below pivots on this parameter.</p>
+
+        <h2>The four texts that draw the boundary</h2>
+        <p><strong>The statute.</strong> GENIUS Act Section 4(a)(11) provides that no permitted payment stablecoin issuer or foreign payment stablecoin issuer shall pay the holder of any payment stablecoin any form of interest or yield (whether in cash, tokens, or other consideration) solely in connection with the holding, use, or retention of such payment stablecoin. Three elements do the work: the regulated payor is the issuer; the protected payee class is holders; and the payment must be solely in connection with holding, use, or retention. The legislative history is direct: during Senate consideration, the Warren and Hickenlooper amendments would have extended the prohibition to third parties such as affiliates, distributors, and merchants; both were considered and neither was adopted. The Council of Economic Advisers' April 2026 white paper states the resulting gap plainly: the prohibition may not fully bind, because the statutory language prohibits payments by the issuer but does not explicitly bar intermediaries between issuers and holders from offering yield-like rewards funded by revenue-sharing arrangements with issuers.</p>
+        <p><strong>The OCC proposal.</strong> The OCC's implementing proposal (91 Fed. Reg. 10199, March 2, 2026) restates the statutory prohibition and adds a rebuttable presumption with a two-prong trigger: prohibited yield is presumed where the issuer has an arrangement to pay interest or yield to an affiliate or a related third party, and that party in turn has an arrangement to pay interest or yield to a holder of the issuer's stablecoin. "Related third party" covers persons paying holders as a service on the issuer's behalf and white-label partners under whose branding the issuer issues. Two preamble sentences bound the rule's intended reach: the prohibition is not intended to prevent a merchant from independently offering a discount for paying in stablecoins, and it is, in the proposal's own words, "not intended to prevent a permitted payment stablecoin issuer from sharing in the profits derived from the payment stablecoin with a non-affiliate partner in a white-label arrangement." Arrangements outside the presumption can still be assessed case by case under the statute's anti-evasion authority.</p>
+        <p><strong>The FDIC proposal.</strong> The FDIC's parallel proposal (91 Fed. Reg. 18534, April 10, 2026) prohibits the stablecoin issuers it supervises from paying interest or yield on stablecoins including via third-party arrangements. The formulation is broader on its face than the OCC's two-prong presumption. Which of the two rulebooks would govern OUSD is unknown, because the issuer of record, and therefore the supervisor of record, is undisclosed.</p>
+        <p><strong>The pending legislation.</strong> The Senate-stage CLARITY Act print's Section 404 would extend a parallel prohibition to digital asset service providers and their affiliates, expressly excluding issuers: covered parties could not pay interest or yield, directly or indirectly, to US customers solely in connection with holding stablecoin balances or in a manner economically or functionally equivalent to deposit interest. Two carve-outs matter here: rewards based on bona fide activities or transactions that are not economically equivalent to deposit interest are permitted, and independent unaffiliated third parties are outside the prohibition unless a covered party directs or significantly influences the offering. A May 2026 joint letter from six bank trade associations argues this draft leaves structuring pathways open and asks Congress to delete the word "solely" and broaden the equivalence standard.</p>
+
+        <h2>The two-hop map</h2>
+        <p>Decompose the yield path into two hops. Hop one: issuer reserve revenue flows to a distribution partner. Hop two: the distribution partner pays something to an end holder. The four texts attach as follows:</p>
+        <table class="mvep-table">
+          <thead>
+            <tr>
+              <th>Text</th>
+              <th>What it reaches</th>
+              <th>Does it reach the announced OUSD design?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GENIUS Act Section 4(a)(11) (enacted)</td>
+              <td>Issuer-to-holder payments</td>
+              <td>Not facially: the payee is a business being paid to distribute, not a holder being paid to hold</td>
+            </tr>
+            <tr>
+              <td>OCC proposed rule (March 2026)</td>
+              <td>Both hops together: issuer pays a related third party, and that party pays holders</td>
+              <td>No: the holder-facing second hop is not announced, and the preamble describes non-affiliate profit-sharing as outside the rule's intent</td>
+            </tr>
+            <tr>
+              <td>FDIC proposed rule (April 2026)</td>
+              <td>Issuer paying yield on stablecoins, including via third-party arrangements</td>
+              <td>Only if a business revenue-share is first characterized as yield on stablecoins at all</td>
+            </tr>
+            <tr>
+              <td>CLARITY Act Section 404 (pending)</td>
+              <td>Hop two only: service-provider-to-customer payments</td>
+              <td>No: it prohibits covered parties from paying customers, not from receiving issuer revenue share</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The structural conclusion, stated as structure: the announced OUSD design occupies the one cell of the yield-routing matrix that the enacted statute, both pending implementing proposals, and the pending legislative amendment all leave unaddressed. Whether by design or not (this briefing takes no position on intent), the announced structure sits almost exactly on the far side of every line the current texts draw.</p>
+
+        <h2>The two exposure points</h2>
+        <p><strong>The partner as holder.</strong> The strongest argument that hop one alone can violate the statute does not need any third-party extension: it recharacterizes the distributor as the holder. Lee Reiners (Duke) makes this argument for the Circle and Coinbase arrangement in a <a href="https://clsbluesky.law.columbia.edu/2025/12/11/circle-coinbase-and-the-prohibition-on-interest-under-the-genius-act/" target="_blank" rel="noopener noreferrer">December 2025 analysis</a>: under custody-law principles, federal guidance, and the exchange's own user agreement and litigation positions, the exchange rather than the customer is likely the holder of custodied tokens, and an issuer's balance-proportional revenue share to that exchange is, on his reading, in tension with the statute. The transferability to OUSD is direct: many OUSD launch partners would custody OUSD in omnibus wallets and would be on-chain holders of record. If the undisclosed calibration is proportional to partner-custodied balances, hop one is literally a payment to a holder measured by its holdings, and the dispute reduces to the statutory word "solely."</p>
+        <p><strong>The word "solely," in both directions.</strong> OUSD's revenue share is conditioned on adopting and distributing the token, an ancillary activity beyond holding. On a narrow reading, that conditioning defeats "solely in connection with the holding, use, or retention" and takes even a balance-calibrated share outside the text. This is precisely the structuring pathway the bank coalition letter warned about when it asked Congress to delete "solely." The same feature cuts the other way before a regulator: a condition that consists of distributing the very token whose balances drive the payment may be read as use of the stablecoin, and the OCC proposal reserves case-by-case anti-evasion assessment for arrangements outside its presumption. Nothing in the announced design resolves either question.</p>
+
+        <h2>The Coinbase contrast</h2>
+        <p>The closest live analog is the Circle and Coinbase USDC arrangement. Under Circle's S-1 disclosures and contemporaneous reporting, Coinbase receives the reserve income on USDC held on its platform and half of residual reserve income elsewhere; Circle paid Coinbase $907.9 million in distribution fees in 2024, a majority of Circle's revenue that year; and Coinbase has marketed rewards for simply holding USDC on its platform. The contrast:</p>
+        <table class="mvep-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Circle and Coinbase (USDC)</th>
+              <th>Open Standard (OUSD, announced)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hops</td>
+              <td>Two: issuer to distributor, distributor to holder (customer rewards)</td>
+              <td>One: issuer to distributors; no holder-facing payment announced</td>
+            </tr>
+            <tr>
+              <td>Parties</td>
+              <td>Bilateral, negotiated, disclosed in the S-1</td>
+              <td>Multilateral, 140 or more partners, consortium-governed; terms undisclosed</td>
+            </tr>
+            <tr>
+              <td>Holder-facing yield</td>
+              <td>Yes (advertised rewards rate)</td>
+              <td>None announced</td>
+            </tr>
+            <tr>
+              <td>Calibration</td>
+              <td>Balance-proportional (platform-held USDC)</td>
+              <td>Undisclosed</td>
+            </tr>
+            <tr>
+              <td>OCC presumption (as proposed)</td>
+              <td>Facially triggers both prongs; the issuer would bear the rebuttal burden</td>
+              <td>Second prong unmet; the presumption does not attach</td>
+            </tr>
+            <tr>
+              <td>Partner-as-holder exposure</td>
+              <td>Live (the Reiners argument targets it directly)</td>
+              <td>Latent; activates if calibration is balance-proportional to custodied OUSD</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Two implications. First, announced OUSD is one hop shorter than the arrangement the third-party debate has actually been about, so the incumbent arrangement is more exposed to the pending rule texts than the challenger's. Second, a final rule that squeezes hop two while leaving hop one open would push distribution economics from the rewards model toward the revenue-share model, a competitive inversion stated here in advance because it is checkable against post-rule behavior.</p>
+
+        <h2>Four moves the final rules could make (due July 18, 2026)</h2>
+        <ol>
+          <li><strong>Finalize the OCC presumption as proposed.</strong> OUSD's announced design remains outside the presumption; the two-hop rewards structure remains presumptively prohibited subject to rebuttal. The boundary lands exactly where OUSD's design sits on the safe side, and distribution economics migrate from holder rewards to business revenue-share. The Senate amendment record supports this as the statute-faithful landing point.</li>
+          <li><strong>Broaden the trigger to balance-calibrated distributor compensation.</strong> Treat issuer payments to distributors measured by held or custodied balances as presumptive indirect yield, regardless of a holder-facing second hop; the FDIC's third-party-arrangements formulation is the natural vehicle. This reaches OUSD's hop one if and only if the undisclosed calibration is balance-proportional, and it would be litigated on the amendment record, since it extends by rule what the Senate declined to enact.</li>
+          <li><strong>Codify a holder definition.</strong> A rule defining holder by control (the custodial intermediary is the holder) arms the partner-as-holder theory against both USDC rewards and any balance-calibrated OUSD share. A rule defining holder by ultimate economic interest (the customer) defuses that theory and leaves hop one fully open. Neither proposal currently does this; the definitional silence is where the deepest uncertainty lives.</li>
+          <li><strong>Track the statute and refer the gap to Congress.</strong> Final rules restate the statutory prohibition, preserve case-by-case anti-evasion authority, and the third-party question rides on the CLARITY amendment. OUSD's design is undisturbed federally through the Act's effective date, and even an enacted Section 404 closes hop two, not hop one.</li>
+        </ol>
+        <p>Under every move except a broad version of the second or a control-based version of the third, the announced design survives. That asymmetry, more than any single provision, is the finding: the design's viability is robust across most of the plausible rule space, and the two moves that would reach it are the two most exposed to statutory-authority challenge on the legislative record.</p>
+
+        <h2>What this means for the yield debate</h2>
+        <p>The Council of Economic Advisers' April 2026 white paper modeled the yield prohibition's stated rationale, protecting bank lending, and found the effect small: at baseline calibration, eliminating stablecoin yield increases bank lending by roughly $2.1 billion, about 0.02 percent of total loans. Combine that result with the OUSD design and a precise structural statement follows: the yield prohibition neither protects bank lending much, nor keeps reserve economics with issuers. Reserve revenue is flowing to whoever the boundary permits to compete for it, and under every design currently on the table, from issuer retention to distributor rewards to consortium revenue-share, holders are the one class excluded from that competition. That statement is checkable: if the final rules preserve hop one, reserve-yield capture should migrate toward distribution-layer intermediaries, observable in distribution-agreement disclosures and issuer cost structures.</p>
+
+        <h2>What to watch</h2>
+        <ol>
+          <li><strong>Issuer of record disclosure</strong> (charter, license, supervisor). Determines which rulebook applies. Trigger: any application or state filing naming Open Standard or an affiliate.</li>
+          <li><strong>Revenue-share calibration basis</strong> (balances versus volume versus flat participation). Determines whether the partner-as-holder exposure is live. Trigger: consortium terms surfacing in partner disclosures; exchange quarterly filings are the likeliest surface.</li>
+          <li><strong>Final rule text on the presumption and any holder definition</strong> (July 18, 2026). The decision points above. Trigger: publication; score the four moves against it.</li>
+          <li><strong>Any partner announcing holder-facing OUSD rewards.</strong> Converts the design from one hop to two and attaches the presumption analysis. Trigger: partner marketing.</li>
+          <li><strong>CLARITY Section 404 enactment state.</strong> Closes hop two prospectively if enacted; hop one survives even that.</li>
+        </ol>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li>This is an ex-ante briefing published before the final implementing rules, and it is written to be scored against them; a post-rule addendum is planned. It is a structural positioning analysis, not a formal academic paper.</li>
+          <li>OUSD is announced, not launched. The consortium agreements, the revenue-share calibration, and the issuer of record are undisclosed as of July 2, 2026; where a conclusion depends on an undisclosed parameter, the briefing says so.</li>
+          <li>This analysis characterizes where texts and design features sit relative to one another. It makes no allegation of misconduct, evasion, or bad faith against Open Standard, any consortium partner, Circle, Coinbase, or any other named party, and it is not legal advice to any entity. Several characterizations of legality are contested questions, labeled as contested.</li>
+          <li>Facts are as of July 2, 2026, drawn from the announcement and contemporaneous public reporting, the primary regulatory texts, Circle's S-1 disclosures as publicly reported, and the cited public legal commentary.</li>
+        </ul>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/routing-the-dollar" class="companion-card">
+            <strong>Routing the Dollar</strong>
+            <span>Stablecoin stress performance varies by gateway, not by token: the dollar-infrastructure evidence base behind this briefing.</span>
+          </a>
+          <a href="/papers/seven-dollars" class="companion-card">
+            <strong>Seven Dollars</strong>
+            <span>How US regulation classifies the competing dollar instruments, including the PPSI eligibility boundary OUSD's issuer of record must clear.</span>
+          </a>
+          <a href="/papers/mvep" class="companion-card">
+            <strong>Minimum Viable Equivalence Pack</strong>
+            <span>The buyer-side diligence framework for tokenized products; the evidence a holder of any stablecoin should ask for.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss the yield boundary, stablecoin market structure, or the final rules when they land? <a href="mailto:zach@tokenization.systems?subject=OUSD%20yield%20boundary%20briefing%20-%20Discussion">zach@tokenization.systems</a></p>
+    </article>
+
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/letters">Letters</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-newsletter" aria-labelledby="footer-newsletter-pitch">
+        <p class="footer-newsletter__pitch" id="footer-newsletter-pitch">Monthly research digest. New papers, frameworks, regulatory events.</p>
+        <form class="footer-newsletter__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+          <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
+          <button class="footer-newsletter__button" type="submit">Subscribe</button>
+        </form>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=236"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
