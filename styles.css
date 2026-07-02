@@ -37,9 +37,10 @@
   --accent-hover:#0a3a7a;
   --accent-soft:rgba(15,76,158,.12);
   --accent-muted:rgba(15,76,158,.06);
-  /* CTA accent: a darker blue than --accent so white text on filled buttons meets WCAG AA 4.5:1 (the brand --accent is too light for text-on-fill). Identical in both themes, so defined once here rather than duplicated in the dark block. */
-  --accent-cta:var(--brand-blue);
+  /* CTA accent: now tracks the brand --accent (one blue family site-wide). Text contrast is held by the theme-aware --accent-cta-text, not by a darker fill (light: white on the navy --accent; dark: near-black on the light-blue --accent; both WCAG AA). Because var() resolves at use time, defining --accent-cta as var(--accent) HERE tracks the dark-theme --accent override automatically. */
+  --accent-cta:var(--accent);
   --accent-cta-hover:#1d4ed8;
+  --accent-cta-text:#fff;
   /* Semantic aliases. Previously referenced but never defined, so they fell through to light-only literals and rendered dark-on-dark in the default dark theme. Resolving via theme primitives lets them track data-theme automatically. */
   --text-secondary:var(--muted);
   --border-subtle:var(--line);
@@ -98,6 +99,9 @@
   --accent-hover:#7ab0ff;
   --accent-soft:rgba(91,156,245,.15);
   --accent-muted:rgba(91,156,245,.08);
+  /* CTA fill is the light-blue --accent in dark mode; flip the text to near-black for AA, and use a lighter hover so the text stays dark on hover (no color flip). */
+  --accent-cta-text:#0a0c10;
+  --accent-cta-hover:#7ab0ff;
   --shadow-sm:0 1px 3px rgba(0,0,0,.2);
   --shadow:0 4px 24px rgba(0,0,0,.25), 0 1px 3px rgba(0,0,0,.15);
   --shadow-lg:0 12px 48px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.2);
@@ -547,14 +551,14 @@ nav .action:hover{
 }
 .action.primary{
   background:var(--accent-cta, var(--brand-blue));
-  color:#fff;
+  color:var(--accent-cta-text, #fff);
   border-color:var(--accent-cta, var(--brand-blue));
   box-shadow:0 1px 3px rgba(15,76,158,.25);
 }
 .action.primary:hover{
   background:var(--accent-cta-hover, #1d4ed8);
   border-color:var(--accent-cta-hover, #1d4ed8);
-  color:#fff;
+  color:var(--accent-cta-text, #fff);
   box-shadow:0 4px 12px rgba(15,76,158,.3);
 }
 .action.primary svg{
