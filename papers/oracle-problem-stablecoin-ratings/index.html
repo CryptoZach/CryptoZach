@@ -42,7 +42,7 @@
   <title>The Oracle Problem in Stablecoin Ratings | TS</title>
   <meta name="description" content="Issuer-pays credit ratings, a conflict named after 2008 and left intact, are now being published on public blockchains where smart contracts read them as automated collateral inputs. A structural briefing." />
   <meta name="author" content="Zach Zukowski" />
-  <meta name="keywords" content="stablecoin ratings, issuer-pays conflict, credit rating agencies, on-chain ratings, oracle problem, DeFi collateral, automated collateral inputs, on-chain stablecoin ratings, stablecoin rating methodology, MVEP, Minimum Viable Equivalence Pack, buyer-side diligence, CLII" />
+  <meta name="keywords" content="stablecoin ratings, issuer-pays conflict, credit rating agencies, on-chain ratings, oracle problem, DeFi collateral, automated collateral inputs, consortium stablecoins, OUSD, on-chain stablecoin ratings, stablecoin rating methodology, MVEP, Minimum Viable Equivalence Pack, buyer-side diligence, CLII" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="The Oracle Problem in Stablecoin Ratings" />
@@ -94,6 +94,7 @@
       "headline": "The Oracle Problem in Stablecoin Ratings: a known conflict, a new automation surface",
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-06-22",
+      "dateModified": "2026-07-02",
       "description": "An accessible briefing on the issuer-pays conflict in credit ratings (named and left intact after 2008) as it enters stablecoin assessment and is delivered on public blockchains as machine-readable collateral inputs. The new element is automation coupling: a rating wired into a smart contract that executes with no human in the loop. Points to the MVEP working paper as the rigorous source.",
       "url": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/" },
@@ -104,8 +105,8 @@
       ],
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
       "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Programmable Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
-      "about": ["Stablecoin ratings", "Issuer-pays conflict of interest", "On-chain credit ratings", "DeFi collateral", "Institutional diligence"],
-      "mentions": ["Minimum Viable Equivalence Pack", "Control Layer Intensity Index", "issuer-pays model", "automated collateral inputs", "buyer-side diligence"]
+      "about": ["Stablecoin ratings", "Issuer-pays conflict of interest", "On-chain credit ratings", "DeFi collateral", "Institutional diligence", "Consortium stablecoins"],
+      "mentions": ["Minimum Viable Equivalence Pack", "Control Layer Intensity Index", "issuer-pays model", "automated collateral inputs", "buyer-side diligence", "Open USD (OUSD)"]
     }
   </script>
   <script type="application/ld+json">
@@ -144,6 +145,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "A buyer-side, evidence-based assessment performed at the decision point, paired with continuous monitoring of drift, as a complement to a seller-commissioned score. This is the ground the Minimum Viable Equivalence Pack (MVEP) and the Control Layer Intensity Index (CLII) occupy. The rigorous treatment is the MVEP working paper on SSRN (abstract 6363138)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a consortium stablecoin change the issuer-pays picture?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It mutates rather than removes it. In a consortium design such as Open USD (OUSD), announced June 2026 with more than 140 launch partners, reserve revenue minus a management fee flows to the businesses that distribute the token, so an assessment fee that is nominally issuer-pays is economically distributor-funded, and a favorable score functions as a shared marketing asset for the whole distribution network. Some of those partners are lending protocols, the same automated consumers an on-chain score feed is built for. The conflicted interest is not eliminated; it is distributed across the score's own consumption network."
           }
         }
       ]
@@ -235,7 +244,7 @@
       <h1 id="paper-title">The Oracle Problem in Stablecoin Ratings: a known conflict, a new automation surface</h1>
 
       <p class="paper-metadata-strip">Briefing &middot; Credit ratings &middot; Stablecoins &middot; On-chain risk data</p>
-      <p class="paper-description-note">Briefing version 1, current as of June 2026.</p>
+      <p class="paper-description-note">Briefing version 1.1, current as of July 2026 (adds the consortium revenue-share case).</p>
 
       <p class="paper-thesis">The credit-rating industry's central structural problem, the issuer-pays conflict of interest, was named, studied, and left structurally intact after the 2008 financial crisis. It is now being carried into stablecoin assessment at the exact moment those assessments are becoming programmable inputs to automated lending and collateral decisions. A known conflict is acquiring a new automation surface that the post-2008 reforms never contemplated.</p>
 
@@ -310,6 +319,10 @@
         <p>The reason this record bears on stablecoin assessment, and not only on the bond and structured-finance markets where it was built, is that the stablecoin context sharpens each element. The application is voluntary: an issuer chooses to seek an assessment and pays for it, so a favorable score functions as a marketing instrument as much as a risk signal. The pull is strongest for issuers locked out of other sources of legitimacy; an offshore issuer that cannot obtain a domestic bank or trust charter has a particular incentive to substitute a third-party score for the imprimatur it cannot get.</p>
         <p>The assessment is also point-in-time, seller-commissioned, and scoped narrowly. A reserve-quality and segregation framework is built to test whether reserve assets survive issuer bankruptcy. It is not built to answer the questions a buyer of the token as collateral most needs answered: token-title questions such as take-free protection and redemption privity sit outside the issuer-to-reserve link the methodology tests, and downstream questions, such as whether a stablecoin can safely serve as another product's settlement leg, are assumed away by a fiat-redemption scope. None of this is a defect in the rating mathematics. It is a matter of what a seller-commissioned, instrument-siloed assessment is built to see.</p>
 
+        <h2>The payer side is mutating: the consortium case</h2>
+        <p>A consortium design announced in late June 2026 shows how the payer side of this structure can mutate. Open USD (OUSD), a stablecoin announced by Open Standard with more than 140 launch partners, sets issuer-side economics deliberately thin: reserve revenue, minus a management fee, is returned to the businesses that adopt and distribute the token rather than retained by the issuer. If such a coin seeks an assessment, the fee is nominally issuer-pays, but the economics behind it are distributor-funded: a favorable score functions as a shared marketing asset for every partner in the distribution network, not as one issuer's franchise defense.</p>
+        <p>And the consortium's partner list includes decentralized lending protocols, which are precisely the automated consumers an on-chain assessment feed is built for. The bilateral conflict the post-2008 literature modeled, one rated issuer paying one rater read by independent investors, becomes a topology in which the parties funding the rated entity, the parties amplifying its score, and the parties whose contracts consume the score are overlapping sets. OUSD is announced, not launched, and no rater has announced coverage of it; the point is structural and forward-looking: consortium distribution does not remove the issuer-pays conflict, it distributes the conflicted interest across the score's own consumption network.</p>
+
         <h2>The new element: a rating wired into a control loop</h2>
         <p>The genuinely new development, relative to the conflict the post-2008 reforms addressed, is the automation coupling. Those reforms targeted disclosure and the human use of ratings. The conflict they managed lived in a document that a person read and exercised judgment over. An on-chain feed wired into a smart contract removes the person.</p>
         <p>To make the coupling concrete: a lending protocol that accepts a stablecoin as collateral must set parameters for it, a loan-to-value ratio, a liquidation threshold, perhaps an eligibility gate or a supply cap. Those parameters can be set by a governance vote, by an internal risk model, or by an external feed. An on-chain assessment band published by an issuer-pays rater is exactly such a feed: a contract can read the band and tighten or loosen the haircut, widen or cut the borrowing limit, or admit or exclude the asset, with no person reviewing the decision between the feed update and the parameter change. At that point the score is not advice that a risk committee weighs; it is a control input that moves capital. One of the firms describes the purpose of its on-chain delivery in just these terms, saying it makes the assessments available so that protocols, lending platforms, and institutional investors can incorporate the risk assessments "directly into their automated decision-making processes." That is the firm's own statement of intent, not an inference.</p>
@@ -333,6 +346,10 @@
           <a href="/papers/mvep-tcmag-comparison" class="companion-card">
             <strong>Tokenized Cash Management Principles and the Operator-Layer Diagnostic</strong>
             <span>How the same operator-layer diagnostic maps against a buyer-side requirements framework for tokenized corporate cash.</span>
+          </a>
+          <a href="/papers/ousd-yield-boundary" class="companion-card">
+            <strong>Open USD and the Yield Boundary</strong>
+            <span>Where the OUSD consortium's distributor revenue-share sits under GENIUS Section 4(a)(11) and the pending implementing rules, mapped ahead of the 2026-07-18 final rules.</span>
           </a>
         </div>
       </section>
