@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>The Oracle Problem in Stablecoin Ratings | TS</title>
+  <meta name="description" content="Issuer-pays credit ratings, a conflict named after 2008 and left intact, are now being published on public blockchains where smart contracts read them as automated collateral inputs. A structural briefing." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="stablecoin ratings, issuer-pays conflict, credit rating agencies, on-chain ratings, oracle problem, DeFi collateral, automated collateral inputs, on-chain stablecoin ratings, stablecoin rating methodology, MVEP, Minimum Viable Equivalence Pack, buyer-side diligence, CLII" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="The Oracle Problem in Stablecoin Ratings" />
+  <meta property="og:description" content="A known conflict (issuer-pays credit ratings) is meeting a new automation surface: rating scores published on public blockchains and read by smart contracts as collateral inputs. A structural briefing pointing to the MVEP working paper." />
+  <meta property="og:url" content="https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Equivalence_Pack.webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="732" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Tokenization Systems research cover" />
+  <link rel="canonical" href="https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="The Oracle Problem in Stablecoin Ratings" />
+  <meta name="twitter:description" content="The two largest rating firms now publish stablecoin scores on public blockchains, where contracts read them as collateral inputs. The score is paid for by the issuer. A question about an incentive design, not an allegation." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Equivalence_Pack.webp" />
+  <meta name="twitter:image:alt" content="Tokenization Systems research cover" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=253" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems/" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research/" },
+        { "@type": "ListItem", "position": 3, "name": "Oracle Problem in Stablecoin Ratings", "item": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "name": "The Oracle Problem in Stablecoin Ratings: a known conflict, a new automation surface",
+      "headline": "The Oracle Problem in Stablecoin Ratings: a known conflict, a new automation surface",
+      "author": { "@id": "https://tokenization.systems/#person" },
+      "datePublished": "2026-06-22",
+      "description": "An accessible briefing on the issuer-pays conflict in credit ratings (named and left intact after 2008) as it enters stablecoin assessment and is delivered on public blockchains as machine-readable collateral inputs. The new element is automation coupling: a rating wired into a smart contract that executes with no human in the loop. Points to the MVEP working paper as the rigorous source.",
+      "url": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/" },
+      "image": "https://tokenization.systems/Publication-Images/Equivalence_Pack.webp",
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems" },
+      "isBasedOn": [
+        { "@type": "ScholarlyArticle", "name": "Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products", "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" }
+      ],
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#paper-title", ".paper-thesis"] },
+      "isPartOf": { "@type": "CreativeWorkSeries", "name": "Track A: Programmable Money, Tokenization, and Market Infrastructure", "url": "https://tokenization.systems/research/#track-a", "publisher": { "@type": "Organization", "name": "Tokenization Systems" } },
+      "about": ["Stablecoin ratings", "Issuer-pays conflict of interest", "On-chain credit ratings", "DeFi collateral", "Institutional diligence"],
+      "mentions": ["Minimum Viable Equivalence Pack", "Control Layer Intensity Index", "issuer-pays model", "automated collateral inputs", "buyer-side diligence"]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/oracle-problem-stablecoin-ratings/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this briefing accusing any rating firm of bias or inflation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. This is a structural critique of an incentive design, not an allegation of misconduct, bias, or inflation against any named rating firm or individual. It makes no claim that any specific stablecoin score is wrong. It asks what changes when a known conflict, the issuer-pays model, meets a delivery channel that removes the human who used to weigh the score."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the issuer-pays conflict?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The issuer-pays model is the arrangement under which the entity being rated pays the firm that rates it. The credit-rating industry adopted it decades ago. The post-2008 academic and policy record examined it at length and left it structurally intact; it remains the model today."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is genuinely new about ratings published on a blockchain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a rating is published on a public blockchain, a smart contract can read it as a collateral input and act on it automatically, with no person reviewing the decision between the feed update and the parameter change. Earlier reforms assumed a human circuit-breaker, an analyst or risk committee who could discount a score they distrusted. An automated on-chain consumer removes that person."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the alternative the briefing proposes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A buyer-side, evidence-based assessment performed at the decision point, paired with continuous monitoring of drift, as a complement to a seller-commissioned score. This is the ground the Minimum Viable Equivalence Pack (MVEP) and the Control Layer Intensity Index (CLII) occupy. The rigorous treatment is the MVEP working paper on SSRN (abstract 6363138)."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Tokenization Systems</strong>
+          <span>Digital Asset Research &amp; Advisory</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true">
+    <div class="nav-directory">
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Research</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/letters">Letters</a>
+        </div>
+      </div>
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Navigate</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+      </div>
+      <div class="nav-directory__col nav-directory__col--connect">
+        <p class="nav-directory__label">Connect</p>
+        <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Oracle Problem in Stablecoin Ratings
+      </nav>
+
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge badge-public">Public</span>
+        <span class="badge">June 22, 2026</span>
+      </div>
+
+      <h1 id="paper-title">The Oracle Problem in Stablecoin Ratings: a known conflict, a new automation surface</h1>
+
+      <p class="paper-metadata-strip">Briefing &middot; Credit ratings &middot; Stablecoins &middot; On-chain risk data</p>
+      <p class="paper-description-note">Briefing version 1, current as of June 2026.</p>
+
+      <p class="paper-thesis">The credit-rating industry's central structural problem, the issuer-pays conflict of interest, was named, studied, and left structurally intact after the 2008 financial crisis. It is now being carried into stablecoin assessment at the exact moment those assessments are becoming programmable inputs to automated lending and collateral decisions. A known conflict is acquiring a new automation surface that the post-2008 reforms never contemplated.</p>
+
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />What happens when a conflict of interest that the post-2008 record named and left intact, the issuer-pays credit rating, enters stablecoin assessment and is delivered on a public blockchain where a smart contract can read it as a collateral input?</p>
+        <p><strong>Answer</strong><br />The conflict does not go away when the score moves on chain; it acquires a new automation surface, because a contract that reads a score and acts on it removes the human who used to weigh it. This is an accessible briefing, not a formal academic paper. The rigorous source is the working paper Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products (SSRN, abstract 6363138), which carries the full literature, the on-chain-delivery analysis, and the coverage comparison in peer-reviewable form. This page is the accessible version.</p>
+        <p><strong>Evidence base</strong><br />The structural argument rests on the post-2008 credit-rating literature, distilled here to three load-bearing findings (Lawrence White on the issuer-pays definition; Jiang, Stanford, and Xie on the empirical signature of the conflict; Griffin and Tang on a structured-finance precedent). The on-chain facts are primary-sourced to the rating firms' own press releases. The fuller record lives in the MVEP working paper.</p>
+      </aside>
+
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+      <h2 id="brief-findings-heading" class="brief-findings-section-title">Three findings</h2>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">1</span>
+        <div class="brief-finding-copy">
+          <h3>The issuer-pays conflict was named after 2008 and left structurally intact</h3>
+          <p>Under the issuer-pays model, the entity being rated pays the firm that rates it. The post-2008 academic and policy record examined the conflict at length, the regulator named it, Congress considered a structural fix, and the model survived. Issuer-pays remains the arrangement today.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> The conflict is not a new or fringe worry. It is one of the most thoroughly documented incentive problems in modern finance, and it was never resolved at the structural level.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">2</span>
+        <div class="brief-finding-copy">
+          <h3>That same conflict is now entering stablecoin assessment and being delivered on chain</h3>
+          <p>Within twelve months, both incumbent rating firms moved into stablecoin assessment, and rating signals are now published as machine-readable data on public blockchains. A stablecoin issuer chooses to seek an assessment and pays for it, so a favorable score functions as a marketing instrument as well as a risk signal.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> The well-studied conflict is being carried into a new product class and onto a new delivery channel at the same time.</p>
+        </div>
+      </div>
+      <div class="brief-finding">
+        <span class="brief-finding-num" aria-hidden="true">3</span>
+        <div class="brief-finding-copy">
+          <h3>The new element: the score becomes an automated collateral input with no human circuit-breaker</h3>
+          <p>An on-chain score can be read by a smart contract and wired into collateral parameters: eligibility, haircuts, borrowing limits, liquidation thresholds. The post-2008 reforms assumed a person, an analyst or risk committee, who could discount a score they distrusted. A contract that reads a feed and acts on it performs no such review between the feed update and the parameter change.</p>
+          <p class="brief-what-this-means"><strong>What this means:</strong> A conflict the literature studied as a distortion in a document a person read becomes a distortion in a control loop that moves capital automatically.</p>
+        </div>
+      </div>
+    </section>
+
+      <div class="paper-audience-tags" aria-label="Audience">
+        <span class="paper-audience-tag">Risk and diligence committees</span>
+        <span class="paper-audience-tag">Stablecoin issuers</span>
+        <span class="paper-audience-tag">DeFi and collateral desks</span>
+        <span class="paper-audience-tag">Policy designers</span>
+        <span class="paper-audience-tag">Rating-methodology readers</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read MVEP on SSRN" title="Read MVEP on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Read MVEP</a>
+        </div>
+        <div class="access-secondary">
+          <a class="access-link" href="mailto:zach@tokenization.systems?subject=Oracle%20Problem%20in%20Stablecoin%20Ratings%20-%20Discussion">Discuss this briefing</a>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <p>In the last twelve months, the two largest credit-rating firms began publishing stablecoin risk scores directly onto public blockchains, where smart contracts can read them as collateral inputs. The score is paid for by the company that issues the stablecoin. This is not a claim that any score is wrong or biased; it is a question about an incentive design, named after 2008 and left intact, now meeting a delivery channel that removes the human who used to weigh it.</p>
+
+        <p>This briefing is the accessible version of a longer argument. The rigorous source is the working paper Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products (SSRN, abstract 6363138), which carries the full literature, the on-chain-delivery analysis, and the coverage comparison in peer-reviewable form. What follows distills it.</p>
+
+        <h2>Two developments arriving together</h2>
+        <p>Two things are happening at once, and the timing is the point. The first is that issuer-pays raters have entered stablecoin assessment. The second is that rating signals are being delivered as on-chain data, machine-readable and addressable by code. Each on its own is unremarkable. Together they carry a known conflict of interest into a setting the conflict was never stress-tested for: one where the output is consumed not by a person but by a contract.</p>
+        <p>To be precise about the facts, which are primary-sourced to the firms themselves: one of the two firms has delivered its stablecoin stability assessments on chain since late 2025, through a third-party data service, across roughly ten stablecoins on a one-to-five scale. The other published a stablecoin rating methodology in early 2026 and, in mid-2026, put its credit ratings on a public, permissionless blockchain for the first time, embedding them into the token metadata of tokenized fixed-income securities so that, in its own words, the integration "allows credit information to travel with the asset on-chain." That second deployment was for tokenized bonds, not stablecoins; the stablecoin methodology and the on-chain delivery capability now sit inside the same firm, which makes the convergence a near-term direction of travel rather than, yet, an accomplished fact.</p>
+        <p>This is not an allegation against any rater. It does not claim that any specific stablecoin assessment is wrong, inflated, or biased. It is a structural reading: of an incentive design the literature has already examined at length, of what that design can and cannot see in the stablecoin context, and of what changes when the output is wired into code that executes without a human in the loop.</p>
+
+        <h2>The structural read: issuer-pays, in three findings</h2>
+        <p>The issuer-pays model is the arrangement under which the entity being rated pays the firm that rates it. As Lawrence White records, the industry adopted it decades ago: "In place of the 'investor pays' model that had been established by John Moody in 1909, the credit rating agencies converted to an 'issuer pays' model, whereby the entity issuing the bonds also pays the rating firm to rate the bonds" (White 2010). The tension is immediate. "The change to the 'issuer pays' business model opened the door to potential conflicts of interest: A rating agency might shade its rating upward so as to keep the issuer happy" (White 2010). That is the definition, and it is not in dispute.</p>
+        <p>The conflict also has a clean empirical signature. Jiang, Stanford, and Xie (2012) exploit a natural experiment: a switch from investor-pay to issuer-pay at one of the two major firms in 1974, four years after the other made the same switch. Using the same bond rated by both firms as a benchmark, they find that the firm still charging investors assigned lower ratings, and that "once S&P adopts issuer-pay, its ratings increase and no longer differ from Moody's." The decisive result is that the increase was not uniform. The firm "only assigns higher ratings for bonds that are subject to greater conflicts of interest, measured by higher expected rating fees or lower credit quality," a pattern "consistent with bond issuers gaining bargaining power when they pay for ratings." The measured effect is on the order of twenty percent of a rating grade. A change in who pays moved ratings, and it moved them most where the conflict was strongest.</p>
+        <p>The third finding is a structured-finance precedent, and it is the one that most needs careful framing. Analyzing 916 collateralized debt obligations, Griffin and Tang (2012) find that "direct outputs from a rating agency model are more straightforward and accurate than actual ratings assigned," that "actual sizes of AAA rated tranches are on average 12.1% larger than implied by the rating agency model," and that "CDOs with larger adjustments experience worse subsequent performance." Their counterfactual sharpens the magnitude: had the agency followed its own model, the affected AAA tranches "would on average have been rated BBB, resulting in a 20.1% lower valuation." <strong>The point here is structural, not accusatory:</strong> in that historical sample, an opaque adjustment layer sat between a model and a published rating, and the adjustments were systematically associated with worse outcomes. The relevance to stablecoins is not that any current stablecoin rater behaves this way; there is no such claim. The relevance is that a published score is not always identical to a model's output, and that the gap, wherever it exists, is exactly the kind of thing a human reader can interrogate and a smart contract cannot.</p>
+
+        <h2>Why the stablecoin setting sharpens it</h2>
+        <p>The reason this record bears on stablecoin assessment, and not only on the bond and structured-finance markets where it was built, is that the stablecoin context sharpens each element. The application is voluntary: an issuer chooses to seek an assessment and pays for it, so a favorable score functions as a marketing instrument as much as a risk signal. The pull is strongest for issuers locked out of other sources of legitimacy; an offshore issuer that cannot obtain a domestic bank or trust charter has a particular incentive to substitute a third-party score for the imprimatur it cannot get.</p>
+        <p>The assessment is also point-in-time, seller-commissioned, and scoped narrowly. A reserve-quality and segregation framework is built to test whether reserve assets survive issuer bankruptcy. It is not built to answer the questions a buyer of the token as collateral most needs answered: token-title questions such as take-free protection and redemption privity sit outside the issuer-to-reserve link the methodology tests, and downstream questions, such as whether a stablecoin can safely serve as another product's settlement leg, are assumed away by a fiat-redemption scope. None of this is a defect in the rating mathematics. It is a matter of what a seller-commissioned, instrument-siloed assessment is built to see.</p>
+
+        <h2>The new element: a rating wired into a control loop</h2>
+        <p>The genuinely new development, relative to the conflict the post-2008 reforms addressed, is the automation coupling. Those reforms targeted disclosure and the human use of ratings. The conflict they managed lived in a document that a person read and exercised judgment over. An on-chain feed wired into a smart contract removes the person.</p>
+        <p>To make the coupling concrete: a lending protocol that accepts a stablecoin as collateral must set parameters for it, a loan-to-value ratio, a liquidation threshold, perhaps an eligibility gate or a supply cap. Those parameters can be set by a governance vote, by an internal risk model, or by an external feed. An on-chain assessment band published by an issuer-pays rater is exactly such a feed: a contract can read the band and tighten or loosen the haircut, widen or cut the borrowing limit, or admit or exclude the asset, with no person reviewing the decision between the feed update and the parameter change. At that point the score is not advice that a risk committee weighs; it is a control input that moves capital. One of the firms describes the purpose of its on-chain delivery in just these terms, saying it makes the assessments available so that protocols, lending platforms, and institutional investors can incorporate the risk assessments "directly into their automated decision-making processes." That is the firm's own statement of intent, not an inference.</p>
+        <p>Three second-order properties of this coupling are worth naming, again as structure rather than prediction. First, correlation: if many protocols key the same parameters off the same conflicted feed, a single revision propagates simultaneously across them, the opposite of the diversified, independently-timed judgment that disclosure reform sought to preserve. Second, cadence: both raters run monitoring cycles, monthly attestations and periodic reviews, that are slower than the hours-scale stress events stablecoin history has already seen, so a feed updated on a monitoring cadence can lag the event it is supposed to price. Third, and most simply, the coupling places a paid party's output at a control point: the entity that pays for the assessment is paying to influence an input that now drives automated leverage, not merely an input that a human reader can choose to discount.</p>
+
+        <h2>The complement: buyer-side evidence at the decision point</h2>
+        <p>The reasonable response is not to indict the raters. A quantitative rating prices loss magnitude, penalizes reserve-credit deterioration, and can rate the forward evolution of a reserve pool within its permitted envelope, none of which a point-in-time artifact check performs. The case is not that rating mathematics is worthless. It is that a seller-paid, instrument-siloed score, delivered as an automated input, is the wrong sole basis for a programmatic leverage decision, and that the missing complement is buyer-side evidence supplied before the coupling executes.</p>
+        <p>That complement has a concrete form: a buyer-side, evidence-based assessment performed at the decision point, paired with continuous monitoring of drift, rather than a point-in-time score commissioned by the seller. The buyer-side instrument returns the evidence a holder actually needs, including the questions the rating frame is not built to ask, and it is not paid for by the rated party. This is the ground the Minimum Viable Equivalence Pack (MVEP) and its monitoring companion, the Control Layer Intensity Index (CLII), are built to occupy. This briefing does not rebuild that framework; the rigorous treatment, with the full literature and the category-by-category coverage comparison, is the MVEP working paper (SSRN, abstract 6363138). This page is the accessible version.</p>
+
+        <h2>The takeaway</h2>
+        <p>The issuer-pays conflict in credit ratings is one of the most thoroughly documented incentive problems in modern finance. It was studied across the bond and structured-finance markets, named by the regulator, considered for a structural fix by Congress, and left intact. It is now being carried into stablecoin assessment at the precise moment those assessments are becoming machine-readable collateral inputs, by the raters' own design. The reasonable response is not to accuse any firm of producing a bad score. It is to add a buyer-side, evidence-based layer at the decision point, so that an automated lending system does not take a seller-commissioned opinion as its sole, unmediated input, before that coupling becomes the market's default.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/mvep" class="companion-card">
+            <strong>Minimum Viable Equivalence Pack</strong>
+            <span>The rigorous source: the buyer-side, evidence-based diligence framework, with the full literature and the coverage comparison this briefing distills.</span>
+          </a>
+          <a href="/papers/mvep-tcmag-comparison" class="companion-card">
+            <strong>Tokenized Cash Management Principles and the Operator-Layer Diagnostic</strong>
+            <span>How the same operator-layer diagnostic maps against a buyer-side requirements framework for tokenized corporate cash.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss on-chain rating feeds, automated collateral risk, or buyer-side diligence for tokenized products? <a href="mailto:zach@tokenization.systems?subject=Oracle%20Problem%20in%20Stablecoin%20Ratings%20-%20Discussion">zach@tokenization.systems</a></p>
+    </article>
+
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/letters">Letters</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker-and-advisory">Advisory &amp; speaking</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-newsletter" aria-labelledby="footer-newsletter-pitch">
+        <p class="footer-newsletter__pitch" id="footer-newsletter-pitch">Monthly research digest. New papers, frameworks, regulatory events.</p>
+        <form class="footer-newsletter__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+          <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
+          <button class="footer-newsletter__button" type="submit">Subscribe</button>
+        </form>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
+    </footer>
+  </main>
+
+  <script defer src="/script.js?v=236"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
