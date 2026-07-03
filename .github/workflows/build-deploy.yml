@@ -215,8 +215,40 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      # Whichever attempt actually deploys sets page_url; the || chain selects it.
+      # A failed or skipped attempt exposes an empty output and falls through.
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment-retry.outputs.page_url || steps.deployment-final.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      # actions/deploy-pages intermittently returns "Deployment failed, try again
+      # later" from the Pages backend. That is a transient infrastructure error,
+      # not a content problem: the build job has already succeeded and uploaded the
+      # artifact every time. Left un-retried, one such failure silently strands the
+      # pushed change until the next successful deploy (observed 2026-07-02:
+      # f40736f47 built clean but its deploy step failed and the change sat
+      # un-shipped for about five hours). Retry the deploy across three attempts
+      # with a short backoff. The first two attempts are continue-on-error; the
+      # third is not, so an exhausted retry chain still fails the job and a genuine
+      # persistent failure surfaces rather than passing silently.
+      - name: Deploy to GitHub Pages (attempt 1)
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Backoff before attempt 2
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+
+      - name: Deploy to GitHub Pages (attempt 2)
+        id: deployment-retry
+        if: steps.deployment.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Backoff before attempt 3
+        if: steps.deployment.outcome == 'failure' && steps.deployment-retry.outcome == 'failure'
+        run: sleep 45
+
+      - name: Deploy to GitHub Pages (attempt 3, final)
+        id: deployment-final
+        if: steps.deployment.outcome == 'failure' && steps.deployment-retry.outcome == 'failure'
         uses: actions/deploy-pages@v4
