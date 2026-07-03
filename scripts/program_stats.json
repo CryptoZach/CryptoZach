@@ -1,0 +1,42 @@
+{
+  "_comment": "Single source of truth for the homepage hero stat tiles (index.html .home-stat block). Bump a value HERE and re-deploy; scripts/check_home_stats.py fails if the hero tiles drift from this file. Each entry names the authoritative source so the value can be re-derived when the underlying research advances. Lives at scripts/ for now (in SITE-EDITOR/BULK-EXECUTOR scope); when build-time injection lands (follow-on B, handoff/dispatch/letter_count_grounding_followon_2026-07-03.md) relocate to _data/program_stats.json so Jekyll can template the hero tiles from it, and register _data/ in SITE-EDITOR scope. The federal-comment-letter count is NOT here: it is derived from published letter pages by scripts/check_letter_count.py.",
+  "home_stats": [
+    {
+      "key": "governance_protocols",
+      "value": "52",
+      "label": "Governance protocols audited",
+      "source": "B2 Governance Concentration paper: N=52 protocol cross-section (DePIN, DeFi, L1/L2 infrastructure, social tokens). Corroborated on papers/governance-concentration, papers/who-burns-the-tokens, research/index.html, docs/KEY_FINDINGS.md."
+    },
+    {
+      "key": "stablecoin_gateways",
+      "value": "19",
+      "label": "Stablecoin gateways mapped",
+      "source": "Routing the Dollar / CLII: 19 gateway entities scored across five regulatory dimensions. Corroborated on papers/routing-the-dollar, research/index.html, docs/KEY_FINDINGS.md F-A1-2. (The counterparty-network sub-analysis uses a 15-gateway subset; the headline is 19.)"
+    },
+    {
+      "key": "transfer_volume",
+      "value": "$60.6T",
+      "label": "Transfer volume analyzed",
+      "source": "Routing the Dollar: $60.6T cumulative stablecoin transfer volume across nine blockchains, Feb 2023 through Jan 2026, Artemis-filtered. Corroborated on papers/routing-the-dollar."
+    },
+    {
+      "key": "tokenized_dollar_products",
+      "value": "14",
+      "label": "Tokenized dollar products mapped",
+      "source": "MVEP (A2) consolidated fourteen-product scorecard (Exhibit 1): a nine-product sample plus five comparators. A2 METADATA repeatedly states 'all fourteen products remain Non-Equivalent.' Note: the paper's Category 5 insolvency matrix separately uses a twelve product-sample-regime count; the scorecard headline is 14."
+    },
+    {
+      "key": "depin_networks",
+      "value": "13",
+      "label": "DePIN networks studied",
+      "source": "Who Burns the Tokens: 13 DePIN protocols (10 GeoDePIN plus 3 DeVIN comparison cases). Corroborated on papers/who-burns-the-tokens."
+    },
+    {
+      "key": "onchain_months",
+      "value": "34",
+      "label": "Months of on-chain data",
+      "source": "Who Burns the Tokens: 34-month Helium longitudinal case.",
+      "flag": "AMBIGUOUS: the hero's 34 matches the Who-Burns Helium case, but Routing the Dollar reports its CLII dataset span as 35 months (Feb 2023 through Jan 2026). As a program-wide 'months of on-chain data' figure the longer dataset (35) is the more natural headline. Author to confirm which figure the hero should show; update value here if it should be 35."
+    }
+  ]
+}

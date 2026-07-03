@@ -108,4 +108,27 @@ if test "$remote" = "origin" && test -z "${SKIP_BROKEN_REF_PREPUSH:-}"; then
 	fi
 fi
 
+# (6) site-number-drift guard: block if the federal-comment-letter count or a
+# homepage hero stat is stale relative to its source of truth. Mirrors layer (5):
+# guards are called by repo path (never stranded), and are FAIL-OPEN (absent guard
+# or an internal error, exit 2, does not block) and FAIL-CLOSED only on a real
+# mismatch (exit 1). check_letter_count.py derives the count from published letter
+# pages; check_home_stats.py checks the hero tiles against scripts/program_stats.json.
+# Bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push ...   See docs/SITE_REPO_SAFETY.md.
+if test "$remote" = "origin" && test -z "${SKIP_SITE_NUMBER_PREPUSH:-}"; then
+	root=$(git rev-parse --show-toplevel 2>/dev/null)
+	for g in check_letter_count.py check_home_stats.py; do
+		test -f "$root/scripts/$g" || continue
+		python3 "$root/scripts/$g" --quiet
+		rc=$?
+		if test "$rc" -eq 1; then
+			echo >&2 "pre-push: BLOCKED by scripts/$g (a site number is stale vs its source of truth)."
+			echo >&2 "  Fix the flagged value (or bump its registry/source), or bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push origin ..."
+			exit 1
+		elif test "$rc" -eq 2; then
+			echo >&2 "pre-push: WARN scripts/$g could not run (exit 2); not blocking."
+		fi
+	done
+fi
+
 exit 0
