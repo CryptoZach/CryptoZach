@@ -35,6 +35,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Site-number consistency gate (letter count + hero stats)
+        # Build-time enforcement of the single-source-of-truth numbers: block the
+        # deploy if the federal-comment-letter count or the homepage hero-stat
+        # block drifts from its source. check_letter_count.py derives the count
+        # from published letter pages; render_home_stats.py --check verifies the
+        # marker-delimited hero block matches scripts/program_stats.json. Mirrors
+        # the site-clone pre-push guard, one step earlier and on every deploy path
+        # (incl. direct GitHub edits that skip the pre-push hook). FAIL-CLOSED on a
+        # real mismatch (exit 1), FAIL-OPEN on an internal error (exit 2).
+        shell: bash
+        run: |
+          run_check() {
+            python3 "$@"
+            rc=$?
+            if [ "$rc" -eq 1 ]; then echo "::error::site-number drift: $*"; exit 1; fi
+            if [ "$rc" -eq 2 ]; then echo "::warning::$* could not run (exit 2); not blocking"; fi
+          }
+          run_check scripts/check_letter_count.py --quiet
+          run_check scripts/render_home_stats.py --check
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
