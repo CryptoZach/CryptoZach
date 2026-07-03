@@ -1,22 +1,12 @@
 name: Build and Deploy to GitHub Pages
 
-# Manual-trigger (workflow_dispatch) only during initial adoption. Once
-# validated end-to-end in a trial run, uncomment the push trigger block
-# to enable automatic deploys on every push to main. Until then, the
-# current GitHub Pages auto-build continues to serve the site, and this
-# workflow is a drop-in replacement available on demand.
-#
-# Activation checklist (author-manual):
-# 1. Run this workflow via GitHub Actions UI (workflow_dispatch).
-# 2. Verify the built _site/ matches expected output (diff vs current
-#    production; spot-check a few pages).
-# 3. Verify the deploy step successfully uploads and publishes.
-# 4. In repo Settings > Pages, change source from "Deploy from a
-#    branch" to "GitHub Actions".
-# 5. Uncomment the `push` block below.
-# 6. Commit and push the push-trigger activation as a separate commit.
-#
-# See handoff/ for the activation memo drafted alongside this workflow.
+# Active deploy path for tokenization.systems. Every push to main (and manual
+# workflow_dispatch) builds the Jekyll site, post-processes CSS, gates on broken
+# image references, and deploys to GitHub Pages. The Pages source is set to
+# "GitHub Actions" (repo Settings > Pages; build_type "workflow"). The deploy
+# step is retry-wrapped (see the deploy job): the Pages backend intermittently
+# returns a transient "Deployment failed, try again later," so a single attempt
+# is not reliable.
 
 on:
   push:
@@ -43,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -52,7 +42,7 @@ jobs:
           bundler-cache: true
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -205,7 +195,7 @@ jobs:
           PY
 
       - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
@@ -232,7 +222,7 @@ jobs:
       - name: Deploy to GitHub Pages (attempt 1)
         id: deployment
         continue-on-error: true
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       - name: Backoff before attempt 2
         if: steps.deployment.outcome == 'failure'
@@ -242,7 +232,7 @@ jobs:
         id: deployment-retry
         if: steps.deployment.outcome == 'failure'
         continue-on-error: true
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       - name: Backoff before attempt 3
         if: steps.deployment.outcome == 'failure' && steps.deployment-retry.outcome == 'failure'
@@ -251,4 +241,4 @@ jobs:
       - name: Deploy to GitHub Pages (attempt 3, final)
         id: deployment-final
         if: steps.deployment.outcome == 'failure' && steps.deployment-retry.outcome == 'failure'
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
