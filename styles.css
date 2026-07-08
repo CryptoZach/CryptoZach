@@ -17369,43 +17369,10 @@ main.resume-profile .resume-related-profiles a{
     color: var(--accent);
   }
 
-  /* Separator + "Connect" eyebrow before the social row */
-  #nav-mobile .nav-mobile-social{
-    position: relative;
-    margin-top: var(--space-lg);
-    padding-top: var(--space-lg);
-    gap: var(--space-xs);
-  }
-
-  #nav-mobile .nav-mobile-social::before{
-    content: "Connect";
-    display: block;
-    width: 100%;
-    margin-bottom: var(--space-sm);
-    font-size:var(--text-2xs);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--accent) 80%, var(--muted));
-  }
-
-  /* Horizontal divider above the social row, gradient fade at both ends
-     so it doesn't look like a hard cut edge */
-  #nav-mobile .nav-mobile-social::after{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      color-mix(in srgb, var(--line) 95%, transparent) 20%,
-      color-mix(in srgb, var(--line) 95%, transparent) 80%,
-      transparent 100%
-    );
-  }
+  /* The "Connect" eyebrow now comes from the HTML .nav-directory__label
+     (parallel to Research / Navigate), so no ::before label or ::after
+     divider here: those predated the three-column directory and produced a
+     duplicate blue "Connect" plus an inconsistent divider on this one column. */
 
   /* Social icons: chip-style background on hover for clearer tap feedback */
   #nav-mobile .nav-mobile-social .header-social-link{
