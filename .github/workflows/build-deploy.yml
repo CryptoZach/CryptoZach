@@ -35,12 +35,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Site-number consistency gate (letter count + hero stats)
-        # Build-time enforcement of the single-source-of-truth numbers: block the
-        # deploy if the federal-comment-letter count or the homepage hero-stat
-        # block drifts from its source. check_letter_count.py derives the count
-        # from published letter pages; render_home_stats.py --check verifies the
-        # marker-delimited hero block matches scripts/program_stats.json. Mirrors
+      - name: Site consistency gate (letter count + hero stats + chrome)
+        # Build-time enforcement of the single-source-of-truth surfaces: block the
+        # deploy if the federal-comment-letter count, the homepage hero-stat
+        # block, or a page's stamped header/footer chrome drifts from its source.
+        # check_letter_count.py derives the count from published letter pages;
+        # render_home_stats.py --check verifies the marker-delimited hero block
+        # matches scripts/program_stats.json; render_chrome.py --check verifies
+        # every nav-bearing page's chrome regions match _partials/. Mirrors
         # the site-clone pre-push guard, one step earlier and on every deploy path
         # (incl. direct GitHub edits that skip the pre-push hook). FAIL-CLOSED on a
         # real mismatch (exit 1), FAIL-OPEN on an internal error (exit 2).
@@ -50,11 +52,12 @@ jobs:
             # `if` guards the call from set -e so a non-zero exit is captured, not
             # fatal: exit 1 blocks (real drift), exit >=2 fail-opens (guard error).
             if python3 "$@"; then rc=0; else rc=$?; fi
-            if [ "$rc" -eq 1 ]; then echo "::error::site-number drift: $*"; exit 1; fi
+            if [ "$rc" -eq 1 ]; then echo "::error::site consistency drift: $*"; exit 1; fi
             if [ "$rc" -ge 2 ]; then echo "::warning::$* could not run (exit $rc); not blocking"; fi
           }
           run_check scripts/check_letter_count.py --quiet
           run_check scripts/render_home_stats.py --check
+          run_check scripts/render_chrome.py --check
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
