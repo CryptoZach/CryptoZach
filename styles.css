@@ -52,6 +52,44 @@
   --brand-amber:#d97706;
   --brand-rose:#e11d48;
   --brand-cyan:#0891b2;
+  --brand-amber-bright:#fbbf24;
+  /* Status spectrum. The recurring published/public/live/draft state colors,
+     promoted from ~109 hex literals (2026-07-10 sweep). This stylesheet themes
+     via explicit [data-theme="dark"] override RULES, not flipping variables,
+     so each token is theme-invariant and dark rules reference the -dark/-glow
+     sibling explicitly; a literal-to-var swap therefore cannot shift any
+     rendered pixel. (Folding each light/dark sibling pair into one flipping
+     token is a follow-on that first needs the duplicate-selector dedup triage:
+     several base rules, e.g. .copy.copied and .newsletter-thanks, have no dark
+     override today and would change appearance under flipping tokens.)
+     Pairings by badge generation:
+       muted family (status pills, best-first-read, public badges, copied):
+         light --status-positive tint/border, --status-positive-ink text;
+         dark  --status-positive-dark (older olive) or --status-positive-glow
+               (newer soft neon that glows on a low-opacity tint).
+       vivid family (.badge-sm.badge-status-published): DELIBERATELY a
+         brighter, more vivid green than the muted family so the small badge
+         stays scannable; an accessibility choice, do NOT normalize it into
+         --status-positive (see the badge comment near the .badge-sm rules).
+       open family (.badge-status-published / .badge-access-open solid chips).
+       live family (contact response dot + pulse, guidance glow).
+       draft (amber): shares the bright-amber accent with the brand spectrum
+         via --brand-amber-bright. */
+  --status-positive:#16a34a;
+  --status-positive-ink:#15803d;
+  --status-positive-dark:#7a8650;
+  --status-positive-glow:#4ade80;
+  --status-published-vivid:#16c60c;
+  --status-published-vivid-ink:#0d910a;
+  --status-published-vivid-glow:#5cf08a;
+  --status-open-bg:#e6f4ea;
+  --status-open-ink:#137333;
+  --status-open-ink-dark:#f0f4e8;
+  --status-live:#22c55e;
+  --status-live-soft:#34d399;
+  --status-live-bright:#6ee7b7;
+  --status-live-dark:#5c6738;
+  --status-draft:var(--brand-amber-bright);
   --shadow-sm:0 1px 4px rgba(0,0,0,.08);
   --shadow:0 4px 24px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
   --shadow-lg:0 12px 48px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
@@ -1006,18 +1044,18 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li::be
 
 @keyframes contactArrowPulse{
   0%, 100%{
-    color:#34d399;
+    color:var(--status-live-soft);
     opacity:1;
-    text-shadow:0 0 4px color-mix(in srgb, #34d399 35%, transparent),
-                0 0 10px color-mix(in srgb, #34d399 20%, transparent);
+    text-shadow:0 0 4px color-mix(in srgb, var(--status-live-soft) 35%, transparent),
+                0 0 10px color-mix(in srgb, var(--status-live-soft) 20%, transparent);
     transform:translateX(0);
   }
   50%{
-    color:#6ee7b7;
+    color:var(--status-live-bright);
     opacity:0.85;
-    text-shadow:0 0 10px color-mix(in srgb, #34d399 70%, transparent),
-                0 0 20px color-mix(in srgb, #34d399 45%, transparent),
-                0 0 30px color-mix(in srgb, #34d399 25%, transparent);
+    text-shadow:0 0 10px color-mix(in srgb, var(--status-live-soft) 70%, transparent),
+                0 0 20px color-mix(in srgb, var(--status-live-soft) 45%, transparent),
+                0 0 30px color-mix(in srgb, var(--status-live-soft) 25%, transparent);
     transform:translateX(2px);
   }
 }
@@ -1031,9 +1069,9 @@ body.contact-page .contact-page-foreground > .contact-page .guidance-list li:foc
   body.contact-page .contact-page-foreground > .contact-page .guidance-list li:hover::before,
   body.contact-page .contact-page-foreground > .contact-page .guidance-list li:focus-within::before{
     animation:none;
-    color:#34d399;
+    color:var(--status-live-soft);
     opacity:1;
-    text-shadow:0 0 6px color-mix(in srgb, #34d399 35%, transparent);
+    text-shadow:0 0 6px color-mix(in srgb, var(--status-live-soft) 35%, transparent);
   }
 }
 
@@ -3143,7 +3181,7 @@ section:has(.speaker-jump-to){
   border-color:rgba(255,255,255,.18);
 }
 :root[data-theme="dark"] .response-dot{
-  background:#5c6738;
+  background:var(--status-live-dark);
   animation-name:response-pulse-dark;
 }
 @keyframes response-pulse-dark{
@@ -4732,14 +4770,14 @@ section:has(.speaker-jump-to){
   white-space:nowrap;
 }
 .status--published{
-  border:1px solid color-mix(in srgb, #16a34a 30%, var(--line));
-  background:color-mix(in srgb, #16a34a 8%, transparent);
-  color:#16a34a;
+  border:1px solid color-mix(in srgb, var(--status-positive) 30%, var(--line));
+  background:color-mix(in srgb, var(--status-positive) 8%, transparent);
+  color:var(--status-positive);
 }
 :root[data-theme="dark"] .status--published{
-  border-color:color-mix(in srgb, #7a8650 30%, var(--line));
-  background:color-mix(in srgb, #7a8650 10%, transparent);
-  color:#7a8650;
+  border-color:color-mix(in srgb, var(--status-positive-dark) 30%, var(--line));
+  background:color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
+  color:var(--status-positive-dark);
 }
 .status--ssrn{
   border:1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
@@ -4752,9 +4790,9 @@ section:has(.speaker-jump-to){
   color:var(--brand-amber);
 }
 :root[data-theme="dark"] .status--draft{
-  border-color:color-mix(in srgb, #fbbf24 30%, var(--line));
-  background:color-mix(in srgb, #fbbf24 10%, transparent);
-  color:#fbbf24;
+  border-color:color-mix(in srgb, var(--status-draft) 30%, var(--line));
+  background:color-mix(in srgb, var(--status-draft) 10%, transparent);
+  color:var(--status-draft);
 }
 
 .writing-date{
@@ -4902,7 +4940,7 @@ section:has(.speaker-jump-to){
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#16a34a;
+  background:var(--status-positive);
   flex-shrink:0;
   animation:response-pulse 2s ease-in-out infinite;
 }
@@ -5171,9 +5209,9 @@ section:has(.speaker-jump-to){
   outline-offset:2px;
 }
 .copy.copied{
-  border-color:color-mix(in srgb, #16a34a 40%, var(--line));
-  color:#16a34a;
-  background:color-mix(in srgb, #16a34a 8%, var(--panel));
+  border-color:color-mix(in srgb, var(--status-positive) 40%, var(--line));
+  color:var(--status-positive);
+  background:color-mix(in srgb, var(--status-positive) 8%, var(--panel));
 }
 
 /* ── Resume hub ── */
@@ -8628,24 +8666,24 @@ footer.site-footer .footer-tagline{
   color: var(--accent);
 }
 .badge-best-first-read{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
-  background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  border-color: color-mix(in srgb, var(--status-positive) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 10%, transparent);
+  color: var(--status-positive);
 }
 :root[data-theme="dark"] .badge-best-first-read{
-  color:#7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color:var(--status-positive-dark);
+  border-color: color-mix(in srgb, var(--status-positive-dark) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
 }
 .badge-public{
-  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
-  background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #15803d;
+  border-color: color-mix(in srgb, var(--status-positive) 32%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 10%, transparent);
+  color: var(--status-positive-ink);
 }
 :root[data-theme="dark"] .badge-public{
-  color: #4ade80;
-  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
-  background: color-mix(in srgb, #4ade80 10%, transparent);
+  color: var(--status-positive-glow);
+  border-color: color-mix(in srgb, var(--status-positive-glow) 28%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-glow) 10%, transparent);
 }
 .badge-request{
   border-color: color-mix(in srgb, var(--brand-amber) 30%, var(--line));
@@ -8653,9 +8691,9 @@ footer.site-footer .footer-tagline{
   color: var(--brand-amber);
 }
 :root[data-theme="dark"] .badge-request{
-  color:#fbbf24;
-  border-color: color-mix(in srgb, #fbbf24 30%, var(--line));
-  background: color-mix(in srgb, #fbbf24 10%, transparent);
+  color:var(--status-draft);
+  border-color: color-mix(in srgb, var(--status-draft) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-draft) 10%, transparent);
 }
 .badge-draft{
   border-color: color-mix(in srgb, var(--brand-amber) 30%, var(--line));
@@ -8663,9 +8701,9 @@ footer.site-footer .footer-tagline{
   color: var(--brand-amber);
 }
 :root[data-theme="dark"] .badge-draft{
-  color:#fbbf24;
-  border-color: color-mix(in srgb, #fbbf24 30%, var(--line));
-  background: color-mix(in srgb, #fbbf24 10%, transparent);
+  color:var(--status-draft);
+  border-color: color-mix(in srgb, var(--status-draft) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-draft) 10%, transparent);
 }
 .program-papers{ display: flex; flex-direction: column; gap: var(--space-lg); }
 .program-paper-card{ position: relative; padding-top: var(--space-md); }
@@ -9522,27 +9560,27 @@ footer.site-footer .footer-tagline{
   .card-badges .badge{ white-space: normal; }
 }
 .badge-status-submitted{ background: #e8f0fe; color: #1a56db; }
-.badge-status-published{ background: #e6f4ea; color: #137333; }
+.badge-status-published{ background: var(--status-open-bg); color: var(--status-open-ink); }
 .badge-status-draft{ background: #fef7e0; color: #b45309; }
 .badge-status-progress{ background: #f0f0f0; color: #555; }
 .badge-venue-ssrn,
 .badge-venue-medium,
 .badge-venue-journal,
 .badge-venue-conference{ background: #f5f5f5; color: #444; }
-.badge-access-open{ background: #e6f4ea; color: #137333; }
+.badge-access-open{ background: var(--status-open-bg); color: var(--status-open-ink); }
 .badge-access-preprint{ background: #e8f0fe; color: #1a56db; }
 .badge-access-request{ background: #fef7e0; color: #b45309; }
 .badge-access-code,
 .badge-access-data{ background: #f5f5f5; color: #444; }
 :root[data-theme="dark"] .badge-status-submitted{ background: rgba(26,86,219,.25); color: #7eb8ff; }
-:root[data-theme="dark"] .badge-status-published{ background: rgba(96,108,62,.42); color: #f0f4e8; }
+:root[data-theme="dark"] .badge-status-published{ background: rgba(96,108,62,.42); color: var(--status-open-ink-dark); }
 :root[data-theme="dark"] .badge-status-draft{ background: rgba(180,83,9,.25); color: #f0b87a; }
 :root[data-theme="dark"] .badge-status-progress{ background: rgba(255,255,255,.08); color: var(--muted); }
 :root[data-theme="dark"] .badge-venue-ssrn,
 :root[data-theme="dark"] .badge-venue-medium,
 :root[data-theme="dark"] .badge-venue-journal,
 :root[data-theme="dark"] .badge-venue-conference{ background: rgba(255,255,255,.08); color: var(--text-soft); }
-:root[data-theme="dark"] .badge-access-open{ background: rgba(96,108,62,.42); color: #f0f4e8; }
+:root[data-theme="dark"] .badge-access-open{ background: rgba(96,108,62,.42); color: var(--status-open-ink-dark); }
 :root[data-theme="dark"] .badge-access-preprint{ background: rgba(26,86,219,.25); color: #7eb8ff; }
 :root[data-theme="dark"] .badge-access-request{ background: rgba(180,83,9,.25); color: #f0b87a; }
 :root[data-theme="dark"] .badge-access-code,
@@ -10776,27 +10814,27 @@ footer.site-footer .footer-tagline{
 }
 
 .badge-best-first-read{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
-  background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  border-color: color-mix(in srgb, var(--status-positive) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 10%, transparent);
+  color: var(--status-positive);
 }
 
 :root[data-theme="dark"] .badge-best-first-read{
-  color:#7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color:var(--status-positive-dark);
+  border-color: color-mix(in srgb, var(--status-positive-dark) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
 }
 
 .badge-public{
-  border-color: color-mix(in srgb, #16a34a 30%, var(--line));
-  background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #16a34a;
+  border-color: color-mix(in srgb, var(--status-positive) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 10%, transparent);
+  color: var(--status-positive);
 }
 
 :root[data-theme="dark"] .badge-public{
-  color:#7a8650;
-  border-color: color-mix(in srgb, #7a8650 30%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color:var(--status-positive-dark);
+  border-color: color-mix(in srgb, var(--status-positive-dark) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
 }
 
 .badge-request{
@@ -10806,9 +10844,9 @@ footer.site-footer .footer-tagline{
 }
 
 :root[data-theme="dark"] .badge-request{
-  color:#fbbf24;
-  border-color: color-mix(in srgb, #fbbf24 30%, var(--line));
-  background: color-mix(in srgb, #fbbf24 10%, transparent);
+  color:var(--status-draft);
+  border-color: color-mix(in srgb, var(--status-draft) 30%, var(--line));
+  background: color-mix(in srgb, var(--status-draft) 10%, transparent);
 }
 
 .featured-thesis{
@@ -11657,17 +11695,17 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
 }
 
 .badge-best-first-read{
-  border-color:color-mix(in srgb, #16a34a 35%, var(--line));
-  background:color-mix(in srgb, #16a34a 12%, transparent);
-  color:#16a34a;
-  box-shadow:0 0 0 1px color-mix(in srgb, #16a34a 12%, transparent);
+  border-color:color-mix(in srgb, var(--status-positive) 35%, var(--line));
+  background:color-mix(in srgb, var(--status-positive) 12%, transparent);
+  color:var(--status-positive);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--status-positive) 12%, transparent);
 }
 
 :root[data-theme="dark"] .badge-best-first-read{
-  color:#7a8650;
-  border-color:color-mix(in srgb, #7a8650 35%, var(--line));
-  background:color-mix(in srgb, #7a8650 10%, transparent);
-  box-shadow:0 0 0 1px color-mix(in srgb, #7a8650 10%, transparent);
+  color:var(--status-positive-dark);
+  border-color:color-mix(in srgb, var(--status-positive-dark) 35%, var(--line));
+  background:color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
 }
 
 .featured-actions{
@@ -12165,7 +12203,7 @@ body.page-focus.structure-page #framework-stack .explainer-section h3{
   font-size: 0.85rem;
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
   font-weight: 600;
-  color: #16a34a;
+  color: var(--status-positive);
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -12922,15 +12960,15 @@ main > section:first-of-type{
 
 /* Best first read */
 .badge-best-first-read{
-  border-color: color-mix(in srgb, #16a34a 36%, var(--line));
-  background: color-mix(in srgb, #16a34a 12%, transparent);
-  color: #16a34a;
+  border-color: color-mix(in srgb, var(--status-positive) 36%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 12%, transparent);
+  color: var(--status-positive);
 }
 
 :root[data-theme="dark"] .badge-best-first-read{
-  color: #7a8650;
-  border-color: color-mix(in srgb, #7a8650 36%, var(--line));
-  background: color-mix(in srgb, #7a8650 10%, transparent);
+  color: var(--status-positive-dark);
+  border-color: color-mix(in srgb, var(--status-positive-dark) 36%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-dark) 10%, transparent);
 }
 
 /* Public / published: non-dominant neon green. Light theme uses a
@@ -12944,18 +12982,18 @@ main > section:first-of-type{
 .badge.badge-public,
 .badge-sm.badge-public,
 .status--published{
-  border-color: color-mix(in srgb, #16a34a 32%, var(--line));
-  background: color-mix(in srgb, #16a34a 10%, transparent);
-  color: #15803d;
+  border-color: color-mix(in srgb, var(--status-positive) 32%, var(--line));
+  background: color-mix(in srgb, var(--status-positive) 10%, transparent);
+  color: var(--status-positive-ink);
 }
 
 :root[data-theme="dark"] .badge-public,
 :root[data-theme="dark"] .badge.badge-public,
 :root[data-theme="dark"] .badge-sm.badge-public,
 :root[data-theme="dark"] .status--published{
-  color: #4ade80;
-  border-color: color-mix(in srgb, #4ade80 28%, var(--line));
-  background: color-mix(in srgb, #4ade80 10%, transparent);
+  color: var(--status-positive-glow);
+  border-color: color-mix(in srgb, var(--status-positive-glow) 28%, var(--line));
+  background: color-mix(in srgb, var(--status-positive-glow) 10%, transparent);
 }
 
 /* Passed peer review: deliberately a BRIGHTER, more vivid green than the
@@ -12965,17 +13003,17 @@ main > section:first-of-type{
 .badge-status-published,
 .badge.badge-status-published,
 .badge-sm.badge-status-published{
-  border-color: color-mix(in srgb, #16c60c 42%, var(--line));
-  background: color-mix(in srgb, #16c60c 16%, transparent);
-  color: #0d910a;
+  border-color: color-mix(in srgb, var(--status-published-vivid) 42%, var(--line));
+  background: color-mix(in srgb, var(--status-published-vivid) 16%, transparent);
+  color: var(--status-published-vivid-ink);
 }
 
 :root[data-theme="dark"] .badge-status-published,
 :root[data-theme="dark"] .badge.badge-status-published,
 :root[data-theme="dark"] .badge-sm.badge-status-published{
-  color: #5cf08a;
-  border-color: color-mix(in srgb, #5cf08a 34%, var(--line));
-  background: color-mix(in srgb, #5cf08a 14%, transparent);
+  color: var(--status-published-vivid-glow);
+  border-color: color-mix(in srgb, var(--status-published-vivid-glow) 34%, var(--line));
+  background: color-mix(in srgb, var(--status-published-vivid-glow) 14%, transparent);
 }
 
 /* Available on request / draft / requestable */
@@ -12988,9 +13026,9 @@ main > section:first-of-type{
 
 :root[data-theme="dark"] .badge-request,
 :root[data-theme="dark"] .status--draft{
-  color: #fbbf24;
-  border-color: color-mix(in srgb, #fbbf24 34%, var(--line));
-  background: color-mix(in srgb, #fbbf24 10%, transparent);
+  color: var(--status-draft);
+  border-color: color-mix(in srgb, var(--status-draft) 34%, var(--line));
+  background: color-mix(in srgb, var(--status-draft) 10%, transparent);
 }
 
 /* Keep badge rows from crowding adjacent titles */
@@ -14560,7 +14598,7 @@ header.scrolled {
   border-top-color: var(--brand-amber); /* amber-600 */
 }
 .card--accent-d .card-eyebrow{
-  color: #fbbf24; /* amber-400 for dark theme */
+  color: var(--brand-amber-bright); /* amber-400 for dark theme */
 }
 :root:not([data-theme="dark"]) .card--accent-d .card-eyebrow{
   color: #b45309;
@@ -15004,7 +15042,7 @@ header.scrolled {
   border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(4):hover{
-  border-left-color: #fbbf24;
+  border-left-color: var(--brand-amber-bright);
 }
 
 #role-paths .role-pills a.role-pill:nth-child(5){
@@ -15368,7 +15406,7 @@ body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-
   border-left-color: color-mix(in srgb, var(--brand-amber) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(4):hover{
-  border-left-color: #fbbf24;
+  border-left-color: var(--brand-amber-bright);
 }
 
 /* Title typography refinement */
@@ -18677,10 +18715,10 @@ body.contact-page .contact-page-foreground > .contact-page .response-dot{
       rgba(255, 255, 255, 0.1) 30%,
       transparent 55%
     ),
-    #22c55e;
+    var(--status-live);
   box-shadow:
-    0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
-    0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+    0 0 0 0 color-mix(in srgb, var(--status-live) 75%, transparent),
+    0 0 8px 0 color-mix(in srgb, var(--status-live) 55%, transparent),
     inset -1px -1px 1px rgba(0, 0, 0, 0.35),
     inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   animation: contact-response-pulse-v2 2.4s ease-out infinite;
@@ -18689,25 +18727,25 @@ body.contact-page .contact-page-foreground > .contact-page .response-dot{
 @keyframes contact-response-pulse-v2{
   0%{
     box-shadow:
-      0 0 0 0 color-mix(in srgb, #22c55e 75%, transparent),
-      0 0 0 0 color-mix(in srgb, #22c55e 40%, transparent),
-      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      0 0 0 0 color-mix(in srgb, var(--status-live) 75%, transparent),
+      0 0 0 0 color-mix(in srgb, var(--status-live) 40%, transparent),
+      0 0 8px 0 color-mix(in srgb, var(--status-live) 55%, transparent),
       inset -1px -1px 1px rgba(0, 0, 0, 0.35),
       inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
   50%{
     box-shadow:
-      0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 0 11px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 10px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      0 0 0 6px color-mix(in srgb, var(--status-live) 0%, transparent),
+      0 0 0 11px color-mix(in srgb, var(--status-live) 0%, transparent),
+      0 0 10px 0 color-mix(in srgb, var(--status-live) 55%, transparent),
       inset -1px -1px 1px rgba(0, 0, 0, 0.35),
       inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
   100%{
     box-shadow:
-      0 0 0 6px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 0 12px color-mix(in srgb, #22c55e 0%, transparent),
-      0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent),
+      0 0 0 6px color-mix(in srgb, var(--status-live) 0%, transparent),
+      0 0 0 12px color-mix(in srgb, var(--status-live) 0%, transparent),
+      0 0 8px 0 color-mix(in srgb, var(--status-live) 55%, transparent),
       inset -1px -1px 1px rgba(0, 0, 0, 0.35),
       inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.15);
   }
@@ -18716,7 +18754,7 @@ body.contact-page .contact-page-foreground > .contact-page .response-dot{
 @media (prefers-reduced-motion: reduce){
   body.contact-page .contact-page-foreground > .contact-page .response-dot{
     animation: none;
-    box-shadow: 0 0 8px 0 color-mix(in srgb, #22c55e 55%, transparent);
+    box-shadow: 0 0 8px 0 color-mix(in srgb, var(--status-live) 55%, transparent);
   }
 }
 
@@ -20334,7 +20372,7 @@ footer.site-footer .footer-newsletter__privacy a:hover{
    to substack.com). Fade-in green; sized to roughly the form footprint so
    layout does not jump when the form is swapped out. */
 .newsletter-thanks{
-  color:#16a34a;
+  color:var(--status-positive);
   font-weight:600;
   font-size:1rem;
   line-height:1.4;
