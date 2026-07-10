@@ -45,7 +45,7 @@ Site content and infrastructure only:
 | `index.html`, `404.html`, `*.html` (root) | Top-level landing pages |
 | `papers/`, `research/`, `frameworks/`, `overview/`, `resume/`, `resumes/`, `speaker/`, `speaker-and-advisory/`, `contact/`, `letters/` | Site sections |
 | `assets/`, `icons/`, `ink-brand-kit/`, `ink-logos/`, `Publication-Images/` | Image and brand assets |
-| `script.js`, `styles.css`, `sitemap.xml`, `robots.txt`, `_redirects`, `CNAME`, `favicon.png`, `favicon.svg`, `apple-touch-icon.png` | Site infra |
+| `script.js`, `styles.css`, `sitemap.xml`, `robots.txt`, `_redirects`, `CNAME`, `favicon.png`, `apple-touch-icon.png` | Site infra |
 | `_config.yml`, `Gemfile`, `package.json`, `package-lock.json`, `purgecss.config.cjs` | Build config |
 | `.github/workflows/build-deploy.yml` | CI deploy (guarded to run only on `CryptoZach/CryptoZach`) |
 | `scripts/` (4 files only) | Build tooling: `inline-critical-css.mjs`, `build-matrix-icons.mjs`, `build_matrix_icons.py`, `check-responsive.js` |
