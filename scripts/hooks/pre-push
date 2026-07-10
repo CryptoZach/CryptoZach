@@ -131,4 +131,22 @@ if test "$remote" = "origin" && test -z "${SKIP_SITE_NUMBER_PREPUSH:-}"; then
 	done
 fi
 
+# (7) added-orphan publication-image guard: block if the push range ADDS an image under
+# Publication-Images/ (or exhibits/) that nothing in the pushed commit references (born
+# orphan: shipped weight with no page). Only ADDED images are judged, so it wired safely
+# the moment the standing orphan set was dispositioned (2026-07-10 author decision; the
+# last 7 removed). The check body is scripts/hooks/cz-added-orphan-prepush.py (called by
+# repo path, so it is never stranded); fail-soft on git errors, mirroring layer (5).
+# Bypass: SKIP_ADDED_ORPHAN_PREPUSH=1 git push ...
+if test "$remote" = "origin" && test -z "${SKIP_ADDED_ORPHAN_PREPUSH:-}"; then
+	aoguard="$(git rev-parse --show-toplevel 2>/dev/null)/scripts/hooks/cz-added-orphan-prepush.py"
+	if test -f "$aoguard"; then
+		echo "$push_refs" | while read local_ref local_oid remote_ref remote_oid; do
+			test -z "$local_ref" && continue
+			test "$local_oid" = "$zero" && continue
+			python3 "$aoguard" "$local_oid" "$remote_oid" || exit 1
+		done || exit 1
+	fi
+fi
+
 exit 0
