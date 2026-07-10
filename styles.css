@@ -52,6 +52,18 @@
   --brand-amber:#d97706;
   --brand-rose:#e11d48;
   --brand-cyan:#0891b2;
+  /* Track accent mapping (2026-07-10 author decision; DEC record pending in the workflow
+     repo's DECISION_LOG): research tracks are accent-coded on wayfinding surfaces only
+     (track badges, track chips, convergence column tints), never on CTAs (one blue CTA
+     family site-wide, see --accent-cta above). The track-to-color assignment is declared
+     HERE once; per-surface rules reference the track token, not the brand primitive.
+     A future Track C claims its token here first. */
+  --track-a:var(--brand-blue);
+  --track-b:var(--brand-teal);
+  /* Teal-400 companion to --brand-teal for hover borders and dark-theme eyebrow contrast
+     (the per-theme teal tuning the brand-spectrum note anticipated); absorbs the former
+     teal-400 hex literals. */
+  --brand-teal-bright:#2dd4bf;
   --brand-amber-bright:#fbbf24;
   /* Status spectrum. The recurring published/public/live/draft state colors,
      promoted from ~109 hex literals (2026-07-10 sweep). This stylesheet themes
@@ -14598,7 +14610,7 @@ header.scrolled {
   border-top-color: var(--brand-teal); /* teal-600 */
 }
 .card--accent-b .card-eyebrow{
-  color: #2dd4bf; /* teal-400; adjusted for dark theme contrast */
+  color: var(--brand-teal-bright); /* teal-400; adjusted for dark theme contrast */
 }
 :root:not([data-theme="dark"]) .card--accent-b .card-eyebrow{
   color: var(--brand-teal);
@@ -15046,7 +15058,7 @@ header.scrolled {
   border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 #role-paths .role-pills a.role-pill:nth-child(2):hover{
-  border-left-color: #2dd4bf;
+  border-left-color: var(--brand-teal-bright);
 }
 
 #role-paths .role-pills a.role-pill:nth-child(3){
@@ -15410,7 +15422,7 @@ body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-
   border-left-color: color-mix(in srgb, var(--brand-teal) 55%, var(--line));
 }
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(2):hover{
-  border-left-color: #2dd4bf;
+  border-left-color: var(--brand-teal-bright);
 }
 
 body.contact-page .contact-page-foreground > .contact-page .route-cards a.route-card:nth-child(3){
@@ -17252,17 +17264,17 @@ main.resume-profile .resume-related-profiles a{
 
 /* Track A variant: blue accent (dollar / stablecoin infrastructure) */
 .paper-track-badge--a{
-  border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--line));
-  background: color-mix(in srgb, var(--brand-blue) 9%, var(--panel));
-  color: color-mix(in srgb, var(--brand-blue) 78%, var(--text));
+  border-color: color-mix(in srgb, var(--track-a) 45%, var(--line));
+  background: color-mix(in srgb, var(--track-a) 9%, var(--panel));
+  color: color-mix(in srgb, var(--track-a) 78%, var(--text));
 }
 
 /* Track B variant: teal accent (DePIN / tokenomics) — contrasts Track A
    without colliding with the policy / blue rotation on other surfaces. */
 .paper-track-badge--b{
-  border-color: color-mix(in srgb, var(--brand-teal) 45%, var(--line));
-  background: color-mix(in srgb, var(--brand-teal) 9%, var(--panel));
-  color: color-mix(in srgb, var(--brand-teal) 78%, var(--text));
+  border-color: color-mix(in srgb, var(--track-b) 45%, var(--line));
+  background: color-mix(in srgb, var(--track-b) 9%, var(--panel));
+  color: color-mix(in srgb, var(--track-b) 78%, var(--text));
 }
 
 /* Mobile: tighten padding + reduce badge text size */
@@ -17306,14 +17318,14 @@ main.resume-profile .resume-related-profiles a{
   flex-shrink: 0;
 }
 .paper-track-chip--a{
-  border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--line));
-  background: color-mix(in srgb, var(--brand-blue) 9%, var(--panel));
-  color: color-mix(in srgb, var(--brand-blue) 78%, var(--text));
+  border-color: color-mix(in srgb, var(--track-a) 45%, var(--line));
+  background: color-mix(in srgb, var(--track-a) 9%, var(--panel));
+  color: color-mix(in srgb, var(--track-a) 78%, var(--text));
 }
 .paper-track-chip--b{
-  border-color: color-mix(in srgb, var(--brand-teal) 45%, var(--line));
-  background: color-mix(in srgb, var(--brand-teal) 9%, var(--panel));
-  color: color-mix(in srgb, var(--brand-teal) 78%, var(--text));
+  border-color: color-mix(in srgb, var(--track-b) 45%, var(--line));
+  background: color-mix(in srgb, var(--track-b) 9%, var(--panel));
+  color: color-mix(in srgb, var(--track-b) 78%, var(--text));
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -17944,12 +17956,12 @@ body.letters-landing .companion-card .card-meta{
 /* Column tinting: Track A (column 2) blue; Track B (column 3) teal */
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(2),
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(2){
-  background: color-mix(in srgb, var(--brand-blue) 5%, var(--panel)) !important;
+  background: color-mix(in srgb, var(--track-a) 5%, var(--panel)) !important;
 }
 
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(odd) td:nth-child(3),
 .research-library-page #cross-track-convergence .convergence-table tbody tr:nth-child(even) td:nth-child(3){
-  background: color-mix(in srgb, var(--brand-teal) 5%, var(--panel)) !important;
+  background: color-mix(in srgb, var(--track-b) 5%, var(--panel)) !important;
 }
 
 /* Header row: column-coded top-bar accent (subtle 2px top border per
@@ -17957,19 +17969,19 @@ body.letters-landing .companion-card .card-meta{
 .research-library-page #cross-track-convergence .convergence-table thead th:nth-child(2){
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--brand-blue) 14%, var(--panel)) 0%,
-    color-mix(in srgb, var(--brand-blue) 8%, var(--panel)) 100%
+    color-mix(in srgb, var(--track-a) 14%, var(--panel)) 0%,
+    color-mix(in srgb, var(--track-a) 8%, var(--panel)) 100%
   );
-  border-bottom-color: color-mix(in srgb, var(--brand-blue) 65%, var(--line));
+  border-bottom-color: color-mix(in srgb, var(--track-a) 65%, var(--line));
 }
 
 .research-library-page #cross-track-convergence .convergence-table thead th:nth-child(3){
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--brand-teal) 14%, var(--panel)) 0%,
-    color-mix(in srgb, var(--brand-teal) 8%, var(--panel)) 100%
+    color-mix(in srgb, var(--track-b) 14%, var(--panel)) 0%,
+    color-mix(in srgb, var(--track-b) 8%, var(--panel)) 100%
   );
-  border-bottom-color: color-mix(in srgb, var(--brand-teal) 65%, var(--line));
+  border-bottom-color: color-mix(in srgb, var(--track-b) 65%, var(--line));
 }
 
 /* Row dimension labels (th[scope="row"]): bump letter-spacing, keep
@@ -17994,10 +18006,10 @@ body.letters-landing .companion-card .card-meta{
 
 /* Column-matched strong-label tint: Track A blue, Track B teal */
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(2) strong{
-  color: color-mix(in srgb, var(--brand-blue) 30%, var(--text));
+  color: color-mix(in srgb, var(--track-a) 30%, var(--text));
 }
 .research-library-page #cross-track-convergence .convergence-table tbody td:nth-child(3) strong{
-  color: color-mix(in srgb, var(--brand-teal) 30%, var(--text));
+  color: color-mix(in srgb, var(--track-b) 30%, var(--text));
 }
 
 /* Synthesis `<em>` at the end of each cell: this is the takeaway line.
