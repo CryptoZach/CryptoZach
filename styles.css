@@ -2260,6 +2260,42 @@ main > section.research-library-page:first-of-type{
 .research-library-page .track-heading-desc{
   color:var(--text-soft);
 }
+
+/* Track accent coding on the research-library wayfinding surfaces (2026-07-10
+   author decision, option a). Track A blue, Track B teal via the --track-*
+   semantic tokens (declared at :root; see the token guardrail: wayfinding
+   surfaces only, never CTAs). Heading prefixes take the track color, cards
+   take a left rail, jump chips and (JS-unhidden) filter buttons take a dot. */
+.research-library-page h2#track-a .track-heading-prefix{
+  color: var(--track-a);
+}
+.research-library-page h2#track-b .track-heading-prefix{
+  color: var(--track-b);
+}
+.research-library-page li[data-track="track-a"] > .writing-card,
+.research-library-page .writing-card[data-track="track-a"]{
+  border-left: 3px solid color-mix(in srgb, var(--track-a) 55%, var(--line));
+}
+.research-library-page li[data-track="track-b"] > .writing-card,
+.research-library-page .writing-card[data-track="track-b"]{
+  border-left: 3px solid color-mix(in srgb, var(--track-b) 55%, var(--line));
+}
+.research-library-page .jump-chip[href="#track-a"]::before,
+.research-library-page .jump-chip[href="#track-b"]::before,
+.research-library-page .filter-btn[data-value="track-a"]::before,
+.research-library-page .filter-btn[data-value="track-b"]::before{
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+  background: var(--track-a);
+}
+.research-library-page .jump-chip[href="#track-b"]::before,
+.research-library-page .filter-btn[data-value="track-b"]::before{
+  background: var(--track-b);
+}
 /* Track blocks: heading + intro sit outside the card list (same pattern for A and B) */
 .research-library-page .research-track{
   margin:0;
