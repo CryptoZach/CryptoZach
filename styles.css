@@ -20570,3 +20570,22 @@ body #contact .about-card .card-expand p{
   color: var(--text-soft);
   max-width: none;
 }
+
+/* Patent disclosure: four left-aligned area sections inside the expander;
+   2-column desktop grid (mirrors the about-card-meta 900px convention),
+   1-column mobile. Scoped under .card-expand so .about-card layout is untouched. */
+body #contact .about-card .card-expand > p,
+body #contact .about-card .card-expand .patent-areas{
+  text-align: left;
+}
+body #contact .about-card .card-expand .patent-areas{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md) var(--space-xl);
+  align-items: start;
+}
+@media (min-width: 900px){
+  body #contact .about-card .card-expand .patent-areas{
+    grid-template-columns: 1fr 1fr;
+  }
+}
