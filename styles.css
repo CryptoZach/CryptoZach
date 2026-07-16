@@ -13064,6 +13064,41 @@ main > section:first-of-type{
   background: color-mix(in srgb, var(--status-positive-glow) 10%, transparent);
 }
 
+/* Agency pills (homepage letters strip): a dark-rainbow trio so the three
+   regulators scan apart at a glance. FDIC crimson, Treasury gold, OCC indigo;
+   green stays reserved for the public/code signal family. Same combo-selector
+   + color-mix glow pattern as .badge-sm.badge-public above. */
+.badge-sm.badge-agency-fdic{
+  color: #be123c;
+  border-color: color-mix(in srgb, #be123c 36%, var(--line));
+  background: color-mix(in srgb, #be123c 12%, transparent);
+}
+.badge-sm.badge-agency-treasury{
+  color: #a16207;
+  border-color: color-mix(in srgb, #a16207 36%, var(--line));
+  background: color-mix(in srgb, #a16207 12%, transparent);
+}
+.badge-sm.badge-agency-occ{
+  color: #4f46e5;
+  border-color: color-mix(in srgb, #4f46e5 36%, var(--line));
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
+}
+:root[data-theme="dark"] .badge-sm.badge-agency-fdic{
+  color: #fb7185;
+  border-color: color-mix(in srgb, #fb7185 34%, var(--line));
+  background: color-mix(in srgb, #fb7185 12%, transparent);
+}
+:root[data-theme="dark"] .badge-sm.badge-agency-treasury{
+  color: #fbbf24;
+  border-color: color-mix(in srgb, #fbbf24 34%, var(--line));
+  background: color-mix(in srgb, #fbbf24 12%, transparent);
+}
+:root[data-theme="dark"] .badge-sm.badge-agency-occ{
+  color: #a5b4fc;
+  border-color: color-mix(in srgb, #a5b4fc 34%, var(--line));
+  background: color-mix(in srgb, #a5b4fc 12%, transparent);
+}
+
 /* Passed peer review: deliberately a BRIGHTER, more vivid green than the
    .badge-public pill, so the strongest status signal reads strongest. Split out
    of the shared public block above. Covers the bare, .badge, and .badge-sm forms
