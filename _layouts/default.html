@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- Local override of jekyll-theme-primer's default layout.
+
+     Primer's layout reads site.github.build_revision and site.github.license,
+     which makes every build call api.github.com through jekyll-github-metadata.
+     With JEKYLL_GITHUB_TOKEN set (as the deploy workflow does), that plugin
+     treats API errors as fatal, so a GitHub API incident fails the whole build
+     (2026-07-16, run #439). This layout renders the few Markdown stub pages
+     with no site.github access at all, which keeps the build hermetic.
+
+     Only Markdown pages use a layout; every served HTML page passes through
+     Jekyll untouched, so this file affects nothing else. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main style="max-width: 46rem; margin: 2rem auto; padding: 0 1rem;">
+    {{ content }}
+  </main>
+</body>
+</html>
