@@ -8,6 +8,15 @@
 # editor config that live alongside the site source but are not pages.
 
 title: Tokenization Systems
+# Explicit description keeps the build hermetic: without it, jekyll-seo-tag
+# falls back to jekyll-github-metadata's repo tagline, which requires a live
+# api.github.com call at build time (2026-07-16 incident: a GitHub API 503
+# failed the whole build inside that fallback). Copy mirrors the homepage
+# meta description.
+description: >-
+  Digital money should be programmable money. Research on stablecoins,
+  tokenization, and tokenomics, with eight SSRN papers and fourteen federal
+  comment letters.
 url: https://tokenization.systems
 
 # Required by jekyll-github-metadata (bundled in github-pages gem). In CI
