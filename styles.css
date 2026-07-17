@@ -403,6 +403,25 @@ header.scrolled{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  transition:color .15s var(--ease-standard), text-shadow .15s var(--ease-standard);
+}
+
+/* Tagline gold aura: hovering (or keyboard-focusing) the brand link warms the
+   tagline to the brand-spectrum gold with a soft halo. Deep-gold ink in light
+   theme (bright gold lacks contrast on white); bright glow in dark. */
+.brand a:hover span,
+.brand a:focus-visible span{
+  color:#a16207;
+  text-shadow:
+    0 0 8px color-mix(in srgb, #a16207 30%, transparent),
+    0 0 18px color-mix(in srgb, #a16207 14%, transparent);
+}
+:root[data-theme="dark"] .brand a:hover span,
+:root[data-theme="dark"] .brand a:focus-visible span{
+  color:var(--brand-amber-bright);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--brand-amber-bright) 45%, transparent),
+    0 0 18px color-mix(in srgb, var(--brand-amber-bright) 22%, transparent);
 }
 
 nav{
