@@ -9140,6 +9140,9 @@ footer.site-footer .footer-tagline{
   margin-bottom: var(--space-xl);
 }
 .paper-key-numbers > p{
+  display: flex;
+  align-items: flex-start;
+  gap: .8em;
   opacity: 0.88;
   color: var(--text-soft);
 }
@@ -9160,6 +9163,23 @@ footer.site-footer .footer-tagline{
 .brief-finding-copy p:last-child{
   margin-bottom: 0;
 }
+/* Stylized index chips for the key-numbers stat card items (author-directed
+   2026-07-16); the row is flex so wrapped stat lines hang clear of the chip. */
+.paper-key-numbers .key-num-copy{ display: block; min-width: 0; }
+.paper-key-numbers .key-num{
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  margin-top: .15em;
+}
+
 .brief-finding-num{
   flex-shrink: 0;
   width: 1.75em;
