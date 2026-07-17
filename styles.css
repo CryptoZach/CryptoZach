@@ -8324,18 +8324,18 @@ footer.site-footer .footer-tagline{
    wrapper in script.js; can also be authored manually as
    <span class="term">CLII</span>.
 
-   Restrained on purpose: a 60% mix of accent with currentColor gives a
-   visible tint without saturating long-form prose. Color tone scales
-   with the surrounding text in both light and dark themes.
+   Restrained on purpose (revised 2026-07-16, author direction): bare .term
+   marks carry NO accent tint, only tracking + weight, because accent-blue
+   text reads as a hyperlink; the tint belongs exclusively to .term-link,
+   which actually links to the canonical reference.
    ───────────────────────────────────────────────────────────────────────────── */
 .term{
   /* No font-variant-caps: source text is already uppercase, so all-small-caps
      would render letters at small-cap height (visibly smaller than surrounding
-     cap-height text like "OCC"). Letter-spacing + weight + accent-tint already
-     differentiate program identifiers without size disparity. */
+     cap-height text like "OCC"). Letter-spacing + weight differentiate
+     program identifiers without size disparity. */
   letter-spacing: 0.05em;
   font-weight: 600;
-  color: color-mix(in srgb, var(--accent) 60%, currentColor);
 }
 
 /* .term-link: a .term that is also a hyperlink to the canonical reference
@@ -8343,6 +8343,7 @@ footer.site-footer .footer-tagline{
    Medium overview article). Dotted underline differentiates from plain
    .term marks without shouting; on hover, solid accent. */
 .term.term-link{
+  color: color-mix(in srgb, var(--accent) 60%, currentColor);
   text-decoration: none;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 50%, transparent);
   transition: border-bottom-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
