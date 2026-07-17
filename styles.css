@@ -8943,8 +8943,10 @@ footer.site-footer .footer-tagline{
 /* Reading measure (2026-07-10; widened 2026-07-16 by author direction): cap
    flowing prose inside the paper/letter template. Originally --measure-wide
    (78ch), which left a third of the canvas blank on the right; now a wide
-   112ch cap that fills most of the shell while still bounding line length
-   on very wide viewports. The article shell stays at --max so exhibits,
+   68rem cap that fills most of the shell while still bounding line length
+   on very wide viewports. rem, not ch, deliberately: ch is measured in the
+   element's OWN font, so the monospace key-numbers card computed a narrower
+   112ch than the prose did and the widths visibly disagreed. The article shell stays at --max so exhibits,
    figures, tables, and card grids keep the full canvas. The resume profile
    Decision lens card is deliberately NOT capped (see its own rule); do not
    extend this cap to it. */
@@ -8952,12 +8954,12 @@ footer.site-footer .footer-tagline{
 .paper-page.paper-detail ul,
 .paper-page.paper-detail ol,
 .paper-page.paper-detail blockquote{
-  max-width: min(112ch, 100%);
+  max-width: min(68rem, 100%);
 }
 /* The key-numbers callout caps as a card (its font is monospace, so ch units
    hug the stat lines instead of stretching the card across the 1400px shell). */
 .paper-page .paper-key-numbers{
-  max-width: min(112ch, 100%);
+  max-width: min(68rem, 100%);
 }
 .paper-breadcrumb{
   font-size: var(--font-size-min);
