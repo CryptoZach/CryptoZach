@@ -40,13 +40,13 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Operational Risk in Decentralized Infrastructure (DePIN) | TS</title>
-  <meta name="description" content="624 simulations layering operational risk onto a DePIN token economy: temporary infrastructure failures make adaptive emission control more resilient, but can break threshold-gated reputation systems." />
+  <meta name="description" content="A 624-configuration battery (1,126 runs) layering operational risk onto a DePIN token economy: the adaptive controller's dispersion advantage holds across every stress scenario and widens under sustained regulatory withdrawal, while a threshold-gated reputation system collapses by design." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="operational risk, token economies, governance architecture, DePIN, agent-based simulation, protocol resilience, decentralized governance, mechanism design" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Operational Risk in Decentralized Infrastructure (DePIN)" />
-  <meta property="og:description" content="624 simulations layering operational risk onto a DePIN token economy. Temporary infrastructure failures make adaptive emission control more resilient; a threshold-gated reputation system can become structurally nonfunctional under routine operational risk." />
+  <meta property="og:description" content="A 624-configuration battery (1,126 runs) layering operational risk onto a DePIN token economy. The adaptive controller's dispersion advantage holds across every stress scenario and widens under sustained regulatory withdrawal; a threshold-gated reputation system is structurally nonfunctional because its recovery threshold exceeds what the uptime process can sustain." />
   <meta property="og:url" content="https://tokenization.systems/papers/operational-risk/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Table3_ValOS-NORS.png" />
   <meta property="og:image:width" content="2384" />
@@ -58,7 +58,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Operational Risk in Decentralized Infrastructure (DePIN)" />
-  <meta name="twitter:description" content="624 simulations with an operational-risk layer. Infrastructure failures harden adaptive emission control; threshold-gated reputation systems can break under routine operational risk." />
+  <meta name="twitter:description" content="624 configurations (1,126 runs) with an operational-risk layer. The adaptive controller's dispersion advantage holds in every stress scenario and widens under sustained regulatory withdrawal; threshold-gated reputation systems collapse by design." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Table3_ValOS-NORS.png" />
   <meta name="twitter:image:alt" content="Operational Risk in Token Economies: ValOS-NORS comparison" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -92,10 +92,11 @@
     {
       "@context": "https://schema.org",
       "@type": "ScholarlyArticle",
-      "name": "Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers and Expose Reputation Design Defects",
+      "name": "Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers Under Sustained Shocks, Expose Reputation Design Defects, and Reveal What a Bolted-On Risk Layer Can Test",
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-03-05",
-      "description": "624-configuration simulation using real outage rates from Ethereum, Helium, GEODNET, and Filecoin. Adaptive emission controllers become more resilient under infrastructure shocks.",
+      "dateModified": "2026-07-22",
+      "description": "A 624-configuration battery (1,126 runs) layering operational risk onto a DePIN token economy, calibrated to published Ethereum and Filecoin data with bounding estimates for Helium and GEODNET. The adaptive controller's dispersion advantage holds across every stress scenario and widens under sustained regulatory withdrawal; a threshold-gated reputation system collapses because its recovery threshold exceeds what the uptime process can sustain.",
       "url": "https://tokenization.systems/papers/operational-risk/",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/operational-risk/" },
       "isBasedOn": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118",
@@ -261,18 +262,18 @@
         <a class="badge badge-access-code" href="https://github.com/CryptoZach/meshnet-depin-simulation" target="_blank" rel="noopener noreferrer">Code available</a>
       </div>
 
-      <h1 id="paper-title">Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers and Expose Reputation Design Defects</h1>
+      <h1 id="paper-title">Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers Under Sustained Shocks, Expose Reputation Design Defects, and Reveal What a Bolted-On Risk Layer Can Test</h1>
 
-      <p class="paper-metadata-strip">~25 min read · ~10,200 words · SSRN</p>
-      <p class="paper-description-note">Description current as of March 2026.</p>
+      <p class="paper-metadata-strip">~40 min read · ~15,800 words · SSRN</p>
+      <p class="paper-description-note">Description current as of July 2026.</p>
 
-      <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, GEODNET, and Filecoin, using the emerging ValOS (Validator Operation Standard) and NORS (the Alluvial-led Node Operator Risk Standard working group, distinct from the paper&rsquo;s general reputation-system framework) standards as the taxonomy for what can go wrong in production. The result is a split finding: temporary infrastructure failures make adaptive emission control more resilient under stress, while a threshold-gated reputation system can become structurally nonfunctional under routine operational risk.</p>
+      <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, GEODNET, and Filecoin, using the emerging ValOS (Validator Operation Standard) and NORS (the Alluvial-led Node Operator Risk Standard working group, distinct from the paper&rsquo;s general reputation-system framework) standards as the taxonomy for what can go wrong in production. The result is a split finding: the adaptive controller&rsquo;s dispersion advantage over fixed-rate emission holds in every stress scenario and measurably widens under a sustained regulatory withdrawal (it is a null under a one-off competitor shock), while a threshold-gated reputation system is structurally nonfunctional because its recovery threshold sits above what the uptime process can sustain. Both findings turn out to be one methodological lesson: a risk layer bolted onto an existing simulation acts only through the state the base model already instruments, so what such an extension can test is legible by inspection before any run.</p>
 
       <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />What happens to a token economy's governance mechanisms when the underlying infrastructure actually fails (outages, key loss, software bugs, correlated incidents), not just when operators leave for economic reasons?</p>
-        <p><strong>Answer</strong><br />Governance design, not participant quality, determines whether a mechanism survives. Temporary infrastructure failures make adaptive PID emission control more resilient under stress (variance compression improves from 6.25x to 6.89x under competitor shock once operational risk is added), because the controller overcompensates and builds a pre-shock buffer. A threshold-gated reputation system does the opposite: at a 0.99 uptime threshold, roughly 36% of operators lose recovery eligibility per season and average reputation decays to 0.18 on a 0-to-5 scale by year 5, effectively disabling reputation-weighted governance. These results are parameterization-dependent: at higher failure intensity or correlation, the buffer can erode.</p>
-        <p><strong>Evidence base</strong><br />The findings rest on a roughly 624-configuration simulation battery (240 baseline runs, 240 operational-risk ensemble runs, 84 per-parameter sweeps, 12 protocol-specific runs, 40 correlated-shock runs, 8 interaction tests) calibrated from Ethereum validator data, Helium network contraction, GEODNET station uptime, and Filecoin sector fault rates, with the operational-risk layer built by mapping 74 ValOS risk vectors, 64 testable controls, and 36 NORS control objectives into seven simulatable parameters.</p>
+        <p><strong>Answer</strong><br />Governance design, not participant quality, determines whether a mechanism survives. The adaptive PID controller compresses the dispersion of outcomes three to six times more than fixed-rate emission in every stress scenario, and that advantage widens under a sustained regulatory withdrawal (compression ratio 3.19x to 6.41x once operational risk is added; change +3.22, 95% CI [+0.10, +6.85]) while it is a null under a one-off competitor shock (change -0.16, 95% CI [-3.47, +2.83]), because the controller emits extra rewards against a genuinely smaller network and pre-loads a buffer that only pays off when the shock keeps coming. A threshold-gated reputation system does the opposite: its recovery award fires only above a 0.99 seasonal uptime threshold the process cannot sustain, so average reputation decays to 0.28 on a 0-to-5 scale before any operational risk is added and to 0.17 with it, effectively disabling reputation-weighted governance. Lowering the recovery threshold to 0.95 repairs it.</p>
+        <p><strong>Evidence base</strong><br />The findings rest on a 624-configuration simulation battery (1,126 runs), with published counts and penalty parameters for Ethereum and Filecoin and operator-community-informed bounding estimates for Helium and GEODNET, and the operational-risk layer built by mapping 74 ValOS risk vectors, 64 testable controls, and 36 NORS control objectives into seven simulatable parameters. The regulatory scenario is reported after examining three, so all three are reported with their bootstrap intervals.</p>
       </aside>
 
       <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
@@ -281,9 +282,9 @@
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">1</span>
           <div class="brief-finding-copy">
-            <h3>Operational failures strengthen PID emission control under the tested parameterization</h3>
-            <p>When temporary outages are misread as permanent departures, the controller overcompensates with higher rewards, building a financial buffer before the next economic shock. Under competitor shock, variance compression improves from <strong>6.25x to 6.89x</strong> once operational risk is added. The result is counterintuitive and parameterization-dependent: at higher failure intensity, the buffer can erode.</p>
-            <p class="brief-what-this-means"><strong>What this means:</strong> A failure that looks like noise can quietly harden a reward controller, so operators cannot assume outages only ever degrade emission stability.</p>
+            <h3>Operational risk strengthens the adaptive controller under a sustained shock</h3>
+            <p>The adaptive controller compresses outcome dispersion three to six times more than fixed-rate emission in every scenario, and operational risk widens that gap where the shock is sustained: under a regulatory withdrawal the compression ratio rises from <strong>3.19x to 6.41x</strong> once operational risk is added (change +3.22, 95% CI [+0.10, +6.85]). Under a one-off competitor poach the change is a null (-0.16, 95% CI [-3.47, +2.83]). The mechanism is that operational risk removes operators permanently, so the controller correctly raises rewards against a genuinely smaller network and pre-loads a buffer that only pays off when the withdrawal keeps coming.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Adaptive emission behaves like insurance whose payoff is largest under a sustained shock, so designers should not weaken an adaptive controller on the strength of economic-only or single-shock simulations.</p>
           </div>
         </div>
 
@@ -291,8 +292,8 @@
           <span class="brief-finding-num" aria-hidden="true">2</span>
           <div class="brief-finding-copy">
             <h3>The reputation system does not gradually drift; it collapses</h3>
-            <p>Model parameters: uptime threshold (0.99), season length (90 days). The recovery threshold is the uptime an operator must show at a season boundary to earn the +1.0 seasonal reputation award; uptime is a persistent operator state, not a per-season downtime count. At the default 99% uptime threshold over a 90-day season, average reputation decays to <strong>0.18</strong> on a 0-to-5 scale by year 5 of simulation clock (not calendar time), effectively disabling reputation-weighted governance. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores average reputation to approximately 1.0 by simulation year 5; 0.90 restores it to approximately 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
-            <p class="brief-what-this-means"><strong>What this means:</strong> Reputation-weighted governance can fail abruptly rather than degrade, so the recovery threshold has to be tuned deliberately instead of left at a strict default.</p>
+            <p>Model parameters: uptime threshold (0.99), season length (90 days). The recovery threshold is the uptime an operator must show at a season boundary to earn the +1.0 seasonal reputation award; uptime is a persistent operator state, not a per-season downtime count. Because the 0.99 threshold sits above what that uptime process can sustain, average reputation decays to <strong>0.28</strong> on a 0-to-5 scale before any operational risk is added and to <strong>0.17</strong> once it is, effectively disabling reputation-weighted governance; the operational-risk layer only deepens a collapse that is already nearly total. The fix is the recovery threshold: lowering it from 0.99 to 0.95 restores a workable reputation floor (roughly 1.0 by simulation year 5), and 0.90 restores roughly 2.0. Changing the decay rate alone does not restore stability at the 0.99 threshold.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> This is the paper&rsquo;s primary, generalizable design rule: set any threshold that gates governance power or a consequential allocation below what the gating metric&rsquo;s own process can sustain, then check it against the failure rate of the least reliable operator tier.</p>
           </div>
         </div>
 
@@ -300,7 +301,7 @@
           <span class="brief-finding-num" aria-hidden="true">3</span>
           <div class="brief-finding-copy">
             <h3>The paper is as much a methods contribution as a findings paper</h3>
-            <p>It maps 74 active ValOS risk vectors and 64 testable controls, plus 36 NORS control objectives, into seven simulatable parameters and stress-tests the result across a <strong>624-configuration battery</strong>. That bridge from operator-risk standards to calibrated simulation is the reusable contribution.</p>
+            <p>It maps 74 active ValOS risk vectors and 64 testable controls, plus 36 NORS control objectives, into seven simulatable parameters and stress-tests the result across a <strong>624-configuration battery</strong>. That bridge from operator-risk standards to calibrated simulation is one reusable contribution; the other is a diagnostic the extension itself demonstrates: a risk layer bolted onto an existing model can only act through the state the base model already instruments, so what such an extension can test is legible by inspection before any run. That is why the reputation defect is surfaced by the extension yet belongs to the base design.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> The translation from operator-risk standards into a calibrated simulation is reusable, so future studies can stress-test other protocols without rebuilding the bridge from scratch.</p>
           </div>
         </div>
@@ -362,25 +363,25 @@
         <h2>What this paper changes</h2>
         <p>Most token simulations model why operators leave for economic reasons (price decline, insufficient rewards, competitive alternatives). This paper asks what happens when operators are still economically viable but suffer real production failures: outages, key loss, software bugs, correlated infrastructure incidents, or regulatory disruption.</p>
         <p>The methodological contribution is a replicable process for extending token simulation with empirically calibrated operational risk. The paper maps 74 active ValOS risk vectors and 64 testable controls, plus a cross-walk to the 36 NORS certification control objectives, into seven simulatable parameters. That mapping is the institutional bridge between operator-risk standards and token-economy simulation: it translates what can go wrong in production into parameters a model can test.</p>
-        <p>The paper also refines the earlier adaptive-tokenomics result. The baseline MeshNet model showed PID-based variance reduction under competitor shock; the operational-risk extension shows the gap versus static emission widens under stress:</p>
+        <p>The paper refines the earlier adaptive-tokenomics result. The adaptive controller&rsquo;s own dispersion falls under operational risk in every stress scenario (competitor 0.094 to 0.085, regulatory 0.096 to 0.080, bear 0.222 to 0.199). What the fixed-rate side does is not uniform, which is why the gap widens only where the shock is sustained:</p>
         <ul>
-          <li><strong>Competitor shock:</strong> Static variability rises from 0.544 to 0.569; PID falls from 0.087 to 0.083.</li>
-          <li><strong>Regulatory shock:</strong> Static rises from 0.229 to 0.561; PID falls from 0.093 to 0.070.</li>
-          <li><strong>Bull conditions:</strong> Outcomes are effectively identical.</li>
+          <li><strong>Regulatory withdrawal (sustained):</strong> Fixed-rate dispersion rises sharply, 0.31 to 0.51, so the compression ratio widens from 3.19x to 6.41x (change +3.22, 95% CI [+0.10, +6.85]).</li>
+          <li><strong>Competitor shock (one-off):</strong> Fixed-rate dispersion falls, 0.52 to 0.46, so the change in the compression ratio is a null (-0.16, 95% CI [-3.47, +2.83]).</li>
+          <li><strong>Bull conditions:</strong> All 30 economic-only seeds finish at exactly 11,934 nodes under both policies, so neither arm has dispersion to compare.</li>
         </ul>
-        <p>The beneficial effect is parameterization-dependent. At higher operational-risk levels or higher failure correlation, the buffer can erode and may eventually overshoot into the dilution loop identified in the earlier MeshNet paper.</p>
+        <p>The dispersion advantage itself is robust: adaptive CV is three to six times lower than fixed-rate in every scenario, every bootstrap interval excluding parity. What is parameterization-dependent is whether operational risk widens that advantage, which happens under a sustained withdrawal and not under a discrete poach.</p>
 
         <h2>Core findings</h2>
-        <h3>1. Temporary outages can make adaptive emission more stabilizing</h3>
-        <p>The controller mistakes recoverable downtime for economic exit, emits extra rewards, and unintentionally pre-loads operator income before the major shock arrives. That explains why the operational-risk version performs better than the economic-only version in the tested stress cases.</p>
-        <p>The paper is explicit that this is parameterization-dependent. The tested calibration (0.5% daily downtime probability, 10% correlated-failure exposure per event, 3-day mean recovery) produces the beneficial buffer. Higher intensity or higher correlation reduces the advantage, even if it does not reverse it within the tested range.</p>
+        <h3>1. Operational risk strengthens adaptive emission under a sustained shock</h3>
+        <p>The controller does not misread transient outages; recoverable downtime never moves the node count it observes. What operational risk does is remove operators permanently through catastrophic failure and stake-exhausting slashing (1,569 cumulative operational exits over the run), so the controller correctly raises rewards against a genuinely smaller network and pre-loads a buffer in the surviving operators. That buffer buys little against a one-off competitor poach the controller already absorbs, but a great deal against a sustained regulatory withdrawal that fixed-rate emission cannot answer, which is why the between-arm divergence is measurable only where the shock is sustained.</p>
+        <p>The effect is bounded and calibration-specific. The tested calibration (0.5% daily downtime probability, 10% correlated-failure exposure per event, 3-day mean recovery) produces the result; the paper reports the regulatory scenario after examining three, and all three are reported with their intervals.</p>
 
         <h3>2. Correlated failures never reach the controller's node-count signal</h3>
-        <p>The biggest single-day node-count drop in the run is 24.94%, and it is the month-18 competitor shock rather than an infrastructure failure. The controller absorbs it within its operating range, regaining the 10,000-node target after 56 days. Correlated infrastructure failure does not register on node count at all: downtime suspends service and cuts yield but never deactivates the operator, so the largest single-day movement from any non-shock source across the five-year run is 0.45%. Operational risk reaches the controller through the reward and reputation channels, not as a discontinuity in the signal it observes.</p>
+        <p>The biggest single-day node-count drop in the run is 25.0% (11,705 to 8,779), and it is the month-18 competitor shock rather than an infrastructure failure. The controller absorbs it within its operating range, regaining the 10,000-node target 48 days later. Correlated infrastructure failure does not register on node count at all: downtime suspends service and cuts yield but never deactivates the operator, so the largest single-day movement from any non-shock source across the five-year run is 0.45%. Operational risk reaches the controller through the reward and reputation channels, not as a discontinuity in the signal it observes, so the predicted flash crash does not form.</p>
 
         <h3>3. Reputation is the true fragility point</h3>
         <p>The seasonal award requires an operator's uptime to read above 0.99 at the season boundary. Uptime is a persistent state that operational incidents push down and that nothing actively restores, so once it drifts below the threshold the award stops firing and the 15% seasonal decay compounds without offset. The seasonal update has a closed-form steady state of roughly 5.7 times the average per-season gain, which is what makes the threshold sweep diagnostic rather than merely remedial.</p>
-        <p>The paper treats this as structural collapse: the uptime threshold is set above the operational floor the operator base can actually achieve. Average reputation decays to 0.18 on a 0-to-5 scale by year 5, effectively disabling reputation-weighted governance.</p>
+        <p>The paper treats this as structural collapse: the uptime threshold is set above what the operator base&rsquo;s uptime process can sustain. Average reputation decays to 0.28 on a 0-to-5 scale in the economic-only baseline and to 0.17 once operational risk is added, effectively disabling reputation-weighted governance; the layer only deepens a collapse that is already nearly total, so the defect belongs to the base design rather than to operational risk.</p>
         <p>The fix is specific: lower the recovery threshold. At 0.95, average reputation restores to approximately 1.0 by year 5. At 0.90, it restores to approximately 2.0. Changing the decay parameter alone does not restore stability at the 0.99 threshold. This is one of the most actionable findings in the paper.</p>
 
         <h3>4. The methodological bridge matters as much as the findings</h3>
@@ -404,17 +405,17 @@
           <h2>Key numbers</h2>
           <p><span class="key-num" aria-hidden="true">1</span><span class="key-num-copy"><strong>Simulation battery</strong><br>
           ~624 runs: 240 baseline + 240 operational-risk ensemble + 84 sweeps + 12 protocol-specific + 40 correlated-shock + 8 interaction tests</span></p>
-          <p><span class="key-num" aria-hidden="true">2</span><span class="key-num-copy"><strong>PID stabilization (operational risk widens the gap)</strong><br>
-          Competitor shock: static CV 0.544 to 0.569; PID CV 0.087 to 0.083 (variance compression improves from 6.25x to 6.89x). CV is the coefficient of variation of final node count across the seed ensemble.<br>
-          Regulatory shock: static CV 0.229 to 0.561; PID CV 0.093 to 0.070<br>
-          Bull: effectively identical</span></p>
+          <p><span class="key-num" aria-hidden="true">2</span><span class="key-num-copy"><strong>Adaptive vs fixed-rate dispersion (compression is 3x to 6x; the gap widens under a sustained shock)</strong><br>
+          Regulatory withdrawal: static CV 0.31 to 0.51; adaptive CV 0.096 to 0.080 (compression ratio 3.19x to 6.41x; change +3.22, 95% CI [+0.10, +6.85], significant only uncorrected). CV is the coefficient of variation of final node count across the seed ensemble.<br>
+          Competitor shock: static CV 0.52 to 0.46; adaptive CV 0.094 to 0.085 (change in compression ratio a null: -0.16, 95% CI [-3.47, +2.83])<br>
+          Bull: all 30 economic-only seeds finish at 11,934 nodes under both policies, so there is no dispersion to compare</span></p>
           <p><span class="key-num" aria-hidden="true">3</span><span class="key-num-copy"><strong>Shock absorption</strong><br>
-          Largest single-day node-count drop: 24.94%, the month-18 competitor shock · Target regained after 56 days · Correlated infrastructure failure moves node count by at most 0.45%</span></p>
+          Largest single-day node-count drop: 25.0% (11,705 to 8,779), the month-18 competitor shock · 10,000-node target regained 48 days later · Correlated infrastructure failure moves node count by at most 0.45%</span></p>
           <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Reputation collapse</strong><br>
-          At 0.99 uptime threshold: average reputation 0.18/5.0 by year 5<br>
+          At 0.99 uptime threshold: average reputation 0.28/5.0 economic-only, 0.17/5.0 with operational risk<br>
           At 0.95 threshold: average reputation ~1.0 by year 5<br>
           At 0.90 threshold: average reputation ~2.0 by year 5<br>
-          Driver is the recovery threshold, not the decay rate: at threshold 0.99 even a zero decay parameter leaves reputation near 0.3</span></p>
+          Driver is the recovery threshold, not the decay rate: at threshold 0.99 even the smallest decay penalty leaves reputation near 0.33</span></p>
           <p><span class="key-num" aria-hidden="true">5</span><span class="key-num-copy"><strong>ValOS/NORS mapping</strong><br>
           74 active ValOS risk vectors · 64 testable controls · 36 NORS control objectives to 7 simulatable parameters</span></p>
           <p><span class="key-num" aria-hidden="true">6</span><span class="key-num-copy"><strong>Calibration sources</strong><br>
