@@ -4551,8 +4551,26 @@ section:has(.speaker-jump-to){
        at most 2-3 actions per card, so overflow is unlikely. */
     overflow-x:visible;
   }
+  /* Cards with a wide left badge (e.g. "Code available" or "Working paper")
+     plus a multi-chip action row (summary + SSRN + thread) held that row on one
+     line (nowrap). When wider than the right-hand reserve the meta padding
+     clears, it spilled left and overlapped the badges. Cap the action row to
+     that same reserve and let it wrap, so extra chips stack in the top-right
+     corner instead of crossing into the badges. Dual-essay cards keep their own
+     wrap handling below. */
+  .research-library-page ul.writing-list > li > article.writing-card--has-actions:not(.research-card--dual-essays) > .writing-card-actions,
+  .featured-research .featured-paper-card.writing-card--has-actions > .writing-card-actions{
+    flex-wrap:wrap;
+    max-width:min(48%, 17rem);
+    justify-content:flex-end;
+    row-gap:0.4rem;
+  }
   .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-card-actions{
     flex-wrap:wrap;
+    /* Same reserve-cap as the standard cards, widened for the dual card's
+       larger reserve (min(52%, 22rem)) so its chips wrap in the top-right
+       corner instead of reaching left into the badge row. */
+    max-width:min(50%, 20rem);
     align-items:flex-start;
     justify-content:flex-end;
     align-content:flex-end;
@@ -13908,7 +13926,7 @@ a.writing-arrow:focus{
   letter-spacing:0.08em;
   opacity:1;
 }
-.speaker-page .advisory-card p{
+.speaker-page .advisory-card p:not(.card-eyebrow){
   margin:0 0 var(--space-sm);
   font-size:var(--font-size-min);
   color:var(--muted);
