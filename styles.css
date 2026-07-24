@@ -17379,17 +17379,21 @@ main.resume-profile .resume-related-profiles a{
 
    Container (both tracks): pill shape, border, subtle backdrop, 0.5rem
    gap for the dot. */
+/* The standalone track-badge row is used only by the Federal Comment Letter
+   Program pages (letters/*); give it an amber accent so it reads as coded
+   rather than grey. Research and advisory surfaces use the --a / --b variants
+   below, which override these three properties. */
 .paper-track-badge{
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.75rem 0.35rem 0.625rem;
-  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-amber) 45%, var(--line));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--panel) 60%, transparent);
+  background: color-mix(in srgb, var(--brand-amber) 9%, var(--panel));
   font-size:var(--text-2xs);
   letter-spacing: 0.12em;
-  color: var(--text-soft);
+  color: color-mix(in srgb, var(--brand-amber) 78%, var(--text));
 }
 
 /* When the track badge follows the breadcrumb on paper detail pages,
