@@ -55,7 +55,12 @@ import sys
 INTERNATIONAL_SLUGS = {"fsb-ai-sound-practices"}
 
 # Directories to scan for count mentions (served site surfaces). Relative to root.
-SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes"]
+SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes",
+             "speaker-and-advisory"]
+
+# Non-.html served files that carry the count. The walker is .html-only, so llms.txt
+# (the AI-surface summary) was never scanned and sat 7 filings stale until 2026-07-24.
+EXTRA_FILES = ["llms.txt"]
 
 # Directory names never recursed into.
 PRUNE_DIRS = {".git", ".claude", "_build", "node_modules", "_site", "submissions"}
@@ -78,10 +83,18 @@ INT_TO_WORD = {v: k for k, v in WORD_TO_INT.items()}
 COUNT_PATTERNS = [
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+federal\s+comment\s+letters?", re.I),
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+comment\s+letters?\s+filed", re.I),
+    # Verb-first order: "filed fifteen comment letters". The noun-first pattern above
+    # does not match it, which is how research/index.html sat at "fourteen" through the
+    # 15th filing while this guard reported OK (2026-07-24).
+    re.compile(r"filed\s+(?P<n>[A-Za-z]+|\d+)\s+comment\s+letters?", re.I),
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+letters?,\s+(?:seven|eight|nine|six|five|four)\s+(?:federal\s+)?agenc", re.I),
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+letters?\s+across\s+(?:nine|eight|seven|six|five|ten)\s+docket", re.I),
     re.compile(r"Program\s+\((?P<n>[A-Za-z]+|\d+)\s+letters?", re.I),
     re.compile(r"The\s+(?P<n>[A-Za-z]+|\d+)\s+letters?\s*<", re.I),
+    # "All N letters" nav copy: <a class="access-link">All fifteen letters</a> plus the
+    # sibling <span> blurb, on every letter page. This phrasing carried 28 of the 32
+    # stale mentions found 2026-07-24 while this guard reported OK.
+    re.compile(r"All\s+(?P<n>[A-Za-z]+|\d+)\s+letters\b", re.I),
 ]
 
 # Substrings that mark a match as a decomposition, not the total. Skip if present
@@ -159,6 +172,11 @@ def html_files(root):
                     if p not in seen:
                         seen.add(p)
                         yield p
+    for rel in EXTRA_FILES:
+        p = os.path.join(root, rel)
+        if os.path.isfile(p) and p not in seen:
+            seen.add(p)
+            yield p
 
 
 def token_to_int(tok):
