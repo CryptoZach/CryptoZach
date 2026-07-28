@@ -20706,3 +20706,10 @@ body #contact .about-card .card-expand .patent-areas{
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* The integrating disclosure is not one area among four: it describes how the
+   others compose. Span it across the full grid so the layout says that too,
+   rather than leaving it stranded in the left column with dead space beside it. */
+body #contact .about-card .card-expand .patent-areas .patent-area-full{
+  grid-column: 1 / -1;
+}
