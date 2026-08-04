@@ -40,27 +40,27 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Agent Infrastructure: Measuring Whether AI Guardrails Work | TS</title>
-  <meta name="description" content="Operating layer for an AI agent fleet running since March 2026: roughly 17,300 commits, a 95-check commit gate, and 4,330 measured control firings showing most guardrails do nothing." />
+  <meta name="description" content="Operating layer for an AI agent fleet running since March 2026: roughly 17,300 commits, a 95-check commit gate, and 4,405 graded warnings showing most guardrails do nothing until measured." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="agent infrastructure, AI agent harness, LLM evaluation, agent guardrails, multi-agent coordination, agent memory, AI governance" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Agent Infrastructure: Measuring Whether AI Guardrails Work" />
-  <meta property="og:description" content="Documentation of the operating layer underneath an AI coding-agent fleet: saturation measurement that grades each guardrail on behavior change, enforcement rungs, referential-integrity constraints on agent memory, lease-based coordination, and the vacuous-check failure class. Measurements dated and producers named." />
+  <meta property="og:description" content="Live documentation of an AI coding-agent fleet: how to measure whether a guardrail changes behavior, when advice is ignored, when hard blocks are required, and how invented facts corrupt shared memory. Measurements dated and producers named." />
   <meta property="og:url" content="https://tokenization.systems/agent-infrastructure/" />
   <meta property="og:site_name" content="Tokenization Systems" />
-  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
-  <meta property="og:image:width" content="3200" />
-  <meta property="og:image:height" content="1800" />
-  <meta property="og:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta property="og:image:width" content="1401" />
+  <meta property="og:image:height" content="933" />
+  <meta property="og:image:alt" content="Control-layer infrastructure for AI agent fleets (Tokenization Systems)" />
   <link rel="canonical" href="https://tokenization.systems/agent-infrastructure/" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Agent Infrastructure: Measuring Whether AI Guardrails Work" />
-  <meta name="twitter:description" content="Documentation of the operating layer underneath an AI coding-agent fleet: saturation measurement that grades each guardrail on behavior change, enforcement rungs, referential-integrity constraints on agent memory, lease-based coordination, and the vacuous-check failure class. Measurements dated and producers named." />
-  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
-  <meta name="twitter:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
+  <meta name="twitter:description" content="Live documentation of an AI coding-agent fleet: how to measure whether a guardrail changes behavior, when advice is ignored, when hard blocks are required, and how invented facts corrupt shared memory. Measurements dated and producers named." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta name="twitter:image:alt" content="Control-layer infrastructure for AI agent fleets (Tokenization Systems)" />
   <meta name="twitter:creator" content="@CryptoZach" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
@@ -84,14 +84,14 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=253" />
+  <link rel="stylesheet" href="/styles.css?v=262" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Agent Infrastructure: Measuring Whether AI Guardrails Work",
-    "description": "Documentation of the operating layer underneath an AI coding-agent fleet: saturation measurement that grades each guardrail on behavior change, enforcement rungs, referential-integrity constraints on agent memory, lease-based coordination, and the vacuous-check failure class. Measurements dated and producers named.",
+    "description": "Live documentation of an AI coding-agent fleet: how to measure whether a guardrail changes behavior, when advice is ignored, when hard blocks are required, and how invented facts corrupt shared memory. Measurements dated and producers named.",
     "url": "https://tokenization.systems/agent-infrastructure/",
     "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems/" },
     "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems/" },
@@ -117,7 +117,7 @@
   </script>
 </head>
 
-<body class="overview-page">
+<body class="overview-page agent-infra-page">
   <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
   <!-- site-chrome:header START (generated from _partials/header.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
@@ -194,20 +194,41 @@
 
     <main id="main">
 
-    <section class="reveal" aria-labelledby="agent-infra-page-title">
+    <section class="reveal ai-hero" aria-labelledby="agent-infra-page-title">
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Agent infrastructure</p>
       <div class="section-title">
         <h1 id="agent-infra-page-title">Most agent guardrails do nothing, and you cannot know which ones without measuring.</h1>
-        <p><strong>This page documents the operating layer underneath an AI agent fleet that has been running since March 2026.</strong> Not a proposal and not a survey: a system in daily use, with the measurements that justified each part of it and the measurements that killed parts of it.</p>
+        <p class="ai-hero-lede"><strong>This page documents the operating layer underneath an AI agent fleet that has been running since March 2026.</strong> Not a proposal and not a survey: a system in daily use, with the measurements that justified each part of it and the measurements that killed parts of it.</p>
         <p>Every mechanism below exists because something went wrong first. Where a number appears, it was measured rather than estimated, and the date it was measured is stated.</p>
+        <p class="ai-measured-as">Measurements as of <time datetime="2026-08-04">2026-08-04</time>. Producers are re-run; the figures on this page are not hand-maintained.</p>
+      </div>
+      <p class="ai-proof-strip" aria-label="Headline measurements">
+        <span class="ai-proof-item"><strong>~17,300</strong> commits since March</span>
+        <span class="ai-proof-sep" aria-hidden="true">·</span>
+        <span class="ai-proof-item"><strong>14 to 39</strong> concurrent sessions</span>
+        <span class="ai-proof-sep" aria-hidden="true">·</span>
+        <span class="ai-proof-item"><strong>95</strong> pre-commit checks</span>
+        <span class="ai-proof-sep" aria-hidden="true">·</span>
+        <span class="ai-proof-item"><strong>4,405</strong> advisory warnings graded</span>
+        <span class="ai-proof-sep" aria-hidden="true">·</span>
+        <span class="ai-proof-item"><strong>81%</strong> noisiest warning ignored on repeat</span>
+      </p>
+      <div class="primer-hero-ctas ai-hero-ctas">
+        <div class="frameworks-2026-flagship-links frameworks-2026-flagship-links--hero" role="group" aria-label="Primary path">
+          <a class="action primary" href="#measurement">See how we measure control effectiveness</a>
+        </div>
+        <nav class="primer-resume-profile-nav" aria-label="Related entry points">
+          <a class="action secondary" href="/resume/ai-governance-infrastructure">AI governance profile</a>
+          <a class="action secondary" href="/research">Research program</a>
+        </nav>
       </div>
       <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Agent infrastructure jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
           <a class="page-toc-link" href="#scale">The system</a>
           <a class="page-toc-link" href="#measurement">Measuring whether a control works</a>
-          <a class="page-toc-link" href="#rungs">Enforcement rungs</a>
-          <a class="page-toc-link" href="#confabulation">Confabulation before capacity</a>
+          <a class="page-toc-link" href="#rungs">Enforcement levels</a>
+          <a class="page-toc-link" href="#invented-facts">Invented facts before forgotten ones</a>
           <a class="page-toc-link" href="#coordination">Coordination is not a pointer</a>
           <a class="page-toc-link" href="#vacuous">Checks that pass for the wrong reason</a>
           <a class="page-toc-link" href="#context">Context as a managed resource</a>
@@ -230,13 +251,13 @@
               <tr><th scope="row">Commits</th><td class="ai-val">roughly 17,300</td><td class="ai-how">Since 2026-03-05, on the mainline branch</td></tr>
               <tr><th scope="row">Concurrent sessions</th><td class="ai-val">a dozen to thirty</td><td class="ai-how">Distinct sessions writing a transcript per clock-hour: median 14, mean 17.1, p90 39 over seven days. Deliberately a range, because a point estimate is stale within the hour</td></tr>
               <tr><th scope="row">Pre-commit gate</th><td class="ai-val">95 checks</td><td class="ai-how">81 top-level plus 14 sub-checks; 22 of the 95 hard-fail</td></tr>
-              <tr><th scope="row">Advisory firings</th><td class="ai-val">4,330</td><td class="ai-how">Across 18 classes over a 25.06-day observation span</td></tr>
+              <tr><th scope="row">Advisory warnings</th><td class="ai-val">4,405</td><td class="ai-how">Across 18 classes over a 25.75-day observation span</td></tr>
               <tr><th scope="row">Skill library</th><td class="ai-val">72</td><td class="ai-how">Unique by resolved path. None load at session start</td></tr>
               <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close</td></tr>
             </tbody>
           </table>
         </div>
-        <p>A count carries a predicate, so each row states one. "95 checks" and "22 checks" are both true of the same gate and are not the same claim.</p>
+        <p class="ai-note">A count carries a predicate, so each row states one. "95 checks" and "22 checks" are both true of the same gate and are not the same claim.</p>
       </div>
     </section>
 
@@ -244,46 +265,61 @@
       <div class="explainer">
         <h2 id="measurement-title">Measuring whether a control works</h2>
         <p>The apparatus above accumulated faster than the evidence for it. So the first real instrument was one whose only job is to say whether any given control changes agent behavior at all.</p>
-        <p><strong>The metric is saturation.</strong> For each control, measure the repeat-firing rate in the same workspace after an agent has already seen the signal. If an agent receives the same warning a dozen times in one workspace, the warning is not teaching anything. It is wallpaper, and its real effect is to raise the noise floor so the useful signals get ignored alongside it.</p>
+        <p><strong>The metric is saturation:</strong> how often the same warning fires again in the same workspace after an agent has already seen it. If the agent gets the same advisory a dozen times and keeps triggering it, the warning is not changing behavior. It is <strong>wallpaper</strong>: background noise that raises the floor so useful signals get ignored alongside it.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness">
-            <caption>Advisory effectiveness, top classes, measured 2026-08-04 over 25.06 days.</caption>
+            <caption>Advisory effectiveness by warning class, ranked by how often each class fired. Measured 2026-08-04 over 25.75 days. Class names are the instrument's own labels.</caption>
             <thead>
-              <tr><th scope="col">Control class</th><th scope="col" class="ai-num-head">Firings</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Repeat rate</th><th scope="col">Verdict</th></tr>
+              <tr><th scope="col">Warning class</th><th scope="col" class="ai-num-head">Warnings</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Repeat rate</th><th scope="col">Verdict</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Loudest class in the system</th><td class="ai-num">2,739</td><td class="ai-num">519</td><td class="ai-num ai-num--key">81%</td><td><span class="ai-verdict ai-verdict--wallpaper">Wallpaper</span></td></tr>
-              <tr><th scope="row">Second</th><td class="ai-num">613</td><td class="ai-num">221</td><td class="ai-num ai-num--key">64%</td><td><span class="ai-verdict ai-verdict--wallpaper">Wallpaper</span></td></tr>
-              <tr><th scope="row">Third</th><td class="ai-num">480</td><td class="ai-num">222</td><td class="ai-num ai-num--key">54%</td><td><span class="ai-verdict ai-verdict--borderline">Borderline</span></td></tr>
-              <tr><th scope="row">Best-performing measured class</th><td class="ai-num">136</td><td class="ai-num">85</td><td class="ai-num ai-num--key">38%</td><td><span class="ai-verdict ai-verdict--teaching">Teaching</span></td></tr>
+              <tr><th scope="row">Pipe-exit misread<span class="ai-class-gloss">Treating a failed command as success</span></th><td class="ai-num">2,780</td><td class="ai-num">527</td><td class="ai-num ai-num--key">81%</td><td><span class="ai-verdict ai-verdict--wallpaper" title="Agents keep triggering the same warning after already seeing it">Ignored</span></td></tr>
+              <tr><th scope="row">Unscoped negative claim<span class="ai-class-gloss">Asserting absence without a scoped search</span></th><td class="ai-num">622</td><td class="ai-num">226</td><td class="ai-num ai-num--key">64%</td><td><span class="ai-verdict ai-verdict--wallpaper" title="Agents keep triggering the same warning after already seeing it">Ignored</span></td></tr>
+              <tr><th scope="row">Recursive delete<span class="ai-class-gloss"><code>rm -rf</code> and similar wipe paths</span></th><td class="ai-num">490</td><td class="ai-num">227</td><td class="ai-num ai-num--key">54%</td><td><span class="ai-verdict ai-verdict--borderline" title="Repeat rate is neither clearly teaching nor clearly ignored">Mixed</span></td></tr>
+              <tr><th scope="row">Destructive-probe check<span class="ai-class-gloss">Wrong test for a destructive-git gate</span></th><td class="ai-num">139</td><td class="ai-num">86</td><td class="ai-num ai-num--key">38%</td><td><span class="ai-verdict ai-verdict--teaching" title="Lower repeat rate: agents more often stop re-triggering after seeing the warning">Changes behavior</span></td></tr>
             </tbody>
           </table>
         </div>
-        <p>The single loudest control in the system, accounting for well over half of all firings, does nothing. Several other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
-        <p>This is the discipline the rest of the page rests on. Build the instrument that could prove your system useless, then believe it.</p>
+        <p class="ai-note"><strong>How to read the verdicts.</strong> <em>Ignored</em> (wallpaper): the warning keeps firing in the same workspace after the agent has already seen it, so it is not teaching. <em>Mixed</em> (borderline): the repeat rate sits between clear failure and clear success. <em>Changes behavior</em> (teaching): agents more often stop re-triggering after the first sighting. Repeat rate is the share of workspaces where the warning fired again after it had already fired once.</p>
+        <p>The noisiest control in the system, pipe-exit misread, accounts for well over half of all warnings and does nothing. Several other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
+        <blockquote class="paper-thesis-line ai-thesis">
+          <p>First build a test that could show your controls are useless. Then trust the result, including when it says most of them are.</p>
+        </blockquote>
       </div>
     </section>
 
     <section id="rungs" class="reveal explainer-section" aria-labelledby="rungs-title">
       <div class="explainer">
-        <h2 id="rungs-title">Enforcement rungs</h2>
-        <p>The saturation measurement forced a distinction that now governs every new rule.</p>
-        <p><strong>A teaching rung</strong> depends on the agent recalling the rule while acting: prose in a session-start file, a memory entry, an advisory warning. <strong>An enforcing rung</strong> does not: a gate that refuses the commit, a hook that denies the call, or best of all an actuator that hands back the correct form so the wrong one is never expressible.</p>
-        <p>The rule that follows: <strong>a control shipped to a teaching rung is unenforced, and the honest thing is to say so rather than count it as delivered.</strong> Two corollaries, both learned the expensive way:</p>
-        <ul>
-          <li><strong>Promote on evidence of harm, never on elapsed time.</strong> A rule that has sat quietly for a month has not earned promotion; it has only failed to be noticed.</li>
-          <li><strong>Measure the new control's precision before shipping it.</strong> Otherwise you rebuild the same cry-wolf problem one rung up, with more authority behind it.</li>
+        <h2 id="rungs-title">Enforcement levels</h2>
+        <p>The saturation measurement forced a distinction that now governs every new rule. Call each level a <strong>rung</strong>: how strongly the system actually enforces the rule, from advice the agent can ignore up to a hard block that removes the wrong action.</p>
+        <div class="ai-rung-pair" role="list">
+          <div class="ai-rung" role="listitem">
+            <h3>Teaching level</h3>
+            <p>Works only if the agent recalls the rule while acting: prose in a session-start file, a memory entry, an advisory warning. Easy to ship; easy to ignore under time pressure.</p>
+          </div>
+          <div class="ai-rung ai-rung--enforce" role="listitem">
+            <h3>Enforcing level</h3>
+            <p>Does not depend on recall: a gate that refuses the commit, a hook that denies the call, or a helper that returns the correct command form so the wrong one is never expressible.</p>
+          </div>
+        </div>
+        <p>The rule that follows: <strong>a control shipped only as teaching-level advice is unenforced, and the honest thing is to say so rather than count it as delivered.</strong> Two corollaries, both learned the expensive way:</p>
+        <ul class="ai-rule-list">
+          <li><strong>Promote on evidence of harm, never on elapsed time.</strong> A rule that has sat quietly for a month has not earned a stronger enforcement level; it has only failed to be noticed.</li>
+          <li><strong>Measure the new control's precision before shipping it.</strong> Otherwise you rebuild the same cry-wolf problem one level up, with more authority behind it.</li>
         </ul>
         <p>The strongest form is the one that removes the choice. A checkout that refuses commits and whose refusal message names the correct command is categorically different from a warning that explains the same thing, because the first cannot be forgotten under time pressure.</p>
       </div>
     </section>
 
-    <section id="confabulation" class="reveal explainer-section" aria-labelledby="confab-title">
+    <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
       <div class="explainer">
-        <h2 id="confab-title">Confabulation before capacity</h2>
-        <p>Memory systems for agents are usually discussed as a capacity problem. In practice the failure that nearly broke this one was not forgetting.</p>
-        <p>It was an agent writing a confident reference to a finding that had never been established, which the next session then read <em>as</em> established, and built on. The corpus does not degrade gracefully under that. A single invented identifier becomes load-bearing within a few sessions.</p>
-        <p>The fix was not a better retriever. It was a referential-integrity constraint enforced at commit time: <strong>no agent may invent an identifier</strong> for a finding, a decision, or an open question, and if the identifier is not already in the corpus the slot must be left empty and flagged for a human. Semantic memory needs referential integrity more than it needs recall.</p>
+        <h2 id="invented-facts-title">Invented facts before forgotten ones</h2>
+        <p>Memory systems for agents are usually discussed as a capacity problem. In practice the failure that nearly broke this one was not forgetting. It was <strong>confabulation</strong>: inventing a confident reference to a finding that had never been established.</p>
+        <p>An agent wrote that reference; the next session then read it <em>as</em> established, and built on it. The corpus does not degrade gracefully under that. A single invented identifier becomes load-bearing within a few sessions.</p>
+        <p>The fix was not a better retriever. It was a referential-integrity constraint enforced at commit time: <strong>no agent may invent an identifier</strong> for a finding, a decision, or an open question, and if the identifier is not already in the corpus the slot must be left empty and flagged for a human.</p>
+        <blockquote class="paper-thesis-line ai-thesis">
+          <p>Semantic memory needs referential integrity more than it needs recall.</p>
+        </blockquote>
         <p>A second, quieter failure in the same family: procedural memory decays invisibly. Session-start procedure files sit under a hard size budget, and past that threshold the tail is silently truncated. A procedure that stops being read reports normal. The loading path is therefore part of the memory design, not plumbing.</p>
       </div>
     </section>
@@ -292,8 +328,17 @@
       <div class="explainer">
         <h2 id="coord-title">Coordination is not a pointer to a live process</h2>
         <p>Agents first coordinated by passing messages. That lost work every single time an owner exited: the message arrived for a process that was gone, and the task sat marked as owned forever, invisible to every other agent.</p>
-        <p>Coordination moved to committed state, and a claim on a work item became a <strong>lease re-checked on every read</strong>. A dead claimer's item reverts to unowned rather than appearing owned. The general rule, which has since applied well outside this system: <strong>coordination state must be durable and re-derivable, never a pointer to something that can exit.</strong></p>
-        <p>One corollary is worth stating separately because it is easy to get backwards. An absent process proves the <em>process</em> is gone. It never proves the <em>work item</em> has no owner. "Nobody is holding this right now" and "nobody is responsible for this" are different questions and need separate answers.</p>
+        <p>Coordination moved to committed state, and a claim on a work item became a <strong>lease</strong> (a time-bounded claim re-checked on every read). A dead claimer's item reverts to unowned rather than appearing owned. The general rule, which has since applied well outside this system: <strong>coordination state must be durable and re-derivable, never a pointer to something that can exit.</strong></p>
+        <div class="ai-distinction" role="group" aria-label="Ownership distinction">
+          <div class="ai-distinction__item">
+            <h3>Holding now</h3>
+            <p>An absent process proves the <em>process</em> is gone. "Nobody is holding this right now" is a live-state question.</p>
+          </div>
+          <div class="ai-distinction__item">
+            <h3>Responsible for</h3>
+            <p>It never proves the <em>work item</em> has no owner. "Nobody is responsible for this" is a durable-state question, and needs a separate answer.</p>
+          </div>
+        </div>
         <p>Isolation followed the same path. A shared working tree let concurrent agents corrupt each other's staged work in ways that only reproduced under specific interleavings, which made them maddening to diagnose. Every session now gets its own isolated tree and index.</p>
       </div>
     </section>
@@ -305,7 +350,10 @@
         <p>A verifier was checking whether a set of external records was still live. It reported one as live. It <em>was</em> live, but the check had not established that: the network fetch had timed out, the output file was never cleared between calls, and the assertion had matched against the previous request's leftover bytes. Right answer, no measurement.</p>
         <p>The correction was to clear state per call, treat a non-zero exit as <em>no verdict</em> rather than as a negative, and then re-run the whole thing against a deliberately fabricated identifier to confirm the check could still tell the difference. That last step is the one usually skipped.</p>
         <p><strong>A check never observed to fail has not been shown to work.</strong> A passing test tells you the assertion held, not that it held for the reason you believe. The companion rule, from repeatedly being wrong in the other direction: when something fails on model output, the verifier is the suspect before the model is.</p>
-        <p>The sharper version, which took longest to learn: when one observable has two possible causes with opposite remedies, testing the property they share will confidently prescribe the wrong fix for whichever half you cannot see. A burst rate-limit and an exhausted budget look identical at the call site and want opposite responses. So does a harness bug and a model regression. An instrument has to name the mechanism, not the symptom.</p>
+        <blockquote class="paper-thesis-line ai-thesis">
+          <p>An instrument has to name the mechanism, not the symptom.</p>
+        </blockquote>
+        <p>The sharper version, which took longest to learn: when one observable has two possible causes with opposite remedies, testing the property they share will confidently prescribe the wrong fix for whichever half you cannot see. A burst rate-limit and an exhausted budget look identical at the call site and want opposite responses. So does a harness bug and a model regression.</p>
       </div>
     </section>
 
@@ -313,12 +361,24 @@
       <div class="explainer">
         <h2 id="context-title">Context as a deliberately managed resource</h2>
         <p>Context is the budget everything else spends. Four rules govern it here.</p>
-        <ul>
-          <li><strong>Progressive disclosure.</strong> Of 72 skills, none load at session start. Each carries a description whose only job is to answer "does this apply to what I am about to do," and the body loads on invocation.</li>
-          <li><strong>Offload by size.</strong> Any result above a fixed threshold goes to disk with a digest returned in its place, and a cost estimator is consulted before a large read rather than after.</li>
-          <li><strong>Instrument the trajectory.</strong> Occupancy and headroom are queryable mid-task against an explicit rubric for when to checkpoint.</li>
-          <li><strong>Compact by rotation, not by truncation.</strong> The durable memory index runs against a hard budget where roughly 81 percent of the space is pointer scaffolding rather than content. The tempting lever is shortening each entry's retrieval hook. That is the wrong lever: a hook that no longer says <em>when</em> the entry applies is dead weight still paying its full pointer cost. Rotating whole entries out to a searchable archive took the index from 130 entries at 16,677 bytes to 85 fully-hooked entries at 15,566 bytes, with 45 rotated and restorable.</li>
-        </ul>
+        <ol class="ai-principle-list">
+          <li>
+            <h3>Progressive disclosure</h3>
+            <p>Of 72 skills, none load at session start. Each carries a description whose only job is to answer "does this apply to what I am about to do," and the body loads on invocation.</p>
+          </li>
+          <li>
+            <h3>Offload by size</h3>
+            <p>Any result above a fixed threshold goes to disk with a digest returned in its place, and a cost estimator is consulted before a large read rather than after.</p>
+          </li>
+          <li>
+            <h3>Instrument the trajectory</h3>
+            <p>Occupancy and remaining context budget (headroom) are queryable mid-task against an explicit rubric for when to checkpoint.</p>
+          </li>
+          <li>
+            <h3>Compact by rotation, not by truncation</h3>
+            <p>The durable memory index runs against a hard budget where roughly 81 percent of the space is pointer scaffolding rather than content. The tempting lever is shortening each entry's retrieval hook. That is the wrong lever: a hook that no longer says <em>when</em> the entry applies is dead weight still paying its full pointer cost. Rotating whole entries out to a searchable archive took the index from 130 entries at 16,677 bytes to 85 fully-hooked entries at 15,566 bytes, with 45 rotated and restorable.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -326,15 +386,15 @@
       <div class="explainer">
         <h2 id="not-claimed-title">What this is not</h2>
         <p>Stated plainly, because a page like this invites assumptions it should not get.</p>
-        <ul>
+        <ul class="ai-not-list">
           <li><strong>Not a product,</strong> and not available to use. It is internal infrastructure for one operator's research program.</li>
           <li><strong>Not a distributed system with users.</strong> The concurrency and consistency problems are real, but there is no external traffic, no service-level objective, and no on-call rotation.</li>
           <li><strong>Not machine-learning work.</strong> No model is trained, fine-tuned, or served here. The models are consumed through provider APIs, plus local inference for work that should not leave the machine.</li>
           <li><strong>Not container or VM isolation.</strong> Isolation is at the process and filesystem level. It solved a real corruption problem and it is not a security sandbox.</li>
           <li><strong>Not a benchmark.</strong> The measurements describe this system's own controls. They are not claims about agent behavior in general, and the observation spans are stated so they can be discounted accordingly.</li>
         </ul>
-        <p>The architecture underneath is the subject of seventeen USPTO applications across nine families. The surrounding research program is eight papers on SSRN, one accepted at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters.</p>
-        <div class="primer-hero-ctas">
+        <p class="ai-closing-creds">The architecture underneath is the subject of seventeen USPTO applications across nine families. The surrounding research program is eight papers on SSRN, one accepted at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters.</p>
+        <div class="primer-hero-ctas ai-hero-ctas">
           <div class="frameworks-2026-flagship-links frameworks-2026-flagship-links--hero" role="group" aria-label="Related">
             <a class="action primary" href="/resume/ai-governance-infrastructure">AI governance &amp; infrastructure profile</a>
           </div>
