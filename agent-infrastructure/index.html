@@ -310,13 +310,13 @@
     <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
       <div class="explainer">
         <h2 id="invented-facts-title">Invented facts before forgotten ones</h2>
-        <p>Memory systems for agents are usually discussed as a capacity problem. In practice the failure that nearly broke this one was not forgetting. It was <strong>confabulation</strong>: inventing a confident reference to a finding that had never been established.</p>
-        <p>An agent wrote that reference; the next session then read it <em>as</em> established, and built on it. The corpus does not degrade gracefully under that. A single invented identifier becomes load-bearing within a few sessions.</p>
-        <p>The fix was not a better retriever. It was a referential-integrity constraint enforced at commit time: <strong>no agent may invent an identifier</strong> for a finding, a decision, or an open question, and if the identifier is not already in the corpus the slot must be left empty and flagged for a human.</p>
+        <p>Memory systems for agents are usually discussed as a capacity problem: how much they can store, and how to retrieve it. In practice the failure that nearly broke this one was not forgetting.</p>
+        <p>It was an agent writing a confident citation to a finding that had never been established. The next session then treated that citation as real, and built more work on top of it. Researchers call this <strong>confabulation</strong> (a made-up fact stated as if it were true). The shared record does not degrade gracefully under that. A single invented ID can become load-bearing within a few sessions.</p>
+        <p>The fix was not a better search tool. It was a commit-time rule: <strong>no agent may invent an ID</strong> for a finding, a decision, or an open question. If the ID is not already in the corpus, the slot must be left empty and flagged for a human. In other words, every cross-reference has to point at something that already exists.</p>
         <blockquote class="paper-thesis-line ai-thesis">
-          <p>Semantic memory needs referential integrity more than it needs recall.</p>
+          <p>Shared memory needs valid cross-references more than it needs better recall.</p>
         </blockquote>
-        <p>A second, quieter failure in the same family: procedural memory decays invisibly. Session-start procedure files sit under a hard size budget, and past that threshold the tail is silently truncated. A procedure that stops being read reports normal. The loading path is therefore part of the memory design, not plumbing.</p>
+        <p>A second, quieter failure in the same family: instructions that are supposed to load at session start can disappear without anyone noticing. Those procedure files sit under a hard size budget, and past that threshold the tail is silently cut off. A procedure that stops being read still looks fine from the outside. So how the files are loaded is part of the memory design, not just plumbing.</p>
       </div>
     </section>
 
