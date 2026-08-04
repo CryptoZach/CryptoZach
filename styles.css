@@ -1010,6 +1010,36 @@ body.contact-page .contact-page-foreground > .contact-page .contact-email-addres
   text-decoration:none;
 }
 
+body.contact-page .contact-page-foreground > .contact-page .contact-email-identity{
+  display:flex;
+  align-items:center;
+  gap:1.25rem;
+}
+body.contact-page .contact-page-foreground > .contact-page .contact-email-headshot{
+  width:112px;
+  height:112px;
+  flex-shrink:0;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid var(--line);
+  display:block;
+}
+body.contact-page .contact-page-foreground > .contact-page .contact-email-identity__text{
+  min-width:0;
+  flex:1 1 auto;
+}
+@media (max-width:560px){
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-identity{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:1rem;
+  }
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-headshot{
+    width:88px;
+    height:88px;
+  }
+}
+
 body.contact-page .contact-page-foreground > .contact-page .contact-email-address:hover{
   color:var(--accent-hover);
   text-decoration:underline;
