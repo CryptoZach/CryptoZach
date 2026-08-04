@@ -149,4 +149,26 @@ if test "$remote" = "origin" && test -z "${SKIP_ADDED_ORPHAN_PREPUSH:-}"; then
 	fi
 fi
 
+# (8) disclosure-review gate: a push that ADDS a page cannot land unless some
+# commit in the range records a `Disclosure-review:` trailer. Pushing this
+# repository deploys to the live site, and publication starts a 12-month US
+# grace period and forfeits absolute novelty where no grace period exists, so
+# the question has to be asked at the last enforceable moment before the
+# outward act. Added 2026-08-04 after /agent-infrastructure/ was authored,
+# pushed, and deployed with no 102(b) review anywhere in the chain. Firing rate
+# measured before shipping: 21 of 1108 commits (1.90%, about 1 in 52). The
+# check body is scripts/hooks/cz-disclosure-review-prepush.py (called by repo
+# path, so it is never stranded); fail-soft on git errors, mirroring layer (7).
+# Bypass: SKIP_DISCLOSURE_REVIEW_PREPUSH=1 git push ...
+if test "$remote" = "origin" && test -z "${SKIP_DISCLOSURE_REVIEW_PREPUSH:-}"; then
+	drguard="$(git rev-parse --show-toplevel 2>/dev/null)/scripts/hooks/cz-disclosure-review-prepush.py"
+	if test -f "$drguard"; then
+		echo "$push_refs" | while read local_ref local_oid remote_ref remote_oid; do
+			test -z "$local_ref" && continue
+			test "$local_oid" = "$zero" && continue
+			python3 "$drguard" "$local_oid" "$remote_oid" || exit 1
+		done || exit 1
+	fi
+fi
+
 exit 0
