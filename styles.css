@@ -20713,3 +20713,152 @@ body #contact .about-card .card-expand .patent-areas{
 body #contact .about-card .card-expand .patent-areas .patent-area-full{
   grid-column: 1 / -1;
 }
+
+/* ---------------------------------------------------------------------------
+   Agent-infrastructure page: measurement tables
+   Follows the .dollar-objects-table house pattern (framed wrap, uppercase
+   accent header, zebra rows, first column as a row header). Differences are
+   deliberate: these tables carry MEASUREMENTS, so numeric columns are
+   tabular-lining and right-aligned to make magnitudes comparable down the
+   column, and the caption sits above the frame as a dated provenance line
+   rather than floating centered above the page text.
+--------------------------------------------------------------------------- */
+.ai-table-wrap{
+  margin:var(--space-lg) 0;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  max-width:100%;
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  box-shadow:var(--shadow-sm);
+}
+.ai-table{
+  width:100%;
+  min-width:min(100%, 680px);
+  border-collapse:collapse;
+  font-size:var(--font-size-min);
+  color:var(--text);
+  background:transparent;
+}
+.ai-table caption{
+  caption-side:top;
+  text-align:left;
+  padding:0.85rem 1.125rem 0.7rem;
+  font-size:var(--text-xs);
+  line-height:1.45;
+  color:var(--muted);
+  border-bottom:1px solid var(--line);
+  letter-spacing:0.01em;
+}
+.ai-table th,
+.ai-table td{
+  padding:0.85rem 1.125rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+}
+.ai-table th:last-child,
+.ai-table td:last-child{ border-right:none; }
+.ai-table thead th{
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  font-size:var(--text-2xs);
+  color:var(--text-soft);
+  background:color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-bottom:2px solid var(--accent);
+  border-right-color:color-mix(in srgb, var(--line) 85%, var(--accent) 15%);
+  white-space:nowrap;
+  vertical-align:bottom;
+}
+.ai-table tbody tr:nth-child(odd){
+  background:color-mix(in srgb, var(--panel) 55%, transparent);
+}
+.ai-table tbody tr:nth-child(even){
+  background:color-mix(in srgb, var(--accent) 6%, var(--panel2));
+}
+.ai-table tbody tr:last-child th,
+.ai-table tbody tr:last-child td{ border-bottom:none; }
+
+/* First column is the row's subject: a row header, not data. */
+.ai-table tbody th[scope="row"]{
+  font-weight:600;
+  color:var(--text);
+  text-align:left;
+}
+
+/* Measured values: keep them on one line so the eye reads a column of
+   magnitudes rather than wrapped fragments. */
+.ai-val{
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.ai-how{
+  color:var(--text-soft);
+  line-height:1.55;
+}
+/* Specificity note: `.ai-table td` is (0,1,1) and would otherwise beat a bare
+   `.ai-num` at (0,1,0), silently leaving these left-aligned. Scoped to the
+   table so header and cells right-align together and magnitudes line up. */
+.ai-table .ai-num,
+.ai-table thead th.ai-num-head{
+  text-align:right;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.ai-table .ai-num{ color:var(--text-soft); }
+/* The repeat rate is the column the section's argument turns on. */
+.ai-table .ai-num--key{ color:var(--text); font-weight:600; }
+/* Numeric columns need only enough width for their header; the control-class
+   name should take the slack instead. */
+.ai-table--effectiveness th.ai-num-head{ width:8.5rem; }
+.ai-table--effectiveness td:last-child,
+.ai-table--effectiveness th:last-child{ width:9.5rem; }
+
+/* Verdict badges. The page's claim is that most controls do nothing, so the
+   verdict reads at a glance instead of as another word in a row of words. */
+.ai-verdict{
+  display:inline-block;
+  padding:0.2rem 0.55rem;
+  border-radius:var(--chip-radius, 999px);
+  font-size:var(--text-2xs);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  white-space:nowrap;
+  border:1px solid transparent;
+}
+.ai-verdict--wallpaper{
+  color:var(--brand-rose);
+  background:color-mix(in srgb, var(--brand-rose) 12%, transparent);
+  border-color:color-mix(in srgb, var(--brand-rose) 34%, transparent);
+}
+.ai-verdict--borderline{
+  color:var(--brand-amber);
+  background:color-mix(in srgb, var(--brand-amber) 14%, transparent);
+  border-color:color-mix(in srgb, var(--brand-amber) 36%, transparent);
+}
+.ai-verdict--teaching{
+  color:var(--status-positive);
+  background:color-mix(in srgb, var(--status-positive) 12%, transparent);
+  border-color:color-mix(in srgb, var(--status-positive) 34%, transparent);
+}
+
+/* The scale table's third column carries most of the text; let it take the
+   slack so Quantity and Value stay narrow and scannable. */
+.ai-table--scale th:first-child,
+.ai-table--scale td:first-child{ width:11rem; }
+.ai-table--scale .ai-val{ width:10rem; }
+
+@media (max-width:640px){
+  .ai-table th,
+  .ai-table td{ padding:0.7rem 0.8rem; }
+  .ai-table caption{ padding:0.7rem 0.8rem 0.6rem; }
+  .ai-table--scale th:first-child,
+  .ai-table--scale td:first-child,
+  .ai-table--scale .ai-val{ width:auto; }
+}

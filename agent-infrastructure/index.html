@@ -191,56 +191,6 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <nav class="structure-nav" id="structureNav" aria-label="Page sections" hidden>
-    <div class="structure-nav__inner">
-      <div class="structure-nav__breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span class="structure-nav__bc-sep" aria-hidden="true">/</span>
-        <span class="structure-nav__bc-current">Overview</span>
-      </div>
-      <ol class="structure-nav__links" role="list">
-        <li class="structure-nav__group" id="navDefGroup">
-          <a href="#definitions" class="structure-nav__link" data-section="definitions">Definitions</a>
-          <ol class="structure-nav__sub" role="list" aria-label="Definitions">
-            <li><a href="#what-stablecoin" class="structure-nav__sublink" data-section="what-stablecoin">Stablecoin</a></li>
-            <li><a href="#what-tokenization" class="structure-nav__sublink" data-section="what-tokenization">Tokenization</a></li>
-            <li><a href="#what-deposit" class="structure-nav__sublink" data-section="what-deposit">Tokenized deposit</a></li>
-            <li><a href="#what-operator" class="structure-nav__sublink" data-section="what-operator">Operator &amp; gateway</a></li>
-            <li><a href="#what-control-layer" class="structure-nav__sublink" data-section="what-control-layer">Control layer</a></li>
-            <li><a href="#what-tokenomics" class="structure-nav__sublink" data-section="what-tokenomics">Tokenomics</a></li>
-          </ol>
-        </li>
-        <li>
-          <a href="#dollar-objects" class="structure-nav__link" data-section="dollar-objects">Four dollar objects</a>
-        </li>
-        <li>
-          <a href="#why-institutions-care" class="structure-nav__link" data-section="why-institutions-care">Why institutions care</a>
-        </li>
-        <li class="structure-nav__group" id="navQGroup">
-          <a href="#five-questions" class="structure-nav__link" data-section="five-questions">Five questions</a>
-          <ol class="structure-nav__sub" role="list" aria-label="Questions">
-            <li><a href="#q1" class="structure-nav__sublink" data-section="q1">Q1</a></li>
-            <li><a href="#q2" class="structure-nav__sublink" data-section="q2">Q2</a></li>
-            <li><a href="#q3" class="structure-nav__sublink" data-section="q3">Q3</a></li>
-            <li><a href="#q4" class="structure-nav__sublink" data-section="q4">Q4</a></li>
-            <li><a href="#q5" class="structure-nav__sublink" data-section="q5">Q5</a></li>
-          </ol>
-        </li>
-        <li>
-          <a href="#start-by-context" class="structure-nav__link" data-section="start-by-context">Start by context</a>
-        </li>
-        <li>
-          <a href="#eight-papers" class="structure-nav__link" data-section="eight-papers">Eight papers</a>
-        </li>
-        <li>
-          <a href="#what-tools" class="structure-nav__link" data-section="what-tools">What the tools do</a>
-        </li>
-        <li>
-          <a href="#overview-contact" class="structure-nav__link" data-section="overview-contact">Contact</a>
-        </li>
-      </ol>
-    </div>
-  </nav>
 
     <main id="main">
 
@@ -270,20 +220,22 @@
       <div class="explainer">
         <h2 id="scale-title">The system</h2>
         <p>A fleet of AI coding agents works a single shared repository. They do research, drafting, verification, and infrastructure work on the same corpus, concurrently, over horizons far longer than any one context window holds.</p>
-        <table>
-          <caption>Measured 2026-08-04. All of these drift; the producers are re-run rather than the numbers re-typed.</caption>
-          <thead>
-            <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Commits</td><td>roughly 17,300</td><td>Since 2026-03-05, on the mainline branch</td></tr>
-            <tr><td>Concurrent sessions</td><td>a dozen to thirty</td><td>Distinct sessions writing a transcript per clock-hour: median 14, mean 17.1, p90 39 over seven days. Deliberately a range, because a point estimate is stale within the hour</td></tr>
-            <tr><td>Pre-commit gate</td><td>95 checks</td><td>81 top-level plus 14 sub-checks; 22 of the 95 hard-fail</td></tr>
-            <tr><td>Advisory firings</td><td>4,330</td><td>Across 18 classes over a 25.06-day observation span</td></tr>
-            <tr><td>Skill library</td><td>72</td><td>Unique by resolved path. None load at session start</td></tr>
-            <tr><td>Canonical state</td><td>33 files</td><td>The durable record agents read at start and write at close</td></tr>
-          </tbody>
-        </table>
+        <div class="ai-table-wrap">
+          <table class="ai-table ai-table--scale">
+            <caption>Measured 2026-08-04. All of these drift; the producers are re-run rather than the numbers re-typed.</caption>
+            <thead>
+              <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Commits</th><td class="ai-val">roughly 17,300</td><td class="ai-how">Since 2026-03-05, on the mainline branch</td></tr>
+              <tr><th scope="row">Concurrent sessions</th><td class="ai-val">a dozen to thirty</td><td class="ai-how">Distinct sessions writing a transcript per clock-hour: median 14, mean 17.1, p90 39 over seven days. Deliberately a range, because a point estimate is stale within the hour</td></tr>
+              <tr><th scope="row">Pre-commit gate</th><td class="ai-val">95 checks</td><td class="ai-how">81 top-level plus 14 sub-checks; 22 of the 95 hard-fail</td></tr>
+              <tr><th scope="row">Advisory firings</th><td class="ai-val">4,330</td><td class="ai-how">Across 18 classes over a 25.06-day observation span</td></tr>
+              <tr><th scope="row">Skill library</th><td class="ai-val">72</td><td class="ai-how">Unique by resolved path. None load at session start</td></tr>
+              <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close</td></tr>
+            </tbody>
+          </table>
+        </div>
         <p>A count carries a predicate, so each row states one. "95 checks" and "22 checks" are both true of the same gate and are not the same claim.</p>
       </div>
     </section>
@@ -293,18 +245,20 @@
         <h2 id="measurement-title">Measuring whether a control works</h2>
         <p>The apparatus above accumulated faster than the evidence for it. So the first real instrument was one whose only job is to say whether any given control changes agent behavior at all.</p>
         <p><strong>The metric is saturation.</strong> For each control, measure the repeat-firing rate in the same workspace after an agent has already seen the signal. If an agent receives the same warning a dozen times in one workspace, the warning is not teaching anything. It is wallpaper, and its real effect is to raise the noise floor so the useful signals get ignored alongside it.</p>
-        <table>
-          <caption>Advisory effectiveness, top classes, measured 2026-08-04 over 25.06 days.</caption>
-          <thead>
-            <tr><th scope="col">Control class</th><th scope="col">Firings</th><th scope="col">Workspaces</th><th scope="col">Repeat rate</th><th scope="col">Verdict</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Loudest class in the system</td><td>2,739</td><td>519</td><td>81%</td><td>Wallpaper</td></tr>
-            <tr><td>Second</td><td>613</td><td>221</td><td>64%</td><td>Wallpaper</td></tr>
-            <tr><td>Third</td><td>480</td><td>222</td><td>54%</td><td>Borderline</td></tr>
-            <tr><td>Best-performing measured class</td><td>136</td><td>85</td><td>38%</td><td>Teaching</td></tr>
-          </tbody>
-        </table>
+        <div class="ai-table-wrap">
+          <table class="ai-table ai-table--effectiveness">
+            <caption>Advisory effectiveness, top classes, measured 2026-08-04 over 25.06 days.</caption>
+            <thead>
+              <tr><th scope="col">Control class</th><th scope="col" class="ai-num-head">Firings</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Repeat rate</th><th scope="col">Verdict</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Loudest class in the system</th><td class="ai-num">2,739</td><td class="ai-num">519</td><td class="ai-num ai-num--key">81%</td><td><span class="ai-verdict ai-verdict--wallpaper">Wallpaper</span></td></tr>
+              <tr><th scope="row">Second</th><td class="ai-num">613</td><td class="ai-num">221</td><td class="ai-num ai-num--key">64%</td><td><span class="ai-verdict ai-verdict--wallpaper">Wallpaper</span></td></tr>
+              <tr><th scope="row">Third</th><td class="ai-num">480</td><td class="ai-num">222</td><td class="ai-num ai-num--key">54%</td><td><span class="ai-verdict ai-verdict--borderline">Borderline</span></td></tr>
+              <tr><th scope="row">Best-performing measured class</th><td class="ai-num">136</td><td class="ai-num">85</td><td class="ai-num ai-num--key">38%</td><td><span class="ai-verdict ai-verdict--teaching">Teaching</span></td></tr>
+            </tbody>
+          </table>
+        </div>
         <p>The single loudest control in the system, accounting for well over half of all firings, does nothing. Several other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
         <p>This is the discipline the rest of the page rests on. Build the instrument that could prove your system useless, then believe it.</p>
       </div>
