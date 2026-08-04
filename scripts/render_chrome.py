@@ -107,7 +107,8 @@ def active_target(rel):
         return "/research"
     if top in ("letters", "resume"):
         return "/" + top
-    if top in ("overview", "frameworks", "contact", "speaker-and-advisory"):
+    if top in ("overview", "frameworks", "contact", "speaker-and-advisory",
+               "agent-infrastructure"):
         return "/" + top
     return None
 
