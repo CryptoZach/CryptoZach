@@ -20908,28 +20908,37 @@ body #contact .about-card .card-expand .patent-areas .patent-area-full{
   opacity:0.7;
 }
 .agent-infra-page .ai-hero-ctas{
-  margin:0 0 var(--space-lg);
+  display:flex;
+  flex-wrap:wrap;
   align-items:center;
   gap:var(--space-sm);
-}
-.agent-infra-page .ai-hero-ctas .frameworks-2026-flagship-links--hero,
-.agent-infra-page .ai-hero-ctas .primer-resume-profile-nav{
-  display:contents;
+  margin:0 0 var(--space-lg);
 }
 .agent-infra-page .ai-hero-ctas .action{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  height:2.75rem;
   min-height:2.75rem;
   margin:0;
   box-sizing:border-box;
-  padding:0.55rem 1.1rem;
-  line-height:1.25;
-  border-width:1px;
-  border-style:solid;
+  padding:0 1.1rem;
+  line-height:1.2;
+  border:1px solid var(--line-strong);
+  box-shadow:none;
+  vertical-align:middle;
 }
 .agent-infra-page .ai-hero-ctas .action.primary{
-  border-color:transparent;
+  border-color:var(--accent-cta, var(--brand-blue));
+  box-shadow:none;
+}
+.agent-infra-page .ai-hero-ctas .action.primary:hover,
+.agent-infra-page .ai-hero-ctas .action.secondary:hover{
+  transform:none;
+  box-shadow:none;
+}
+.agent-infra-page .ai-hero-ctas .action.primary::before{
+  display:none;
 }
 @media (max-width:640px){
   .agent-infra-page .ai-hero-ctas{
