@@ -211,7 +211,7 @@
         <span class="ai-proof-sep" aria-hidden="true">·</span>
         <span class="ai-proof-item"><strong>4,405</strong> advisory warnings graded</span>
         <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item"><strong>81%</strong> noisiest warning ignored on repeat</span>
+        <span class="ai-proof-item" title="Of workspaces that saw the most common advisory once, 81% saw it fire again. Agents read it and kept doing the same thing."><strong>81%</strong> still ignore the most common warning</span>
       </p>
       <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
         <a class="action primary" href="#measurement">See how we measure control effectiveness</a>
@@ -277,7 +277,8 @@
           </table>
         </div>
         <p class="ai-note"><strong>How to read the verdicts.</strong> <em>Ignored</em> (wallpaper): the warning keeps firing in the same workspace after the agent has already seen it, so it is not teaching. <em>Mixed</em> (borderline): the repeat rate sits between clear failure and clear success. <em>Changes behavior</em> (teaching): agents more often stop re-triggering after the first sighting. Repeat rate is the share of workspaces where the warning fired again after it had already fired once.</p>
-        <p>The noisiest control in the system, pipe-exit misread, accounts for well over half of all warnings and does nothing. Several other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
+        <p>The most common control in the system, pipe-exit misread, accounts for well over half of all warnings. In <strong>81%</strong> of the workspaces that saw it once, it fired again: agents read the warning and kept doing the same thing. Naming a safer command in the warning text raised adoption and did not move that rate. Soft advice alone stayed wallpaper.</p>
+        <p>The upgrade that follows is not a louder warning. It is a <strong>narrow hard refuse</strong> on the subset where the command is clearly reading the pipe's exit status as a pass/fail verdict (about a third of this class), flag-gated and shipped off until a precision sample justifies arming it. A blanket refuse on every pipe-to-head would recreate cry-wolf one level up. Several other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
         <blockquote class="paper-thesis-line ai-thesis">
           <p>First build a test that could show your controls are useless. Then trust the result, including when it says most of them are.</p>
         </blockquote>
