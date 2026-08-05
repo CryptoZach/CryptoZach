@@ -7318,9 +7318,13 @@ footer.site-footer .footer-tagline{
   header .header-social{display:none}
 }
 
-/* Header at tablet landscape and narrower: drop the brand subtitle so the
-   brand title (now nowrap) stays compact next to the nav. */
-@media (max-width: 1099px){
+/* Header on phones: drop the brand subtitle so the brand title (now nowrap)
+   stays compact next to the nav. Above 768px the subtitle stays visible: the
+   769-1099px hide was lifted 2026-08-05 on author direction, because at those
+   widths the nav is already collapsed to the hamburger and there is room for
+   the tagline. Its resting gold is a deliberate brand signal, so hiding it
+   read as the styling having been reverted. */
+@media (max-width: 768px){
   header .brand span{display:none}
 }
 
@@ -14648,12 +14652,12 @@ header.scrolled {
   }
 }
 
-/* Squeezed desktop widths (tablet landscape, narrow desktop): subtitle disappears
-   so the nav row never breaks. Brand wordmark remains visible. */
+/* Squeezed desktop widths (tablet landscape, narrow desktop). The subtitle used
+   to disappear here to keep the nav row from breaking; lifted 2026-08-05 on
+   author direction. It is safe to keep because the desktop nav already collapses
+   to the hamburger below ~1180px (see the collapse rule above), so the row this
+   was protecting is not present at these widths. Nav padding tightening stays. */
 @media (min-width: 769px) and (max-width: 1099px) {
-  .brand span {
-    display: none;
-  }
   .navlink {
     padding: 6px 10px;
   }
