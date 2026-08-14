@@ -52,6 +52,20 @@ scripts/.deps/
 Cryptozach-site-files/
 
 # Claude Code local settings (per-machine permissions, may contain API keys).
-# .claude/memory/ is the git-tracked auto-memory backup; only the local
-# settings file is excluded.
 .claude/settings.local.json
+
+# Auto-memory mirror: PRIVATE, Claude1 ONLY. Author directive 2026-08-14,
+# "memory mirror shouldnt ever go to public repo, only private repo (Claude1)".
+# This reverses the note that stood here until 2026-08-14, which described
+# .claude/memory/ as "the git-tracked auto-memory backup" of THIS repo.
+#
+# THIS LINE IS THE WEAKER HALF, and it is written down so nobody mistakes it for
+# the fix. gitignore does not apply to ALREADY-TRACKED files, and 41 of them are
+# tracked here, so this line alone would stop new memory files and let every
+# edit to those 41 through. The real enforcement is scripts/hooks/pre-commit,
+# which now blocks any staged path under .claude/memory/ and defeats `git add -f`
+# (verified 2026-08-14 by a live probe commit that was rejected).
+#
+# The 41 remain tracked and public at HEAD by author decision; removing them
+# from HEAD would not unpublish them from history anyway.
+.claude/memory/

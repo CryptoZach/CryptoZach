@@ -8,13 +8,35 @@
 # in CryptoZach/Claude1 (clone at /Users/zach/Tokenization_Systems_Website/).
 #
 # 2026-04-27: .claude/memory/ exception (auto-memory mirror is tracked here).
+#   RETIRED 2026-08-14 on author directive: "memory mirror shouldnt ever go to
+#   public repo, only private repo (Claude1)". See the block below.
 # 2026-06-24: AGENTS.md is NO LONGER blocked; the site clone now intentionally
 # carries its own AGENTS.md (site-canonical rules + localhost-always) per the
 # cross-clone cutover step 15.
+#
+# 2026-08-14: .claude/memory/ IS WORKFLOW CONTENT AND IS NOW BLOCKED HERE.
+#
+# THE EXCEPTION WAS GUARDING NOTHING, and that is why this needed a fix rather
+# than a one-line deletion. `.claude/` never appeared in WORKFLOW_PATHS, so the
+# `grep -vE '^\.claude/memory/'` filter below could never subtract anything: it
+# was a no-op that READ like a deliberate carve-out. Measured 2026-08-14 with a
+# positive control: '.claude/memory/foo.md' does not match WORKFLOW_PATHS while
+# 'docs/x.md' does. So the guard had a HOLE, not an exception, and every routine
+# site push carried the mirror to the PUBLIC repo. 41 files were public by
+# 2026-08-05.
+#
+# Scoped to `.claude/memory/` deliberately, not all of `.claude/`:
+# `.claude/worktrees` is also tracked here and is NOT part of this directive.
+# Widening the block is a separate decision and belongs to the author.
+#
+# WHAT THIS DOES AND DOES NOT DO. It stops FUTURE leakage, both new memory files
+# and edits to the 41 already tracked, since it fires on any staged path under
+# `.claude/memory/`. It does NOT remove the 41 from the public HEAD or from
+# public history; the author chose to leave those in place for now, and deleting
+# from HEAD would not unpublish them anyway.
+WORKFLOW_PATHS='^(docs/|handoff/|research_content/|tools/|\.cursor/|\.claude/memory/|scripts/(audit_session|bump-cache-buster|claude-code-sync|commit_msg_bypass|declare_session_scope|gen-hyperliquid-webp|generate-sprint4|migrate_email_domain|pre_commit_staging|push-to-github|remove-meshnet|serve-debug|sprint5-link)|R1_README\.md$|CITATION\.cff$|requirements\.txt$|playwright\.config\.js$|^tests/)'
 
-WORKFLOW_PATHS='^(docs/|handoff/|research_content/|tools/|\.cursor/|scripts/(audit_session|bump-cache-buster|claude-code-sync|commit_msg_bypass|declare_session_scope|gen-hyperliquid-webp|generate-sprint4|migrate_email_domain|pre_commit_staging|push-to-github|remove-meshnet|serve-debug|sprint5-link)|R1_README\.md$|CITATION\.cff$|requirements\.txt$|playwright\.config\.js$|^tests/)'
-
-BLOCKED=$(git diff --cached --name-only | grep -E "$WORKFLOW_PATHS" | grep -vE '^\.claude/memory/')
+BLOCKED=$(git diff --cached --name-only | grep -E "$WORKFLOW_PATHS")
 
 if [ -n "$BLOCKED" ]; then
   echo "[pre-commit] ERROR: workflow-content paths staged in site clone." >&2
@@ -23,7 +45,14 @@ if [ -n "$BLOCKED" ]; then
   echo "[pre-commit] Staged workflow-content paths:" >&2
   echo "$BLOCKED" | sed 's/^/  - /' >&2
   echo "[pre-commit] Switch to workflow clone for these commits." >&2
-  echo "[pre-commit] Exception: .claude/memory/ is allowed per CLAUDE.md auto-memory backup section." >&2
+  case "$BLOCKED" in
+    *.claude/memory/*)
+      echo "[pre-commit] .claude/memory/ is the AUTO-MEMORY MIRROR and belongs to Claude1 ONLY." >&2
+      echo "[pre-commit] Author directive 2026-08-14: it must never reach the public repo." >&2
+      echo "[pre-commit] Mirror it in the workflow clone instead: scripts/sync_memory_mirror.sh" >&2
+      echo "[pre-commit] (which pushes to origin=Claude1, the private remote, and only there)." >&2
+      ;;
+  esac
   exit 1
 fi
 
