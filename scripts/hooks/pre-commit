@@ -25,18 +25,36 @@
 # site push carried the mirror to the PUBLIC repo. 41 files were public by
 # 2026-08-05.
 #
-# Scoped to `.claude/memory/` deliberately, not all of `.claude/`:
-# `.claude/worktrees` is also tracked here and is NOT part of this directive.
-# Widening the block is a separate decision and belongs to the author.
+# WIDENED 2026-08-14 (second author directive, same day): ".claude/worktrees
+# should not be in public repo, only claude1 private". The block is now ALL of
+# `.claude/`, not a list of subdirectories, because enumerating them is a game
+# you lose once: `.claude/memory/` and `.claude/worktrees/` were the only two
+# tracked here, and a third would have ridden in silently exactly as these did.
+# `.claude/settings.local.json` stays excluded by .gitignore as before.
 #
-# WHAT THIS DOES AND DOES NOT DO. It stops FUTURE leakage, both new memory files
-# and edits to the 41 already tracked, since it fires on any staged path under
-# `.claude/memory/`. It does NOT remove the 41 from the public HEAD or from
-# public history; the author chose to leave those in place for now, and deleting
-# from HEAD would not unpublish them anyway.
-WORKFLOW_PATHS='^(docs/|handoff/|research_content/|tools/|\.cursor/|\.claude/memory/|scripts/(audit_session|bump-cache-buster|claude-code-sync|commit_msg_bypass|declare_session_scope|gen-hyperliquid-webp|generate-sprint4|migrate_email_domain|pre_commit_staging|push-to-github|remove-meshnet|serve-debug|sprint5-link)|R1_README\.md$|CITATION\.cff$|requirements\.txt$|playwright\.config\.js$|^tests/)'
+# What `.claude/worktrees/97344` actually was, since the name suggests worse: a
+# stray git worktree OF THIS SAME SITE REPO (same origin), committed by accident
+# as an UNMAPPED GITLINK (mode 160000, no .gitmodules anywhere). So the public
+# repo held a 40-char commit SHA and a directory name, never file content, since
+# git does not push submodule objects. No workflow content leaked through it. It
+# is session scratch that belongs in neither repo, so it is untracked here
+# rather than moved to Claude1.
+#
+# WHAT THIS DOES AND DOES NOT DO. It stops FUTURE leakage, both new files and
+# edits to anything already tracked under `.claude/`. It does NOT remove the 41
+# memory files from the public HEAD or from public history; the author chose to
+# leave those, and deleting from HEAD would not unpublish them anyway.
+WORKFLOW_PATHS='^(docs/|handoff/|research_content/|tools/|\.cursor/|\.claude/|scripts/(audit_session|bump-cache-buster|claude-code-sync|commit_msg_bypass|declare_session_scope|gen-hyperliquid-webp|generate-sprint4|migrate_email_domain|pre_commit_staging|push-to-github|remove-meshnet|serve-debug|sprint5-link)|R1_README\.md$|CITATION\.cff$|requirements\.txt$|playwright\.config\.js$|^tests/)'
 
-BLOCKED=$(git diff --cached --name-only | grep -E "$WORKFLOW_PATHS")
+# DELETIONS ARE ALWAYS ALLOWED, and this is a real fix rather than a convenience.
+# The guard exists to stop workflow content ENTERING the site repo; it must never
+# stop it LEAVING. Until 2026-08-14 this read the whole staged set, so a `git rm`
+# of a blocked path was itself rejected: the guard ENTRENCHED exactly what it was
+# built to keep out. Concretely, it would have blocked the author from ever
+# removing those 41 memory files from HEAD, which is a live option they are still
+# holding. --diff-filter=ACMR keeps Added, Copied, Modified and Renamed (so a
+# rename INTO .claude/ is still caught) and drops Deleted.
+BLOCKED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E "$WORKFLOW_PATHS")
 
 if [ -n "$BLOCKED" ]; then
   echo "[pre-commit] ERROR: workflow-content paths staged in site clone." >&2
@@ -51,6 +69,14 @@ if [ -n "$BLOCKED" ]; then
       echo "[pre-commit] Author directive 2026-08-14: it must never reach the public repo." >&2
       echo "[pre-commit] Mirror it in the workflow clone instead: scripts/sync_memory_mirror.sh" >&2
       echo "[pre-commit] (which pushes to origin=Claude1, the private remote, and only there)." >&2
+      ;;
+  esac
+  case "$BLOCKED" in
+    *.claude/worktrees/*)
+      echo "[pre-commit] .claude/worktrees/ is per-session scratch and belongs in NO repo." >&2
+      echo "[pre-commit] Author directive 2026-08-14: keep it out of the public repo." >&2
+      echo "[pre-commit] If a worktree got committed as a gitlink, untrack it:" >&2
+      echo "[pre-commit]   git rm --cached .claude/worktrees/<id>   (deletions are allowed here)" >&2
       ;;
   esac
   exit 1

@@ -51,21 +51,32 @@ vendor/bundle/
 scripts/.deps/
 Cryptozach-site-files/
 
-# Claude Code local settings (per-machine permissions, may contain API keys).
-.claude/settings.local.json
-
-# Auto-memory mirror: PRIVATE, Claude1 ONLY. Author directive 2026-08-14,
-# "memory mirror shouldnt ever go to public repo, only private repo (Claude1)".
-# This reverses the note that stood here until 2026-08-14, which described
-# .claude/memory/ as "the git-tracked auto-memory backup" of THIS repo.
+# .claude/ IS NOT PUBLIC. Author directives 2026-08-14: "memory mirror shouldnt
+# ever go to public repo, only private repo (Claude1)" and ".claude/worktrees
+# should not be in public repo, only claude1 private". This reverses the note
+# that stood here until 2026-08-14, which described .claude/memory/ as "the
+# git-tracked auto-memory backup" of THIS repo.
 #
-# THIS LINE IS THE WEAKER HALF, and it is written down so nobody mistakes it for
-# the fix. gitignore does not apply to ALREADY-TRACKED files, and 41 of them are
-# tracked here, so this line alone would stop new memory files and let every
-# edit to those 41 through. The real enforcement is scripts/hooks/pre-commit,
-# which now blocks any staged path under .claude/memory/ and defeats `git add -f`
-# (verified 2026-08-14 by a live probe commit that was rejected).
+# Ignored as a WHOLE DIRECTORY rather than subdirectory by subdirectory, because
+# enumerating them is a game you lose once: .claude/memory/ and
+# .claude/worktrees/ were the only two ever tracked here, and a third would have
+# ridden in silently exactly as those did.
 #
-# The 41 remain tracked and public at HEAD by author decision; removing them
-# from HEAD would not unpublish them from history anyway.
-.claude/memory/
+# THIS IS THE WEAKER HALF, written down so nobody mistakes it for the fix.
+# gitignore does not apply to ALREADY-TRACKED files, and 41 memory files are
+# still tracked here, so this alone would stop new files and let every edit to
+# those 41 through. The real enforcement is scripts/hooks/pre-commit, which
+# blocks any staged ADDITION under .claude/ and defeats `git add -f` (verified
+# 2026-08-14 by a live probe commit that was rejected). Deletions stay allowed
+# there on purpose, so this can be cleaned up later without disarming the guard.
+#
+# The 41 memory files remain tracked and public at HEAD by author decision;
+# removing them from HEAD would not unpublish them from history anyway. The
+# .claude/worktrees/97344 gitlink WAS untracked, since it carried no content:
+# an unmapped mode-160000 pointer to a commit in this same repo.
+#
+# NOTE for whoever needs to re-include something under .claude/ later: you
+# cannot. A negation like `!.claude/foo` has NO effect once the DIRECTORY is
+# excluded, because git never descends into it to evaluate the exception. To
+# carry one file you must ignore narrower paths instead of `.claude/` itself.
+.claude/
