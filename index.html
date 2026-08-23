@@ -1422,17 +1422,77 @@
           <p><strong>Founder</strong> Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
           <p><strong>Frameworks</strong> Control Layer Intensity Index (CLII), a 0-to-1 score for how heavily regulated a gateway is, where a gateway is any issuer or distributor routing dollars between on-chain and off-chain rails. Minimum Viable Equivalence Pack (MVEP), a ten-category diligence standard for tokenized money and securities, run by the institution taking the risk rather than paid for by the issuer. MVEP is the entry gate, checked once before you commit; CLII is the ongoing check that flags when a product drifts away from what it cleared on.</p>
           <p><strong>Program</strong> Eight working papers on SSRN and <a href="/letters">fifteen federal comment letters</a> across the GENIUS Act and related rulemaking dockets, organized in two tracks: Track A (stablecoins, gateways, and settlement) and Track B (tokenomics; DePIN, meaning decentralized physical infrastructure networks; and protocol-network governance).</p>
-          <p><strong>Patent-pending systems</strong> Thirty filed USPTO applications across twenty families describe infrastructure for running many AI agents on one shared codebase at the same time: keeping their edits from overwriting each other, requiring every output to point at the evidence behind it, keeping a tamper-evident record of what changed and who changed it, and governing when an agent may start, stop, or hand unfinished work to another. One of them describes the combination itself: how those mechanisms compose into one architecture.</p>
+          <p><strong>Patent-pending systems</strong> Thirty filed USPTO applications across twenty families. Most describe infrastructure for running many AI agents on one shared codebase at the same time: keeping their edits from overwriting each other, requiring every output to point at the evidence behind it, keeping a tamper-evident record of what changed and who changed it, and governing when an agent may start, stop, or hand unfinished work to another. The rest cover measurement itself, and the attribution of control in pseudonymous on-chain systems. One describes the combination: how those mechanisms compose into one architecture.</p>
         </div>
         <details class="card-expand">
           <summary>Application areas and numbers</summary>
-          <p>Grouped by primary function; several applications span more than one area. Each group opens with the problem in plain terms. What follows in each is the short subject summary and application number of record, left as filed rather than reworded.</p>
+          <p>All thirty, grouped by primary function; several span more than one area. Each group opens with the problem in plain terms, then lists the filings that address it. Each row is a short subject summary and the application number of record.</p>
           <div class="patent-areas">
-          <p><strong>Concurrent repository integrity</strong> The problem: two agents writing to the same repository at the same time can overwrite or lose each other's work, and the failure usually shows up only under one specific ordering of events, which makes it hard to reproduce and easy to miss. Multi-session staging isolation and multi-mode verification (64/071,767); push-time and landing concurrency control (64/095,598); unsupervised autonomous-agent write integrity (64/095,603); conflict-halting concurrent publication (64/096,039); authorship-based commit-replay narrowing with edit-intent ledger collision gating (64/107,827); and pre-commit write-collision detection and classification (64/109,514).</p>
-          <p><strong>Evidence and retrieval quality</strong> The problem: a language model states things with the same confidence whether or not a source supports them, and will retrieve a plausible wrong document as readily as the right one. Authority-aware context routing and retrieval-quality gating (64/097,316); and evidence-grounding for AI-generated assessments (64/095,597) and cited values (64/102,816).</p>
-          <p><strong>Provenance and artifact coherence</strong> The problem: once a record is machine-written and machine-updated, nothing in the record itself shows who wrote it, when, or whether it still matches the data it was derived from. Tamper-evident coordination-proof logging and governance-oracle consumption (64/107,069); count-in-artifact staleness detection and re-keyed staleness signaling for committed derived artifacts (64/111,022); and digest-verified interaction-contribution attestation from immutable transcript archives (64/111,048).</p>
-          <p><strong>Coordination, fleet governance, and session continuity</strong> The problem: an agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely. Role-routed coordination and self-describing verification registries (19/693,448); recursive self-validation, evidence-grounded truth gathering, and fleet-scale coordination, admission, and reconciliation mechanisms (64/107,073); resource-triggered session handoff with curated state preservation and in-flight work transfer (64/111,051); and multi-axis pre-launch admission governance with a shared-directory de-arm sentinel and telemetry-stream isolation (64/111,059).</p>
-          <p class="patent-area-full"><strong>The combination</strong> Statement-time provenance binding and fail-closed admission control for concurrent autonomous actors sharing a version-controlled repository (64/120,240). Where the applications above each describe a mechanism, this one describes how they compose: every stated fact in the system is bound at the moment it is stated to a persisted, primary-sourced claim, so an unbound statement is mechanically detectable. Fail-closed means the system refuses to proceed when it cannot verify, rather than proceeding and assuming.</p>
+            <div class="patent-area">
+              <p><strong>Concurrent repository integrity</strong> Two agents writing to the same repository at the same time can overwrite or lose each other's work, and the failure usually shows up only under one specific ordering of events, which makes it hard to reproduce and easy to miss.</p>
+              <ul class="patent-filings">
+              <li>Multi-session staging isolation and multi-mode verification <span class="filing-no">64/071,767</span></li>
+              <li>Push-time and landing concurrency control <span class="filing-no">64/095,598</span></li>
+              <li>Unsupervised autonomous-agent write integrity <span class="filing-no">64/095,603</span></li>
+              <li>Conflict-halting concurrent publication <span class="filing-no">64/096,039</span></li>
+              <li>Authorship-based commit-replay narrowing with edit-intent ledger collision gating <span class="filing-no">64/107,827</span></li>
+              <li>Pre-commit write-collision detection and classification <span class="filing-no">64/109,514</span></li>
+              <li>Distinguishing false write contention from true write contention, recorded as a counted verdict class <span class="filing-no">64/137,910</span></li>
+              </ul>
+            </div>
+            <div class="patent-area">
+              <p><strong>Evidence and retrieval quality</strong> A language model states things with the same confidence whether or not a source supports them, and will retrieve a plausible wrong document as readily as the right one.</p>
+              <ul class="patent-filings">
+              <li>Authority-aware context routing and retrieval-quality gating <span class="filing-no">64/097,316</span></li>
+              <li>Evidence-grounding for AI-generated assessments <span class="filing-no">64/095,597</span></li>
+              <li>Evidence-grounding for cited values <span class="filing-no">64/102,816</span></li>
+              </ul>
+            </div>
+            <div class="patent-area">
+              <p><strong>Provenance and artifact coherence</strong> Once a record is machine-written and machine-updated, nothing in the record itself shows who wrote it, when, or whether it still matches the data it was derived from.</p>
+              <ul class="patent-filings">
+              <li>Tamper-evident coordination-proof logging and governance-oracle consumption <span class="filing-no">64/107,069</span></li>
+              <li>Count-in-artifact staleness detection and re-keyed staleness signaling for committed derived artifacts <span class="filing-no">64/111,022</span></li>
+              <li>Digest-verified interaction-contribution attestation from immutable transcript archives <span class="filing-no">64/111,048</span></li>
+              <li>Admission control for derived-artifact writes, resolving an input enumeration against an independently sourced population baseline <span class="filing-no">64/128,862</span></li>
+              <li>Falsifiability-preserving integrity controls for durable coordination records <span class="filing-no">64/137,913</span></li>
+              </ul>
+            </div>
+            <div class="patent-area">
+              <p><strong>Coordination, fleet governance, and session continuity</strong> An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely.</p>
+              <ul class="patent-filings">
+              <li>Role-routed coordination and self-describing verification registries <span class="filing-no">19/693,448</span></li>
+              <li>Recursive self-validation, evidence-grounded truth gathering, and fleet-scale coordination, admission, and reconciliation mechanisms <span class="filing-no">64/107,073</span></li>
+              <li>Resource-triggered session handoff with curated state preservation and in-flight work transfer <span class="filing-no">64/111,051</span></li>
+              <li>Multi-axis pre-launch admission governance with a shared-directory de-arm sentinel and telemetry-stream isolation <span class="filing-no">64/111,059</span></li>
+              </ul>
+            </div>
+            <div class="patent-area">
+              <p><strong>Measurement and detector validity</strong> A detector nobody has shown can fire on a real fault, and stay quiet on a clean one, is an assumption wearing an instrument's clothes. These separate a measurement that came back negative from one that never ran.</p>
+              <ul class="patent-filings">
+              <li>Calibration-gated promotion of threshold detectors using corpus-specific false-alarm and detection-power estimation <span class="filing-no">64/135,000</span></li>
+              <li>Validity-preserving instrumentation for pattern-based corpus search <span class="filing-no">64/135,009</span></li>
+              <li>Discrimination-gated dual-arm evaluation of language-model extraction configurations <span class="filing-no">64/135,700</span></li>
+              <li>Supplying a measuring instrument for an unmeasured property of a coordination record, and emitting instrument-absence as its own outcome rather than as the verdict it resembles <span class="filing-no">64/136,397</span></li>
+              <li>Instrument-absence controls for cryptographic verifiers: establishing that a verifier verifies what it claims <span class="filing-no">64/139,115</span></li>
+              </ul>
+            </div>
+            <div class="patent-area">
+              <p><strong>On-chain governance and control attribution</strong> In a pseudonymous system, a wallet count is not a holder count, and an absence of evidence that one party controls several addresses is not evidence that no party does.</p>
+              <ul class="patent-filings">
+              <li>Self-calibrating reputation-recovery threshold for reputation-weighted on-chain governance <span class="filing-no">64/128,867</span></li>
+              <li>The same subject, expanded disclosure <span class="filing-no">64/135,014</span></li>
+              <li>Deterministic multi-surface control-attribution interlock with a frontier-relative typed absence outcome for pseudonymous on-chain systems <span class="filing-no">64/130,737</span></li>
+              <li>The same subject, genus expansion <span class="filing-no">64/136,352</span></li>
+              <li>Control-attribution interlock for machine-generated control-absence assessments, bound to the evidence-grounding backbone above <span class="filing-no">64/138,859</span></li>
+              </ul>
+            </div>
+            <div class="patent-area patent-area-full">
+              <p><strong>The combination</strong> Where each application above describes a mechanism, this one describes how they compose: every stated fact in the system is bound at the moment it is stated to a persisted, primary-sourced claim, so an unbound statement is mechanically detectable. Fail-closed means the system refuses to proceed when it cannot verify, rather than proceeding and assuming.</p>
+              <ul class="patent-filings">
+              <li>Statement-time provenance binding and fail-closed admission control for concurrent autonomous actors sharing a version-controlled repository <span class="filing-no">64/120,240</span></li>
+              </ul>
+            </div>
           </div>
         </details>
         <div class="about-card-ctas">

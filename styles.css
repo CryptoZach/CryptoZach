@@ -16971,10 +16971,9 @@ body #contact .about-card > p{
    centered value below, no left border. Gradient underline separator
    retained above. */
 body #contact .about-card .about-card-meta{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg) var(--space-xl);
-  align-items: start;
+  display: block;
+  columns: 2;
+  column-gap: var(--space-xl);
   max-width: 960px;
   margin: var(--space-xl) auto 0;
   padding-top: var(--space-lg);
@@ -17062,8 +17061,7 @@ body #contact .about-card .about-card-followup{
     font-size: 1rem;
   }
   body #contact .about-card .about-card-meta{
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    columns: 1;
   }
 }
 
@@ -19643,14 +19641,14 @@ body #contact .about-card .about-card-header h2{
 }
 @media (min-width: 900px){
   body #contact .about-card .about-card-meta{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg) var(--space-2xl);
+    columns: 2;
+    column-gap: var(--space-2xl);
     max-width: 1200px;
   }
 }
 @media (max-width: 899px) and (min-width: 600px){
   body #contact .about-card .about-card-meta{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    columns: 2;
   }
 }
 
@@ -20730,14 +20728,17 @@ body #contact .about-card .card-expand .patent-areas{
   text-align: left;
 }
 body #contact .about-card .card-expand .patent-areas{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-md) var(--space-xl);
-  align-items: start;
+  margin-top: var(--space-lg);
+  columns: 1;
+  column-gap: var(--space-2xl);
+}
+body #contact .about-card .card-expand .patent-area{
+  break-inside: avoid;
+  margin: 0 0 var(--space-xl);
 }
 @media (min-width: 900px){
   body #contact .about-card .card-expand .patent-areas{
-    grid-template-columns: 1fr 1fr;
+    columns: 2;
   }
 }
 
@@ -20745,8 +20746,108 @@ body #contact .about-card .card-expand .patent-areas{
    others compose. Span it across the full grid so the layout says that too,
    rather than leaving it stranded in the left column with dead space beside it. */
 body #contact .about-card .card-expand .patent-areas .patent-area-full{
-  grid-column: 1 / -1;
+  column-span: all;
+  margin-bottom: 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
 }
+
+/* ---------------------------------------------------------------------------
+   About-card readability pass.
+
+   1. META COLUMNS PACK INSTEAD OF ALIGNING. The 2-col grid aligned row tops, so
+      a short cell (Founder, three lines) left a tall gap beside a long one
+      (Frameworks, ten lines). Multi-column flows and balances instead, which is
+      what this content wants: four independent labelled blocks with no
+      row-to-row relationship worth preserving. break-inside keeps a block whole
+      and margin-top:0 keeps both column tops flush.
+--------------------------------------------------------------------------- */
+body #contact .about-card .about-card-meta > p{
+  break-inside: avoid;
+  margin: 0 0 var(--space-lg);
+}
+
+
+/* 2. THE EXPANDER READS AS AN AFFORDANCE. Inherited .card-expand summary is
+      0.6 opacity and centre-aligned inside this card, so its +/- marker read as
+      a stray dash floating above the text rather than a control. */
+body #contact .about-card > .card-expand > summary{
+  text-align: left;
+  opacity: 1;
+  padding: 0.35rem 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+  transition: color .2s var(--ease-standard);
+}
+
+body #contact .about-card > .card-expand > summary:hover{
+  color: var(--accent);
+}
+
+/* 3. EACH AREA IS TWO PARTS, AND NOW LOOKS LIKE IT. The plain-language problem
+      statement and the as-filed subject summaries used to run together in one
+      paragraph, so the structure the intro promises was invisible. The label
+      becomes an eyebrow, the problem stays prose, and the filings become one
+      row each with the application number on its own line. Nothing in the
+      as-filed summaries is reworded; they are only re-delimited. */
+body #contact .about-card .card-expand .patent-area > p{
+  margin: 0;
+}
+
+body #contact .about-card .card-expand .patent-area > p > strong:first-child{
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text-soft));
+}
+
+body #contact .about-card .card-expand .patent-filings{
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-min);
+  color: var(--text-soft);
+  text-align: left;
+}
+
+body #contact .about-card .card-expand .patent-filings > li{
+  position: relative;
+  padding: 0.4rem 0 0.4rem var(--space-md);
+  border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+  line-height: 1.45;
+}
+
+body #contact .about-card .card-expand .patent-filings > li:first-child{
+  border-top: none;
+}
+
+/* A 6px rule, not a dash glyph: the house editorial rule bans em and en dashes,
+   and a bullet character would read heavier than these rows want. */
+body #contact .about-card .card-expand .patent-filings > li::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95em;
+  width: 6px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+body #contact .about-card .card-expand .patent-filings .filing-no{
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--muted);
+}
+
 
 /* ---------------------------------------------------------------------------
    Agent-infrastructure page: measurement tables
