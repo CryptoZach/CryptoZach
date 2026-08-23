@@ -21150,6 +21150,78 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page .ai-rule-list{
   margin:var(--space-sm) 0 var(--space-md);
 }
+
+/* Three-lane routing block: same frame and eyebrow vocabulary as .ai-rung-pair,
+   three across, each lane ending in its own action row. */
+.agent-infra-page .ai-lanes{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:0;
+  margin:var(--space-md) 0 var(--space-lg);
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+  background:color-mix(in srgb, var(--panel) 88%, transparent);
+}
+.agent-infra-page .ai-lane{
+  display:flex;
+  flex-direction:column;
+  padding:var(--space-md) var(--space-lg);
+  border-right:1px solid var(--line);
+}
+.agent-infra-page .ai-lane:last-child{ border-right:none; }
+.agent-infra-page .ai-lane--primary{
+  background:color-mix(in srgb, var(--accent) 7%, var(--panel));
+}
+.agent-infra-page .ai-lane h3{
+  margin:0 0 var(--space-xs);
+  font-size:var(--text-2xs);
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-soft);
+}
+.agent-infra-page .ai-lane--primary h3{
+  color:color-mix(in srgb, var(--accent) 88%, var(--text-soft));
+}
+.agent-infra-page .ai-lane p{
+  margin:0 0 var(--space-md);
+  font-size:var(--font-size-min);
+  line-height:1.6;
+  color:var(--text);
+  max-width:none;
+}
+.agent-infra-page .ai-lane-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem 1rem;
+  margin-top:auto;
+  font-size:var(--font-size-min);
+}
+.agent-infra-page .ai-lane-links a{
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:500;
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding-bottom:1px;
+  transition:border-color .2s var(--ease-standard), color .2s var(--ease-standard);
+}
+.agent-infra-page .ai-lane-links a:hover{
+  color:var(--accent-hover, var(--accent));
+  border-color:var(--accent);
+}
+
+@media (max-width:979px){
+  .agent-infra-page .ai-lanes{
+    grid-template-columns:1fr;
+  }
+  .agent-infra-page .ai-lane{
+    border-right:none;
+    border-bottom:1px solid var(--line);
+  }
+  .agent-infra-page .ai-lane:last-child{ border-bottom:none; }
+  .agent-infra-page .ai-lane-links{ margin-top:0; }
+}
 .agent-infra-page .ai-distinction{
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
