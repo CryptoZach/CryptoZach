@@ -200,6 +200,7 @@
         <h1 id="agent-infra-page-title">Most agent guardrails do nothing, and you cannot know which ones without measuring.</h1>
         <p class="ai-hero-lede"><strong>This page documents the operating layer underneath an AI agent fleet that has been running since March 2026.</strong> Not a proposal and not a survey: a system in daily use, with the measurements that justified each part of it and the measurements that killed parts of it.</p>
         <p>Every mechanism below exists because something went wrong first. Where a number appears, it was measured rather than estimated, and the date it was measured is stated.</p>
+        <p><strong>One failure runs through all of them.</strong> In every case a control looked like it was working: the warning fired, the check passed, the claim was held, the rule was on the branch. None were doing what they appeared to do, and each failed quietly and toward the answer that looks fine. That is why this page leads with an instrument rather than an architecture. The instances are <a href="#pattern">collected at the end</a>.</p>
         <p class="ai-measured-as">Measurements as of <time datetime="2026-08-23">2026-08-23</time>. Every figure is re-run from its own producer at each revision rather than carried forward, and where one has moved since the last revision the direction is stated rather than quietly replaced.</p>
       </div>
       <p class="ai-proof-strip" aria-label="Headline measurements">
@@ -224,12 +225,13 @@
           <a class="page-toc-link" href="#scale">The system</a>
           <a class="page-toc-link" href="#measurement">Measuring whether a control works</a>
           <a class="page-toc-link" href="#rungs">Enforcement levels</a>
-          <a class="page-toc-link" href="#armed">What the hard refuse bought</a>
+          <a class="page-toc-link" href="#armed">What the hard refuse actually bought</a>
           <a class="page-toc-link" href="#invented-facts">Invented facts before forgotten ones</a>
-          <a class="page-toc-link" href="#coordination">Coordination is not a pointer</a>
+          <a class="page-toc-link" href="#coordination">Coordination is not a pointer to a live process</a>
           <a class="page-toc-link" href="#unowned">Work with no owner</a>
           <a class="page-toc-link" href="#vacuous">Checks that pass for the wrong reason</a>
-          <a class="page-toc-link" href="#context">Context as a managed resource</a>
+          <a class="page-toc-link" href="#context">Context as a deliberately managed resource</a>
+          <a class="page-toc-link" href="#pattern">The same failure, ten times</a>
           <a class="page-toc-link" href="#not-claimed">What this is not</a>
         </div>
       </div>
@@ -355,7 +357,7 @@
     <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
       <div class="explainer">
         <h2 id="invented-facts-title">Invented facts before forgotten ones</h2>
-        <p>Memory systems for agents are usually discussed as a capacity problem: how much they can store, and how to retrieve it. In practice the failure that nearly broke this one was not forgetting.</p>
+        <p>The same shape appears in the memory layer, and it is worth its own section because the usual framing hides it. Memory systems for agents are discussed as a capacity problem: how much they can store, and how to retrieve it. In practice the failure that nearly broke this one was not forgetting.</p>
         <p>It was an agent writing a confident citation to a finding that had never been established. The next session then treated that citation as real, and built more work on top of it. Researchers call this <strong>confabulation</strong> (a made-up fact stated as if it were true). The shared record does not degrade gracefully under that. A single invented ID can become load-bearing within a few sessions.</p>
         <p>The fix was not a better search tool. It was a commit-time rule: <strong>no agent may invent an ID</strong> for a finding, a decision, or an open question. If the ID is not already in the corpus, the slot must be left empty and flagged for a human. In other words, every cross-reference has to point at something that already exists.</p>
         <blockquote class="paper-thesis-line ai-thesis">
@@ -397,14 +399,14 @@
         <blockquote class="paper-thesis-line ai-thesis">
           <p>When a rule is written in two places, the copy that reaches readers governs, whichever copy is current.</p>
         </blockquote>
-        <p><strong>The backlog number was not a count of findings.</strong> The queue's own listing runs each entry's closure check under a total time budget, and labels the entries it does not reach as unmeasured rather than dropping them, which is the honest thing to do. But unmeasured was what every session saw. Run to completion on 2026-08-08 instead of under the budget, twenty-two entries turned out to be already resolved and invisible to the entire fleet, still aging, still escalating, and still inflating the count the duty was being graded against. An instrument with a cost bound reports the bound. Naming the abstention correctly is necessary and it is not sufficient, because the label is the thing people act on.</p>
+        <p><strong>The backlog number was not a count of findings.</strong> The queue's own listing runs each entry's closure check under a total time budget, and labels the entries it does not reach as unmeasured rather than dropping them, which is the honest thing to do. But unmeasured was what every session saw. Run to completion on 2026-08-08 instead of under the budget, twenty-two entries turned out to be already resolved and invisible to the entire fleet, still aging, still escalating, and still inflating the count the duty was being graded against. An instrument with a cost bound reports the bound. This is the same distinction the effectiveness instrument makes when it declines to score an under-sampled class, and it is the distinction the next section is about: naming the abstention correctly is necessary and it is not sufficient, because the label is the thing people act on.</p>
       </div>
     </section>
 
     <section id="vacuous" class="reveal explainer-section" aria-labelledby="vacuous-title">
       <div class="explainer">
         <h2 id="vacuous-title">Checks that pass for the wrong reason</h2>
-        <p>A worked example, included because the failure is more instructive than the success.</p>
+        <p>Everything above is a special case of one thing, and this section is the general form of it. A worked example first, included because the failure is more instructive than the success.</p>
         <p>A verifier was checking whether a set of external records was still live. It reported one as live. It <em>was</em> live, but the check had not established that: the network fetch had timed out, the output file was never cleared between calls, and the assertion had matched against the previous request's leftover bytes. Right answer, no measurement.</p>
         <p>The correction was to clear state per call, treat a non-zero exit as <em>no verdict</em> rather than as a negative, and then re-run the whole thing against a deliberately fabricated identifier to confirm the check could still tell the difference. That last step is the one usually skipped.</p>
         <p><strong>A check never observed to fail has not been shown to work.</strong> A passing test tells you the assertion held, not that it held for the reason you believe. The companion rule, from repeatedly being wrong in the other direction: when something fails on model output, the verifier is the suspect before the model is.</p>
@@ -448,18 +450,53 @@
       </div>
     </section>
 
+    <section id="pattern" class="reveal explainer-section" aria-labelledby="pattern-title">
+      <div class="explainer">
+        <h2 id="pattern-title">The same failure, ten times</h2>
+        <p>Read in order, the sections above are a list of subjects. Read against the lede they are one subject, and this is the table that says so. Every row is a control that reported success while doing something other than what its name says.</p>
+        <div class="ai-table-wrap">
+          <table class="ai-table">
+            <caption>Each row links to the section that measured it. Nothing here is new evidence; it is the same evidence, arranged so the pattern is visible.</caption>
+            <thead>
+              <tr><th scope="col">Where</th><th scope="col">It looked like</th><th scope="col">It actually was</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row"><a href="#measurement">The loudest advisory</a></th><td>A rule the agent had read</td><td class="ai-how">Read, and re-triggered in 85% of the workspaces that saw it</td></tr>
+              <tr><th scope="row"><a href="#armed">The narrow hard refuse</a></th><td>A block on the loudest class</td><td class="ai-how">Six firings against 8,352 warnings in that same class</td></tr>
+              <tr><th scope="row"><a href="#armed">The launch gate</a></th><td>A refusal protecting against conflict</td><td class="ai-how">A refusal tracking machine load</td></tr>
+              <tr><th scope="row"><a href="#invented-facts">The shared record</a></th><td>A citation to an established finding</td><td class="ai-how">A citation to nothing, load-bearing within a few sessions</td></tr>
+              <tr><th scope="row"><a href="#invented-facts">The startup instructions</a></th><td>A procedure file that loads</td><td class="ai-how">A file silently cut off past a size limit</td></tr>
+              <tr><th scope="row"><a href="#coordination">A held claim</a></th><td>A task with an owner</td><td class="ai-how">An owner that had already exited</td></tr>
+              <tr><th scope="row"><a href="#unowned">The sweep duty</a></th><td>A duty its holder kept failing</td><td class="ai-how">A duty no holder could discharge</td></tr>
+              <tr><th scope="row"><a href="#unowned">The backlog count</a></th><td>A count of open findings</td><td class="ai-how">A count of the findings one time budget reached</td></tr>
+              <tr><th scope="row"><a href="#vacuous">A liveness check</a></th><td>A record confirmed live</td><td class="ai-how">An assertion matched against the previous call's leftover bytes</td></tr>
+              <tr><th scope="row"><a href="#vacuous">A landed rule</a></th><td>A rule present on the shared branch</td><td class="ai-how">The old code still executing</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Every row fails <strong>silently</strong>, and every row fails <strong>toward the reassuring answer</strong>. Those two properties together are why none of them are visible from inside the thing that is broken, and why the first real piece of work here was an instrument rather than a mechanism.</p>
+        <p>Three habits fall out of it, and they are the part most likely to transfer to a system that looks nothing like this one:</p>
+        <ul class="ai-rule-list">
+          <li><strong>Build the instrument that could show your controls are useless,</strong> then believe it, including when it says most of them are.</li>
+          <li><strong>Keep "could not determine" as its own answer.</strong> Folding it into "no" is this same failure again, and it lands in the reassuring direction every time.</li>
+          <li><strong>A control is not delivered until you can name the surface that carries it</strong> and show one instance of it firing or being read.</li>
+        </ul>
+        <p class="ai-note">The counter-example belongs here too, because the page would flatter itself without it. Not all ten were caught by an instrument. Several were caught by a person reading output and noticing it was wrong; the instrument came afterwards. What the instrument buys is not the first catch. It is that the same failure does not have to be found by luck a second time.</p>
+      </div>
+    </section>
+
     <section id="not-claimed" class="reveal explainer-section" aria-labelledby="not-claimed-title">
       <div class="explainer">
         <h2 id="not-claimed-title">What this is not</h2>
-        <p>Stated plainly, because a page like this invites assumptions it should not get.</p>
+        <p>Stated plainly, because a page like this invites assumptions it should not get, and because the honest boundary moves as the work does. This is where it sits today.</p>
         <ul class="ai-not-list">
-          <li><strong>Not a product,</strong> and not available to use. It is internal infrastructure for one operator's research program.</li>
-          <li><strong>Not a distributed system with users.</strong> The concurrency and consistency problems are real, but there is no external traffic, no service-level objective, and no on-call rotation.</li>
+          <li><strong>Not available to use yet.</strong> This runs every day as the operating layer for one research program, and a product is being built on it. There is nothing to sign up for at the time of writing, and this page is documentation rather than an announcement. If that is what you came for, <a href="/contact">say so</a> and you will hear when it changes.</li>
+          <li><strong>Not yet a distributed system with users.</strong> The concurrency and consistency problems are real, and so is every failure above. But there is no external traffic, no service-level objective, and no on-call rotation. The load is one operator's fleet, and nothing here has been tested against a load it does not generate itself. Read every number on this page with that attached.</li>
           <li><strong>Not machine-learning work.</strong> No model is trained, fine-tuned, or served here. The models are consumed through provider APIs, plus local inference for work that should not leave the machine.</li>
-          <li><strong>Not container or VM isolation.</strong> Isolation is at the process and filesystem level. It solved a real corruption problem and it is not a security sandbox.</li>
-          <li><strong>Not a benchmark.</strong> The measurements describe this system's own controls. They are not claims about agent behavior in general, and the observation spans are stated so they can be discounted accordingly.</li>
+          <li><strong>Not container or VM isolation.</strong> Isolation is at the process and filesystem level. It solved a real corruption problem, and it is not a security sandbox.</li>
+          <li><strong>Not a benchmark.</strong> The measurements describe this system's own controls. They are not claims about agent behavior in general, and every observation span is stated so the numbers can be discounted accordingly.</li>
         </ul>
-        <p class="ai-closing-creds">The architecture underneath is the subject of thirty USPTO applications across twenty families, thirteen of them filed since this page was written. The surrounding research program is eight papers on SSRN, one published at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters.</p>
+        <p class="ai-closing-creds"><strong>What it is:</strong> the operating layer described above, in daily use since March 2026, measured continuously, and the subject of thirty USPTO applications across twenty families, thirteen of them filed since this page was first published. The surrounding research program is eight papers on SSRN, one published at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters. The product being built on it starts from the finding this page opens with: that most of what an agent fleet calls a guardrail is not one, and that you cannot tell which without measuring.</p>
         <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Related">
           <a class="action primary" href="/resume/ai-governance-infrastructure">AI governance &amp; infrastructure profile</a>
           <a class="action secondary" href="/research">Research program</a>
