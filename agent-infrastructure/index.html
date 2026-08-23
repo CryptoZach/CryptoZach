@@ -206,7 +206,7 @@
       <p class="ai-proof-strip" aria-label="Headline measurements">
         <span class="ai-proof-item"><strong>25,000+</strong> commits since March</span>
         <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item"><strong>11 to 26</strong> concurrent sessions</span>
+        <span class="ai-proof-item"><strong>11 to 43</strong> concurrent sessions</span>
         <span class="ai-proof-sep" aria-hidden="true">·</span>
         <span class="ai-proof-item"><strong>131</strong> pre-commit checks</span>
         <span class="ai-proof-sep" aria-hidden="true">·</span>
@@ -294,7 +294,7 @@
             </thead>
             <tbody>
               <tr><th scope="row">Commits</th><td class="ai-val">over 25,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was ~17,300]</span></td></tr>
-              <tr><th scope="row">Concurrent sessions</th><td class="ai-val">11 to 26</td><td class="ai-how">Distinct sessions writing a transcript in the same clock-hour, over the trailing seven days: typically 11, rising to 26 in the busiest tenth of hours and 43 at the peak. Deliberately a range, because a single figure is stale within the hour <span class="ai-class-gloss">[was 14 typical, 39 busiest tenth]</span></td></tr>
+              <tr><th scope="row">Concurrent sessions</th><td class="ai-val">11 to 43</td><td class="ai-how">Distinct sessions writing a transcript in the same clock-hour, over the trailing seven days: typically 11, rising to 26 in the busiest tenth of hours and 43 at the peak. It swings hard by day, from a median of 4 on the quietest to 26 on the busiest, which is why one figure is the wrong shape for this row <span class="ai-class-gloss">[was 14 typical, 39 busiest tenth]</span></td></tr>
               <tr><th scope="row">Pre-commit gate</th><td class="ai-val">131 checks</td><td class="ai-how">117 top-level plus 14 sub-checks; 31 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 95, 22 hard-fail]</span></td></tr>
               <tr><th scope="row">Advisory warnings</th><td class="ai-val">13,140</td><td class="ai-how">Across 27 classes over 44 days of observation <span class="ai-class-gloss">[was 4,405 across 18 classes]</span></td></tr>
               <tr><th scope="row">Hard refusals</th><td class="ai-val">287</td><td class="ai-how">Calls stopped by an armed gate across the 7 classes that carry one, in the same span. 245 refused, 42 overridden with the documented escape <span class="ai-class-gloss">[new since 2026-08-04]</span></td></tr>
