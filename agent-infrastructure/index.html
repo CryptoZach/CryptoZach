@@ -214,6 +214,7 @@
         <span class="ai-proof-sep" aria-hidden="true">·</span>
         <span class="ai-proof-item" title="Of workspaces that saw the most common advisory once, 85% saw it fire again. Agents read it and kept doing the same thing."><strong>85%</strong> still ignore the most common warning</span>
       </p>
+      <p class="ai-note ai-strip-gloss">Those are counts of work done and of safeguards measured. The last one is the finding: the most common safeguard in the system was being ignored by the agents it had already warned.</p>
       <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
         <a class="action primary" href="#work-with-us">Talk to us about your fleet</a>
         <a class="action secondary" href="#measurement">See the measurements</a>
@@ -222,6 +223,7 @@
       <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Agent Infrastructure jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
+          <a class="page-toc-link" href="#short-version">The short version</a>
           <a class="page-toc-link" href="#building">What we are building</a>
           <a class="page-toc-link" href="#scale">The system</a>
           <a class="page-toc-link" href="#measurement">Measuring whether a control works</a>
@@ -239,6 +241,24 @@
       </div>
     </section>
 
+    <section id="short-version" class="reveal explainer-section" aria-labelledby="short-version-title">
+      <div class="explainer">
+        <h2 id="short-version-title">The short version</h2>
+        <p>Written for anyone deciding whether this matters, without needing to know how any of it works. <strong>This section is the whole argument.</strong> Everything after it is the evidence, and the evidence is written for engineers.</p>
+        <p>Companies are beginning to run many AI coding agents at once against the same body of work. When they do, three things go wrong that almost nobody plans for.</p>
+        <ul class="ai-rule-list">
+          <li><strong>The agents get in each other's way.</strong> Two of them change the same thing at the same time and one quietly destroys the other's work. It only happens under a particular sequence of events, which makes it hard to reproduce, easy to dismiss, and easy to ship.</li>
+          <li><strong>They write down things that are not true, and then believe each other.</strong> One agent cites a finding that was never established. The next three build on it. Within days the false thing is holding up real work, and nothing in the record marks it as invented.</li>
+          <li><strong>The safeguards you put in place mostly do not work, and nothing tells you which ones.</strong> We wrote warnings, watched agents read them, and then measured what the agents did next. The most common warning in our system fired again in 85% of the places it had already fired: agents read it and carried on unchanged. It had been running for months. It looked fine the entire time.</li>
+        </ul>
+        <p>The third one is the general problem, and it is the reason this page exists rather than a diagram of the architecture. A safeguard that is switched on looks exactly like a safeguard that works. The only difference is visible in the measurements, and almost nobody takes them.</p>
+        <blockquote class="paper-thesis-line ai-thesis">
+          <p>A control you have not measured is a control you are only assuming you have.</p>
+        </blockquote>
+        <p>So we measured ours, and this page is that record, including the parts where the answer was that a safeguard we had trusted for months was doing nothing at all. <a href="#building">What we are building</a> follows from it. If you want the argument in one more line: the operating layer is the part of an agent fleet that keeps the work correct, and today most teams are assuming they have one.</p>
+      </div>
+    </section>
+
     <section id="building" class="reveal explainer-section" aria-labelledby="building-title">
       <div class="explainer">
         <h2 id="building-title">What we are building</h2>
@@ -246,15 +266,15 @@
         <div class="ai-lanes" role="list">
           <div class="ai-lane" role="listitem">
             <h3>Coordination that survives an exit</h3>
-            <p>Ownership of work is durable state with a time bound on it, not a pointer to a process. When an agent dies its work returns to the pool instead of sitting owned forever, and work nobody owns is filed somewhere that gets louder rather than mailed to a session that can vanish. <a href="#coordination">How it broke first</a>.</p>
+            <p>When an agent stops mid-task, its work has to go back in the queue rather than vanish into one nobody is watching. Ownership of work is therefore durable state with a time limit on it, not a pointer to a running program. When an agent dies its work returns to the pool instead of sitting owned forever, and work nobody owns is filed somewhere that gets louder rather than mailed to a session that can vanish. <a href="#coordination">How it broke first</a>.</p>
           </div>
           <div class="ai-lane" role="listitem">
             <h3>A shared record that stays true</h3>
-            <p>Every cross-reference has to point at something that already exists, enforced when the work is committed rather than trusted. The failure that forces this is not forgetting. It is one agent inventing a citation and the next three building on it. <a href="#invented-facts">How it broke first</a>.</p>
+            <p>Nothing an agent writes down may refer to a fact that does not exist, and that is checked by machine at the moment the work is saved rather than taken on trust. The failure that forces this is not forgetting. It is one agent inventing a citation and the next three building on it. <a href="#invented-facts">How it broke first</a>.</p>
           </div>
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>Controls that are measured</h3>
-            <p>An instrument whose only job is to say whether each guardrail changes agent behavior at all, and a ladder from advice to hard refusal with the override rate measured at every rung. This is the part with no substitute: without it you cannot tell a control from a decoration. <a href="#measurement">How we measure it</a>.</p>
+            <p>A measuring device whose only job is to answer one question about every safeguard you have: does it change what the agents actually do? Underneath it sits a ladder from gentle advice up to a hard block, with the rate at which people step over each rung measured rather than guessed. This is the part with no substitute. Without it you cannot tell a safeguard from a decoration, and both look the same on an architecture diagram. <a href="#measurement">How we measure it</a>.</p>
           </div>
         </div>
         <p class="ai-note">What is deliberately not on that list: anything this page cannot show working. The <a href="#not-claimed">boundaries are stated</a> at the end, including the largest one, which is that all of this has so far run against exactly one fleet.</p>
@@ -264,6 +284,7 @@
     <section id="scale" class="reveal explainer-section" aria-labelledby="scale-title">
       <div class="explainer">
         <h2 id="scale-title">The system</h2>
+        <p class="ai-note">Everything from here to the closing sections is the evidence, written for a technical reader. Nothing in it is needed to follow the argument above.</p>
         <p>A fleet of AI coding agents works a single shared repository. They do research, drafting, verification, and infrastructure work on the same corpus, concurrently, over horizons far longer than any one context window holds.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--scale">
@@ -515,9 +536,9 @@
         <p>Stated plainly, because a page like this invites assumptions it should not get, and because the honest boundary moves as the work does. This is where it sits today.</p>
         <ul class="ai-not-list">
           <li><strong>Not available to use yet.</strong> This runs every day as the operating layer for one research program, and a product is being built on it. This page is evidence rather than an announcement: there is no trial, no pricing, and no date here, because none of those are settled. <a href="#work-with-us">The routes that do exist</a> are at the end.</li>
-          <li><strong>Not yet a distributed system with users.</strong> The concurrency and consistency problems are real, and so is every failure above. But there is no external traffic, no service-level objective, and no on-call rotation. The load is one operator's fleet, and nothing here has been tested against a load it does not generate itself. Read every number on this page with that attached.</li>
-          <li><strong>Not machine-learning work.</strong> No model is trained, fine-tuned, or served here. The models are consumed through provider APIs, plus local inference for work that should not leave the machine.</li>
-          <li><strong>Not container or VM isolation.</strong> Isolation is at the process and filesystem level. It solved a real corruption problem, and it is not a security sandbox.</li>
+          <li><strong>Not yet a distributed system with users.</strong> The concurrency and consistency problems are real, and so is every failure above. But nobody outside runs work through it, nothing is promised to anyone about how reliably it stays up, and no one is woken at night when it breaks. The load is one operator's fleet, and nothing here has been tested against a load it does not generate itself. Read every number on this page with that attached.</li>
+          <li><strong>Not machine-learning work.</strong> No AI model is built or trained here. The models are rented from the companies that make them, and some work runs on our own hardware instead so that it never leaves the building.</li>
+          <li><strong>Not a security product.</strong> Agents are kept apart so they cannot corrupt each other's work, which is a correctness measure and not a defence against anything hostile. It is not the heavier kind of sandboxing used to contain untrusted code, and it should not be bought as one.</li>
           <li><strong>Not a benchmark.</strong> The measurements describe this system's own controls. They are not claims about agent behavior in general, and every observation span is stated so the numbers can be discounted accordingly.</li>
         </ul>
         <p class="ai-closing-creds"><strong>What it is:</strong> the operating layer described above, in daily use since March 2026, measured continuously, and the subject of thirty USPTO applications across twenty families, thirteen of them filed since this page was first published. The surrounding research program is eight papers on SSRN, one published at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters. The product being built on it starts from the finding this page opens with: that most of what an agent fleet calls a guardrail is not one, and that you cannot tell which without measuring.</p>
