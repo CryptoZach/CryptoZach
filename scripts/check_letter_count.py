@@ -82,6 +82,12 @@ INT_TO_WORD = {v: k for k, v in WORD_TO_INT.items()}
 # the WHOLE-PROGRAM federal-letter figure only, not its decomposition.
 COUNT_PATTERNS = [
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+federal\s+comment\s+letters?", re.I),
+    # "N federal regulatory comment letters": the same total figure with "regulatory"
+    # inserted. Six mentions across resume/policy, resume/product, and
+    # agent-infrastructure sat at "fifteen" through the sixteenth filing (2026-08-24)
+    # while this guard reported OK, because the pattern above requires the two words
+    # to be adjacent.
+    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+federal\s+regulatory\s+comment\s+letters?", re.I),
     re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+comment\s+letters?\s+filed", re.I),
     # Verb-first order: "filed fifteen comment letters". The noun-first pattern above
     # does not match it, which is how research/index.html sat at "fourteen" through the
@@ -109,6 +115,7 @@ ALLOWLIST = {
     ("overview/index.html", "twelve"),
     ("overview/index.html", "thirteen"),
     ("overview/index.html", "fourteen"),
+    ("overview/index.html", "fifteen"),
 }
 
 
