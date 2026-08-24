@@ -40,13 +40,13 @@
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Agent Infrastructure: A Measured Operating Layer for AI Fleets | TS</title>
-  <meta name="description" content="An operating layer for AI agent fleets: durable coordination, truthful shared memory, and controls measured by what agents do next. In daily use since March 2026." />
+  <meta name="description" content="An operating layer for AI agent fleets that preserves identity, provenance, and attribution, coordinates shared work, and measures controls by outcomes. In daily use since March 2026." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="agent infrastructure, AI agent harness, LLM evaluation, agent guardrails, multi-agent coordination, agent memory, AI governance" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Agent Infrastructure: A Measured Operating Layer for AI Fleets" />
-  <meta property="og:description" content="Durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible." />
+  <meta property="og:description" content="See how an operating layer preserves agent identity, provenance, and attribution, coordinates shared work, and measures whether controls change behavior." />
   <meta property="og:url" content="https://tokenization.systems/agent-infrastructure/" />
   <meta property="og:site_name" content="Tokenization Systems" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
@@ -58,7 +58,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Agent Infrastructure: A Measured Operating Layer for AI Fleets" />
-  <meta name="twitter:description" content="Durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible." />
+  <meta name="twitter:description" content="See how an operating layer preserves agent identity, provenance, and attribution, coordinates shared work, and measures whether controls change behavior." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
   <meta name="twitter:image:alt" content="Control-layer infrastructure for AI agent fleets (Tokenization Systems)" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -91,7 +91,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Agent Infrastructure: A Measured Operating Layer for AI Fleets",
-    "description": "An operating layer for AI agent fleets: durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible.",
+    "description": "An operating layer for AI agent fleets that preserves identity, provenance, and attribution, coordinates shared work, and measures controls by outcomes. In daily use since March 2026.",
     "url": "https://tokenization.systems/agent-infrastructure/",
     "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems/" },
     "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems/" },
@@ -198,7 +198,7 @@
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Agent Infrastructure</p>
       <div class="section-title">
         <h1 id="agent-infra-page-title">AI agent fleets need an operating layer that can prove its controls work.</h1>
-        <p class="ai-hero-lede"><strong>We are building that layer:</strong> durable coordination, shared memory with referential integrity, and controls graded by what agents do next. It has run our own fleet since March 2026. This page shows what held, what failed, and what changed.</p>
+        <p class="ai-hero-lede"><strong>We are building that layer:</strong> durable coordination, identity and provenance for shared work, memory with referential integrity, and controls graded by what agents do next. It has run our own fleet since March 2026. This page shows what held, what failed, and what changed.</p>
         <p class="ai-hero-support">The differentiator is measurement. A warning firing is not evidence it worked, and a rule landing is not evidence it ran. We measure behavior, refusals, overrides, and delivery paths so weak controls can be redesigned before they become trusted infrastructure.</p>
         <p class="ai-measured-as">Measurements as of <time datetime="2026-08-23">2026-08-23</time>. Every figure is re-run from its own producer at each revision rather than carried forward, and where one has moved since the last revision the direction is stated rather than quietly replaced.</p>
       </div>
@@ -257,8 +257,8 @@
             <p>Ownership is durable state with an expiry, not a pointer to a running process. When a session exits, its work returns to the pool, and ownerless work enters a queue that escalates on its own. <a href="#coordination">See the failure that forced it</a>.</p>
           </div>
           <div class="ai-lane" role="listitem">
-            <h3>A shared record that stays true</h3>
-            <p>Every finding, decision, and open question must resolve to an existing record when work is saved. Missing references are surfaced instead of invented. <a href="#invented-facts">See the failure that forced it</a>.</p>
+            <h3>A shared record with identity and provenance</h3>
+            <p>Shared work retains attribution: which agent and session produced it, what evidence and prior state it relied on, and which committed change made it durable. Findings, decisions, and open questions must also resolve to existing records; missing references are surfaced instead of invented. <a href="#invented-facts">See the failure that forced it</a>.</p>
           </div>
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>Controls that are measured</h3>
