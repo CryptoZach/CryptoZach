@@ -1293,8 +1293,8 @@
     <div style="max-width: 1200px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; box-sizing: border-box;">
     <section class="section-compact reveal" id="agent-infrastructure-home" aria-labelledby="agent-infra-home-title">
       <h2 id="agent-infra-home-title">We are building an operating layer for AI agent fleets.</h2>
-      <p>Teams are starting to run many AI coding agents at once against the same codebase. Three things go wrong that almost nobody plans for: the agents overwrite each other's work, they record things that are not true and then believe each other, and the safeguards meant to catch both mostly do not work, with nothing to say which ones.</p>
-      <p>We built the layer that holds that together, have run it on our own fleet since March 2026, and measured every control in it. Most of them did nothing. The page is the record: dated measurements, the method that grades whether a safeguard changes agent behavior at all, and the parts we got wrong alongside the parts we did not.</p>
+      <p>Teams are beginning to run many AI coding agents against the same codebase. At that scale, three problems compound: agents overwrite one another's work, record false claims that later sessions accept as fact, and rely on safeguards without measuring whether those safeguards change behavior.</p>
+      <p>We built an operating layer to address those failures. It has run on our fleet since March 2026, and we measure its controls by outcomes. Some advisory warnings kept repeating, while most armed gates held. This page presents the evidence: dated measurements, the method used to grade each safeguard, and a transparent account of what failed, what worked, and what changed as a result.</p>
       <p class="section-link"><a href="/agent-infrastructure">Agent infrastructure <span aria-hidden="true">&rarr;</span></a></p>
     </section>
 
