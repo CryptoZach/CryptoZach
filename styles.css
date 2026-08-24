@@ -21012,12 +21012,12 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   text-wrap:balance;
 }
 .agent-infra-page .ai-hero-lede{
-  max-width:72ch !important;
+  max-width:none;
   font-size:clamp(1.05rem, 1.4vw, 1.22rem);
   line-height:1.58 !important;
 }
 .agent-infra-page .ai-hero-support{
-  max-width:72ch !important;
+  max-width:none;
 }
 .agent-infra-page .ai-measured-as{
   margin:var(--space-sm) 0 0;
@@ -21110,11 +21110,11 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
    Sits tight under the strip's bottom rule rather than reading as body copy. */
 .agent-infra-page .ai-strip-gloss{
   margin:calc(var(--space-sm) * -1) 0 var(--space-md);
-  max-width:72ch;
+  max-width:none;
 }
 .agent-infra-page .ai-thesis{
   margin:var(--space-lg) 0 var(--space-md) 0.5rem;
-  max-width:78ch;
+  max-width:none;
 }
 @media (min-width:1100px){
   .agent-infra-page .ai-thesis{
@@ -21345,7 +21345,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page .ai-not-list > li:last-child{ border-bottom:none; }
 .agent-infra-page .ai-closing-creds{
   margin:var(--space-md) 0 var(--space-lg);
-  max-width:68ch;
+  max-width:none;
   color:var(--text-soft);
 }
 
@@ -21369,7 +21369,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page .ai-hero .section-title,
 .agent-infra-page.overview-page .ai-hero .section-title{
   border-bottom:none;
-  max-width:72ch;
+  max-width:none;
   margin-bottom:var(--space-md);
   padding-bottom:0;
 }
@@ -21382,14 +21382,14 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page .ai-hero .section-title .ai-hero-lede,
 .agent-infra-page .ai-hero-lede{
   margin:0.35rem 0 0;
-  max-width:66ch;
+  max-width:none;
   font-size:1.05rem;
   line-height:1.55;
   color:var(--text);
 }
 .agent-infra-page .ai-hero-support{
   margin:0.55rem 0 0;
-  max-width:66ch;
+  max-width:none;
   font-size:1rem;
   line-height:1.55;
   color:var(--text-soft);
@@ -21435,7 +21435,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 }
 .agent-infra-page .ai-strip-gloss{
   margin:0 0 var(--space-md);
-  max-width:66ch;
+  max-width:none;
 }
 .agent-infra-page .ai-section-nav{
   position:sticky;
@@ -21589,7 +21589,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page .ai-finding p,
 .agent-infra-page .ai-callout p{
   margin:0;
-  max-width:62ch;
+  max-width:none;
 }
 .agent-infra-page .ai-rate{
   display:inline-flex;
@@ -21654,15 +21654,20 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   .agent-infra-page .ai-inline-cta .action{ width:100%; justify-content:center; }
 }
 
-/* Final readability pass: cap continuous prose, keep the local navigation
-   below the sticky site header, and render measurement rows as labelled
-   records on narrow screens instead of requiring horizontal table swipes. */
+/* Fill the same main column as Overview. A 68ch prose cap left a skinny
+   reading column under a full-width on-this-page nav. Tables, metric grids,
+   and cards already span that column. */
+.agent-infra-page .explainer,
 .agent-infra-page .explainer > p,
-.agent-infra-page .explainer > .ai-rule-list{
-  max-width:var(--measure);
-}
-.agent-infra-page .explainer > h3{
-  max-width:72ch;
+.agent-infra-page .explainer > h2,
+.agent-infra-page .explainer > h3,
+.agent-infra-page .explainer > .ai-rule-list,
+.agent-infra-page .explainer-section p,
+.agent-infra-page .explainer-section h2,
+.agent-infra-page .explainer-section h3,
+.agent-infra-page .ai-thesis,
+.agent-infra-page .paper-thesis-line{
+  max-width:none;
 }
 .agent-infra-page .ai-section-nav{
   top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1px);
