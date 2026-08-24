@@ -39,14 +39,14 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Agent Infrastructure: Measuring Whether AI Guardrails Work | TS</title>
-  <meta name="description" content="We are building the operating layer a fleet of AI agents needs to work a shared codebase without corrupting it. This is the evidence: it has run our own fleet since March 2026, and every control in it was measured. Most of them did nothing." />
+  <title>Agent Infrastructure: A Measured Operating Layer for AI Fleets | TS</title>
+  <meta name="description" content="An operating layer for AI agent fleets: durable coordination, truthful shared memory, and controls measured by what agents do next. In daily use since March 2026." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="agent infrastructure, AI agent harness, LLM evaluation, agent guardrails, multi-agent coordination, agent memory, AI governance" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Agent Infrastructure: Measuring Whether AI Guardrails Work" />
-  <meta property="og:description" content="The operating layer a fleet of AI agents needs to work a shared codebase without corrupting it: coordination that survives a process exiting, shared memory that stays true, and controls that are measured rather than assumed. Running since March 2026, with the measurements." />
+  <meta property="og:title" content="Agent Infrastructure: A Measured Operating Layer for AI Fleets" />
+  <meta property="og:description" content="Durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible." />
   <meta property="og:url" content="https://tokenization.systems/agent-infrastructure/" />
   <meta property="og:site_name" content="Tokenization Systems" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
@@ -57,8 +57,8 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
-  <meta name="twitter:title" content="Agent Infrastructure: Measuring Whether AI Guardrails Work" />
-  <meta name="twitter:description" content="The operating layer a fleet of AI agents needs to work a shared codebase without corrupting it: coordination that survives a process exiting, shared memory that stays true, and controls that are measured rather than assumed. Running since March 2026, with the measurements." />
+  <meta name="twitter:title" content="Agent Infrastructure: A Measured Operating Layer for AI Fleets" />
+  <meta name="twitter:description" content="Durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
   <meta name="twitter:image:alt" content="Control-layer infrastructure for AI agent fleets (Tokenization Systems)" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -84,14 +84,14 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=262" />
+  <link rel="stylesheet" href="/styles.css?v=265" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Agent Infrastructure: Measuring Whether AI Guardrails Work",
-    "description": "The operating layer a fleet of AI agents needs to work a shared codebase without corrupting it: coordination that survives a process exiting, shared memory that stays true, and controls that are measured rather than assumed. Running since March 2026, with the measurements that justified each part and the measurements that killed parts.",
+    "headline": "Agent Infrastructure: A Measured Operating Layer for AI Fleets",
+    "description": "An operating layer for AI agent fleets: durable coordination, truthful shared memory, and controls graded by what agents do next. In daily use since March 2026, with the measurements and limits visible.",
     "url": "https://tokenization.systems/agent-infrastructure/",
     "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems/" },
     "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems/" },
@@ -197,87 +197,79 @@
     <section class="reveal ai-hero" aria-labelledby="agent-infra-page-title">
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Agent Infrastructure</p>
       <div class="section-title">
-        <h1 id="agent-infra-page-title">Most agent guardrails do nothing, and you cannot know which ones without measuring.</h1>
-        <p class="ai-hero-lede"><strong>We are building the operating layer a fleet of AI agents needs to work a shared codebase without corrupting it:</strong> coordination that survives a process exiting, shared memory that stays true, and controls that are measured rather than assumed. This page is the evidence for it. Not a proposal and not a survey: the layer has run our own fleet since March 2026, and what follows is the measurements that justified each part of it and the measurements that killed parts of it.</p>
-        <p>Every mechanism below exists because something went wrong first. Where a number appears, it was measured rather than estimated, and the date it was measured is stated.</p>
-        <p><strong>One failure runs through all of them.</strong> In every case a control looked like it was working: the warning fired, the check passed, the claim was held, the rule was on the branch. None were doing what they appeared to do, and each failed quietly and toward the answer that looks fine. That is why this page leads with an instrument rather than an architecture. The instances are <a href="#pattern">collected at the end</a>.</p>
+        <h1 id="agent-infra-page-title">AI agent fleets need an operating layer that can prove its controls work.</h1>
+        <p class="ai-hero-lede"><strong>We are building that layer:</strong> durable coordination, shared memory with referential integrity, and controls graded by what agents do next. It has run our own fleet since March 2026. This page shows what held, what failed, and what changed.</p>
+        <p class="ai-hero-support">The differentiator is measurement. A warning firing is not evidence it worked, and a rule landing is not evidence it ran. We measure behavior, refusals, overrides, and delivery paths so weak controls can be redesigned before they become trusted infrastructure.</p>
         <p class="ai-measured-as">Measurements as of <time datetime="2026-08-23">2026-08-23</time>. Every figure is re-run from its own producer at each revision rather than carried forward, and where one has moved since the last revision the direction is stated rather than quietly replaced.</p>
       </div>
-      <p class="ai-proof-strip" aria-label="Headline measurements">
-        <span class="ai-proof-item"><strong>25,000+</strong> commits since March</span>
-        <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item"><strong>11 to 43</strong> concurrent sessions</span>
-        <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item"><strong>131</strong> pre-commit checks</span>
-        <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item"><strong>13,140</strong> advisory warnings graded</span>
-        <span class="ai-proof-sep" aria-hidden="true">·</span>
-        <span class="ai-proof-item" title="Of workspaces that saw the most common advisory once, 85% saw it fire again. Agents read it and kept doing the same thing."><strong>85%</strong> still ignore the most common warning</span>
-      </p>
-      <p class="ai-note ai-strip-gloss">Those are counts of work done and of safeguards measured. The last one is the finding: the most common safeguard in the system was being ignored by the agents it had already warned.</p>
-      <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
-        <a class="action primary" href="#work-with-us">Talk to us about your fleet</a>
-        <a class="action secondary" href="#measurement">See the measurements</a>
-        <a class="action secondary" href="#building">What we are building</a>
+      <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
+        <div class="ai-proof-item" role="listitem"><strong>25,000+</strong><span>commits observed since March</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>11 to 43</strong><span>concurrent sessions</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>13,140</strong><span>advisory outcomes graded</span></div>
+        <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>6 in 7</strong><span>armed gates held</span></div>
       </div>
-      <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Agent Infrastructure jump links">
-        <p class="page-toc-title">Jump to</p>
-        <div class="page-toc-list">
-          <a class="page-toc-link" href="#short-version">The short version</a>
-          <a class="page-toc-link" href="#building">What we are building</a>
-          <a class="page-toc-link" href="#scale">The system</a>
-          <a class="page-toc-link" href="#measurement">Measuring whether a control works</a>
-          <a class="page-toc-link" href="#rungs">Enforcement levels</a>
-          <a class="page-toc-link" href="#armed">What the hard refuse actually bought</a>
-          <a class="page-toc-link" href="#invented-facts">Invented facts before forgotten ones</a>
-          <a class="page-toc-link" href="#coordination">Coordination is not a pointer to a live process</a>
-          <a class="page-toc-link" href="#unowned">Work with no owner</a>
-          <a class="page-toc-link" href="#vacuous">Checks that pass for the wrong reason</a>
-          <a class="page-toc-link" href="#context">Context as a deliberately managed resource</a>
-          <a class="page-toc-link" href="#pattern">The same failure, ten times</a>
-          <a class="page-toc-link" href="#not-claimed">What this is not</a>
-          <a class="page-toc-link" href="#work-with-us">Where to go from here</a>
-        </div>
+      <p class="ai-note ai-strip-gloss">Operating counts from one fleet, re-measured at each revision. Repeat rates and override rates sit with the method, in the measurements.</p>
+      <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
+        <a class="action primary" href="/contact">Explore a design partnership</a>
+        <a class="action secondary" href="#building">What we are building</a>
+        <a class="action secondary" href="#measurement">See the measurements</a>
       </div>
     </section>
 
+    <nav class="page-toc structure-jump-to ai-section-nav" id="jumpTo" aria-label="Agent Infrastructure sections">
+      <p class="page-toc-title">On this page</p>
+      <div class="page-toc-list page-toc-list--compact">
+        <a class="page-toc-link" href="#short-version">The argument</a>
+        <a class="page-toc-link" href="#building">The operating layer</a>
+        <span class="page-toc-sep" aria-hidden="true">·</span>
+        <a class="page-toc-link" href="#scale">System scale</a>
+        <a class="page-toc-link" href="#measurement">Control evidence</a>
+        <a class="page-toc-link" href="#invented-facts">Memory &amp; coordination</a>
+        <span class="page-toc-sep" aria-hidden="true">·</span>
+        <a class="page-toc-link" href="#not-claimed">Scope &amp; limits</a>
+        <a class="page-toc-link" href="#work-with-us">Work with us</a>
+      </div>
+    </nav>
+
     <section id="short-version" class="reveal explainer-section" aria-labelledby="short-version-title">
       <div class="explainer">
-        <h2 id="short-version-title">The short version</h2>
-        <p>Written for anyone deciding whether this matters, without needing to know how any of it works. <strong>This section is the whole argument.</strong> Everything after it is the evidence, and the evidence is written for engineers.</p>
-        <p>Companies are beginning to run many AI coding agents at once against the same body of work. When they do, three things go wrong that almost nobody plans for.</p>
-        <ul class="ai-rule-list">
-          <li><strong>The agents get in each other's way.</strong> Two of them change the same thing at the same time and one quietly destroys the other's work. It only happens under a particular sequence of events, which makes it hard to reproduce, easy to dismiss, and easy to ship.</li>
-          <li><strong>They write down things that are not true, and then believe each other.</strong> One agent cites a finding that was never established. The next three build on it. Within days the false thing is holding up real work, and nothing in the record marks it as invented.</li>
-          <li><strong>The safeguards you put in place mostly do not work, and nothing tells you which ones.</strong> We wrote warnings, watched agents read them, and then measured what the agents did next. The most common warning in our system fired again in 85% of the places it had already fired: agents read it and carried on unchanged. It had been running for months. It looked fine the entire time.</li>
+        <h2 id="short-version-title">Why this layer matters</h2>
+        <p>This page is for anyone deciding whether agent infrastructure matters, without needing to understand every mechanism. Once many agents share a codebase, correctness depends on three capabilities that ordinary task runners do not provide.</p>
+        <ul class="ai-problem-grid">
+          <li><strong>Concurrency needs isolation.</strong> Two agents can change the same state under a rare interleaving, and one can quietly erase the other's work.</li>
+          <li><strong>Shared memory needs integrity.</strong> One invented reference can be accepted by the next session and become load-bearing within days.</li>
+          <li><strong>Controls need outcome data.</strong> Trigger counts show that a warning fired. They do not show that the warning changed behavior or that the enforcing code ran.</li>
         </ul>
-        <p>The third one is the general problem, and it is the reason this page exists rather than a diagram of the architecture. A safeguard that is switched on looks exactly like a safeguard that works. The only difference is visible in the measurements, and almost nobody takes them.</p>
         <blockquote class="paper-thesis-line ai-thesis">
           <p>A control you have not measured is a control you are only assuming you have.</p>
         </blockquote>
-        <p>So we measured ours, and this page is that record, including the parts where the answer was that a safeguard we had trusted for months was doing nothing at all. <a href="#building">What we are building</a> follows from it. If you want the argument in one more line: the operating layer is the part of an agent fleet that keeps the work correct, and today most teams are assuming they have one.</p>
+        <p>The operating layer is the part of a fleet that keeps shared work correct. The rest of this page shows the system, the measurements that changed its design, and the boundaries on what those measurements establish.</p>
       </div>
     </section>
 
     <section id="building" class="reveal explainer-section" aria-labelledby="building-title">
       <div class="explainer">
         <h2 id="building-title">What we are building</h2>
-        <p>Three things, in the order a fleet breaks without them. Each is described at length further down, with what it cost to get wrong.</p>
+        <p>Three capabilities, in the order a fleet breaks without them. Each is linked to the failure that forced its design.</p>
         <div class="ai-lanes" role="list">
           <div class="ai-lane" role="listitem">
             <h3>Coordination that survives an exit</h3>
-            <p>When an agent stops mid-task, its work has to go back in the queue rather than vanish into one nobody is watching. Ownership of work is therefore durable state with a time limit on it, not a pointer to a running program. When an agent dies its work returns to the pool instead of sitting owned forever, and work nobody owns is filed somewhere that gets louder rather than mailed to a session that can vanish. <a href="#coordination">How it broke first</a>.</p>
+            <p>Ownership is durable state with an expiry, not a pointer to a running process. When a session exits, its work returns to the pool, and ownerless work enters a queue that escalates on its own. <a href="#coordination">See the failure that forced it</a>.</p>
           </div>
           <div class="ai-lane" role="listitem">
             <h3>A shared record that stays true</h3>
-            <p>Nothing an agent writes down may refer to a fact that does not exist, and that is checked by machine at the moment the work is saved rather than taken on trust. The failure that forces this is not forgetting. It is one agent inventing a citation and the next three building on it. <a href="#invented-facts">How it broke first</a>.</p>
+            <p>Every finding, decision, and open question must resolve to an existing record when work is saved. Missing references are surfaced instead of invented. <a href="#invented-facts">See the failure that forced it</a>.</p>
           </div>
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>Controls that are measured</h3>
-            <p>A measuring device whose only job is to answer one question about every safeguard you have: does it change what the agents actually do? Underneath it sits a ladder from gentle advice up to a hard block, with the rate at which people step over each rung measured rather than guessed. This is the part with no substitute. Without it you cannot tell a safeguard from a decoration, and both look the same on an architecture diagram. <a href="#measurement">How we measure it</a>.</p>
+            <p>Each safeguard is graded by behavior after exposure, plus refusal and override rates where a gate is armed. That separates teaching, enforcement, and decoration. <a href="#measurement">See the measurement method</a>.</p>
           </div>
         </div>
-        <p class="ai-note">What is deliberately not on that list: anything this page cannot show working. The <a href="#not-claimed">boundaries are stated</a> at the end, including the largest one, which is that all of this has so far run against exactly one fleet.</p>
+        <p class="ai-note">The largest current boundary is explicit: every number on this page comes from one operator's fleet. <a href="#not-claimed">See the full scope and limits</a>.</p>
+        <p class="ai-inline-cta">
+          <a class="action primary" href="/contact">Discuss your agent fleet</a>
+          <a class="action secondary" href="#measurement">Skip to the measurements</a>
+        </p>
       </div>
     </section>
 
@@ -286,54 +278,103 @@
         <h2 id="scale-title">The system</h2>
         <p class="ai-note">Everything from here to the closing sections is the evidence, written for a technical reader. Nothing in it is needed to follow the argument above.</p>
         <p>A fleet of AI coding agents works a single shared repository. They do research, drafting, verification, and infrastructure work on the same corpus, concurrently, over horizons far longer than any one context window holds.</p>
-        <div class="ai-table-wrap">
-          <table class="ai-table ai-table--scale">
-            <caption>Measured 2026-08-23. All of these drift; the producers are re-run rather than the numbers re-typed. Bracketed values are what this page carried on 2026-08-04.</caption>
-            <thead>
-              <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Commits</th><td class="ai-val">over 25,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was ~17,300]</span></td></tr>
-              <tr><th scope="row">Concurrent sessions</th><td class="ai-val">11 to 43</td><td class="ai-how">Distinct sessions writing a transcript in the same clock-hour, over the trailing seven days: typically 11, rising to 26 in the busiest tenth of hours and 43 at the peak. It swings hard by day, from a median of 4 on the quietest to 26 on the busiest, which is why one figure is the wrong shape for this row <span class="ai-class-gloss">[was 14 typical, 39 busiest tenth]</span></td></tr>
-              <tr><th scope="row">Pre-commit gate</th><td class="ai-val">131 checks</td><td class="ai-how">117 top-level plus 14 sub-checks; 31 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 95, 22 hard-fail]</span></td></tr>
-              <tr><th scope="row">Advisory warnings</th><td class="ai-val">13,140</td><td class="ai-how">Across 27 classes over 44 days of observation <span class="ai-class-gloss">[was 4,405 across 18 classes]</span></td></tr>
-              <tr><th scope="row">Hard refusals</th><td class="ai-val">287</td><td class="ai-how">Calls stopped by an armed gate across the 7 classes that carry one, in the same span. 245 refused, 42 overridden with the documented escape <span class="ai-class-gloss">[new since 2026-08-04]</span></td></tr>
-              <tr><th scope="row">Unowned-work queue</th><td class="ai-val">1,168 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 2,272 filed, 1,104 closed <span class="ai-class-gloss">[new since 2026-08-04]</span></td></tr>
-              <tr><th scope="row">Skill library</th><td class="ai-val">72</td><td class="ai-how">Program skills, counted by unique name; 78 including six that are not program-specific. None load at session start</td></tr>
-              <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
-            </tbody>
-          </table>
+        <div class="ai-metric-grid">
+          <article class="ai-metric">
+            <p class="ai-metric-value">25,000+</p>
+            <p class="ai-metric-label">Commits</p>
+            <p class="ai-metric-was">was ~17,300 on 4 Aug</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">11 to 43</p>
+            <p class="ai-metric-label">Concurrent sessions</p>
+            <p class="ai-metric-was">was 14 typical, 39 busiest tenth</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">131</p>
+            <p class="ai-metric-label">Pre-commit checks</p>
+            <p class="ai-metric-was">was 95, 22 hard-fail</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">13,140</p>
+            <p class="ai-metric-label">Advisories graded</p>
+            <p class="ai-metric-was">was 4,405 across 18 classes</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">287</p>
+            <p class="ai-metric-label">Hard refusals</p>
+            <p class="ai-metric-was">245 held, 42 escaped</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">1,168</p>
+            <p class="ai-metric-label">Unowned items open</p>
+            <p class="ai-metric-was">2,272 filed, 1,104 closed</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">72</p>
+            <p class="ai-metric-label">Program skills</p>
+            <p class="ai-metric-was">none load at session start</p>
+          </article>
+          <article class="ai-metric">
+            <p class="ai-metric-value">33</p>
+            <p class="ai-metric-label">Canonical state files</p>
+            <p class="ai-metric-was">unchanged since 4 Aug</p>
+          </article>
         </div>
+        <details class="ai-method">
+          <summary>How each figure is counted</summary>
+          <div class="ai-table-wrap">
+            <table class="ai-table ai-table--scale">
+              <caption>Measured 2026-08-23. All of these drift; the producers are re-run rather than the numbers re-typed. Bracketed values are what this page carried on 2026-08-04.</caption>
+              <thead>
+                <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Commits</th><td class="ai-val">over 25,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was ~17,300]</span></td></tr>
+                <tr><th scope="row">Concurrent sessions</th><td class="ai-val">11 to 43</td><td class="ai-how">Distinct sessions writing a transcript in the same clock-hour, over the trailing seven days: typically 11, rising to 26 in the busiest tenth of hours and 43 at the peak. It swings hard by day, from a median of 4 on the quietest to 26 on the busiest, which is why one figure is the wrong shape for this row <span class="ai-class-gloss">[was 14 typical, 39 busiest tenth]</span></td></tr>
+                <tr><th scope="row">Pre-commit gate</th><td class="ai-val">131 checks</td><td class="ai-how">117 top-level plus 14 sub-checks; 31 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 95, 22 hard-fail]</span></td></tr>
+                <tr><th scope="row">Advisory warnings</th><td class="ai-val">13,140</td><td class="ai-how">Across 27 classes over 44 days of observation <span class="ai-class-gloss">[was 4,405 across 18 classes]</span></td></tr>
+                <tr><th scope="row">Hard refusals</th><td class="ai-val">287</td><td class="ai-how">Calls stopped by an armed gate across the 7 classes that carry one, in the same span. 245 refused, 42 overridden with the documented escape <span class="ai-class-gloss">[new since 2026-08-04]</span></td></tr>
+                <tr><th scope="row">Unowned-work queue</th><td class="ai-val">1,168 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 2,272 filed, 1,104 closed <span class="ai-class-gloss">[new since 2026-08-04]</span></td></tr>
+                <tr><th scope="row">Skill library</th><td class="ai-val">72</td><td class="ai-how">Program skills, counted by unique name; 78 including six that are not program-specific. None load at session start</td></tr>
+                <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
         <p class="ai-note">A count carries a predicate, so each row states one. "131 checks" and "31 checks" are both true of the same gate and are not the same claim. Six of the eight rows are new or have moved in nineteen days, which is the argument for measuring them from a producer rather than re-typing them here.</p>
       </div>
     </section>
 
     <section id="measurement" class="reveal explainer-section" aria-labelledby="measurement-title">
       <div class="explainer">
-        <h2 id="measurement-title">Measuring whether a control works</h2>
-        <p>The apparatus above accumulated faster than the evidence for it. So the first real instrument was one whose only job is to say whether any given control changes agent behavior at all.</p>
-        <p><strong>The metric is saturation:</strong> how often the same warning fires again in the same workspace after an agent has already seen it. If the agent gets the same advisory a dozen times and keeps triggering it, the warning is not changing behavior. It is <strong>wallpaper</strong>: background noise that raises the floor so useful signals get ignored alongside it.</p>
+        <h2 id="measurement-title">Which controls change behavior?</h2>
+        <p>The first instrument answers one question about every advisory: after a workspace sees the warning, does the same warning keep returning?</p>
+        <p><strong>The metric is saturation:</strong> the share of workspaces where the same warning fires again after its first appearance. A high repeat rate is evidence that teaching alone is insufficient. It is not proof that every warning was read or that no behavior changed.</p>
+        <aside class="ai-finding">
+          <p class="ai-finding-label">What the loudest advisory showed</p>
+          <p>Pipe-exit misread is more than half of all warnings, and it repeated in 85% of workspaces that had already seen it. That is a fact about teaching-level advice, which is why enforcing controls exist. It is not a score of the operating layer.</p>
+        </aside>
         <div class="ai-table-wrap">
-          <table class="ai-table ai-table--effectiveness">
+          <table class="ai-table ai-table--effectiveness ai-table--advisories">
             <caption>Advisory effectiveness by warning class, ranked by how often each class fired. The six loudest of 27 classes. Measured 2026-08-23 over 44 days. Class names are the instrument's own labels.</caption>
             <thead>
               <tr><th scope="col">Warning class</th><th scope="col" class="ai-num-head">Warnings</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Repeat rate</th><th scope="col">Verdict</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Pipe-exit misread<span class="ai-class-gloss">Treating a failed command as success</span></th><td class="ai-num">8,352</td><td class="ai-num">1,260</td><td class="ai-num ai-num--key">85%</td><td><span class="ai-verdict ai-verdict--wallpaper" title="Agents keep triggering the same warning after already seeing it">Ignored</span></td></tr>
-              <tr><th scope="row">Unscoped negative claim<span class="ai-class-gloss">Asserting absence without a scoped search</span></th><td class="ai-num">1,439</td><td class="ai-num">639</td><td class="ai-num ai-num--key">56%</td><td><span class="ai-verdict ai-verdict--wallpaper" title="Agents keep triggering the same warning after already seeing it">Ignored</span></td></tr>
-              <tr><th scope="row">Recursive delete<span class="ai-class-gloss"><code>rm -rf</code> and similar wipe paths</span></th><td class="ai-num">1,252</td><td class="ai-num">487</td><td class="ai-num ai-num--key">61%</td><td><span class="ai-verdict ai-verdict--wallpaper" title="Agents keep triggering the same warning after already seeing it">Ignored</span></td></tr>
-              <tr><th scope="row">Abandoned publish<span class="ai-class-gloss">Walking away from a publish before it has finished</span></th><td class="ai-num">336</td><td class="ai-num">195</td><td class="ai-num ai-num--key">42%</td><td><span class="ai-verdict ai-verdict--teaching" title="Lower repeat rate: agents more often stop re-triggering after seeing the warning">Changes behavior</span></td></tr>
-              <tr><th scope="row">Ancestry as landedness<span class="ai-class-gloss">Using a change's place in history as proof it shipped</span></th><td class="ai-num">331</td><td class="ai-num">239</td><td class="ai-num ai-num--key">28%</td><td><span class="ai-verdict ai-verdict--teaching" title="Lower repeat rate: agents more often stop re-triggering after seeing the warning">Changes behavior</span></td></tr>
-              <tr><th scope="row">Destructive-probe check<span class="ai-class-gloss">Testing a delete-protection gate the wrong way</span></th><td class="ai-num">308</td><td class="ai-num">221</td><td class="ai-num ai-num--key">28%</td><td><span class="ai-verdict ai-verdict--teaching" title="Lower repeat rate: agents more often stop re-triggering after seeing the warning">Changes behavior</span></td></tr>
+              <tr><th scope="row">Pipe-exit misread<span class="ai-class-gloss">Treating a failed command as success</span></th><td class="ai-num">8,352</td><td class="ai-num">1,260</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:85%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>85%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">High repeat</span></td></tr>
+              <tr><th scope="row">Unscoped negative claim<span class="ai-class-gloss">Asserting absence without a scoped search</span></th><td class="ai-num">1,439</td><td class="ai-num">639</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:56%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>56%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">High repeat</span></td></tr>
+              <tr><th scope="row">Recursive delete<span class="ai-class-gloss"><code>rm -rf</code> and similar wipe paths</span></th><td class="ai-num">1,252</td><td class="ai-num">487</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:61%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>61%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">High repeat</span></td></tr>
+              <tr><th scope="row">Abandoned publish<span class="ai-class-gloss">Walking away from a publish before it has finished</span></th><td class="ai-num">336</td><td class="ai-num">195</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:42%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>42%</span></td><td><span class="ai-verdict ai-verdict--teaching" title="The warning repeats in fewer than half of observed workspaces">Lower repeat</span></td></tr>
+              <tr><th scope="row">Ancestry as landedness<span class="ai-class-gloss">Using a change's place in history as proof it shipped</span></th><td class="ai-num">331</td><td class="ai-num">239</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:28%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>28%</span></td><td><span class="ai-verdict ai-verdict--teaching" title="The warning repeats in fewer than half of observed workspaces">Lower repeat</span></td></tr>
+              <tr><th scope="row">Destructive-probe check<span class="ai-class-gloss">Testing a delete-protection gate the wrong way</span></th><td class="ai-num">308</td><td class="ai-num">221</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:28%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>28%</span></td><td><span class="ai-verdict ai-verdict--teaching" title="The warning repeats in fewer than half of observed workspaces">Lower repeat</span></td></tr>
             </tbody>
           </table>
         </div>
-        <p class="ai-note"><strong>How to read the verdicts.</strong> <em>Ignored</em> (wallpaper): the warning keeps firing in the same workspace after the agent has already seen it, so it is not teaching. <em>Mixed</em> (borderline): the repeat rate sits between clear failure and clear success. <em>Changes behavior</em> (teaching): agents more often stop re-triggering after the first sighting. Repeat rate is the share of workspaces where the warning fired again after it had already fired once, and it rises with the length of the observation window, so two spans of different length are not comparable and are never compared here.</p>
-        <p>The most common control in the system, pipe-exit misread, accounts for well over half of all warnings. In <strong>85%</strong> of the workspaces that saw it once, it fired again: agents read the warning and kept doing the same thing. Naming a safer command in the warning text raised adoption and did not move that rate. Soft advice alone stayed wallpaper.</p>
-        <p>Nineteen days of further observation did not rescue it. Repeat rate depends on how long you watch, so the only honest comparison holds the window fixed. Re-measured over a window exactly as long as the one the first version of this table used, the class now sits at <strong>87%</strong> rather than 81%, on 7,229 firings rather than 2,780, and one workspace triggered it 70 times. Recursive delete moved the same way on the same fixed window, 54% to 64%, crossing from borderline into ignored. Two classes did improve, unscoped negative claim from 64% to 55% and destructive-probe check from 38% to 32%, and nothing in the data says why. Six other classes return <strong>no verdict at all</strong> because they are under-sampled, and the instrument reports that rather than a flattering number: a precision estimate computed on nine events is not a precision estimate.</p>
+        <p class="ai-note"><strong>How to read the verdicts.</strong> High repeat means the warning returned in most workspaces after its first appearance, so teaching alone is not a reliable control. Lower repeat is consistent with behavior change, but does not prove causation. Repeat rates rise with observation length, so spans of different lengths are not compared here.</p>
+        <p><strong>This finding changed the architecture.</strong> A trigger-count dashboard would have shown a busy control. Saturation showed that advice alone was insufficient, which led us to separate teaching-level guidance from enforcing controls.</p>
+        <p>Nineteen days of further observation did not improve the result. On a fixed-length comparison window, pipe-exit misread moved from 81% to 87% while unscoped negative claim moved from 64% to 55%. The data records the movement without assigning a cause it cannot establish. Six other classes return no verdict because they are under-sampled.</p>
         <blockquote class="paper-thesis-line ai-thesis">
-          <p>First build a test that could show your controls are useless. Then trust the result, including when it says most of them are.</p>
+          <p>Measure whether controls change behavior, then redesign the ones that do not.</p>
         </blockquote>
       </div>
     </section>
@@ -363,10 +404,14 @@
 
     <section id="armed" class="reveal explainer-section" aria-labelledby="armed-title">
       <div class="explainer">
-        <h2 id="armed-title">What the hard refuse actually bought</h2>
-        <p>The previous revision of this page ended with a promise rather than a result: a narrow hard refuse on the unambiguous subset of the loudest warning class, built, flag-gated, and shipped switched off until a precision sample justified arming it. It has since been armed, and six other classes were armed alongside it. This is what came back, and it is not what the argument for hard blocks predicts.</p>
+        <h2 id="armed-title">What enforcement changed, and where it did not</h2>
+        <aside class="ai-callout">
+          <p class="ai-callout-stat">6 in 7</p>
+          <p>Armed gates held. Across 287 calls that reached a gate, 245 stopped and 42 used the documented escape. The 15% override rate is the evidence for whether these gates held, and it took six weeks of logging every refusal and every escape to establish.</p>
+        </aside>
+        <p>Seven classes now carry an armed refusal. The table is the breakdown. The logs also show where a technically armed gate behaves like a speed bump.</p>
         <div class="ai-table-wrap">
-          <table class="ai-table ai-table--effectiveness">
+          <table class="ai-table ai-table--effectiveness ai-table--refusals">
             <caption>Every class that carries an armed hard refuse, ranked by refusals. Measured 2026-08-23 over the same 44 days. An override is an operator supplying the documented escape, which is logged rather than silent. The last column is the first refusal in the log, which for the two oldest classes is the log's own start rather than the arming date.</caption>
             <thead>
               <tr><th scope="col">Refused action</th><th scope="col" class="ai-num-head">Refusals</th><th scope="col" class="ai-num-head">Overrides</th><th scope="col" class="ai-num-head">Override rate</th><th scope="col">First refusal logged</th></tr>
@@ -382,14 +427,14 @@
             </tbody>
           </table>
         </div>
-        <p class="ai-note">Every escape leaves a log line, which is the only reason an override rate exists to report. A control whose bypass is silent can be measured for how often it fires and never for whether it held.</p>
-        <p><strong>A refusal is honored about six times in seven.</strong> Across 287 calls that reached an armed gate, 245 were refused and 42 were overridden. That 15% is the number the whole enforcement-level argument rests on, and it took six weeks of logging every refusal and every escape to be able to state it at all. It is also the ceiling: an escape hatch exists on purpose, because a gate with no escape gets disabled entirely the first time it is wrong.</p>
+        <p class="ai-note">Every escape leaves a log line. Without that record, a control can be measured for how often it fires but never for whether it held.</p>
+        <p>An escape hatch remains necessary because an incorrect gate with no recovery path is likely to be disabled entirely.</p>
         <p><strong>What can be armed is decided by ambiguity, not by will.</strong> Those 287 events are 2% of the 13,140 warnings in the same window. Look at what is on the list: destroying a stash, force-deleting a branch, garbage-collecting the object store. In every one the wrong action is unmistakable from the command alone. The loudest class in the system is missing from the top of that list precisely because piping one command into another is usually correct, and only a subset is a misread. You cannot promote a control to the enforcing level faster than you can say exactly which action is wrong, and for the noisiest classes that is the part nobody has.</p>
         <p><strong>A refuse scoped narrowly enough to be safe can be scoped narrowly enough to be pointless.</strong> The narrow pipe-exit refuse has fired six times in the fifteen days since arming, against 8,352 advisories in the same class over the window. It reaches under a tenth of one percent of the population it was built for. Five of those six refusals were overridden inside one second by the same agent re-issuing the identical command with the escape prefix, and four of the five were one command in one workspace, hit and stepped over four times across fourteen hours. So the refuse is doing one thing well and one thing badly: it is not crying wolf, and it is also not stopping anyone.</p>
         <blockquote class="paper-thesis-line ai-thesis">
-          <p>Whether you built a gate or a speed bump is settled by the override count, not by the design.</p>
+          <p>An enforcing control is proven by hold and override rates, not by the word gate.</p>
         </blockquote>
-        <h3>A refusal cost that was not a property of the refusal</h3>
+        <h3>When gate cost tracks load, not risk</h3>
         <p>One more gate is worth the space, because it inverts the usual question. It refuses to start new work when it cannot establish what other sessions have already claimed, and it was armed in early August, the day its trigger first fired against a zero baseline. A week later it was firing on 22% of its reads (the trigger rate: the share of attempts where it could not establish that state), refusing dozens of launches a day, and operators were routing around 29% of them, which by the rule above is a gate failing.</p>
         <p>The mechanism was not contention. The gate fires when the <em>read</em> of shared state fails to complete, that read times out more often as the machine saturates, and so an armed refusal was quietly converting machine load into refusals to work. A refusal that clears on a plain retry teaches operators to retry rather than to check, which is the worst thing a gate can teach.</p>
         <p>Measured again for this revision, with nothing about the gate changed: the trigger rate is <strong>1.8%</strong>, ten of 543 reads over twenty-four hours, producing five refusals and no overrides. The control did not get better. The load fell.</p>
@@ -434,7 +479,7 @@
     <section id="unowned" class="reveal explainer-section" aria-labelledby="unowned-title">
       <div class="explainer">
         <h2 id="unowned-title">Work with no owner</h2>
-        <p>The most common thing a fleet of agents produces is a finding nobody owns, and it is the least likely thing to survive. Saying it in a session reaches no one. Writing it into a commit message makes it durable and still unswept: a commit body is a grave. Handing it to another session inherits the pointer problem from the section above, because that session can exit.</p>
+        <p>A fleet can produce findings faster than it assigns owners, and ownerless findings are the least likely to survive. Saying one in a session reaches no queue. Writing it into a commit message makes it durable and still unswept: a commit body is a grave. Handing it to another session inherits the pointer problem from the section above, because that session can exit.</p>
         <p>So an ownerless finding is <strong>filed</strong> rather than sent. It goes into a committed queue where it escalates on a schedule of its own, where a claim on it is a lease rather than an assignment, and where it appears in every session's startup summary until it is closed with evidence. The rule that goes with the queue is the part that actually changed behavior: a finding named in a turn and not closed in that turn is filed before that turn ends. The test of whether something was routed is not whether it was written down. It is whether it gets louder by itself.</p>
         <p class="ai-note">Measured 2026-08-23, over the 27 days since the queue opened: <strong>2,272</strong> entries filed, <strong>1,104</strong> closed, <strong>1,168</strong> open. Arrivals run about 84 a day against closures of about 41. A typical open entry has been waiting about thirteen days.</p>
         <p><strong>Filing forces the question that closing depends on.</strong> Every entry has to record how anyone would know it was done. Of the open entries, 42% carry a predicate a machine can evaluate, and 57% carry a written statement of why no predicate can decide it. Nine of 1,168 carry neither. The second category turned out to be the valuable one: "this needs a human judgement, and here is exactly which judgement" is a real answer, and it only exists because leaving the field blank was not allowed.</p>
@@ -500,13 +545,13 @@
         <h2 id="pattern-title">The same failure, ten times</h2>
         <p>Read in order, the sections above are a list of subjects. Read against the lede they are one subject, and this is the table that says so. Every row is a control that reported success while doing something other than what its name says.</p>
         <div class="ai-table-wrap">
-          <table class="ai-table">
+          <table class="ai-table ai-table--pattern">
             <caption>Each row links to the section that measured it. Nothing here is new evidence; it is the same evidence, arranged so the pattern is visible.</caption>
             <thead>
               <tr><th scope="col">Where</th><th scope="col">It looked like</th><th scope="col">It actually was</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row"><a href="#measurement">The loudest advisory</a></th><td>A rule the agent had read</td><td class="ai-how">Read, and re-triggered in 85% of the workspaces that saw it</td></tr>
+              <tr><th scope="row"><a href="#measurement">The loudest advisory</a></th><td>A rule assumed to be teaching</td><td class="ai-how">Repeated in 85% of workspaces after its first appearance</td></tr>
               <tr><th scope="row"><a href="#armed">The narrow hard refuse</a></th><td>A block on the loudest class</td><td class="ai-how">Six firings against 8,352 warnings in that same class</td></tr>
               <tr><th scope="row"><a href="#armed">The launch gate</a></th><td>A refusal protecting against conflict</td><td class="ai-how">A refusal tracking machine load</td></tr>
               <tr><th scope="row"><a href="#invented-facts">The shared record</a></th><td>A citation to an established finding</td><td class="ai-how">A citation to nothing, load-bearing within a few sessions</td></tr>
@@ -522,7 +567,7 @@
         <p>Every row fails <strong>silently</strong>, and every row fails <strong>toward the reassuring answer</strong>. Those two properties together are why none of them are visible from inside the thing that is broken, and why the first real piece of work here was an instrument rather than a mechanism.</p>
         <p>Three habits fall out of it, and they are the part most likely to transfer to a system that looks nothing like this one:</p>
         <ul class="ai-rule-list">
-          <li><strong>Build the instrument that could show your controls are useless,</strong> then believe it, including when it says most of them are.</li>
+          <li><strong>Build an instrument that can disprove a control's effectiveness,</strong> then redesign what the evidence rejects.</li>
           <li><strong>Keep "could not determine" as its own answer.</strong> Folding it into "no" is this same failure again, and it lands in the reassuring direction every time.</li>
           <li><strong>A control is not delivered until you can name the surface that carries it</strong> and show one instance of it firing or being read.</li>
         </ul>
@@ -532,16 +577,16 @@
 
     <section id="not-claimed" class="reveal explainer-section" aria-labelledby="not-claimed-title">
       <div class="explainer">
-        <h2 id="not-claimed-title">What this is not</h2>
-        <p>Stated plainly, because a page like this invites assumptions it should not get, and because the honest boundary moves as the work does. This is where it sits today.</p>
+        <h2 id="not-claimed-title">Scope and limits</h2>
+        <p>The evidence is strongest when its boundary is visible. This is where the operating layer sits today.</p>
         <ul class="ai-not-list">
-          <li><strong>Not available to use yet.</strong> This runs every day as the operating layer for one research program, and a product is being built on it. This page is evidence rather than an announcement: there is no trial, no pricing, and no date here, because none of those are settled. <a href="#work-with-us">The routes that do exist</a> are at the end.</li>
-          <li><strong>Not yet a distributed system with users.</strong> The concurrency and consistency problems are real, and so is every failure above. But nobody outside runs work through it, nothing is promised to anyone about how reliably it stays up, and no one is woken at night when it breaks. The load is one operator's fleet, and nothing here has been tested against a load it does not generate itself. Read every number on this page with that attached.</li>
-          <li><strong>Not machine-learning work.</strong> No AI model is built or trained here. The models are rented from the companies that make them, and some work runs on our own hardware instead so that it never leaves the building.</li>
-          <li><strong>Not a security product.</strong> Agents are kept apart so they cannot corrupt each other's work, which is a correctness measure and not a defence against anything hostile. It is not the heavier kind of sandboxing used to contain untrusted code, and it should not be bought as one.</li>
-          <li><strong>Not a benchmark.</strong> The measurements describe this system's own controls. They are not claims about agent behavior in general, and every observation span is stated so the numbers can be discounted accordingly.</li>
+          <li><strong>Current access.</strong> The layer runs every day for one research program, and a product is being built on it. There is no trial, pricing, or release date yet. <a href="#work-with-us">The available routes are below</a>.</li>
+          <li><strong>Validation boundary.</strong> The load comes from one operator's fleet. No outside team relies on its uptime, and it has not yet been tested against a second operating environment.</li>
+          <li><strong>System category.</strong> This is agent orchestration, shared-state integrity, and control evaluation. It does not build or train an AI model.</li>
+          <li><strong>Security boundary.</strong> Session isolation protects correctness between cooperating agents. It is not a hostile-code sandbox or a security product.</li>
+          <li><strong>Measurement boundary.</strong> These observations describe this system's controls, not agent behavior in general. Every observation span is stated so the evidence can be discounted appropriately.</li>
         </ul>
-        <p class="ai-closing-creds"><strong>What it is:</strong> the operating layer described above, in daily use since March 2026, measured continuously, and the subject of thirty USPTO applications across twenty families, thirteen of them filed since this page was first published. The surrounding research program is eight papers on SSRN, one published at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters. The product being built on it starts from the finding this page opens with: that most of what an agent fleet calls a guardrail is not one, and that you cannot tell which without measuring.</p>
+        <p class="ai-closing-creds"><strong>What it is:</strong> the operating layer described above, in daily use since March 2026, measured continuously, and the subject of thirty USPTO applications across twenty families, thirteen of them filed since this page was first published. The surrounding research program is eight papers on SSRN, one published at <em>Frontiers in Blockchain</em>, and fifteen federal regulatory comment letters. The product starts from the distinction this page measures: a configured safeguard is not yet an effective control, and the difference has to be observed.</p>
       </div>
     </section>
 
@@ -552,14 +597,14 @@
         <div class="ai-lanes" role="list">
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>You run a fleet like this</h3>
-            <p>We want design partners: teams running many agents against a shared codebase who will let this be measured on their fleet instead of ours. That is the one thing that would fix the biggest weakness on this page, which is that every number here comes from a single operator.</p>
+            <p>We are looking for design partners running many agents against a shared codebase. The goal is to measure the layer in a second operating environment, expose fleet-specific assumptions, and validate which controls transfer.</p>
             <div class="ai-lane-links">
               <a href="/contact">Become a design partner</a>
             </div>
           </div>
           <div class="ai-lane" role="listitem">
             <h3>You are evaluating the approach</h3>
-            <p>Start with the measurement section rather than the architecture: it is the part that would change your mind, and it is the part most likely to be wrong. The governance framing is a separate document, written for readers who need the controls to be auditable rather than fast.</p>
+            <p>Start with the measurement section. It shows the method, thresholds, and counterexamples behind the architecture. The governance framing is separate for readers who need controls to be auditable as well as operational.</p>
             <div class="ai-lane-links">
               <a href="#measurement">The measurements</a>
               <a href="/resume/ai-governance-infrastructure">Governance profile</a>
