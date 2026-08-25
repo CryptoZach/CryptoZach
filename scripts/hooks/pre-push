@@ -117,7 +117,7 @@ fi
 # Bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push ...   See docs/SITE_REPO_SAFETY.md.
 if test "$remote" = "origin" && test -z "${SKIP_SITE_NUMBER_PREPUSH:-}"; then
 	root=$(git rev-parse --show-toplevel 2>/dev/null)
-	for g in check_letter_count.py check_home_stats.py; do
+	for g in check_letter_count.py check_home_stats.py check_agent_infra_stats.py; do
 		test -f "$root/scripts/$g" || continue
 		python3 "$root/scripts/$g" --quiet
 		rc=$?

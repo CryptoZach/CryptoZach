@@ -56,7 +56,7 @@ INTERNATIONAL_SLUGS = {"fsb-ai-sound-practices"}
 
 # Directories to scan for count mentions (served site surfaces). Relative to root.
 SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes",
-             "speaker-and-advisory"]
+             "speaker-and-advisory", "agent-infrastructure"]
 
 # Non-.html served files that carry the count. The walker is .html-only, so llms.txt
 # (the AI-surface summary) was never scanned and sat 7 filings stale until 2026-07-24.
