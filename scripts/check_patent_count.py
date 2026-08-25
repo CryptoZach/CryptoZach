@@ -37,6 +37,18 @@ WORDS = {
     "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
     "nineteen": 19, "twenty": 20,
 }
+# The tens and their compounds, added 2026-08-25. The original table stopped at twenty,
+# so once the portfolio passed twenty a spelled-out count ("thirty patents pending")
+# matched nothing and the guard went blind on exactly the prose it exists to catch.
+# Enumerating a fixed ceiling is the failure this fix repeats at a higher number, so the
+# compounds are GENERATED rather than typed, and extending the ceiling is a one-line edit.
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60}
+_ONES = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+         "six": 6, "seven": 7, "eight": 8, "nine": 9}
+for _tw, _tv in _TENS.items():
+    WORDS[_tw] = _tv
+    for _ow, _ov in _ONES.items():
+        WORDS[f"{_tw}-{_ow}"] = _tv + _ov
 NUM_TO_WORD = {v: k for k, v in WORDS.items()}
 
 # A count word or digit immediately followed by a patent noun phrase.
@@ -49,12 +61,40 @@ COUNT_RE = re.compile(
 APP_RE = re.compile(r"\b(\d{2}/\d{3},\d{3})\b")
 
 
+def patent_areas_block(text):
+    """The FULL `patent-areas` div, nested children included.
+
+    CORRECTED 2026-08-25. This was `re.search(r'<div class="patent-areas">(.*?)</div>')`,
+    which is non-greedy and therefore stops at the FIRST nested `</div>`. The block holds
+    one nested `patent-area` div per area, so the extractor only ever saw the first area:
+    it reported 7 enumerated applications against a block that enumerates 30, and the
+    guard failed on every run with a number that was its own artifact rather than the
+    page's. Verified at the time of the fix: full block 30 distinct numbers, non-greedy
+    match 7, page prose "30 patents pending" CORRECT and the guard wrong. The failure was
+    invisible because this guard is not in the deploy workflow, so its FAIL reached no
+    reader. Depth-counting is used rather than a wider regex because a wider regex would
+    over-capture at the next restructure exactly as this one under-captured.
+    """
+    start = text.find('<div class="patent-areas">')
+    if start < 0:
+        return None
+    depth = 0
+    for m in re.finditer(r"<div\b|</div>", text[start:]):
+        if m.group(0) == "</div>":
+            depth -= 1
+            if depth == 0:
+                return text[start:start + m.end()]
+        else:
+            depth += 1
+    return None  # unbalanced markup: refuse rather than guess
+
+
 def enumerated_count(text):
     """Distinct application numbers listed in the patent-areas block."""
-    m = re.search(r'<div class="patent-areas">(.*?)</div>', text, re.S)
-    if not m:
+    block = patent_areas_block(text)
+    if block is None:
         return None, []
-    found = APP_RE.findall(m.group(1))
+    found = APP_RE.findall(block)
     return len(set(found)), found
 
 
