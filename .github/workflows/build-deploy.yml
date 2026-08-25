@@ -99,6 +99,17 @@ jobs:
       - name: Post-process (PurgeCSS + minify + critical CSS)
         run: npm run build:postprocess:with-purgecss
 
+      - name: Cache-buster deploy gate (built _site/)
+        # Verifies that the content-hash cache-buster actually FIRED. If
+        # scripts/inline-critical-css.mjs silently no-ops, every built page ships the
+        # SOURCE INTEGER instead: the site renders, the deploy succeeds, and returning
+        # visitors keep a stale stylesheet until that integer happens to change. Nothing
+        # else in this pipeline would notice. Fails the build on an integer, on an
+        # unclassifiable value, on two different hashes for one asset, and on a zero scan
+        # (which means the check stopped running rather than the site being clean).
+        # Self-test: python3 scripts/check_built_cache_busters.py --selftest
+        run: python3 scripts/check_built_cache_busters.py _site
+
       - name: Broken-image-ref deploy gate (built _site/)
         # Self-contained 404 guard: blocks the upload+deploy if any built page
         # references an image file missing from _site/. Mirrors
