@@ -84,7 +84,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=265" />
+  <link rel="stylesheet" href="/styles.css?v=266" />
 
   <script type="application/ld+json">
   {
@@ -258,7 +258,7 @@
           </div>
           <div class="ai-lane" role="listitem">
             <h3>Preserve identity, provenance, and valid references</h3>
-            <p>Shared work records which agent and session produced it, what evidence and prior state it used, and which committed change made it durable. Findings, decisions, and open questions must resolve to existing records; missing references are surfaced instead of invented. <a href="#invented-facts">See how an invented reference spread</a>.</p>
+            <p>Shared work records which agent and session produced it, what evidence and prior state it used, and the exact commit that wrote it into the durable record, so any result can be traced to the change that saved it. Findings, decisions, and open questions must resolve to existing records; missing references are surfaced instead of invented. <a href="#invented-facts">See how an invented reference spread</a>.</p>
           </div>
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>Measure safeguards by outcomes</h3>
@@ -370,7 +370,7 @@
             </tbody>
           </table>
         </div>
-        <p class="ai-note"><strong>Interpretation boundary.</strong> Repeat rates rise with observation length, so only equal spans are compared. A lower rate is consistent with behavior change, not proof that the warning caused it.</p>
+        <p class="ai-note"><strong>Interpretation boundary.</strong> Repeat rates rise with observation length, so only equal spans are compared. A falling rate shows the mistake recurred less often, which is the outcome teaching would produce. It is not proof the warning caused the change: there is no control group, so a model upgrade, a workload shift, or another fix landing in the same period could produce the same drop.</p>
         <p><strong>This result changed the architecture.</strong> Teaching controls now explain the safer action, while enforcing controls stop an action when the wrong behavior can be identified precisely. Each is measured separately.</p>
         <p>The result persisted when the observation window was held constant. Over equal 21-day windows either side of 2026-08-04, the failed-command warning moved from 81% to 86%, while the unscoped-absence warning moved from 64% to 48%. The span is stated because the comparison is not reproducible without it: the instrument bounds both windows to the shorter side, so the same command run a week from now compares longer spans and returns different numbers. Six other classes had too few observations to grade, so the instrument returned no verdict instead of a flattering number.</p>
         <blockquote class="paper-thesis-line ai-thesis">
@@ -448,7 +448,7 @@
     <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
       <div class="explainer">
         <h2 id="invented-facts-title">Shared memory needs identity and provenance</h2>
-        <p>Memory capacity and retrieval matter only after the record can be trusted. Before one agent reuses another's result, it needs four answers: does the referenced fact exist, which agent and session produced the result, what evidence and prior state did it use, and which committed change made it durable?</p>
+        <p>Memory capacity and retrieval matter only after the record can be trusted. Before one agent reuses another's result, it needs four answers: does the referenced fact exist, which agent and session produced the result, what evidence and prior state did it use, and which commit wrote it into the durable record?</p>
         <p>The failure that forced this design was not forgetting. An agent confidently cited a finding that had never been established. The next session accepted the citation as real and built more work on top of it. This is confabulation: a made-up fact stated as true. In shared memory, one invented identifier can become load-bearing within a few sessions.</p>
         <ol class="ai-principle-list">
           <li>
@@ -519,7 +519,7 @@
             <p class="ai-metric-was">lifetime average; 60 / 35 over the last 7 days</p>
           </article>
         </div>
-        <p><strong>Every entry must say how closure can be verified.</strong> Of the open entries, 41% have a condition a machine can evaluate. Another 59% explain the specific human judgment required. Eight entries have neither. Requiring an answer turns “needs human review” from a vague deferral into a named decision.</p>
+        <p><strong>Every entry must say how closure can be verified.</strong> Of the open entries, 41% state a condition a machine can evaluate, and nearly all of the rest explain the specific human judgment required. Eight entries have neither. Requiring an answer turns “needs human review” from a vague deferral into a named decision.</p>
         <h3>A flow cannot be managed as an absolute backlog</h3>
         <p>The queue owner was originally told to assign every unclaimed entry. At 81 arrivals a day, that would require roughly 81 new assignments every day. The workable duty is a rate target: close at least as many entries as arrive.</p>
         <p>The obsolete absolute duty remained in a startup file after the rate target replaced it. Two consecutive role holders then failed in the same way because both loaded the same impossible instruction. Replacing the person did not change the rule they received.</p>
@@ -586,8 +586,8 @@
 
     <section id="pattern" class="reveal explainer-section" aria-labelledby="pattern-title">
       <div class="explainer">
-        <h2 id="pattern-title">One quiet failure pattern, ten examples</h2>
-        <p>Each control or record below appeared healthy because its visible signal matched its name: a warning fired, a claim was held, a check passed, or a rule was committed. A second measurement showed that the signal meant something else.</p>
+        <h2 id="pattern-title">Ten failures, one pattern: the signal looked healthy</h2>
+        <p>Each failure here was quiet: nothing crashed and no error appeared. A warning fired, a claim was held, a check passed, a rule was committed, and each of those signals looked like a control doing its job. In every row, a second measurement showed the signal meant something else.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--pattern">
             <caption>The same evidence arranged by apparent state and measured state. Each row links back to the section that documents the underlying result.</caption>
@@ -603,7 +603,7 @@
               <tr><th scope="row"><a href="#coordination">Claimed task</a></th><td>An active agent still owned the work</td><td class="ai-how">The holder had already exited</td></tr>
               <tr><th scope="row"><a href="#unowned">Queue-sweeping duty</a></th><td>The role holder was failing a reasonable duty</td><td class="ai-how">The absolute target could not be completed at the arrival rate</td></tr>
               <tr><th scope="row"><a href="#unowned">Open-backlog count</a></th><td>Every listed item was still unresolved</td><td class="ai-how">A time-bounded scan had not checked the full queue</td></tr>
-              <tr><th scope="row"><a href="#vacuous">External-record check</a></th><td>The record had been freshly confirmed live</td><td class="ai-how">The assertion matched bytes from the previous request</td></tr>
+              <tr><th scope="row"><a href="#vacuous">External-record check</a></th><td>The record had been freshly confirmed live</td><td class="ai-how">The fetch had timed out, and the check matched a response left behind by an earlier request</td></tr>
               <tr><th scope="row"><a href="#vacuous">Committed rule</a></th><td>The new rule was running</td><td class="ai-how">An older copy of the hook code was still executing</td></tr>
             </tbody>
           </table>

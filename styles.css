@@ -21362,7 +21362,13 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 }
 
 @media (max-width:720px){
-  .agent-infra-page .ai-hero .section-title h1{ max-width:none; }
+  .agent-infra-page .ai-hero .section-title h1,
+  .agent-infra-page.overview-page .ai-hero .section-title h1{
+    max-width:none;
+    font-size:clamp(1.8rem, 7.2vw, 2.5rem);
+    line-height:1.12;
+    letter-spacing:-0.03em;
+  }
   .agent-infra-page .ai-rung-pair,
   .agent-infra-page .ai-distinction{
     grid-template-columns:1fr;
