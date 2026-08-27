@@ -1,0 +1,992 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+/* ═══════════════════════════════════════════════════════════════
+   VAULT MATRIX: the site's green/blue matrix field, in machined
+   vault plate. Field colors are the live ones from script.js:
+   olive 96 108 62, mint 204 251 229, accent blue 91 156 245.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── SURFACE: dark is the default, matching the live site ── */
+:root{
+  --void:#0a0c10;
+  --plate:#111318;
+  --plate-2:#0d0f14;
+  --shoulder:#151820;
+  --mill:rgba(255,255,255,.075);
+  --mill-2:rgba(255,255,255,.145);
+  --bevel:rgba(214,240,255,.055);
+  --ink:#e8eaef;
+  --ink-soft:#c8ccd4;
+  --ink-mute:#9ca3af;
+  --grain:rgba(200,230,255,.013);
+  --engrave:0 1px 0 rgba(0,0,0,.85), 0 -1px 0 rgba(214,240,255,.05);
+  --accent:#5b9cf5;
+  --accent-hot:#7ab0ff;
+  --accent-text:#8fbcff;
+  --accent-fill:#5b9cf5;
+  --accent-fill-ink:#080a0e;
+  --accent-wash:rgba(91,156,245,.10);
+  --mint:#ccfbe5;
+  --mint-text:#8fe6c4;
+  --olive:#606c3e;
+  --rivet:rgba(91,156,245,.46);
+  --bolt-hi:rgba(204,251,229,.30);
+  --brand-gold:#fbbf24;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --void:#e9edf2;
+    --plate:#f8fafc;
+    --plate-2:#f1f4f8;
+    --shoulder:#dfe5ec;
+    --mill:rgba(12,20,32,.11);
+    --mill-2:rgba(12,20,32,.24);
+    --bevel:rgba(255,255,255,.85);
+    --ink:#0f141b;
+    --ink-soft:#3a424e;
+    --ink-mute:#454d59;
+    --grain:rgba(12,20,32,.016);
+    --engrave:0 1px 0 rgba(255,255,255,.9), 0 -1px 0 rgba(12,20,32,.11);
+    --accent:#1f5bb5;
+    --accent-hot:#1d5cbd;
+    --accent-text:#174a94;
+    --accent-fill:#1a4f9e;
+    --accent-fill-ink:#f6f9ff;
+    --accent-wash:rgba(47,111,208,.10);
+    --mint:#05c87a;
+    --mint-text:#095238;
+    --olive:#5d6a3d;
+    --rivet:rgba(47,111,208,.55);
+    --bolt-hi:rgba(5,200,122,.28);
+    --brand-gold:#a16207;
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --void:#e9edf2;
+  --plate:#f8fafc;
+  --plate-2:#f1f4f8;
+  --shoulder:#dfe5ec;
+  --mill:rgba(12,20,32,.11);
+  --mill-2:rgba(12,20,32,.24);
+  --bevel:rgba(255,255,255,.85);
+  --ink:#0f141b;
+  --ink-soft:#3a424e;
+  --ink-mute:#454d59;
+  --grain:rgba(12,20,32,.016);
+  --engrave:0 1px 0 rgba(255,255,255,.9), 0 -1px 0 rgba(12,20,32,.11);
+  --accent:#1f5bb5;
+  --accent-hot:#1d5cbd;
+  --accent-text:#174a94;
+  --accent-fill:#1a4f9e;
+  --accent-fill-ink:#f6f9ff;
+  --accent-wash:rgba(47,111,208,.10);
+  --mint:#05c87a;
+  --mint-text:#095238;
+  --olive:#5d6a3d;
+  --rivet:rgba(47,111,208,.55);
+  --bolt-hi:rgba(5,200,122,.28);
+  --brand-gold:#a16207;
+  color-scheme:light;
+}
+
+/* ── BASE ── */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--ink);
+  font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:clip;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 76% 44% at 50% -10%, var(--accent-wash), transparent 62%),
+    repeating-linear-gradient(114deg, transparent 0 3px, var(--grain) 3px 4px);
+}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--accent-text);text-decoration:none}
+a:hover{color:var(--accent-hot)}
+:focus-visible{outline:2px solid var(--accent-hot);outline-offset:3px}
+
+h1,h2,h3{font-family:Archivo,system-ui,sans-serif;margin:0;text-wrap:balance}
+h1{font-weight:800;font-size:clamp(2.35rem,5.4vw,4rem);line-height:1.03;letter-spacing:-.032em;text-shadow:var(--engrave)}
+h2{font-weight:700;font-size:clamp(1.65rem,2.9vw,2.35rem);line-height:1.12;letter-spacing:-.022em;text-shadow:var(--engrave)}
+h3{font-weight:650;font-size:1.0625rem;line-height:1.3;letter-spacing:-.012em}
+p{margin:0}
+
+.label{
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:.75rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{
+  max-width:min(2100px, 88vw);margin:0 auto;position:relative;z-index:1;
+  padding-left:max(1.5rem,env(safe-area-inset-left));
+  padding-right:max(1.5rem,env(safe-area-inset-right));
+}
+
+/* ── MACHINED PLATE: chamfered rim, raking bevel, milled groove, bolts ── */
+.plate{
+  --c:16px;
+  position:relative;
+  background:var(--mill-2);
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  isolation:isolate;
+}
+.plate::before{
+  content:"";position:absolute;inset:1px;z-index:-1;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  background:
+    linear-gradient(180deg,var(--bevel),transparent 76px),
+    repeating-linear-gradient(114deg, transparent 0 3px, var(--grain) 3px 4px),
+    var(--plate);
+}
+/* corner bolts, plus the milled groove that runs inside the rim */
+.plate::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle 2.5px at calc(100% - 16px) 16px, var(--rivet) 0 46%, transparent 58%),
+    radial-gradient(circle 2.5px at 16px calc(100% - 16px), var(--rivet) 0 46%, transparent 58%),
+    linear-gradient(var(--mill),var(--mill)) no-repeat 9px 8px / calc(100% - 18px) 1px,
+    linear-gradient(var(--mill),var(--mill)) no-repeat 9px calc(100% - 9px) / calc(100% - 18px) 1px;
+}
+/* heavy plates get a full bolt rail along the top edge */
+.plate--bolted-btm::after{
+  background-image:
+    radial-gradient(circle 2.2px at 14px calc(100% - 13px), var(--rivet) 0 44%, transparent 56%),
+    linear-gradient(var(--mill),var(--mill));
+  background-size:28px 100%, calc(100% - 18px) 1px;
+  background-repeat:repeat-x, no-repeat;
+  background-position:0 0, 9px calc(100% - 26px);
+}
+.plate--bolted::after{
+  background-image:
+    radial-gradient(circle 2.2px at 14px 13px, var(--rivet) 0 44%, transparent 56%),
+    linear-gradient(var(--mill),var(--mill));
+  background-size:28px 100%, calc(100% - 18px) 1px;
+  background-repeat:repeat-x, no-repeat;
+  background-position:0 0, 9px 26px;
+}
+.plate > *{position:relative;z-index:1}
+a.plate{display:block;color:inherit;transition:transform .28s cubic-bezier(.2,.7,.3,1),background-color .28s}
+a.plate:hover{transform:translateY(-3px);background:var(--accent)}
+a.plate:hover h3{color:var(--accent-text)}
+/* a.plate sets display:block and outranks a bare .paper/.letter; restate at higher
+   specificity so the column flex (and the venue line's margin-top:auto) actually applies. */
+.plate.paper,.plate.letter{display:flex;flex-direction:column}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--void) 84%,transparent);
+  backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--mill);
+}
+.hdr{display:flex;align-items:center;gap:1.5rem;padding-block:.85rem}
+.brand{display:flex;flex-direction:row;align-items:center;margin-right:auto}
+.brand a{display:flex;flex-direction:row;align-items:center;gap:.7rem;cursor:pointer}
+.brand a:active .brand-mark{transform:scale(.92);transition:transform .1s}
+.brand-mark{width:26px;height:26px;flex:none;color:var(--accent)}
+.brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.147rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--ink)}
+/* Brand tagline gold, taken from the live site: quietly gold at rest, warming with a
+   soft halo on hover. --brand-gold is #fbbf24 in dark, #a16207 in light. */
+.brand span{
+  font-size:.917rem;font-weight:700;letter-spacing:.085em;text-transform:uppercase;
+  font-family:"JetBrains Mono",monospace;white-space:nowrap;
+  /* a quarter inch of air from the wordmark; .7rem of it is the flex gap */
+  margin-left:calc(0.25in - .7rem);
+  color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink));
+  transition:color .15s, text-shadow .15s;
+}
+.brand a:hover span,.brand a:focus-visible span{
+  color:var(--brand-gold);
+  text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent),
+              0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);
+}
+.navlinks{display:flex;gap:1.35rem;flex-wrap:wrap}
+.navlinks a{
+  font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;
+  text-transform:uppercase;color:var(--ink-soft);padding-block:.3rem;position:relative;
+}
+.navlinks a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--accent);transition:right .3s}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a:hover::after{right:0}
+.tog{
+  width:32px;height:32px;flex:none;display:grid;place-items:center;cursor:pointer;
+  background:var(--plate-2);border:1px solid var(--mill-2);color:var(--ink-soft);
+}
+.tog:hover{color:var(--accent-text)}
+.tog svg{width:15px;height:15px}
+.tog .sun{display:none}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .tog .moon{display:none}
+  :root:not([data-theme="dark"]) .tog .sun{display:block}
+}
+:root[data-theme="light"] .tog .moon{display:none}
+:root[data-theme="light"] .tog .sun{display:block}
+:root[data-theme="dark"] .tog .moon{display:block}
+:root[data-theme="dark"] .tog .sun{display:none}
+
+/* ══ HERO: the matrix field runs the full bleed, copy sits on plate ══ */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--mill-2)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#mtx{z-index:1;opacity:.9}
+#reef{z-index:2}
+#pile{z-index:3}
+.hero-veil{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:
+    radial-gradient(ellipse 72% 88% at 38% 50%, color-mix(in srgb,var(--void) 90%, transparent) 0%, color-mix(in srgb,var(--void) 56%, transparent) 52%, transparent 80%),
+    linear-gradient(180deg, color-mix(in srgb,var(--void) 58%, transparent), transparent 24%, color-mix(in srgb,var(--void) 62%, transparent));
+}
+.hero-inner{z-index:4;padding-block:clamp(3.5rem,7.5vw,6rem) clamp(3.25rem,5.5vw,4.75rem)}
+/* the flow line along the bottom edge, kept from the live hero */
+.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;z-index:5;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--mint),var(--accent),transparent);
+  opacity:.55;
+  background-size:220% 100%;
+  animation:flow 9s linear infinite;
+}
+@keyframes flow{from{background-position:0% 0}to{background-position:220% 0}}
+
+/* Hero geometry is the live site's: a 1fr copy column beside a 280-340px trust rail,
+   with the live measures (primary 92ch, h1 70ch, subhead 78ch). The earlier 58-62ch
+   caps were what read as cropped inside a wide box. */
+@media (min-width:1000px){
+  .hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,410px);column-gap:clamp(2rem,3.5vw,3.25rem);align-items:start}
+  .hero-eyebrow{grid-column:1 / -1}
+  .hero-lead{grid-column:1;max-width:none;min-width:0}
+  .hero-aside{grid-column:2;display:flex;flex-direction:column;gap:1.15rem;min-width:0}
+  .hero-aside .proof,.hero-aside }
+.hero-lead{max-width:none}
+.hero-eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.9rem;max-width:70ch}
+/* The hero eyebrow is the first line anyone reads, so it gets its own weight and the
+   mint register rather than the muted one. The hover mix moves TOWARD --ink, which
+   brightens on the dark ground and darkens on the light one, so contrast rises in
+   both themes instead of only one. */
+.hero-eyebrow .label{
+  font-size:.8125rem;letter-spacing:.075em;color:var(--mint-text);
+  transition:color .25s ease, letter-spacing .25s ease, text-shadow .25s ease;
+}
+.hero-eyebrow::after{transition:background .35s ease}
+.hero-eyebrow:hover .label{
+  color:color-mix(in srgb, var(--mint-text) 62%, var(--ink));
+  letter-spacing:.095em;
+  text-shadow:0 0 14px color-mix(in srgb, var(--mint-text) 40%, transparent);
+}
+.hero-eyebrow:hover::after{
+  background:linear-gradient(90deg, color-mix(in srgb, var(--mint-text) 70%, transparent), transparent);
+}
+.hero-eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--mill-2),transparent)}
+.hero h1{max-width:22ch}
+.hero h1 .flare{color:var(--accent-text)}
+.hero-sub{margin-top:1.6rem;font-size:1.0625rem;color:var(--ink-soft);max-width:96ch}
+.hero-sub strong{color:var(--ink);font-weight:600}
+
+.proof{
+  list-style:none;margin:2rem 0 0;padding:0;max-width:780px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--mill);border:1px solid var(--mill-2);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+}
+@media (min-width:1000px){ .proof{grid-template-columns:1fr;max-width:none} }
+.proof-head{
+  grid-column:1 / -1;background:color-mix(in srgb,var(--shoulder) 88%, transparent);
+  padding:.72rem 1.15rem;display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;
+}
+.proof-head .label{color:var(--ink);letter-spacing:.14em;font-weight:700;font-size:.75rem}
+.proof-head b{font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;color:var(--mint-text);letter-spacing:.07em}
+.proof li{
+  position:relative;overflow:hidden;
+  background:color-mix(in srgb,var(--plate-2) 88%, transparent);padding:.9rem 1.15rem;
+  font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-soft);
+  transition:background-color .22s, color .22s, padding-left .24s cubic-bezier(.2,.7,.3,1);
+}
+/* the accent edge wipes down the brick, the way a bolt seats */
+.proof li::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--accent);transform:scaleY(0);transform-origin:top center;
+  transition:transform .26s cubic-bezier(.2,.7,.3,1);
+}
+.proof li:hover,.proof li:focus-within{
+  background:color-mix(in srgb,var(--shoulder) 94%, transparent);
+  color:var(--ink);padding-left:1.4rem;
+}
+.proof li:hover::before,.proof li:focus-within::before{transform:scaleY(1)}
+.proof li:hover a{color:var(--accent-hot)}
+.proof li a{color:var(--accent-text)}
+.proof li a:hover{color:var(--mint-text)}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.35rem}
+.btn{
+  --c:10px;display:inline-block;padding:.85rem 1.5rem;
+  font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.095em;text-transform:uppercase;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  transition:.22s;cursor:pointer;border:0;font-weight:700;}
+.btn-primary{background:var(--accent-fill);color:var(--accent-fill-ink);font-weight:700}
+.btn-primary:hover{background:var(--accent-hot);color:var(--accent-fill-ink)}
+.btn-book{
+  background:var(--mint-text);color:var(--void);font-weight:700;
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--mint-text) 55%, transparent);
+}
+.btn-book:hover{
+  background:var(--mint);color:#06110c;
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--mint-text) 28%, transparent);
+}
+.btn-ghost{background:color-mix(in srgb,var(--plate-2) 88%, transparent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--mill-2)}
+.btn-ghost:hover{background:var(--shoulder);color:var(--accent-text)}
+
+.signal{
+  margin-top:2.5rem;padding:.1rem 0 .1rem 1.15rem;border-left:2px solid var(--accent);
+  font-size:.875rem;line-height:1.75;color:var(--ink-soft);max-width:none;
+  text-shadow:0 1px 3px color-mix(in srgb, var(--void) 85%, transparent);
+}
+.signal .tag{font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.095em;text-transform:uppercase;color:var(--mint-text);display:block;margin-bottom:.4rem;font-weight:700;}
+.signal em{color:var(--ink-soft);font-style:italic}
+.anchors{margin-top:1.9rem;font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;color:var(--ink-soft)}
+.anchors a{color:var(--ink-soft)}
+.anchors a:hover{color:var(--accent-text)}
+
+
+/* ── SIGNUP: a machined slot. The field is an OPAQUE plate, not a translucent
+   one, so the matrix field behind it can never compete with what you type. ── */
+.signup{border-block:1px solid var(--mill-2);background:var(--plate-2)}
+.signup__inner{
+  max-width:min(2100px,88vw);margin:0 auto;
+  padding:clamp(2.25rem,4vw,3.25rem) clamp(1.5rem,3vw,2.5rem);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,520px);
+  gap:clamp(1.75rem,4vw,4rem);align-items:center;
+}
+.signup h2{font-size:clamp(1.4rem,2.2vw,1.9rem);margin-bottom:.6rem}
+.signup p{color:var(--ink-soft);font-size:.9375rem;max-width:62ch;text-wrap:balance}
+.signup__form{display:flex;gap:.75rem;flex-wrap:wrap}
+.signup__field{
+  --c:10px;flex:1 1 260px;min-width:0;
+  background:var(--plate) !important;      /* opaque, deliberately */
+  color:var(--ink);
+  border:1px solid var(--mill-2);border-radius:0;
+  padding:.95rem 1.15rem;
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:.8125rem;letter-spacing:.04em;
+  clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+  transition:border-color .2s, box-shadow .2s;
+}
+.signup__field::placeholder{color:var(--ink-mute);opacity:1}
+.signup__field:focus{
+  outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.signup__btn{flex:0 0 auto}
+@media (max-width:900px){ .signup__inner{grid-template-columns:1fr} }
+
+/* ── BOLT RAIL divider ── */
+.rail{
+  position:relative;height:9px;margin-block:clamp(3.5rem,7vw,6rem);
+  background:linear-gradient(var(--mill-2),var(--mill-2)) no-repeat 0 4px / 100% 1px;
+}
+.rail::after{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle 2.2px at 14px 4.5px, var(--rivet) 0 44%, transparent 56%);
+  background-size:56px 100%;background-repeat:repeat-x;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+
+/* ── SECTIONS ── */
+section{position:relative;z-index:1}
+.sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.9rem}
+.sec-head::after{content:"";flex:1;height:1px;background:var(--mill);align-self:center}
+.sec h2{margin-bottom:1.35rem}
+.sec > h2:first-child{margin-top:.35rem}
+/* the agent-infrastructure heading sits over a two-column block, so it centres
+   on the same axis the block does */
+#agent > h2{text-align:center}
+.sec p{color:var(--ink-soft);max-width:108ch}
+.sec p + p{margin-top:.9rem}
+.more{display:inline-block;margin-top:2rem;font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:letter-spacing .2s}
+.more:hover{letter-spacing:.17em}
+
+/* Long-form prose fills a wide desktop as two columns rather than one over-long measure. */
+.prose-2 p{color:var(--ink-soft)}
+.prose-2 p + p{margin-top:.9rem}
+@media (min-width:1180px){
+  .prose-2{column-count:2;column-gap:3.25rem;margin-bottom:.5rem}
+  /* spacing goes on the BOTTOM so a paragraph that begins a column is not pushed
+     down by a top padding meant to separate it from the paragraph above it */
+  .prose-2 p{max-width:none;break-inside:avoid;margin:0 0 .95rem;padding-top:0}
+  .prose-2 p + p{margin-top:0;padding-top:0}
+  /* SYMMETRY: an odd trailing paragraph spans both columns instead of leaving one
+     column short. The :nth-of-type(odd) guard means this fires only when the count
+     is actually odd, so an even block keeps its clean two-column balance. */
+  .prose-2 p:last-of-type:nth-of-type(odd){
+    column-span:all;
+    padding-top:1.15rem;
+    margin-top:.4rem;
+    border-top:1px solid var(--mill);
+    /* the spanning paragraph is the block's closing statement, so it sits centred
+       on a measure of its own rather than running the full two-column width */
+    max-width:100ch;
+    margin-inline:auto;
+    text-align:center;
+    text-wrap:balance;
+  }
+}
+
+/* ── PROGRAM DIAL: the vault door, no seal. Its geometry IS the two stats it sits
+   beside: 52 outer ticks (protocols audited), 19 locking bolts (gateways mapped). ── */
+.dialwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(400px,505px);gap:clamp(2rem,5vw,6rem);align-items:center}
+.dialfig{margin:0 0 0 -1in;display:flex;flex-direction:column;align-items:center;gap:1rem}
+/* the text column centres on itself, not on the row, so the dial's width is
+   excluded from the reckoning and the block reads symmetric beside it */
+.dialwrap > div:first-child{text-align:center}
+.dialwrap > div:first-child h2{text-align:center}
+.dialwrap > div:first-child p{margin-inline:auto;text-wrap:balance}
+.dialwrap > div:first-child .more{margin-inline:auto}
+.dialfig canvas{
+  width:100%;max-width:505px;aspect-ratio:1;display:block;cursor:default;
+  transition:filter .35s ease;
+}
+
+.dialfig canvas.grinding{ cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M3%201.6%20L3%2019.2%20L7.7%2014.7%20L10.6%2021%20L13.6%2019.6%20L10.7%2013.4%20L17%2013.2%20Z%27%20fill%3D%27%23fbbf24%27%20stroke%3D%27%23241a05%27%20stroke-width%3D%271.15%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E") 3 2, default; }
+.dialfig figcaption{
+  font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.075em;
+  text-transform:uppercase;color:var(--ink);text-align:center;line-height:2.1;
+}
+.dialfig figcaption b{color:var(--accent-text);font-weight:700;font-size:1.05em}
+@media (max-width:900px){ .dialwrap{grid-template-columns:1fr} .dialfig{order:-1} }
+
+/* Header mark: slow counter-rotation, the accretion read they liked */
+.brand-mark .ring-o{transform-origin:12px 12px;animation:spinO 34s linear infinite}
+.brand-mark .ring-i{transform-origin:12px 12px;animation:spinI 22s linear infinite reverse}
+.brand-mark .core{animation:corePulse 4.5s ease-in-out infinite}
+@keyframes spinO{to{transform:rotate(360deg)}}
+@keyframes spinI{to{transform:rotate(360deg)}}
+@keyframes corePulse{0%,100%{opacity:.85}50%{opacity:1}}
+
+/* ── BLACK HOLE: the mark spins up under the cursor, and collapses on click.
+   The rings wind inward and vanish, the core implodes then flares through an
+   accretion ring, and everything settles back. One shot, class removed on end. ── */
+.brand-mark .core,.brand-mark .accretion{transform-origin:12px 12px}
+.brand a .brand-mark{transition:filter .32s ease}
+.brand a:hover .brand-mark,.brand a:focus-visible .brand-mark{
+  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 62%, transparent));
+}
+.brand a:hover .ring-o{animation-duration:7s}
+.brand a:hover .ring-i{animation-duration:3.6s}
+.brand a:hover .core{animation:coreSwell 1.5s ease-in-out infinite}
+.brand a:hover .accretion{animation:accretionIdle 1.5s ease-in-out infinite}
+@keyframes coreSwell{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.3);opacity:1}}
+@keyframes accretionIdle{0%,100%{transform:scale(.9);opacity:0}50%{transform:scale(1.18);opacity:.5}}
+
+.brand-mark.collapse .ring-o{animation:ringFall .95s cubic-bezier(.55,0,.8,.2) forwards}
+.brand-mark.collapse .ring-i{animation:ringFall .8s cubic-bezier(.55,0,.8,.2) forwards}
+.brand-mark.collapse .core{animation:coreFlash .95s ease-out forwards}
+.brand-mark.collapse .accretion{animation:accrete .95s ease-out forwards}
+@keyframes ringFall{
+  0%{transform:rotate(0deg) scale(1);opacity:1}
+  60%{opacity:1}
+  100%{transform:rotate(340deg) scale(.05);opacity:0}
+}
+@keyframes coreFlash{
+  0%{transform:scale(1);opacity:.9}
+  52%{transform:scale(.22);opacity:1}
+  66%{transform:scale(2.7);opacity:1}
+  100%{transform:scale(1);opacity:.9}
+}
+@keyframes accrete{
+  0%{transform:scale(.25) rotate(0deg);opacity:0}
+  52%{transform:scale(.7) rotate(120deg);opacity:.9}
+  100%{transform:scale(2.4) rotate(300deg);opacity:0}
+}
+
+
+/* Short standalone prose gets balanced lines. A two-line block whose second line is
+   a 7% stub is the defect scripts/check_text_wrap.py flags; balance evens the two
+   rather than forcing one over-long line. */
+.sec p, .patent-lede, .letters-lede, .hero-sub, figcaption{ text-wrap: balance; }
+
+/* ── STAT BAND ── */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--mill);border-block:1px solid var(--mill-2)}
+.stat{background:var(--void);padding:1.6rem 1.1rem;text-align:center}
+.stat b{
+  display:block;font-family:"JetBrains Mono",monospace;font-weight:500;
+  font-size:clamp(1.5rem,2.8vw,2.15rem);color:var(--accent-text);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1;
+}
+.stat span{display:block;margin-top:.6rem;font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;color:var(--ink-soft);line-height:1.6}
+
+/* ── GATE READOUT ── */
+.readout{--c:14px;margin-top:2.25rem;max-width:1400px;margin-inline:auto;padding:1.9rem 1.8rem 1.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem}
+.readout .num{font-family:"JetBrains Mono",monospace;font-size:1.9rem;font-weight:500;color:var(--mint-text);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.readout .num i{font-style:normal;color:var(--ink-mute);font-size:1.05rem}
+.readout .meta{flex:1;min-width:220px}
+.bar{height:7px;background:var(--shoulder);margin-top:.6rem;overflow:hidden}
+.bar i{display:block;height:100%;width:85.8%;background:linear-gradient(90deg,var(--accent),var(--mint))}
+
+/* ── KEY PLATES ── */
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem}
+.key{--c:12px;padding:1.45rem 1.5rem 1.6rem}
+.key h3{margin-bottom:.4rem}
+.key span{display:block;font-size:.8125rem;color:var(--ink-mute);line-height:1.55}
+.key .cut{font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.085em;text-transform:uppercase;color:var(--mint-text);display:block;margin-bottom:.55rem}
+
+/* ── SHOT: an exhibit sunk into the plate ── */
+.shot{position:relative;display:block;overflow:hidden;background:var(--plate-2)}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+.shot img.lite{filter:invert(1) hue-rotate(180deg) saturate(.72) brightness(.93) contrast(1.05)}
+:root[data-theme="light"] .shot img.lite{filter:saturate(.85) contrast(1.04)}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .shot img.lite{filter:saturate(.85) contrast(1.04)}
+}
+.shot img:not(.lite){filter:saturate(.8) contrast(1.05)}
+.shot img.lite.mono{filter:invert(1) hue-rotate(180deg) brightness(.97) contrast(1.06) sepia(.6) hue-rotate(176deg) saturate(2.6)}
+:root[data-theme="light"] .shot img.lite.mono{filter:saturate(.85) contrast(1.05) sepia(.35) hue-rotate(176deg)}
+.shot::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, var(--accent-wash), transparent 70%),
+    linear-gradient(180deg, transparent 52%, color-mix(in srgb, var(--plate) 92%, transparent));
+}
+
+/* ── FRAMEWORK / PAPER / LETTER PLATES ── */
+.frames{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.frame{--c:18px;overflow:hidden}
+.frame .shot{aspect-ratio:2.2/1;background:var(--plate-2)}
+/* fill the band and let object-fit letterbox inside it. A grid item centred with
+   place-items is not stretched, so percentage max-height had nothing definite to
+   resolve against and a tall image escaped its box. */
+.frame .shot img{width:100%;height:100%;object-fit:contain;padding:.7rem}
+.frame:hover .shot img{filter:saturate(.95) contrast(1.08) brightness(1.04)}
+.frame .body{padding:1.45rem 1.6rem 1.7rem}
+.frame h3{font-size:1.15rem;margin-bottom:.5rem}
+.frame p{font-size:.875rem;color:var(--ink-mute);line-height:1.6}
+
+.papers{display:grid;grid-template-columns:repeat(4,1fr);gap:1.15rem}
+.paper{--c:12px;overflow:hidden;display:flex;flex-direction:column}
+.paper .shot{aspect-ratio:4/3;background:var(--plate-2)}
+.paper .shot img{object-fit:contain;padding:.5rem}
+.paper .body{padding:1.2rem 1.25rem 1.35rem;display:flex;flex-direction:column;gap:.65rem;flex:1}
+.paper p{font-size:.8125rem;color:var(--ink-mute);line-height:1.55;flex:1}
+.paper .venue,.letter .venue{font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.065em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--mill);padding-top:.6rem}
+.paper .venue{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;margin-top:auto}
+
+/* ── FLARE: the hover outline is lit at the foot and burns out going up, so the
+   rim does not simply switch on. .plate paints its own rim as the element
+   background, so a gradient there IS the outline. The upward drop-shadow is the
+   flare the outline sheds as it fades. ── */
+a.plate.paper{
+  transition:transform .28s cubic-bezier(.2,.7,.3,1), background .34s ease, filter .34s ease;
+}
+a.plate.paper:hover{
+  background:linear-gradient(to top,
+    var(--accent) 0%,
+    color-mix(in srgb, var(--accent) 78%, var(--mill-2)) 26%,
+    color-mix(in srgb, var(--accent) 34%, var(--mill-2)) 58%,
+    color-mix(in srgb, var(--accent) 8%,  var(--mill-2)) 82%,
+    var(--mill-2) 100%) !important;
+  filter:drop-shadow(0 -7px 16px color-mix(in srgb, var(--accent) 26%, transparent))
+         drop-shadow(0 -2px 5px  color-mix(in srgb, var(--accent) 20%, transparent));
+}
+.letter .venue{line-height:1.9;margin-top:auto}
+
+.letters{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem}
+.letter{--c:12px;padding:1.4rem 1.45rem 1.5rem;display:flex;flex-direction:column;gap:.75rem}
+.letter p{font-size:.8125rem;color:var(--ink-mute);line-height:1.55;flex:1}
+
+.stamp{
+  align-self:flex-start;font-family:"JetBrains Mono",monospace;font-size:.75rem;
+  font-weight:700;letter-spacing:.085em;text-transform:uppercase;padding:.32rem .58rem;
+  border:1px solid var(--accent);color:var(--accent-text);
+}
+/* Published vs public is carried by FILL, so it survives any color vision:
+   published is a solid chip, public is an outline chip. Hue is the second cue only. */
+.stamp.pub{background:var(--mint-text);border-color:var(--mint-text);color:var(--void);font-weight:700}
+.stamp{transition:background-color .24s, border-color .24s, color .24s,
+       transform .24s cubic-bezier(.2,.7,.3,1), box-shadow .24s}
+a.plate:hover .stamp{
+  background:var(--accent-fill);border-color:var(--accent-fill);
+  color:var(--accent-fill-ink);transform:translateY(-2px);
+}
+a.plate:hover .stamp.pub{
+  background:var(--mint-text);border-color:var(--mint-text);color:var(--void);
+  transform:translateY(-2px);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--mint-text) 26%, transparent);
+}
+
+/* ── ABOUT ── */
+.about{--c:22px;padding:clamp(1.6rem,3.5vw,2.6rem) clamp(1.6rem,3.5vw,2.6rem) clamp(2.1rem,3.8vw,3rem)}
+.about-head{display:flex;gap:1.6rem;align-items:flex-start;flex-wrap:wrap}
+.about-head img{width:104px;height:104px;object-fit:cover;flex:none;filter:grayscale(.45) contrast(1.05);
+  clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.about-head p{font-size:.9375rem;color:var(--ink-soft);margin-top:.7rem}
+.about-meta{margin-top:2rem;display:grid;gap:1.35rem;padding-top:1.8rem;border-top:1px solid var(--mill)}
+/* Live site: .about-card-meta p has no max-width and carries a left accent rule. */
+.about-meta p{
+  max-width:none;font-size:.9rem;color:var(--ink-soft);line-height:1.7;
+  padding-left:1.1rem;border-left:2px solid color-mix(in srgb,var(--accent) 34%, transparent);
+  transition:border-left-color .2s;
+}
+.about-meta p:hover{border-left-color:var(--accent)}
+.about-head p{max-width:none}
+.about-meta strong{
+  /* Sentence case and a step dimmer. In caps at full mint these read as a second
+     headline on every row, which is a lot to meet after the rest of the page. The
+     glow stays: it is what makes them findable when scanning. */
+  font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:600;
+  letter-spacing:.015em;text-transform:none;
+  color:color-mix(in srgb, var(--mint-text) 72%, var(--ink-mute));
+  text-shadow:0 0 10px color-mix(in srgb, var(--mint-text) 26%, transparent);
+  display:block;margin-bottom:.5rem;
+}
+
+/* ── PATENT LEDGER: a disclosure inside the About plate ── */
+.card-expand{margin-top:1.9rem;padding-top:1.5rem;border-top:1px solid var(--mill)}
+.card-expand > summary{
+  cursor:pointer;list-style:none;
+  font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;
+  letter-spacing:.085em;text-transform:uppercase;color:var(--accent-text);
+  display:flex;align-items:center;gap:.6rem;
+}
+.card-expand > summary::-webkit-details-marker{display:none}
+.card-expand > summary::after{content:"+";font-size:1.1rem;line-height:1;color:var(--ink-mute)}
+.card-expand[open] > summary::after{content:"\2212"}
+.card-expand > summary:hover{color:var(--accent-hot)}
+.patent-lede{margin-top:1rem;font-size:.875rem;color:var(--ink-soft);line-height:1.7}
+.patent-areas{margin-top:1.6rem;display:grid;gap:1.6rem}
+@media (min-width:1180px){ .patent-areas{grid-template-columns:1fr 1fr;column-gap:2.75rem} }
+.patent-area{--c:12px;padding:1.15rem 1.25rem 1.25rem;background:var(--plate-2);
+  clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
+  box-shadow:inset 0 0 0 1px var(--mill)}
+.patent-area > p{font-size:.8125rem;color:var(--ink-mute);line-height:1.65;max-width:none}
+.patent-area > p strong{
+  font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:600;
+  letter-spacing:.015em;text-transform:none;
+  color:color-mix(in srgb, var(--mint-text) 72%, var(--ink-mute));
+  text-shadow:0 0 10px color-mix(in srgb, var(--mint-text) 26%, transparent);
+  display:block;margin-bottom:.45rem;
+}
+.patent-filings{margin:.9rem 0 0;padding:0;list-style:none;display:grid;gap:.55rem}
+.patent-filings li{
+  font-size:.8125rem;color:var(--ink-soft);line-height:1.5;
+  padding-left:.85rem;border-left:1px solid var(--mill-2);
+}
+.filing-no{
+  display:block;margin-top:.2rem;font-family:"JetBrains Mono",monospace;
+  font-size:.75rem;font-weight:700;letter-spacing:.06em;color:var(--accent-text);
+  font-variant-numeric:tabular-nums;
+}
+
+
+/* the footer carries navigation and a subscribe surface again: the chrome swap had
+   dropped an 8-link nav, the Buttondown form and the only /privacy link on the site */
+.foot-top{
+  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);
+  gap:clamp(1.5rem,3vw,3rem);align-items:start;
+  padding-bottom:1.9rem;margin-bottom:1.6rem;border-bottom:1px solid var(--mill);
+}
+.foot-nav{display:flex;flex-wrap:wrap;gap:.55rem 1.5rem}
+.foot-nav a{
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.foot-nav a:hover{color:var(--accent-text)}
+.foot-sub{display:flex;gap:.6rem;flex-wrap:wrap}
+.foot-sub__field{flex:1 1 200px;padding:.7rem .9rem;font-size:.75rem}
+@media (max-width:900px){ .foot-top{grid-template-columns:1fr} }
+
+/* ── FOOTER: mark left, line centred, social right ── */
+.foot{
+  position:relative;
+  display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+}
+.foot__mark{
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:.8125rem;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);
+}
+.foot__line{
+  position:absolute;left:50%;transform:translateX(-50%);
+  text-align:center;
+  font-size:.875rem;line-height:1.75;color:var(--ink-mute);
+  text-wrap:balance;max-width:64ch;
+}
+.foot__social{display:flex;align-items:center;gap:1rem}
+.foot__social a{
+  display:grid;place-items:center;width:30px;height:30px;
+  color:var(--ink-mute);transition:color .2s, transform .2s;
+}
+.foot__social a svg{width:17px;height:17px;display:block}
+.foot__social a:hover{color:var(--accent-text);transform:translateY(-2px)}
+@media (max-width:1100px){
+  .foot{flex-direction:column;text-align:center;gap:1.1rem}
+  .foot__line{position:static;transform:none;order:-1}
+}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);padding-block:2.5rem 3rem;position:relative;z-index:1}
+.foot{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
+/* the footer line reads as a sentence, so it leaves the uppercase label spec */
+.foot .label{
+  max-width:none;line-height:1.75;
+  font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:.875rem;font-weight:400;letter-spacing:.005em;text-transform:none;
+  color:var(--ink-mute);
+}
+@media (max-width:1180px){ .foot .label{max-width:52ch} }
+
+/* ── RESPONSIVE ── */
+@media (max-width:1080px){
+  .papers,.keys{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:900px){
+  .navlinks{display:none}
+  .letters,.frames{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .papers,.keys{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .proof{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPATIBILITY LAYER
+   The subpages keep their existing markup and layout from styles.css. This
+   maps that markup into the vault language: the site's tokens are re-pointed
+   at the vault palette, every rounded panel becomes a machined plate, and the
+   small-caps labels take the same spec as the homepage.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root, :root[data-theme="dark"]{
+  --bg: var(--void); --panel: var(--plate); --panel2: var(--plate-2);
+  --surface: var(--shoulder); --text: var(--ink); --text-soft: var(--ink-soft);
+  --muted: var(--ink-mute); --line: var(--mill); --line-strong: var(--mill-2);
+  --accent-hover: var(--accent-hot); --accent-soft: var(--accent-wash);
+  --accent-muted: var(--accent-wash);
+  --radius: 0px; --radius-sm: 0px; --radius-lg: 0px;
+}
+
+body{ background: var(--void) !important; color: var(--ink) !important; }
+
+/* the content column matches the homepage */
+#main, main > .wrap, .section-compact{ max-width: min(2100px, 88vw); margin-inline: auto; }
+
+/* every panel-ish box becomes a plate */
+.card, .compact-card, .research-card-sm, .companion-card, .about-card,
+.audience-panel, .role-pill, .letter-card-sm, .hero-rail, .patent-area,
+.brief-finding, .key-num-card, .page-toc, .structure-nav, details.card-expand,
+blockquote, .callout, .note-card, .framework-card, .stat-card{
+  --c: 14px;
+  border-radius: 0 !important;
+  border: none !important;
+  background: var(--mill-2) !important;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  position: relative; isolation: isolate;
+}
+.card::before, .compact-card::before, .research-card-sm::before,
+.companion-card::before, .about-card::before, .audience-panel::before,
+.role-pill::before, .letter-card-sm::before, .patent-area::before,
+.brief-finding::before, .page-toc::before, .structure-nav::before,
+blockquote::before, .framework-card::before{
+  content:""; position:absolute; inset:1px; z-index:-1; pointer-events:none;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  background: linear-gradient(180deg, var(--bevel), transparent 76px), var(--plate);
+}
+
+/* anything still rounded is squared off */
+[class*="card"], [class*="panel"], [class*="pill"], [class*="chip"],
+[class*="badge"], [class*="btn"], .action, input, textarea, select, button{
+  border-radius: 0 !important;
+}
+
+/* small-caps labels take the homepage spec */
+.kicker, .section-eyebrow, .navlink, .card-venue, .card-date, .card-venue-context,
+.badge, .badge-sm, .filing-no, .paper-audience-tag, .nav-directory__label,
+.home-stat__label, .access-link, .page-toc-title, .page-toc-link,
+.structure-nav__link, .structure-nav__sublink, .section-link a, .footer-nav a{
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace !important;
+  font-weight: 700 !important;
+  font-size: max(.75rem, 1em) !important;
+  letter-spacing: .075em !important;
+}
+
+/* numbers read as instrument values */
+.home-stat__num, .key-num, .brief-finding-num, .stat-num, .filing-no{
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-text) !important;
+}
+
+/* exhibits are contained, never cropped */
+img.compact-card-thumb, img.research-card-thumb, .paper-figure img, figure img{
+  object-fit: contain !important;
+  background: var(--plate-2);
+}
+
+/* the chrome injected on every page needs the homepage header rules to apply
+   even though styles.css also styles `header` */
+header{ background: color-mix(in srgb, var(--void) 84%, transparent) !important;
+        border-bottom: 1px solid var(--mill) !important; }
+
+/* Short standalone prose gets balanced lines. A two-line block whose second line is
+   a 7% stub is the defect scripts/check_text_wrap.py flags; balance evens the two
+   rather than forcing one over-long line. */
+.sec p, .patent-lede, .letters-lede, .hero-sub, figcaption{ text-wrap: balance; }
+
+
+/* the 3px accent bar beside brief/section headings reads as a stray triangle;
+   the vault language already separates sections with rules and plates */
+.brief-findings-section-title::before,
+.brief-problem > h2::before,
+.brief-so-what > h2::before{ content: none !important; display: none !important; }
+.brief-findings-section-title, .brief-problem > h2, .brief-so-what > h2{ padding-left: 0 !important; }
+
+/* the on-page nav is a stacked list: left-aligned items in a centred block */
+.page-toc, .structure-jump-to{ text-align: left; }
+.page-toc-list, .page-toc-list--compact{
+  display: flex; flex-direction: column; align-items: flex-start; gap: .55rem;
+}
+.page-toc-title{ display:block; margin-bottom:.7rem; }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION RHYTHM
+   Headings sat almost on top of their bodies and sections ran together, so a
+   long page read as one undifferentiated column. These are the only spacing
+   rules the subpages get, and they apply everywhere the chrome does.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+main section, main .section-compact{ margin-block: clamp(3rem, 5.5vw, 5rem); }
+main section:first-of-type{ margin-top: clamp(2rem, 3vw, 3rem); }
+
+main h2{ margin-top: 0; margin-bottom: clamp(1.1rem, 1.6vw, 1.6rem); }
+main h3{ margin-top: clamp(1.75rem, 2.4vw, 2.4rem); margin-bottom: .7rem; }
+main h2 + p, main h3 + p, main h2 + ul, main h3 + ul{ margin-top: 0; }
+main p + p{ margin-top: 1.05rem; }
+main p, main li{ line-height: 1.72; }
+main ul, main ol{ margin-block: 1.1rem; }
+main li + li{ margin-top: .5rem; }
+
+/* a heading that opens a section gets a hairline above it, so the eye finds the
+   seam without needing a rule drawn between every block */
+main section > h2:first-child{
+  padding-top: clamp(1.4rem, 2.2vw, 2.2rem);
+  border-top: 1px solid var(--mill);
+}
+
+/* ── IN DEVELOPMENT: the page's one highlight, so it reads as a held object ── */
+#in-development{
+  --c: 18px;
+  position: relative;
+  padding: clamp(1.9rem, 3vw, 2.9rem) clamp(1.6rem, 2.6vw, 2.6rem) clamp(2.2rem, 3.2vw, 3rem);
+  background: var(--mill-2);
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  isolation: isolate;
+}
+#in-development::before{
+  content: ""; position: absolute; inset: 1px; z-index: -1; pointer-events: none;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  background: linear-gradient(180deg, var(--bevel), transparent 90px), var(--plate);
+}
+/* a bolt rail along the top edge, the same one the homepage readout carries */
+#in-development::after{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle 2.2px at 14px 13px, var(--rivet) 0 44%, transparent 56%),
+    linear-gradient(var(--mill), var(--mill));
+  background-size: 28px 100%, calc(100% - 18px) 1px;
+  background-repeat: repeat-x, no-repeat;
+  background-position: 0 0, 9px 26px;
+}
+#in-development > *{ position: relative; z-index: 1; }
+#in-development > h2{
+  border-top: none !important;
+  padding-top: .6rem !important;
+  margin-bottom: 1.4rem;
+}
+/* each track becomes its own entry rather than another line in a wall */
+#in-development > p{
+  max-width: 104ch;
+  padding-left: 1.15rem;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  transition: border-left-color .2s;
+}
+#in-development > p + p{ margin-top: 1.9rem; }
+#in-development > p:hover{ border-left-color: var(--accent); }
+#in-development > p:first-of-type,
+#in-development > p:last-of-type{
+  border-left-color: transparent;
+  padding-left: 0;
+  color: var(--ink-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTHOR-REQUESTED CORRECTIONS 2026-08-27
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. Disclosure controls ("More on relevance and audience", 13 on /research).
+   Measured before: 1151 x 22px, zero padding, no background or border, so it
+   read as a line of text rather than a control and the hit target was under
+   the 24px WCAG 2.2 minimum. Now a real chip: fit-content width so the +/-
+   marker sits beside its label instead of a full grid column away, a 44px
+   tap target, and a visible resting affordance. */
+.card-expand > summary{
+  width:fit-content;
+  min-height:44px;
+  box-sizing:border-box;
+  padding:.55rem .95rem;
+  gap:.7rem;
+  border:1px solid var(--mill-2);
+  border-radius:2px;
+  background:var(--plate-2);
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.card-expand > summary:hover{
+  background:var(--shoulder);
+  border-color:var(--accent);
+}
+.card-expand > summary:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.card-expand[open] > summary{
+  border-color:var(--accent);
+  margin-bottom:.4rem;
+}
+
+/* 2b. THE REAL CULPRIT, found after the first attempt missed it: the same
+   styles.css:4680-4683 rule also targets the 36 .writing-card items on
+   /research/, not just the 2 featured cards. Matching the original selector
+   exactly so cascade ORDER decides (vault.css loads after styles.css) rather
+   than relying on a specificity guess. */
+.research-library-page ul.writing-list > li > article.writing-card:hover,
+.research-library-page ul.writing-list > li > article.writing-card:focus-within{
+  transform:scale(1.06);
+  transform-origin:center center;
+}
+
+/* 2. Featured-research hover zoom clipped past the viewport on desktop.
+   styles.css:4684 sets transform:scale(1.25), a 25 percent jump against this
+   site's own hover idiom of 1.02 to 1.08 elsewhere. On a right-edge card that
+   pushes ~12 percent of the card width outside the layout. Reduced to 1.06 and
+   pinned transform-origin to centre so growth is symmetric and bounded. */
+.featured-research .featured-paper-card:hover,
+.featured-research .featured-paper-card:focus-within{
+  transform:scale(1.06);
+  transform-origin:center center;
+}
