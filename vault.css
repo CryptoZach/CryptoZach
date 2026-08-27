@@ -1287,3 +1287,75 @@ ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
 }
 /* a clipped box crops its own hover scale, so grow from centre */
 .writing-card, .featured-paper-card{transform-origin:center center}
+
+
+/* ============================================================
+   Header, jump-to TOC and thesis-card corrections (2026-08-27)
+   Each rule below states the specificity it must beat. Verified in
+   real Chrome at 375 to 1600px, light and dark, before landing.
+   ============================================================ */
+/* ============================================================
+   A. Jump-to TOC: restore horizontal padding.
+   styles.css `.page-toc.structure-jump-to .page-toc-link` (0,3,0) zeroes
+   padding-inline and beats vault.css `.page-toc-list > a` (0,1,1).
+   ============================================================ */
+.page-toc.structure-jump-to .page-toc-list > a { padding: 0.35rem 1.15rem; }
+@media (max-width: 768px) {
+  .page-toc.structure-jump-to .page-toc-list > a { padding: 0.15rem 0.55rem; }
+}
+
+/* ============================================================
+   B. Header nav clipping.
+   styles.css `header .navlink { overflow:hidden }` + flex-shrink:1 + min-width:0
+   lets each link shrink BELOW its text width and shave both ends.
+   ============================================================ */
+@media (min-width: 769px) {
+  /* `.nav-links--desktop` is display:contents, so the links are flex items of
+     `.nav-desktop`, which is justify-content:flex-end. Overflow there spills
+     LEFT, over the brand. Wrapping is what keeps it off the brand; never rely
+     on shrink, which only clips the text. */
+  header > .header-inner > nav.nav-desktop { flex-wrap: wrap; row-gap: 0.3rem; }
+  header .nav-links--desktop .navlink { overflow: visible; flex-shrink: 0; }
+}
+/* Buy back width from padding so the wrap almost never triggers. */
+@media (min-width: 1100px) and (max-width: 1520px) {
+  header .nav-links--desktop .navlink { padding-left: 7px; padding-right: 7px; }
+  header > .header-inner > nav.nav-desktop { column-gap: 6px; }
+}
+
+/* ============================================================
+   C. Brand lockup: align the tagline to the NAME's text edge.
+   `header .brand a strong` has padding-left:28px (logo mark gutter);
+   `.brand span` only had margin-left:12.8px, so the two lines were
+   misaligned by ~15px.
+   ============================================================ */
+@media (min-width: 769px) {
+  header .brand a strong,
+  header .brand a span { padding-left: 28px; margin-left: 0; }
+  header .brand a { justify-content: center; }
+}
+
+/* ============================================================
+   D. Bezelled card treatment + even padding.
+   The visible card is `__row--thesis` (it carries the tint), not the outer
+   stack, so the bezel goes there; otherwise a square-cornered inner box sits
+   inside a rounded outer one. Painted from currentColor so ONE rule serves
+   light and dark (NOT --mill-2, a white overlay invisible in light mode).
+   ============================================================ */
+.operating-model-stack {
+  padding: 0; border: 0; background: none; box-shadow: none; border-radius: 0;
+}
+.operating-model-stack__row--thesis {
+  padding: 1.5rem 1.75rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, currentColor 12%, transparent),
+    0 1px 2px color-mix(in srgb, currentColor 10%, transparent),
+    0 12px 28px -16px color-mix(in srgb, currentColor 34%, transparent);
+}
+.operating-model-stack__row--thesis .operating-model-stack__body { margin: 0; }
+@media (max-width: 768px) {
+  .operating-model-stack__row--thesis { padding: 1.15rem 1.15rem; border-radius: 12px; }
+}
