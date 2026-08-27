@@ -1091,3 +1091,156 @@ main section > h2:first-child{
 .header-inner{padding-left:14px;padding-right:18px}
 .nav-links--desktop{column-gap:.8rem}
 .nav-links--desktop .navlink{padding-left:8px;padding-right:8px}
+
+/* ═══════════════════════════════════════════════════════════════
+   8. CHAMFER PASS (author request 2026-08-27): rectangular controls and
+   research cards take the plate bevel, top-left and bottom-right, reusing
+   the theme's existing --c polygon rather than inventing a second shape.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 8a. Action buttons: pill -> chamfered plate. These were border-radius 999px,
+   which is the one shape in the theme that contradicts the machined-plate idiom. */
+.writing-link, .writing-thread, .writing-card-actions > a,
+.card-expand > summary, .cta, .btn, .button, a.plate-btn{
+  --c:8px;
+  border-radius:0 !important;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                    calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* 8b. Research cards take the same bevel at card scale. */
+.writing-card, .research-card, .research-card--compact, .featured-paper-card{
+  --c:16px;
+  border-radius:0 !important;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                    calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+/* a hover scale on a clipped box crops against its own clip-path, so give the
+   card room by scaling from centre and keeping the clip on the same element */
+.writing-card{transform-origin:center center}
+
+/* 8c. Vertical dividers between the /frameworks section jump-links
+   (Featured: MVEP, Framework stack, Classification, Track A, Track B,
+   Rulemaking, AI extension, Directory, Principles, Go deeper). Rules sit
+   BETWEEN items only, never leading or trailing, and never on a wrapped row's
+   first item. */
+.structure-nav, .jump-to, #jumpTo, .page-toc{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  column-gap:0;
+}
+.structure-nav > a, .jump-to > a, #jumpTo > a, .page-toc > a{
+  position:relative;
+  padding-inline:.85rem;
+}
+.structure-nav > a + a::before, .jump-to > a + a::before,
+#jumpTo > a + a::before, .page-toc > a + a::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:1px;
+  height:1.05em;
+  background:linear-gradient(to bottom, transparent, var(--mill-2) 22%,
+                             var(--mill-2) 78%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   9. AUTHOR PASS 2, 2026-08-27, each item found by screenshot.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 9a. "On this page" TOC ran its items together: the screenshot read
+   "The argumentThe operating layer" as one word. Cause: the links are NOT direct
+   children of nav.page-toc, they sit in div.page-toc-list, so the earlier
+   ".page-toc > a + a" rule matched nothing, and each link is display:block with
+   1.6px 0 padding, i.e. no horizontal separation at all. Target the real parent,
+   lay it out as a wrapping row, and put a hairline rule BETWEEN items only. */
+.page-toc-list{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  column-gap:0;
+  row-gap:.15rem;
+}
+.page-toc-list > a{
+  display:inline-flex;
+  align-items:center;
+  position:relative;
+  padding:.3rem .9rem;
+  white-space:nowrap;
+  line-height:1.5;
+}
+.page-toc-list > a + a::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:1px;
+  height:1.05em;
+  background:linear-gradient(to bottom, transparent, var(--mill-2) 22%,
+                             var(--mill-2) 78%, transparent);
+}
+/* a wrapped row's first item must not show a leading rule */
+.page-toc-list > a:first-child::before{content:none}
+
+/* 9b. Author: remove the vertical blue rule from stylized headings, findings and
+   stat callouts ("Keep concurrent work isolated and recoverable", the teaching /
+   enforcing control headers, the numbered callouts). Keep the panel, drop the bar.
+   Padding that existed only to clear the bar is reclaimed. */
+.ai-finding, .ai-callout, .ai-section h3, .ai-body h3,
+.brief-finding, .key-num-card, .stat-card{
+  border-left:0 !important;
+}
+.ai-section h3, .ai-body h3{padding-left:0 !important}
+.ai-finding, .ai-callout{padding-left:1.15rem}
+
+/* 9c. The dividers in 8c and 9a were invisible in LIGHT mode: they painted
+   var(--mill-2), which is rgba(255,255,255,.145), a white overlay from the dark
+   palette. White at 14.5% on a light ground is nothing. Repaint from currentColor
+   so the rule works in both themes without needing a second token. */
+.page-toc-list > a + a::before,
+.structure-nav > a + a::before, .jump-to > a + a::before,
+#jumpTo > a + a::before, .page-toc > a + a::before{
+  background:linear-gradient(to bottom, transparent,
+              color-mix(in srgb, currentColor 34%, transparent) 20%,
+              color-mix(in srgb, currentColor 34%, transparent) 80%, transparent) !important;
+  opacity:1;
+}
+
+/* 9d. Broaden the blue-bar removal: 23 elements still carried a >=2px accent
+   border-left after the first pass. Strip it from every heading and panel that
+   uses it as decoration, in both themes. */
+.ai-section h3, .ai-body h3, .ai-finding, .ai-callout, .ai-card, .ai-note,
+.brief-finding, .key-num-card, .stat-card, .note-card, .callout,
+main h3[style*="border"], aside[class*="ai-"], div[class*="ai-"] > h3{
+  border-left:0 !important;
+  border-inline-start:0 !important;
+}
+
+/* 9e. The last 13 bars were on BARE h3 (no class), so container-scoped selectors
+   missed them. Measured parents: div.explainer (inside section.explainer-section)
+   and li inside ol.ai-principle-list, the numbered principles. 3px accent border
+   with 20px of padding that exists only to clear it, so reclaim the padding too. */
+.explainer h3, .explainer-section h3,
+.ai-principle-list > li > h3, .ai-principle-list > li,
+ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
+  border-left:0 !important;
+  border-inline-start:0 !important;
+  padding-left:0 !important;
+}
+
+/* 9f. The 9a/9c dividers rendered but read as run-together text: 14px of padding
+   and a 34%-alpha hairline is not enough separation for uppercase mono set tight.
+   Widen the gutter and strengthen the rule. Verified by screenshot, not by
+   computed style, because "is it legible" is not a property you can query. */
+.page-toc-list{column-gap:0;row-gap:.35rem}
+.page-toc-list > a{padding:.35rem 1.15rem}
+.page-toc-list > a + a::before,
+.structure-nav > a + a::before, .jump-to > a + a::before,
+#jumpTo > a + a::before, .page-toc > a + a::before{
+  height:1.25em;
+  background:color-mix(in srgb, currentColor 45%, transparent) !important;
+}
