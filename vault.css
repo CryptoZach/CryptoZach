@@ -1244,3 +1244,33 @@ ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
   height:1.25em;
   background:color-mix(in srgb, currentColor 45%, transparent) !important;
 }
+
+/* 10. THE THEME TOGGLE WAS OFF-SCREEN on every interior page, at x=1442 against a
+   1440px viewport, so the light/dark switch was unclickable sitewide (Playwright:
+   click times out, elementFromPoint at its centre returns null). It worked on the
+   homepage, which has its own header, which is why this read as "light mode is
+   broken" rather than "the header overflows".
+
+   This is the 38px residual I measured while fixing the header clip, confirmed the
+   NAVLINKS fit, and moved on without identifying. The residual was the control.
+   Lesson: name what the leftover overflow IS before calling a layout fix done.
+
+   Reclaim the width so the toggle lands inside the viewport, and pin it so it can
+   never be the element that overflows again. */
+.nav-links--desktop{column-gap:.5rem}
+.nav-links--desktop .navlink{padding-left:6px;padding-right:6px}
+.nav-desktop{gap:.5rem}
+#themeToggle, .tog{
+  flex:0 0 auto;
+  margin-inline-start:.35rem;
+}
+
+/* 10b. The toggle still sat past the right edge (x 1409..1445 on a 1440 viewport),
+   so it worked when scripted but a REAL user click could not reach it. The header
+   row was still over budget. Give the toggle an inviolable slot before the nav is
+   allowed to consume the remainder, and let the nav wrap under pressure instead of
+   pushing the control out. */
+.header-inner{padding-right:12px}
+.nav-desktop{flex:1 1 auto; min-width:0; display:flex; align-items:center; justify-content:flex-end}
+.nav-links--desktop{flex:1 1 auto; min-width:0; justify-content:flex-end}
+#themeToggle, .tog{order:99; flex:0 0 auto; margin-inline-start:.4rem}
