@@ -1359,3 +1359,134 @@ ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
 @media (max-width: 768px) {
   .operating-model-stack__row--thesis { padding: 1.15rem 1.15rem; border-radius: 12px; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   11. AUTHOR PASS 3, 2026-08-27. Header mark, kicker treatment, and
+       the two residuals the specificity-war pass above left open.
+
+   Written to sit ON TOP of that pass, not to replace it. Where the two
+   overlap, the rule that wins on SPECIFICITY rather than source order
+   is the one kept: section A's `.page-toc.structure-jump-to
+   .page-toc-list > a` is (0,3,1) and beats styles.css outright, so it
+   stays and this section adds only what A does not cover. Section B's
+   scoping is likewise kept; 11c below adds the cause B did not find.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 11a. TWO THINGS SECTION A LEAVES. First, the divider: it is drawn at the
+   item's own left edge, so the parent's 0.85rem column-gap pushes it off
+   centre, nearer the preceding text than the following one. Zero the gap and
+   A's symmetric 1.15rem padding centres it by itself.
+
+   Second, the wrapped row. The rule is an ::before on every item after the
+   first, which is right on one row and wrong the moment the list wraps: the
+   first item of every LATER row also draws a leading rule, hanging off
+   nothing. ":first-child" cannot express "first of its row", so vault.js tags
+   the real row-firsts by offsetTop and this suppresses the rule on the tag. */
+.page-toc.structure-jump-to{column-gap:0}
+.page-toc-list > a.is-row-first::before{content:none !important}
+
+/* 11b. THE HEADER MARK, AND WHY THERE IS NOW ONLY ONE.
+   Measured: 0 of the 50 pages that load vault.css carry a .brand-mark, so the
+   interior header had no animation at all, while the homepage header did.
+   vault.js mounts the homepage dial here in compact form.
+
+   AUTHOR, 2026-08-27: "tokenization systems block rainbow orb and disc icon
+   are duplicative. Combine all." The brand already drew a 9px dark-rainbow orb
+   at strong::before with its aura at ::after, so the page carried two round
+   marks side by side. They are now ONE: the orb is retired here and redrawn as
+   the dial's core in vault.js, using that rule's own five stops.
+
+   Section C above aligned the wordmark and tagline by giving both the 28px
+   gutter the orb needed. The orb is gone and the dial is a real element with
+   real width, so that gutter is now dead space in front of the text; reclaim
+   it. C's actual fix, the two lines sharing one left edge, is untouched. */
+header .brand a strong::before,
+header .brand a strong::after{content:none !important}
+header .brand a strong,
+header .brand a span{padding-left:0 !important}
+
+.vault-headdial{
+  width:34px;
+  height:34px;
+  flex:none;
+  display:block;
+  border-radius:50%;
+  margin-inline-end:.6rem;
+  transition:filter .32s ease, transform .1s;
+}
+.brand:hover .vault-headdial,
+.brand:focus-within .vault-headdial{
+  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent));
+}
+.brand:active .vault-headdial{transform:scale(.92)}
+@media (max-width:640px){
+  .vault-headdial{width:27px;height:27px}
+}
+
+/* 11c. WHY THE NAV WAS OVER BUDGET AT ALL.
+   Section B correctly stopped the links shrinking into their own glyphs, and
+   bought width back from padding so the wrap would rarely trigger. This is the
+   reason they were short of width in the first place.
+
+   The label group at ~line 816 sets `font-size: max(.75rem, 1em)` under the
+   comment "small-caps labels take the homepage spec". For .navlink that is
+   self-defeating: 1em resolves against the inherited 16px, so max(12px, 16px)
+   is 16px and the interior nav renders a THIRD larger than the homepage nav it
+   was copying. Measured side by side at 1440: interior 16px with 1.2px
+   letter-spacing, homepage 12px with 0.9px. The eight links wanted 1003px of a
+   roughly 1030px budget, which is the entire shortfall.
+
+   Take the homepage spec literally rather than approximately. Measured after:
+   the same eight links want 778px, 225px reclaimed, and across all 50 pages
+   zero links clip and no page overflows at 1440. */
+.nav-desktop .navlink{
+  font-size:.75rem !important;
+}
+
+/* 11d. THE PAGE KICKER: DARK RAINBOW, NOT BLUE.
+   The kicker is colour:var(--accent) on every subpage, so the author's
+   "'FRAMEWORKS' shouldn't be blue" is a sitewide note, not a one-page one.
+
+   The first attempt invented a brighter spectrum and the author's verdict was
+   "way too bright and duplicative". The site already HAS a dark rainbow: the
+   brand orb's own stops, documented in styles.css as "muted versions of the
+   site's 5-accent rotation (dark blue, dark violet, dark rose, dark amber,
+   dark teal)". Those exact five are used here, so the kicker reads as the same
+   program signature the mark carries rather than a second, louder one. Dark
+   mode lifts the same hues just clear of the ground; it does not brighten
+   them. The kicker dot keeps the site's own treatment: a second disc there
+   would restate the header mark one band lower, which is the duplication the
+   author called out. */
+:root{
+  --kicker-spectrum:linear-gradient(100deg,
+    #3b82f6 0%, #7c3aed 20%, #be123c 40%, #b45309 60%, #0d9488 80%, #3b82f6 100%);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --kicker-spectrum:linear-gradient(100deg,
+      #1e3a8a 0%, #4c1d95 20%, #9f1239 40%, #854d0e 60%, #0f766e 80%, #1e3a8a 100%);
+  }
+}
+:root[data-theme="light"]{
+  --kicker-spectrum:linear-gradient(100deg,
+    #1e3a8a 0%, #4c1d95 20%, #9f1239 40%, #854d0e 60%, #0f766e 80%, #1e3a8a 100%);
+}
+.kicker--vault .kicker-text{
+  background-image:var(--kicker-spectrum);
+  background-size:220% 100%;
+  background-position:0 0;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:none;
+}
+@media (prefers-reduced-motion: no-preference){
+  /* slow enough to read as a settled gradient, not a moving light */
+  .kicker--vault .kicker-text{animation:kickerSpectrum 34s linear infinite}
+}
+@keyframes kickerSpectrum{
+  from{background-position:0 0}
+  to{background-position:220% 0}
+}

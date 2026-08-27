@@ -19,13 +19,24 @@
     });
   })();
 
-  var saved = get('vm-theme');
-  if (saved) root.setAttribute('data-theme', saved);
-  document.getElementById('themeToggle').addEventListener('click', function(){
-    var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
-    var next = dark ? 'light' : 'dark';
-    root.setAttribute('data-theme', next); set('vm-theme', next);
-  });
+  /* THE TOGGLE IS NOT ALWAYS OURS. Every page that loads script.js already has a
+     click handler on #themeToggle, keyed on 'theme', and binding a second one
+     here would toggle twice per click, leaving the switch looking dead. That is
+     the exact failure 6a7ac2196 fixed on all 50 interior pages. Measured: the
+     homepage loads no script.js (its two matches are both in comments), the 50
+     interior pages all load it, so the presence of that tag is an exact
+     discriminator. Take the toggle only when nothing else holds it. */
+  var themeOwner = !document.querySelector('script[src*="script.js"]');
+  if (themeOwner){
+    var saved = get('vm-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+    var tgBtn = document.getElementById('themeToggle');
+    if (tgBtn) tgBtn.addEventListener('click', function(){
+      var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
+      var next = dark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next); set('vm-theme', next);
+    });
+  }
   function isDark(){ return getComputedStyle(root).colorScheme.indexOf('dark') > -1; }
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -798,9 +809,17 @@
 })();
 
 
-(function(){
-  var cv = document.getElementById('dial');
+/* Mountable dial. The homepage figure gets the full instrument, with the rim
+   grind and its sparks under the pointer. Interior page headers mount the SAME
+   dial in COMPACT form: compact attaches no pointer listeners, so `cur` stays
+   null and every grind, spark, bolt-ding and core-glow branch below is already
+   inert by its own guard. Compact also lowers the 200px floor, which exists so
+   the homepage figure never renders below its detail threshold. */
+function vaultMountDial(cv, opts){
   if (!cv) return;
+  opts = opts || {};
+  var compact = !!opts.compact;
+  var minSize = opts.minSize || (compact ? 120 : 200);
   var ctx = cv.getContext('2d'), TAU = Math.PI * 2;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
@@ -831,17 +850,24 @@
   var RED   = [255, 92, 38],  YEL  = [255, 214, 96];   /* hot metal */
   var ROYAL = [58, 96, 232],  TEAL = [42, 214, 196];   /* cold arc  */
   var TEAL_PALE = [168, 245, 236];
-  cv.addEventListener('pointermove', function(e){
-    var b = cv.getBoundingClientRect();
-    var nx = e.clientX - b.left, ny = e.clientY - b.top;
-    if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
-    cur = { x: nx, y: ny };
-  }, {passive:true});
-  cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
+  /* Pointer coordinates below are compared against `size`, the LOGICAL dial
+     space, not the CSS box, so they only agree when the two are the same
+     scale. A compact dial is drawn at minSize and displayed far smaller, so
+     attaching these would put the contact test in the wrong coordinate space
+     as well as spend a rim-grind budget on a 30px ornament. */
+  if (!compact){
+    cv.addEventListener('pointermove', function(e){
+      var b = cv.getBoundingClientRect();
+      var nx = e.clientX - b.left, ny = e.clientY - b.top;
+      if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
+      cur = { x: nx, y: ny };
+    }, {passive:true});
+    cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
+  }
 
   function fit(){
     var r = cv.getBoundingClientRect();
-    size = Math.max(200, r.width || 320);
+    size = Math.max(minSize, r.width || 320);
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = size * dpr; cv.height = size * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -875,8 +901,13 @@
       ctx.beginPath();
       ctx.moveTo(Math.cos(a)*r1, Math.sin(a)*r1);
       ctx.lineTo(Math.cos(a)*r2, Math.sin(a)*r2);
-      ctx.strokeStyle = major ? rgba(A, .92) : rgba(INK, .5);
-      ctx.lineWidth = major ? 2 : 1; ctx.stroke();
+      /* A tick drawn 1px wide in a 120px space is a fifth of a pixel once the
+         header displays it at 26. Compact keeps all 52 ticks and the 13-major
+         rhythm, but paints them in accent and thickens them, so the rim still
+         reads blue at the size it is actually shown. */
+      ctx.strokeStyle = compact ? (major ? rgba(A, 1) : rgba(A, .60))
+                                : (major ? rgba(A, .92) : rgba(INK, .5));
+      ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1); ctx.stroke();
     }
     ctx.restore();
 
@@ -892,7 +923,8 @@
         var mdx = (cur.x - size/2) - hx, mdy = (cur.y - size/2) - hy;
         if (Math.sqrt(mdx*mdx + mdy*mdy) < R * 0.028 * 1.9) boltDing[b] = 1;
       }
-      var bx = Math.cos(ab)*R*0.795, by = Math.sin(ab)*R*0.795, br = R*0.028;
+      var bx = Math.cos(ab)*R*0.795, by = Math.sin(ab)*R*0.795,
+          br = R*(compact ? 0.045 : 0.028);
       var g = ctx.createRadialGradient(bx - br*0.4, by - br*0.5, 0, bx, by, br);
       g.addColorStop(0, rgba(HOT, .88)); g.addColorStop(1, rgba(A, .42));
       ctx.beginPath(); ctx.arc(bx, by, br, 0, TAU); ctx.fillStyle = g; ctx.fill();
@@ -918,7 +950,8 @@
     ctx.restore();
 
     ctx.save(); ctx.rotate(spin * 0.18);
-    for (var q = 0; q < 4; q++){
+    /* the spokes are decorative grey and only muddy the mark at header size */
+    for (var q = 0; q < (compact ? 0 : 4); q++){
       ctx.save(); ctx.rotate(q*(TAU/4) + Math.PI/4);
       ctx.beginPath();
       ctx.moveTo(R*0.42, -R*0.028); ctx.lineTo(R*0.865, -R*0.013);
@@ -936,8 +969,31 @@
     well.addColorStop(0.72, dark ? 'rgba(0,0,0,.55)' : 'rgba(30,40,55,.12)');
     well.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.beginPath(); ctx.arc(0, 0, R*0.40, 0, TAU); ctx.fillStyle = well; ctx.fill();
+    /* AUTHOR, 2026-08-27: "tokenization systems block rainbow orb and disc icon
+       are duplicative. Combine all." The header carried two round marks side by
+       side: the brand's dark-rainbow orb (styles.css header .brand a
+       strong::before) and this dial. Rather than drop either, the orb becomes
+       the dial's CORE, so one mark carries both. The five stops are the site's
+       own accent rotation, copied from that rule, not a new palette. CSS conic
+       0deg points up and canvas 0rad points right, hence the -90deg. */
+    if (compact && ctx.createConicGradient){
+      var orb = ctx.createConicGradient((200 - 90) * Math.PI / 180, 0, 0);
+      orb.addColorStop(0,   '#1e3a8a'); orb.addColorStop(0.2, '#4c1d95');
+      orb.addColorStop(0.4, '#9f1239'); orb.addColorStop(0.6, '#854d0e');
+      orb.addColorStop(0.8, '#0f766e'); orb.addColorStop(1,   '#1e3a8a');
+      ctx.beginPath(); ctx.arc(0, 0, R*0.185, 0, TAU);
+      ctx.fillStyle = orb; ctx.fill();
+      /* the orb's specular highlight, top-left, as in the CSS original */
+      var spec = ctx.createRadialGradient(-R*0.055, -R*0.065, 0, 0, 0, R*0.185);
+      spec.addColorStop(0,    'rgba(255,255,255,.55)');
+      spec.addColorStop(0.28, 'rgba(255,255,255,.10)');
+      spec.addColorStop(0.62, 'rgba(255,255,255,0)');
+      ctx.beginPath(); ctx.arc(0, 0, R*0.185, 0, TAU);
+      ctx.fillStyle = spec; ctx.fill();
+    }
     ctx.beginPath(); ctx.arc(0, 0, R*0.185, 0, TAU);
-    ctx.strokeStyle = rgba(A, .55); ctx.lineWidth = 1.2; ctx.stroke();
+    ctx.strokeStyle = rgba(A, compact ? .95 : .55);
+    ctx.lineWidth = compact ? 2.6 : 1.2; ctx.stroke();
     var halo = ctx.createRadialGradient(0, 0, R*0.185, 0, 0, R*0.30);
     halo.addColorStop(0, rgba(HOT, .22)); halo.addColorStop(1, rgba(HOT, 0));
     ctx.beginPath(); ctx.arc(0, 0, R*0.30, 0, TAU); ctx.fillStyle = halo; ctx.fill();
@@ -1069,4 +1125,103 @@
   }
   window.addEventListener('resize', draw);
   reduce ? draw() : frame();
+}
+
+/* the homepage figure, unchanged: full instrument, no options */
+vaultMountDial(document.getElementById('dial'));
+
+
+/* ══ 11. INTERIOR HEADER: THE BLUE DIAL ══════════════════════════════════════
+   The homepage header carries an animated brand mark; the interior chrome
+   carries none. Measured across the 50 pages that load vault.css: 0 of 50 have
+   a .brand-mark, 50 of 50 have .brand. So there is no header animation on any
+   interior page today, and the author's request ("the Header animation on all
+   pages should be the blue dial") is a gap to fill rather than a swap.
+
+   The same dial the homepage figure draws is mounted here in compact form, so
+   the two never drift apart: one instrument, two sizes. It is decorative, so
+   it is aria-hidden and sits inside the existing brand link rather than adding
+   a new focus stop. */
+(function(){
+  var brand = document.querySelector('header .brand');
+  if (!brand) return;
+  /* the homepage already has its own animated mark; never double up */
+  if (document.querySelector('header .brand-mark')) return;
+  if (document.querySelector('.vault-headdial')) return;
+  if (typeof vaultMountDial !== 'function') return;
+
+  /* Mount on .brand, NOT on the <a> inside it. Measured on the interior chrome:
+     .brand is flex-direction:row / align-items:center, but .brand a is
+     flex-direction:COLUMN, so a canvas inserted into the link becomes a row
+     stacked ABOVE the wordmark instead of an instrument beside it. */
+  var cv = document.createElement('canvas');
+  cv.className = 'vault-headdial';
+  cv.setAttribute('aria-hidden', 'true');
+  brand.insertBefore(cv, brand.firstChild);
+  vaultMountDial(cv, { compact: true });
+})();
+
+
+/* ══ 12. PAGE KICKER: DARK RAINBOW + BLACK HOLE ══════════════════════════════
+   Author: "'FRAMEWORKS' shouldn't be blue, it should be dark rainbow with
+   black hole animation." The kicker is colour:var(--accent) on every subpage,
+   so the complaint is sitewide, not specific to one page.
+
+   The text sits as a bare text node beside .kicker-dot, and a gradient cannot
+   be clipped to a bare text node, so wrap it once here. The dot becomes the
+   black hole; the CSS carries both treatments. */
+(function(){
+  var kickers = document.querySelectorAll('.kicker--subpage');
+  for (var i = 0; i < kickers.length; i++){
+    var k = kickers[i];
+    if (k.querySelector('.kicker-text')) continue;
+    var moved = false;
+    var nodes = Array.prototype.slice.call(k.childNodes);
+    var span = document.createElement('span');
+    span.className = 'kicker-text';
+    for (var n = 0; n < nodes.length; n++){
+      var node = nodes[n];
+      /* only bare text and inline markup that is not the dot itself */
+      if (node.nodeType === 3 && !node.nodeValue.trim()) continue;
+      if (node.nodeType === 1 && node.classList.contains('kicker-dot')) continue;
+      span.appendChild(node);
+      moved = true;
+    }
+    if (moved) k.appendChild(span);
+    k.classList.add('kicker--vault');
+  }
+})();
+
+
+/* ══ 13. WRAPPED-ROW TOC DIVIDERS ════════════════════════════════════════════
+   The between-item rules are drawn as an ::before on every item after the
+   first, which is correct on one row and wrong the moment the list wraps: the
+   first item of every SUBSEQUENT row also shows a leading rule, hanging off
+   nothing. ":first-child" only ever suppresses the first item of the whole
+   list, which is why the existing rule did not fix it.
+
+   A wrapped row's first item is not expressible in CSS, so tag it here by
+   comparing offsetTop, and let the stylesheet suppress the rule on the tag. */
+(function(){
+  var lists = document.querySelectorAll('.page-toc-list');
+  if (!lists.length) return;
+
+  function tag(){
+    for (var i = 0; i < lists.length; i++){
+      var items = lists[i].querySelectorAll(':scope > a');
+      var lastTop = null;
+      for (var j = 0; j < items.length; j++){
+        var a = items[j];
+        var top = a.offsetTop;
+        /* sub-pixel row jitter is not a new row */
+        var isRowFirst = (lastTop === null) || (top - lastTop > 2);
+        a.classList.toggle('is-row-first', isRowFirst);
+        if (isRowFirst) lastTop = top;
+      }
+    }
+  }
+
+  tag();
+  window.addEventListener('resize', tag, {passive:true});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(tag);
 })();
