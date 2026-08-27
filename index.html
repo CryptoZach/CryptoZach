@@ -763,6 +763,24 @@ footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);paddin
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
 }
+
+/* ── AUTHOR-FIX mobile header wrap 2026-08-27 ──
+   Measured at 390px: .brand a span carried white-space:nowrap at 332px, so the
+   header row could not wrap, .brand held 501px and pushed .tog to x=572, i.e.
+   214px past the viewport. The dial canvas bleed at x=-49 is clipped and was not
+   the cause. Let the row wrap and let the tagline drop out below 720px. */
+@media (max-width:720px){
+  .hdr{flex-wrap:wrap;row-gap:.5rem}
+  .brand{min-width:0;flex:1 1 auto}
+  .brand a{min-width:0;flex-wrap:wrap}
+  .brand a span{display:none}
+  .navlinks{flex-wrap:wrap;row-gap:.4rem;min-width:0}
+  .tog{margin-left:auto;flex:0 0 auto}
+}
+@media (max-width:420px){
+  .brand a b{font-size:1rem}
+  .navlinks{width:100%;justify-content:flex-start}
+}
 </style>
 
 <header>
