@@ -1036,48 +1036,58 @@ main section > h2:first-child{
   border-color:var(--accent);
 }
 
-/* 4. Header clipped and off-centre on desktop, measured 2026-08-27.
-   At 1440px .header-inner needed scrollWidth 2084 against clientWidth 1440, so 644px was
-   clipped with flex-wrap:nowrap and the last navlink ("Contact") sat 410px past the right
-   edge. It was also never centred: max-width 1480px with margin 0/0. Cause is this theme's
-   own nav typography (uppercase mono with .085em tracking) against 8 nav links plus a 501px
-   brand plus 4 social marks. Fix centres the row, lets it shrink, tightens nav typography,
-   and retires the header social marks below 1600px where they do not fit (they are still in
-   the footer, so no destination is lost). */
-.header-inner{
-  margin-inline:auto;
-  min-width:0;
-  gap:1rem;
+/* HEADER LAYOUT: REVERTED 2026-08-27, see handoff note.
+   Three attempts (centre + shrink, then no-shrink + wrap, then flex-start) each traded one
+   defect for another: clipping -> truncation -> a 235px overlap of the nav onto the brand.
+   Reverted to the pre-attempt state, which has the ORIGINAL clipping defect and no overlap,
+   so the page is in one known state rather than a half-fixed one.
+
+   MEASURED FACTS for whoever picks this up, all at 1440px on /research/:
+     .header-inner  needs scrollWidth 2084 against clientWidth 1440 (flex-wrap:nowrap),
+                    so 644px is clipped and "Contact" lands 410px past the right edge.
+                    It also has max-width 1480px with margin 0/0, so it never centres.
+     .brand         x 32..390 (358 wide), a two-line column (name over tagline).
+     .nav-desktop   x 406..1408 (1002 wide).
+     8 navlinks + 4 header social marks are the content that does not fit.
+   TRAPS ALREADY PAID FOR, do not repeat:
+     - min-width:0 on the flex children truncates all 8 navlinks (scrollWidth > clientWidth).
+     - justify-content:flex-end overflows off the START edge, driving the nav 235px LEFT
+       over the brand.
+     - .nav-links--desktop measured 0 width in the last attempt while its children rendered
+       at x155..x1252, so the container was collapsed and children were escaping it. That is
+       the thing to understand FIRST next time; querySelector may also be hitting a hidden
+       mobile twin rather than the desktop element, which was never ruled out.
+   The honest fix is probably to reduce CONTENT (drop the header social marks, which are
+   already in the footer, and/or shorten "Agent Infrastructure"), not to fight the flexbox. */
+
+/* 7. THE ACTUAL HEADER BUG, found by screenshot after three measurement-led attempts failed.
+   The brand tagline was rendering INLINE beside the name, eating ~330px of a 1440px header,
+   which is why the nav could not fit and ran into "Overview". The site's own lockup stacks
+   the tagline UNDER the name; this theme had turned .brand a into a row. Restoring the
+   two-line lockup returns that width to the nav and the collision goes away on its own.
+   Do not chase this with flex tricks on the nav; the nav was never the problem. */
+.brand a{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  line-height:1.2;
+  gap:1px;
 }
-.nav-desktop{flex:0 1 auto;min-width:0}
-/* CORRECTION: min-width:0 on the links themselves let every navlink shrink BELOW its
-   content width, which truncated all 8 (measured: scrollWidth exceeded clientWidth on
-   every one). Links must never shrink; the ROW wraps instead. */
-.nav-links--desktop .navlink{flex:0 0 auto;min-width:max-content}
-.nav-links--desktop{
-  min-width:0;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  row-gap:.25rem;
-  column-gap:.85rem;
-}
-.nav-links--desktop .navlink{
-  font-size:.72rem;
-  letter-spacing:.055em;
+.brand a > span{
+  display:block;
+  font-size:.625rem;
+  letter-spacing:.09em;
   white-space:nowrap;
 }
-@media (max-width:1600px){
-  .header-social{display:none}
-}
-@media (max-width:1320px){
-  .nav-links--desktop{column-gap:.6rem}
-  .nav-links--desktop .navlink{font-size:.68rem;letter-spacing:.04em}
-}
-
-/* 5. Brand lockup was not vertically aligned with the nav text: .brand is a column
-   (name over tagline) sitting in a row whose other items are single-line, so their
-   baselines never agreed. Centre both on the cross axis. */
 .header-inner{align-items:center}
-.brand{display:flex;align-items:center}
-.brand a{display:flex;flex-direction:column;justify-content:center;line-height:1.15}
-.nav-links--desktop{align-items:center}
+/* 7b. Stacking the tagline recovered 344px (scrollWidth 2084 -> 1740). The last 66px come
+   from the 4 header social marks, which are duplicated in the footer, so retiring them below
+   1600px loses no destination. */
+@media (max-width:1600px){ .header-social{display:none} }
+/* 7c. Author: move the brand lockup further left. The header gutter was 32px; taking it to
+   14px moves the lockup left and returns that width to the nav row, which still needed 66px
+   at 1440. Nav column-gap tightened a little to close the rest. */
+.header-inner{padding-left:14px;padding-right:18px}
+.nav-links--desktop{column-gap:.8rem}
+.nav-links--desktop .navlink{padding-left:8px;padding-right:8px}
