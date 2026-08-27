@@ -1049,8 +1049,11 @@ main section > h2:first-child{
   min-width:0;
   gap:1rem;
 }
-.header-inner > *{min-width:0}
-.nav-desktop{min-width:0;flex:0 1 auto}
+.nav-desktop{flex:0 1 auto;min-width:0}
+/* CORRECTION: min-width:0 on the links themselves let every navlink shrink BELOW its
+   content width, which truncated all 8 (measured: scrollWidth exceeded clientWidth on
+   every one). Links must never shrink; the ROW wraps instead. */
+.nav-links--desktop .navlink{flex:0 0 auto;min-width:max-content}
 .nav-links--desktop{
   min-width:0;
   flex-wrap:wrap;
@@ -1070,3 +1073,11 @@ main section > h2:first-child{
   .nav-links--desktop{column-gap:.6rem}
   .nav-links--desktop .navlink{font-size:.68rem;letter-spacing:.04em}
 }
+
+/* 5. Brand lockup was not vertically aligned with the nav text: .brand is a column
+   (name over tagline) sitting in a row whose other items are single-line, so their
+   baselines never agreed. Centre both on the cross axis. */
+.header-inner{align-items:center}
+.brand{display:flex;align-items:center}
+.brand a{display:flex;flex-direction:column;justify-content:center;line-height:1.15}
+.nav-links--desktop{align-items:center}
