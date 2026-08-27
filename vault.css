@@ -1098,15 +1098,11 @@ main section > h2:first-child{
    the theme's existing --c polygon rather than inventing a second shape.
    ═══════════════════════════════════════════════════════════════ */
 
-/* 8a. Action buttons: pill -> chamfered plate. These were border-radius 999px,
-   which is the one shape in the theme that contradicts the machined-plate idiom. */
-.writing-link, .writing-thread, .writing-card-actions > a,
-.card-expand > summary, .cta, .btn, .button, a.plate-btn{
-  --c:8px;
-  border-radius:0 !important;
-  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
-                    calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
-}
+/* 8a. REVERSED 2026-08-27 per the author: bevel belongs on CARDS, not on controls.
+   The previous rule chamfered .writing-link, .writing-thread, .card-expand summary,
+   .cta, .btn and friends; buttons now keep their pill so the bevel reads as a
+   surface treatment rather than a button style. Nothing to declare here: removing
+   the override restores the pill radius these controls already had. */
 
 /* 8b. Research cards take the same bevel at card scale. */
 .writing-card, .research-card, .research-card--compact, .featured-paper-card{
@@ -1274,3 +1270,20 @@ ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
 .nav-desktop{flex:1 1 auto; min-width:0; display:flex; align-items:center; justify-content:flex-end}
 .nav-links--desktop{flex:1 1 auto; min-width:0; justify-content:flex-end}
 #themeToggle, .tog{order:99; flex:0 0 auto; margin-inline-start:.4rem}
+
+/* 8d. BEVEL ON ALL CARDS (author, 2026-08-27). Most card classes already get the
+   chamfer from the theme's own plate group at ~line 786 (.card, .companion-card,
+   .brief-finding, .compact-card, .about-card, .audience-panel, .letter-card-sm,
+   .hero-rail, .patent-area, .key-num-card, .framework-card, .stat-card, .callout,
+   .note-card, blockquote). These are the card surfaces that were NOT in it. Same
+   --c polygon, so there is one bevel on the site rather than two. */
+.writing-card, .research-card, .research-card--compact, .featured-paper-card,
+.plate, .card--polished, .paper, .letter-card, .resume-summary-card,
+.explainer, .ai-card, .ai-finding, .ai-callout, .research-card-sm{
+  --c:16px;
+  border-radius:0 !important;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                    calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+/* a clipped box crops its own hover scale, so grow from centre */
+.writing-card, .featured-paper-card{transform-origin:center center}
