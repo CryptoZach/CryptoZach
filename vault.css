@@ -1035,3 +1035,38 @@ main section > h2:first-child{
   background:var(--shoulder);
   border-color:var(--accent);
 }
+
+/* 4. Header clipped and off-centre on desktop, measured 2026-08-27.
+   At 1440px .header-inner needed scrollWidth 2084 against clientWidth 1440, so 644px was
+   clipped with flex-wrap:nowrap and the last navlink ("Contact") sat 410px past the right
+   edge. It was also never centred: max-width 1480px with margin 0/0. Cause is this theme's
+   own nav typography (uppercase mono with .085em tracking) against 8 nav links plus a 501px
+   brand plus 4 social marks. Fix centres the row, lets it shrink, tightens nav typography,
+   and retires the header social marks below 1600px where they do not fit (they are still in
+   the footer, so no destination is lost). */
+.header-inner{
+  margin-inline:auto;
+  min-width:0;
+  gap:1rem;
+}
+.header-inner > *{min-width:0}
+.nav-desktop{min-width:0;flex:0 1 auto}
+.nav-links--desktop{
+  min-width:0;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  row-gap:.25rem;
+  column-gap:.85rem;
+}
+.nav-links--desktop .navlink{
+  font-size:.72rem;
+  letter-spacing:.055em;
+  white-space:nowrap;
+}
+@media (max-width:1600px){
+  .header-social{display:none}
+}
+@media (max-width:1320px){
+  .nav-links--desktop{column-gap:.6rem}
+  .nav-links--desktop .navlink{font-size:.68rem;letter-spacing:.04em}
+}
