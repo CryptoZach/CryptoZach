@@ -1458,24 +1458,51 @@ header .brand a span{padding-left:0 !important}
    them. The kicker dot keeps the site's own treatment: a second disc there
    would restate the header mark one band lower, which is the duplication the
    author called out. */
+/* 11d-ii. TWO FIXES TO THE SAME SPECTRUM, 2026-08-28. The five hues and their
+   order are unchanged, because they are the brand orb's own stops and that is
+   the program signature the author settled on. What changed is how they are
+   deployed, both faults measured rather than eyeballed.
+
+   (1) UNEVEN INK. The five stops were not one colour at five hues, they were
+   five different LIGHTNESSES: L* 25.5 to 44.5 in light (spread 19) and 40.7 to
+   55.6 in dark (spread 15). Teal sat 17 L* above violet, so a word crossing
+   both read as a word typed in two different inks, and light-mode amber at
+   L* 38 on a near-white ground was the muddy one that looked like an error.
+   Every stop is now solved to ONE target lightness per theme (31 light, 54
+   dark), hue and hue order held, saturation lifted 12 percent in light so the
+   darker stops read as colour rather than as dirty ink.
+
+   (2) FIVE HUES ON AN EIGHT-LETTER WORD. At 220% the visible window spanned
+   most of the ramp, so OVERVIEW got a hue change per letter: navy, violet,
+   crimson, amber, one word in five colours, which reads as confetti and not as
+   a gradient. At 520% the window is 19.2% of the ramp, almost exactly one
+   stop-to-stop segment, so a kicker is a two-hue sweep and reads as one
+   considered colour.
+
+   The per-page offset is why the resting state is not blue everywhere. With
+   reduced motion the animation never runs, so a fixed start would put every
+   subpage back on the blue the author rejected; vault.js instead seeds
+   --kicker-offset from the kicker's own text, so Overview, Frameworks and
+   Research each rest on a different band and stay there. */
 :root{
   --kicker-spectrum:linear-gradient(100deg,
-    #3b82f6 0%, #7c3aed 20%, #be123c 40%, #b45309 60%, #0d9488 80%, #3b82f6 100%);
+    #337df6 0%, #9863f1 20%, #ec3b66 40%, #d1600a 60%, #0d9185 80%, #337df6 100%);
+  --kicker-offset:30%;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
     --kicker-spectrum:linear-gradient(100deg,
-      #1e3a8a 0%, #4c1d95 20%, #9f1239 40%, #854d0e 60%, #0f766e 80%, #1e3a8a 100%);
+      #1b40a7 0%, #5a1abe 20%, #94082f 40%, #6e3d05 60%, #06524c 80%, #1b40a7 100%);
   }
 }
 :root[data-theme="light"]{
   --kicker-spectrum:linear-gradient(100deg,
-    #1e3a8a 0%, #4c1d95 20%, #9f1239 40%, #854d0e 60%, #0f766e 80%, #1e3a8a 100%);
+    #1b40a7 0%, #5a1abe 20%, #94082f 40%, #6e3d05 60%, #06524c 80%, #1b40a7 100%);
 }
 .kicker--vault .kicker-text{
   background-image:var(--kicker-spectrum);
-  background-size:220% 100%;
-  background-position:0 0;
+  background-size:520% 100%;
+  background-position:var(--kicker-offset, 30%) 0;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
@@ -1483,10 +1510,17 @@ header .brand a span{padding-left:0 !important}
   animation:none;
 }
 @media (prefers-reduced-motion: no-preference){
-  /* slow enough to read as a settled gradient, not a moving light */
-  .kicker--vault .kicker-text{animation:kickerSpectrum 34s linear infinite}
+  /* BREATHE, DO NOT TRAVERSE. A full pass through the ramp defeats the per-page
+     offset: every kicker eventually shows every hue, so the page identity lasts
+     only as long as one frame, and each pass drags the word through the amber
+     and green band, which at L* 31 on a near-white ground is the muddy reading
+     the author objected to in the first place. Measured from the hue-versus-
+     offset sweep: 13% of offset moves the rendered hue 40 to 70 degrees, so a
+     6% swing is about 25 degrees, a shimmer inside one family. Alternate rather
+     than loop, so there is no seam where it snaps back. */
+  .kicker--vault .kicker-text{animation:kickerSpectrum 19s ease-in-out infinite alternate}
 }
 @keyframes kickerSpectrum{
-  from{background-position:0 0}
-  to{background-position:220% 0}
+  from{background-position:calc(var(--kicker-offset, 39%) - 6%) 0}
+  to{background-position:calc(var(--kicker-offset, 39%) + 6%) 0}
 }
