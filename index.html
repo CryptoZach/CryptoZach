@@ -880,9 +880,78 @@ footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);paddin
   .papers,.keys{grid-template-columns:repeat(2,1fr)}
   .stats{grid-template-columns:repeat(3,1fr)}
 }
+/* ── HOMEPAGE MOBILE MENU (option C, author-chosen 2026-08-28) ────────────────
+   Below 900px the homepage hid its eight nav links and offered nothing in their
+   place: measured at 390px the only reachable header controls were the brand
+   link, which points at the page you are already on, and the theme toggle. The
+   body still carried 36 internal links so the page was never a dead end, but
+   the header was inert where the other 50 pages open a directory panel.
+
+   Built in the homepage's OWN idiom rather than by porting the shared
+   subsystem, which is 31 lines of markup, 335 lines of CSS across 48 blocks and
+   72 lines of JS against a page that loads no styles.css at all. Same three
+   groups and the same 900px breakpoint as the interior panel, so the menu does
+   not change identity when you leave the homepage. Enrolling this page in the
+   shared chrome remains the end state; see the note at the top of the file. */
+.menu-tog{display:none}
+.menu-tog .ic-close{display:none}
+.menu-tog[aria-expanded="true"] .ic-open{display:none}
+.menu-tog[aria-expanded="true"] .ic-close{display:block}
+.nav-mobile-home[hidden]{display:none}
+.nav-mobile-home{
+  position:fixed;left:0;right:0;bottom:0;
+  /* the header's MEASURED height, set from JS. A hardcoded 73px was wrong at
+     390 because this header wraps to two rows there, and the panel then covered
+     its own close button. */
+  top:calc(var(--hdr-h, 73px) + env(safe-area-inset-top, 0px));
+  z-index:11000;background:var(--void);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+.nmh-directory{
+  display:flex;flex-direction:column;gap:2rem;
+  width:100%;max-width:340px;margin-inline:auto;margin-block:0;
+  padding:1.5rem 1rem 3rem;box-sizing:border-box;
+}
+.nmh-col{display:flex;flex-direction:column;align-items:stretch;gap:.1rem}
+.nmh-label{
+  margin:0 0 .65rem;padding-left:1rem;
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-mute);opacity:.75;
+}
+.nmh-set{display:flex;flex-direction:column;align-items:stretch;gap:.1rem}
+/* left-aligned with one shared indent and a chevron column, the same shape the
+   shared panel was corrected to in this cycle */
+.nmh-set a{
+  position:relative;display:flex;align-items:center;
+  width:100%;min-height:44px;padding:.45rem 2.25rem .45rem 1rem;
+  box-sizing:border-box;text-align:left;
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:1.05rem;color:var(--ink-soft);
+  border-left:2px solid transparent;
+  transition:color .15s, background .15s, border-color .15s;
+}
+.nmh-set a::after{
+  content:"\203A";position:absolute;right:1.25rem;
+  color:var(--ink-mute);font-size:1.1rem;line-height:1;
+}
+.nmh-set a:hover,.nmh-set a:focus-visible{
+  color:var(--ink);
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+  border-left-color:var(--accent);
+}
+.nmh-social{display:flex;gap:.65rem;padding-left:1rem}
+html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 @media (max-width:900px){
   .navlinks{display:none}
+  .menu-tog{display:grid}
+  /* the panel's Connect group carries these, and keeping them in the header
+     wrapped it to two rows at 390 */
+  .hdr .header-social{display:none}
   .letters,.frames{grid-template-columns:1fr}
+}
+@media (min-width:901px){
+  .nav-mobile-home{display:none}
 }
 @media (max-width:560px){
   .papers,.keys{grid-template-columns:1fr}
@@ -935,12 +1004,47 @@ footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);paddin
     <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
     <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
     </div>
+    <button class="tog menu-tog" type="button" id="menuToggle" aria-expanded="false"
+            aria-controls="nav-mobile-home" aria-label="Open menu" title="Menu">
+      <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
     <button class="tog" type="button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
       <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>
     </button>
   </div>
 </header>
+  <nav id="nav-mobile-home" class="nav-mobile-home" hidden inert aria-hidden="true" aria-label="Main navigation">
+    <div class="nmh-directory">
+      <div class="nmh-col">
+        <p class="nmh-label">Research &amp; product</p>
+        <div class="nmh-set">
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/letters/">Letters</a>
+        </div>
+      </div>
+      <div class="nmh-col">
+        <p class="nmh-label">Navigate</p>
+        <div class="nmh-set">
+          <a href="/overview/">Overview</a>
+          <a href="/resume/">Roles</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+      <div class="nmh-col">
+        <p class="nmh-label">Connect</p>
+        <div class="nmh-social"><a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+    <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a></div>
+      </div>
+    </div>
+  </nav>
+
 
 <main id="top">
 
@@ -1304,6 +1408,63 @@ footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);paddin
   var root = document.documentElement;
   function get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
   function set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+
+  /* ── MOBILE MENU ───────────────────────────────────────────────────────────
+     Six behaviours, and they are correctness rather than taste, so they match
+     the interior panel one for one: hidden+inert+aria-hidden while closed so it
+     leaves the a11y tree, focus to the first link on open, Escape closes and
+     returns focus to the button, a Tab trap while open, the body scroll locked,
+     and an automatic close when the viewport goes back past the breakpoint. The
+     media query below MUST match the CSS collapse at 900px: the shared version
+     carries a comment saying a mismatch there once left its focus trap inert in
+     the band where the hamburger showed. */
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var panel = document.getElementById('nav-mobile-home');
+    if (!btn || !panel) return;
+    var MQ = window.matchMedia('(max-width: 900px)');
+    var root = document.documentElement;
+    var hdr = document.querySelector('header .hdr') || document.querySelector('header');
+    function syncHeaderHeight(){
+      if (hdr) root.style.setProperty('--hdr-h', Math.round(hdr.getBoundingClientRect().height) + 'px');
+    }
+    syncHeaderHeight();
+    window.addEventListener('resize', syncHeaderHeight);
+    function focusables(){
+      return panel.querySelectorAll('.nmh-set a, .nmh-social a');
+    }
+    function setOpen(open){
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      panel.hidden = !open;
+      panel.inert = !open;
+      panel.setAttribute('aria-hidden', String(!open));
+      root.classList.toggle('nav-open', open);
+      if (open) syncHeaderHeight();
+      if (open) window.requestAnimationFrame(function(){
+        var first = focusables()[0]; if (first) first.focus();
+      });
+    }
+    function close(){ if (btn.getAttribute('aria-expanded') === 'true') setOpen(false); }
+    btn.addEventListener('click', function(){
+      setOpen(btn.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape') return;
+      if (btn.getAttribute('aria-expanded') === 'true'){ setOpen(false); btn.focus(); }
+    });
+    panel.addEventListener('keydown', function(e){
+      if (e.key !== 'Tab' || btn.getAttribute('aria-expanded') !== 'true') return;
+      var f = focusables(); if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    });
+    panel.addEventListener('click', function(e){ if (e.target.closest('a')) close(); });
+    window.addEventListener('resize', function(){ if (!MQ.matches) close(); });
+    if (typeof MQ.addEventListener === 'function') MQ.addEventListener('change', function(e){ if (!e.matches) close(); });
+    else if (typeof MQ.addListener === 'function') MQ.addListener(function(e){ if (!e.matches) close(); });
+  })();
 
   /* black-hole collapse on the brand mark, click-triggered, self-clearing */
   (function(){

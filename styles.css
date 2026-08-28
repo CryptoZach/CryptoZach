@@ -20684,8 +20684,15 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   gap:2.75rem 4.5rem;
   width:100%;
   max-width:760px;
-  margin:auto;
-  padding:3rem 1.5rem;
+  /* margin-inline auto, NOT margin:auto. The panel is a flex column with
+     justify-content:flex-start, so an auto BLOCK margin absorbs the free space
+     and centres this vertically: measured 113px of nothing above the first
+     group label at 390x844, 14% of the panel, which pushed Connect onto the
+     bottom edge. Horizontal centring is what was wanted; vertical was a side
+     effect of the shorthand. */
+  margin-inline:auto;
+  margin-block:0;
+  padding:1.5rem 1.5rem 3rem;
   box-sizing:border-box;
 }
 #nav-mobile .nav-directory__col{
@@ -20715,7 +20722,9 @@ footer.site-footer .footer-newsletter__privacy a:hover{
 }
 #nav-mobile .nav-directory .mobile-nav-linkset .navlink{
   width:100%;
-  min-height:40px;
+  /* 44, not 40. Clears Apple's 44pt guidance; WCAG 2.5.8 AA (24px) was already
+     met, so this is a comfort floor rather than a conformance fix. */
+  min-height:44px;
   padding:.45rem .5rem .45rem calc(var(--space-md) + 8px);
   font-size:1.05rem;
 }
@@ -20734,11 +20743,17 @@ footer.site-footer .footer-newsletter__privacy a:hover{
     max-width:340px;
     padding:2rem 1rem;
   }
-  #nav-mobile .nav-directory__col{ width:100%; min-width:0; align-items:center; }
-  #nav-mobile .nav-directory__label{ padding-left:0; text-align:center; }
-  #nav-mobile .nav-directory .mobile-nav-linkset{ align-items:center; }
-  #nav-mobile .nav-directory .mobile-nav-linkset .navlink{ text-align:center; padding-left:.5rem; }
-  #nav-mobile .nav-directory .nav-mobile-social{ justify-content:center; padding-left:0; }
+  /* LEFT-ALIGNED, because a menu is scanned down its left edge and this one had
+     none. Centring gave 8 links SIX distinct text left edges (88 to 169px), and
+     because the chevrons sit at a fixed right edge the gap between label and
+     chevron then ranged 45px to 126px, an 81px spread, which is what read as
+     unfinished. One shared indent fixes both: labels, rows and the social strip
+     all hang off the same value. */
+  #nav-mobile .nav-directory__col{ width:100%; min-width:0; align-items:stretch; }
+  #nav-mobile .nav-directory__label{ padding-left:var(--space-md); text-align:left; }
+  #nav-mobile .nav-directory .mobile-nav-linkset{ align-items:stretch; }
+  #nav-mobile .nav-directory .mobile-nav-linkset .navlink{ text-align:left; padding-left:var(--space-md); }
+  #nav-mobile .nav-directory .nav-mobile-social{ justify-content:flex-start; padding-left:var(--space-md); }
 }
 
 /* Mobile nav drawer overlay fix (2026-06-24): force a fixed, opaque, full-height
