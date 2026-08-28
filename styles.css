@@ -6990,12 +6990,55 @@ footer.site-footer{
   --footer-strip-text:rgba(232, 234, 239, 0.94);
   --footer-strip-muted:rgba(210, 214, 222, 0.9);
 }
+/* THE NAV COLUMN IS THE ONE THAT SHOULD YIELD, and it was the only one that
+   could not. With `auto` in the middle the nav took its full content width
+   FIRST (1266px, measured, and it does not wrap), leaving the two minmax(0,1fr)
+   columns 115px at 1600 and 35px at 1440. The copy needs 247, so it overflowed
+   its column by 212px and painted straight over "Overview" and "Frameworks",
+   and the social column got 35px so its four icons stacked FOUR rows deep.
+
+   The rule below at max-width 1320px already names this collision ("to keep
+   'Tokenization Systems' from clipping into 'Frameworks'") but guards the wrong
+   side of it: the parts want 1266 + 247 + 152 plus two gaps, about 1705px, so
+   the row does not fit until roughly a 1770px viewport and collides at every
+   common desktop width above the 1320 breakpoint, which is where it was
+   reported.
+
+   So: the two small items take their content width, the long list flexes and
+   wraps. That is width-independent and needs no breakpoint to be right. */
 footer.site-footer .footer-top{
   display:grid;
-  grid-template-columns:minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns:minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
   align-items:center;
   gap:var(--space-md);
   width:100%;
+}
+footer.site-footer .footer-nav{
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* NAV ON ITS OWN ROW above 1320, which is where the three-across layout is
+   active. One row cannot satisfy both constraints at once: for the nav to be
+   centred on the PAGE the two side columns must be EQUAL, and the copy (247px)
+   is wider than the social block (152px), so equal columns squeeze the social
+   block until its four icons stack four rows deep. Measured both ways before
+   choosing: auto/1fr/auto keeps the social block intact but puts the nav's
+   centre 95px left of the page axis the newsletter block sits on, which is the
+   misalignment that was reported; equal columns centre it and break the social
+   block. Giving the nav the full width resolves both, and it is the ordinary
+   footer shape: links centred over a copyright-left, social-right baseline. */
+@media (min-width: 1321px){
+  footer.site-footer .footer-top{
+    grid-template-columns:1fr auto 1fr;
+    grid-template-areas:
+      "nav  nav nav"
+      "copy .   social";
+    row-gap:var(--space-sm);
+  }
+  footer.site-footer .footer-nav{ grid-area:nav; }
+  footer.site-footer .footer-copy{ grid-area:copy; justify-self:start; }
+  footer.site-footer .footer-links{ grid-area:social; justify-self:end; flex-wrap:nowrap; }
 }
 footer.site-footer .footer-copy{
   justify-self:start;
