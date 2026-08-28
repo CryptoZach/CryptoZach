@@ -844,6 +844,7 @@ function vaultMountDial(cv, opts){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
+  var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function rgba(hex, a){
@@ -1062,7 +1063,16 @@ function vaultMountDial(cv, opts){
     if (cur){
       var ddx = cur.x - size/2, ddy = cur.y - size/2;
       var dd = Math.sqrt(ddx*ddx + ddy*ddy);
-      if (dd > R*0.84 && dd < R*1.04){ contact = true; grindA = Math.atan2(ddy, ddx); }
+      /* A FINGER CANNOT FIND A 39px RING. The mouse band is 0.84R to 1.04R,
+         which on the 505px hero dial is r 163 to 202: twenty percent of the
+         radius, about 39px wide. That is a fine mouse target and an impossible
+         touch one, and "drag around the edges" naturally means the OUTER edge of
+         the canvas, which sits outside it entirely (measured: a drag at r=212
+         registers nothing, r=197 registers). Coarse pointers get 0.62R to 1.28R,
+         about 130px, which a fingertip can land on while still excluding the
+         core and its bolts. The mouse path keeps its precision. */
+      var rimIn = COARSE_DIAL ? 0.62 : 0.84, rimOut = COARSE_DIAL ? 1.28 : 1.04;
+      if (dd > R*rimIn && dd < R*rimOut){ contact = true; grindA = Math.atan2(ddy, ddx); }
     }
     if (contact && !reduce){
       grind = Math.min(1, grind + 0.2);

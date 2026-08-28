@@ -355,6 +355,14 @@ header{
 /* ══ HERO: the matrix field runs the full bleed, copy sits on plate ══ */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--mill-2)}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* THE DIAL TAKES ITS OWN DRAGS. Its grind is driven by pointermove, which on a
+   touch screen fires only while a finger is down; without this the browser
+   claims that gesture for scrolling and sends pointercancel, so dragging around
+   the rim scrolled the page and the wheel never bit. touch-action:none is scoped
+   to the dial itself, NOT the hero: the hero is full-bleed and blocking scroll
+   there would trap the page. The dial is one bounded control in a tall document,
+   which is the ordinary treatment for a knob. */
+#dial{touch-action:none}
 #mtx{z-index:1;opacity:.9}
 #reef{z-index:2}
 #pile{z-index:3}
@@ -942,15 +950,28 @@ footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);paddin
 }
 .nmh-social{display:flex;gap:.65rem;padding-left:1rem}
 html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
-@media (max-width:900px){
+/* COLLAPSE AT 1280, which is what the other 50 pages do (styles.css shows the
+   interior nav at @media (min-width:1280px)). At 900 the homepage kept eight
+   links in a band where they do not fit: measured 1024 -> two rows of [5,3],
+   1100 and 1180 -> [6,2], header 108px against the interior's 73px in the same
+   band. That asymmetric wrap is the reported defect, and the eight links only
+   fit one row from 1280 up, which is exactly where the interior reveals them. */
+@media (max-width:1279px){
   .navlinks{display:none}
   .menu-tog{display:grid}
+  /* 11px, not 10. Below 1280 the nav is in the panel, so the brand block is no
+     longer competing for the row and the tagline does not have to be set at a
+     size chosen to get out of its way. 10px of tracked-out uppercase mono is
+     the reported "hard to read". */
+  .brand a > span{font-size:.6875rem;letter-spacing:.06em}
   /* the panel's Connect group carries these, and keeping them in the header
      wrapped it to two rows at 390 */
   .hdr .header-social{display:none}
+}
+@media (max-width:900px){
   .letters,.frames{grid-template-columns:1fr}
 }
-@media (min-width:901px){
+@media (min-width:1280px){
   .nav-mobile-home{display:none}
 }
 @media (max-width:560px){
@@ -971,12 +992,25 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   .hdr{flex-wrap:wrap;row-gap:.5rem}
   .brand{min-width:0;flex:1 1 auto}
   .brand a{min-width:0;flex-wrap:wrap}
-  .brand a span{display:none}
   .navlinks{flex-wrap:wrap;row-gap:.4rem;min-width:0}
   .tog{margin-left:auto;flex:0 0 auto}
+  /* THE TAGLINE IS KEPT, not dropped. It was display:none below 720 and 10px
+     above it, so on a phone the brand lost half its identity and on a tablet the
+     half it kept was 10px. The nav lives in the panel now, so the header has the
+     room: the tagline stays at a legible size and gives back the letter-spacing
+     it does not need at this width. */
+  .brand a > span{
+    display:block;
+    font-size:.6875rem;
+    letter-spacing:.05em;
+    white-space:normal;
+  }
 }
 @media (max-width:420px){
-  .brand a b{font-size:1rem}
+  /* 17px, not 16: the wordmark is the brand and 162px of a 390px viewport is
+     not where the space is tight, now that eight nav links are not in this row. */
+  .brand a b{font-size:1.0625rem}
+  .brand a > span{font-size:.6875rem;letter-spacing:.03em}
   .navlinks{width:100%;justify-content:flex-start}
 }
 </style>
@@ -1424,7 +1458,10 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var btn = document.getElementById('menuToggle');
     var panel = document.getElementById('nav-mobile-home');
     if (!btn || !panel) return;
-    var MQ = window.matchMedia('(max-width: 900px)');
+    /* MUST match the CSS collapse above. The shared implementation carries a
+       comment recording that a mismatch here once left its focus trap inert in
+       the band where the hamburger was showing. */
+    var MQ = window.matchMedia('(max-width: 1279px)');
     var root = document.documentElement;
     var hdr = document.querySelector('header .hdr') || document.querySelector('header');
     function syncHeaderHeight(){
@@ -1857,10 +1894,19 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
                  born:now, maxAge:rnd(3000,8000), gen:gen, pulse:rnd(0, Math.PI*2), ph:0,
                  free: now + GRACE_MS });
   }
+  /* A FINGER IS NOT A CURSOR. On a mouse the $ spray is continuous: the pointer
+     is always over the hero, so clusters accumulate and read as a trail. On
+     touch, pointermove fires ONLY while a finger is down, the browser competes
+     for the same gesture, and pointerleave fires the moment it lifts, so the
+     same constants produce a handful of small marks that are gone before they
+     register. Coarse pointers get a bigger, faster, wider burst per event so one
+     tap or short drag is legible; the mouse path is untouched. */
+  var COARSE = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   function spawnCluster(cx, cy, v, now){
     var count = (Math.random() < 0.3 ? 3 : 2) + (v > 0.8 ? 1 : 0);
     var speedMul = 1 + Math.min(0.6, v * 0.3);
     var spreadMul = 1 + Math.min(0.8, v * 0.4);
+    if (COARSE){ count += 4; speedMul *= 1.45; spreadMul *= 1.7; }
     for (var i = 0; i < count; i++){
       var a = rnd(0, Math.PI * 2), d = rnd(3, 18) * spreadMul;
       spawnBranch(cx + Math.cos(a)*d, cy + Math.sin(a)*d, a + rnd(-0.5,0.5), 0, rnd(0.6,1.6)*speedMul);
@@ -2222,6 +2268,19 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     if (now - lastSpawn > 40){ lastSpawn = now; spawnCluster(x, y, vel, now); }
   }, {passive:true});
   hero.addEventListener('pointerleave', function(){ active = false; vel = 0; pcx = -1; pcy = -1; });
+  /* A TAP MUST DO SOMETHING. pointermove needs travel; a stationary tap produces
+     none, so on touch the field was inert unless you dragged. pointerdown seeds
+     one burst at the contact point, and pointercancel (which the browser fires
+     when it takes the gesture for a scroll) is treated as a leave rather than
+     left to strand `active` true. */
+  hero.addEventListener('pointerdown', function(e){
+    var r = hero.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    pmx = x; pmy = y; mx = x; my = y; warpTX = x; warpTY = y; pcx = x; pcy = y;
+    active = true; lastMove = performance.now();
+    spawnCluster(x, y, 1.2, lastMove);
+  }, {passive:true});
+  hero.addEventListener('pointercancel', function(){ active = false; vel = 0; pcx = -1; pcy = -1; });
 
   var ambient = 0;
   function frame(){
@@ -2296,6 +2355,7 @@ function vaultMountDial(cv, opts){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
+  var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function rgba(hex, a){
@@ -2514,7 +2574,16 @@ function vaultMountDial(cv, opts){
     if (cur){
       var ddx = cur.x - size/2, ddy = cur.y - size/2;
       var dd = Math.sqrt(ddx*ddx + ddy*ddy);
-      if (dd > R*0.84 && dd < R*1.04){ contact = true; grindA = Math.atan2(ddy, ddx); }
+      /* A FINGER CANNOT FIND A 39px RING. The mouse band is 0.84R to 1.04R,
+         which on the 505px hero dial is r 163 to 202: twenty percent of the
+         radius, about 39px wide. That is a fine mouse target and an impossible
+         touch one, and "drag around the edges" naturally means the OUTER edge of
+         the canvas, which sits outside it entirely (measured: a drag at r=212
+         registers nothing, r=197 registers). Coarse pointers get 0.62R to 1.28R,
+         about 130px, which a fingertip can land on while still excluding the
+         core and its bolts. The mouse path keeps its precision. */
+      var rimIn = COARSE_DIAL ? 0.62 : 0.84, rimOut = COARSE_DIAL ? 1.28 : 1.04;
+      if (dd > R*rimIn && dd < R*rimOut){ contact = true; grindA = Math.atan2(ddy, ddx); }
     }
     if (contact && !reduce){
       grind = Math.min(1, grind + 0.2);
