@@ -192,9 +192,31 @@ header{
   backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
   border-bottom:1px solid var(--mill);
 }
-.hdr{display:flex;align-items:center;gap:1.5rem;padding-block:.85rem}
+/* The header shell matches the interior header's, not the page's content wrap.
+   Measured 2026-08-28 at 1440: .wrap caps at min(2100px, 88vw) = 1267px, while
+   the interior header runs to 1480px, so the homepage header was giving away
+   213px it never needed to. That gap, not the link count, is why eight links
+   could not sit on one row here and can there. Gap 1.5rem to 1rem pays for the
+   pill padding added below; 16px between pills against the interior's 20px. */
+.hdr{
+  display:flex;align-items:center;gap:.9rem;padding-block:.85rem;
+  max-width:1480px;
+  padding-left:max(14px,env(safe-area-inset-left));
+  padding-right:max(12px,env(safe-area-inset-right));
+}
 .brand{display:flex;flex-direction:row;align-items:center;margin-right:auto}
-.brand a{display:flex;flex-direction:row;align-items:center;gap:.7rem;cursor:pointer}
+/* STACKED, and this is what pays for the nav pills below. Measured 2026-08-28 at
+   1440: the tagline rendering INLINE beside the wordmark made the brand block
+   501px wide, which left the nav box 638px for links wanting 832px, so the
+   homepage nav wrapped to two rows (three at 1100) and the header stood 108px
+   against the interior header's 73px. Same tagline-inline fault the interior
+   header already fixed, never applied here. Grid rather than a markup change:
+   the mark spans both rows, wordmark over tagline in column 2. */
+.brand a{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+  align-items:center;column-gap:.7rem;cursor:pointer}
+.brand a > .brand-mark{grid-row:1 / span 2;align-self:center}
+.brand b{grid-column:2;grid-row:1;white-space:nowrap}
+.brand a > span{grid-column:2;grid-row:2;margin-left:0}
 .brand a:active .brand-mark{transform:scale(.92);transition:transform .1s}
 .brand-mark{width:26px;height:26px;flex:none;color:var(--accent)}
 .brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.147rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--ink)}
@@ -214,13 +236,51 @@ header{
               0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);
 }
 .navlinks{display:flex;gap:1.35rem;flex-wrap:wrap}
+/* PILLS, matching the interior header. A nav item on any other page becomes a
+   blue rounded button on hover and stays one for the current page; here it was
+   bare text that only darkened, so the same control looked like two different
+   things depending on which page you were standing on. Geometry and colour are
+   read off the interior rule (.nav-links--desktop .navlink in styles.css): 6px
+   by 7px of padding, 10px radius, a transparent 1px border that only appears on
+   hover, accent at 10 percent behind it. The underline stays, because the
+   interior links carry one too. */
 .navlinks a{
   font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;
-  text-transform:uppercase;color:var(--ink-soft);padding-block:.3rem;position:relative;
+  text-transform:uppercase;color:var(--ink-soft);position:relative;
+  padding:6px;border-radius:10px;border:1px solid transparent;background:transparent;
+  transition:color .2s,background-color .2s,border-color .2s;
 }
-.navlinks a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--accent);transition:right .3s}
-.navlinks a:hover{color:var(--ink)}
-.navlinks a:hover::after{right:0}
+/* inset to the padding box, so the rule tracks the word and not the pill edge */
+.navlinks a::after{content:"";position:absolute;left:6px;right:calc(100% - 6px);bottom:3px;height:1px;background:var(--accent);transition:right .3s}
+.navlinks a:hover{
+  color:var(--ink);
+  /* interior uses --line (~.11 light, ~.075 dark); --line is unset here, so
+     half of --mill-2 lands on the same value in both themes */
+  border-color:color-mix(in srgb, var(--mill-2) 50%, transparent);
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.navlinks a:hover::after{right:6px}
+/* Present for parity even though the homepage nav has no current page: a link
+   added here later gets the interior active pill without a second edit. */
+.navlinks a[aria-current="page"]{
+  color:var(--accent);
+  border-color:color-mix(in srgb, var(--accent) 30%, var(--mill-2));
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+}
+/* Below the width where eight uppercase links fit at full spacing, tighten the
+   pills rather than wrap. Measured 2026-08-28: at 1280 the nav box is 821px and
+   the links want 960 at full spacing, so 139px has to come from somewhere;
+   letter-spacing, gap and pill padding give about 153. Under roughly 1200 it
+   wraps again, which is the pre-existing behaviour rather than a new one: this
+   header has no mobile menu to collapse into, unlike the interior one. */
+@media (max-width:1439px){
+  .hdr{gap:.5rem}
+  .navlinks{gap:.5rem}
+  .navlinks a{letter-spacing:.02em;padding:6px 4px}
+  .navlinks a::after{left:4px;right:calc(100% - 4px)}
+  .navlinks a:hover::after{right:4px}
+}
 .tog{
   width:32px;height:32px;flex:none;display:grid;place-items:center;cursor:pointer;
   background:var(--plate-2);border:1px solid var(--mill-2);color:var(--ink-soft);

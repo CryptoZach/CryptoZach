@@ -1458,6 +1458,18 @@ header .brand a span{padding-left:0 !important}
    them. The kicker dot keeps the site's own treatment: a second disc there
    would restate the header mark one band lower, which is the duplication the
    author called out. */
+/* 11c-ii. THE HEADER PILL IS ONE BLUE ON BOTH HEADERS.
+   --accent-muted resolves through --accent-wash, and the LIGHT wash drifted from
+   the light accent: measured 2026-08-28 the pill filled rgb(47,111,208) at 10%
+   while --accent is #1f5bb5, rgb(31,91,181). Dark matched exactly, which is why
+   it went unnoticed. The homepage nav pill derives its fill from --accent, so
+   the same control was two different blues depending on which page you were on.
+   Derived here too rather than re-hardcoded. Scoped to the nav on purpose: the
+   wash has 57 other callers and this is a header fix, not a token migration. */
+.nav-links--desktop .navlink:hover{
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
 /* 11d-ii. TWO FIXES TO THE SAME SPECTRUM, 2026-08-28. The five hues and their
    order are unchanged, because they are the brand orb's own stops and that is
    the program signature the author settled on. What changed is how they are
