@@ -13,7 +13,7 @@ single source of truth (scripts/program_stats.json). Author workflow:
 
 The generated region is bounded by:
     <!-- program-stats:home-stats START (...) -->
-    ...six generated .home-stat tiles...
+    ...six generated .stat tiles...
     <!-- program-stats:home-stats END -->
 
 Modes:
@@ -64,9 +64,13 @@ def generate_tiles(stats, indent):
     lines = []
     for s in stats:
         lines.append(
-            f'{indent}<div class="home-stat">'
-            f'<span class="home-stat__num">{s["value"]}</span>'
-            f'<span class="home-stat__label">{s["label"]}</span></div>')
+            # The 2026-08 vault theme reshaped the hero tiles. The generator was
+            # still emitting the pre-theme markup, so even with markers present it
+            # would have rewritten the block back to a shape the page no longer
+            # styles. Emission follows the shipped markup; the VALUES and their
+            # single source of truth are unchanged.
+            f'{indent}<div class="stat"><b>{s["value"]}</b>'
+            f'<span>{s["label"]}</span></div>')
     return lines
 
 
@@ -84,7 +88,7 @@ def locate_region(lines):
         raise ValueError(
             "hero-stats markers not found in index.html. Expected a region bounded by\n"
             "  <!-- program-stats:home-stats START (...) -->  ...  <!-- program-stats:home-stats END -->\n"
-            "Add the markers around the .home-stat tiles once, then re-run.")
+            "Add the markers around the .stat tiles once, then re-run.")
     return start_idx, end_idx, indent
 
 
