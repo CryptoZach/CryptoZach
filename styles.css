@@ -5825,22 +5825,33 @@ main.resume-profile .resume-closing{
   white-space:nowrap;
   flex-shrink:0;
 }
+/* THESE ARE LINKS TO PAPERS, and they did not look like any. Every colour in
+   the old rule was neutral: text at 72% mixed toward --muted, a --text 4% fill,
+   a --line border, and a hover that went from grey to slightly darker grey. Six
+   of them sat in a row reading as disabled chips, while the two real CTAs above
+   carried all the affordance. They also used a 4px radius, which matches
+   nothing else on the site since the nav pills settled at 10.
+
+   Accent carries the affordance now, and the resting fill is dropped so six
+   chips stop competing with the two buttons above them. Hover is the SAME
+   treatment the header nav pills use (accent at 10 percent, accent-tinted
+   border), so the site has one chip vocabulary rather than two. */
 .resume-evidence a{
   font-size:0.75rem;
   padding:0.25rem 0.625rem;
-  border-radius:4px;
+  border-radius:var(--nav-radius, 10px);
   white-space:nowrap;
-  color:color-mix(in srgb, var(--text) 72%, var(--muted));
+  color:color-mix(in srgb, var(--accent) 82%, var(--text));
   text-decoration:none;
   min-width:0;
-  border:1px solid color-mix(in srgb, var(--line) 88%, transparent);
-  background:color-mix(in srgb, var(--text) 4%, transparent);
+  border:1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background:transparent;
   transition:background 0.15s var(--ease-standard), border-color 0.15s var(--ease-standard), color 0.15s var(--ease-standard);
 }
 .resume-evidence a:hover{
-  background:color-mix(in srgb, var(--text) 8%, transparent);
-  border-color:color-mix(in srgb, var(--line) 100%, transparent);
-  color:var(--text);
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color:color-mix(in srgb, var(--accent) 30%, var(--line));
+  color:var(--accent);
 }
 .resume-evidence a:focus-visible{
   outline:2px solid var(--accent);

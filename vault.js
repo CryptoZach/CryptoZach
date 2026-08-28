@@ -900,8 +900,6 @@ function vaultMountDial(cv, opts){
     var A = token('--accent') || '#5b9cf5';
     var HOT = token('--accent-hot') || '#7ab0ff';
     var INK = token('--ink-mute') || '#9ca3af';
-    /* theme-aware on both page types, verified 2026-08-28: #a16207 light, #fbbf24 dark */
-    var GOLD_TOK = token('--brand-gold') || '#a16207';
     var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
     var R = size * 0.385;
     ctx.clearRect(0, 0, size, size);
@@ -934,31 +932,12 @@ function vaultMountDial(cv, opts){
                                 : (major ? rgba(A, .92) : rgba(INK, .5));
       ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1); ctx.stroke();
     }
-    /* THE INDEX MARK, and it is what makes the header dial look like it is
-       turning at all. Measured 2026-08-28: raising the compact spin rate alone
-       did NOT help, because this ring is 52-fold symmetric and therefore looks
-       IDENTICAL every 6.923 degrees. Frame-to-frame difference rose to 5.9/255
-       and then fell back to 1.06 as the pattern re-aligned: faster spin only
-       returns it to identical sooner. Symmetry was the fault, not speed.
-       One long bright tick makes the ring 1-fold, so there is a feature to
-       track, and at 40px its tip sweeps about 5px a second. Compact only: the
-       hero figure is large enough to read its own rotation. */
-    if (compact){
-      var ia = -Math.PI/2, ir1 = R*0.845, ir2 = R*0.995;
-      ctx.beginPath();
-      ctx.moveTo(Math.cos(ia)*ir1, Math.sin(ia)*ir1);
-      ctx.lineTo(Math.cos(ia)*ir2, Math.sin(ia)*ir2);
-      /* GOLD, not HOT. --accent-hot is a brighter BLUE (#1d5cbd light), so an
-         index painted in it is the same hue as the 52 ticks it has to be told
-         apart from: measured, a warm-pixel tracker could not find it at all and
-         locked onto the core instead. --brand-gold is the one brand colour that
-         is not in the ring, which is exactly what an index mark needs. */
-      ctx.strokeStyle = rgba(GOLD_TOK, 1); ctx.lineWidth = 4.2;
-      ctx.lineCap = 'round'; ctx.stroke(); ctx.lineCap = 'butt';
-      ctx.beginPath();
-      ctx.arc(Math.cos(ia)*ir2, Math.sin(ia)*ir2, 2.6, 0, TAU);
-      ctx.fillStyle = rgba(GOLD_TOK, 1); ctx.fill();
-    }
+    /* No index mark on the rim. One was added here on 2026-08-28 to break the
+       ring's 52-fold symmetry, which is what made the header dial look frozen,
+       and removed the same day on author instruction ("remove the orange tick").
+       The symmetry problem is real and did not go away with it, so the motion
+       cue moved to the CORE instead, which is 1-fold already and needs no mark
+       added to the face. See the conic rotation below. */
     ctx.restore();
 
     ctx.save(); ctx.rotate(-spin * 0.32);
@@ -1035,7 +1014,15 @@ function vaultMountDial(cv, opts){
          (Track B) and --brand-gold, so the core is built from those and their
          teal-400 companion. Blue through teal is the short hop, gold is the
          single glint, and blue closes the circle. */
-      var orb = ctx.createConicGradient((200 - 90) * Math.PI / 180, 0, 0);
+      /* THE CORE IS THE MOTION CUE, now that the rim carries no index.
+         The ring cannot supply one: 52 evenly spaced ticks look identical every
+         6.923 degrees, so it reads as frozen at any speed (measured: frame
+         difference rose to 5.9/255 then fell back to 1.06 as the pattern
+         re-aligned). This gradient has three distinct brand colours and ONE of
+         each, so rotating it is unambiguous movement with nothing added to the
+         face. spin*0.55 matches the tick layer, so core and rim turn together
+         rather than reading as two mechanisms. */
+      var orb = ctx.createConicGradient((200 - 90) * Math.PI / 180 + spin * 0.55, 0, 0);
       orb.addColorStop(0,    '#2563eb'); orb.addColorStop(0.28, '#0d9488');
       orb.addColorStop(0.52, '#2dd4bf'); orb.addColorStop(0.78, '#a16207');
       orb.addColorStop(1,    '#2563eb');
