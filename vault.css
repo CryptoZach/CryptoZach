@@ -1407,8 +1407,10 @@ header .brand a strong,
 header .brand a span{padding-left:0 !important}
 
 .vault-headdial{
-  width:34px;
-  height:34px;
+  /* 34 to 40 on author request 2026-08-28; the header content box is 46px
+     tall at 73px of header, so 40 fits with air and 44 would not. */
+  width:40px;
+  height:40px;
   flex:none;
   display:block;
   border-radius:50%;
@@ -1421,7 +1423,7 @@ header .brand a span{padding-left:0 !important}
 }
 .brand:active .vault-headdial{transform:scale(.92)}
 @media (max-width:640px){
-  .vault-headdial{width:27px;height:27px}
+  .vault-headdial{width:32px;height:32px}
 }
 
 /* 11c. WHY THE NAV WAS OVER BUDGET AT ALL.
@@ -1496,20 +1498,41 @@ header .brand a span{padding-left:0 !important}
    subpage back on the blue the author rejected; vault.js instead seeds
    --kicker-offset from the kicker's own text, so Overview, Frameworks and
    Research each rest on a different band and stay there. */
+/* 11d-iii. THE SPECTRUM IS THE BRAND'S OWN THREE COLOURS, 2026-08-28.
+   AUTHOR: "the rainbow colors dont look like they fit the rest of the brand
+   identity." Correct, and checkable: the previous five stops were navy,
+   VIOLET, ROSE, amber and teal, and violet and rose are defined nowhere in
+   this site's tokens. They came from the brand orb, which was itself the only
+   place they appeared. The brand has three colours that already carry meaning,
+   --brand-blue #2563eb (Track A), --brand-teal #0d9488 (Track B) and
+   --brand-gold, so the ramp is built from those.
+
+   Blue and teal are solved to ONE lightness per theme (31 light, 54 dark) by
+   the same method as before. GOLD IS DELIBERATELY NOT, and this is the one
+   place the earlier rule is traded away on purpose: at L* 31 gold is brown,
+   which is the muddy reading the author objected to in the first place, and at
+   its brand value it FAILS contrast (4.42 against the 4.5 floor on this
+   ground). It sits at L* 40 light and 64 dark, which reads as gold and clears
+   AA at 5.81 and 6.92. The cost is real and bounded: a gold page's kicker is
+   about 9 L* lighter than a blue or teal one. Nothing inside a word mismatches,
+   because each page now rests on ONE family.
+
+   Palindromic blue-teal-gold-teal-blue keeps the wrap seamless without a direct
+   gold to blue transit, which in RGB passes through a dead brown. */
 :root{
   --kicker-spectrum:linear-gradient(100deg,
-    #337df6 0%, #9863f1 20%, #ec3b66 40%, #d1600a 60%, #0d9185 80%, #337df6 100%);
-  --kicker-offset:30%;
+    #487cee 0%, #0d9185 25%, #c99204 50%, #0d9185 75%, #487cee 100%);
+  --kicker-offset:39%;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
     --kicker-spectrum:linear-gradient(100deg,
-      #1b40a7 0%, #5a1abe 20%, #94082f 40%, #6e3d05 60%, #06524c 80%, #1b40a7 100%);
+      #083db2 0%, #03534b 25%, #875206 50%, #03534b 75%, #083db2 100%);
   }
 }
 :root[data-theme="light"]{
   --kicker-spectrum:linear-gradient(100deg,
-    #1b40a7 0%, #5a1abe 20%, #94082f 40%, #6e3d05 60%, #06524c 80%, #1b40a7 100%);
+    #083db2 0%, #03534b 25%, #875206 50%, #03534b 75%, #083db2 100%);
 }
 .kicker--vault .kicker-text{
   background-image:var(--kicker-spectrum);

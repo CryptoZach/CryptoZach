@@ -997,10 +997,18 @@ function vaultMountDial(cv, opts){
        own accent rotation, copied from that rule, not a new palette. CSS conic
        0deg points up and canvas 0rad points right, hence the -90deg. */
     if (compact && ctx.createConicGradient){
+      /* AUTHOR, 2026-08-28: "the rainbow colors dont look like they fit the
+         rest of the brand identity." They did not: the old five stops were
+         navy, VIOLET, ROSE, amber, teal, and violet and rose appear nowhere
+         else on this site. The brand is three colours with meanings already
+         attached, --brand-blue #2563eb (Track A), --brand-teal #0d9488
+         (Track B) and --brand-gold, so the core is built from those and their
+         teal-400 companion. Blue through teal is the short hop, gold is the
+         single glint, and blue closes the circle. */
       var orb = ctx.createConicGradient((200 - 90) * Math.PI / 180, 0, 0);
-      orb.addColorStop(0,   '#1e3a8a'); orb.addColorStop(0.2, '#4c1d95');
-      orb.addColorStop(0.4, '#9f1239'); orb.addColorStop(0.6, '#854d0e');
-      orb.addColorStop(0.8, '#0f766e'); orb.addColorStop(1,   '#1e3a8a');
+      orb.addColorStop(0,    '#2563eb'); orb.addColorStop(0.28, '#0d9488');
+      orb.addColorStop(0.52, '#2dd4bf'); orb.addColorStop(0.78, '#a16207');
+      orb.addColorStop(1,    '#2563eb');
       ctx.beginPath(); ctx.arc(0, 0, R*0.185, 0, TAU);
       ctx.fillStyle = orb; ctx.fill();
       /* the orb's specular highlight, top-left, as in the CSS original */
@@ -1213,32 +1221,22 @@ vaultMountDial(document.getElementById('dial'));
        on the blue the author rejected. Seeding the offset from the kicker's own
        text is deterministic (Overview always lands where Overview lands, across
        loads and across pages) and needs no per-page markup. The 520% ramp holds
-       five stops. The buckets are MEASURED, not stepped: an even step through
-       offset space is NOT an even step through hue, because the ramp is cyclic
-       and blue closes it, so two of five evenly-spaced buckets came back blue
-       (measured 2026-08-28: 14 of 34 kickers read blue-dominant, and Frameworks,
-       the one word the author named, was one of them). These five offsets are
-       read off a hue-versus-offset sweep of the rendered text at 13% steps, and
-       they render blue 214, rose 338, amber 28, teal 190 and violet 263: five
-       distinct families with blue appearing exactly once. Re-derive rather than
-       nudge if the stops ever change; the mapping is not guessable from them.
+       three stops now, not five, because the ramp is the brand's three colours.
+       The buckets are MEASURED, not stepped: hue does not move at a constant
+       rate along the ramp, so an evenly-spaced bucket can land on a cliff. Each
+       of these was read off a hue-versus-offset sweep of the rendered text at
+       13% steps and sits on a FLAT stretch, which is what the CSS breathe
+       depends on. They render blue 216, teal 185 and gold 43. Re-derive rather
+       than nudge if the stops change; the mapping is not guessable from them.
        It IS independent of word length, since background-position percentages
-       are relative, so one page's sweep generalises to all of them.
-
-       Every bucket also sits on a FLAT stretch of that curve, which the CSS
-       breathe depends on: the hue does not move at a constant rate, and 78%
-       (the first teal pick) sat on the steep amber-to-teal climb where 13% of
-       offset buys 116 degrees. Sampled over a full cycle it swung 131 degrees,
-       amber through green to teal, so that one page had no colour of its own.
-       91% is the shelf just past it and swings about 32. */
-    var BUCKETS = [104, 39, 52, 91, 13];
+       are relative, so one page's sweep generalises to all of them. */
+    var BUCKETS = [117, 208, 175];
     /* PINNED beats the hash. The author ruled on one word BY NAME ("'FRAMEWORKS'
-       shouldn't be blue"), and a hash has no way to know that: measured with the
-       animation frozen, FRAMEWORKS fell in the 104% bucket and rested at hue 215,
-       which is the blue that started this. Pinning it is honest; tuning the hash
-       constant until that one word moved would be the same fix, undocumented and
-       liable to silently re-break the next time a page title changes. */
-    var PINNED = { FRAMEWORKS: 39 };
+       shouldn't be blue"), and a hash has no way to know that. Pinning it is
+       honest; tuning the hash constant until that one word moved would be the
+       same fix, undocumented and liable to silently re-break the next time a
+       page title changes. */
+    var PINNED = { FRAMEWORKS: 175 };
     var label = (span.textContent || k.textContent || '').trim().toUpperCase();
     var h = 0;
     for (var q = 0; q < label.length; q++) h = (h * 31 + label.charCodeAt(q)) % 100003;
