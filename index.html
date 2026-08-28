@@ -769,7 +769,13 @@ a.plate:hover .stamp.pub{
    dropped an 8-link nav, the Buttondown form and the only /privacy link on the site */
 .foot-top{
   display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);
-  gap:clamp(1.5rem,3vw,3rem);align-items:start;
+  /* CENTER, not START. The nav wraps to two rows at every desktop width (eleven
+     links), so align-items:start pinned the subscribe form to the top of a
+     56px-tall row while the form is a single 36px control: measured at 1440 the
+     nav ran 6571..6627 and the form 6571..6607, so the input sat 20px above the
+     nav block's centre line and read as floating rather than as part of the
+     row. Centring puts it on the block's axis. */
+  gap:clamp(1.5rem,3vw,3rem);align-items:center;
   padding-bottom:1.9rem;margin-bottom:1.6rem;border-bottom:1px solid var(--mill);
 }
 .foot-nav{display:flex;flex-wrap:wrap;gap:.55rem 1.5rem}
@@ -779,8 +785,20 @@ a.plate:hover .stamp.pub{
   color:var(--ink-soft);
 }
 .foot-nav a:hover{color:var(--accent-text)}
-.foot-sub{display:flex;gap:.6rem;flex-wrap:wrap}
-.foot-sub__field{flex:1 1 200px;padding:.7rem .9rem;font-size:.75rem}
+/* margin-bottom:0 is load-bearing, not tidying. A <form> inherits a 16px bottom
+   margin here, and grid centring centres the MARGIN box, so the form's visible
+   box landed exactly half of that, 8px, above the nav block's centre line. That
+   was the residual after align-items:center and it is the whole of the reported
+   offset at 1440 and 1200. */
+.foot-sub{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:0}
+/* basis 140, not 200. With flex-wrap the basis decides whether the row wraps
+   BEFORE any shrinking happens, and 200 + the 123px button + a 10px gap is
+   333px against the 316px this column gets at 1024. So Subscribe dropped to its
+   own line, the form grew taller than the input, and the input floated 26px
+   above the nav's centre even with the row centred. 140 + 123 + 10 = 273 fits,
+   and the input still grows to fill on wider screens. */
+.foot-sub__field{flex:1 1 140px;min-width:0;padding:.7rem .9rem;font-size:.75rem}
+.foot-sub .btn{flex:0 0 auto}
 @media (max-width:900px){ .foot-top{grid-template-columns:1fr} }
 
 /* ── FOOTER: mark left, line centred, social right ── */
