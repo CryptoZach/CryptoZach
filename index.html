@@ -627,6 +627,41 @@ section{position:relative;z-index:1}
   :root:not([data-theme="dark"]) .shot img.lite{filter:saturate(.85) contrast(1.04)}
 }
 .shot img:not(.lite){filter:saturate(.8) contrast(1.05)}
+/* THE HOVER FLIP, IN LIGHT MODE TOO. In dark the resting filter inverts the
+   diagram and `.frame:hover .shot img` drops the invert, so hovering flips it
+   light: that is the switch. In light it never fired, and not because a rule was
+   missing but because of SPECIFICITY: the light resting rule is
+   :root[data-theme="light"] .shot img.lite at (0,4,1) and the hover rule is
+   .frame:hover .shot img at (0,3,1), so resting won and the computed filter was
+   byte-identical hovered and not (measured: saturate(0.85) contrast(1.04) in
+   both states). These carry the light-mode flip at (0,6,1) so they land, and
+   they flip the other way, to the inverted form, which is dark mode's own
+   resting value rather than a second set of numbers to keep in sync.
+
+   SCOPED TO .frame, deliberately. A first version also covered .paper and
+   measured 5 of 5 cards flipping in light against 1 of 5 in dark, because the
+   dark-mode hover rule (.frame:hover .shot img) only ever covered .frame. That
+   would have been a NEW asymmetry introduced while fixing one. Mirror dark, do
+   not extend it. */
+:root[data-theme="light"] .frame:hover .shot img.lite{
+  filter:invert(1) hue-rotate(180deg) saturate(.72) brightness(.93) contrast(1.05);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .frame:hover .shot img.lite{
+    filter:invert(1) hue-rotate(180deg) saturate(.72) brightness(.93) contrast(1.05);
+  }
+}
+/* .lite.mono has its OWN pair of resting filters, so it needs its own flip or
+   the rule above would strip the mono treatment on hover. Same principle: the
+   light-mode hover value is dark mode's resting value. */
+:root[data-theme="light"] .frame:hover .shot img.lite.mono{
+  filter:invert(1) hue-rotate(180deg) brightness(.97) contrast(1.06) sepia(.6) hue-rotate(176deg) saturate(2.6);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .frame:hover .shot img.lite.mono{
+    filter:invert(1) hue-rotate(180deg) brightness(.97) contrast(1.06) sepia(.6) hue-rotate(176deg) saturate(2.6);
+  }
+}
 .shot img.lite.mono{filter:invert(1) hue-rotate(180deg) brightness(.97) contrast(1.06) sepia(.6) hue-rotate(176deg) saturate(2.6)}
 :root[data-theme="light"] .shot img.lite.mono{filter:saturate(.85) contrast(1.05) sepia(.35) hue-rotate(176deg)}
 .shot::after{
