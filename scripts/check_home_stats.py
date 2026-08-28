@@ -45,9 +45,33 @@ import sys
 REGISTRY_REL = os.path.join("scripts", "program_stats.json")
 HERO_FILE_REL = "index.html"
 
-TILE_RE = re.compile(
+# Two markup shapes, because the hero tiles were reshaped by the 2026-08 vault
+# theme and this guard was still looking for the old one. It reported all six
+# registry entries as "no matching hero tile" and BLOCKED the push, which was the
+# correct behaviour for a guard that cannot see its subject: the tiles had not
+# been removed, they had been renamed from
+#   <span class="home-stat__num">52</span><span class="home-stat__label">...
+# to
+#   <div class="stat"><b>52</b><span>...
+# with every VALUE unchanged (52, 19, $60.6T, 14, 13, 35). Both are matched so
+# the guard keeps working against pages that still carry the older markup.
+TILE_RE_LEGACY = re.compile(
     r'home-stat__num">(?P<num>[^<]+)</span>\s*'
     r'<span class="home-stat__label">(?P<label>[^<]+)</span>')
+TILE_RE_VAULT = re.compile(
+    r'class="stat"><b>(?P<num>[^<]+)</b>\s*<span>(?P<label>[^<]+)</span>')
+
+
+def find_tiles(html):
+    """Every hero tile in either markup shape, as (num, label) pairs."""
+    seen, out = set(), []
+    for rx in (TILE_RE_LEGACY, TILE_RE_VAULT):
+        for m in rx.finditer(html):
+            pair = (m.group("num").strip(), m.group("label").strip())
+            if pair not in seen:
+                seen.add(pair)
+                out.append(m)
+    return out
 
 
 def repo_root():
@@ -79,7 +103,7 @@ def parse_tiles(root):
     tiles = []
     with open(path, encoding="utf-8", errors="replace") as fh:
         for lineno, line in enumerate(fh, start=1):
-            for m in TILE_RE.finditer(line):
+            for m in find_tiles(line):
                 tiles.append({
                     "num": m.group("num").strip(),
                     "label": m.group("label").strip(),
