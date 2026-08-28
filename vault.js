@@ -843,6 +843,7 @@ function vaultMountDial(cv, opts){
   var ctx = cv.getContext('2d'), TAU = Math.PI * 2;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
+  var SPIN_SCALE = compact ? 5.2 : 1;
   function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function rgba(hex, a){
@@ -863,6 +864,8 @@ function vaultMountDial(cv, opts){
      counterclockwise drag cuts AGAINST it, bites, throws red and yellow, and
      drags the wheel down. grindDir is +1 with, -1 against, 0 while still. */
   var grindDir = 0, lastA = null, dirHeld = 0, strike = 0;
+  /* true only while the pointer is actually TRAVELLING along the rim */
+  var gMoving = false;
   /* one ding per bolt: it lights teal as the contact point passes over it */
   var boltDing = new Array(19).fill(0);
   /* the core lights while the cursor is anywhere on the dial */
@@ -897,6 +900,8 @@ function vaultMountDial(cv, opts){
     var A = token('--accent') || '#5b9cf5';
     var HOT = token('--accent-hot') || '#7ab0ff';
     var INK = token('--ink-mute') || '#9ca3af';
+    /* theme-aware on both page types, verified 2026-08-28: #a16207 light, #fbbf24 dark */
+    var GOLD_TOK = token('--brand-gold') || '#a16207';
     var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
     var R = size * 0.385;
     ctx.clearRect(0, 0, size, size);
@@ -928,6 +933,31 @@ function vaultMountDial(cv, opts){
       ctx.strokeStyle = compact ? (major ? rgba(A, 1) : rgba(A, .60))
                                 : (major ? rgba(A, .92) : rgba(INK, .5));
       ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1); ctx.stroke();
+    }
+    /* THE INDEX MARK, and it is what makes the header dial look like it is
+       turning at all. Measured 2026-08-28: raising the compact spin rate alone
+       did NOT help, because this ring is 52-fold symmetric and therefore looks
+       IDENTICAL every 6.923 degrees. Frame-to-frame difference rose to 5.9/255
+       and then fell back to 1.06 as the pattern re-aligned: faster spin only
+       returns it to identical sooner. Symmetry was the fault, not speed.
+       One long bright tick makes the ring 1-fold, so there is a feature to
+       track, and at 40px its tip sweeps about 5px a second. Compact only: the
+       hero figure is large enough to read its own rotation. */
+    if (compact){
+      var ia = -Math.PI/2, ir1 = R*0.845, ir2 = R*0.995;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(ia)*ir1, Math.sin(ia)*ir1);
+      ctx.lineTo(Math.cos(ia)*ir2, Math.sin(ia)*ir2);
+      /* GOLD, not HOT. --accent-hot is a brighter BLUE (#1d5cbd light), so an
+         index painted in it is the same hue as the 52 ticks it has to be told
+         apart from: measured, a warm-pixel tracker could not find it at all and
+         locked onto the core instead. --brand-gold is the one brand colour that
+         is not in the ring, which is exactly what an index mark needs. */
+      ctx.strokeStyle = rgba(GOLD_TOK, 1); ctx.lineWidth = 4.2;
+      ctx.lineCap = 'round'; ctx.stroke(); ctx.lineCap = 'butt';
+      ctx.beginPath();
+      ctx.arc(Math.cos(ia)*ir2, Math.sin(ia)*ir2, 2.6, 0, TAU);
+      ctx.fillStyle = rgba(GOLD_TOK, 1); ctx.fill();
     }
     ctx.restore();
 
@@ -1055,34 +1085,50 @@ function vaultMountDial(cv, opts){
         while (da >  Math.PI) da -= TAU;
         while (da < -Math.PI) da += TAU;
         if (Math.abs(da) > 0.004){ grindDir = da > 0 ? 1 : -1; dirHeld = 1; }
-        else { dirHeld = Math.max(0, dirHeld - 0.04); }
+        /* AUTHOR, 2026-08-28: the sparks fired while the cursor merely SAT on
+           the rim. Two faults, and they compounded. (1) grindDir was sticky: it
+           was set on movement and never cleared, and `against` read it alone,
+           so one counterclockwise flick left the wheel biting forever on a
+           motionless pointer. dirHeld decays four times faster now and takes
+           grindDir to neutral with it. (2) Emission was gated on CONTACT, not
+           on travel, and the rate floor was 4 against / 1.2 with, so
+           `1 + random*rate` threw at least one spark per frame at zero cursor
+           speed. Cutting metal is work: no travel, no sparks. */
+        else { dirHeld = Math.max(0, dirHeld - 0.16); if (dirHeld === 0) grindDir = 0; }
       }
       lastA = grindA;
-      var against = grindDir < 0;
+      /* actively travelling, not resting. Held briefly so a pause between two
+         pointermove events inside one frame does not strobe the effect off. */
+      gMoving = dirHeld > 0.25;
+      var against = gMoving && grindDir < 0;
 
       var ex = Math.cos(grindA)*R*0.945, ey = Math.sin(grindA)*R*0.945;
       /* against the spin throws far more material than riding with it */
       if (against) strike = Math.min(1, strike + 0.55);
-      var rate = against ? (4 + curSpeed*2.4) : (1.2 + curSpeed*0.9);
-      var n = 1 + ((Math.random() * rate) | 0);
-      for (var q2 = 0; q2 < n && sparks.length < SPARK_MAX; q2++){
-        var tang = grindA + Math.PI/2;
-        var sp = against ? (2.0 + Math.random() * (4.6 + curSpeed*1.5))
-                         : (1.1 + Math.random() * (2.6 + curSpeed));
-        var spread = (Math.random() - 0.5) * (against ? 1.35 : 0.8);
-        sparks.push({ x:ex, y:ey, px:ex, py:ey,
-                      vx: Math.cos(tang + spread)*sp, vy: Math.sin(tang + spread)*sp,
-                      life:1, hot: against, arc: against ? (Math.random() < 0.45) : true,
-                      decay: against ? (0.018 + Math.random()*0.035)
-                                     : (0.036 + Math.random()*0.055) });
+      if (gMoving){
+        var rate = against ? (4 + curSpeed*2.4) : (1.2 + curSpeed*0.9);
+        var n = 1 + ((Math.random() * rate) | 0);
+        for (var q2 = 0; q2 < n && sparks.length < SPARK_MAX; q2++){
+          var tang = grindA + Math.PI/2;
+          var sp = against ? (2.0 + Math.random() * (4.6 + curSpeed*1.5))
+                           : (1.1 + Math.random() * (2.6 + curSpeed));
+          var spread = (Math.random() - 0.5) * (against ? 1.35 : 0.8);
+          sparks.push({ x:ex, y:ey, px:ex, py:ey,
+                        vx: Math.cos(tang + spread)*sp, vy: Math.sin(tang + spread)*sp,
+                        life:1, hot: against, arc: against ? (Math.random() < 0.45) : true,
+                        decay: against ? (0.018 + Math.random()*0.035)
+                                       : (0.036 + Math.random()*0.055) });
+        }
       }
     } else {
       grind = Math.max(0, grind - 0.055);
-      lastA = null;
+      lastA = null; gMoving = false; grindDir = 0; dirHeld = 0;
     }
 
     if (grind > 0.015){
-      var bite = grindDir < 0;
+      /* a resting cursor gets the soft contact glow; the bite, its teal arc and
+         the hot core belong to travel, same rule as the sparks. */
+      var bite = gMoving && grindDir < 0;
       var coreC = bite ? YEL : TEAL_PALE, edgeC = bite ? RED : TEAL;
       var rad = R * (bite ? 0.155 : 0.10);
       var gx = Math.cos(grindA)*R*0.945, gy = Math.sin(grindA)*R*0.945;
@@ -1148,7 +1194,17 @@ function vaultMountDial(cv, opts){
     var wantGrind = grind > 0.12;
     if (wantGrind !== cv.classList.contains('grinding')) cv.classList.toggle('grinding', wantGrind);
     var drag = grindDir < 0 ? -grind * 0.0052 : grind * 0.0032;
-    spin += Math.max(-0.0012, 0.0016 + drag);
+    /* ANGULAR velocity is scale-free; PERCEIVED motion is not. The hero figure
+       turns its tick layer at spin*0.55, about 3 degrees a second, and at 320px
+       a rim feature therefore travels roughly 8px a second, which reads as a
+       slow instrument. The header mounts the same numbers at 40px, where the
+       rim radius is ~18px and that same 3 degrees a second moves a tick 0.95px
+       a second: under one pixel, which is why the mark looked frozen unless you
+       zoomed in (author, 2026-08-28). Compact scales the step so the rim moves
+       at a comparable PIXEL rate instead of a comparable angular one. 5.2x puts
+       the tick layer near 5px/s at 40px and one revolution at about 22s; at
+       60fps that is ~26 frames per tick period, well clear of strobing. */
+    spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag);
     draw(); requestAnimationFrame(frame);
   }
   window.addEventListener('resize', draw);
