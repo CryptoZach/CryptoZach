@@ -670,7 +670,16 @@ section{position:relative;z-index:1}
   text-transform:uppercase;color:var(--ink);text-align:center;line-height:2.1;
 }
 .dialfig figcaption b{color:var(--accent-text);font-weight:700;font-size:1.05em}
-@media (max-width:900px){ .dialwrap{grid-template-columns:1fr} .dialfig{order:-1} }
+/* margin-left MUST go back to 0 here. The desktop rule pulls the figure a
+   full inch left so the dial closes the gap to the text column; once the grid
+   is one column that pull has nothing to close and just shoves the dial off
+   the screen. Measured at 390px before this rule: the canvas box ran from
+   x=-49 to x=343, centred at 147 against a viewport centre of 195, with the
+   left of the ring clipped. */
+@media (max-width:900px){
+  .dialwrap{grid-template-columns:1fr}
+  .dialfig{order:-1;margin-left:0;margin-inline:auto;width:100%;max-width:505px}
+}
 
 /* The SVG mark's spin, swell, accretion and collapse keyframes lived here.
    They drove <g class="ring-o"> and friends, which the canvas dial does not
@@ -1552,7 +1561,17 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       if (hdr) root.style.setProperty('--hdr-h', Math.round(hdr.getBoundingClientRect().height) + 'px');
     }
     syncHeaderHeight();
-    window.addEventListener('resize', syncHeaderHeight);
+    /* Setting --hdr-h on the root element invalidates style for the whole
+       document. iOS Safari fires resize continuously through a pinch, because
+       innerWidth and innerHeight track the VISUAL viewport, so an unthrottled
+       listener here ran a full-document style invalidation dozens of times a
+       second during the gesture. The header height does not change during a
+       pinch at all: the layout box does not move. Settle first, then write. */
+    var hdrTimer = null;
+    window.addEventListener('resize', function(){
+      if (hdrTimer) clearTimeout(hdrTimer);
+      hdrTimer = setTimeout(function(){ hdrTimer = null; syncHeaderHeight(); }, 200);
+    }, { passive: true });
     function focusables(){
       return panel.querySelectorAll('.nmh-set a, .nmh-social a');
     }
@@ -1611,7 +1630,27 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var next = dark ? 'light' : 'dark';
     root.setAttribute('data-theme', next); set('vm-theme', next);
   });
-  function isDark(){ return getComputedStyle(root).colorScheme.indexOf('dark') > -1; }
+  /* isDark() resolved the entire root style on every call, and tintFor() calls
+     it once per mark per frame purely to build a cache key. Measured at 390x844
+     dpr3 with everything else already fixed: 3,463 root style resolutions in
+     three idle seconds from tintFor alone, ~1,150 a second, the single largest
+     style cost on the page and all of it for a boolean that changes only when
+     the theme does. Resolve once, and let the two things that can change it say
+     so. */
+  var darkCached = null;
+  function isDark(){
+    if (darkCached === null) darkCached = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
+    return darkCached;
+  }
+  if (window.MutationObserver){
+    new MutationObserver(function(){ darkCached = null; })
+      .observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+  (function(){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var clear = function(){ darkCached = null; };
+    mq.addEventListener ? mq.addEventListener('change', clear) : mq.addListener(clear);
+  })();
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hero = document.getElementById('hero');
@@ -2390,8 +2429,31 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     drawReef(now);
     pileSim();
     drawPile();
-    requestAnimationFrame(frame);
+    heroRaf = heroAwake() ? requestAnimationFrame(frame) : 0;
   }
+
+  /* Three canvases, two of them the full viewport, painted 60 times a second
+     for as long as the tab lived: scrolled past, in a background tab, and
+     through a pinch, when WebKit is simultaneously rasterizing every layer at
+     the zoom scale. That sustained cost is what the tab ran out of memory on.
+     Painting a field nobody can see buys nothing, so stop when the hero is off
+     screen or the tab is hidden and pick up where it left off on return. This
+     is NOT the rejected "pause the animation at high zoom" workaround: nothing
+     here keys on zoom, and anything on screen keeps animating exactly as it
+     did. */
+  var heroRaf = 0, heroSeen = true;
+  function heroAwake(){ return heroSeen && !document.hidden && !reduce; }
+  function heroStart(){ if (!heroRaf && heroAwake()) heroRaf = requestAnimationFrame(frame); }
+  function heroStop(){ if (heroRaf){ cancelAnimationFrame(heroRaf); heroRaf = 0; } }
+  if (window.IntersectionObserver){
+    new IntersectionObserver(function(es){
+      heroSeen = es[0].isIntersecting;
+      heroSeen ? heroStart() : heroStop();
+    }, { threshold: 0 }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? heroStop() : heroStart();
+  });
 
   /* one static composition: the field is present, nothing moves */
   function staticFrame(){
@@ -2430,7 +2492,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   } else {
     for (var s2 = 0; s2 < 26; s2++) spawnCluster(rnd(W*0.05, W*0.95), rnd(H*0.1, H*0.9), 0.2, performance.now() - rnd(0, 2000));
     fade = 0.46;
-    frame();
+    heroStart();
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ buildColumns(); });
 })();
@@ -2452,7 +2514,34 @@ function vaultMountDial(cv, opts){
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
   var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
-  function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
+  /* draw() read four computed styles off the root every frame, on both dials,
+     to fetch three custom properties and the colour scheme. Each read resolves
+     the whole root style. Measured at 390x844 dpr3: 5,094 style resolutions in
+     three idle seconds, ~1,700 a second for values that change only when the
+     theme does. Resolve them on a flag instead, and set the flag from the two
+     things that can actually change them. */
+  var skinDirty = true, skinA, skinHot, skinInk, skinDark;
+  function readSkin(){
+    skinDirty = false;
+    var cs = getComputedStyle(root);
+    skinA    = cs.getPropertyValue('--accent').trim()     || '#5b9cf5';
+    skinHot  = cs.getPropertyValue('--accent-hot').trim() || '#7ab0ff';
+    skinInk  = cs.getPropertyValue('--ink-mute').trim()   || '#9ca3af';
+    skinDark = cs.colorScheme.indexOf('dark') > -1;
+  }
+  /* The loop can be stopped when the theme flips (off screen, hidden tab,
+     reduced motion), and a stopped loop would leave the old palette baked into
+     a canvas that is about to come back into view. Mark the skin stale, and
+     repaint here if nothing else is going to. */
+  function reskin(){ skinDirty = true; if (!raf) draw(); }
+  if (window.MutationObserver){
+    new MutationObserver(reskin)
+      .observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+  (function(){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener ? mq.addEventListener('change', reskin) : mq.addListener(reskin);
+  })();
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function rgba(hex, a){
     hex = hex.replace('#','');
@@ -2496,27 +2585,32 @@ function vaultMountDial(cv, opts){
     cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
   }
 
+  /* The rect read is the other half of the same bill as the style reads above:
+     getBoundingClientRect forces a layout flush, and fit() ran from draw(),
+     once per frame, on two dials. The dial's box only moves on a resize or a
+     font load, so measure on a flag too. setTransform stays unconditional and
+     costs no flush, and it has to, because a reallocation clears it. */
+  var boxDirty = true, dpr = 1;
   function fit(){
-    var r = cv.getBoundingClientRect();
-    size = Math.max(minSize, r.width || 320);
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    /* Assigning canvas.width or canvas.height destroys and reallocates the
-       backing store even when the value is unchanged, and fit() runs from
-       draw(), which runs once per animation frame on two dials. That was 120
-       full canvas reallocations a second, which is what iOS Safari runs out
-       of memory on while it is also rasterizing the page at a pinch-zoom
-       scale. Reallocate only on a real size change; the transform is cheap
-       and stays unconditional because a realloc clears it. */
-    var w = Math.floor(size * dpr), h = w;
-    if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; }
+    if (boxDirty){
+      boxDirty = false;
+      var r = cv.getBoundingClientRect();
+      size = Math.max(minSize, r.width || 320);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* Assigning canvas.width or canvas.height destroys and reallocates the
+         backing store even when the value is unchanged. That was 120 full
+         canvas reallocations a second, which is what iOS Safari runs out of
+         memory on while it is also rasterizing the page at a pinch-zoom
+         scale. Reallocate only on a real size change. */
+      var w = Math.floor(size * dpr), h = w;
+      if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; }
+    }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function draw(){
     fit();
-    var A = token('--accent') || '#5b9cf5';
-    var HOT = token('--accent-hot') || '#7ab0ff';
-    var INK = token('--ink-mute') || '#9ca3af';
-    var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
+    if (skinDirty) readSkin();
+    var A = skinA, HOT = skinHot, INK = skinInk, dark = skinDark;
     var R = size * 0.385;
     ctx.clearRect(0, 0, size, size);
     ctx.save(); ctx.translate(size/2, size/2);
@@ -2817,10 +2911,50 @@ function vaultMountDial(cv, opts){
        the tick layer near 5px/s at 40px and one revolution at about 22s; at
        60fps that is ~26 frames per tick period, well clear of strobing. */
     spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag);
-    draw(); requestAnimationFrame(frame);
+    draw();
+    raf = awake() ? requestAnimationFrame(frame) : 0;
   }
-  window.addEventListener('resize', draw);
-  reduce ? draw() : frame();
+
+  /* Same reasoning as the hero field: a dial scrolled off the screen, or in a
+     hidden tab, is painting 52 ticks, 19 bolts, four gradients and up to 340
+     sparks for nobody, and it was doing it right through the pinch that killed
+     the tab. Nothing here keys on zoom. The header dial is sticky, so it stays
+     intersecting and keeps turning; it is the 505px hero dial that stops. */
+  var raf = 0, seen = true;
+  function awake(){ return seen && !document.hidden && !reduce; }
+  function start(){ if (!raf && awake()) raf = requestAnimationFrame(frame); }
+  function stop(){ if (raf){ cancelAnimationFrame(raf); raf = 0; } }
+  if (window.IntersectionObserver){
+    new IntersectionObserver(function(es){
+      seen = es[0].isIntersecting;
+      seen ? start() : stop();
+    }, { threshold: 0 }).observe(cv);
+  }
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? stop() : start();
+  });
+
+  /* This listener is the residual the 2026-08-28 fix left behind. It guarded
+     the canvas REALLOCATION but left the redraw itself on an unthrottled
+     resize, and draw() is the expensive half: iOS fires resize continuously
+     through a pinch, so a two-second gesture ran ~120 full dial repaints per
+     dial on top of the animation loop already running. Measured at 390x844
+     dpr3, 120 resize events scheduled 16ms apart took 6,039ms of wall clock
+     instead of 1,920, i.e. the main thread was saturated more than 3x over.
+     The dial's layout box does not move during a pinch, so every one of those
+     repaints was redundant. Settle first, and only then re-measure and paint. */
+  var reTimer = null;
+  window.addEventListener('resize', function(){
+    if (reTimer) clearTimeout(reTimer);
+    reTimer = setTimeout(function(){
+      reTimer = null; boxDirty = true; skinDirty = true;
+      draw();
+    }, 200);
+  }, { passive: true });
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ boxDirty = true; });
+  }
+  reduce ? draw() : start();
 }
 vaultMountDial(document.getElementById('dial'));
 vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true });
