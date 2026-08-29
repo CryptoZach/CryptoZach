@@ -1,4 +1,86 @@
-<title>Vault Matrix</title>
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    /* Set the stored theme before first paint, so the vault surface does not
+       flash the wrong ground. Same key the toggle writes at the end of body. */
+    (function(){
+      try {
+        var saved = localStorage.getItem('vm-theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>Tokenization Systems | Stablecoin &amp; Digital Asset Research</title>
+  <meta name="description" content="Digital money should be programmable money. Independent research on programmable money, tokenization, and tokenomics; eight SSRN papers." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="stablecoin research, tokenization, CLII, MVEP, digital asset risk, institutional diligence, tokenized securities, DePIN, stablecoin regulation" />
+
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
+  <meta property="og:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and eighteen federal comment letters across programmable money, tokenization, and tokenomics." />
+  <meta property="og:url" content="https://tokenization.systems/" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
+  <meta property="og:image:width" content="3200" />
+  <meta property="og:image:height" content="1800" />
+  <meta property="og:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
+  <link rel="canonical" href="https://tokenization.systems/" />
+  <link rel="sitemap" type="application/xml" href="https://tokenization.systems/sitemap.xml" title="Sitemap" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Tokenization Systems | Stablecoin &amp; Digital Asset Research" />
+  <meta name="twitter:description" content="Digital money should be programmable money. Diligence for the tokenization era. Eight SSRN papers and eighteen federal comment letters across programmable money, tokenization, and tokenomics." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
+  <meta name="twitter:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -1014,6 +1096,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   .navlinks{width:100%;justify-content:flex-start}
 }
 </style>
+</head>
+<body>
 
 <header>
   <div class="wrap hdr">
@@ -1557,8 +1641,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var r = hero.getBoundingClientRect();
     W = Math.max(320, r.width); H = Math.max(320, r.height);
     dpr = Math.min(window.devicePixelRatio || 1, 2);
+    /* iOS Safari fires window resize continuously through a pinch gesture,
+       because innerWidth and innerHeight track the VISUAL viewport. The hero
+       layout box does not move under a pinch, so without this guard a zoom
+       gesture reallocated two full-viewport canvases dozens of times a
+       second and the tab was killed for memory. Bail when nothing changed. */
+    var cw = Math.floor(W * dpr), ch = Math.floor(H * dpr);
+    if (mtxC.width === cw && mtxC.height === ch && rfC.width === cw && rfC.height === ch) return;
     [mtxC, rfC].forEach(function(c){
-      c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
+      c.width = cw; c.height = ch;
       c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
     });
     bandH = 0;
@@ -2322,10 +2413,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     if (reduce) staticFrame();
   }
 
+  var resizeTimer = null;
   window.addEventListener('resize', function(){
-    resize();
-    if (reduce) staticFrame();
-  });
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      resizeTimer = null;
+      resize();
+      if (reduce) staticFrame();
+    }, 200);
+  }, { passive: true });
   resize();
   if (reduce){
     for (var s = 0; s < 90; s++) spawnCluster(rnd(W*0.05, W*0.95), rnd(H*0.1, H*0.9), 0.2, performance.now());
@@ -2404,7 +2500,15 @@ function vaultMountDial(cv, opts){
     var r = cv.getBoundingClientRect();
     size = Math.max(minSize, r.width || 320);
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cv.width = size * dpr; cv.height = size * dpr;
+    /* Assigning canvas.width or canvas.height destroys and reallocates the
+       backing store even when the value is unchanged, and fit() runs from
+       draw(), which runs once per animation frame on two dials. That was 120
+       full canvas reallocations a second, which is what iOS Safari runs out
+       of memory on while it is also rasterizing the page at a pinch-zoom
+       scale. Reallocate only on a real size change; the transform is cheap
+       and stays unconditional because a realloc clears it. */
+    var w = Math.floor(size * dpr), h = w;
+    if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function draw(){
@@ -2721,3 +2825,5 @@ function vaultMountDial(cv, opts){
 vaultMountDial(document.getElementById('dial'));
 vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true });
 </script>
+</body>
+</html>
