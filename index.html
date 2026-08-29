@@ -611,8 +611,26 @@ header{
 
 /* ── SECTIONS ── */
 section{position:relative;z-index:1}
-.sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.9rem}
-.sec-head::after{content:"";flex:1;height:1px;background:var(--mill);align-self:center}
+/* The label sits in the CENTRE of its own rule, not at the left end of it. The
+   rule runs in from both edges and stops short of the text on each side, and
+   each run ends in the house chamfer point aimed at the label. The left side is
+   the right side mirrored, so the two are one shape, not two that have to be
+   kept in agreement. */
+.sec-head{display:flex;align-items:center;justify-content:center;gap:clamp(.9rem,2.5vw,1.45rem);margin-bottom:1.9rem}
+.sec-head .label{flex:0 1 auto;text-align:center;margin-right:-.09em}
+.sec-head::before,
+.sec-head::after{
+  content:"";flex:1 1 0;min-width:1.25rem;height:1px;background:var(--mill);
+  /* the plain hairline the head has always used, thinning away at the ends the
+     way the bolt rail does, so neither run reads as an arrow pointing at the
+     label. The label end fades over a short distance and the page end over a
+     long one, so the rule arrives at the text softly and dissolves into the
+     margin rather than stopping dead against it. */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 92%,transparent 100%);
+}
+/* one shape, mirrored, so the two ends cannot drift apart */
+.sec-head::after{transform:scaleX(-1)}
 .sec h2{margin-bottom:1.35rem}
 .sec > h2:first-child{margin-top:.35rem}
 /* the agent-infrastructure heading sits over a two-column block, so it centres
