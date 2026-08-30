@@ -87,16 +87,27 @@ function stripCacheBusters(html) {
   return { stripped, versions: captured };
 }
 
-function restoreCacheBusters(html, versions, preferredVersion) {
-  // Prefer the content-hash version derived from the final styles.css
-  // (preferredVersion); fall back to the integer captured from source only if
-  // the stylesheet could not be hashed. After Beasties there may be MORE <link>
-  // references to the same stylesheet (e.g., preload + original kept as
-  // fallback); we apply one version to all .css href attributes (the site has a
-  // single stylesheet, styles.css).
-  const version = preferredVersion || versions[0];
-  if (!version) return html;
-  return html.replace(/(href="[^"]*\.css)(")/g, `$1?v=${version}$2`);
+function restoreCacheBusters(html, versions, preferredVersion, cssVersions) {
+  // Each stylesheet gets the hash of ITS OWN content. This used to stamp one
+  // version, derived from styles.css, onto every .css href, on the stated
+  // assumption that "the site has a single stylesheet, styles.css". That
+  // assumption is false and was costing real staleness: 50 interior pages also
+  // load vault.css, so vault.css inherited styles.css's hash and its ?v= did not
+  // move when vault.css changed. Measured across two deploys, 325e4c4 to
+  // 769e626, where vault.css gained a rule and lost a selector while every page
+  // kept stamping ?v=0a4a0ee6: with cache-control max-age=14400 on the asset, a
+  // returning visitor kept the old vault.css for up to four hours after a fix
+  // shipped. After Beasties there may be several <link> references to the same
+  // sheet (preload plus the original as fallback); keying on the href path
+  // rather than on one global version handles that unchanged.
+  const fallback = preferredVersion || versions[0];
+  return html.replace(/(href="([^"]*\.css))(")/g, (match, prefix, href, suffix) => {
+    // href is site-absolute or relative; the hash map is keyed by basename,
+    // which is what /styles.css and ../styles.css both resolve to here.
+    const base = href.split('/').pop();
+    const version = (cssVersions && cssVersions[base]) || fallback;
+    return version ? `${prefix}?v=${version}${suffix}` : match;
+  });
 }
 
 // Content-hash cache-buster: derive ?v= from the final (post-PurgeCSS, post-
@@ -249,6 +260,14 @@ async function main() {
 
   const cssVersion = await computeAssetVersion(buildPath, 'styles.css');
   const jsVersion = await computeAssetVersion(buildPath, 'script.js');
+  // Hash every stylesheet at the build root, not just styles.css, so each one's
+  // ?v= tracks its own content. Keyed by basename because that is what the href
+  // resolves to whether the page writes /styles.css or ../styles.css.
+  const cssVersions = {};
+  for (const name of (await fs.readdir(buildPath)).filter((n) => n.endsWith('.css'))) {
+    const v = await computeAssetVersion(buildPath, name);
+    if (v) cssVersions[name] = v;
+  }
   console.log(
     cssVersion
       ? `Cache-buster (CSS): content-hash ?v=${cssVersion} (sha256 of _site/styles.css)`
@@ -275,7 +294,7 @@ async function main() {
       const inputSize = stripped.length;
       const processed = await beasties.process(stripped);
       const deduped = removeRedundantStylesheetLink(processed);
-      const restored = applyJsCacheBuster(restoreCacheBusters(deduped, versions, cssVersion), jsVersion);
+      const restored = applyJsCacheBuster(restoreCacheBusters(deduped, versions, cssVersion, cssVersions), jsVersion);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
       await fs.writeFile(file, restored, 'utf-8');
