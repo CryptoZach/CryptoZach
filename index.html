@@ -826,6 +826,18 @@ section{position:relative;z-index:1}
 .paper .venue,.letter .venue{font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.065em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--mill);padding-top:.6rem}
 .paper .venue{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;margin-top:auto}
 
+/* Author, 2026-08-30: the recent-papers section centres, all of it. The heading,
+   the grid, and everything inside a card: stamp, title, summary and venue. The
+   stamp and the venue need their own line, because they are flex children whose
+   alignment is set by the box, not by text-align. The venue drops
+   space-between with it, since pinning the journal left and the date right is
+   the opposite of centred. */
+#research > h2{text-align:center}
+.papers{justify-items:center}
+.paper .body{text-align:center}
+.paper .body .stamp{align-self:center}
+.paper .venue{justify-content:center}
+
 /* ── FLARE: the hover outline is lit at the foot and burns out going up, so the
    rim does not simply switch on. .plate paints its own rim as the element
    background, so a gradient there IS the outline. The upward drop-shadow is the
