@@ -2660,8 +2660,30 @@ function vaultMountDial(cv, opts){
     /* On touch there is no hover, so pointermove does not fire until the finger
        has already travelled. Seeding the contact on pointerdown gives the drag
        its first frame and lets a stationary press register at all. */
-    cv.addEventListener('pointerdown', function(e){ curSpeed = 0; track(e); }, {passive:true});
-    var release = function(){ cur = null; curSpeed = 0; };
+    /* A PRESS MUST BITE BEFORE THE BROWSER DECIDES. Under touch-action:pan-y the
+       browser watches the first movements to work out whether the gesture is a
+       vertical pan, and when it decides it is, it fires pointercancel. On a
+       touch that cancel can arrive before a single frame has drawn, so the
+       press seeded here was wiped before anything was painted and the first
+       press on the dial did nothing at all. Hold the contact for a short floor
+       so every press registers, then let it go. Nothing here fights the scroll:
+       the page still pans, the dial just gets its moment first. */
+    var HOLD_MS = 260, holdUntil = 0, holdTimer = null;
+    cv.addEventListener('pointerdown', function(e){
+      curSpeed = 0; track(e);
+      holdUntil = performance.now() + HOLD_MS;
+    }, {passive:true});
+    var clear = function(){ cur = null; curSpeed = 0; holdTimer = null; };
+    var release = function(){
+      var left = holdUntil - performance.now();
+      if (left > 0){
+        /* still inside the floor: let it finish rather than cutting it dead */
+        if (!holdTimer) holdTimer = setTimeout(clear, left);
+        return;
+      }
+      if (holdTimer){ clearTimeout(holdTimer); }
+      clear();
+    };
     cv.addEventListener('pointerleave', release);
     /* The browser fires pointercancel when it takes the gesture over. Without
        this the last contact point stayed latched and the rim kept glowing. */

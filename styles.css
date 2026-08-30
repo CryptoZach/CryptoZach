@@ -21892,3 +21892,33 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
     grid-template-columns:repeat(auto-fit, minmax(min(10rem, 100%), 1fr));
   }
 }
+
+/* Below 375 there is no arrangement in which the mark, the full wordmark and two
+   44px controls all fit on one row: measured with the widest fallback face here,
+   the wordmark alone holds 174px of a 178px share at 320, and it overlapped the
+   menu button by 48px at 320, 24px at 344 and 8px at 360.
+
+   Two properties, and both are needed. white-space:normal gives the wordmark a
+   place to break, because a nowrap word cannot shrink, it can only overflow.
+   min-width:min-content then stops the box shrinking BELOW its longest word,
+   which is what defeated an earlier attempt that set white-space alone: the
+   brand kept giving ground past its own content and overflowed anyway.
+
+   The alternative, wrapping the whole header row so the controls drop to a
+   second line, was built and measured and is worse on both counts: 59px of
+   overlap at 320 and a 118px bar at every width to 360, against 90px here and
+   73px, unchanged, from 344 up. This costs nothing until the row actually runs
+   out of room. */
+@media (max-width:374px){
+  .header-inner > .brand{min-width:min-content}
+  .header-inner > .brand strong{white-space:normal}
+  /* The floor min-content resolves to is the widest unbreakable run in the
+     lockup, and that is NOT the wordmark: it is the tagline, whose first four
+     words are bound with non-breaking spaces so the line breaks before Advisory
+     rather than anywhere. That run is 166px, and with the mark it pushed the
+     brand to 214 and shoved the theme toggle 40px off the screen at 320.
+     overflow-wrap:anywhere lets the binding yield at this width only, so the
+     floor falls back to the wordmark and the controls stay reachable. The
+     binding still governs everywhere the row has room. */
+  .header-inner > .brand a > span{overflow-wrap:anywhere}
+}
