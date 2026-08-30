@@ -1106,6 +1106,18 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
    header row could not wrap, .brand held 501px and pushed .tog to x=572, i.e.
    214px past the viewport. The dial canvas bleed at x=-49 is clipped and was not
    the cause. Let the row wrap and let the tagline drop out below 720px. */
+/* The page gutter was paying twice on a phone. .wrap caps at 88vw, which is a
+   wide-screen rule, and then adds 1.5rem of padding inside that: measured at
+   412px, 24.7px of auto margin plus 24px of padding on each side, so 76% of the
+   screen held content and 24% was gutter. Below the desktop nav the cap earns
+   nothing, so drop it and let the padding alone set the gutter. */
+@media (max-width:720px){
+  .wrap{
+    max-width:100%;
+    padding-left:max(1rem,env(safe-area-inset-left));
+    padding-right:max(1rem,env(safe-area-inset-right));
+  }
+}
 @media (max-width:720px){
   .hdr{flex-wrap:wrap;row-gap:.5rem}
   .brand{min-width:0;flex:1 1 auto}
