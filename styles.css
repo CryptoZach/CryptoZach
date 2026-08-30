@@ -7404,7 +7404,7 @@ footer.site-footer .footer-tagline{
      or any device whose system font sets the name wider, it could push the
      cluster off the right edge instead of giving way. Let it yield. */
   .header-inner > .brand{flex-shrink:1; min-width:0}
-  .header-inner > .brand a{min-width:0}
+  .header-inner > .brand a{min-width:min-content}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
@@ -7512,6 +7512,14 @@ footer.site-footer .footer-tagline{
   }
   nav{width:auto; justify-content:flex-end; flex-wrap:nowrap; gap:var(--space-xs)}
   /* Pull menu + theme into one right cluster (otherwise space-between leaves the X mid-bar). */
+  /* The bar's gap is set to --space-lg (32px) by a late desktop-polish rule that
+     sits after this media query and therefore wins here too. Two 32px gaps is
+     64px of a 390px bar spent on air between three items, and it comes straight
+     out of the brand, which is the only element that gives ground. Put the phone
+     back on --space-sm and the tagline gets the width it needs to keep
+     "Research &" on its first line. Qualified with header so it outranks that
+     later rule; matching its specificity only loses on source order. */
+  header .header-inner{gap:var(--space-sm)}
   .header-inner .menu-toggle{
     margin-left:auto;
     flex-shrink:0;
@@ -7522,7 +7530,7 @@ footer.site-footer .footer-tagline{
     flex-grow:0;
   }
   .header-inner > .brand{flex-shrink:1; min-width:0}
-  .header-inner > .brand a{min-width:0}
+  .header-inner > .brand a{min-width:min-content}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
