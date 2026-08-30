@@ -1823,6 +1823,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   /* Currency MARKS rather than three-letter codes, matching the live hero's textChars.
    The bitcoin mark is drawn in brand gold; every other glyph stays in the olive field. */
   var GOLD = [251, 191, 36];
+  /* The forex marks, as distinct from the tickers and commodity codes they share
+     the pool with. They are the only glyphs that get their own size. */
+  var FX = {'\u20AC':1,'\u00A3':1,'\u00A5':1,'\u20A9':1,'\u20B9':1,'\u20A3':1,'\u20B4':1,'\uFDFC':1};
   var POOL = ['$','$','$','\u20BF','\u20BF','USDC','USDT','PYUSD','RLUSD','DAI','FDUSD',
               '\u20AC','\u00A3','\u00A5','\u20A9','\u20B9','\u20A3','\u20B4','\uFDFC',
               '\u039E','T-BILL','REPO','SOFR','DXY','XAU','XAG','WTI','VIX','NAV','CUSIP'];
@@ -2019,7 +2022,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
             mctx.font = '700 ' + (head ? 18 : 15) + 'px "JetBrains Mono", ui-monospace, monospace';
             mctx.fillStyle = rgb(GOLD, Math.min(1, a * 1.4));
           } else {
-            mctx.font = '500 ' + (v.length > 3 ? 10 : 12) + 'px "JetBrains Mono", ui-monospace, monospace';
+            /* Author, 2026-08-30: the forex marks run 25% larger than the
+               tickers beside them, 12px to 15px, so a currency reads as a
+               currency at a glance. Ticker words are unchanged at 10px and
+               other single glyphs at 12px. */
+            mctx.font = '500 ' + (FX[v] ? 15 : (v.length > 3 ? 10 : 12)) + 'px "JetBrains Mono", ui-monospace, monospace';
             /* five tonal steps across the columns, green through green-blue, so the
                field reads as a range with depth instead of one flat colour */
             var fieldC = mixc(P.olive, P.blue, 0.05 + 0.30 * ((i % 5) / 4));

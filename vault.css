@@ -786,6 +786,10 @@ body{ background: var(--void) !important; color: var(--ink) !important; }
 .card, .compact-card, .research-card-sm, .companion-card, .about-card,
 .audience-panel, .role-pill, .letter-card-sm, .hero-rail, .patent-area,
 .brief-finding, .key-num-card, .page-toc, .structure-nav,
+/* .resume-quick-nav added 2026-08-30: the six profile cards inside it were
+   plates already, but the container holding them was still a square-cornered
+   rectangle, so the page read as chamfered cards in a box that was not one. */
+.resume-quick-nav,
 blockquote, .callout, .note-card, .framework-card, .stat-card{
   --c: 14px;
   border-radius: 0 !important;
@@ -799,6 +803,7 @@ blockquote, .callout, .note-card, .framework-card, .stat-card{
 .companion-card::before, .about-card::before, .audience-panel::before,
 .role-pill::before, .letter-card-sm::before, .patent-area::before,
 .brief-finding::before, .page-toc::before, .structure-nav::before,
+.resume-quick-nav::before,
 blockquote::before, .framework-card::before{
   content:""; position:absolute; inset:1px; z-index:-1; pointer-events:none;
   clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
