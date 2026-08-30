@@ -443,8 +443,15 @@ header{
    the rim scrolled the page and the wheel never bit. touch-action:none is scoped
    to the dial itself, NOT the hero: the hero is full-bleed and blocking scroll
    there would trap the page. The dial is one bounded control in a tall document,
-   which is the ordinary treatment for a knob. */
-#dial{touch-action:none}
+   which is the ordinary treatment for a knob.
+
+   pan-y, not none, since 2026-08-30. none applies to the whole SQUARE canvas,
+   and the dial is a disc inscribed in it, so the four corners that look like
+   background swallowed the scroll as well. The rim grind is a rotational drag,
+   which is dominated by its horizontal component, so reserving vertical panning
+   for the page costs the grind almost nothing and gives every upward flick on
+   the dial, on the disc or off it, back to the document. */
+#dial{touch-action:pan-y}
 #mtx{z-index:1;opacity:.9}
 #reef{z-index:2}
 #pile{z-index:3}
@@ -636,6 +643,15 @@ section{position:relative;z-index:1}
 /* the agent-infrastructure heading sits over a two-column block, so it centres
    on the same axis the block does */
 #agent > h2{text-align:center}
+/* Author, 2026-08-30: the prose centres with the heading above it. Single column
+   only. The two-column layout above kicks in on a wide screen, and centred body
+   copy inside narrow columns is unreadable, so the columns keep their ragged
+   right and only the measure is centred on the page. */
+#agent > .prose-2{margin-inline:auto}
+@media (max-width:900px){
+  #agent > .prose-2{text-align:center; max-width:70ch}
+  #agent > .prose-2 p{margin-inline:auto; text-wrap:balance}
+}
 .sec p{color:var(--ink-soft);max-width:108ch}
 .sec p + p{margin-top:.9rem}
 .more{display:inline-block;margin-top:2rem;font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:letter-spacing .2s}
@@ -1301,7 +1317,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       <div class="dialwrap">
         <div>
           <h2>We only draw what we counted.</h2>
-          <p>This dial is an instrument, not an illustration: every tick is a governance protocol we audited, every bolt a stablecoin gateway we mapped. Nothing on its face is drawn that we did not measure.</p>
+          <p>This dial is a compass: every tick is a governance protocol we audited, every bolt a stablecoin gateway we mapped. Nothing on its face is drawn that we did not measure.</p>
           <a class="more" href="#research">See the underlying research &rarr;</a>
         </div>
         <figure class="dialfig">
