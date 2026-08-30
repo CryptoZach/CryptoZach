@@ -1304,9 +1304,16 @@ ol[class*="principle"] > li, ol[class*="principle"] > li > h3{
    .hero-rail, .patent-area, .key-num-card, .framework-card, .stat-card, .callout,
    .note-card, blockquote). These are the card surfaces that were NOT in it. Same
    --c polygon, so there is one bevel on the site rather than two. */
+/* .explainer removed 2026-08-30. It was added here as a "card surface" and it is
+   not one: it computes to a transparent background, no border, no padding and no
+   ::before, i.e. bare running text. A clip-path on bare text has nothing to
+   shape and only cuts: the notch sliced the left stem off the T in "The
+   operating layer" on /agent-infrastructure/ and off "Track A" on /overview/,
+   and the bottom-right notch clipped the closing line. Measured: the heading's
+   first glyph sat at dx 0, dy 1 inside a 16px notch. */
 .writing-card, .research-card, .research-card--compact, .featured-paper-card,
 .plate, .card--polished, .paper, .letter-card, .resume-summary-card,
-.explainer, .ai-card, .ai-finding, .ai-callout, .research-card-sm{
+.ai-card, .ai-finding, .ai-callout, .research-card-sm{
   --c:16px;
   border-radius:0 !important;
   clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
@@ -1612,3 +1619,20 @@ header .brand a span{padding-left:0 !important}
     max-width:100%;
   }
 }
+
+
+/* Notch clearance and arrow spacing, 2026-08-30.
+
+   .paper-thesis-line IS a real plate, unlike .explainer above: it carries a fill
+   and a ::before. But its padding is 0 on the right, so its last line ran into
+   the bottom-right notch, measured at dx 0, dy 5 inside a 14px cut. Padding on
+   the right alone clears it, because a point is only clipped when its distance
+   from the right plus its distance from the bottom is under --c.
+
+   .research-card-action is display:flex, and flex layout strips the trailing
+   space in a text node, so the arrow butted straight against the last letter:
+   measured gap 0px, against 5.6px on .writing-arrow and 8px on .action, which
+   are the same pattern done right. The source markup already has the space; it
+   never survived layout. */
+.paper-thesis-line{ padding-right:1rem; }
+.research-card-action{ gap:.5em; }
