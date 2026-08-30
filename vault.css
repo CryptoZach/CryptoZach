@@ -1598,3 +1598,17 @@ header .brand a span{padding-left:0 !important}
   clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
 }
+
+
+/* Phone gutter, 2026-08-30. Same defect the homepage carried: these containers
+   cap at 88vw, a wide-screen rule, and then add their own padding INSIDE that
+   cap, so the gutter is charged twice. Measured on the resume detail pages at
+   412px: 24.7px of auto margin from the cap plus 16px of padding a side, 40.7px
+   a side, against 16px on the pages that do not cap. Below the width where the
+   desktop nav collapses the cap earns nothing, so drop it and let the padding
+   alone set the gutter. */
+@media (max-width:720px){
+  .wrap, .signup__inner, #main, main > .wrap, .section-compact{
+    max-width:100%;
+  }
+}
