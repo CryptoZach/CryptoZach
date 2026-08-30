@@ -7393,8 +7393,18 @@ footer.site-footer .footer-tagline{
 @media (max-width: 1180px){
   .header-inner{flex-wrap:nowrap}
   .header-inner .menu-toggle{margin-left:auto; flex-shrink:0}
+  /* flex-grow:0 is what makes the margin-left:auto above do anything. Once the
+     link row and the social row are hidden, nav holds nothing but the theme
+     toggle, but it still computed flex-grow:1, so it took ALL the free space in
+     the bar and the toggle rode its right edge to the far end. The menu button
+     stayed back against the wordmark and the two controls read as unrelated. */
   .header-inner > nav.nav-desktop,
-  .header-inner > .nav-desktop{flex-shrink:0}
+  .header-inner > .nav-desktop{flex-shrink:0; flex-grow:0}
+  /* The brand was flex-shrink:0 with a nowrap wordmark, so on a narrow phone,
+     or any device whose system font sets the name wider, it could push the
+     cluster off the right edge instead of giving way. Let it yield. */
+  .header-inner > .brand{flex-shrink:1; min-width:0}
+  .header-inner > .brand a{min-width:0}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
@@ -7509,7 +7519,10 @@ footer.site-footer .footer-tagline{
   .header-inner > nav.nav-desktop,
   .header-inner > .nav-desktop{
     flex-shrink:0;
+    flex-grow:0;
   }
+  .header-inner > .brand{flex-shrink:1; min-width:0}
+  .header-inner > .brand a{min-width:0}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}

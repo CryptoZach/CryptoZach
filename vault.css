@@ -1085,6 +1085,18 @@ main section > h2:first-child{
    from the 4 header social marks, which are duplicated in the footer, so retiring them below
    1600px loses no destination. */
 @media (max-width:1600px){ .header-social{display:none} }
+/* 7d. Phone header. The tagline is what set the brand's floor. It is 33
+   monospace characters at nowrap, so it is wider than the wordmark above it, and
+   the lockup could not give ground when the bar got tight: it pushed the menu
+   and theme buttons toward the edge and then ran underneath them. Let the brand
+   yield and clip the tagline, which is what styles.css already does with this
+   same line above 769px. Wrapping it instead was tried and rejected: it turned
+   the two-line lockup into four and took the bar from 73px to 117px. */
+@media (max-width:768px){
+  .brand{min-width:0}
+  .brand a{min-width:0}
+  .brand a > span{overflow:hidden; text-overflow:ellipsis; max-width:100%}
+}
 /* 7c. Author: move the brand lockup further left. The header gutter was 32px; taking it to
    14px moves the lockup left and returns that width to the nav row, which still needed 66px
    at 1440. Nav column-gap tightened a little to close the rest. */
