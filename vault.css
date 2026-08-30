@@ -1095,7 +1095,11 @@ main section > h2:first-child{
 @media (max-width:768px){
   .brand{min-width:0}
   .brand a{min-width:0}
-  .brand a > span{overflow:hidden; text-overflow:ellipsis; max-width:100%}
+  /* Wrap rather than truncate: an ellipsised tagline reads as a rendering
+     failure. The words before Advisory are joined with non-breaking spaces in
+     the markup, so the line can only ever break in one place and the lockup is
+     either one line or two, never a ragged three. */
+  .brand a > span{white-space:normal; max-width:100%; margin-left:0}
 }
 /* 7c. Author: move the brand lockup further left. The header gutter was 32px; taking it to
    14px moves the lockup left and returns that width to the nav row, which still needed 66px
