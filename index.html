@@ -2603,13 +2603,23 @@ function vaultMountDial(cv, opts){
      attaching these would put the contact test in the wrong coordinate space
      as well as spend a rim-grind budget on a 30px ornament. */
   if (!compact){
-    cv.addEventListener('pointermove', function(e){
+    var track = function(e){
       var b = cv.getBoundingClientRect();
       var nx = e.clientX - b.left, ny = e.clientY - b.top;
       if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
       cur = { x: nx, y: ny };
-    }, {passive:true});
-    cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
+    };
+    cv.addEventListener('pointermove', track, {passive:true});
+    /* On touch there is no hover, so pointermove does not fire until the finger
+       has already travelled. Seeding the contact on pointerdown gives the drag
+       its first frame and lets a stationary press register at all. */
+    cv.addEventListener('pointerdown', function(e){ curSpeed = 0; track(e); }, {passive:true});
+    var release = function(){ cur = null; curSpeed = 0; };
+    cv.addEventListener('pointerleave', release);
+    /* The browser fires pointercancel when it takes the gesture over. Without
+       this the last contact point stayed latched and the rim kept glowing. */
+    cv.addEventListener('pointercancel', release);
+    cv.addEventListener('pointerup', release);
   }
 
   /* The rect read is the other half of the same bill as the style reads above:
@@ -2687,7 +2697,15 @@ function vaultMountDial(cv, opts){
         var abs = ab - spin * 0.32;
         var hx = Math.cos(abs) * R * 0.795, hy = Math.sin(abs) * R * 0.795;
         var mdx = (cur.x - size/2) - hx, mdy = (cur.y - size/2) - hy;
-        if (Math.sqrt(mdx*mdx + mdy*mdy) < R * 0.028 * 1.9) boltDing[b] = 1;
+        /* A FINGER CANNOT FIND A 6px DISC, the same fault the rim band already
+           carries a coarse branch for. 0.028R at 1.9 is a 6.0px radius on the
+           295px dial a 390px phone renders, against a contact patch tens of
+           pixels across, so a drag crossed the bolts and dinged nothing. The
+           bolts sit at 0.795R, which puts 29.8px between neighbours there, so
+           the coarse target is capped just under half that: it is reachable by
+           touch and still cannot light two bolts at once. */
+        var boltHit = R * 0.028 * (COARSE_DIAL ? 4.5 : 1.9);
+        if (Math.sqrt(mdx*mdx + mdy*mdy) < boltHit) boltDing[b] = 1;
       }
       var bx = Math.cos(ab)*R*0.795, by = Math.sin(ab)*R*0.795,
           br = R*(compact ? 0.045 : 0.028);
