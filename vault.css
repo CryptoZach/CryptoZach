@@ -788,8 +788,14 @@ body{ background: var(--void) !important; color: var(--ink) !important; }
 .brief-finding, .key-num-card, .page-toc, .structure-nav,
 /* .resume-quick-nav added 2026-08-30: the six profile cards inside it were
    plates already, but the container holding them was still a square-cornered
-   rectangle, so the page read as chamfered cards in a box that was not one. */
-.resume-quick-nav,
+   rectangle, so the page read as chamfered cards in a box that was not one.
+   .resume-closing joined the same day, on author instruction. .footer-newsletter
+   and .site-footer were tried with it and backed out: this rule sets the fill
+   with !important and paints a ::before behind the content, which on a footer
+   that already has its own ground turned the nav and mission copy grey on grey
+   and made the newsletter band an opaque white slab. A full-bleed footer and a
+   transparent band are not plates. */
+.resume-quick-nav, .resume-closing,
 blockquote, .callout, .note-card, .framework-card, .stat-card{
   --c: 14px;
   border-radius: 0 !important;
@@ -803,7 +809,7 @@ blockquote, .callout, .note-card, .framework-card, .stat-card{
 .companion-card::before, .about-card::before, .audience-panel::before,
 .role-pill::before, .letter-card-sm::before, .patent-area::before,
 .brief-finding::before, .page-toc::before, .structure-nav::before,
-.resume-quick-nav::before,
+.resume-quick-nav::before, .resume-closing::before,
 blockquote::before, .framework-card::before{
   content:""; position:absolute; inset:1px; z-index:-1; pointer-events:none;
   clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
@@ -1579,4 +1585,16 @@ header .brand a span{padding-left:0 !important}
 @keyframes kickerSpectrum{
   from{background-position:calc(var(--kicker-offset, 39%) - 6%) 0}
   to{background-position:calc(var(--kicker-offset, 39%) + 6%) 0}
+}
+
+
+/* Controls, 2026-08-30. The plate treatment is for panels; a 14px notch on a
+   36px-tall control would take most of its height, so these take the 10px the
+   house already uses on .btn and .signup__field. Clip only: they keep their own
+   fill and border. */
+.action, .footer-newsletter__input, .footer-newsletter__button{
+  --c:10px;
+  border-radius:0;
+  clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                    calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
 }
