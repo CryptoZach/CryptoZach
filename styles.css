@@ -21117,7 +21117,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   max-width:24ch;
   font-size:clamp(2.35rem, 5.4vw, 4rem);
   line-height:1.03;
-  letter-spacing:-0.025em;
+  letter-spacing:-0.032em;
   text-wrap:balance;
 }
 .agent-infra-page .ai-hero-lede{
@@ -21475,11 +21475,17 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   margin-bottom:var(--space-md);
   padding-bottom:0;
 }
+/* letter-spacing is repeated here on purpose. `.overview-page main >
+   section:first-of-type .section-title h1` sets -0.025em at specificity (0,3,3),
+   which outranks the (0,3,1) rule above, so the site's display tracking only
+   takes effect from this (0,4,1) selector. Value tracks vault.css's
+   `h1{ ... letter-spacing:-.032em }`, the same tracking the homepage renders. */
 .agent-infra-page .ai-hero .section-title h1,
 .agent-infra-page.overview-page .ai-hero .section-title h1{
   max-width:22em;
   text-wrap:balance;
   font-weight:800;
+  letter-spacing:-0.032em;
 }
 .agent-infra-page .ai-hero .section-title .ai-hero-lede,
 .agent-infra-page .ai-hero-lede{
