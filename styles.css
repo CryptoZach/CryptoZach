@@ -21105,12 +21105,19 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
    Hierarchy upgrades without dashboard chrome: proof strip, thesis rails,
    teaching/enforcing compare, ownership distinction, numbered principles.
 --------------------------------------------------------------------------- */
-.agent-infra-page .ai-hero .section-title h1,
+/* Page title uses the SITE display-title metrics (the base `h1` rule:
+   clamp(2.35rem, 5.4vw, 4rem) / 800 / 1.03), the same type the homepage
+   and every /papers/ page render. The scoped rule exists only to climb
+   back out of `.section-title h1` (--h-compact, 700), which the
+   .overview-page shell imposes and which made this H1 read as a
+   subsection. It must not restate the display metrics with its own
+   numbers: doing that is what left this page at 58.19px/700 against the
+   site's 64px/800. */
 .agent-infra-page .ai-hero .section-title h1{
   max-width:24ch;
-  font-size:clamp(2.4rem, 4.6vw, 4.4rem);
-  line-height:1.04;
-  letter-spacing:-0.04em;
+  font-size:clamp(2.35rem, 5.4vw, 4rem);
+  line-height:1.03;
+  letter-spacing:-0.025em;
   text-wrap:balance;
 }
 .agent-infra-page .ai-hero-lede{
@@ -21169,31 +21176,18 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   gap:var(--space-sm);
   margin:0 0 var(--space-lg);
 }
+/* Geometry and interaction come from the shared `.action` rules, so these
+   buttons match the CTAs on /overview, /frameworks, /speaker-and-advisory
+   and every paper page (and this page's own .ai-inline-cta row). The
+   earlier fixed 2.75rem height plus `box-shadow:none` was a workaround
+   for nested wrappers that no longer exist: all three CTAs are direct
+   flex children here, so the shared padding already makes them equal
+   height. Killing the shadow, the hover lift and the primary sheen also
+   removed the site's button feedback from this page alone; the shared
+   reduced-motion block already disables the sheen where that matters. */
 .agent-infra-page .ai-hero-ctas .action{
-  display:inline-flex;
-  align-items:center;
   justify-content:center;
-  height:2.75rem;
-  min-height:2.75rem;
   margin:0;
-  box-sizing:border-box;
-  padding:0 1.1rem;
-  line-height:1.2;
-  border:1px solid var(--line-strong);
-  box-shadow:none;
-  vertical-align:middle;
-}
-.agent-infra-page .ai-hero-ctas .action.primary{
-  border-color:var(--accent-cta, var(--brand-blue));
-  box-shadow:none;
-}
-.agent-infra-page .ai-hero-ctas .action.primary:hover,
-.agent-infra-page .ai-hero-ctas .action.secondary:hover{
-  transform:none;
-  box-shadow:none;
-}
-.agent-infra-page .ai-hero-ctas .action.primary::before{
-  display:none;
 }
 @media (max-width:640px){
   .agent-infra-page .ai-hero-ctas{
@@ -21452,12 +21446,12 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 }
 
 @media (max-width:720px){
+  /* No font-size here: the shared clamp floors at 2.35rem, which is the
+     size the homepage and paper pages render on phones. Restating it
+     smaller is what put this page at 28.8px against the site's 37.6px. */
   .agent-infra-page .ai-hero .section-title h1,
   .agent-infra-page.overview-page .ai-hero .section-title h1{
     max-width:none;
-    font-size:clamp(1.8rem, 7.2vw, 2.5rem);
-    line-height:1.12;
-    letter-spacing:-0.03em;
   }
   .agent-infra-page .ai-rung-pair,
   .agent-infra-page .ai-distinction{
@@ -21485,7 +21479,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .agent-infra-page.overview-page .ai-hero .section-title h1{
   max-width:22em;
   text-wrap:balance;
-  font-weight:700;
+  font-weight:800;
 }
 .agent-infra-page .ai-hero .section-title .ai-hero-lede,
 .agent-infra-page .ai-hero-lede{
