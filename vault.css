@@ -1647,3 +1647,11 @@ header .brand a span{padding-left:0 !important}
    never survived layout. */
 .paper-thesis-line{ padding-right:1rem; }
 .research-card-action{ gap:.5em; }
+
+/* /overview/ rail: the authored `position:sticky` is overridden to `relative` by two
+   later grouped rules, which strands its `top:calc(var(--header-h) + ...)`. Under
+   `relative`, `top` shifts PAINT down --header-h px while reserving no flow space, so
+   the rail landed on the page kicker and the H1's first line. Set position and top
+   together, here, so neither can be changed alone again. To restore the sticky rail,
+   change this one rule to `position:sticky` and keep the `top` from styles.css. */
+.structure-nav{ position:relative; top:auto; }
