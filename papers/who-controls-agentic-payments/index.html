@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+
+  <title>Who Controls Agentic Payments? | TS</title>
+  <meta name="description" content="First control-layer measurement of agentic payments: x402 facilitator concentration clears both merger-guidelines thresholds on every chain, the count layer and the value layer have different monopolists, and headline volume is dominated by subsidized and proxy pipelines that buyer cardinality exposes." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="agentic payments, x402, facilitator concentration, stablecoins, USDC, payment facilitators, market concentration, autonomous agents, consumer protection, settlement finality, buyer cardinality, subsidy pipeline, composition chain, accountability, Herfindahl-Hirschman Index, EIP-3009, Base, Solana, Polygon" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Who Controls Agentic Payments?" />
+  <meta property="og:description" content="The first measurement of the x402 control layer: which facilitators agentic payments route through, how concentrated that layer is, and where accountability sits in the chain that delivers an agent-initiated payment." />
+  <meta property="og:url" content="https://tokenization.systems/papers/who-controls-agentic-payments/" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="675" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Control layer diagram: agentic payments route through a small set of facilitator operators that verify the authorization, submit settlement on chain, and pay the gas." />
+  <link rel="canonical" href="https://tokenization.systems/papers/who-controls-agentic-payments/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="Who Controls Agentic Payments?" />
+  <meta name="twitter:description" content="x402 facilitator concentration measured across Base, Polygon and Solana. Every reading clears both merger-guidelines thresholds; the count and value layers have different monopolists; 55.8 percent of cross-chain payments come from 52 buyer wallets." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta name="twitter:image:alt" content="Control layer diagram for agentic payments: buyers authorize, facilitators settle, and the facilitator layer is where operational power sits." />
+  <meta name="twitter:creator" content="@CryptoZach" />
+
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
+  <link rel="preconnect" href="https://papers.ssrn.com" />
+  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css?v=266" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tokenization.systems/" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://tokenization.systems/research/" },
+        { "@type": "ListItem", "position": 3, "name": "Who Controls Agentic Payments?", "item": "https://tokenization.systems/papers/who-controls-agentic-payments/" }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "Who Controls Agentic Payments? Facilitator Concentration, Subsidy Pipelines, and Settlement Accountability in x402",
+      "name": "Who Controls Agentic Payments? Facilitator Concentration, Subsidy Pipelines, and Settlement Accountability in x402",
+      "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems/" },
+      "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems/" },
+      "url": "https://tokenization.systems/papers/who-controls-agentic-payments/",
+      "mainEntityOfPage": "https://tokenization.systems/papers/who-controls-agentic-payments/",
+      "identifier": "https://doi.org/10.2139/ssrn.7396241",
+      "sameAs": [
+        "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7396241",
+        "https://doi.org/10.2139/ssrn.7396241"
+      ],
+      "datePublished": "2026-09-05",
+      "inLanguage": "en",
+      "image": "https://tokenization.systems/Publication-Images/Control_Layer.webp",
+      "keywords": "agentic payments; x402; stablecoins; payment facilitators; market concentration; autonomous agents; consumer protection; financial measurement",
+      "abstract": "Agentic payments have a measurement literature and a leaderboard culture, but no one measures the control layer: the small set of facilitator operators through whom x402 settlement routes, and the accountability structure of the composition chain those operators sit in. This paper reports the first such measurement across the three chains carrying materially all x402 activity.",
+      "isBasedOn": "https://tokenization.systems/papers/agentic-payments-control-layer/"
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "url": "https://tokenization.systems/papers/who-controls-agentic-payments/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a facilitator, and why measure it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In x402, an autonomous agent signs a payment authorization off chain and never broadcasts it. A facilitator validates the authorization, submits the settlement transaction, and fronts the gas. It is the only party that touches every payment it carries, and it exercises discretion at each step: which authorizations to broadcast, when, on which chain, at what fee. No license, registration or capital requirement attaches to the role. Token-level statistics cannot see this layer, because they treat the network as a homogeneous pool rather than asking whose infrastructure each payment traversed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How concentrated is the facilitator layer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "July 2026 concentration measures at HHI 6,512 by payment count and 4,700 by corrected dollar volume on Base, 4,071 and 3,831 on Solana, and effective single-operator service on Polygon. Every reading clears both merger-guidelines thresholds for a highly concentrated market: 1,800 under the 2023 guidelines and 2,500 under the superseded 2010 edition. The settlement layer is more concentrated than the stablecoin gateway layer it sits on."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do the count layer and the value layer have the same leader?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, and not on either chain where both layers can be measured. On Base, Coinbase's CDP facilitator carries 78.5 percent of July payment counts while Meridian, a proxy-settlement facilitator, carries 62.6 percent of corrected July dollars. On Solana, Dexter carries 52.2 percent of counts while payAI carries 56.2 percent of dollars. A measurement that reports only one layer names the wrong operator as dominant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the buyer-cardinality classifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is the paper's methodological contribution: events per distinct buyer per month, computed at submitter, facilitator or chain level. It separates organic usage from pipeline activity using only settlement data, with no wash-trading heuristic. Applied to July 2026, it shows the official Polygon Facilitator, a 24-address fleet run under a public one-million-dollar gas-rebate programme, generating 5.61 million payments, 55.8 percent of all cross-chain counts, from 52 buyer wallets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How large is the agentic-payments market at the value layer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Small, measured against its own settlement rails. Corrected cross-chain July volume is 583,430 dollars across 10.06 million payments: counts rose and dollars fell against May. In May, the payment-level-validated baseline month, that activity was 2.83 percent of all USDC transfer events on the three chains carrying materially all x402 traffic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does accountability sit in an agentic payment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At no layer that currently composes. Settlement is push-payment and irreversible at the protocol layer, so there is no chargeback path. The facilitator layer is unlicensed and unregistered, and on two of three chains is dominated by an operator with a direct economic interest in the measured volume. The sell-side endpoints are pseudonymous. The paper reports this as a composition-chain census rather than an assertion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do published x402 volume figures disagree so much?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The divergences reduce to attribution-set and filter choices, and the paper reconciles them rather than picking a favourite. Published 30-day estimates span an order of magnitude. The widely cited May 2026 community dashboard volume of 179,793 dollars reflects an address set that misses Meridian entirely; the same month recomputes to 1,030,242 dollars raw on Base. That reconciliation is itself a result: measurement infrastructure, not the underlying activity, explains most of the disagreement."
+          }
+        }
+      ]
+    }
+  </script>
+  <link rel="stylesheet" href="/vault.css?v=6" />
+  <script src="/vault.js?v=6" defer></script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <!-- site-chrome:header START (generated from _partials/header.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/">
+          <strong>Tokenization Systems</strong>
+          <span>Digital&nbsp;Asset&nbsp;Research&nbsp;&amp; Advisory</span>
+        </a>
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true" aria-label="Main navigation">
+    <div class="nav-directory">
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Research &amp; product</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink active" href="/research" aria-current="page">Research</a>
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/letters">Letters</a>
+        </div>
+      </div>
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Navigate</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact">Contact</a>
+        </div>
+      </div>
+      <div class="nav-directory__col nav-directory__col--connect">
+        <p class="nav-directory__label">Connect</p>
+        <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- site-chrome:header END -->
+
+  <main id="main" class="paper-detail-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Controls Agentic Payments?
+      </nav>
+
+      <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
+      <div class="paper-badges">
+        <span class="badge badge-public">Public on SSRN</span>
+        <span class="badge">September 5, 2026</span>
+      </div>
+
+      <h1 id="paper-title">Who Controls Agentic Payments? Facilitator Concentration, Subsidy Pipelines, and Settlement Accountability in x402</h1>
+
+      <p class="paper-metadata-strip">Working paper &middot; SSRN 7396241 &middot; DOI 10.2139/ssrn.7396241</p>
+      <p class="paper-description-note">Posted to SSRN on September 5, 2026. Concentration figures are anchored to the July 2026 snapshot, with May 2026 retained throughout as the payment-level-validated baseline. The companion <a href="/papers/agentic-payments-control-layer">control-layer measurement memo</a> is the empirical core and carries the reproduction detail; this paper is the separate scholarly treatment.</p>
+
+      <div class="paper-thesis">
+        <p>Agentic payments are usually described by their tokens and their throughput. The more consequential question is who routes them. When an agent pays over x402, the value moves as a familiar stablecoin, but the payment clears through a facilitator: the operator that verifies the authorization, submits settlement on chain, and pays the gas. The buyer never broadcasts.</p>
+        <p>That makes a small set of operators the locus of three questions token-level measurement cannot reach: how concentrated the settlement layer is, what happens to the agents depending on a facilitator when it fails or withdraws, and which supervisor holds it to account. This paper measures all three across the chains that carry materially all x402 activity.</p>
+      </div>
+
+      <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
+        <h2 id="at-a-glance-heading">At a glance</h2>
+        <p><strong>Question</strong><br />Who controls agentic payments: how concentrated is the facilitator layer that settles them, how much of the measured activity is organic, and where does accountability sit in the chain that delivers an agent-initiated payment?</p>
+        <p><strong>Answer</strong><br />The settlement layer is more concentrated than the stablecoin gateway layer beneath it, the count layer and the value layer have different monopolists, most headline activity is subsidized or self-referential, and no layer of the composition chain currently composes accountability.</p>
+        <p><strong>Evidence base</strong><br />A settlement census across Base, Polygon and Solana, built from the x402scan facilitator registry (138 address entries across 29 facilitators and 3 networks) merged with two curated attribution maps, validated at payment level. On Base the registry set accounts for 92.3 percent of trailing-30-day authorization events, a conservative lower bound on coverage.</p>
+      </aside>
+
+      <div class="paper-key-numbers">
+        <h2>The findings in four numbers</h2>
+        <p><span class="key-num" aria-hidden="true">1</span><span class="key-num-copy"><strong>The settlement layer is highly concentrated on every chain</strong><br />July 2026 HHI 6,512 by count and 4,700 by corrected dollars on Base; 4,071 and 3,831 on Solana; effective single-operator service on Polygon. Every reading clears both merger-guidelines thresholds (1,800 under the 2023 guidelines, 2,500 under the superseded 2010 edition)</span></p>
+        <p><span class="key-num" aria-hidden="true">2</span><span class="key-num-copy"><strong>Counts and dollars have different monopolists</strong><br />on Base, Coinbase's CDP facilitator carries 78.5 percent of payment counts while Meridian carries 62.6 percent of corrected dollars; on Solana, Dexter 52.2 percent of counts against payAI 56.2 percent of dollars</span></p>
+        <p><span class="key-num" aria-hidden="true">3</span><span class="key-num-copy"><strong>Most headline activity comes from 52 wallets</strong><br />the official Polygon Facilitator, a 24-address fleet under a public $1 million gas-rebate programme, generated 5.61 million July payments, 55.8 percent of cross-chain counts, from 52 buyer wallets recirculating seeded USDC</span></p>
+        <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Measured at the value layer, the market is tiny</strong><br />corrected cross-chain July volume is $583,430 across 10.06 million payments; in the validated May baseline that activity was 2.83 percent of all USDC transfer events on the same three chains</span></p>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7396241" target="_blank" rel="noopener noreferrer" aria-label="Read Who Controls Agentic Payments on SSRN" title="Read the paper on SSRN">Read the paper on SSRN</a>
+          <a class="access-link" href="https://doi.org/10.2139/ssrn.7396241" target="_blank" rel="noopener noreferrer">DOI 10.2139/ssrn.7396241</a>
+          <a class="access-link" href="/papers/agentic-payments-control-layer">Companion measurement memo</a>
+        </div>
+        <div class="access-secondary">
+          <a class="access-link access-request" href="mailto:zach@tokenization.systems?subject=Who%20Controls%20Agentic%20Payments%20-%20dataset%20and%20queries%20request">Request the dataset and queries</a>
+        </div>
+      </div>
+
+      <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
+        <h2 id="brief-findings-heading" class="brief-findings-section-title">Five findings</h2>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">1</span>
+          <div class="brief-finding-copy">
+            <h3>Settlement is more concentrated than the gateway layer it sits on</h3>
+            <p>July 2026 facilitator concentration measures at <strong>HHI 6,512 by payment count and 4,700 by corrected dollar volume on Base</strong>, 4,071 and 3,831 on Solana, and effective single-operator service on Polygon. Every reading clears both merger-guidelines thresholds for a highly concentrated market.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> the layer that actually routes agentic payments is more concentrated than the stablecoin gateway infrastructure beneath it, which is already a supervised concern.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">2</span>
+          <div class="brief-finding-copy">
+            <h3>The count layer and the value layer have different monopolists</h3>
+            <p>On Base, Coinbase's CDP facilitator carries <strong>78.5 percent of July payment counts</strong> while Meridian, a proxy-settlement facilitator, carries <strong>62.6 percent of corrected July dollars</strong>. On Solana the split repeats independently: Dexter 52.2 percent of counts, payAI 56.2 percent of dollars. The cast is not fixed across months.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> a measurement that reports one layer names the wrong dominant operator. Supervisory attention aimed at the count leader misses where the money concentrates.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">3</span>
+          <div class="brief-finding-copy">
+            <h3>Buyer cardinality exposes subsidized pipelines without a wash-trading heuristic</h3>
+            <p>The paper's methodological contribution is events per distinct buyer per month, computable at submitter, facilitator or chain level from settlement data alone. Applied to July, the official Polygon Facilitator, a 24-address fleet under a public <strong>$1 million gas-rebate programme</strong>, produced <strong>5.61 million payments, 55.8 percent of cross-chain counts, from 52 buyer wallets</strong> recirculating seeded USDC.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> headline transaction counts in this market are dominated by subsidized and self-referential flow, and the separation needs no judgment call about intent.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">4</span>
+          <div class="brief-finding-copy">
+            <h3>At the value layer the market is currently small</h3>
+            <p>Corrected cross-chain July volume is <strong>$583,430 across 10.06 million payments</strong>; counts rose while dollars fell against May. Measured against its own settlement rails in the validated May baseline, x402 activity was <strong>2.83 percent of all USDC transfer events</strong> on the three chains that carry materially all of it.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> the policy question is about the structure forming now, not about present systemic scale. Structure set at this size is what persists if the category grows.</p>
+          </div>
+        </div>
+
+        <div class="brief-finding">
+          <span class="brief-finding-num" aria-hidden="true">5</span>
+          <div class="brief-finding-copy">
+            <h3>No layer of the composition chain composes accountability</h3>
+            <p>Settlement is push-payment and irreversible at the protocol layer, so no chargeback path exists. The facilitator layer is unlicensed and unregistered, and on two of three chains is dominated by an operator with a direct economic interest in the measured volume. The sell-side endpoints are pseudonymous. In May, <strong>99.66 percent of the 110,727 distinct buyers</strong> authorizing on Base depended on a single facilitator.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> stranding exposure is measured rather than notional, and there is currently no layer at which a harmed agent's principal can seek redress.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="paper-abstract">
+        <h2>What this paper changes</h2>
+        <p>Existing x402 measurement counts transactions, estimates volume, and filters wash activity. That work answers "how much," and its answers disagree by an order of magnitude depending on filters. This paper asks "through whom," which is the question that determines financial-stability and consumer-protection exposure, for the same reason it mattered for stablecoins in the program's earlier gateway work.</p>
+        <p>Two structural properties of the protocol make the question answerable. The buyer never broadcasts, so every settled payment passes through a facilitator and the facilitator layer is fully observable at per-payment granularity from public chain data. And settlement is a one-way authorization, so the payment is irreversible once submitted. The first property is what makes the measurement possible today; the paper discusses why that observability is likely temporary.</p>
+
+        <h2>Core findings</h2>
+        <p>Five results organize the paper: concentration above both antitrust thresholds on every chain measured; different monopolists at the count and value layers, replicated independently on two chains; subsidized and proxy pipelines dominating headline counts, exposed by buyer cardinality; a value layer that is small measured against its own rails; and a composition chain with no accountable layer.</p>
+        <p>A sixth, methodological result conditions the rest: vendor and community measurements of this market diverge by an order of magnitude, and the divergences reduce to attribution-set and filter choices. The widely cited May 2026 community dashboard volume of $179,793 reflects an address set that misses Meridian entirely; the same month recomputes to $1,030,242 raw on Base. Reconciling those readings is itself a contribution, because it shows that measurement infrastructure rather than underlying activity explains most of the disagreement.</p>
+
+        <h2>Methods and data</h2>
+        <p><strong>Settlement fingerprint.</strong> The dominant exact-EVM scheme settles via <code>transferWithAuthorization()</code> on EIP-3009 tokens, in practice USDC: the buyer signs an EIP-712 authorization off chain and the facilitator submits it, which leaves a per-payment record attributable to the submitting operator.</p>
+        <p><strong>Census frame.</strong> Three merged sources: the machine-readable x402scan facilitator registry (138 address entries across 29 facilitators and 3 networks) plus two curated attribution maps. On Base the registry set accounts for 92.3 percent of trailing-30-day authorization events, which is a conservative lower bound on coverage because the denominator includes non-x402 EIP-3009 traffic.</p>
+        <p><strong>The buyer-cardinality classifier.</strong> Events per distinct buyer per month, computed at submitter, facilitator or chain level, separates organic usage from pipeline activity using settlement data only.</p>
+        <p><strong>Denominator discipline.</strong> Concentration claims are anchored to the July 2026 snapshot, with the payment-level-validated May 2026 snapshot retained throughout as the baseline, and every number reproduces from the committed measurement store described in the paper's reproducibility appendix.</p>
+
+        <h2>Limitations</h2>
+        <p>The measurement rests on the current settlement fingerprint, and that fingerprint is not permanent: newer transfer methods and batching would reduce per-payment observability. Attribution depends on registry and curated address sets, which is precisely the dependency the reconciliation section quantifies. The concentration series is anchored to one snapshot month with a validated baseline, and external anchors in this market move weekly. The paper carries its own verification queue rather than treating any of these as closed.</p>
+      </div>
+
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Read next</h3>
+        <div class="companion-cards">
+          <a href="/papers/agentic-payments-control-layer" class="companion-card">
+            <strong>The Control Layer of Agentic Payments</strong>
+            <span>The companion measurement memo and the paper's empirical core: the monthly facilitator series, the concentration recompute, and the reproduction detail behind every number here.</span>
+          </a>
+          <a href="/papers/routing-the-dollar" class="companion-card">
+            <strong>Routing the Dollar</strong>
+            <span>The stablecoin gateway-layer concentration measurement this paper's method ports from, and the layer the facilitator layer sits on top of.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="paper-contact-strip">Want to discuss facilitator concentration, the buyer-cardinality classifier, or the composition-chain accountability census? <a href="mailto:zach@tokenization.systems?subject=Who%20Controls%20Agentic%20Payments%20-%20discussion">zach@tokenization.systems</a></p>
+    </article>
+
+    <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview">Overview</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/research">Research</a>
+          <a href="/agent-infrastructure">Agent Infrastructure</a>
+          <a href="/letters">Letters</a>
+          <a href="/resume">Resume</a>
+          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-newsletter" aria-labelledby="footer-newsletter-pitch">
+        <p class="footer-newsletter__pitch" id="footer-newsletter-pitch">Monthly research digest. New papers, frameworks, regulatory events.</p>
+        <form class="footer-newsletter__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+          <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
+          <button class="footer-newsletter__button" type="submit">Subscribe</button>
+        </form>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
+    </footer>
+    <!-- site-chrome:footer END -->
+  </main>
+
+  <script defer src="/script.js?v=236"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
