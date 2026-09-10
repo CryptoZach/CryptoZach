@@ -2251,7 +2251,7 @@
     /* mtxSubmersionZoneTop was 0.76 (drew a blue control-layer band across
        the lower 24% of the hero). Per author 2026-04-26: that band created
        a visible "box cutting off hero animation" at the same horizontal
-       axis as the hero subtitle ("Eight papers across two tracks..."). Set
+       axis as the hero subtitle ("Nine papers across two tracks..."). Set
        to 1.0 to push the submersion zone off-screen (the band is no longer
        drawn; mesh interactions that gate on this threshold continue to
        work below the visible hero). */
