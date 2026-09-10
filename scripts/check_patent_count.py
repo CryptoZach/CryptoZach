@@ -151,11 +151,15 @@ def main():
         print("Fix the prose, or add the new application number to the enumeration first.")
         return 1
 
-    print(
-        f"check_patent_count: OK. All {checked} patent-count mention(s) agree with "
-        f"N = {truth} ('{NUM_TO_WORD.get(truth, truth)}', from {truth} enumerated "
-        f"application numbers)."
-    )
+    # --quiet is honoured so this can join the pre-push battery without adding a
+    # line to every successful push. It was previously accepted only because argv
+    # was never read at all, which is silence by accident rather than by contract.
+    if "--quiet" not in sys.argv[1:]:
+        print(
+            f"check_patent_count: OK. All {checked} patent-count mention(s) agree with "
+            f"N = {truth} ('{NUM_TO_WORD.get(truth, truth)}', from {truth} enumerated "
+            f"application numbers)."
+        )
     return 0
 
 
