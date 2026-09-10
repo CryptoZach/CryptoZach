@@ -56,11 +56,17 @@ INTERNATIONAL_SLUGS = {"fsb-ai-sound-practices"}
 
 # Directories to scan for count mentions (served site surfaces). Relative to root.
 SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes",
-             "speaker-and-advisory", "agent-infrastructure"]
+             "speaker-and-advisory", "agent-infrastructure", "contact", "papers"]
 
 # Non-.html served files that carry the count. The walker is .html-only, so llms.txt
 # (the AI-surface summary) was never scanned and sat 7 filings stale until 2026-07-24.
-EXTRA_FILES = ["llms.txt"]
+# _config.yml joined the list 2026-09-10, after its Jekyll site description was found
+# reading "fourteen federal comment letters", FOUR filings stale, while this checker
+# reported OK across all 81 mentions it could see. Two separate blind spots kept it
+# invisible: the walker read no .yml at all, and the phrase wraps a line inside the
+# YAML folded scalar, which the line-by-line scan below could never have matched even
+# had the file been walked. Both are fixed; see logical_text().
+EXTRA_FILES = ["llms.txt", "_config.yml"]
 
 # Directory names never recursed into.
 PRUNE_DIRS = {".git", ".claude", "_build", "node_modules", "_site", "submissions"}
@@ -186,6 +192,36 @@ def html_files(root):
             yield p
 
 
+def logical_text(lines):
+    """Join lines into one string, returning it plus an offset-to-lineno mapper.
+
+    Hard-wrapped prose is the reason this exists. A YAML folded scalar can put the
+    count on one line and its noun on the next ("fourteen federal\\n  comment
+    letters" in _config.yml), which the line-by-line scan can never match. Joining
+    with a single space makes the phrase matchable while keeping every match
+    reportable at the line where its count token sits.
+    """
+    text_parts, starts, pos = [], [], 0
+    for line in lines:
+        stripped = line.rstrip("\n")
+        starts.append(pos)
+        text_parts.append(stripped)
+        pos += len(stripped) + 1
+    joined = " ".join(text_parts)
+
+    def lineno_at(offset):
+        lo, hi = 0, len(starts) - 1
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if starts[mid] <= offset:
+                lo = mid
+            else:
+                hi = mid - 1
+        return lo + 1
+
+    return joined, lineno_at
+
+
 def token_to_int(tok):
     tok = tok.strip().lower()
     if tok.isdigit():
@@ -203,7 +239,16 @@ def scan(root, n):
                 lines = fh.readlines()
         except OSError:
             continue
-        for lineno, line in enumerate(lines, start=1):
+        # HTML keeps the line-by-line scan: a joined scan over tag-dense markup
+        # would match across unrelated element boundaries. Wrapped prose formats
+        # (.txt, .yml) get the joined scan so a line break inside a phrase cannot
+        # hide a stale count.
+        if rel.endswith(".html"):
+            units = list(enumerate(lines, start=1))
+        else:
+            joined, lineno_at = logical_text(lines)
+            units = [(lineno_at, joined)]
+        for lineno, line in units:
             for pat in COUNT_PATTERNS:
                 for m in pat.finditer(line):
                     span = m.group(0).lower()
@@ -218,11 +263,14 @@ def scan(root, n):
                     tok = m.group("n").strip().lower()
                     if (rel.replace(os.sep, "/"), tok) in ALLOWLIST:
                         continue
-                    if "count-guard-ignore" in line:
+                    resolved_line = lineno(m.start()) if callable(lineno) else lineno
+                    source_line = lines[resolved_line - 1] if 0 < resolved_line <= len(lines) else ""
+                    if "count-guard-ignore" in source_line:
                         continue
+                    resolved = lineno(m.start()) if callable(lineno) else lineno
                     mismatches.append({
                         "file": rel,
-                        "line": lineno,
+                        "line": resolved,
                         "found": val,
                         "expected": n,
                         "text": m.group(0).strip(),

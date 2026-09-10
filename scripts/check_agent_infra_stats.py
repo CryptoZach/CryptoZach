@@ -58,7 +58,10 @@ AI = os.path.join("agent-infrastructure", "index.html")
 # to distinctive wording; a rewording surfaces as exit 2, not a silent pass.
 PATTERNS = [
     (HOME, "homepage gate sentence",
-     re.compile(r"Across\s+(\d[\d,]*)\s+measured\s+attempts[^.]*?stopped\s+the\s+action\s+in\s+(\d[\d,]*)\s+cases\.\s*In\s+the\s+other\s+(\d[\d,]*)", re.I | re.S),
+     # "stopped the action" was the only accepted verb until 2026-09-10, when the
+     # live homepage was found reading "refused the action". Both are accepted now:
+     # the verb is editorial, the three figures are what this guard exists to hold.
+     re.compile(r"Across\s+(\d[\d,]*)\s+measured\s+attempts[^.]*?(?:stopped|refused)\s+the\s+action\s+in\s+(\d[\d,]*)\s+cases\.\s*In\s+the\s+other\s+(\d[\d,]*)", re.I | re.S),
      lambda g: {"n": g[0], "s": g[1], "o": g[2]}),
     (AI, "callout S of N",
      re.compile(r'ai-callout-stat">\s*(\d[\d,]*)\s+of\s+(\d[\d,]*)\s*<', re.I),
@@ -105,7 +108,15 @@ def main():
         with open(full, encoding="utf-8", errors="replace") as fh:
             texts[path] = fh.read()
 
-    if "agent-infrastructure-home" not in texts[HOME]:
+    # SENTINEL. This asks "is there still a homepage section to keep in sync?", and
+    # its answer decides between a real comparison and a clean no-op, so a sentinel
+    # that names something the page does not contain turns this guard OFF silently.
+    # That is what happened: it looked for the id "agent-infrastructure-home", the
+    # section has been id="agent" for as long as the readout has existed, and so this
+    # branch was taken on every run. The guard was built after the 2026-08-25 incident
+    # where the homepage sat stale at 287 attempts, and it had never once compared a
+    # figure. Found 2026-09-10 while landing an edit to that very section.
+    if 'id="agent"' not in texts[HOME]:
         # The homepage section was removed entirely; nothing to keep in sync.
         if not args.quiet:
             print("check_agent_infra_stats: homepage carries no agent-infrastructure section; OK.")
