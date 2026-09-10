@@ -14328,14 +14328,18 @@ details.card-expand[open] summary {
   margin-bottom: 0.5rem;
 }
 
+/* The page gutter is paid ONCE, by `main`. This section used to pay it again in its
+   own padding, and cap itself at var(--max) on top of the cap `main` already applies,
+   so its heading and every experience block sat 32px inside all seven sibling sections
+   at 1440px (measured content-left 143 against a modal 111) while its own border-top
+   still spanned the full sibling width. The reader saw a rule 32px wider than the
+   heading beneath it. Same class as the two phone-gutter double-charges already fixed
+   in 242303de40 and a82da7a7ce; this was the desktop instance. Vertical padding, the
+   rule, and the margin are this section's own and stay. */
 .speaker-page #engagements.section-compact {
-  padding: 2.5rem max(var(--page-gutter), env(safe-area-inset-left)) 1rem max(var(--page-gutter), env(safe-area-inset-right));
+  padding: 2.5rem 0 1rem;
   border-top: 1px solid var(--line);
   margin-top: 0.5rem;
-  max-width: var(--max);
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
 }
 
 .speaker-page #engagements.section-compact h2 {
