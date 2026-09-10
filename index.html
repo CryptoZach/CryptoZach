@@ -640,48 +640,45 @@ section{position:relative;z-index:1}
 .sec-head::after{transform:scaleX(-1)}
 .sec h2{margin-bottom:1.35rem}
 .sec > h2:first-child{margin-top:.35rem}
-/* the agent-infrastructure heading sits over a two-column block, so it centres
-   on the same axis the block does */
-#agent > h2{text-align:center}
-/* Author, 2026-08-30: the prose centres with the heading above it. Single column
-   only. The two-column layout above kicks in on a wide screen, and centred body
-   copy inside narrow columns is unreadable, so the columns keep their ragged
-   right and only the measure is centred on the page. */
-#agent > .prose-2{margin-inline:auto}
-@media (max-width:900px){
-  #agent > .prose-2{text-align:center; max-width:70ch}
-  #agent > .prose-2 p{margin-inline:auto; text-wrap:balance}
+/* the agent-infrastructure heading sits over a centred block, so it centres
+   on the same axis the block does. The measure is capped so the hook sets as two
+   balanced lines rather than one 76-character rule across a wide plate. */
+#agent > h2{text-align:center;max-width:38ch;margin-inline:auto}
+/* Author, 2026-08-30, revised 2026-09-10: the prose still centres with the heading
+   above it, and only the MEASURE is centred, never the body copy. The three-fault
+   list is the exception and stays left-aligned at every width: its numerals hang in
+   a left gutter, and centred text under a hanging numeral has no edge to hang from. */
+#agent > .agent-lede{max-width:76ch;margin-inline:auto;text-align:center}
+#agent > .agent-close{max-width:92ch;margin:1.6rem auto 0;text-align:center}
+
+/* ── FAULT LIST: the three failures, each answered by a mechanism. Hairline-ruled
+   rows with a hanging mono numeral, so the bold label is the whole skim. ── */
+.faults{
+  counter-reset:fault;list-style:none;padding:0;
+  margin:1.9rem auto 0;max-width:92ch;
+  border-top:1px solid var(--mill);
+  text-align:left;
+}
+.faults li{
+  position:relative;padding:1.1rem 0 1.1rem 3.15rem;
+  border-bottom:1px solid var(--mill);
+  color:var(--ink-soft);line-height:1.62;
+}
+.faults li::before{
+  counter-increment:fault;content:counter(fault,decimal-leading-zero);
+  position:absolute;left:0;top:1.3rem;
+  font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;
+  letter-spacing:.085em;color:var(--mint-text);
+}
+.faults b{display:block;margin-bottom:.28rem;color:var(--ink);font-weight:700}
+@media (max-width:640px){
+  .faults li{padding-left:2.5rem}
 }
 .sec p{color:var(--ink-soft);max-width:108ch}
 .sec p + p{margin-top:.9rem}
 .more{display:inline-block;margin-top:2rem;font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:letter-spacing .2s}
 .more:hover{letter-spacing:.17em}
 
-/* Long-form prose fills a wide desktop as two columns rather than one over-long measure. */
-.prose-2 p{color:var(--ink-soft)}
-.prose-2 p + p{margin-top:.9rem}
-@media (min-width:1180px){
-  .prose-2{column-count:2;column-gap:3.25rem;margin-bottom:.5rem}
-  /* spacing goes on the BOTTOM so a paragraph that begins a column is not pushed
-     down by a top padding meant to separate it from the paragraph above it */
-  .prose-2 p{max-width:none;break-inside:avoid;margin:0 0 .95rem;padding-top:0}
-  .prose-2 p + p{margin-top:0;padding-top:0}
-  /* SYMMETRY: an odd trailing paragraph spans both columns instead of leaving one
-     column short. The :nth-of-type(odd) guard means this fires only when the count
-     is actually odd, so an even block keeps its clean two-column balance. */
-  .prose-2 p:last-of-type:nth-of-type(odd){
-    column-span:all;
-    padding-top:1.15rem;
-    margin-top:.4rem;
-    border-top:1px solid var(--mill);
-    /* the spanning paragraph is the block's closing statement, so it sits centred
-       on a measure of its own rather than running the full two-column width */
-    max-width:100ch;
-    margin-inline:auto;
-    text-align:center;
-    text-wrap:balance;
-  }
-}
 
 /* ── PROGRAM DIAL: the vault door, no seal. Its geometry IS the two stats it sits
    beside: 52 outer ticks (protocols audited), 19 locking bolts (gateways mapped). ── */
@@ -1342,12 +1339,16 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     <!-- ══ AGENT INFRASTRUCTURE ══ -->
     <section class="sec" id="agent" style="padding-top:clamp(3rem,6vw,5rem)">
       <div class="sec-head"><span class="label">Agent infrastructure</span></div>
-      <h2>We are building an operating layer for AI agent fleets.</h2>
-      <div class="prose-2">
-      <p>Teams are beginning to run many AI coding agents against the same codebase. At that scale, three problems compound: agents overwrite one another's work, record false claims that later sessions accept as fact, and rely on safeguards without measuring whether those safeguards change behavior.</p>
-      <p>We built an operating layer to address those failures. It has run on our fleet since March 2026, and we judge each control by what happens after it fires. Warnings that only advised the agent often appeared again in the same workspace, indicating that advice alone was not reliably changing behavior.</p>
-      <p>The operating layer also preserves identity, provenance, and attribution for work that enters the shared record: which agent and session produced it, what evidence and prior state it relied on, and the exact commit that wrote it into that record.</p>
-      </div>
+      <h2>We built an operating layer for AI agent fleets, and we count what it stops.</h2>
+      <p class="agent-lede">Teams are starting to run many coding agents against one codebase. At that scale three failures compound, and each one needs a mechanism rather than a reminder.</p>
+
+      <ol class="faults">
+        <li><b>Agents overwrite each other.</b> Each session works in its own tree and holds a time-limited lease, so a session that exits releases its claim instead of holding it.</li>
+        <li><b>A false claim becomes a shared fact.</b> Shared work carries which agent and session produced it, what evidence it relied on, and the exact commit that wrote it into the record.</li>
+        <li><b>Safeguards go ungraded.</b> A warning can fire thousands of times and change nothing, so every control is judged by what happens after it fires.</li>
+      </ol>
+
+      <p class="agent-close">The layer has run on our own fleet since March 2026. Warnings that only advised the agent often returned in the same workspace, which is why a control that can name the wrong action now stops it instead of explaining it.</p>
 
       <div class="plate plate--bolted readout">
         <div class="num">254<i> / 296</i></div>
@@ -1358,7 +1359,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         </div>
       </div>
 
-      <a class="more" href="/agent-infrastructure/">Agent infrastructure &rarr;</a>
+      <a class="more" href="/agent-infrastructure/">See the measurements &rarr;</a>
     </section>
 
     <div class="rail" aria-hidden="true"></div>
@@ -1493,7 +1494,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         <div class="about-meta">
           <p><strong>Founder</strong>Zach Zukowski. Six years as Senior Investment Analyst and founding research hire at Borderless Capital, a Web3-focused registered investment adviser.</p>
           <p><strong>Frameworks</strong>Control Layer Intensity Index (CLII), a 0-to-1 score for how heavily regulated a gateway is, where a gateway is any issuer or distributor routing dollars between on-chain and off-chain rails. Minimum Viable Equivalence Pack (MVEP), a ten-category diligence standard for tokenized money and securities, run by the institution taking the risk rather than paid for by the issuer. MVEP is the entry gate, checked once before you commit; CLII is the ongoing check that flags when a product drifts away from what it cleared on.</p>
-          <p><strong>Program</strong>Eight working papers on SSRN and eighteen federal comment letters across the GENIUS Act and related rulemaking dockets, organized in two tracks:<br>Track A (stablecoins, gateways, and settlement) and Track B (tokenomics; DePIN, meaning decentralized physical infrastructure networks; and protocol-network governance).</p>
+          <p><strong>Program</strong>Nine working papers on SSRN and eighteen federal comment letters across the GENIUS Act and related rulemaking dockets, organized in two tracks:<br>Track A (stablecoins, gateways, and settlement) and Track B (tokenomics; DePIN, meaning decentralized physical infrastructure networks; and protocol-network governance).</p>
           <p><strong>Patent-pending systems</strong>Thirty-two filed USPTO applications across twenty-two families. Most describe infrastructure for running many AI agents on one shared codebase at the same time: keeping their edits from overwriting each other, requiring every output to point at the evidence behind it, keeping a tamper-evident record of what changed and who changed it, and governing when an agent may start, stop, or hand unfinished work to another. The rest cover measurement itself, and the attribution of control in pseudonymous on-chain systems. One describes the combination: how those mechanisms compose into one architecture.</p>
         </div>
         <details class="card-expand">
