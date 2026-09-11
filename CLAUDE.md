@@ -91,7 +91,22 @@ git pull --rebase --autostash origin main   # pull.rebase + autoStash preconfigu
 # 2. Edit, then verify the rendered output locally before deploying.
 bundle exec jekyll serve                     # visually verify the changed page
 
-# 3. Commit and push (pushing IS deploying; it is irreversible and public).
+# 3. Commit with an EXPLICIT PATHSPEC, then push (pushing IS deploying; irreversible, public).
+#
+#    ALWAYS pass `-- <paths>`. This is a PLAIN clone, not a worktree pair, so every session
+#    editing served paths here shares ONE .git/index. `git add <path>` followed by a bare
+#    `git commit` is therefore NOT path-scoped: a sibling session staging its own file in the
+#    seconds between your two commands gets swept into YOUR commit, under a message that never
+#    mentions it. Observed twice in one hour on 2026-09-10; one commit captured a peer's
+#    styles.css under a 49-line message naming it zero times, and was caught only because the
+#    stat line said 2 files where 1 was expected.
+#
+#    This is the same bundling class as the `git add -A` prohibition, arriving by a route that
+#    prohibition does not close, because no forbidden command is used. The pathspec form commits
+#    ONLY the paths you name, whatever else is sitting in the shared index, and costs nothing.
+#    DEC-223 per-session worktrees removed this race for the workflow clone; this clone has no
+#    such isolation, so the discipline is the control.
+git commit -F <message-file> -- <path> [<path> ...]
 git push origin main
 
 # 4. Verify live after the Pages build (about 2 minutes).
