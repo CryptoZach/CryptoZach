@@ -54,6 +54,31 @@ import sys
 # Extend when another international standard-setter response is published.
 INTERNATIONAL_SLUGS = {"fsb-ai-sound-practices"}
 
+# N counts FILED letters. A page may also be published for a comment that was DRAFTED and
+# never submitted, which is part of the program record but is not a filing, and counting one
+# would make every "N federal comment letters" claim on this site false in the direction that
+# overstates the record. Such a page is detected from its OWN schema.org status rather than
+# from a slug list here, so a future drafted page needs no edit to this file and cannot be
+# missed by someone who forgets to add it. The marker is the Article JSON-LD field:
+#     "creativeWorkStatus": "Draft"
+# First case: letters/fed-r1835-aml-cft-programs/ (Board Docket R-1835, drafted 2026-08-24,
+# comment period closed 2026-09-08 unfiled).
+DRAFT_STATUS_MARKER = '"creativeWorkStatus": "Draft"'
+
+
+def _is_unfiled_draft(index_path):
+    """True when a letter page declares itself a draft in its own Article JSON-LD.
+
+    Read from the page, not asserted here, so the exclusion cannot drift away from what the
+    page actually says. An unreadable page is treated as NOT a draft, which keeps the count
+    on the side that a reader can falsify by opening the page.
+    """
+    try:
+        with open(index_path, encoding="utf-8") as fh:
+            return DRAFT_STATUS_MARKER in fh.read()
+    except OSError:
+        return False
+
 # Directories to scan for count mentions (served site surfaces). Relative to root.
 SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes",
              "speaker-and-advisory", "agent-infrastructure", "contact", "papers"]
@@ -156,6 +181,8 @@ def derive_n(root):
         if not os.path.isfile(os.path.join(d, "index.html")):
             continue
         if slug in INTERNATIONAL_SLUGS:
+            continue
+        if _is_unfiled_draft(os.path.join(d, "index.html")):
             continue
         n += 1
         federal_slugs.append(slug)
