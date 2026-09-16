@@ -480,7 +480,7 @@ header{
   .hero-eyebrow{grid-column:1 / -1}
   .hero-lead{grid-column:1;max-width:none;min-width:0}
   .hero-aside{grid-column:2;display:flex;flex-direction:column;gap:1.15rem;min-width:0}
-  .hero-aside .proof,.hero-aside }
+}
 .hero-lead{max-width:none}
 .hero-eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.9rem;max-width:70ch}
 /* The hero eyebrow is the first line anyone reads, so it gets its own weight and the
@@ -505,6 +505,7 @@ header{
 .hero h1 .flare{color:var(--accent-text)}
 .hero-sub{margin-top:1.6rem;font-size:1.0625rem;color:var(--ink-soft);max-width:96ch}
 .hero-sub strong{color:var(--ink);font-weight:600}
+.hero-sub > span{display:block;margin-top:.6rem}
 
 .proof{
   list-style:none;margin:2rem 0 0;padding:0;max-width:780px;
@@ -566,7 +567,14 @@ header{
   text-shadow:0 1px 3px color-mix(in srgb, var(--void) 85%, transparent);
 }
 .signal .tag{font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.095em;text-transform:uppercase;color:var(--mint-text);display:block;margin-bottom:.4rem;font-weight:700;}
-.signal em{color:var(--ink-soft);font-style:italic}
+.signal-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.4rem}
+.signal-list li{min-width:0;line-height:1.4}
+.signal-list a{display:inline-block;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--mill-2);text-underline-offset:.2em}
+.signal-list a:hover{color:var(--accent-text);text-decoration-color:currentColor}
+.signal-list a:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px}
+.signal-list li > span{display:block;margin-top:.35rem;font-size:.75rem;line-height:1.5;color:var(--ink-soft)}
+.signal-published{font-weight:600;color:var(--mint-text)}
+@media(max-width:479px){.signal-list{grid-template-columns:1fr;gap:.9rem}}
 .anchors{margin-top:1.9rem;font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;color:var(--ink-soft)}
 .anchors a{color:var(--ink-soft)}
 .anchors a:hover{color:var(--accent-text)}
@@ -1250,21 +1258,35 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
       <div class="hero-lead">
         <h1>Diligence for the <span class="flare">tokenization era.</span></h1>
-      <p class="hero-sub"><strong>Digital money should be programmable money.</strong><br>Who routes the dollar determines how it behaves under stress.<br>Research and advisory for the operators, allocators, and policymakers shaping tokenized markets.</p>
+      <p class="hero-sub"><strong>Know who controls a tokenized asset, how redemption behaves under stress, and where operational risk accumulates.</strong><span>Research and advisory for operators, allocators, and policymakers shaping tokenized markets.</span></p>
 
       <div class="cta-row">
-        <a class="btn btn-primary" href="#frameworks">Read Routing the Dollar</a>
-        <a class="btn btn-ghost" href="#frameworks">View MVEP framework</a>
+        <a class="btn btn-primary" href="/papers/routing-the-dollar/">Read Routing the Dollar</a>
+        <a class="btn btn-ghost" href="/papers/mvep/">View MVEP framework</a>
           <a class="btn btn-book" href="/contact/">Book a consulting intro</a>
       </div>
 
-        <p class="signal">
-          <span class="tag">Signal</span>
-          <em>Routing the Dollar</em>, prepared for FRBNY's Fifth Conference on International Roles of the U.S. Dollar (June 2026).<br>
-          <em>Auditing Governance Concentration Beyond Token Allocation</em>, published at <em>Frontiers in Blockchain</em> (August 2026).<br>
-          <em>Minimum Viable Equivalence Pack</em>, an editor-invited submission to the <em>Journal of Financial Regulation</em> (March 2026).<br>
-          <em>Who Controls Agentic Payments?</em>, submitted to the American Finance Association 2027 Annual Meeting (September 2026).
-        </p>
+        <div class="signal" aria-labelledby="selected-work-title">
+          <span class="tag" id="selected-work-title">Selected work</span>
+          <ul class="signal-list">
+            <li>
+              <a href="/papers/governance-concentration/">Auditing Governance Concentration</a>
+              <span><b class="signal-published">Published</b> &middot; Frontiers in Blockchain<br>August 2026</span>
+            </li>
+            <li>
+              <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+              <span>Prepared for FRBNY&rsquo;s Fifth Conference on International Roles of the U.S. Dollar<br>June 2026</span>
+            </li>
+            <li>
+              <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+              <span>Editor-invited submission &middot; Journal of Financial Regulation<br>March 2026</span>
+            </li>
+            <li>
+              <a href="/papers/who-controls-agentic-payments/">Who Controls Agentic Payments?</a>
+              <span>Submitted &middot; American Finance Association 2027 Annual Meeting<br>September 2026</span>
+            </li>
+          </ul>
+        </div>
 
       <p class="anchors">
         <a href="/research/">All research</a> &middot;
@@ -1304,84 +1326,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   </section>
 
 
-  <!-- ══ SIGNUP ══ -->
-  <section class="signup" aria-labelledby="signup-title">
-    <div class="signup__inner">
-      <div>
-        <h2 id="signup-title">Monthly research digest</h2>
-        <p>New papers, framework updates, regulatory events, and reading-list highlights. Independent research; one email a month.</p>
-      </div>
-      <form class="signup__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
-        <label class="visually-hidden" for="signup-email">Email address</label>
-        <input class="signup__field" id="signup-email" type="email" name="email"
-               placeholder="you@route.value" autocomplete="email" required>
-        <button class="btn btn-primary signup__btn" type="submit">Subscribe</button>
-      </form>
-    </div>
-  </section>
-
   <div class="wrap">
 
-    <section class="sec" id="program" style="padding-top:clamp(3rem,6vw,5rem)">
-      <div class="sec-head"><span class="label">Program at a glance</span></div>
-      <div class="dialwrap">
-        <div>
-          <h2>We only draw what we counted.</h2>
-          <p>This dial is a compass: every tick is a governance protocol we audited, every bolt a stablecoin gateway we mapped. Nothing on its face is drawn that we did not measure.</p>
-          <a class="more" href="#research">See the underlying research &rarr;</a>
-        </div>
-        <figure class="dialfig">
-          <canvas id="dial" role="img" aria-label="Program dial: 52 outer ticks for governance protocols audited, 19 locking bolts for stablecoin gateways mapped"></canvas>
-          <figcaption><b>52</b> ticks &middot; protocols audited<br><b>19</b> bolts &middot; gateways mapped</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ══ AGENT INFRASTRUCTURE ══ -->
-    <section class="sec" id="agent" style="padding-top:clamp(3rem,6vw,5rem)">
-      <div class="sec-head"><span class="label">Agent infrastructure</span></div>
-      <h2>Telling an agent no is not the same as stopping it.</h2>
-      <p class="agent-lede">We built an operating layer for AI agent fleets. Teams are starting to run many coding agents against one codebase, and at that scale three failures compound, each answered with a mechanism rather than a reminder.</p>
-
-      <ol class="faults">
-        <li><b>Concurrent work stays isolated.</b> Two agents editing the same files can erase each other's work, so each session works in its own tree and holds a time-limited lease that expires if it exits.</li>
-        <li><b>Shared results carry their provenance.</b> A wrong result can enter the record and later sessions build on it, so shared work carries which agent and session produced it, what evidence it relied on, and the exact commit that wrote it.</li>
-        <li><b>Every control is graded by outcome.</b> A warning can fire thousands of times and change nothing, so controls are judged by what happens after they fire, not by how often they fire.</li>
-      </ol>
-
-      <p class="agent-close">The layer has run on our own fleet since March 2026. Warnings that only advised the agent often returned in the same workspace, which is why a control that can name the wrong action now stops it instead of explaining it.</p>
-
-      <div class="plate plate--bolted readout">
-        <div class="num">254<i> / 296</i></div>
-        <div class="meta">
-          <span class="label">Hard gate held</span>
-          <div class="bar"><i></i></div>
-          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.65rem;max-width:none">Across 296 measured attempts that reached one of these gates, the system refused the action in 254 cases. In the other 42, the agent used the documented override and continued. The gate held about six times in seven.</p>
-        </div>
-      </div>
-
-      <a class="more" href="/agent-infrastructure/">See the measurements &rarr;</a>
-    </section>
-
-    <div class="rail" aria-hidden="true"></div>
-
-    <!-- ══ ROLES ══ -->
-    <section class="sec" id="roles">
-      <h2>Six roles, one research program.</h2>
-      <div class="keys" style="margin-top:1.8rem">
-        <a class="plate key" href="/resume/policy/"><span class="cut">Policy</span><h3>Policy &amp; Market Infrastructure</h3><span>Fed transmission, gateway concentration, SVB stress analysis</span></a>
-        <a class="plate key" href="/resume/asset-management/"><span class="cut">Asset management</span><h3>Asset Management &amp; Tokenization</h3><span>Equivalence testing, institutional diligence, composed products</span></a>
-        <a class="plate key" href="/resume/stablecoin-payments/"><span class="cut">Payments</span><h3>Stablecoin &amp; Payments Strategy</h3><span>Reserve structure, redemption mechanics, control-layer design</span></a>
-        <a class="plate key" href="/resume/product/"><span class="cut">Product</span><h3>Digital Asset Product</h3><span>Product strategy, discovery engine, exception management</span></a>
-        <a class="plate key" href="/resume/ai-governance-infrastructure/"><span class="cut">AI governance</span><h3>AI Governance &amp; Infrastructure</h3><span>Control-layer instruments (CLII, MVEP) transferable to AI accountability</span></a>
-        <a class="plate key" href="/resume/risk-controls/"><span class="cut">Risk</span><h3>Risk, Controls &amp; Diligence</h3><span>Operational risk, monitoring infrastructure, committee readiness</span></a>
-      </div>
-      <a class="more" href="/resume/">View all roles and resumes &rarr;</a>
-    </section>
-
-    <div class="rail" aria-hidden="true"></div>
-
-    <!-- ══ FRAMEWORKS ══ -->
     <section class="sec" id="frameworks">
       <h2>Signature frameworks.</h2>
       <div class="frames" style="margin-top:1.8rem">
@@ -1407,7 +1353,6 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
     <div class="rail" aria-hidden="true"></div>
 
-    <!-- ══ RESEARCH ══ -->
     <section class="sec" id="research">
       <h2>Recent papers.</h2>
       <div class="papers" style="margin-top:1.8rem">
@@ -1453,7 +1398,6 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
     <div class="rail" aria-hidden="true"></div>
 
-    <!-- ══ LETTERS ══ -->
     <section class="sec" id="letters">
       <h2>Regulatory engagement.</h2>
       <p>Eighteen comment letters across the GENIUS Act implementation cycle and the SEC draft strategic plan (April to August 2026), applying CLII, MVEP, and the control-layer framework.</p>
@@ -1480,9 +1424,84 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       <a class="more" href="/letters/">View all 18 letters &rarr;</a>
     </section>
 
+  </div>
+
+  <section class="signup" aria-labelledby="signup-title">
+    <div class="signup__inner">
+      <div>
+        <h2 id="signup-title">Monthly research digest</h2>
+        <p>New papers, framework updates, regulatory events, and reading-list highlights. Independent research; one email a month.</p>
+      </div>
+      <form class="signup__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+        <label class="visually-hidden" for="signup-email">Email address</label>
+        <input class="signup__field" id="signup-email" type="email" name="email"
+               placeholder="you@route.value" autocomplete="email" required>
+        <button class="btn btn-primary signup__btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="sec" id="program" style="padding-top:clamp(3rem,6vw,5rem)">
+      <div class="sec-head"><span class="label">Program at a glance</span></div>
+      <div class="dialwrap">
+        <div>
+          <h2>We only draw what we counted.</h2>
+          <p>This dial is a compass: every tick is a governance protocol we audited, every bolt a stablecoin gateway we mapped. Nothing on its face is drawn that we did not measure.</p>
+          <a class="more" href="#research">See the underlying research &rarr;</a>
+        </div>
+        <figure class="dialfig">
+          <canvas id="dial" role="img" aria-label="Program dial: 52 outer ticks for governance protocols audited, 19 locking bolts for stablecoin gateways mapped"></canvas>
+          <figcaption><b>52</b> ticks &middot; protocols audited<br><b>19</b> bolts &middot; gateways mapped</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <div class="rail" aria-hidden="true"></div>
 
-    <!-- ══ ABOUT ══ -->
+    <section class="sec" id="agent" style="padding-top:clamp(3rem,6vw,5rem)">
+      <div class="sec-head"><span class="label">Agent infrastructure</span></div>
+      <h2>Telling an agent no is not the same as stopping it.</h2>
+      <p class="agent-lede">We built an operating layer for AI agent fleets. Teams are starting to run many coding agents against one codebase, and at that scale three failures compound, each answered with a mechanism rather than a reminder.</p>
+
+      <ol class="faults">
+        <li><b>Concurrent work stays isolated.</b> Two agents editing the same files can erase each other's work, so each session works in its own tree and holds a time-limited lease that expires if it exits.</li>
+        <li><b>Shared results carry their provenance.</b> A wrong result can enter the record and later sessions build on it, so shared work carries which agent and session produced it, what evidence it relied on, and the exact commit that wrote it.</li>
+        <li><b>Every control is graded by outcome.</b> A warning can fire thousands of times and change nothing, so controls are judged by what happens after they fire, not by how often they fire.</li>
+      </ol>
+
+      <p class="agent-close">The layer has run on our own fleet since March 2026. Warnings that only advised the agent often returned in the same workspace, which is why a control that can name the wrong action now stops it instead of explaining it.</p>
+
+      <div class="plate plate--bolted readout">
+        <div class="num">254<i> / 296</i></div>
+        <div class="meta">
+          <span class="label">Hard gate held</span>
+          <div class="bar"><i></i></div>
+          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.65rem;max-width:none">Across 296 measured attempts that reached one of these gates, the system refused the action in 254 cases. In the other 42, the agent used the documented override and continued. The gate held about six times in seven.</p>
+        </div>
+      </div>
+
+      <a class="more" href="/agent-infrastructure/">See the measurements &rarr;</a>
+    </section>
+
+    <div class="rail" aria-hidden="true"></div>
+
+    <section class="sec" id="roles">
+      <h2>Six roles, one research program.</h2>
+      <div class="keys" style="margin-top:1.8rem">
+        <a class="plate key" href="/resume/policy/"><span class="cut">Policy</span><h3>Policy &amp; Market Infrastructure</h3><span>Fed transmission, gateway concentration, SVB stress analysis</span></a>
+        <a class="plate key" href="/resume/asset-management/"><span class="cut">Asset management</span><h3>Asset Management &amp; Tokenization</h3><span>Equivalence testing, institutional diligence, composed products</span></a>
+        <a class="plate key" href="/resume/stablecoin-payments/"><span class="cut">Payments</span><h3>Stablecoin &amp; Payments Strategy</h3><span>Reserve structure, redemption mechanics, control-layer design</span></a>
+        <a class="plate key" href="/resume/product/"><span class="cut">Product</span><h3>Digital Asset Product</h3><span>Product strategy, discovery engine, exception management</span></a>
+        <a class="plate key" href="/resume/ai-governance-infrastructure/"><span class="cut">AI governance</span><h3>AI Governance &amp; Infrastructure</h3><span>Control-layer instruments (CLII, MVEP) transferable to AI accountability</span></a>
+        <a class="plate key" href="/resume/risk-controls/"><span class="cut">Risk</span><h3>Risk, Controls &amp; Diligence</h3><span>Operational risk, monitoring infrastructure, committee readiness</span></a>
+      </div>
+      <a class="more" href="/resume/">View all roles and resumes &rarr;</a>
+    </section>
+
+    <div class="rail" aria-hidden="true"></div>
+
     <section class="sec" id="about">
       <div class="plate plate--bolted-btm about">
         <div class="about-head">
@@ -2004,10 +2023,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     return n;
   }
 
-  function drawMatrix(now, boost){
+  /* Express motion in 60 Hz steps so refresh rate changes do not change speed. */
+  var FRAME_MS = 1000 / 60;
+  function frameEase(amount, step){ return 1 - Math.pow(1 - amount, step); }
+
+  function drawMatrix(now, boost, step){
+    if (step == null) step = 1;
     var P = pal();
     /* trail fade, the same short trail the live hero uses */
-    mctx.fillStyle = rgb(P.trail, P.fade);
+    mctx.fillStyle = rgb(P.trail, frameEase(P.fade, step));
     mctx.fillRect(0, 0, W, H);
 
     mctx.textAlign = 'center';
@@ -2015,13 +2039,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     iconPts.length = 0;
     for (var i = 0; i < cols.length; i++){
       var c = cols[i];
-      c.y += c.sp * (1 + boost * 0.5);
+      c.y += c.sp * (1 + boost * 0.5) * step;
       if (c.y - c.len * 20 > H){
         c.y = -Math.random() * 220;
         c.sp = 0.5 + Math.random() * 1.5;
         c.len = 6 + Math.floor(Math.random() * 12);
       }
-      if ((c.tick = (c.tick + 1) % 26) === 0){
+      c.tick += step;
+      if (c.tick >= 26){
+        c.tick %= 26;
         c.glyphs[(Math.random() * c.glyphs.length) | 0] = pickItem();
       }
       var gm = Math.max(0, Math.min(1, c.x / W));
@@ -2044,9 +2070,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           else { ih = it.d.wm ? 26 : 19; iw = ih * ar; }
           if (head){ iw *= 1.14; ih *= 1.14; }
           iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
-          var ix = Math.round(c.x - iw * 0.5), iy = Math.round(gy - ih * 0.5);
+          var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
           var ia = Math.min(0.92, a * 1.8);
-          mctx.globalAlpha = ia;
+          mctx.globalAlpha = frameEase(ia, step);
           mctx.drawImage(tl, ix, iy, iw, ih);
           mctx.globalAlpha = 1;
           if (gy > 0 && gy < H && ia > 0.14 && iconPts.length < ICONPT_CAP){
@@ -2063,11 +2089,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
             /* dollars cross-fade blue (left) to mint (right), as on the live hero */
             var col = mixc(P.blue, P.mint, gm);
             mctx.font = '700 ' + (head ? 17 : 14) + 'px "JetBrains Mono", ui-monospace, monospace';
-            mctx.fillStyle = rgb(col, Math.min(1, a * 1.25));
+            mctx.fillStyle = rgb(col, frameEase(Math.min(1, a * 1.25), step));
           } else if (v === '\u20BF'){
             /* the bitcoin mark is the one gold thing in the chain */
             mctx.font = '700 ' + (head ? 18 : 15) + 'px "JetBrains Mono", ui-monospace, monospace';
-            mctx.fillStyle = rgb(GOLD, Math.min(1, a * 1.4));
+            mctx.fillStyle = rgb(GOLD, frameEase(Math.min(1, a * 1.4), step));
           } else {
             /* Author, 2026-08-30: the forex marks run 25% larger than the
                tickers beside them, 12px to 15px, so a currency reads as a
@@ -2077,7 +2103,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
             /* five tonal steps across the columns, green through green-blue, so the
                field reads as a range with depth instead of one flat colour */
             var fieldC = mixc(P.olive, P.blue, 0.05 + 0.30 * ((i % 5) / 4));
-            mctx.fillStyle = rgb(fieldC, head ? Math.min(1, a * 1.55) : a * 1.12);
+            mctx.fillStyle = rgb(fieldC, frameEase(head ? Math.min(1, a * 1.55) : a * 1.12, step));
           }
           mctx.fillText(v, gxw, gyw);
         }
@@ -2167,8 +2193,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         var q = _scr2[j];
         if (q === p) continue;
         var dx = q.x - p.x, dy = q.y - p.y;
-        var d = Math.sqrt(dx*dx + dy*dy);
-        if (d > LINKR || d < 9) continue;
+        var d = dx*dx + dy*dy;
+        if (d > LINKR * LINKR || d < 81) continue;
         if (n < 4){ bp[n] = q; bd[n] = d; n++; }
         else {
           w = 0;
@@ -2180,11 +2206,10 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         var nb = bp[z];
         /* one edge per pair: only the lower-indexed mark draws it */
         if (nb.i < p.i) continue;
-        var dd = bd[z], close = 1 - dd / LINKR;
-        var ang = Math.atan2(nb.y - p.y, nb.x - p.x);
+        var dd = Math.sqrt(bd[z]), close = 1 - dd / LINKR;
         var sway = Math.sin(now * 0.002 + i * 1.3 + z * 2.1) * dd * 0.21;
-        var cpx = (p.x + nb.x) * 0.5 - Math.sin(ang) * sway;
-        var cpy = (p.y + nb.y) * 0.5 + Math.cos(ang) * sway;
+        var cpx = (p.x + nb.x) * 0.5 - (nb.y - p.y) / dd * sway;
+        var cpy = (p.y + nb.y) * 0.5 + (nb.x - p.x) / dd * sway;
         var la = Math.max(0.09, close * 0.66) * Math.min(p.a, nb.a) * fade * 3.1;
         rctx.beginPath();
         rctx.moveTo(p.x, p.y);
@@ -2241,20 +2266,21 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     }
   }
 
-  function drawReef(now){
+  function drawReef(now, step){
+    if (step == null) step = 1;
     var P = pal();
     rctx.clearRect(0, 0, W, H);
-    if (active && fade < 1) fade = Math.min(1, fade + 0.08);
-    if (!active && fade > 0.40) fade = Math.max(0.40, fade - 0.008);
+    if (active && fade < 1) fade = Math.min(1, fade + 0.08 * step);
+    if (!active && fade > 0.40) fade = Math.max(0.40, fade - 0.008 * step);
 
     /* branches grow, curve, fork, and lay down nodes */
     for (var i = branches.length - 1; i >= 0; i--){
       var b = branches[i];
-      b.life++;
+      b.life += step;
       if (b.life > b.maxLife){ branches.splice(i, 1); continue; }
-      b.angle += b.curve;
-      var nx = b.x + Math.cos(b.angle) * b.speed;
-      var ny = b.y + Math.sin(b.angle) * b.speed;
+      b.angle += b.curve * step;
+      var nx = b.x + Math.cos(b.angle) * b.speed * step;
+      var ny = b.y + Math.sin(b.angle) * b.speed * step;
       var la = b.alpha * fade * (1 - b.life / b.maxLife) * 1.45;
       rctx.beginPath();
       rctx.moveTo(b.x, b.y); rctx.lineTo(nx, ny);
@@ -2262,12 +2288,12 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       rctx.lineWidth = b.thickness * 1.15;
       rctx.stroke();
       b.x = nx; b.y = ny;
-      if (!b.forked && b.gen < 3 && b.life > b.maxLife * 0.4 && Math.random() < 0.06){
+      if (!b.forked && b.gen < 3 && b.life > b.maxLife * 0.4 && Math.random() < frameEase(0.06, step)){
         b.forked = true;
         spawnBranch(b.x, b.y, b.angle + rnd(0.4, 1.0) * (Math.random() < 0.5 ? 1 : -1), b.gen + 1);
         if (Math.random() < 0.4) addNode(b.x, b.y, b.gen + 1, now);
       }
-      if (Math.random() < 0.03) addNode(b.x, b.y, b.gen, now);
+      if (Math.random() < frameEase(0.03, step)) addNode(b.x, b.y, b.gen, now);
     }
 
     /* the marks get their own tendril web, and the $ ride it */
@@ -2280,7 +2306,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       if (nd.ph !== 1) continue;
       var snap = nearestIcon(nd.x, nd.y, 30);
       /* lerp, never teleport: a hard snap made the $ ride a falling mark off screen */
-      if (snap){ nd.x += (snap.x - nd.x) * 0.35; nd.y += (snap.y - nd.y) * 0.35; }
+      if (snap){ var holdEase = frameEase(0.35, step); nd.x += (snap.x - nd.x) * holdEase; nd.y += (snap.y - nd.y) * holdEase; }
       else if (nd.y > H + 8) { nd.ph = 0; }
     }
     /* a riding $ follows its quadratic bezier, sway and all */
@@ -2323,7 +2349,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         var pdx = tgt.x - nd.x, pdy = tgt.y - nd.y;
         var pd = Math.sqrt(pdx*pdx + pdy*pdy);
         if (pd <= 0.6) continue;
-        var f = (1 - pd / PULLR) * PULLK;
+        var f = frameEase((1 - pd / PULLR) * PULLK, step);
         nd.x += pdx * f; nd.y += pdy * f;
         nd.x = Math.max(-12, Math.min(W + 12, nd.x));
         nd.y = Math.max(-12, Math.min(H + 12, nd.y));
@@ -2344,6 +2370,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       var p = Math.sin(now * 0.003 + nd.pulse) * 0.3 + 0.7;
       var px = Math.max(8, Math.min(15, nd.r * p * 3.8));
       if (nd.ph === 1) px *= 1.12;
+      /* Bound the font raster cache while retaining the breathing effect. */
+      px = Math.round(px * 2) / 2;
       var t2 = Math.max(0, Math.min(1, nd.x / W));
       var col = mixc(P.blue, P.mint, t2);
       rctx.save();
@@ -2493,12 +2521,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }, {passive:true});
   hero.addEventListener('pointercancel', function(){ active = false; vel = 0; pcx = -1; pcy = -1; });
 
-  var ambient = 0;
-  function frame(){
-    var now = performance.now();
+  var ambient = 0, previousFrame = null, pileSteps = 0;
+  function frame(timestamp){
+    var now = typeof timestamp === 'number' ? timestamp : performance.now();
+    var step = previousFrame == null ? 1 : Math.min(3, Math.max(0, (now - previousFrame) / FRAME_MS));
+    previousFrame = now;
     if (warpTX != null){
-      warpX = (warpX == null) ? warpTX : warpX + (warpTX - warpX) * 0.18;
-      warpY = (warpY == null) ? warpTY : warpY + (warpTY - warpY) * 0.18;
+      var warpEase = frameEase(0.18, step);
+      warpX = (warpX == null) ? warpTX : warpX + (warpTX - warpX) * warpEase;
+      warpY = (warpY == null) ? warpTY : warpY + (warpTY - warpY) * warpEase;
     }
     if (!active && now - ambient > 620){
       ambient = now;
@@ -2506,9 +2537,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     }
     if (now - ctaAt > 700){ ctaAt = now; measureCta(); }
     if (now - lastDrop > 640){ lastDrop = now; pileSpawn(); }
-    drawMatrix(now, active ? Math.min(1, 0.35 + vel * 0.25) : 0.10);
-    drawReef(now);
-    pileSim();
+    drawMatrix(now, active ? Math.min(1, 0.35 + vel * 0.25) : 0.10, step);
+    drawReef(now, step);
+    /* Keep collision physics on its original 60 Hz clock. Bound catch-up work. */
+    pileSteps = Math.min(3, pileSteps + step);
+    while (pileSteps >= 1){ pileSim(); pileSteps -= 1; }
     drawPile();
     heroRaf = heroAwake() ? requestAnimationFrame(frame) : 0;
   }
@@ -2524,8 +2557,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
      did. */
   var heroRaf = 0, heroSeen = true;
   function heroAwake(){ return heroSeen && !document.hidden && !reduce; }
-  function heroStart(){ if (!heroRaf && heroAwake()) heroRaf = requestAnimationFrame(frame); }
-  function heroStop(){ if (heroRaf){ cancelAnimationFrame(heroRaf); heroRaf = 0; } }
+  function heroStart(){ if (!heroRaf && heroAwake()){ previousFrame = null; heroRaf = requestAnimationFrame(frame); } }
+  function heroStop(){ if (heroRaf){ cancelAnimationFrame(heroRaf); heroRaf = 0; } previousFrame = null; pileSteps = 0; }
   if (window.IntersectionObserver){
     new IntersectionObserver(function(es){
       heroSeen = es[0].isIntersecting;
