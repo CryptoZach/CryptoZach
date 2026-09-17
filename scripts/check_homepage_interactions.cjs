@@ -4,7 +4,7 @@ const {createRequire}=require('node:module');
 const root=path.resolve(process.argv[2]||'_site');
 const {chromium}=createRequire(path.resolve(process.env.PLAYWRIGHT_PACKAGE_ROOT||process.cwd(),'package.json'))('playwright');
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, trusted browser input, passive canvas and event observations',cases:[]};
+const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, trusted browser input, passive canvas and event observations',htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
 function observe(){
  const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[]};
  const proto=CanvasRenderingContext2D.prototype,fill=proto.fillRect,draw=proto.drawImage,text=proto.fillText,move=proto.moveTo,curve=proto.quadraticCurveTo;
@@ -31,9 +31,9 @@ function observe(){
    const ref=rowAnchors.find(q=>q.col===p.col)||logos.find(q=>q!==p&&q.col===p.col&&Math.abs(q.dx)<.001&&Math.abs(q.cy-p.cy)>90);
    if(ref){p.baseCy=ref.cy+20*Math.round((p.cy-ref.cy)/20);p.dy=p.cy-p.baseCy;p.distance=Math.hypot(p.dx,p.dy);}
    if(f.input){p.pointerDistance=Math.hypot(p.baseCx-f.input.x,(p.baseCy??p.cy)-f.input.y);p.away=p.dx*(p.baseCx-f.input.x)+(p.dy||0)*((p.baseCy??p.cy)-f.input.y)>0;}
-   p.linkAligned=p.distance>.15&&f.links.some(q=>Math.hypot(q.x-p.cx,q.y-p.cy)<.001);
+   p.linkAligned=(p.distance>.15||Math.abs(p.dx)>.15)&&f.links.some(q=>Math.hypot(q.x-p.cx,q.y-p.cy)<.001);
   }
-  state.frames.push({t:f.t,input:f.input,logos,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
+  state.frames.push({t:f.t,input:f.input,logos,rows:rowAnchors,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
  }
  state.finish=finish;
  proto.fillRect=function(...args){
@@ -60,8 +60,8 @@ function observe(){
  document.addEventListener('pointerout',e=>{if(e.pointerType!=='touch'&&!e.relatedTarget)state.input=null;},{passive:true});
 }
 function summary(frames){
- const logos=frames.flatMap(f=>f.logos),measured=logos.filter(p=>Number.isFinite(p.distance)),nudged=measured.filter(p=>p.distance>.15);
- return {frames:frames.length,logoDraws:logos.length,measuredDisplacements:measured.length,maxHorizontal:logos.reduce((n,p)=>Math.max(n,Math.abs(p.dx)),0),maxDisplacement:measured.reduce((n,p)=>Math.max(n,p.distance),0),nudged:nudged.length,away:nudged.filter(p=>p.away).length,alignedTargetDraws:nudged.filter(p=>p.linkAligned).length,overlaps:frames.reduce((n,f)=>n+f.overlaps,0),repeats:frames.reduce((n,f)=>n+f.repeats,0)};
+ const logos=frames.flatMap(f=>f.logos),measured=logos.filter(p=>Number.isFinite(p.distance)),nudged=logos.filter(p=>p.distance>.15||Math.abs(p.dx)>.15);
+ return {frames:frames.length,logoDraws:logos.length,measuredDisplacements:measured.length,horizontalOnly:logos.length-measured.length,maxHorizontal:logos.reduce((n,p)=>Math.max(n,Math.abs(p.dx)),0),maxDisplacement:measured.reduce((n,p)=>Math.max(n,p.distance),0),nudged:nudged.length,away:nudged.filter(p=>p.away).length,alignedTargetDraws:nudged.filter(p=>p.linkAligned).length,overlaps:frames.reduce((n,f)=>n+f.overlaps,0),repeats:frames.reduce((n,f)=>n+f.repeats,0)};
 }
 async function snapshot(page){return page.evaluate(()=>{const s=__interactionProbe;s.finish();return {frames:s.frames,events:s.events,reefPaint:s.reefPaint,errors:s.errors};});}
 async function reset(page){await page.evaluate(()=>{const s=__interactionProbe;s.finish();s.frames=[];s.events=[];s.reefPaint=[];s.errors=[];});}
@@ -73,12 +73,219 @@ async function target(page){
   return p?{...p,screenY:p.cy+r.top}:null;
  });
 }
+function median(values){const a=[...values].sort((a,b)=>a-b);return a.length?a[Math.floor(a.length/2)]:null;}
+function rowRates(frames){
+ const rates={};let previous=null;
+ for(const f of frames){
+  const rows=new Map(f.rows.map(r=>[r.col,r.cy]));
+  if(previous){const dt=f.t-previous.t;if(dt>5&&dt<75)for(const [col,y]of rows){
+   if(!previous.rows.has(col))continue;
+   const raw=y-previous.rows.get(col),dy=((raw+10)%20+20)%20-10;
+   if(dy>0.005&&dy<9)(rates[col]||(rates[col]=[])).push(dy/dt*1000);
+  }}
+  previous={t:f.t,rows};
+ }
+ return Object.fromEntries(Object.entries(rates).filter(([,v])=>v.length>=8).map(([k,v])=>[k,median(v)]));
+}
+function fadeEvidence(frames){
+ let previous=[];let nextId=1;const ups=new Set(),downs=new Set(),samples=[];
+ for(const f of frames){
+  const current=[];
+  for(const p of f.logos){
+   if(p.key==null)continue;
+   const q=previous.filter(q=>!q.used&&q.key===p.key&&q.col===p.col&&q.w===p.w&&q.h===p.h&&Math.abs(q.cy-p.cy)<12).sort((a,b)=>Math.abs(a.cy-p.cy)-Math.abs(b.cy-p.cy))[0];
+   let run=0,direction=0,start=p.alpha,id=nextId++;
+   if(q){q.used=true;id=q.id;const delta=p.alpha-q.alpha;direction=Math.abs(delta)>.0001?Math.sign(delta):0;run=direction&&direction===q.direction?q.run+1:direction?1:0;start=run>1?q.start:q.alpha;}
+   const t={...p,id,run,direction,start};current.push(t);
+   if(run>=3&&Math.abs(p.alpha-start)>.008){const set=direction>0?ups:downs;if(!set.has(id)&&samples.length<8)samples.push({direction:direction>0?'in':'out',frames:run+1,from:start,to:p.alpha});set.add(id);}
+  }
+  previous=current;
+ }
+ return {fadeInTracks:ups.size,fadeOutTracks:downs.size,samples};
+}
+async function matrixFlowSample(page){
+ await reset(page);await pause(600);return rowRates((await snapshot(page)).frames);
+}
+function compareFlow(actual,idle){
+ const columns=Object.keys(idle).filter(key=>Number.isFinite(actual[key])&&actual[key]>0);
+ return {columns:columns.length,idleRatio:median(columns.map(key=>actual[key]/idle[key]))};
+}
+async function heroInputPoint(page){
+ return page.locator('#hero').evaluate(hero=>{
+  const r=hero.getBoundingClientRect(),x=r.left+24,y=Math.max(180,Math.min(innerHeight-180,r.top+300));
+  const hit=document.elementFromPoint(x,y);
+  if(!hit?.closest('#hero')||hit.closest('a,button,input,textarea,select'))throw new Error('Flow fixture needs visible hero padding');
+  return {x,y};
+ });
+}
+async function checkSmoothing(page){
+ // rowRates uses ordinary text baselines only. Dollar warps and nudged logo centers are excluded by observe().
+ await page.mouse.move(0,0);await pause(650);const idle=await matrixFlowSample(page);
+ const point=await heroInputPoint(page);await page.mouse.move(point.x,point.y);await pause(650);
+ const hovered=compareFlow(await matrixFlowSample(page),idle);
+ const cta=page.locator('#hero a[href="/papers/routing-the-dollar/"]').first();await cta.scrollIntoViewIfNeeded();const b=await cta.boundingBox();assert.ok(b);
+ await page.mouse.move(b.x+b.width/2,b.y+b.height/2);await pause(650);
+ const ctaHovered=compareFlow(await matrixFlowSample(page),idle);
+ await page.mouse.move(0,0);await pause(650);const released=compareFlow(await matrixFlowSample(page),idle);
+ const measured={idleColumns:Object.keys(idle).length,hovered,ctaHovered,released};report.currentCase.smoothing=measured;
+ assert.ok(measured.idleColumns>=5&&[hovered,ctaHovered,released].every(v=>v.columns>=5),'enough common painted columns to measure mouse flow');
+ assert.ok(hovered.idleRatio>.50&&hovered.idleRatio<.72,'mouse hover anywhere in the hero slows actual matrix flow to about sixty percent');
+ assert.ok(ctaHovered.idleRatio>.50&&ctaHovered.idleRatio<.72,'CTA hover keeps the same slow matrix flow without renewed acceleration');
+ assert.ok(Math.abs(ctaHovered.idleRatio-hovered.idleRatio)<.12,'CTA proximity does not change the hero hover speed');
+ assert.ok(released.idleRatio>.85&&released.idleRatio<1.15,'matrix flow returns to idle after the mouse leaves the hero');
+ await reset(page);await pause(4200);const raw=await snapshot(page);measured.fades=fadeEvidence(raw.frames);measured.spacing=summary(raw.frames);
+ assert.ok(measured.fades.fadeInTracks>=1&&measured.fades.fadeOutTracks>=1,'actual logo paints show consecutive fade-in and fade-out alpha steps');
+ assert.equal(measured.spacing.overlaps,0);assert.equal(measured.spacing.repeats,0);
+ await page.evaluate(()=>scrollTo(0,0));await pause(200);return measured;
+}
+async function checkTouchFlow(page,cdp){
+ await page.evaluate(()=>scrollTo(0,0));await pause(650);const idle=await matrixFlowSample(page);
+ const point=await heroInputPoint(page);await touch(cdp,'touchStart',[point]);
+ // Continue moving through native pan, so a touch-induced 500ms speed ramp could not hide in a short tap.
+ for(let i=1;i<=20;i++){await touch(cdp,'touchMove',[{x:point.x,y:point.y-i*2}]);await pause(30);}
+ await reset(page);
+ for(let i=21;i<=40;i++){await touch(cdp,'touchMove',[{x:point.x,y:point.y-i*2}]);await pause(30);}
+ const raw=await snapshot(page),held=compareFlow(rowRates(raw.frames),idle);
+ assert.ok(raw.events.filter(e=>e.type==='touchmove'&&e.trusted).length>=6,'touch-speed measurement observes sustained trusted finger movement');
+ await touch(cdp,'touchEnd',[]);await pause(650);const released=compareFlow(await matrixFlowSample(page),idle);
+ const measured={idleColumns:Object.keys(idle).length,held,released};report.currentCase.touchFlow=measured;
+ assert.ok(measured.idleColumns>=4&&held.columns>=4&&released.columns>=4,'enough common painted columns to measure touch flow');
+ assert.ok(held.idleRatio>.85&&held.idleRatio<1.15,'finger interaction preserves the idle matrix speed');
+ assert.ok(released.idleRatio>.85&&released.idleRatio<1.15,'ending a touch preserves the same idle matrix speed');
+ await page.evaluate(()=>scrollTo(0,0));await pause(250);return measured;
+}
+
+async function shellState(page,mobile){
+ return page.evaluate(mobile=>{
+  const host=document.querySelector('.signal'),svg=host?.querySelector('.signal-shell');
+  if(!host||!svg)throw new Error('Selected-work shell is missing');
+  const variant=mobile?'mobile':'desktop';
+  const ids=['selected-work-shell-mesh-'+variant,'selected-work-shell-glints-'+variant];
+  const paths=ids.map(id=>{
+   const d=document.getElementById(id)?.getAttribute('d');
+   if(!d)throw new Error('Missing rendered shell path '+id);
+   return {id,numbers:(d.match(/[-+]?(?:\d*\.?\d+)(?:e[-+]?\d+)?/gi)||[]).map(Number)};
+  });
+  const b=svg.getBoundingClientRect(),v=svg.viewBox.baseVal;
+  const visibleOpacity=el=>{let value=1;for(let n=el;n&&n!==svg;n=n.parentElement){const s=getComputedStyle(n);if(s.display==='none'||s.visibility==='hidden')return 0;value*=Number(s.opacity);}return value;};
+  const feedback=[svg,...svg.querySelectorAll('.signal-shell__rim,.signal-shell__halo,.signal-shell__bevel')].map(el=>{
+   const s=getComputedStyle(el);return [s.stroke,s.strokeOpacity,s.strokeWidth,s.opacity,s.filter];
+  });
+  return {paths,scaleX:b.width/v.width,scaleY:b.height/v.height,active:host.classList.contains('is-shell-active'),
+   responseOpacity:Math.max(0,...[...svg.querySelectorAll('.signal-shell__response')].map(visibleOpacity)),
+   gradient:document.getElementById('selected-work-shell-contact')?.getAttribute('gradientTransform')||'',
+   feedback:JSON.stringify(feedback),pointerEvents:getComputedStyle(svg).pointerEvents};
+ },mobile);
+}
+function shellDisplacement(base,next){
+ assert.equal(next.paths.length,base.paths.length,'Shell topology remains stable during interaction');
+ let maximum=0,moved=0,still=0,total=0;
+ for(let p=0;p<base.paths.length;p++){
+  const a=base.paths[p].numbers,b=next.paths[p].numbers;
+  assert.ok(a.length>20&&a.length%2===0,'Shell needs real paired SVG mesh coordinates');
+  assert.equal(b.length,a.length,'Interaction preserves all existing mesh vertices');
+  for(let i=0;i<a.length;i+=2){
+   assert.ok(Number.isFinite(b[i])&&Number.isFinite(b[i+1]),'Deformed SVG coordinates are finite');
+   const distance=Math.hypot((b[i]-a[i])*base.scaleX,(b[i+1]-a[i+1])*base.scaleY);
+   maximum=Math.max(maximum,distance);if(distance>.15)moved++;if(distance<.05)still++;total++;
+  }
+ }
+ return {maximum,moved,still,total};
+}
+async function settleShell(page,mobile,base){
+ const start=Date.now();let state,displacement;
+ do{
+  await pause(100);state=await shellState(page,mobile);displacement=shellDisplacement(base,state);
+  if(!state.active&&displacement.maximum<.08&&state.responseOpacity<.02)break;
+ }while(Date.now()-start<2600);
+ assert.ok(!state.active&&displacement.maximum<.08&&state.responseOpacity<.02,'Shell settles back after release without latched geometry or glow');
+ return {milliseconds:Date.now()-start,maxResidualPx:displacement.maximum};
+}
+async function shellPoint(page,fraction=.1){
+ return page.locator('.signal').evaluate((host,fraction)=>{
+  const b=host.getBoundingClientRect(),x=b.left+b.width*fraction;
+  const y=Math.max(150,Math.min(innerHeight-120,b.top+b.height*.5));
+  const hit=document.elementFromPoint(x,y);
+  if(!hit?.closest('.signal')||hit.closest('a,button,input,textarea,select'))throw new Error('Shell gesture fixture needs non-interactive visible padding');
+  return {x,y};
+ },fraction);
+}
+async function checkShell(page,url,mobile,reduced,cdp){
+ await page.locator('.signal').scrollIntoViewIfNeeded();
+ await page.locator('.signal').evaluate(host=>{const b=host.getBoundingClientRect();scrollBy(0,b.top+b.height*.5-innerHeight*.55);});
+ if(!mobile)await page.mouse.move(0,0);
+ await pause(200);const base=await shellState(page,mobile),result={};
+ assert.equal(base.pointerEvents,'none','Decorative shell SVG must not intercept its research links');
+ const a=await shellPoint(page,.1),b=await shellPoint(page,.9);
+ await reset(page);
+ if(mobile){
+  const scrollBefore=await page.evaluate(()=>scrollY);
+  await touch(cdp,'touchStart',[a]);await pause(160);
+  const pressed=await shellState(page,mobile);result.press=shellDisplacement(base,pressed);
+  assert.ok(pressed.active,'A finger press gives visible shell feedback');
+  if(reduced){
+   assert.equal(result.press.maximum,0,'Reduced-motion press cannot deform the mesh');
+   assert.notEqual(pressed.feedback,base.feedback,'Reduced-motion feedback changes actual rim styling');
+  }else{
+   assert.ok(result.press.maximum>.25&&result.press.moved>2,'Finger press deforms actual shell geometry');
+   assert.ok(pressed.responseOpacity>base.responseOpacity+.02,'Finger contact produces visible localized glow');
+  }
+  const afterCancel=[];
+  for(let i=1;i<=18;i++){
+   await touch(cdp,'touchMove',[{x:a.x+i*2,y:a.y-i*6}]);await pause(30);
+   if(i%3===0){
+    const events=await page.evaluate(()=>__interactionProbe.events);
+    if(events.some(e=>e.type==='pointercancel'))afterCancel.push(await shellState(page,mobile));
+   }
+  }
+  const dragged=await shellState(page,mobile),raw=await snapshot(page);
+  assert.ok(raw.events.length&&raw.events.every(e=>e.trusted),'Shell gesture uses real trusted browser input');
+  const cancel=raw.events.find(e=>e.type==='pointercancel');assert.ok(cancel,'Shell allows native pan to cancel its pointer stream');
+  assert.ok(raw.events.filter(e=>e.type==='touchmove'&&e.t>cancel.t).length>=6,'Shell receives sustained native touch movement after pointer cancellation');
+  result.nativeScrollPx=await page.evaluate(()=>scrollY)-scrollBefore;assert.ok(result.nativeScrollPx>35,'Dragging the decorative shell still scrolls the document');
+  if(reduced){
+   assert.ok(afterCancel.length>=2);for(const state of afterCancel)assert.equal(shellDisplacement(base,state).maximum,0,'Reduced-motion native drags keep every mesh vertex fixed');
+  }else{
+   assert.ok(afterCancel.length>=2,'Measure shell movement after native pointer cancellation');
+   result.afterCancelMovement=shellDisplacement(afterCancel[0],afterCancel.at(-1));
+   assert.ok(result.afterCancelMovement.maximum>.15,'Finger drag continues deforming the shell after pointercancel');
+   assert.ok(new Set(afterCancel.map(s=>s.gradient)).size>=2,'Localized glow follows new finger positions after native pan starts');
+   assert.ok(dragged.responseOpacity>.02);
+  }
+  await touch(cdp,'touchEnd',[]);result.settlement=await settleShell(page,mobile,base);
+ }else{
+  await page.mouse.move(a.x,a.y);await pause(220);const hovered=await shellState(page,mobile);
+  result.hover=shellDisplacement(base,hovered);
+  assert.ok(result.hover.maximum>.25&&result.hover.moved>2,'Mouse hover deforms actual SVG mesh coordinates');
+  assert.ok(result.hover.still>result.hover.total*.25,'Shell reaction remains local instead of moving the entire mesh');
+  assert.ok(hovered.responseOpacity>base.responseOpacity+.02,'Hover produces a visible localized glow');
+  await page.mouse.down();await pause(160);const pressed=await shellState(page,mobile);result.press=shellDisplacement(base,pressed);
+  assert.ok(pressed.active&&result.press.maximum>.25);
+  for(let i=1;i<=8;i++){await page.mouse.move(a.x+(b.x-a.x)*i/8,a.y+(b.y-a.y)*i/8);await pause(25);}
+  await pause(160);const dragged=await shellState(page,mobile);result.drag=shellDisplacement(pressed,dragged);
+  assert.ok(result.drag.maximum>.25,'Dragging to another part changes which shell vertices move');
+  assert.notEqual(dragged.gradient,pressed.gradient,'Localized glow follows the mouse drag');
+  const raw=await snapshot(page);assert.ok(raw.events.length&&raw.events.every(e=>e.trusted));
+  await page.mouse.up();await page.mouse.move(0,0);result.settlement=await settleShell(page,mobile,base);
+ }
+ const link=page.locator('.signal-list a[href="/papers/routing-the-dollar/"]');
+ await link.scrollIntoViewIfNeeded();const destination=new URL(await link.getAttribute('href'),url).pathname;
+ await Promise.all([page.waitForURL(u=>u.pathname===destination,{timeout:5000}),mobile?link.tap({timeout:5000}):link.click({timeout:5000})]);
+ result.linkReached=new URL(page.url()).pathname;
+ // Restore an untouched homepage before the existing matrix, coral and dial checks.
+ await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
+ return result;
+}
+
 async function checkCase(browser,url,mobile,reduced){
  const context=await browser.newContext({viewport:{width:mobile?390:1280,height:844},deviceScaleFactor:1,isMobile:mobile,hasTouch:mobile,reducedMotion:reduced?'reduce':'no-preference',colorScheme:'dark'});
  await context.addInitScript(observe);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
  const spec={name:reduced?'reduced-motion':mobile?'mobile':'desktop'},cdp=mobile?await context.newCDPSession(page):null;
  report.currentCase=spec;
+ spec.shell=await checkShell(page,url,mobile,reduced,cdp);
+ if(!mobile&&!reduced)spec.smoothing=await checkSmoothing(page);
+ if(mobile&&!reduced)spec.touchFlow=await checkTouchFlow(page,cdp);
  await reset(page);
  if(reduced){
   const before=await page.locator('#mtx').evaluate(c=>c.toDataURL());await touch(cdp,'touchStart',[{x:90,y:600}]);
@@ -86,17 +293,28 @@ async function checkCase(browser,url,mobile,reduced){
   assert.equal(await page.locator('#mtx').evaluate(c=>c.toDataURL()),before,'reduced-motion matrix remains stationary');
   const raw=await snapshot(page);assert.equal(raw.frames.length,0);spec.stationary=true;spec.scrollPx=await page.evaluate(()=>scrollY);assert.ok(spec.scrollPx>30);
  }else{
-  let chosen=null;for(let i=0;i<25&&!chosen;i++){await pause(80);chosen=await target(page);}assert.ok(chosen,'visible logo available for an actual pointer target');
+  // Wait through a complete idle logo dwell and fade before targeting visible ink.
+  const targetStart=Date.now();let chosen=null;
+  while(!chosen&&Date.now()-targetStart<6000){await pause(80);chosen=await target(page);}
+  spec.pointerTarget={waitMs:Date.now()-targetStart,found:!!chosen};
+  if(!chosen)spec.pointerTarget.observation=await page.evaluate(()=>{
+   const s=__interactionProbe;s.finish();const f=s.frames.at(-1),r=document.getElementById('hero').getBoundingClientRect();
+   return {scrollY,heroTop:r.top,heroBottom:r.bottom,viewportHeight:innerHeight,frames:s.frames.length,latestFrameTime:f?.t??null,now:performance.now(),logoDraws:f?.logos.length??0,visibleLogos:f?.logos.filter(p=>p.cy+r.top>0&&p.cy+r.top<innerHeight).length??0,errors:s.errors};
+  });
+  assert.ok(chosen,'visible logo available for an actual pointer target: '+JSON.stringify(spec.pointerTarget));
   await reset(page);const x=chosen.baseCx-7,y=chosen.screenY;
   if(mobile){
    await touch(cdp,'touchStart',[{x,y}]);await pause(60);
-   for(let i=1;i<=22;i++){await touch(cdp,'touchMove',[{x,y:y-i*5}]);await pause(35);}await touch(cdp,'touchEnd',[]);
-  }else{
-   for(let i=0;i<20;i++){
-    const next=await page.evaluate(({col,key,cy})=>{const s=__interactionProbe;s.finish();const latest=s.frames.at(-1);if(!latest)return null;const list=latest.logos.filter(p=>p.col===col&&p.key===key);list.sort((a,b)=>Math.abs(a.cy-cy)-Math.abs(b.cy-cy));const p=list[0],r=document.getElementById('hero').getBoundingClientRect();return p?{...p,screenY:p.cy+r.top}:null;},chosen);
-    if(next)chosen=next;await page.mouse.move(chosen.baseCx-7,chosen.screenY);await pause(35);
-   }
+   for(let i=1;i<=12;i++){await touch(cdp,'touchMove',[{x,y:y-i*8}]);await pause(35);}spec.nativeScrollPx=await page.evaluate(()=>scrollY);
   }
+  // Follow actual visible ink after the native pan, so a drifting random mark cannot make the test vacuous.
+  for(let i=0;i<20;i++){
+   const next=await page.evaluate(({col,key,cy})=>{const s=__interactionProbe;s.finish();const latest=s.frames.at(-1);if(!latest)return null;const r=document.getElementById('hero').getBoundingClientRect(),visible=latest.logos.filter(p=>p.alpha>.15&&p.cx>30&&p.cx<innerWidth-30&&p.cy+r.top>100&&p.cy+r.top<innerHeight-100),list=visible.filter(p=>p.col===col&&p.key===key);if(!list.length)list.push(...visible);list.sort((a,b)=>Math.hypot(a.cy-cy,(a.col-col)*26)-Math.hypot(b.cy-cy,(b.col-col)*26));const p=list[0];return p?{...p,screenY:p.cy+r.top}:null;},chosen);
+   if(next)chosen=next;
+   if(mobile)await touch(cdp,'touchMove',[{x:chosen.baseCx-7,y:chosen.screenY}]);else await page.mouse.move(chosen.baseCx-7,chosen.screenY);
+   await pause(35);
+  }
+  if(mobile)await touch(cdp,'touchEnd',[]);
   await pause(40);const raw=await snapshot(page);spec.nudge=summary(raw.frames);
   assert.ok(raw.events.length>0&&raw.events.every(e=>e.trusted),'browser input must be trusted');
   assert.ok(spec.nudge.nudged>=4,'actual logo pixels must move, not only dollar glyphs');assert.ok(spec.nudge.maxHorizontal>.25,'logos must visibly deflect horizontally');
@@ -107,7 +325,7 @@ async function checkCase(browser,url,mobile,reduced){
    const cancel=raw.events.find(e=>e.type==='pointercancel');assert.ok(cancel,'native page pan cancels pointer stream');
    spec.afterCancelNudge=summary(raw.frames.filter(f=>f.t>cancel.t+350));assert.ok(spec.afterCancelNudge.nudged>=2,'logo movement continues beyond tap settling during native touch scrolling');
    const moves=raw.events.filter(e=>e.type==='touchmove'&&e.t>cancel.t);spec.fingerDollarSamples=moves.filter(e=>raw.reefPaint.some(p=>p.t>=e.t&&p.t<e.t+90&&Math.hypot(p.x-e.hx,p.y-e.hy)<6)).length;
-   assert.ok(spec.fingerDollarSamples>=3,'coral dollar paint follows touch after pointercancel');spec.nativeScrollPx=await page.evaluate(()=>scrollY);assert.ok(spec.nativeScrollPx>40);
+   assert.ok(spec.fingerDollarSamples>=3,'coral dollar paint follows touch after pointercancel');spec.finalScrollPx=await page.evaluate(()=>scrollY);assert.ok(spec.nativeScrollPx>40,'native page pan remains available before following the falling logo');
   }else await page.mouse.move(0,0);
   await pause(800);await reset(page);await pause(120);spec.released=summary((await snapshot(page)).frames);assert.ok(spec.released.maxHorizontal<.05,'logos ease back after input leaves or ends');
   if(mobile){

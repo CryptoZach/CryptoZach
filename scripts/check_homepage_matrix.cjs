@@ -56,8 +56,13 @@ function productionFunction(name, required = true) {
   assert.ok(start >= 0 && end > start, 'Missing production function: ' + name);
   return source.slice(start, end + 5);
 }
-const paintCode = productionFunction('claimMatrixSpace', false) + '\n' +
-  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('nudgeMatrixIcon') + '\n' + productionFunction('drawMatrix');
+const matrixMotionStart=source.indexOf('  var MATRIX_IDLE_SPEED =');
+const matrixMotionEnd=source.indexOf('  function drawMatrix(',matrixMotionStart);
+assert.ok(matrixMotionStart>=0&&matrixMotionEnd>matrixMotionStart,'Missing operative matrix hover motion');
+const matrixMotionCode=source.slice(matrixMotionStart,matrixMotionEnd);
+const paintCode = productionFunction('matrixConflictWithin') + '\n' + productionFunction('claimMatrixSpace', false) + '\n' +
+  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('nudgeMatrixIcon') + '\n' + productionFunction('sameMatrixItem') + '\n' +
+  productionFunction('matrixGlyph') + '\n' + matrixMotionCode + '\n' + productionFunction('drawMatrix');
 function seededMath(seed) {
   const math = Object.create(Math);
   math.random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
@@ -89,16 +94,24 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
         actualBoundingBoxAscent:size * 0.75, actualBoundingBoxDescent:size * 0.25};
     },
     fillRect(x,y,w,h) { backgrounds.push({x,y,w,h,alpha:this.fillStyle.alpha * this.globalAlpha}); },
-    drawImage(image,x,y,w,h) { calls.push({kind:'logo',name:image.n,x,y,w,h,alpha:this.globalAlpha}); },
+    drawImage(image,x,y,w,h) {
+      const alpha=this.globalAlpha;
+      assert.ok(Number.isFinite(alpha)&&alpha>=0&&alpha<=1,'Logo paint alpha must be finite and within [0,1]');
+      if(alpha===0)return; // No pixels are painted; keep every positive-alpha draw observable.
+      calls.push({kind:'logo',name:image.n,x,y,w,h,alpha});
+    },
     fillText(value,x,y) {
+      const alpha=this.fillStyle.alpha*this.globalAlpha;
+      assert.ok(Number.isFinite(alpha)&&alpha>=0&&alpha<=1,'Text paint alpha must be finite and within [0,1]');
+      if(alpha===0)return;
       const m = this.measureText(value);
       calls.push({kind:'text',name:value,x:x-m.actualBoundingBoxLeft,y:y-m.actualBoundingBoxAscent,
         w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,
-        h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,alpha:this.fillStyle.alpha*this.globalAlpha});
+        h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,alpha});
     }
   };
-  const state = {W:width,H:440,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
-    mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,
+  const state = {FRAME_MS:1000/60,W:width,H:440,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
+    mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,matrixSpeed:0.48,ctaOK:false,
     GOLD:[251,191,36], FX:{'\u20A9':1},matrixTextMetrics:{},
     pal:()=>({trail:[0,0,0],fade:0.158,blue:[1,2,3],mint:[3,2,1],olive:[2,3,1]}),
     rgb:(color,alpha)=>({color,alpha}),mixc:(a)=>a,
@@ -198,15 +211,15 @@ for(const reduce of [false,true]) {
 // Different stream speeds must trigger and then release suppression as they cross.
 {
   const h=paintHarness();
-  h.state.cols=[column(100,150,[openai]),column(126,60,[openai],2)];
+  h.state.cols=[column(100,300,[openai]),column(126,80,[openai],2)];
   h.state.cols.forEach(c=>{c.tick=-1000;}); // Isolate convergence from random mutation.
   const counts=[];
-  for(let frame=0;frame<90;frame++) {
+  for(let frame=0;frame<340;frame++) {
     const result=h.draw();checkPainting(result,h.state,'crossing frame'+frame);
     counts.push(result.groups.length);
   }
   assert.equal(counts[0],2,'Initially separated logos remain visible');
-  assert.ok(counts.slice(25,45).every(n=>n===1),'Converging adjacent duplicates are suppressed');
+  assert.ok(counts.slice(195,240).every(n=>n===1),'Converging adjacent duplicates are suppressed');
   assert.equal(counts[counts.length-1],2,'Separated logos reappear after crossing');
   console.log('PASS matrix dynamic convergence and release');
 }
@@ -233,20 +246,23 @@ assert.ok(heroInputStart >= 0 && heroInputEnd > heroInputStart, 'Missing hero to
 const heroInputCode = source.slice(heroInputStart, heroInputEnd);
 function heroInputHarness(reduce = false, sharedState = {}) {
   let now = 1000;
-  const handlers = {}, bursts = [], rect = {left:0,top:100,width:390,height:900};
-  const state = Object.assign(sharedState, {reduce,W:390,H:900,Math,performance:{now:()=>now},
+  const handlers = {}, documentHandlers = {}, windowHandlers = {}, bursts = [], rect = {left:0,top:100,width:390,height:900};
+  const state = Object.assign(sharedState, {reduce,FRAME_MS:1000/60,W:390,H:900,Math,performance:{now:()=>now},
     active:false,vel:0,pmx:-1,pmy:-1,mx:-1,my:-1,pcx:-1,pcy:-1,
     warpX:null,warpY:null,warpTX:null,warpTY:null,lastMove:0,lastSpawn:0,
     spawnCluster(...args){bursts.push(args);},
+    document:{addEventListener(type,fn,options){documentHandlers[type]={fn,options};}},
+    window:{addEventListener(type,fn,options){windowHandlers[type]={fn,options};}},
     hero:{getBoundingClientRect:()=>rect,addEventListener(type,fn,options){handlers[type]={fn,options};}}});
-  vm.createContext(state); vm.runInContext(heroInputCode,state,{timeout:1000});
+  vm.createContext(state); vm.runInContext(matrixMotionCode+'\n'+heroInputCode,state,{timeout:1000});
   function send(type,event={},elapsed=60) {
     now += elapsed;
     const e={pointerType:'touch',clientX:80,clientY:240,touches:[],
       preventDefault(){throw Error('Hero must not cancel native gestures');},...event};
+    if(documentHandlers[type])documentHandlers[type].fn(e);
     if(handlers[type])handlers[type].fn(e);
   }
-  return {state,handlers,bursts,rect,send};
+  return {state,handlers,documentHandlers,windowHandlers,bursts,rect,send};
 }
 const finger = (identifier=7,clientX=80,clientY=240) => ({identifier,clientX,clientY});
 {
@@ -372,6 +388,192 @@ for(const width of [390,1280]) {
   }
   assert.ok(displaced>10&&maxLogos>=5,'Interaction checks need actual displaced icons in a populated field');
   console.log('PASS matrix nudge: moving contact, spacing, no adjacent duplicates and resize, width='+width);
+}
+
+// Stable ownership: pointer deflection cannot alternate which crowded logo owns a slot.
+{
+  const h=paintHarness(false,900,301), stable=[];
+  for(let i=0;i<12;i++) stable.push(column(70+i*50,150,[logo('stable-'+i)]));
+  h.state.cols=stable.concat(stable.slice(0,6).map((c,i)=>column(c.x+20,150,[logo('contender-'+i)])));
+  h.state.cols.forEach(c=>{c.tick=-10000;});
+  for(let i=0;i<45;i++)h.draw();
+  const initial=h.draw(), owners=initial.groups.filter(g=>g.kind==='logo').map(g=>g.name).sort();
+  assert.ok(owners.length>=8,'Stable-owner fixture needs a populated, crowded field');
+  let displaced=0;
+  for(let frame=0;frame<160;frame++) {
+    Object.assign(h.state,{active:frame<120,warpTX:60+(frame*31)%620,warpTY:145+12*Math.sin(frame*.8)});
+    const result=h.draw(frame%2?.5:1);checkPainting(result,h.state,'stable hover '+frame);
+    assert.deepEqual(result.groups.filter(g=>g.kind==='logo').map(g=>g.name).sort(),owners,
+      'Pointer sweeps cannot blink accepted logos or promote their suppressed neighbors');
+    displaced+=h.state.cols.filter(c=>(c.nudges||[]).some(n=>n&&Math.hypot(n.x,n.y)>.3)).length;
+  }
+  assert.ok(displaced>30,'Stable ownership must include genuine pointer deflection');
+  // An earlier array position gets no right to evict an already visible mark.
+  const survivor=initial.groups.find(g=>g.kind==='logo');
+  const newcomer=column(survivor.main.x+survivor.main.w/2,150,[logo('late-claimant')]);
+  newcomer.tick=-10000;h.state.cols.unshift(newcomer);
+  for(let frame=0;frame<45;frame++) {
+    const result=h.draw();checkPainting(result,h.state,'retained owner '+frame);
+    assert.deepEqual(result.groups.filter(g=>g.kind==='logo').map(g=>g.name).sort(),owners,
+      'An incoming earlier column cannot replace a retained visible owner');
+  }
+  console.log('PASS matrix continuity: fixed crowded logos retain ownership through pointer sweeps and new contenders');
+}
+
+// Warped currency is a lower-priority overlay regardless of its column order.
+{
+  const h=paintHarness(), cash=column(25,150,[{t:0,v:'$'}]), mark=column(130,150,[openai]);
+  cash.tick=mark.tick=-10000;h.state.cols=[cash,mark];
+  Object.assign(h.state,{active:true,warpTX:125,warpTY:150});
+  let overlapTarget=true,outsideDraws=0;
+  h.state.dollarWarp=()=>[overlapTarget?130:330,150];
+  for(let frame=0;frame<100;frame++) {
+    overlapTarget=frame%2===0;
+    const result=h.draw();checkPainting(result,h.state,'currency priority '+frame);
+    if(frame<35)continue;
+    assert.ok(result.groups.some(g=>g.kind==='logo'&&g.name==='openai'),
+      'Warped dollars cannot evict an established logo');
+    const dollars=result.groups.filter(g=>g.kind==='text'&&g.name==='$');
+    if(overlapTarget)assert.equal(dollars.length,0,'Currency yields conflicting space to the logo');
+    else {assert.ok(dollars.length>0,'Free currency paint must remain visible');outsideDraws++;}
+  }
+  assert.ok(outsideDraws>20);
+  console.log('PASS matrix continuity: warped currency yields to logos without disappearing outside conflicts');
+}
+
+// Read the production transition state, including the zero-opacity identity boundary.
+{
+  function transition(step) {
+    const h=paintHarness();h.state.testColumn=column(100,150,[openai]);
+    h.state.testItem=openai;h.state.testStep=step;
+    const tick=()=>{
+      const result=vm.runInContext('matrixGlyph(testColumn,0,testItem,testStep)',h.state,{timeout:1000});
+      assert.ok(result&&result.item&&Number.isFinite(result.alpha));
+      assert.ok(result.alpha>=0&&result.alpha<=1,'Transition opacity is bounded');
+      const row={name:result.item.t===1?result.item.d.n:result.item.v,alpha:result.alpha};
+      result.visible=true; // Model a slot whose reservation is accepted, including at alpha zero.
+      return row;
+    };
+    for(let i=0;i<60/step;i++)tick();
+    const initial=tick();assert.equal(initial.name,'openai');assert.equal(initial.alpha,1);
+    h.state.testItem=maple;
+    const rows=[];
+    for(let i=1;i<=44/step;i++)rows.push({...tick(),time:i*step});
+    const changed=rows.findIndex(r=>r.name==='maple');
+    assert.ok(changed>0,'An existing mark fades out before its identity changes');
+    assert.ok(rows.slice(0,changed).every(r=>r.name==='openai'));
+    assert.ok(rows.slice(changed).every(r=>r.name==='maple'));
+    assert.ok(rows[changed].alpha<=1e-8,'The brand changes only while fully transparent');
+    assert.ok(rows.slice(0,changed).filter(r=>r.alpha>0&&r.alpha<1).length>=3,'Old mark needs intermediate fade values');
+    assert.ok(rows.slice(changed).filter(r=>r.alpha>0&&r.alpha<1).length>=3,'New mark needs intermediate fade values');
+    for(let i=1;i<changed;i++)assert.ok(rows[i].alpha<=rows[i-1].alpha+1e-12,'Fade-out must be monotonic');
+    for(let i=changed+1;i<rows.length;i++)assert.ok(rows[i].alpha>=rows[i-1].alpha-1e-12,'Fade-in must be monotonic');
+    assert.equal(rows.at(-1).alpha,1,'Replacement eventually becomes fully visible');
+    return rows;
+  }
+  const sixty=transition(1),oneTwenty=transition(.5);
+  for(const elapsed of [6,10,20,36,44]) {
+    const a=sixty.find(r=>r.time===elapsed),b=oneTwenty.find(r=>r.time===elapsed);
+    assert.equal(a.name,b.name,'Refresh rate cannot change transition identity at equal elapsed time');
+    assert.ok(Math.abs(a.alpha-b.alpha)<1e-8,'Fade timing uses elapsed time, not frame count');
+  }
+  console.log('PASS matrix transitions: old/new intermediate fades, transparent identity switch and elapsed-time equivalence');
+}
+
+// Rain alone slows on mouse hover, with a finite and refresh-independent easing window.
+{
+  const h=paintHarness(false,900);
+  const advance=(steps=1)=>vm.runInContext('matrixMotion('+steps+');',h.state,{timeout:1000});
+  for(let i=0;i<60;i++)assert.equal(advance(),.48,'Idle speed stays at the current baseline');
+  h.state.matrixHovered=true;
+  const first=advance();assert.ok(first<.48&&first>.475,'Hover begins gently rather than snapping to the lower rate');
+  for(let i=1;i<15;i++)advance();
+  assert.ok(Math.abs(h.state.matrixSpeed-.384)<1e-10,'Halfway through500ms, smoothstep is halfway through the40% slowdown');
+  for(let i=15;i<24;i++)advance();
+  assert.ok(h.state.matrixSpeed>.288&&h.state.matrixSpeed<.32,'Hover is close to its target at400ms, with easing still active');
+  for(let i=24;i<30;i++)advance();
+  assert.ok(Math.abs(h.state.matrixSpeed-.288)<1e-10,'Hover reaches exactly60% of idle by500ms');
+  for(const [x,y]of [[-10000,-10000],[350,240],[50,0]]){
+    Object.assign(h.state,{active:true,warpTX:x,warpTY:y,ctaOK:true,ctaL:250,ctaR:450,ctaTop:220,ctaBottom:260});
+    assert.ok(Math.abs(advance()-.288)<1e-10,'CTA and pointer proximity cannot accelerate hovered rain');
+  }
+  h.state.matrixHovered=false;
+  const firstReturn=advance();assert.ok(firstReturn>.288&&firstReturn<.293,'Mouse leave eases back rather than snapping');
+  for(let i=1;i<30;i++)advance();assert.ok(Math.abs(h.state.matrixSpeed-.48)<1e-10,'Release restores the unchanged idle rate in500ms');
+  for(const fps of [30,60,120,144]){
+    const f=paintHarness(false,900);f.state.matrixHovered=true;
+    const step=60/fps;
+    for(let i=0;i<fps/2;i++)vm.runInContext('matrixMotion('+step+');',f.state,{timeout:1000});
+    assert.ok(Math.abs(f.state.matrixSpeed-.288)<1e-10,'Equal elapsed time gives equal hover speed at'+fps+'Hz');
+  }
+  h.state.matrixHovered=true;for(let i=0;i<10;i++)advance();
+  const interrupted=h.state.matrixSpeed;h.state.matrixHovered=false;
+  assert.ok(advance()>interrupted&&h.state.matrixSpeed<interrupted+.002,'An interrupted transition restarts smoothly from its actual current speed');
+  for(let i=0;i<35;i++){const v=advance();assert.ok(v>=.288&&v<=.48,'Transitions stay within hover and idle limits');}
+  function tone(hovered,boost){
+    const h=paintHarness(false,900),mark=logo('tone'),blank={t:0,v:'T'};
+    h.state.cols=[column(80,250,[blank,blank,blank,blank,blank,mark])];h.state.cols[0].tick=-10000;
+    Object.assign(h.state,{matrixHovered:hovered,active:hovered,warpTX:350,warpTY:240});
+    let result;for(let i=0;i<45;i++)result=h.draw(1,boost);
+    const g=result.groups.find(g=>g.kind==='logo'&&g.name==='tone');assert.ok(g,'Opacity comparison needs a visible non-head logo');return g.main.alpha;
+  }
+  assert.ok(Math.abs(tone(false,.1)-tone(true,1))<1e-10,'Hover slowing cannot pump logo brightness or change its fade clock');
+  console.log('PASS matrix hover motion:40% slowdown,500ms easing, release, reversal, refresh independence and stable alpha');
+}
+
+// Exercise the actual event listeners, including modality changes on hybrid devices.
+{
+  const p=paintHarness(false,390),h=heroInputHarness(false,p.state);
+  const advance=(frames=35)=>{for(let i=0;i<frames;i++)vm.runInContext('matrixMotion(1)',h.state,{timeout:1000});return h.state.matrixSpeed;};
+  h.send('pointerenter',{pointerType:'mouse'});assert.ok(Math.abs(advance()-.288)<1e-10,'Mouse entry alone arms hover slowing');
+  h.send('pointerup',{pointerType:'mouse'});assert.ok(Math.abs(advance()-.288)<1e-10,'Mouse release inside keeps real hover');
+  h.send('pointerleave',{pointerType:'mouse'});assert.ok(Math.abs(advance()-.48)<1e-10,'Leaving the hero restores idle');
+  h.send('pointermove',{pointerType:'mouse'});advance();
+  h.send('touchstart',{touches:[finger()]});assert.equal(h.state.matrixSpeed,.48,'Touch immediately clears an old mouse slowdown');
+  h.send('pointercancel');
+  for(let i=0;i<12;i++){h.send('touchmove',{touches:[finger(7,80+i*3,250+i)]});assert.equal(advance(1),.48,'Finger drag keeps rain speed steady after native cancellation');}
+  assert.ok(h.state.active&&h.bursts.length>2,'Touch still drives responsive coral and nudge targets');
+  h.send('pointermove',{pointerType:'mouse'});assert.equal(advance(),.48,'A mouse event while a finger is down cannot rearm hover');
+  h.send('touchend');assert.equal(advance(),.48,'Touch release cannot latch hover');
+  h.send('pointermove',{pointerType:'mouse',sourceCapabilities:{firesTouchEvents:true}});assert.equal(advance(),.48,'Compatibility touch mouse events cannot arm slowdown');
+  h.send('pointermove',{pointerType:'mouse'});assert.ok(Math.abs(advance()-.288)<1e-10,'A fresh real mouse recovers hover on a hybrid device');
+  h.send('pointermove',{pointerType:'pen'});assert.equal(h.state.matrixSpeed,.48,'Pen input has no persistent mouse hover rate');
+  h.send('pointermove',{pointerType:'mouse'});advance();h.documentHandlers.touchstart.fn({touches:[finger()]});
+  assert.equal(h.state.matrixSpeed,.48,'A touch beginning outside the hero also clears stale mouse hover');
+  assert.equal(h.documentHandlers.touchstart.options.passive,true,'Global touch reset cannot block scrolling');
+  h.send('pointermove',{pointerType:'mouse'});advance();h.windowHandlers.blur.fn();assert.equal(h.state.matrixSpeed,.48,'Window blur clears stale hover speed');
+  const quiet=heroInputHarness(true);quiet.send('pointerenter',{pointerType:'mouse'});quiet.send('pointermove',{pointerType:'mouse'});
+  assert.equal(quiet.state.matrixHovered,false,'Reduced motion cannot arm hover animation');
+  console.log('PASS matrix hover input:mouse lifecycle, touch/pen steady speed, hybrid recovery, compatibility events and blur');
+}
+
+// Judge the actual drawing sequence, including a larger replacement that must wait.
+{
+  const h=paintHarness(), changing=column(100,150,[openai]), neighbor=column(151,150,[coinbase]);
+  changing.tick=neighbor.tick=-10000;h.state.cols=[changing,neighbor];
+  const before=h.draw();assert.equal(before.groups.filter(g=>g.kind==='logo').length,2);
+  changing.glyphs=changing.glyphs.map(()=>logo('openai'));
+  assert.equal(h.draw().groups.find(g=>g.name==='openai').main.alpha,
+    before.groups.find(g=>g.name==='openai').main.alpha,'Identical brand selections cannot cause a gratuitous fade');
+  changing.glyphs=changing.glyphs.map(()=>maple);
+  const old=[];
+  for(let frame=0;frame<40;frame++) {
+    const result=h.draw();checkPainting(result,h.state,'actual fade waiting '+frame);
+    assert.ok(result.groups.some(g=>g.name==='coinbase'),'A wider replacement cannot blink an established neighbor');
+    assert.ok(!result.groups.some(g=>g.name==='maple'),'Conflicting replacement remains hidden');
+    const previous=result.groups.find(g=>g.name==='openai');if(previous)old.push(previous.main.alpha);
+  }
+  assert.ok(old.length>=8&&old.at(-1)<old[0]*.2,'Actual old-logo paint fades down over multiple frames');
+  for(let i=1;i<old.length;i++)assert.ok(old[i]<old[i-1],'Outgoing logo opacity decreases continuously');
+  neighbor.y=600;
+  const next=[];
+  for(let frame=0;frame<24;frame++) {
+    const result=h.draw();checkPainting(result,h.state,'actual fade entering '+frame);
+    const replacement=result.groups.find(g=>g.name==='maple');if(replacement)next.push(replacement.main.alpha);
+  }
+  assert.ok(next.length>=12&&next[0]<.1&&next.at(-1)>.8,'Actual new-logo paint fades up after the space becomes free');
+  for(let i=1;i<next.length;i++)assert.ok(next[i]>=next[i-1],'Incoming logo opacity increases continuously');
+  console.log('PASS matrix painted transitions: same-brand stability, visible old fade, blocked replacement and new fade');
 }
 
 // Exercise the real dial handlers and the hit surface delivered in this page.
@@ -501,4 +703,144 @@ for(const width of [390,1280]) {
     run(dialInputHarness());
     console.log('PASS dial touch: ' + name);
   }
+}
+// Relative stream motion retires a logo before contact, including duplicate-only conflicts.
+for(const duplicateOnly of [false,true]) {
+  const h=paintHarness(false,500,631), loserX=duplicateOnly?150:126;
+  const winner=logo('collision-owner'),loser=duplicateOnly?winner:logo('collision-loser');
+  h.state.cols=[column(100,280,[winner]),column(loserX,60,[loser],2)];
+  h.state.cols.forEach(c=>{c.tick=-10000;});
+  const rows=[];
+  for(let frame=0;frame<340;frame++) {
+    const r=h.draw();checkPainting(r,h.state,'collision fade '+duplicateOnly+' '+frame);
+    const g=r.groups.find(g=>g.kind==='logo'&&Math.abs(g.main.x+g.main.w/2-loserX)<1);
+    rows.push(g?g.main.alpha:0);
+  }
+  assert.ok(rows[0]>.8,'Crossing fixture begins with a genuinely visible full-strength loser');
+  const firstExit=rows.findIndex((a,i)=>i>0&&a===0&&rows[i-1]>0);
+  assert.ok(firstExit>10,'The existing logo must retire while the streams cross');
+  assert.ok(rows[firstExit-1]<.09,'Last collision-retirement paint must be nearly transparent, not an abrupt cut');
+  assert.ok(rows.slice(firstExit-16,firstExit).filter(a=>a>0&&a<.8).length>=8,'Collision retirement needs an actual multi-frame fade');
+  for(let i=1;i<=firstExit;i++)assert.ok(rows[i-1]-rows[i]<.09,'Collision exit cannot erase a high-alpha logo in one frame');
+  assert.ok(rows.slice(firstExit,firstExit+18).every(a=>a===0),'Retired mark stays hidden through its collision');
+  const returnAt=rows.findIndex((a,i)=>i>firstExit&&a>0);
+  assert.ok(returnAt>firstExit+18,'Separated stream eventually becomes eligible again');
+  assert.ok(rows[returnAt]<.12,'Readmission begins with a faint frame');
+  assert.ok(rows.slice(returnAt,returnAt+12).every(a=>a>0),'A returned logo cannot flash for one or two frames');
+  assert.ok(rows.at(-1)>.8,'Prediction cannot permanently erase separated logos');
+  console.log('PASS matrix collision retirement: '+(duplicateOnly?'same-brand proximity without ink overlap':'converging ink envelopes'));
+}
+
+// A prospective short-lived slot stays hidden, rather than starting a doomed fade-in.
+{
+  const h=paintHarness(),winner=logo('admission-owner'),loser=logo('admission-loser');
+  h.state.cols=[column(100,180,[winner]),column(126,90,[loser],2)];
+  h.state.cols.forEach(c=>{c.tick=-10000;});
+  let count=0;
+  for(let frame=0;frame<100;frame++) {
+    const r=h.draw();checkPainting(r,h.state,'short admission '+frame);
+    assert.ok(r.groups.some(g=>g.kind==='logo'&&g.name==='admission-owner'),'Owner remains visible');
+    count+=r.groups.filter(g=>g.kind==='logo'&&g.name==='admission-loser').length;
+  }
+  assert.equal(count,0,'Do not admit a moving logo whose projected clear interval cannot cover a useful fade-in and exit');
+  console.log('PASS matrix collision admission: projected short intervals never flash');
+}
+
+// Retirement is sticky even when its original obstacle disappears during the fade.
+{
+  const h=paintHarness(false,500),winner=logo('sticky-owner'),loser=logo('sticky-loser');
+  const moving=column(126,60,[loser],2);
+  h.state.cols=[column(100,280,[winner]),moving];h.state.cols.forEach(c=>{c.tick=-10000;});
+  let retiring=false;
+  for(let frame=0;frame<180;frame++) {
+    const r=h.draw();checkPainting(r,h.state,'sticky trigger '+frame);
+    if(moving.marks[0]?.retiring){retiring=true;break;}
+  }
+  assert.ok(retiring,'Fixture must trigger the production retirement state');
+  h.state.cols=[moving];
+  const rows=[];
+  for(let frame=0;frame<70;frame++) {
+    const r=h.draw();checkPainting(r,h.state,'sticky exit '+frame);
+    rows.push(r.groups.find(g=>g.kind==='logo')?.main.alpha||0);
+  }
+  const zero=rows.indexOf(0);assert.ok(zero>0&&zero<16);
+  for(let i=1;i<=zero;i++)assert.ok(rows[i]<=rows[i-1]+1e-10,'Removing the obstacle cannot reverse an in-progress fade');
+  const resume=rows.findIndex((a,i)=>i>zero&&a>0);assert.ok(resume-zero>=16,'A completed retirement retains a short stable cooldown');
+  assert.ok(rows[resume]<.12&&rows.at(-1)>.8,'Cooldown ends in a fresh, complete fade-in');
+  console.log('PASS matrix collision retirement: sticky fade and bounded readmission cooldown');
+}
+
+// Execute the complete production shell closure with an observable RAF queue.
+const shellSource=source.match(/<script\s+id="selected-work-shell-reaction"[^>]*>([\s\S]*?)<\/script>/);
+assert.ok(shellSource,'Missing operative selected-work shell reaction script');
+function shellLifecycle(reduce=false){
+ const events=()=>{const handlers=new Map();return {
+  addEventListener(type,fn){const list=handlers.get(type)||[];list.push(fn);handlers.set(type,list);},
+  emit(type,event={}){for(const fn of handlers.get(type)||[])fn(event);}
+ };};
+ const attrs=(values={})=>({getAttribute:key=>values[key]??null,setAttribute(key,value){values[key]=String(value);}});
+ const nodes=new Map(),bases=new Map();
+ for(const variant of ['desktop','mobile'])for(const kind of ['mesh','glints']){
+  const id='selected-work-shell-'+kind+'-'+variant;
+  const match=source.match(new RegExp('<path\\s+id="'+id+'"[^>]*\\sd="([^"]+)"'));
+  assert.ok(match,'Missing original shell path '+id);bases.set(id,match[1]);nodes.set('#'+id,attrs({d:match[1]}));
+ }
+ const response=attrs({opacity:'0'}),contact=attrs(),classes=new Set();
+ nodes.set('.signal-shell__response',response);nodes.set('#selected-work-shell-contact',contact);
+ const svg={querySelector:selector=>nodes.get(selector)};
+ const host=Object.assign(events(),{querySelector:selector=>selector==='.signal-shell'?svg:null,
+  classList:{add:name=>classes.add(name),remove:name=>classes.delete(name)},
+  getBoundingClientRect:()=>({left:20,top:50,width:850,height:320})});
+ const doc=Object.assign(events(),{hidden:false,querySelector:selector=>selector==='.signal'?host:null});
+ const motion=Object.assign(events(),{matches:reduce}),compact=Object.assign(events(),{matches:false});
+ const win=Object.assign(events(),{matchMedia:q=>q.includes('reduced')?motion:compact});
+ const pending=new Map();let next=1,now=0,calls=0,cancelled=0,intersection;
+ const state={window:win,document:doc,Math,performance:{now:()=>now},
+  requestAnimationFrame(fn){const id=next++;pending.set(id,fn);return id;},
+  cancelAnimationFrame(id){if(pending.delete(id))cancelled++;},
+  IntersectionObserver:function(fn){intersection=fn;this.observe=()=>{};}};
+ win.IntersectionObserver=state.IntersectionObserver;
+ vm.runInNewContext(shellSource[1],state,{timeout:1000});
+ function advance(frames=1){for(let i=0;i<frames;i++){now+=1000/60;const work=[...pending.values()];pending.clear();for(const fn of work){calls++;fn(now);}}}
+ const pointer={pointerType:'mouse',button:0,clientX:445,clientY:210};
+ const changed=()=>[...bases].some(([id,base])=>nodes.get('#'+id).getAttribute('d')!==base);
+ const clean=()=>!changed()&&!classes.has('is-shell-active')&&Number(response.getAttribute('opacity'))===0;
+ return {host,doc,win,motion,pointer,pending,advance,changed,clean,classes,
+  visible(value){intersection([{isIntersecting:value}]);},
+  counts:()=>({calls,cancelled}),touch(type,touches){const event={touches};doc.emit(type,event);host.emit(type,event);}};
+}
+{
+ const h=shellLifecycle();assert.equal(h.pending.size,0,'Idle shell schedules no animation work');
+ h.host.emit('pointermove',h.pointer);h.advance(30);assert.ok(h.changed(),'Hover changes the actual production mesh');
+ h.advance(180);assert.equal(h.pending.size,0,'A stationary hover settles and stops requesting frames');
+ const settledCalls=h.counts().calls;h.advance(10);assert.equal(h.counts().calls,settledCalls,'Stopped hover does no hidden frame work');
+ h.host.emit('pointerdown',h.pointer);h.advance(10);h.host.emit('pointerleave',h.pointer);h.advance(120);
+ assert.ok(h.clean(),'Released shell restores exact source geometry and removes glow');
+ assert.equal(h.pending.size,0,'Released shell stops its RAF loop within two seconds');
+ h.host.emit('pointerdown',h.pointer);h.advance(8);assert.ok(h.pending.size>0&&h.changed());
+ h.doc.hidden=true;h.doc.emit('visibilitychange');
+ assert.ok(h.clean(),'Hidden-tab transition restores shell geometry immediately');assert.equal(h.pending.size,0,'Hidden-tab transition cancels outstanding shell RAF');
+ const hiddenCalls=h.counts().calls;h.advance(20);assert.equal(h.counts().calls,hiddenCalls,'Hidden shell executes no queued animation callback');
+ h.doc.hidden=false;h.doc.emit('visibilitychange');h.host.emit('pointermove',h.pointer);h.advance(8);
+ h.visible(false);assert.ok(h.clean(),'Offscreen transition restores shell geometry immediately');assert.equal(h.pending.size,0,'Offscreen shell resets and cancels outstanding work');
+ h.host.emit('pointermove',h.pointer);assert.equal(h.pending.size,0,'Offscreen input cannot restart the frame loop');
+ console.log('PASS shell lifecycle: idle, stationary hover, release, hidden tab and offscreen stop');
+}
+{
+ const h=shellLifecycle();h.touch('touchstart',[{identifier:3,clientX:400,clientY:200}]);h.advance(12);assert.ok(h.changed());
+ h.touch('touchstart',[{identifier:3,clientX:400,clientY:200},{identifier:8,clientX:450,clientY:210}]);
+ assert.ok(h.clean(),'Multitouch resets shell geometry immediately');assert.equal(h.pending.size,0,'Multitouch immediately clears deformation and cancels animation');
+ h.touch('touchmove',[{identifier:3,clientX:420,clientY:190}]);assert.equal(h.pending.size,0,'Partially ended pinch cannot restart a stale gesture');
+ h.touch('touchend',[]);h.touch('touchstart',[{identifier:9,clientX:450,clientY:220}]);h.advance(12);
+ assert.ok(h.changed(),'A fresh single touch recovers after pinch release');
+ console.log('PASS shell lifecycle: multitouch reset and fresh-touch recovery');
+}
+{
+ const h=shellLifecycle(true);h.host.emit('pointermove',h.pointer);h.host.emit('pointerdown',h.pointer);h.advance(60);
+ assert.ok(h.classes.has('is-shell-active'),'Reduced motion still exposes static contact feedback');
+ assert.equal(h.pending.size,0);assert.equal(h.counts().calls,0,'Reduced motion never starts the spring RAF');assert.ok(!h.changed());
+ h.host.emit('pointerleave',h.pointer);assert.ok(h.clean());
+ h.motion.matches=false;h.motion.emit('change');h.host.emit('pointerdown',h.pointer);h.advance(8);assert.ok(h.changed());
+ h.motion.matches=true;h.motion.emit('change');assert.ok(h.clean());assert.equal(h.pending.size,0,'Enabling reduced motion cancels an in-flight spring');
+ console.log('PASS shell lifecycle: reduced motion zero RAF and preference-change cancellation');
 }
