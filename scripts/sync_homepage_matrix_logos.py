@@ -19,10 +19,10 @@ def render(source):
     if not match or not wordmarks:
         raise ValueError("Homepage logo delivery markers are missing")
     body = match.group(1).rstrip()
-    wm = [name.strip().split(":")[0] for name in wordmarks.group(1).split(",") if name.strip()]
+    wm = [name.strip().split(":")[0].strip().strip('"') for name in wordmarks.group(1).split(",") if name.strip()]
     for row in rows:
         name = row["name"]
-        if not re.fullmatch(r"[a-z0-9]+", name):
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
             raise ValueError("Invalid logo name: " + name)
         if row["asset"] != f"icons/matrix/{name}.webp":
             raise ValueError("Logo asset must match its name under icons/matrix")
@@ -47,7 +47,7 @@ def render(source):
         elif not row["wordmark"] and name in wm:
             wm.remove(name)
     source = source[:match.start(1)] + body + source[match.end(1):]
-    return re.sub(r"var WORDMARK = \{.*?\};", "var WORDMARK = { " + ", ".join(name + ":1" for name in wm) + " };", source, count=1)
+    return re.sub(r"var WORDMARK = \{.*?\};", "var WORDMARK = { " + ", ".join(json.dumps(name) + ":1" for name in wm) + " };", source, count=1)
 
 
 def main():

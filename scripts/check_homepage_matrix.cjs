@@ -4,6 +4,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(process.argv[2] || path.join(__dirname, '..', 'index.html'), 'utf8');
+// Generated object keys and logo data must also be valid in the full page.
+let scriptCount = 0;
+for (const match of source.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
+  if (match[1].includes('application/ld+json')) JSON.parse(match[2]);
+  else { new vm.Script(match[2]); scriptCount++; }
+}
+assert.ok(scriptCount > 0, 'No homepage scripts found');
+console.log('PASS homepage inline script syntax: ' + scriptCount);
+
 function extract(name, endMarker) {
   const start = source.indexOf('  function ' + name + '(');
   const end = source.indexOf(endMarker, start);

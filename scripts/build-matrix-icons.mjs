@@ -496,6 +496,12 @@ const ICONS = [
   /* Prediction-market wordmarks from the bundled Cursor artwork. */
   { name: 'kalshi', localSvg: 'icons/matrix/build-sources/kalshi.svg', si: [] },
   { name: 'polymarket', localSvg: 'icons/matrix/build-sources/polymarket.svg', si: [] },
+  { name: 'tally', localSvg: 'icons/matrix/build-sources/tally.svg', si: [] },
+  { name: 'snapshot', localSvg: 'icons/matrix/build-sources/snapshot.svg', si: [] },
+  { name: 'vantage-bank', localSvg: 'icons/matrix/build-sources/vantage-bank.svg', si: [] },
+  { name: 'custodia', localSvg: 'icons/matrix/build-sources/custodia.svg', si: [] },
+  { name: 'maple', localSvg: 'icons/matrix/build-sources/maple.svg', si: [] },
+  { name: 'hazel-network', localSvg: 'icons/matrix/build-sources/hazel-network.svg', si: [] },
 ];
 
 async function fetchText(url) {

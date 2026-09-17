@@ -217,6 +217,12 @@ COMPANIES = {
     "wise": ("wise", []),  # bundled build-sources/wise.svg (Lineicons path; MIT)
     "polymarket": ("polymarket", []),
     "kalshi": ("kalshi", []),
+    "tally": ("tally", []),
+    "snapshot": ("snapshot", []),
+    "vantage-bank": ("vantagebank", []),
+    "custodia": ("custodia", []),
+    "maple": ("maple", []),
+    "hazel-network": ("hazelnetwork", []),
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────
