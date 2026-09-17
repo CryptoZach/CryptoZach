@@ -493,6 +493,9 @@ const ICONS = [
     localRaster: 'icons/matrix/build-sources/usdp.png',
     si: [],
   },
+  /* Prediction-market wordmarks from the bundled Cursor artwork. */
+  { name: 'kalshi', localSvg: 'icons/matrix/build-sources/kalshi.svg', si: [] },
+  { name: 'polymarket', localSvg: 'icons/matrix/build-sources/polymarket.svg', si: [] },
 ];
 
 async function fetchText(url) {

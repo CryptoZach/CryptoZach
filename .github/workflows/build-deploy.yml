@@ -96,6 +96,9 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Homepage matrix logo delivery and startup gate
+        run: npm run check:homepage-logos
+
       - name: CSS duplicate-selector lint (stylelint; warn-only)
         # no-duplicate-selectors surfaces accidentally repeated selectors in the
         # source CSS. WARN-ONLY (continue-on-error): the hand-maintained CSS uses

@@ -21,7 +21,9 @@
     "build:cache-bust-images": "node scripts/cache-bust-images.mjs _site",
     "build:postprocess": "npm run build:wrap-terms && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html && npm run build:cache-bust-images",
     "build:postprocess:with-purgecss": "npm run build:wrap-terms && npm run build:purge-css && npm run build:minify-css && npm run build:minify-js && npm run build:critical-css && npm run build:minify-html && npm run build:cache-bust-images",
-    "ci:postprocess:ci": "npm run build:postprocess"
+    "ci:postprocess:ci": "npm run build:postprocess",
+    "build:homepage-logos": "python3 scripts/sync_homepage_matrix_logos.py --write",
+    "check:homepage-logos": "python3 scripts/sync_homepage_matrix_logos.py --check && node scripts/check_homepage_matrix.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

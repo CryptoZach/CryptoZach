@@ -2,7 +2,6 @@
 """Build white-silhouette matrix icons for cryptozach.com hero animation."""
 
 import os
-import re
 import struct
 import subprocess
 import sys
@@ -17,6 +16,11 @@ if os.path.isdir(_brew_lib):
 
 import requests
 from PIL import Image
+
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPT_DIR)
+from add_matrix_logo import fit_canvas, image_to_white_mark, render_svg
 
 # ── Manifests ──────────────────────────────────────────────────────────────
 
@@ -211,73 +215,43 @@ COMPANIES = {
     "wu": ("westernunion", []),
     "moneygram": ("moneygram", []),
     "wise": ("wise", []),  # bundled build-sources/wise.svg (Lineicons path; MIT)
+    "polymarket": ("polymarket", []),
+    "kalshi": ("kalshi", []),
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────
 
 def svg_to_white_png(svg_bytes: bytes, size: int = 32) -> bytes | None:
-    """Convert SVG to white-on-transparent PNG."""
-    svg_text = svg_bytes.decode("utf-8")
+    """Convert SVG to white-on-transparent PNG.
 
-    # Force all fills to white, but preserve fill="none" (transparent areas).
-    svg_text = re.sub(r'fill="(?!none)[^"]*"', 'fill="#FFFFFF"', svg_text)
-    # Handle currentColor (used by some Iconify SVGs)
-    svg_text = svg_text.replace('currentColor', '#FFFFFF')
-    # Handle style-based fills (inline CSS)
-    svg_text = re.sub(r'fill:\s*#[0-9a-fA-F]{3,8}', 'fill:#FFFFFF', svg_text)
-    svg_text = re.sub(r'fill:\s*rgb[^;)]+[;)]', 'fill:#FFFFFF;', svg_text)
-    # If no fill attribute exists on any element, set a default on <svg> so
-    # paths that rely on the SVG default (black) render white instead.
-    # But only when there are NO existing fill attributes at all — otherwise
-    # a root fill="#FFFFFF" floods the entire canvas as a white rectangle.
-    if 'fill=' not in svg_text:
-        svg_text = svg_text.replace('<svg ', '<svg fill="#FFFFFF" ', 1)
-
+    Render at high res, punch near-white interior pixels as holes, then
+    BOX-downsample into `size`. Do not flatten every fill to #FFFFFF when the
+    SVG has two or more brand colors: that unions PayPal's overlapping P's
+    and drops the etched crescent. `render_svg` skips recolor in that case.
+    """
     try:
-        import cairosvg
-        png_data = cairosvg.svg2png(
-            bytestring=svg_text.encode("utf-8"),
-            output_width=size,
-            output_height=size,
-        )
-        return png_data
-    except (ImportError, OSError):
-        pass
-
-    # Fallback: try rsvg-convert via subprocess
-    import tempfile
-    with tempfile.NamedTemporaryFile(suffix=".svg", delete=False, mode="w") as f:
-        f.write(svg_text)
-        svg_path = f.name
-    png_path = svg_path.replace(".svg", ".png")
-    try:
-        subprocess.run(
-            ["rsvg-convert", "-w", str(size), "-h", str(size), svg_path, "-o", png_path],
-            check=True, capture_output=True,
-        )
-        with open(png_path, "rb") as f:
-            return f.read()
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        pass
-    finally:
-        for p in [svg_path, png_path]:
-            if os.path.exists(p):
-                os.unlink(p)
-
-    return None
+        rendered = render_svg(svg_bytes, min_px=max(1024, size * 16))
+    except (FileNotFoundError, subprocess.CalledProcessError, OSError, ValueError):
+        return None
+    mark, _luma_punched = image_to_white_mark(rendered)
+    fitted = fit_canvas(mark, square=size, landscape_if_wide=False, oversample=4)
+    buf = BytesIO()
+    fitted.save(buf, format="PNG")
+    return buf.getvalue()
 
 
 def color_png_to_white(png_bytes: bytes, size: int = 32) -> bytes:
-    """Replace all non-transparent pixels with white."""
-    img = Image.open(BytesIO(png_bytes)).convert("RGBA").resize((size, size), Image.LANCZOS)
-    pixels = img.load()
-    for y in range(img.height):
-        for x in range(img.width):
-            r, g, b, a = pixels[x, y]
-            if a > 0:
-                pixels[x, y] = (255, 255, 255, a)
+    """White ink on transparent, preserving light interior etching.
+
+    Previous form: resize with LANCZOS first, then paint every opaque pixel
+    white. That smeared 32x32 bakes and filled PayPal's white crescent. Knock
+    out near-white pixels at native resolution, then BOX-fit to `size`.
+    """
+    img = Image.open(BytesIO(png_bytes)).convert("RGBA")
+    mark, _luma_punched = image_to_white_mark(img)
+    fitted = fit_canvas(mark, square=size, landscape_if_wide=False, oversample=4)
     buf = BytesIO()
-    img.save(buf, format="PNG")
+    fitted.save(buf, format="PNG")
     return buf.getvalue()
 
 
