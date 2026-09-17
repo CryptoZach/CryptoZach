@@ -57,7 +57,7 @@ function productionFunction(name, required = true) {
   return source.slice(start, end + 5);
 }
 const paintCode = productionFunction('claimMatrixSpace', false) + '\n' +
-  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('drawMatrix');
+  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('nudgeMatrixIcon') + '\n' + productionFunction('drawMatrix');
 function seededMath(seed) {
   const math = Object.create(Math);
   math.random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
@@ -98,7 +98,7 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
     }
   };
   const state = {W:width,H:440,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
-    mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,
+    mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,
     GOLD:[251,191,36], FX:{'\u20A9':1},matrixTextMetrics:{},
     pal:()=>({trail:[0,0,0],fade:0.158,blue:[1,2,3],mint:[3,2,1],olive:[2,3,1]}),
     rgb:(color,alpha)=>({color,alpha}),mixc:(a)=>a,
@@ -231,14 +231,14 @@ const heroInputStart = source.indexOf('  var heroTouchId =');
 const heroInputEnd = source.indexOf('  var ambient = 0, previousFrame = null, pileSteps = 0;', heroInputStart);
 assert.ok(heroInputStart >= 0 && heroInputEnd > heroInputStart, 'Missing hero touch lifecycle');
 const heroInputCode = source.slice(heroInputStart, heroInputEnd);
-function heroInputHarness(reduce = false) {
+function heroInputHarness(reduce = false, sharedState = {}) {
   let now = 1000;
   const handlers = {}, bursts = [], rect = {left:0,top:100,width:390,height:900};
-  const state = {reduce,W:390,H:900,Math,performance:{now:()=>now},
+  const state = Object.assign(sharedState, {reduce,W:390,H:900,Math,performance:{now:()=>now},
     active:false,vel:0,pmx:-1,pmy:-1,mx:-1,my:-1,pcx:-1,pcy:-1,
     warpX:null,warpY:null,warpTX:null,warpTY:null,lastMove:0,lastSpawn:0,
     spawnCluster(...args){bursts.push(args);},
-    hero:{getBoundingClientRect:()=>rect,addEventListener(type,fn,options){handlers[type]={fn,options};}}};
+    hero:{getBoundingClientRect:()=>rect,addEventListener(type,fn,options){handlers[type]={fn,options};}}});
   vm.createContext(state); vm.runInContext(heroInputCode,state,{timeout:1000});
   function send(type,event={},elapsed=60) {
     now += elapsed;
@@ -305,6 +305,73 @@ const finger = (identifier=7,clientX=80,clientY=240) => ({identifier,clientX,cli
   quiet.send('pointermove',{pointerType:'mouse'});
   assert.equal(quiet.bursts.length,0,'Reduced motion must not accumulate hidden bursts');
   console.log('PASS hero touch: bounds, mouse hover and reduced motion');
+}
+
+// Drive the served input handlers all the way through actual logo paint calls.
+// These fail when a helper exists but is disconnected from input or rendering.
+for (const input of ['mouse', 'touch']) {
+  const paint=paintHarness(), h=heroInputHarness(false,paint.state);
+  paint.state.cols=[column(100,150,[openai]),column(260,150,[maple])];
+  paint.state.cols.forEach(c=>{c.tick=-1000;});
+  const center=result=>{const g=result.groups.find(g=>g.name==='openai');assert.ok(g,'Touched logo must stay visible');return {x:g.main.x+g.main.w/2,y:g.main.y+g.main.h/2};};
+  const initial=paint.draw(),before=center(initial);
+  const farBefore=initial.groups.find(g=>g.name==='maple').main;
+  if(input==='mouse')h.send('pointermove',{pointerType:'mouse',clientX:94,clientY:250});
+  else {
+    h.send('touchstart',{touches:[finger(7,80,250)]});
+    h.send('pointercancel');
+    h.send('touchmove',{touches:[finger(7,94,250)]});
+  }
+  let result;
+  for(let frame=0;frame<20;frame++) {
+    result=paint.draw();checkPainting(result,paint.state,input+' nudge frame'+frame);
+  }
+  const moved=center(result),delta=Math.hypot(moved.x-before.x,moved.y-before.y);
+  assert.ok(delta>2 && delta<=8.01,input+': pointer contact must move the actual painted icon slightly');
+  assert.ok(moved.x>before.x,input+': icon deflects away from contact');
+  const far=result.groups.find(g=>g.name==='maple');
+  assert.equal(far.main.x,farBefore.x,'Distant logos stay on their rain columns');
+  assert.equal(far.main.y,farBefore.y,'Distant logos have no vertical deflection');
+  if(input==='mouse')h.send('pointerleave',{pointerType:'mouse'});else h.send('touchend');
+  const firstReturn=center(paint.draw());
+  assert.ok(firstReturn.x>before.x && firstReturn.x<moved.x,'Release settles smoothly, without snapping');
+  for(let frame=0;frame<60;frame++)paint.draw();
+  const settled=center(paint.draw());
+  assert.ok(Math.hypot(settled.x-before.x,settled.y-before.y)<0.01,'Released logos return to their original stream');
+  console.log('PASS matrix nudge: '+input+' input reaches paint, local displacement, target alignment and smooth release');
+}
+{
+  const results=[];
+  for(const step of [1,0.5]) {
+    const h=paintHarness();h.state.cols=[column(100,150,[openai])];h.state.cols[0].tick=-1000;
+    Object.assign(h.state,{active:true,warpTX:100,warpTY:150});
+    for(let frame=0;frame<10/step;frame++)h.draw(step);
+    const n=h.state.cols[0].nudges[0];
+    assert.ok(Number.isFinite(n.x)&&Number.isFinite(n.y),'Exact-center contact cannot divide by zero');
+    assert.ok(Math.hypot(n.x,n.y)<=8,'Displacement is bounded to eight CSS pixels');
+    results.push({x:n.x,y:n.y});
+  }
+  assert.ok(Math.hypot(results[0].x-results[1].x,results[0].y-results[1].y)<1e-8,'Same elapsed time at 60/120 Hz gives the same nudge');
+  const quiet=paintHarness(true);quiet.state.cols=[column(100,150,[openai])];
+  Object.assign(quiet.state,{active:true,warpTX:94,warpTY:150});
+  const still=quiet.draw();checkPainting(still,quiet.state,'reduced motion nudge');
+  assert.equal(still.groups[0].main.x+still.groups[0].main.w/2,100,'Reduced motion keeps the icon stationary');
+  console.log('PASS matrix nudge: center contact, displacement cap, refresh-rate independence and reduced motion');
+}
+for(const width of [390,1280]) {
+  const h=paintHarness(false,width,441);
+  vm.runInContext('buildColumns();',h.state,{timeout:1000});
+  let displaced=0,maxLogos=0;
+  for(let frame=0;frame<120;frame++) {
+    Object.assign(h.state,{active:frame<100,warpTX:(frame*17)%h.state.W,warpTY:80+(frame*3)%240});
+    if(frame===50){h.state.W=width===390?520:780;vm.runInContext('buildColumns();',h.state,{timeout:1000});}
+    const result=h.draw(frame%2?0.5:1);
+    checkPainting(result,h.state,'active nudge width'+width+' frame'+frame);
+    displaced+=h.state.cols.filter(c=>(c.nudges||[]).some(n=>n&&Math.hypot(n.x,n.y)>0.5)).length;
+    maxLogos=Math.max(maxLogos,result.groups.filter(g=>g.kind==='logo').length);
+  }
+  assert.ok(displaced>10&&maxLogos>=5,'Interaction checks need actual displaced icons in a populated field');
+  console.log('PASS matrix nudge: moving contact, spacing, no adjacent duplicates and resize, width='+width);
 }
 
 // Exercise the real dial handlers and the hit surface delivered in this page.

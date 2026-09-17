@@ -1973,6 +1973,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         sp: old ? old.sp : 0.5 + Math.random() * 1.5,
         len: old ? old.len : 6 + Math.floor(Math.random() * 12),
         glyphs: old && !reseed ? old.glyphs : [],
+        nudges: old && !reseed ? old.nudges : [],
         tick: old ? old.tick : 0
       };
       if (!c.glyphs.length){
@@ -2104,6 +2105,27 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     });
   }
 
+  /* A local, eight-pixel deflection of the actual logo, with a soft return.
+     Keep it per visible slot: pool entries are shared across many columns. */
+  function nudgeMatrixIcon(c, k, item, x, y, width, height, step){
+    if (!c.nudges) c.nudges = [];
+    var n = c.nudges[k];
+    if (!n || n.item !== item) n = c.nudges[k] = { item:item, x:0, y:0 };
+    var tx = 0, ty = 0;
+    if (!reduce && active && warpTX != null){
+      var dx = x-warpTX, dy = y-warpTY, distance = Math.hypot(dx, dy);
+      var radius = 28 + Math.max(width, height)*0.5;
+      if (distance < radius){
+        var strength = 8 * Math.pow(1-distance/radius, 2);
+        if (distance < 0.01){ dx = 1; dy = 0; distance = 1; }
+        tx = dx/distance*strength; ty = dy/distance*strength;
+      }
+    }
+    var ease = reduce ? 1 : frameEase(0.22, step);
+    n.x += (tx-n.x)*ease; n.y += (ty-n.y)*ease;
+    return n;
+  }
+
   function drawMatrix(now, boost, step){
     if (step == null) step = 1;
     var P = pal();
@@ -2123,6 +2145,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       c.y += c.sp * (1 + boost * 0.5) * step;
       if (c.y - c.len * 20 > H){
         c.y = -Math.random() * 220;
+        c.nudges = [];
         c.sp = 0.5 + Math.random() * 1.5;
         c.len = 6 + Math.floor(Math.random() * 12);
       }
@@ -2153,6 +2176,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           if (head){ iw *= 1.14; ih *= 1.14; }
           iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
           var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
+          var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step);
+          ix += nudge.x; iy += nudge.y;
           var ia = Math.min(0.92, a * 1.8);
           if (!claimMatrixSpace(it.d.n, ix, iy-trail, iw, ih+trail)) continue;
           if (trail){
@@ -2164,8 +2189,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           mctx.globalAlpha = ia;
           mctx.drawImage(tl, ix, iy, iw, ih);
           mctx.globalAlpha = 1;
-          if (gy > 0 && gy < H && ia > 0.14 && iconPts.length < ICONPT_CAP){
-            iconPts.push({ x: c.x, y: gy, a: ia, i: iconPts.length });
+          var iconY = iy+ih*0.5;
+          if (iconY > 0 && iconY < H && ia > 0.14 && iconPts.length < ICONPT_CAP){
+            iconPts.push({ x: ix+iw*0.5, y: iconY, a: ia, i: iconPts.length });
           }
         } else {
           var v = it.t === 1 ? '$' : it.v;

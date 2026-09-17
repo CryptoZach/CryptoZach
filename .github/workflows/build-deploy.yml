@@ -124,6 +124,17 @@ jobs:
       - name: Post-process (PurgeCSS + minify + critical CSS)
         run: npm run build:postprocess:with-purgecss
 
+      - name: Install browser for homepage interaction gate
+        timeout-minutes: 5
+        run: npx playwright install --with-deps chromium
+
+      - name: Built homepage native interaction gate
+        # Test the post-processed artifact that Pages will publish. A source-only
+        # helper test cannot prove the loaded page still delivers the interaction.
+        # Browser setup errors and failed gestures both block upload and deploy.
+        timeout-minutes: 3
+        run: node scripts/check_homepage_interactions.cjs _site
+
       - name: Cache-buster deploy gate (built _site/)
         # Verifies that the content-hash cache-buster actually FIRED. If
         # scripts/inline-critical-css.mjs silently no-ops, every built page ships the
