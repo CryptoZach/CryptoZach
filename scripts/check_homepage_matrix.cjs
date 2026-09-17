@@ -225,3 +225,213 @@ for(const width of [390,1280]) {
   assert.ok(maxLogos>=5 && names.size>=5,'Spacing must not pass by erasing the field');
   console.log('PASS matrix motion, mutation and resize: width='+width+', brands='+names.size);
 }
+
+// Exercise the registered production handlers through native gesture sequences.
+const heroInputStart = source.indexOf('  var heroTouchId =');
+const heroInputEnd = source.indexOf('  var ambient = 0, previousFrame = null, pileSteps = 0;', heroInputStart);
+assert.ok(heroInputStart >= 0 && heroInputEnd > heroInputStart, 'Missing hero touch lifecycle');
+const heroInputCode = source.slice(heroInputStart, heroInputEnd);
+function heroInputHarness(reduce = false) {
+  let now = 1000;
+  const handlers = {}, bursts = [], rect = {left:0,top:100,width:390,height:900};
+  const state = {reduce,W:390,H:900,Math,performance:{now:()=>now},
+    active:false,vel:0,pmx:-1,pmy:-1,mx:-1,my:-1,pcx:-1,pcy:-1,
+    warpX:null,warpY:null,warpTX:null,warpTY:null,lastMove:0,lastSpawn:0,
+    spawnCluster(...args){bursts.push(args);},
+    hero:{getBoundingClientRect:()=>rect,addEventListener(type,fn,options){handlers[type]={fn,options};}}};
+  vm.createContext(state); vm.runInContext(heroInputCode,state,{timeout:1000});
+  function send(type,event={},elapsed=60) {
+    now += elapsed;
+    const e={pointerType:'touch',clientX:80,clientY:240,touches:[],
+      preventDefault(){throw Error('Hero must not cancel native gestures');},...event};
+    if(handlers[type])handlers[type].fn(e);
+  }
+  return {state,handlers,bursts,rect,send};
+}
+const finger = (identifier=7,clientX=80,clientY=240) => ({identifier,clientX,clientY});
+{
+  const h=heroInputHarness();
+  h.send('pointerdown'); assert.equal(h.bursts.length,0,'Touch must not start twice through pointer and touch events');
+  h.send('touchstart',{touches:[finger()]});
+  assert.equal(h.bursts.length,1,'Tap starts a coral burst');
+  h.send('pointercancel');
+  h.send('touchmove',{touches:[finger(7,90,260)]});
+  assert.equal(h.bursts.length,2,'Native pan cancellation must not stop finger drag');
+  assert.equal(h.state.active,true);
+  assert.deepEqual(h.bursts[1].slice(0,2),[90,160]);
+  h.rect.top=50;
+  h.send('touchmove',{touches:[finger(7,90,270)]});
+  assert.deepEqual(h.bursts[2].slice(0,2),[90,220],'Follow the finger in the scrolled hero coordinate space');
+  h.send('pointermove'); assert.equal(h.bursts.length,3,'Compatibility pointer moves must not double emission');
+  h.send('touchmove',{touches:[finger(7,95,271)]},10);
+  h.send('touchmove',{touches:[finger(7,96,272)]},10);
+  assert.equal(h.bursts.length,4,'Burst rate remains bounded while touch position updates');
+  for(const type of ['touchstart','touchmove','touchend','touchcancel']) assert.equal(h.handlers[type].options.passive,true);
+  h.send('touchend'); assert.equal(h.state.active,false); assert.equal(h.state.warpTX,null);
+  const count=h.bursts.length;
+  h.send('touchmove',{touches:[finger()]}); assert.equal(h.bursts.length,count,'Ended gestures cannot leave an active magnet');
+  console.log('PASS hero touch: drag after native pan cancellation, scroll coordinates, rate and cleanup');
+}
+{
+  const h=heroInputHarness();
+  h.send('touchstart',{touches:[finger()]});
+  h.send('touchstart',{touches:[finger(),finger(8,220,250)]});
+  assert.equal(h.state.active,false,'Pinch releases decorative interaction');
+  h.send('touchmove',{touches:[finger(),finger(8,250,270)]});
+  h.send('touchend',{touches:[finger(8)]});
+  h.send('touchmove',{touches:[finger(8,110,300)]});
+  assert.equal(h.bursts.length,1,'A remaining pinch finger must not become a new drag');
+  // The last finger lifts outside the hero; no all-fingers-up event reaches it.
+  h.send('touchstart',{touches:[finger(9)]});
+  assert.equal(h.state.active,true,'A fresh touch recovers after an outside-hero pinch end');
+  h.send('touchmove',{touches:[finger(10,110,300)]});
+  assert.equal(h.bursts.length,2,'Only the tracked touch identifier can drive the effect');
+  h.send('touchcancel'); assert.equal(h.state.active,false);
+  console.log('PASS hero touch: pinch, identifiers and cancellation');
+}
+{
+  const h=heroInputHarness();
+  h.send('touchstart',{touches:[finger()]});
+  h.send('touchmove',{touches:[finger(7,400,250)]});
+  assert.equal(h.state.active,false,'Outside contact stops the effect');
+  h.send('touchmove',{touches:[finger(7,100,250)]});
+  assert.equal(h.state.active,true,'Reentering the hero resumes the same drag');
+  h.send('touchend');
+  h.send('pointermove',{pointerType:'mouse',clientX:50,clientY:200});
+  assert.equal(h.state.active,true,'Mouse hover remains interactive');
+  h.send('pointerleave',{pointerType:'mouse'}); assert.equal(h.state.active,false);
+  const quiet=heroInputHarness(true);
+  quiet.send('touchstart',{touches:[finger()]}); quiet.send('touchmove',{touches:[finger(7,100,270)]});
+  quiet.send('pointermove',{pointerType:'mouse'});
+  assert.equal(quiet.bursts.length,0,'Reduced motion must not accumulate hidden bursts');
+  console.log('PASS hero touch: bounds, mouse hover and reduced motion');
+}
+
+// Exercise the real dial handlers and the hit surface delivered in this page.
+// Native browser tests separately prove page scrolling and pinch recognition.
+{
+  const dialStyle = source.match(/#dial-gesture-rim\s*\{([^}]+)\}/);
+  assert.ok(dialStyle, 'The dial rim needs its own pre-gesture touch policy');
+  assert.match(dialStyle[1], /(?:^|;)\s*touch-action\s*:\s*pinch-zoom\s*(?:;|$)/,
+    'A rim drag must retain vertical movement while allowing native pinch zoom');
+  assert.match(dialStyle[1], /(?:^|;)\s*pointer-events\s*:\s*stroke\s*(?:;|$)/,
+    'Only the annular stroke may claim a dial gesture');
+  const dialOverlayStyle = source.match(/\.dialgesture\s*\{([^}]+)\}/);
+  assert.ok(dialOverlayStyle, 'Missing dial gesture overlay style');
+  assert.match(dialOverlayStyle[1], /(?:^|;)\s*pointer-events\s*:\s*none\s*(?:;|$)/,
+    'The invisible overlay box must pass center and corner gestures through');
+  assert.match(dialOverlayStyle[1], /(?:^|;)\s*touch-action\s*:\s*pinch-zoom\s*(?:;|$)/,
+    'The outer SVG box must own rim drags; policy on a graphics circle alone is ignored');
+  assert.match(source, /#dial\s*\{\s*touch-action\s*:\s*auto\s*\}/,
+    'The canvas center and corners must allow normal page gestures');
+  const dialMarkup = source.match(/<div\s+class="dialstage">([\s\S]*?)<\/div>/);
+  assert.ok(dialMarkup, 'Missing dial gesture stage in served markup');
+  assert.match(dialMarkup[1], /<canvas\s+id="dial"(?=\s|>)/, 'Stage must contain the actual dial canvas');
+  assert.match(dialMarkup[1], /<svg\s+class="dialgesture"(?=\s)[^>]*viewBox="0 0 100 100"/,
+    'The overlay must share the canvas coordinate bounds');
+  const dialCircle = dialMarkup[1].match(/<circle\b[^>]*\bid="dial-gesture-rim"[^>]*>/);
+  assert.ok(dialCircle, 'Missing actual hit-testable rim');
+  const attribute = name => {
+    const match = dialCircle[0].match(new RegExp('\\b' + name + '="([^" ]+)"'));
+    assert.ok(match, 'Missing dial rim attribute: ' + name);
+    return match[1];
+  };
+  assert.equal(attribute('fill'), 'none', 'Dial center cannot be a filled hit target');
+  assert.equal(attribute('stroke'), 'transparent', 'Gesture layer must not alter the drawing');
+  assert.equal(Number(attribute('cx')), 50);
+  assert.equal(Number(attribute('cy')), 50);
+  const radius = Number(attribute('r')), band = Number(attribute('stroke-width'));
+  assert.ok(radius - band / 2 > 20 && radius - band / 2 < 30 &&
+    radius + band / 2 > 45 && radius + band / 2 < 50,
+    'The touch annulus must cover the visible rim and exclude the center and corners');
+
+  const dialStart = source.indexOf('  if (!compact){\n    var stage = cv.closest');
+  const dialEnd = source.indexOf('\n  /* The rect read is the other half', dialStart);
+  assert.ok(dialStart >= 0 && dialEnd > dialStart, 'Missing production dial input handlers');
+  const dialInputCode = source.slice(dialStart, dialEnd);
+  function dialInputHarness(compact = false) {
+    let now = 1000, nextTimer = 0;
+    const handlers = {}, timers = new Map(), captured = new Set(), rim = {};
+    const stage = {
+      querySelector(selector){assert.equal(selector, '#dial-gesture-rim'); return rim;},
+      addEventListener(type, handler){handlers[type] = handler;},
+      setPointerCapture(id){captured.add(id);},
+      hasPointerCapture(id){return captured.has(id);},
+      releasePointerCapture(id){captured.delete(id);}
+    };
+    const canvas = {closest(){return stage;},
+      getBoundingClientRect(){return {left:10,top:20,width:100,height:100};}};
+    const state = {compact,cv:canvas,size:200,cur:null,curSpeed:0,Math,
+      performance:{now:()=>now},
+      setTimeout(fn, delay){const id=++nextTimer; timers.set(id,{at:now+delay,fn}); return id;},
+      clearTimeout(id){timers.delete(id);}
+    };
+    vm.createContext(state);
+    vm.runInContext(dialInputCode,state,{timeout:1000});
+    return {state,captured,handlers,canvas,rim,timers,
+      fire(type, props={}){
+        assert.ok(handlers[type], 'Missing registered dial handler: ' + type);
+        handlers[type]({type,pointerId:1,isPrimary:true,pointerType:'touch',
+          clientX:95,clientY:70,target:rim,...props});
+      },
+      advance(ms){
+        now+=ms;
+        for(const [id,timer] of timers) if(timer.at<=now){timers.delete(id); timer.fn();}
+      }
+    };
+  }
+  const dialCases = {
+    'rim capture and logical coordinates'(h){
+      h.fire('pointerdown');
+      assert.ok(h.captured.has(1), 'A rim press must capture its primary pointer');
+      assert.equal(h.state.cur.x,170); assert.equal(h.state.cur.y,100);
+    },
+    'continuous primary drag'(h){
+      h.fire('pointerdown');
+      h.fire('pointermove',{clientX:90,clientY:80});
+      h.fire('pointermove',{clientX:85,clientY:90});
+      assert.equal(h.state.cur.x,150); assert.equal(h.state.cur.y,140);
+      assert.ok(h.state.curSpeed>0, 'Movement must reach the production grind state');
+      h.fire('pointermove',{pointerId:2,isPrimary:false,clientX:1});
+      h.fire('pointerup',{pointerId:2,isPrimary:false});
+      assert.equal(h.state.cur.x,150, 'A second touch cannot replace the primary contact');
+      assert.ok(h.captured.has(1), 'A second touch cannot release the primary drag');
+    },
+    'capture survives pointer leaving'(h){
+      h.fire('pointerdown'); h.advance(300); h.fire('pointerleave');
+      assert.ok(h.state.cur && h.captured.has(1), 'Leaving the ring cannot end a captured drag');
+    },
+    'cancel and release cleanup'(h){
+      h.fire('pointerdown'); h.fire('pointercancel');
+      assert.equal(h.state.cur,null, 'Native pinch cancellation must clear contact immediately');
+      assert.equal(h.captured.size,0);
+      h.fire('pointerdown'); h.advance(300); h.fire('pointerup');
+      assert.equal(h.state.cur,null); assert.equal(h.captured.size,0);
+    },
+    'center remains uncaptured'(h){
+      h.fire('pointerdown',{target:h.canvas});
+      assert.equal(h.captured.size,0, 'The scrollable center cannot capture the gesture');
+    },
+    'tap glow and renewed contact'(h){
+      h.fire('pointerdown'); h.fire('pointerup');
+      h.advance(100); assert.ok(h.state.cur, 'A short tap still needs visible feedback');
+      h.fire('pointerdown'); h.advance(200);
+      assert.ok(h.state.cur, 'The previous tap timer cannot clear a renewed contact');
+      h.fire('pointerup'); h.advance(70);
+      assert.equal(h.state.cur,null, 'Tap feedback must end after its floor');
+    },
+    'unexpected lost capture releases drag'(h){
+      h.fire('pointerdown'); h.advance(300); h.captured.clear(); h.fire('lostpointercapture');
+      assert.equal(h.state.cur,null);
+      h.fire('pointerdown',{pointerId:3});
+      assert.ok(h.captured.has(3), 'A lost pointer cannot block later drags');
+    },
+    'compact dial keeps no drag handlers'(){
+      assert.deepEqual(Object.keys(dialInputHarness(true).handlers),[]);
+    }
+  };
+  for(const [name, run] of Object.entries(dialCases)){
+    run(dialInputHarness());
+    console.log('PASS dial touch: ' + name);
+  }
+}

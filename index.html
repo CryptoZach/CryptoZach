@@ -437,21 +437,14 @@ header{
 /* ══ HERO: the matrix field runs the full bleed, copy sits on plate ══ */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--mill-2)}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-/* THE DIAL TAKES ITS OWN DRAGS. Its grind is driven by pointermove, which on a
-   touch screen fires only while a finger is down; without this the browser
-   claims that gesture for scrolling and sends pointercancel, so dragging around
-   the rim scrolled the page and the wheel never bit. touch-action:none is scoped
-   to the dial itself, NOT the hero: the hero is full-bleed and blocking scroll
-   there would trap the page. The dial is one bounded control in a tall document,
-   which is the ordinary treatment for a knob.
-
-   pan-y, not none, since 2026-08-30. none applies to the whole SQUARE canvas,
-   and the dial is a disc inscribed in it, so the four corners that look like
-   background swallowed the scroll as well. The rim grind is a rotational drag,
-   which is dominated by its horizontal component, so reserving vertical panning
-   for the page costs the grind almost nothing and gives every upward flick on
-   the dial, on the disc or off it, back to the document. */
-#dial{touch-action:pan-y}
+/* The invisible ring owns drags that start on the dial's usable rim. Its
+   static touch policy keeps vertical parts of a circular drag on the dial,
+   while the center, square corners, and surrounding page remain scrollable.
+   Pinch zoom stays available on the ring. */
+#dial{touch-action:auto}
+.dialstage{position:relative;width:100%;max-width:505px;aspect-ratio:1}
+.dialgesture{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;touch-action:pinch-zoom;cursor:inherit}
+#dial-gesture-rim{pointer-events:stroke;touch-action:pinch-zoom}
 #mtx{z-index:1;opacity:.9}
 #reef{z-index:2}
 #pile{z-index:3}
@@ -703,7 +696,7 @@ section{position:relative;z-index:1}
   transition:filter .35s ease;
 }
 
-.dialfig canvas.grinding{ cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M3%201.6%20L3%2019.2%20L7.7%2014.7%20L10.6%2021%20L13.6%2019.6%20L10.7%2013.4%20L17%2013.2%20Z%27%20fill%3D%27%23fbbf24%27%20stroke%3D%27%23241a05%27%20stroke-width%3D%271.15%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E") 3 2, default; }
+.dialfig canvas.grinding,.dialstage.grinding{ cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M3%201.6%20L3%2019.2%20L7.7%2014.7%20L10.6%2021%20L13.6%2019.6%20L10.7%2013.4%20L17%2013.2%20Z%27%20fill%3D%27%23fbbf24%27%20stroke%3D%27%23241a05%27%20stroke-width%3D%271.15%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E") 3 2, default; }
 .dialfig figcaption{
   font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.075em;
   text-transform:uppercase;color:var(--ink);text-align:center;line-height:2.1;
@@ -1452,7 +1445,12 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           <a class="more" href="#research">See the underlying research &rarr;</a>
         </div>
         <figure class="dialfig">
-          <canvas id="dial" role="img" aria-label="Program dial: 52 outer ticks for governance protocols audited, 19 locking bolts for stablecoin gateways mapped"></canvas>
+          <div class="dialstage">
+            <canvas id="dial" role="img" aria-label="Program dial: 52 outer ticks for governance protocols audited, 19 locking bolts for stablecoin gateways mapped"></canvas>
+            <svg class="dialgesture" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle id="dial-gesture-rim" cx="50" cy="50" r="36.575" fill="none" stroke="transparent" stroke-width="25.41" />
+            </svg>
+          </div>
           <figcaption><b>52</b> ticks &middot; protocols audited<br><b>19</b> bolts &middot; gateways mapped</figcaption>
         </figure>
       </div>
@@ -2241,11 +2239,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
      register. Coarse pointers get a bigger, faster, wider burst per event so one
      tap or short drag is legible; the mouse path is untouched. */
   var COARSE = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-  function spawnCluster(cx, cy, v, now){
+  function spawnCluster(cx, cy, v, now, isTouch){
     var count = (Math.random() < 0.3 ? 3 : 2) + (v > 0.8 ? 1 : 0);
     var speedMul = 1 + Math.min(0.6, v * 0.3);
     var spreadMul = 1 + Math.min(0.8, v * 0.4);
-    if (COARSE){ count += 4; speedMul *= 1.45; spreadMul *= 1.7; }
+    if (COARSE || isTouch){ count += 4; speedMul *= 1.45; spreadMul *= 1.7; }
     for (var i = 0; i < count; i++){
       var a = rnd(0, Math.PI * 2), d = rnd(3, 18) * spreadMul;
       spawnBranch(cx + Math.cos(a)*d, cy + Math.sin(a)*d, a + rnd(-0.5,0.5), 0, rnd(0.6,1.6)*speedMul);
@@ -2594,34 +2592,71 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }
 
   /* ── pointer drives the reef and the pile; an ambient drip keeps it alive when idle ── */
-  hero.addEventListener('pointermove', function(e){
+  /* The browser cancels touch pointer events when a native pan starts. Passive
+     touch events keep the decorative reef following a single finger through
+     that pan, while links, page scrolling and pinch zoom remain native. */
+  var heroTouchId = null, heroTouchBlocked = false;
+  function stopHeroInput(){
+    active = false; vel = 0; pmx = -1; pmy = -1; pcx = -1; pcy = -1;
+    warpX = null; warpY = null; warpTX = null; warpTY = null;
+  }
+  function trackHeroInput(clientX, clientY, press, isTouch){
+    if (reduce) return;
     var r = hero.getBoundingClientRect();
-    var x = e.clientX - r.left, y = e.clientY - r.top;
+    if (!r.width || !r.height) return;
+    var x = (clientX-r.left) * W/r.width, y = (clientY-r.top) * H/r.height;
+    if (x < 0 || x > W || y < 0 || y > H){ stopHeroInput(); return; }
     var now = performance.now();
-    if (pmx >= 0){
-      var dt = Math.max(16, now - lastMove);
-      vel = Math.hypot(x - pmx, y - pmy) / dt * 10;
+    if (press){ vel = 1.2; }
+    else if (pmx >= 0){
+      var dt = Math.max(16, now-lastMove);
+      vel = Math.hypot(x-pmx, y-pmy) / dt * 10;
     }
     pmx = x; pmy = y; mx = x; my = y; lastMove = now;
-    warpTX = x; warpTY = y;
-    pcx = x; pcy = y;
-    active = true;
-    if (now - lastSpawn > 40){ lastSpawn = now; spawnCluster(x, y, vel, now); }
+    warpTX = x; warpTY = y; pcx = x; pcy = y; active = true;
+    if (press || now-lastSpawn > 40){
+      lastSpawn = now; spawnCluster(x, y, vel, now, isTouch);
+    }
+  }
+  hero.addEventListener('pointermove', function(e){
+    if (e.pointerType !== 'touch') trackHeroInput(e.clientX, e.clientY, false, false);
   }, {passive:true});
-  hero.addEventListener('pointerleave', function(){ active = false; vel = 0; pcx = -1; pcy = -1; });
-  /* A TAP MUST DO SOMETHING. pointermove needs travel; a stationary tap produces
-     none, so on touch the field was inert unless you dragged. pointerdown seeds
-     one burst at the contact point, and pointercancel (which the browser fires
-     when it takes the gesture for a scroll) is treated as a leave rather than
-     left to strand `active` true. */
   hero.addEventListener('pointerdown', function(e){
-    var r = hero.getBoundingClientRect();
-    var x = e.clientX - r.left, y = e.clientY - r.top;
-    pmx = x; pmy = y; mx = x; my = y; warpTX = x; warpTY = y; pcx = x; pcy = y;
-    active = true; lastMove = performance.now();
-    spawnCluster(x, y, 1.2, lastMove);
+    if (e.pointerType !== 'touch') trackHeroInput(e.clientX, e.clientY, true, false);
   }, {passive:true});
-  hero.addEventListener('pointercancel', function(){ active = false; vel = 0; pcx = -1; pcy = -1; });
+  hero.addEventListener('pointerleave', function(e){
+    if (e.pointerType !== 'touch') stopHeroInput();
+  }, {passive:true});
+  hero.addEventListener('pointercancel', function(e){
+    if (e.pointerType !== 'touch') stopHeroInput();
+  }, {passive:true});
+  hero.addEventListener('pointerup', function(e){
+    if (e.pointerType === 'pen') stopHeroInput();
+  }, {passive:true});
+  hero.addEventListener('touchstart', function(e){
+    if (e.touches.length !== 1){
+      heroTouchId = null; heroTouchBlocked = true; stopHeroInput(); return;
+    }
+    /* A one-finger start is a fresh gesture, including after the last pinch
+       finger lifted outside the hero and its touchend did not bubble here. */
+    heroTouchBlocked = false;
+    var t = e.touches[0];
+    heroTouchId = t.identifier;
+    trackHeroInput(t.clientX, t.clientY, true, true);
+  }, {passive:true});
+  hero.addEventListener('touchmove', function(e){
+    if (e.touches.length !== 1){
+      heroTouchId = null; heroTouchBlocked = true; stopHeroInput(); return;
+    }
+    if (heroTouchBlocked || heroTouchId === null) return;
+    var t = e.touches[0];
+    if (t.identifier === heroTouchId) trackHeroInput(t.clientX, t.clientY, false, true);
+  }, {passive:true});
+  function endHeroTouch(e){
+    heroTouchId = null; heroTouchBlocked = e.touches.length > 0; stopHeroInput();
+  }
+  hero.addEventListener('touchend', endHeroTouch, {passive:true});
+  hero.addEventListener('touchcancel', endHeroTouch, {passive:true});
 
   var ambient = 0, previousFrame = null, pileSteps = 0;
   function frame(timestamp){
@@ -2799,45 +2834,55 @@ function vaultMountDial(cv, opts){
      attaching these would put the contact test in the wrong coordinate space
      as well as spend a rim-grind budget on a 30px ornament. */
   if (!compact){
+    var stage = cv.closest('.dialstage') || cv;
+    var rim = stage.querySelector('#dial-gesture-rim');
+    var dragId = null;
     var track = function(e){
+      if (e.isPrimary === false || (dragId !== null && e.pointerId !== dragId)) return;
       var b = cv.getBoundingClientRect();
-      var nx = e.clientX - b.left, ny = e.clientY - b.top;
+      var nx = (e.clientX - b.left) * size / b.width;
+      var ny = (e.clientY - b.top) * size / b.height;
       if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
       cur = { x: nx, y: ny };
     };
-    cv.addEventListener('pointermove', track, {passive:true});
-    /* On touch there is no hover, so pointermove does not fire until the finger
-       has already travelled. Seeding the contact on pointerdown gives the drag
-       its first frame and lets a stationary press register at all. */
-    /* A PRESS MUST BITE BEFORE THE BROWSER DECIDES. Under touch-action:pan-y the
-       browser watches the first movements to work out whether the gesture is a
-       vertical pan, and when it decides it is, it fires pointercancel. On a
-       touch that cancel can arrive before a single frame has drawn, so the
-       press seeded here was wiped before anything was painted and the first
-       press on the dial did nothing at all. Hold the contact for a short floor
-       so every press registers, then let it go. Nothing here fights the scroll:
-       the page still pans, the dial just gets its moment first. */
+    stage.addEventListener('pointermove', track, {passive:true});
+    /* A tap gets a short glow. A rim drag retains its pointer even when the
+       finger leaves the ring, and touch-action decides ownership before the
+       browser can turn a vertical segment into a page scroll. */
     var HOLD_MS = 260, holdUntil = 0, holdTimer = null;
-    cv.addEventListener('pointerdown', function(e){
+    stage.addEventListener('pointerdown', function(e){
+      if (e.isPrimary === false || dragId !== null) return;
+      if (holdTimer){ clearTimeout(holdTimer); holdTimer = null; }
       curSpeed = 0; track(e);
       holdUntil = performance.now() + HOLD_MS;
+      if (rim && e.target === rim){
+        dragId = e.pointerId;
+        stage.setPointerCapture(e.pointerId);
+      }
     }, {passive:true});
     var clear = function(){ cur = null; curSpeed = 0; holdTimer = null; };
-    var release = function(){
+    var release = function(e){
+      if (dragId !== null && e.pointerId !== dragId) return;
+      var ended = dragId;
+      dragId = null;
+      if (ended !== null && stage.hasPointerCapture(ended)) stage.releasePointerCapture(ended);
+      if (e.type === 'pointercancel'){
+        if (holdTimer) clearTimeout(holdTimer);
+        clear();
+        return;
+      }
       var left = holdUntil - performance.now();
       if (left > 0){
-        /* still inside the floor: let it finish rather than cutting it dead */
         if (!holdTimer) holdTimer = setTimeout(clear, left);
         return;
       }
-      if (holdTimer){ clearTimeout(holdTimer); }
+      if (holdTimer) clearTimeout(holdTimer);
       clear();
     };
-    cv.addEventListener('pointerleave', release);
-    /* The browser fires pointercancel when it takes the gesture over. Without
-       this the last contact point stayed latched and the rim kept glowing. */
-    cv.addEventListener('pointercancel', release);
-    cv.addEventListener('pointerup', release);
+    stage.addEventListener('pointerleave', function(e){ if (dragId === null) release(e); });
+    stage.addEventListener('pointercancel', release);
+    stage.addEventListener('pointerup', release);
+    stage.addEventListener('lostpointercapture', function(e){ if (e.pointerId === dragId) release(e); });
   }
 
   /* The rect read is the other half of the same bill as the style reads above:
@@ -3161,7 +3206,10 @@ function vaultMountDial(cv, opts){
     strike *= 0.78;
     /* the pointer heats only while the rim is actually being cut */
     var wantGrind = grind > 0.12;
-    if (wantGrind !== cv.classList.contains('grinding')) cv.classList.toggle('grinding', wantGrind);
+    if (wantGrind !== cv.classList.contains('grinding')){
+      cv.classList.toggle('grinding', wantGrind);
+      if (stage) stage.classList.toggle('grinding', wantGrind);
+    }
     var drag = grindDir < 0 ? -grind * 0.0052 : grind * 0.0032;
     /* ANGULAR velocity is scale-free; PERCEIVED motion is not. The hero figure
        turns its tick layer at spin*0.55, about 3 degrees a second, and at 320px
