@@ -114,13 +114,22 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
     const groups=[];
     for (const call of calls) {
       const previous=groups[groups.length-1];
-      if (previous && previous.kind===call.kind && previous.name===call.name &&
+      if (!reduce && previous && previous.kind===call.kind && previous.name===call.name &&
+          call.alpha>previous.calls[previous.calls.length-1].alpha &&
           previous.first.x===call.x && previous.first.w===call.w && previous.first.h===call.h &&
           call.y>=previous.first.y && call.y-previous.first.y<=4.001 && previous.calls.length<3) {
         previous.calls.push(call);
       } else groups.push({kind:call.kind,name:call.name,first:call,calls:[call]});
     }
     for (const group of groups) {
+      if (group.calls.length>1) {
+        assert.equal(group.calls.length,3,'A trail group must contain two trails and one main draw');
+        const [first,second,main]=group.calls;
+        assert.ok(Math.abs(second.y-first.y-2)<1e-8 && Math.abs(main.y-first.y-4)<1e-8,
+          'Only explicit trail offsets may share a reservation');
+        assert.ok(Math.abs(first.alpha/main.alpha-0.12)<1e-8 && Math.abs(second.alpha/main.alpha-0.24)<1e-8,
+          'Coincident main draws must not be hidden inside a trail group');
+      }
       const xs=group.calls.map(c=>c.x),ys=group.calls.map(c=>c.y);
       group.left=Math.min(...xs); group.top=Math.min(...ys);
       group.right=Math.max(...group.calls.map(c=>c.x+c.w));
@@ -153,8 +162,8 @@ function checkPainting(result, state, label) {
     Math.abs(point.x-(g.main.x+g.main.w/2))<=0.51 &&
     Math.abs(point.y-(g.main.y+g.main.h/2))<=0.01),label+': target points at a suppressed logo');
 }
-function fixture(name, columns, expected, configure) {
-  const h=paintHarness(); h.state.cols=columns;
+function fixture(name, columns, expected, configure, reduce=false) {
+  const h=paintHarness(reduce); h.state.cols=columns;
   if(configure)configure(h.state);
   const r=h.draw();checkPainting(r,h.state,name);
   assert.equal(r.groups.length,expected,name+': accepted-item count');
@@ -171,6 +180,8 @@ fixture('nonneighbors remain visible',[column(100,150,[openai]),column(180,150,[
 fixture('ticker competes with wordmark',[column(100,150,[maple]),column(126,150,[{t:0,v:'T-BILL'}])],1);
 fixture('warped currency competes with logo',[column(100,150,[openai]),column(180,150,[{t:0,v:'$'}])],1,
   state=>{state.dollarWarp=()=>[100,150];});
+fixture('crowded reduced motion',[column(100,150,[maple]),column(126,150,[kalshi]),
+  column(200,150,[openai]),column(240,170,[openai])],2,null,true);
 for(const reduce of [false,true]) {
   const h=paintHarness(reduce,900);
   const columns=()=>[coinbase,{t:0,v:'$'},{t:0,v:'\u20BF'},{t:0,v:'\u039E'},
