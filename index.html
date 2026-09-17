@@ -560,7 +560,7 @@ header{
   --shell-coral:color-mix(in srgb,#f28f7b 76%,var(--ink));
   --shell-mesh:color-mix(in srgb,#8edfe7 78%,var(--mint-text));
   position:relative;isolation:isolate;
-  margin-top:2.5rem;padding:2.5rem max(1.5rem,12%);
+  margin-top:2.5rem;padding:calc(2.5rem - 1.5mm) max(1.5rem,12%) calc(2.5rem + 1.5mm);
   transform:translateX(-1.5%);
   width:calc(100% + clamp(1rem,2vw,2.5rem));
   font-size:.875rem;line-height:1.75;color:var(--ink-soft);max-width:none;
@@ -603,18 +603,15 @@ header{
 }
 .signal .tag{position:relative;isolation:isolate;width:fit-content;font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.095em;text-transform:uppercase;color:var(--mint-text);display:block;margin:0 auto .9rem;text-align:center;font-weight:700}
 
-/* Match the visible space between the wide-screen text columns. */
-@media(min-width:1200px){.signal .tag{transform:translateX(clamp(-5rem,calc(5.25rem - 9.3vw),-1.75rem))}}
-
 .signal-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(13rem,calc(50% - .7rem))),1fr));gap:1.1rem 1.4rem}
-.signal-list li{min-width:0;line-height:1.4}
-.signal-list a{display:inline-block;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--mill-2);text-underline-offset:.2em}
+.signal-list li{min-width:0;line-height:1.4;text-align:center}
+.signal-list a{display:block;width:fit-content;max-width:100%;margin-inline:auto;text-align:center;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--mill-2);text-underline-offset:.2em}
 .signal-list a:hover{color:var(--accent-text);text-decoration-color:currentColor}
 .signal-list a:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px}
 .signal-list li > span{display:block;margin-top:.35rem;font-size:.75rem;line-height:1.5;color:var(--ink-soft)}
 .signal-published{font-weight:600;color:var(--mint-text)}
 .signal-date{
-  display:block;
+  display:block;text-align:center;
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.75rem;line-height:1.5;font-weight:500;letter-spacing:.065em;
   text-transform:uppercase;
