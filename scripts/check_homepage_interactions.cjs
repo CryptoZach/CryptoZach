@@ -7,6 +7,9 @@ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, trusted browser input, passive canvas and event observations',htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
 function observe(){
  const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[]};
+ // Observe the animation clock separately from time spent waiting in the callback queue.
+ const requestFrame=window.requestAnimationFrame;
+ window.requestAnimationFrame=function(callback){return requestFrame.call(window,time=>{state.frameTime=time;return callback.call(window,time);});};
  const proto=CanvasRenderingContext2D.prototype,fill=proto.fillRect,draw=proto.drawImage,text=proto.fillText,move=proto.moveTo,curve=proto.quadraticCurveTo;
  function finish(){
   const f=state.current;if(!f||!f.ink.length)return;
@@ -33,11 +36,11 @@ function observe(){
    if(f.input){p.pointerDistance=Math.hypot(p.baseCx-f.input.x,(p.baseCy??p.cy)-f.input.y);p.away=p.dx*(p.baseCx-f.input.x)+(p.dy||0)*((p.baseCy??p.cy)-f.input.y)>0;}
    p.linkAligned=(p.distance>.15||Math.abs(p.dx)>.15)&&f.links.some(q=>Math.hypot(q.x-p.cx,q.y-p.cy)<.001);
   }
-  state.frames.push({t:f.t,input:f.input,logos,rows:rowAnchors,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
+  state.frames.push({t:f.t,frameTime:f.frameTime,input:f.input,logos,rows:rowAnchors,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
  }
  state.finish=finish;
  proto.fillRect=function(...args){
-  if(this.canvas.id==='mtx'){finish();const r=this.canvas.getBoundingClientRect(),p=state.input;state.current={t:performance.now(),ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};}
+  if(this.canvas.id==='mtx'){finish();const r=this.canvas.getBoundingClientRect(),p=state.input;state.current={t:performance.now(),frameTime:state.frameTime,ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};}
   return fill.apply(this,args);
  };
  proto.drawImage=function(im,...args){
@@ -78,12 +81,13 @@ function rowRates(frames){
  const rates={};let previous=null;
  for(const f of frames){
   const rows=new Map(f.rows.map(r=>[r.col,r.cy]));
-  if(previous){const dt=f.t-previous.t;if(dt>5&&dt<75)for(const [col,y]of rows){
+  // Only compare uncapped animation frames; slow callbacks must not change the measured speed.
+  if(previous){const dt=f.frameTime-previous.frameTime;if(dt>5&&dt<49)for(const [col,y]of rows){
    if(!previous.rows.has(col))continue;
    const raw=y-previous.rows.get(col),dy=((raw+10)%20+20)%20-10;
    if(dy>0.005&&dy<9)(rates[col]||(rates[col]=[])).push(dy/dt*1000);
   }}
-  previous={t:f.t,rows};
+  previous={frameTime:f.frameTime,rows};
  }
  return Object.fromEntries(Object.entries(rates).filter(([,v])=>v.length>=8).map(([k,v])=>[k,median(v)]));
 }
