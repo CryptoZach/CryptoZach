@@ -33,7 +33,11 @@ def render(source):
         if data[:4] != b"RIFF" or data[8:12] != b"WEBP":
             raise ValueError("Expected WebP asset: " + str(asset))
         encoded = base64.b64encode(data).decode("ascii")
-        entry = '{n:"%s",c:%d,w:%d,s:"data:image/webp;base64,%s"}' % (name, row["crypto"], row["weight"], encoded)
+        scale = row.get("scale", 1)
+        if isinstance(scale, bool) or not isinstance(scale, (int, float)) or not 0.5 <= scale <= 2:
+            raise ValueError("Logo scale must be a number between 0.5 and 2")
+        size_field = ",z:" + json.dumps(scale) if scale != 1 else ""
+        entry = '{n:"%s",c:%d,w:%d%s,s:"data:image/webp;base64,%s"}' % (name, row["crypto"], row["weight"], size_field, encoded)
         pattern = r'\{n:"' + name + r'",[^}]+\}'
         matches = re.findall(pattern, body)
         if len(matches) > 1:

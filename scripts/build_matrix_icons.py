@@ -223,6 +223,8 @@ COMPANIES = {
     "custodia": ("custodia", []),
     "maple": ("maple", []),
     "hazel-network": ("hazelnetwork", []),
+    "openai": ("openai", []),
+    "xai": ("xai", []),
 }
 
 # ── Conversion helpers ─────────────────────────────────────────────────────

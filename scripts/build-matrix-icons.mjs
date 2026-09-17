@@ -502,6 +502,8 @@ const ICONS = [
   { name: 'custodia', localSvg: 'icons/matrix/build-sources/custodia.svg', si: [] },
   { name: 'maple', localSvg: 'icons/matrix/build-sources/maple.svg', si: [] },
   { name: 'hazel-network', localSvg: 'icons/matrix/build-sources/hazel-network.svg', si: [] },
+  { name: 'openai', localSvg: 'icons/matrix/build-sources/openai.svg', si: [] },
+  { name: 'xai', localSvg: 'icons/matrix/build-sources/xai.svg', si: [] },
 ];
 
 async function fetchText(url) {
