@@ -438,9 +438,52 @@ async function checkDialCaptions(page,mobile,reduced,cdp){
    await touch(cdp,'touchEnd',[]);await pause(150);await expect(kind,'tap-hold-'+kind);
    await pause(1200);await expect(null,'touch-release-'+kind);
   }
+  // A finger can enter from outside and cross captions after native pointercancel.
+  // Horizontal axis lock keeps this retargeting test independent of page scrolling.
+  const slide={};result.slide=slide;
+  const tickBox=await ticks.boundingBox(),tickPoint={...await center(ticks),x:tickBox.x+16};
+  const start={x:tickBox.x-28,y:tickPoint.y},slideScroll=await page.evaluate(()=>scrollY);
+  assert.ok(start.x>0,'Slide starts inside the viewport');
+  assert.equal(await page.evaluate(p=>!!document.elementFromPoint(p.x,p.y)?.closest('.dial-stat'),start),false,'Slide begins outside either caption');
+  await reset(page);await touch(cdp,'touchStart',[start]);await pause(80);
+  async function moveContact(from,to){
+   for(let i=1;i<=8;i++){await touch(cdp,'touchMove',[{x:from.x+(to.x-from.x)*i/8,y:from.y+(to.y-from.y)*i/8}]);await pause(35);}
+  }
+  await moveContact(start,tickPoint);await pause(300);
+  const entry=await snapshot(page);slide.pointerCanceled=entry.events.some(e=>e.type==='pointercancel'&&e.trusted);
+  assert.equal(slide.pointerCanceled,true,'Slide exercises touch movement after native pointer cancellation');
+  async function atCaption(point,kind,label){
+   const hit=await page.evaluate(p=>document.elementFromPoint(p.x,p.y)?.closest('.dial-stat')?.dataset.dialHighlight||null,point);
+   slide[label]={hit,scrollY:await page.evaluate(()=>scrollY)};
+   assert.equal(hit,kind,label+' contact physically reaches the intended caption');
+   assert.ok(Math.abs(slide[label].scrollY-slideScroll)<1,'Horizontal fixture preserves caption geometry');
+   await expect(kind,label);
+  }
+  await atCaption(tickPoint,'ticks','slide-entry-ticks');
+  const boltBox=await bolts.boundingBox(),boltPoint={...await center(bolts),x:boltBox.x+boltBox.width-16};await moveContact(tickPoint,boltPoint);await pause(750);
+  await atCaption(boltPoint,'bolts','slide-cross-bolts');
+  await moveContact(boltPoint,tickPoint);await pause(750);
+  await atCaption(tickPoint,'ticks','slide-return-ticks');
+  await touch(cdp,'touchEnd',[]);await pause(150);await expect('ticks','slide-afterglow');
+  await pause(1200);await expect(null,'slide-release');
+  const cancelPoint=await center(bolts);await reset(page);
+  await touch(cdp,'touchStart',[cancelPoint]);await pause(300);await expect('bolts','cancel-held');
+  await touch(cdp,'touchCancel',[]);await pause(1000);
+  assert.ok((await snapshot(page)).events.some(e=>e.type==='touchcancel'&&e.trusted),'Cleanup test receives an actual touchcancel');
+  await expect(null,'touch-cancel');
+  const firstPoint=await center(ticks),secondPoint={x:firstPoint.x+48,y:firstPoint.y};
+  await touch(cdp,'touchStart',[firstPoint]);await pause(300);await expect('ticks','multitouch-before');
+  await touch(cdp,'touchStart',[firstPoint,secondPoint]);await pause(1000);
+  assert.ok((await snapshot(page)).events.some(e=>e.type==='touchstart'&&e.trusted&&e.touches===2),'Cleanup test adds a genuine second contact');
+  await expect(null,'multitouch-clear');await touch(cdp,'touchEnd',[]);await pause(1000);await expect(null,'multitouch-release');
   const p=await center(ticks),before=await page.evaluate(()=>scrollY);await reset(page);
   await touch(cdp,'touchStart',[p]);await pause(80);
   for(let i=1;i<=9;i++){await touch(cdp,'touchMove',[{x:p.x,y:p.y-i*10}]);await pause(30);}
+  await pause(300);
+  const panPoint={x:p.x,y:p.y-90};
+  result.panHeld={hit:await page.evaluate(q=>document.elementFromPoint(q.x,q.y)?.closest('.dial-stat')?.dataset.dialHighlight||null,panPoint),scrollY:await page.evaluate(()=>scrollY)};
+  assert.ok((await snapshot(page)).events.some(e=>e.type==='pointercancel'&&e.trusted),'Held native pan has already canceled the pointer stream');
+  if(result.panHeld.hit==='ticks'||result.panHeld.hit==='bolts')await expect(result.panHeld.hit,'pan-tracking');
   await touch(cdp,'touchEnd',[]);await pause(1000);
   result.captionPanPx=await page.evaluate(()=>scrollY)-before;assert.ok(result.captionPanPx>40,'A pan beginning on a caption still scrolls the page');
   const raw=await snapshot(page);assert.ok(raw.events.some(e=>e.type==='pointercancel'&&e.trusted),'Native pan cancels the caption pointer');await expect(null,'pan-cancel');

@@ -3235,8 +3235,11 @@ function vaultMountDial(cv, opts){
     var captions = figure ? Array.from(figure.querySelectorAll('[data-dial-highlight]')) : [];
     var captionHover = null, captionFocus = null, captionPress = null;
     var captionPointer = null, captionPulse = null, captionTimer = null;
+    var captionTouchId = null, captionTouchBlocked = false, captionClient = null;
     function syncCaption(){
-      captionTarget = captionPress || captionHover || captionFocus || captionPulse;
+      var next = captionPress || captionHover || captionFocus || captionPulse;
+      if (next === captionTarget) return;
+      captionTarget = next;
       captions.forEach(function(button){
         button.classList.toggle('is-active', button.dataset.dialHighlight === captionTarget);
       });
@@ -3269,6 +3272,7 @@ function vaultMountDial(cv, opts){
       });
       button.addEventListener('blur', function(){ captionFocus = null; syncCaption(); });
       button.addEventListener('pointerdown', function(e){
+        if (e.pointerType === 'touch') return;
         clearCaptionPulse(); captionFocus = null;
         if (e.isPrimary !== false && e.pointerType !== 'mouse'){
           captionPointer = e.pointerId; captionPress = kind;
@@ -3282,7 +3286,7 @@ function vaultMountDial(cv, opts){
           e.clientY >= box.top && e.clientY <= box.bottom ? kind : null;
         syncCaption();
       }, {passive:true});
-      button.addEventListener('click', function(e){ if (e.detail === 0) pulseCaption(kind); });
+      button.addEventListener('click', function(){ pulseCaption(kind); });
     });
     function releaseCaption(e){
       if (e.pointerId !== captionPointer) return;
@@ -3293,10 +3297,58 @@ function vaultMountDial(cv, opts){
     }
     window.addEventListener('pointerup', releaseCaption, {passive:true});
     window.addEventListener('pointercancel', releaseCaption, {passive:true});
-    window.addEventListener('blur', function(){
+
+    /* A native pan cancels pointer events, but touch events keep their original
+       target. Hit-test the current finger position so slides can enter either
+       label, cross between them, and keep working while the page scrolls. */
+    function trackCaptionTouch(touch){
+      captionClient = {clientX:touch.clientX, clientY:touch.clientY};
+      var hit = document.elementFromPoint(touch.clientX, touch.clientY);
+      var button = hit && hit.closest ? hit.closest('[data-dial-highlight]') : null;
+      captionPress = captions.indexOf(button) >= 0 ? button.dataset.dialHighlight : null;
+      syncCaption();
+    }
+    function endCaptionTouch(afterglow){
+      var kind = captionPress;
+      captionTouchId = null; captionClient = null; captionPress = null;
+      if (afterglow && kind) pulseCaption(kind);
+      else { clearCaptionPulse(); syncCaption(); }
+    }
+    function clearCaptionInput(){
       captionHover = captionFocus = captionPress = captionPointer = null;
+      captionTouchId = null; captionClient = null; captionTouchBlocked = false;
       clearCaptionPulse(); syncCaption();
-    });
+    }
+    if (captions.length){
+      document.addEventListener('touchstart', function(e){
+        clearCaptionPulse(); captionHover = captionFocus = captionPointer = null;
+        if (e.touches.length !== 1){
+          captionTouchBlocked = true; endCaptionTouch(false); return;
+        }
+        captionTouchBlocked = false; captionTouchId = e.touches[0].identifier;
+        trackCaptionTouch(e.touches[0]);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchmove', function(e){
+        if (e.touches.length !== 1){
+          captionTouchBlocked = true; endCaptionTouch(false); return;
+        }
+        if (captionTouchBlocked || captionTouchId === null) return;
+        var touch = e.touches[0];
+        if (touch.identifier === captionTouchId) trackCaptionTouch(touch);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchend', function(e){
+        captionTouchBlocked = e.touches.length > 0;
+        endCaptionTouch(!captionTouchBlocked);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchcancel', function(e){
+        captionTouchBlocked = e.touches.length > 0; endCaptionTouch(false);
+      }, {passive:true,capture:true});
+      document.addEventListener('scroll', function(){
+        if (captionTouchId !== null && captionClient && !captionTouchBlocked) trackCaptionTouch(captionClient);
+      }, {passive:true,capture:true});
+      document.addEventListener('visibilitychange', function(){ if (document.hidden) clearCaptionInput(); });
+    }
+    window.addEventListener('blur', clearCaptionInput);
   }
 
   /* The rect read is the other half of the same bill as the style reads above:
