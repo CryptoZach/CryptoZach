@@ -2282,7 +2282,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     });
   }
 
-  /* A local, eight-pixel deflection of the actual logo, with a soft return.
+  /* A local deflection, up to eight pixels across and three vertically, with a soft return.
      Keep it per visible slot: pool entries are shared across many columns. */
   function nudgeMatrixIcon(c, k, item, x, y, width, height, step){
     if (!c.nudges) c.nudges = [];
@@ -2295,7 +2295,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       if (distance < radius){
         var strength = 8 * Math.pow(1-distance/radius, 2);
         if (distance < 0.01){ dx = 1; dy = 0; distance = 1; }
-        tx = dx/distance*strength; ty = dy/distance*strength;
+        tx = dx/distance*strength; ty = dy/distance*strength*(MATRIX_VERTICAL_NUDGE/8);
       }
     }
     var ease = reduce ? 1 : frameEase(0.22, step);
@@ -2330,6 +2330,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }
   /* Hover slows only the falling streams. Nudge, fade and coral clocks stay live. */
   var MATRIX_IDLE_SPEED = 0.48, MATRIX_HOVER_RATIO = 0.6, MATRIX_EASE_MS = 500;
+  var MATRIX_ROW_STEP = 18.5, MATRIX_VERTICAL_NUDGE = 3;
   var matrixSpeed = MATRIX_IDLE_SPEED, matrixHovered = false;
   var matrixFrom = MATRIX_IDLE_SPEED, matrixTarget = MATRIX_IDLE_SPEED, matrixElapsed = MATRIX_EASE_MS;
   function resetMatrixHover(){
@@ -2350,6 +2351,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
   function drawMatrix(now, boost, step){
     if (step == null) step = 1;
+    var rowStep = reduce ? 20 : MATRIX_ROW_STEP;
+    mtxC.dataset.rowStep = rowStep;
     var P = pal();
     /* Explicit short trails share each mark's reservation. Clearing old pixels
        prevents a rejected logo's afterimage colliding with its new neighbor. */
@@ -2373,7 +2376,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       var c = cols[i];
       if (pass === 0){
       c.y += c.sp * speed * step;
-      if (c.y - c.len * 20 > H){
+      if (c.y - c.len * rowStep > H){
         c.y = -Math.random() * 220;
         c.nudges = []; c.marks = [];
         c.sp = 0.5 + Math.random() * 1.5;
@@ -2389,7 +2392,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       var gm = Math.max(0, Math.min(1, c.x / W));
       var gstep = Math.min(TINT_STEPS - 1, (gm * TINT_STEPS) | 0);
       for (var k = 0; k < c.len; k++){
-        var gy = c.y - k * 20;
+        var gy = c.y - k * rowStep;
         if (gy < -24 || gy > H + 24) continue;
         var chosen = c.glyphs[(i + k) % c.glyphs.length];
         var mark = pass === 0 ? matrixGlyph(c, k, chosen, step) : c.marks[k];
@@ -2412,11 +2415,12 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
           var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
           var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step);
+          var verticalNudge = reduce ? 0 : MATRIX_VERTICAL_NUDGE;
           /* Claim the entire possible nudge before applying its current offset.
              Retain an old logo's reservation through its fade. A replacement
              starts at zero and cannot evict a neighbor that is already visible. */
           if (!reduce && !mark.retiring && matrixConflictWithin(it.d.n,
-              ix-8, iy-trail-8, iw+16, ih+trail+16, c.sp,
+              ix-8, iy-trail-verticalNudge, iw+16, ih+trail+verticalNudge*2, c.sp,
               mark.wasVisible ? 18 : 44, maxStreamSpeed)){
             if (mark.wasVisible){
               /* Commit to the exit even if the winner later disappears. The
@@ -2429,7 +2433,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
               continue;
             }
           }
-          if (!claimMatrixSpace(it.d.n, ix-8, iy-trail-8, iw+16, ih+trail+16, c.sp)){
+          if (!claimMatrixSpace(it.d.n, ix-8, iy-trail-verticalNudge, iw+16, ih+trail+verticalNudge*2, c.sp)){
             mark.alpha = 0; mark.retiring = false; mark.wait = reduce ? 0 : 18;
             continue;
           }

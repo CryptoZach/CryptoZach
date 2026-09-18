@@ -4,7 +4,7 @@ const {createRequire}=require('node:module');
 const root=path.resolve(process.argv[2]||'_site');
 const {chromium}=createRequire(path.resolve(process.env.PLAYWRIGHT_PACKAGE_ROOT||process.cwd(),'package.json'))('playwright');
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, trusted browser input, passive canvas and event observations',htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
+const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, seeded scene, trusted browser input, passive canvas and event observations',sceneSeed:431,htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
 function observe(){
  const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[]};
  // Observe the animation clock separately from time spent waiting in the callback queue.
@@ -13,6 +13,8 @@ function observe(){
  const proto=CanvasRenderingContext2D.prototype,fill=proto.fillRect,draw=proto.drawImage,text=proto.fillText,move=proto.moveTo,curve=proto.quadraticCurveTo;
  function finish(){
   const f=state.current;if(!f||!f.ink.length)return;
+  const matrixRowStep=f.rowStep;
+  if(!Number.isFinite(matrixRowStep)||matrixRowStep<=0)throw new Error('Canvas must declare a positive matrix row pitch');
   const passes=matchMedia('(prefers-reduced-motion: reduce)').matches?1:3,marks=[];
   for(let i=0;i<f.ink.length;i+=passes){
    const group=f.ink.slice(i,i+passes),main=group.at(-1);
@@ -32,15 +34,16 @@ function observe(){
   const rowAnchors=marks.filter(p=>p.kind==='text'&&p.key!=='$'&&p.key!=='₿').map(p=>({col:Math.round((p.ax-13)/26),cy:p.ay}));
   for(const p of logos){
    const ref=rowAnchors.find(q=>q.col===p.col)||logos.find(q=>q!==p&&q.col===p.col&&Math.abs(q.dx)<.001&&Math.abs(q.cy-p.cy)>90);
-   if(ref){p.baseCy=ref.cy+20*Math.round((p.cy-ref.cy)/20);p.dy=p.cy-p.baseCy;p.distance=Math.hypot(p.dx,p.dy);}
+   if(ref){p.baseCy=ref.cy+matrixRowStep*Math.round((p.cy-ref.cy)/matrixRowStep);p.dy=p.cy-p.baseCy;p.distance=Math.hypot(p.dx,p.dy);}
    if(f.input){p.pointerDistance=Math.hypot(p.baseCx-f.input.x,(p.baseCy??p.cy)-f.input.y);p.away=p.dx*(p.baseCx-f.input.x)+(p.dy||0)*((p.baseCy??p.cy)-f.input.y)>0;}
-   p.linkAligned=(p.distance>.15||Math.abs(p.dx)>.15)&&f.links.some(q=>Math.hypot(q.x-p.cx,q.y-p.cy)<.001);
+   p.linked=f.links.some(q=>Math.hypot(q.x-p.cx,q.y-p.cy)<.001);
+   p.linkAligned=(p.distance>.15||Math.abs(p.dx)>.15)&&p.linked;
   }
-  state.frames.push({t:f.t,frameTime:f.frameTime,input:f.input,logos,rows:rowAnchors,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
+  state.frames.push({t:f.t,frameTime:f.frameTime,input:f.input,rowStep:matrixRowStep,logos,rows:rowAnchors,overlaps,repeats});if(state.frames.length>700)state.frames.shift();state.current=null;
  }
  state.finish=finish;
  proto.fillRect=function(...args){
-  if(this.canvas.id==='mtx'){finish();const r=this.canvas.getBoundingClientRect(),p=state.input;state.current={t:performance.now(),frameTime:state.frameTime,ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};}
+  if(this.canvas.id==='mtx'){finish();const r=this.canvas.getBoundingClientRect(),p=state.input;state.current={t:performance.now(),frameTime:state.frameTime,rowStep:Number(this.canvas.dataset.rowStep),ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};}
   return fill.apply(this,args);
  };
  proto.drawImage=function(im,...args){
@@ -72,7 +75,7 @@ async function touch(cdp,type,points){await cdp.send('Input.dispatchTouchEvent',
 async function target(page){
  return page.evaluate(()=>{const s=__interactionProbe;s.finish();const f=s.frames.at(-1),r=document.getElementById('hero').getBoundingClientRect();
   if(!f)return null;
-  const p=f.logos.find(p=>p.alpha>.2&&p.cx>45&&p.cx<innerWidth-45&&p.cy+r.top>220&&p.cy+r.top<Math.min(innerHeight-130,680));
+  const p=f.logos.find(p=>p.linked&&p.alpha>.2&&p.cx>45&&p.cx<innerWidth-45&&p.cy+r.top>220&&p.cy+r.top<Math.min(innerHeight-130,680));
   return p?{...p,screenY:p.cy+r.top}:null;
  });
 }
@@ -84,7 +87,7 @@ function rowRates(frames){
   // Only compare uncapped animation frames; slow callbacks must not change the measured speed.
   if(previous){const dt=f.frameTime-previous.frameTime;if(dt>5&&dt<49)for(const [col,y]of rows){
    if(!previous.rows.has(col))continue;
-   const raw=y-previous.rows.get(col),dy=((raw+10)%20+20)%20-10;
+   const raw=y-previous.rows.get(col),pitch=f.rowStep,dy=((raw+pitch/2)%pitch+pitch)%pitch-pitch/2;
    if(dy>0.005&&dy<9)(rates[col]||(rates[col]=[])).push(dy/dt*1000);
   }}
   previous={frameTime:f.frameTime,rows};
@@ -309,6 +312,8 @@ async function checkShell(page,url,mobile,reduced,cdp){
 
 async function checkCase(browser,url,mobile,reduced){
  const context=await browser.newContext({viewport:{width:mobile?390:1280,height:844},deviceScaleFactor:1,isMobile:mobile,hasTouch:mobile,reducedMotion:reduced?'reduce':'no-preference',colorScheme:'dark'});
+ // Repeatable scene input keeps the gesture fixture independent of random startup density.
+ await context.addInitScript(()=>{let seed=431;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);});
  await context.addInitScript(observe);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
  const spec={name:reduced?'reduced-motion':mobile?'mobile':'desktop'},cdp=mobile?await context.newCDPSession(page):null;
@@ -316,6 +321,8 @@ async function checkCase(browser,url,mobile,reduced){
  spec.shell=await checkShell(page,url,mobile,reduced,cdp);
  if(!mobile&&!reduced)spec.smoothing=await checkSmoothing(page);
  if(mobile&&!reduced)spec.touchFlow=await checkTouchFlow(page,cdp);
+ // Start nudge checks from a fresh scene after the longer shell and flow checks.
+ await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
  await reset(page);
  if(reduced){
   const before=await page.locator('#mtx').evaluate(c=>c.toDataURL());await touch(cdp,'touchStart',[{x:90,y:600}]);
@@ -323,7 +330,7 @@ async function checkCase(browser,url,mobile,reduced){
   assert.equal(await page.locator('#mtx').evaluate(c=>c.toDataURL()),before,'reduced-motion matrix remains stationary');
   const raw=await snapshot(page);assert.equal(raw.frames.length,0);spec.stationary=true;spec.scrollPx=await page.evaluate(()=>scrollY);assert.ok(spec.scrollPx>30);
  }else{
-  // Wait through a complete idle logo dwell and fade before targeting visible ink.
+  // Target visible ink with an observed web edge so displaced-endpoint checks are non-vacuous.
   const targetStart=Date.now();let chosen=null;
   while(!chosen&&Date.now()-targetStart<6000){await pause(80);chosen=await target(page);}
   spec.pointerTarget={waitMs:Date.now()-targetStart,found:!!chosen};
@@ -339,7 +346,7 @@ async function checkCase(browser,url,mobile,reduced){
   }
   // Follow actual visible ink after the native pan, so a drifting random mark cannot make the test vacuous.
   for(let i=0;i<20;i++){
-   const next=await page.evaluate(({col,key,cy})=>{const s=__interactionProbe;s.finish();const latest=s.frames.at(-1);if(!latest)return null;const r=document.getElementById('hero').getBoundingClientRect(),visible=latest.logos.filter(p=>p.alpha>.15&&p.cx>30&&p.cx<innerWidth-30&&p.cy+r.top>100&&p.cy+r.top<innerHeight-100),list=visible.filter(p=>p.col===col&&p.key===key);if(!list.length)list.push(...visible);list.sort((a,b)=>Math.hypot(a.cy-cy,(a.col-col)*26)-Math.hypot(b.cy-cy,(b.col-col)*26));const p=list[0];return p?{...p,screenY:p.cy+r.top}:null;},chosen);
+   const next=await page.evaluate(({col,key,cy})=>{const s=__interactionProbe;s.finish();const latest=s.frames.at(-1);if(!latest)return null;const r=document.getElementById('hero').getBoundingClientRect(),visible=latest.logos.filter(p=>p.alpha>.15&&p.cx>30&&p.cx<innerWidth-30&&p.cy+r.top>100&&p.cy+r.top<innerHeight-100),list=visible.filter(p=>p.col===col&&p.key===key);if(!list.length)list.push(...visible.filter(p=>p.linked));list.sort((a,b)=>Math.hypot(a.cy-cy,(a.col-col)*26)-Math.hypot(b.cy-cy,(b.col-col)*26));const p=list[0];return p?{...p,screenY:p.cy+r.top}:null;},chosen);
    if(next)chosen=next;
    if(mobile)await touch(cdp,'touchMove',[{x:chosen.baseCx-7,y:chosen.screenY}]);else await page.mouse.move(chosen.baseCx-7,chosen.screenY);
    await pause(35);

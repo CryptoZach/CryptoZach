@@ -111,7 +111,7 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
     }
   };
   const state = {FRAME_MS:1000/60,W:width,H:440,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
-    mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,matrixSpeed:0.48,ctaOK:false,
+    mtxC:{dataset:{}},mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,matrixSpeed:0.48,ctaOK:false,
     GOLD:[251,191,36], FX:{'\u20A9':1},matrixTextMetrics:{},
     pal:()=>({trail:[0,0,0],fade:0.158,blue:[1,2,3],mint:[3,2,1],olive:[2,3,1]}),
     rgb:(color,alpha)=>({color,alpha}),mixc:(a)=>a,
@@ -184,6 +184,29 @@ function fixture(name, columns, expected, configure, reduce=false) {
 }
 fixture('same-brand horizontal',[column(100,150,[openai]),column(140,150,[openai])],1);
 fixture('same-brand vertical',[column(100,150,[coinbase,coinbase])],1);
+// Ordinary 19px marks fit every other 18.5px row, including their trail and live
+// vertical deflection. Full 8px vertical reservations used to erase two rows.
+fixture('compact vertical neighbors',[column(100,250,Array.from({length:6},(_,i)=>logo('vertical-'+i)))],3);
+fixture('reduced-motion compact wordmarks',[column(100,150,Array.from({length:3},(_,i)=>logo('quiet-'+i,true,4)))],3,null,true);
+{
+  const h=paintHarness(),items=Array.from({length:10},(_,i)=>logo('packed-'+i));
+  h.state.cols=[column(100,350,items)];h.state.cols[0].tick=-10000;
+  let verticalMotion=0;
+  for(let frame=0;frame<120;frame++){
+    Object.assign(h.state,{active:true,warpTX:100,warpTY:140+(frame*7)%220});
+    const result=h.draw();checkPainting(result,h.state,'compact vertical drag '+frame);
+    const marks=result.groups.filter(g=>g.kind==='logo');
+    assert.equal(marks.length,5,'Packing must retain every other row while a pointer passes');
+    for(const n of h.state.cols[0].nudges){if(!n)continue;assert.ok(Math.abs(n.y)<=3.000001,'Vertical nudge stays inside its reserved three-pixel envelope');verticalMotion=Math.max(verticalMotion,Math.abs(n.y));}
+    if(frame===0){
+      const centers=marks.map(g=>g.main.y+g.main.h/2).sort((a,b)=>a-b);
+      assert.ok(centers.at(-1)-centers[0]<150,'Five moving logos fit within 150px at the tighter 37px spacing');
+    }
+  }
+  assert.ok(verticalMotion>1,'Density checks must include visible vertical motion');
+  console.log('PASS matrix vertical density: closer neighbors retain live deflection without overlap or flicker');
+}
+
 fixture('same-brand diagonal',[column(100,150,[openai]),column(140,174,[openai])],1);
 fixture('wide wordmarks forward',[column(100,150,[kalshi]),column(126,150,[maple])],1);
 fixture('wide wordmarks reverse',[column(100,150,[maple]),column(126,150,[kalshi])],1);
@@ -734,7 +757,7 @@ for(const duplicateOnly of [false,true]) {
 // A prospective short-lived slot stays hidden, rather than starting a doomed fade-in.
 {
   const h=paintHarness(),winner=logo('admission-owner'),loser=logo('admission-loser');
-  h.state.cols=[column(100,180,[winner]),column(126,90,[loser],2)];
+  h.state.cols=[column(100,180,[winner]),column(126,100,[loser],2)];
   h.state.cols.forEach(c=>{c.tick=-10000;});
   let count=0;
   for(let frame=0;frame<100;frame++) {
