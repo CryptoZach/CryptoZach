@@ -233,7 +233,7 @@ async function shellState(page,mobile){
   const feedback=[svg,...svg.querySelectorAll('.signal-shell__rim,.signal-shell__halo,.signal-shell__bevel')].map(el=>{
    const s=getComputedStyle(el);return [s.stroke,s.strokeOpacity,s.strokeWidth,s.opacity,s.filter];
   });
-  return {paths,scaleX:b.width/v.width,scaleY:b.height/v.height,active:host.classList.contains('is-shell-active'),
+  return {sampleTime:performance.now(),paths,scaleX:b.width/v.width,scaleY:b.height/v.height,active:host.classList.contains('is-shell-active'),
    responseOpacity:Math.max(0,...[...svg.querySelectorAll('.signal-shell__response')].map(visibleOpacity)),
    gradient:document.getElementById('selected-work-shell-contact')?.getAttribute('gradientTransform')||'',
    feedback:JSON.stringify(feedback),pointerEvents:getComputedStyle(svg).pointerEvents};
@@ -274,7 +274,7 @@ async function shellPoint(page,fraction=.1){
 }
 async function checkShell(page,url,mobile,reduced,cdp){
  await page.locator('.signal').scrollIntoViewIfNeeded();
- await page.locator('.signal').evaluate(host=>{const b=host.getBoundingClientRect();scrollBy(0,b.top+b.height*.5-innerHeight*.55);});
+ await page.locator('.signal').evaluate(host=>{const b=host.getBoundingClientRect();scrollBy({top:b.top+b.height*.5-innerHeight*.55,behavior:'instant'});});
  if(!mobile)await page.mouse.move(0,0);
  await pause(200);const base=await shellState(page,mobile),result={};report.currentCase.shell=result;
  assert.equal(base.pointerEvents,'none','Decorative shell SVG must not intercept its research links');
@@ -292,28 +292,44 @@ async function checkShell(page,url,mobile,reduced,cdp){
    assert.ok(result.press.maximum>.25&&result.press.moved>2,'Finger press deforms actual shell geometry');
    assert.ok(pressed.responseOpacity>base.responseOpacity+.02,'Finger contact produces visible localized glow');
   }
-  const duringDrag=[];
-  for(let i=1;i<=18;i++){
-   await touch(cdp,'touchMove',[{x:a.x+i*2,y:a.y-i*6}]);await pause(30);
-   if(i%3===0)duringDrag.push(await shellState(page,mobile));
+  async function panShell(direction,point,label,before){
+   const measured={};result.pans[label]=measured;const duringDrag=[];
+   for(let i=1;i<=18;i++){
+    await touch(cdp,'touchMove',[{x:point.x+i*2,y:point.y+direction*i*6}]);await pause(30);
+    if(i%3===0)duringDrag.push(await shellState(page,mobile));
+   }
+   const raw=await snapshot(page),cancel=raw.events.find(e=>e.type==='pointercancel');
+   assert.ok(raw.events.length&&raw.events.every(e=>e.trusted),'Shell gesture uses real trusted browser input');
+   measured.nativeScrollPx=await page.evaluate(()=>scrollY)-before;
+   measured.pointerCanceled=!!cancel;
+   assert.ok(direction*measured.nativeScrollPx<-40,'A vertical finger drag beginning inside the cocoon scrolls the page ('+label+')');
+   assert.ok(cancel,'Native cocoon scrolling cancels the pointer stream');
+   measured.movesAfterCancel=raw.events.filter(e=>e.type==='touchmove'&&e.t>cancel.t).length;
+   assert.ok(measured.movesAfterCancel>=4,'Shell receives sustained touch movement after pointercancel');
+   const continued=duringDrag.filter(s=>s.sampleTime>cancel.t+50);
+   measured.samplesAfterCancel=continued.length;
+   assert.ok(continued.length>=3,'Observe feedback throughout native scrolling after pointercancel');
+   for(const state of continued){
+    assert.ok(state.active,'Shell feedback continues while the finger pans after pointercancel');
+    if(reduced){
+     assert.equal(shellDisplacement(base,state).maximum,0,'Reduced-motion native pans keep every mesh vertex fixed');
+     assert.notEqual(state.feedback,base.feedback,'Reduced-motion scrolling retains visible rim feedback');
+    }else assert.ok(state.responseOpacity>.02,'Localized shell glow remains visible during native scrolling');
+   }
+   if(!reduced){
+    measured.dragMovement=shellDisplacement(continued[0],continued.at(-1));
+    assert.ok(measured.dragMovement.maximum>.15,'Shell geometry follows new finger positions after pointercancel');
+    assert.ok(new Set(continued.map(s=>s.gradient)).size>=2,'Localized glow tracks the finger throughout native scrolling');
+   }
+   await touch(cdp,'touchEnd',[]);measured.settlement=await settleShell(page,mobile,base);return measured;
   }
-  const dragged=await shellState(page,mobile),raw=await snapshot(page);
-  assert.ok(raw.events.length&&raw.events.every(e=>e.trusted),'Shell gesture uses real trusted browser input');
-  result.nativeScrollPx=await page.evaluate(()=>scrollY)-scrollBefore;
-  result.pointerCanceled=raw.events.some(e=>e.type==='pointercancel');
-  assert.ok(!result.pointerCanceled,'Shell owns the drag instead of surrendering it to page scrolling');
-  assert.ok(raw.events.filter(e=>e.type==='touchmove').length>=6,'Shell receives sustained native finger movement');
-  assert.ok(Math.abs(result.nativeScrollPx)<2,'Dragging the shell holds the page in place');
-  if(reduced){
-   assert.ok(duringDrag.length>=2);for(const state of duringDrag)assert.equal(shellDisplacement(base,state).maximum,0,'Reduced-motion native drags keep every mesh vertex fixed');
-  }else{
-   assert.ok(duringDrag.length>=2,'Measure shell movement throughout a held finger drag');
-   result.dragMovement=shellDisplacement(duringDrag[0],duringDrag.at(-1));
-   assert.ok(result.dragMovement.maximum>.15,'Finger drag keeps deforming the shell at new contact positions');
-   assert.ok(new Set(duringDrag.map(s=>s.gradient)).size>=2,'Localized glow follows the held finger');
-   assert.ok(dragged.responseOpacity>.02);
-  }
-  await touch(cdp,'touchEnd',[]);result.settlement=await settleShell(page,mobile,base);
+  result.pans={};const upward=await panShell(-1,a,'up',scrollBefore);
+  result.nativeScrollPx=upward.nativeScrollPx;result.pointerCanceled=upward.pointerCanceled;result.settlement=upward.settlement;
+  // Repeat from the current shell position in the other direction, without a reload.
+  const reverse=await shellPoint(page,.05);await reset(page);
+  const reverseScroll=await page.evaluate(()=>scrollY);
+  await touch(cdp,'touchStart',[reverse]);await pause(100);
+  await panShell(1,reverse,'down',reverseScroll);
   const outside=await page.locator('.signal').evaluate(host=>{
    const r=host.getBoundingClientRect(),x=Math.max(1,r.left-8),y=r.top+r.height*.5;
    if(document.elementFromPoint(x,y)?.closest('.signal'))throw new Error('Outside-shell gesture must begin outside the cocoon');
