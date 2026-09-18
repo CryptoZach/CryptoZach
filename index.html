@@ -2201,8 +2201,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
      time. Only accepted marks become targets for the coral and dollar magnet. */
   var MATRIX_CELL = 64, matrixSpace = {}, matrixTextMetrics = {};
   function claimMatrixSpace(name, left, top, width, height, velocity){
-    var gap = 3, cx = left + width * 0.5, cy = top + height * 0.5;
-    var box = { l:left-gap, t:top-gap, r:left+width+gap, b:top+height+gap,
+    var gapX = 3, gapY = 0.5, cx = left + width * 0.5, cy = top + height * 0.5;
+    var box = { l:left-gapX, t:top-gapY, r:left+width+gapX, b:top+height+gapY,
                 x:cx, y:cy, w:width, h:height, n:name, v:velocity || 0 };
     var reachX = name ? COLW * 2 : 0, reachY = name ? 44 : 0;
     var x0 = Math.floor((box.l-reachX) / MATRIX_CELL);
@@ -2234,7 +2234,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }
   /* All streams share the same bounded speed multiplier. Look ahead using
      their relative fall rates, without letting cursor motion alter eligibility.
-     The local grid holds complete nudge and trail envelopes. */
+     The local grid holds resting ink and trails; nudges may overlap. */
   function matrixConflictWithin(name, left, top, width, height, velocity, steps, maxSpeed){
     var cx = left+width*0.5, cy = top+height*0.5;
     var reachX = name ? COLW*2 : 0, reachY = name ? 44 : 0;
@@ -2242,8 +2242,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var sweep = (Math.abs(velocity)+maxSpeed)*travel;
     var x0 = Math.floor((left-3-reachX)/MATRIX_CELL);
     var x1 = Math.floor((left+width+3+reachX)/MATRIX_CELL);
-    var y0 = Math.floor((top-3-reachY-sweep)/MATRIX_CELL);
-    var y1 = Math.floor((top+height+3+reachY+sweep)/MATRIX_CELL);
+    var y0 = Math.floor((top-0.5-reachY-sweep)/MATRIX_CELL);
+    var y1 = Math.floor((top+height+0.5+reachY+sweep)/MATRIX_CELL);
     for (var x = x0; x <= x1; x++){
       for (var y = y0; y <= y1; y++){
         var bucket = matrixSpace[x+':'+y];
@@ -2253,7 +2253,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           var dy = cy-other.y, end = dy+(velocity-other.v)*travel;
           var nearest = dy*end <= 0 ? 0 : Math.min(Math.abs(dy), Math.abs(end));
           var inkX = left-3 < other.r && left+width+3 > other.l;
-          if (inkX && nearest < (height+other.h)*0.5+6) return true;
+          if (inkX && nearest < (height+other.h)*0.5+1) return true;
           if (name && name === other.n &&
               Math.abs(cx-other.x) <= Math.max(COLW*2, (width+other.w)*0.5+12) &&
               nearest <= Math.max(44, (height+other.h)*0.5+12)) return true;
@@ -2282,7 +2282,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     });
   }
 
-  /* A local deflection, up to eight pixels across and three vertically, with a soft return.
+  /* A local deflection of up to eight pixels, with a soft return.
      Keep it per visible slot: pool entries are shared across many columns. */
   function nudgeMatrixIcon(c, k, item, x, y, width, height, step){
     if (!c.nudges) c.nudges = [];
@@ -2330,7 +2330,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }
   /* Hover slows only the falling streams. Nudge, fade and coral clocks stay live. */
   var MATRIX_IDLE_SPEED = 0.48, MATRIX_HOVER_RATIO = 0.6, MATRIX_EASE_MS = 500;
-  var MATRIX_ROW_STEP = 18.5, MATRIX_VERTICAL_NUDGE = 3;
+  var MATRIX_ROW_STEP = 26, MATRIX_VERTICAL_NUDGE = 8;
   var matrixSpeed = MATRIX_IDLE_SPEED, matrixHovered = false;
   var matrixFrom = MATRIX_IDLE_SPEED, matrixTarget = MATRIX_IDLE_SPEED, matrixElapsed = MATRIX_EASE_MS;
   function resetMatrixHover(){
@@ -2369,7 +2369,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var maxStreamSpeed = 2;
     for (var si = 0; si < cols.length; si++) maxStreamSpeed = Math.max(maxStreamSpeed, Math.abs(cols[si].sp));
     /* Existing logos keep ownership. New marks wait for free space, and warped
-       text yields to both. A pointer can move ink inside its reserved envelope
+       text yields to both. Pointer nudges may cross resting bounds
        without changing which logos are eligible to appear. */
     for (var pass = 0; pass < 3; pass++){
     for (var i = 0; i < cols.length; i++){
@@ -2415,12 +2415,12 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
           var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
           var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step);
-          var verticalNudge = reduce ? 0 : MATRIX_VERTICAL_NUDGE;
-          /* Claim the entire possible nudge before applying its current offset.
+          /* Claim resting ink and its trail, then apply the live nudge.
+             Transient overlap never changes admission or triggers a swap.
              Retain an old logo's reservation through its fade. A replacement
              starts at zero and cannot evict a neighbor that is already visible. */
           if (!reduce && !mark.retiring && matrixConflictWithin(it.d.n,
-              ix-8, iy-trail-verticalNudge, iw+16, ih+trail+verticalNudge*2, c.sp,
+              ix, iy-trail, iw, ih+trail, c.sp,
               mark.wasVisible ? 18 : 44, maxStreamSpeed)){
             if (mark.wasVisible){
               /* Commit to the exit even if the winner later disappears. The
@@ -2433,7 +2433,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
               continue;
             }
           }
-          if (!claimMatrixSpace(it.d.n, ix-8, iy-trail-verticalNudge, iw+16, ih+trail+verticalNudge*2, c.sp)){
+          if (!claimMatrixSpace(it.d.n, ix, iy-trail, iw, ih+trail, c.sp)){
             mark.alpha = 0; mark.retiring = false; mark.wait = reduce ? 0 : 18;
             continue;
           }

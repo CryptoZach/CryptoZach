@@ -353,18 +353,24 @@ async function checkCase(browser,url,mobile,reduced){
   }
   if(mobile)await touch(cdp,'touchEnd',[]);
   await pause(40);const raw=await snapshot(page);spec.nudge=summary(raw.frames);
+  spec.contactOverlapPairs=spec.nudge.overlaps;
   assert.ok(raw.events.length>0&&raw.events.every(e=>e.trusted),'browser input must be trusted');
   assert.ok(spec.nudge.nudged>=4,'actual logo pixels must move, not only dollar glyphs');assert.ok(spec.nudge.maxHorizontal>.25,'logos must visibly deflect horizontally');
   assert.ok(spec.nudge.maxDisplacement<=8.001,'logo deflection remains within eight pixels');assert.ok(spec.nudge.maxHorizontal<=8.001);
   assert.ok(spec.nudge.away>=4,'local logos move away from the contact');assert.ok(spec.nudge.alignedTargetDraws>=2,'reef targets follow the displaced painted centers');
-  assert.equal(spec.nudge.overlaps,0,'painted glyph/logo rectangles overlap');assert.equal(spec.nudge.repeats,0,'neighboring copies of the same logo repeat');assert.deepEqual(raw.errors,[]);
+  // Contact may push neighboring logos across their resting bounds; layout remains fixed.
+  assert.equal(spec.nudge.repeats,0,'neighboring copies of the same logo repeat');assert.deepEqual(raw.errors,[]);
   if(mobile){
    const cancel=raw.events.find(e=>e.type==='pointercancel');assert.ok(cancel,'native page pan cancels pointer stream');
    spec.afterCancelNudge=summary(raw.frames.filter(f=>f.t>cancel.t+350));assert.ok(spec.afterCancelNudge.nudged>=2,'logo movement continues beyond tap settling during native touch scrolling');
    const moves=raw.events.filter(e=>e.type==='touchmove'&&e.t>cancel.t);spec.fingerDollarSamples=moves.filter(e=>raw.reefPaint.some(p=>p.t>=e.t&&p.t<e.t+90&&Math.hypot(p.x-e.hx,p.y-e.hy)<6)).length;
    assert.ok(spec.fingerDollarSamples>=3,'coral dollar paint follows touch after pointercancel');spec.finalScrollPx=await page.evaluate(()=>scrollY);assert.ok(spec.nativeScrollPx>40,'native page pan remains available before following the falling logo');
   }else await page.mouse.move(0,0);
-  await pause(800);await reset(page);await pause(120);spec.released=summary((await snapshot(page)).frames);assert.ok(spec.released.maxHorizontal<.05,'logos ease back after input leaves or ends');
+  await pause(800);await reset(page);await pause(120);spec.released=summary((await snapshot(page)).frames);
+  assert.ok(spec.released.frames>0&&spec.released.logoDraws>0,'settled spacing observes actual logo paints');
+  assert.ok(spec.released.maxHorizontal<.05&&spec.released.maxDisplacement<.05,'logos ease back after input leaves or ends');
+  assert.equal(spec.released.overlaps,0,'resting glyph/logo rectangles stay clear after contact settles');
+  assert.equal(spec.released.repeats,0,'resting neighboring copies of the same logo do not repeat');
   if(mobile){
    await page.locator('#dial').scrollIntoViewIfNeeded();await page.evaluate(()=>{const b=document.getElementById('dial').getBoundingClientRect();scrollBy(0,b.top-(innerHeight-b.height)/2);});await pause(300);await reset(page);
    assert.equal(await page.locator('.dialgesture').evaluate(e=>getComputedStyle(e).touchAction),'pinch-zoom');

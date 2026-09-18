@@ -85,6 +85,7 @@ function column(x, y, items, speed = 0) {
 }
 function paintHarness(reduce = false, width = 390, seed = 103) {
   const calls = [], backgrounds = [];
+  let observedNudge = {x:0,y:0};
   const ctx = {
     globalAlpha:1, fillStyle:{alpha:1}, font:'12px monospace',
     measureText(value) {
@@ -98,7 +99,7 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
       const alpha=this.globalAlpha;
       assert.ok(Number.isFinite(alpha)&&alpha>=0&&alpha<=1,'Logo paint alpha must be finite and within [0,1]');
       if(alpha===0)return; // No pixels are painted; keep every positive-alpha draw observable.
-      calls.push({kind:'logo',name:image.n,x,y,w,h,alpha});
+      calls.push({kind:'logo',name:image.n,x,y,w,h,alpha,nudgeX:observedNudge.x,nudgeY:observedNudge.y});
     },
     fillText(value,x,y) {
       const alpha=this.fillStyle.alpha*this.globalAlpha;
@@ -120,6 +121,8 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
   state.pickItem = () => choices[(state.Math.random()*choices.length)|0];
   vm.createContext(state);
   vm.runInContext(paintCode+'\n'+productionFunction('buildColumns'),state,{timeout:1000});
+  const productionNudge=state.nudgeMatrixIcon;
+  state.nudgeMatrixIcon=(...args)=>{const n=productionNudge(...args);observedNudge={x:n.x,y:n.y};return n;};
   function draw(step = 1, boost = 0.1) {
     calls.length=0; backgrounds.length=0;
     vm.runInContext('drawMatrix(0, '+boost+', '+step+');',state,{timeout:1000});
@@ -148,6 +151,8 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
       group.right=Math.max(...group.calls.map(c=>c.x+c.w));
       group.bottom=Math.max(...group.calls.map(c=>c.y+c.h));
       group.main=group.calls.reduce((a,b)=>a.alpha>=b.alpha?a:b);
+      const dx=group.main.nudgeX||0,dy=group.main.nudgeY||0;
+      group.rest={left:group.left-dx,right:group.right-dx,top:group.top-dy,bottom:group.bottom-dy};
     }
     return {groups,calls:calls.map(c=>({...c})),backgrounds:backgrounds.map(c=>({...c})),points:[...state.iconPts]};
   }
@@ -157,11 +162,12 @@ function checkPainting(result, state, label) {
   const {groups}=result;
   for(let i=0;i<groups.length;i++) for(let j=i+1;j<groups.length;j++) {
     const a=groups[i],b=groups[j];
-    assert.ok(a.right+3<=b.left-3 || b.right+3<=a.left-3 || a.bottom+3<=b.top-3 || b.bottom+3<=a.top-3,
-      label+': insufficient painted clearance '+a.name+'/'+b.name);
+    const ar=a.rest,br=b.rest;
+    assert.ok(ar.right+3<=br.left-3+1e-8 || br.right+3<=ar.left-3+1e-8 || ar.bottom+0.5<=br.top-0.5+1e-8 || br.bottom+0.5<=ar.top-0.5+1e-8,
+      label+': insufficient resting clearance '+a.name+'/'+b.name);
     if(a.kind==='logo' && b.kind==='logo' && a.name===b.name) {
-      const dx=Math.abs((a.left+a.right-b.left-b.right)/2);
-      const dy=Math.abs((a.top+a.bottom-b.top-b.bottom)/2);
+      const dx=Math.abs((ar.left+ar.right-br.left-br.right)/2);
+      const dy=Math.abs((ar.top+ar.bottom-br.top-br.bottom)/2);
       const minX=Math.max(52,((a.right-a.left)+(b.right-b.left))/2+12);
       const minY=Math.max(44,((a.bottom-a.top)+(b.bottom-b.top))/2+12);
       assert.ok(dx>minX || dy>minY,label+': adjacent duplicate '+a.name);
@@ -184,27 +190,45 @@ function fixture(name, columns, expected, configure, reduce=false) {
 }
 fixture('same-brand horizontal',[column(100,150,[openai]),column(140,150,[openai])],1);
 fixture('same-brand vertical',[column(100,150,[coinbase,coinbase])],1);
-// Ordinary 19px marks fit every other 18.5px row, including their trail and live
-// vertical deflection. Full 8px vertical reservations used to erase two rows.
-fixture('compact vertical neighbors',[column(100,250,Array.from({length:6},(_,i)=>logo('vertical-'+i)))],3);
+// Ordinary marks occupy consecutive rows. Contact never changes their resting slots.
+fixture('stacked vertical neighbors',[column(100,300,Array.from({length:6},(_,i)=>logo('vertical-'+i)))],6);
 fixture('reduced-motion compact wordmarks',[column(100,150,Array.from({length:3},(_,i)=>logo('quiet-'+i,true,4)))],3,null,true);
+function paintedOverlaps(groups){
+  let count=0;
+  for(let i=0;i<groups.length;i++)for(let j=i+1;j<groups.length;j++){
+    const a=groups[i],b=groups[j];
+    if(a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top)count++;
+  }
+  return count;
+}
 {
   const h=paintHarness(),items=Array.from({length:10},(_,i)=>logo('packed-'+i));
   h.state.cols=[column(100,350,items)];h.state.cols[0].tick=-10000;
-  let verticalMotion=0;
+  const baseline=h.draw();checkPainting(baseline,h.state,'stacked baseline');
+  const signature=r=>r.groups.map(g=>({name:g.name,alpha:g.main.alpha}));
+  const initial=signature(baseline);
+  assert.equal(initial.length,10,'Every ordinary logo must occupy its own consecutive row');
+  const centers=baseline.groups.map(g=>g.main.y+g.main.h/2).sort((a,b)=>a-b);
+  for(let i=1;i<centers.length;i++)assert.ok(Math.abs(centers[i]-centers[i-1]-26)<1e-8,'Ordinary logo centers must form a26px stack');
+  assert.equal(paintedOverlaps(baseline.groups),0,'Resting logos and trails stay separate');
+  let verticalMotion=0,overlapFrames=0;
   for(let frame=0;frame<120;frame++){
-    Object.assign(h.state,{active:true,warpTX:100,warpTY:140+(frame*7)%220});
-    const result=h.draw();checkPainting(result,h.state,'compact vertical drag '+frame);
-    const marks=result.groups.filter(g=>g.kind==='logo');
-    assert.equal(marks.length,5,'Packing must retain every other row while a pointer passes');
-    for(const n of h.state.cols[0].nudges){if(!n)continue;assert.ok(Math.abs(n.y)<=3.000001,'Vertical nudge stays inside its reserved three-pixel envelope');verticalMotion=Math.max(verticalMotion,Math.abs(n.y));}
-    if(frame===0){
-      const centers=marks.map(g=>g.main.y+g.main.h/2).sort((a,b)=>a-b);
-      assert.ok(centers.at(-1)-centers[0]<150,'Five moving logos fit within 150px at the tighter 37px spacing');
-    }
+    Object.assign(h.state,{active:true,warpTX:100.5,warpTY:323.5});
+    const result=h.draw();checkPainting(result,h.state,'stacked contact '+frame);
+    assert.deepEqual(signature(result),initial,'Nudging must not hide, swap, fade or promote a stacked logo');
+    overlapFrames+=paintedOverlaps(result.groups)>0;
+    for(const n of h.state.cols[0].nudges){if(!n)continue;assert.ok(Math.hypot(n.x,n.y)<=8.000001,'Live nudge remains bounded to eight pixels');verticalMotion=Math.max(verticalMotion,Math.abs(n.y));}
   }
-  assert.ok(verticalMotion>1,'Density checks must include visible vertical motion');
-  console.log('PASS matrix vertical density: closer neighbors retain live deflection without overlap or flicker');
+  assert.ok(overlapFrames>=20,'The fixture must exercise actual transient logo/trail intersections');
+  assert.ok(verticalMotion>6,'Stacking retains full responsive vertical deflection');
+  h.state.active=false;
+  let settled;
+  for(let frame=0;frame<60;frame++)settled=h.draw();
+  checkPainting(settled,h.state,'stacked settlement');
+  assert.deepEqual(signature(settled),initial);
+  assert.equal(paintedOverlaps(settled.groups),0,'Allowed contact overlap disappears after release');
+  assert.ok(h.state.cols[0].nudges.every(n=>!n||Math.hypot(n.x,n.y)<.01),'Every logo settles back into its resting stack');
+  console.log('PASS matrix stacks: consecutive26px rows, deliberate contact overlap, stable identities and clean settlement');
 }
 
 fixture('same-brand diagonal',[column(100,150,[openai]),column(140,174,[openai])],1);
@@ -572,7 +596,7 @@ for(const width of [390,1280]) {
 
 // Judge the actual drawing sequence, including a larger replacement that must wait.
 {
-  const h=paintHarness(), changing=column(100,150,[openai]), neighbor=column(151,150,[coinbase]);
+  const h=paintHarness(), changing=column(100,150,[openai]), neighbor=column(146,150,[coinbase]);
   changing.tick=neighbor.tick=-10000;h.state.cols=[changing,neighbor];
   const before=h.draw();assert.equal(before.groups.filter(g=>g.kind==='logo').length,2);
   changing.glyphs=changing.glyphs.map(()=>logo('openai'));
@@ -757,7 +781,7 @@ for(const duplicateOnly of [false,true]) {
 // A prospective short-lived slot stays hidden, rather than starting a doomed fade-in.
 {
   const h=paintHarness(),winner=logo('admission-owner'),loser=logo('admission-loser');
-  h.state.cols=[column(100,180,[winner]),column(126,100,[loser],2)];
+  h.state.cols=[column(100,180,[winner]),column(126,115,[loser],2)];
   h.state.cols.forEach(c=>{c.tick=-10000;});
   let count=0;
   for(let frame=0;frame<100;frame++) {
@@ -775,7 +799,7 @@ for(const duplicateOnly of [false,true]) {
   const moving=column(126,60,[loser],2);
   h.state.cols=[column(100,280,[winner]),moving];h.state.cols.forEach(c=>{c.tick=-10000;});
   let retiring=false;
-  for(let frame=0;frame<180;frame++) {
+  for(let frame=0;frame<240;frame++) {
     const r=h.draw();checkPainting(r,h.state,'sticky trigger '+frame);
     if(moving.marks[0]?.retiring){retiring=true;break;}
   }
