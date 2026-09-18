@@ -560,6 +560,7 @@ header{
   --shell-coral:color-mix(in srgb,#f28f7b 76%,var(--ink));
   --shell-mesh:color-mix(in srgb,#8edfe7 78%,var(--mint-text));
   position:relative;isolation:isolate;
+  touch-action:pinch-zoom;
   margin-top:2.5rem;padding:calc(2.5rem - 1.5mm) max(1.5rem,12%) calc(2.5rem + 1.5mm);
   transform:translateX(-1.5%);
   width:calc(100% + clamp(1rem,2vw,2.5rem));
@@ -3717,7 +3718,7 @@ vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true
     if(!hover)host.classList.remove('is-shell-active');
     start();
   },{passive:true});
-  // Native scrolling cancels pointer events; passive touch events keep the skin responsive.
+  // The shell owns one-finger drags; link taps and native two-finger zoom remain available.
   document.addEventListener('touchstart',function(event){
     if(event.touches.length>1){multitouch=true;reset();}
   },{passive:true,capture:true});
@@ -3731,9 +3732,12 @@ vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true
     if(event.touches.length!==1){multitouch=true;reset();return;}
     for(var i=0;i<event.touches.length;i++){
       var touch=event.touches[i];
-      if(touch.identifier===touchId){input(touch.clientX,touch.clientY);break;}
+      if(touch.identifier===touchId){
+        if(event.cancelable)event.preventDefault();
+        input(touch.clientX,touch.clientY);break;
+      }
     }
-  },{passive:true});
+  },{passive:false});
   function endTouch(event){
     if(!event.touches.length)multitouch=false;
     if(touchId===null)return;

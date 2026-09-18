@@ -218,9 +218,9 @@ async function checkShell(page,url,mobile,reduced,cdp){
  await page.locator('.signal').scrollIntoViewIfNeeded();
  await page.locator('.signal').evaluate(host=>{const b=host.getBoundingClientRect();scrollBy(0,b.top+b.height*.5-innerHeight*.55);});
  if(!mobile)await page.mouse.move(0,0);
- await pause(200);const base=await shellState(page,mobile),result={};
+ await pause(200);const base=await shellState(page,mobile),result={};report.currentCase.shell=result;
  assert.equal(base.pointerEvents,'none','Decorative shell SVG must not intercept its research links');
- const a=await shellPoint(page,.1),b=await shellPoint(page,.9);
+ const a=await shellPoint(page,.05),b=await shellPoint(page,.95);
  await reset(page);
  if(mobile){
   const scrollBefore=await page.evaluate(()=>scrollY);
@@ -234,29 +234,37 @@ async function checkShell(page,url,mobile,reduced,cdp){
    assert.ok(result.press.maximum>.25&&result.press.moved>2,'Finger press deforms actual shell geometry');
    assert.ok(pressed.responseOpacity>base.responseOpacity+.02,'Finger contact produces visible localized glow');
   }
-  const afterCancel=[];
+  const duringDrag=[];
   for(let i=1;i<=18;i++){
    await touch(cdp,'touchMove',[{x:a.x+i*2,y:a.y-i*6}]);await pause(30);
-   if(i%3===0){
-    const events=await page.evaluate(()=>__interactionProbe.events);
-    if(events.some(e=>e.type==='pointercancel'))afterCancel.push(await shellState(page,mobile));
-   }
+   if(i%3===0)duringDrag.push(await shellState(page,mobile));
   }
   const dragged=await shellState(page,mobile),raw=await snapshot(page);
   assert.ok(raw.events.length&&raw.events.every(e=>e.trusted),'Shell gesture uses real trusted browser input');
-  const cancel=raw.events.find(e=>e.type==='pointercancel');assert.ok(cancel,'Shell allows native pan to cancel its pointer stream');
-  assert.ok(raw.events.filter(e=>e.type==='touchmove'&&e.t>cancel.t).length>=6,'Shell receives sustained native touch movement after pointer cancellation');
-  result.nativeScrollPx=await page.evaluate(()=>scrollY)-scrollBefore;assert.ok(result.nativeScrollPx>35,'Dragging the decorative shell still scrolls the document');
+  result.nativeScrollPx=await page.evaluate(()=>scrollY)-scrollBefore;
+  result.pointerCanceled=raw.events.some(e=>e.type==='pointercancel');
+  assert.ok(!result.pointerCanceled,'Shell owns the drag instead of surrendering it to page scrolling');
+  assert.ok(raw.events.filter(e=>e.type==='touchmove').length>=6,'Shell receives sustained native finger movement');
+  assert.ok(Math.abs(result.nativeScrollPx)<2,'Dragging the shell holds the page in place');
   if(reduced){
-   assert.ok(afterCancel.length>=2);for(const state of afterCancel)assert.equal(shellDisplacement(base,state).maximum,0,'Reduced-motion native drags keep every mesh vertex fixed');
+   assert.ok(duringDrag.length>=2);for(const state of duringDrag)assert.equal(shellDisplacement(base,state).maximum,0,'Reduced-motion native drags keep every mesh vertex fixed');
   }else{
-   assert.ok(afterCancel.length>=2,'Measure shell movement after native pointer cancellation');
-   result.afterCancelMovement=shellDisplacement(afterCancel[0],afterCancel.at(-1));
-   assert.ok(result.afterCancelMovement.maximum>.15,'Finger drag continues deforming the shell after pointercancel');
-   assert.ok(new Set(afterCancel.map(s=>s.gradient)).size>=2,'Localized glow follows new finger positions after native pan starts');
+   assert.ok(duringDrag.length>=2,'Measure shell movement throughout a held finger drag');
+   result.dragMovement=shellDisplacement(duringDrag[0],duringDrag.at(-1));
+   assert.ok(result.dragMovement.maximum>.15,'Finger drag keeps deforming the shell at new contact positions');
+   assert.ok(new Set(duringDrag.map(s=>s.gradient)).size>=2,'Localized glow follows the held finger');
    assert.ok(dragged.responseOpacity>.02);
   }
   await touch(cdp,'touchEnd',[]);result.settlement=await settleShell(page,mobile,base);
+  const outside=await page.locator('.signal').evaluate(host=>{
+   const r=host.getBoundingClientRect(),x=Math.max(1,r.left-8),y=r.top+r.height*.5;
+   if(document.elementFromPoint(x,y)?.closest('.signal'))throw new Error('Outside-shell gesture must begin outside the cocoon');
+   return {x,y,scrollY};
+  });
+  await touch(cdp,'touchStart',[{x:outside.x,y:outside.y}]);
+  for(let i=1;i<=12;i++){await touch(cdp,'touchMove',[{x:outside.x,y:outside.y-i*8}]);await pause(30);}
+  await touch(cdp,'touchEnd',[]);await pause(180);
+  result.outsideScrollPx=await page.evaluate(()=>scrollY)-outside.scrollY;assert.ok(result.outsideScrollPx>35,'A finger outside the cocoon still scrolls the page');
  }else{
   await page.mouse.move(a.x,a.y);await pause(220);const hovered=await shellState(page,mobile);
   result.hover=shellDisplacement(base,hovered);
@@ -274,10 +282,28 @@ async function checkShell(page,url,mobile,reduced,cdp){
  }
  const link=page.locator('.signal-list a[href="/papers/routing-the-dollar/"]');
  await link.scrollIntoViewIfNeeded();const destination=new URL(await link.getAttribute('href'),url).pathname;
- await Promise.all([page.waitForURL(u=>u.pathname===destination,{timeout:5000}),mobile?link.tap({timeout:5000}):link.click({timeout:5000})]);
- result.linkReached=new URL(page.url()).pathname;
+ result.linkInput=await link.evaluate(el=>{
+  const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width*.5,r.top+r.height*.5);
+  return {hitHref:hit?.closest('a')?.getAttribute('href'),scale:visualViewport.scale,offsetX:visualViewport.offsetLeft,offsetY:visualViewport.offsetTop};
+ });
+ assert.equal(result.linkInput.hitHref,destination,'The tap starts on the intended research link');
+ try{
+  await Promise.all([page.waitForURL(u=>u.pathname===destination,{timeout:5000,waitUntil:'domcontentloaded'}),mobile?link.tap({timeout:5000}):link.click({timeout:5000})]);
+ }finally{result.linkReached=new URL(page.url()).pathname;}
+ if(mobile){
+  // Isolate native zoom so its visual viewport cannot leak into later gesture checks.
+  const pinchPage=await page.context().newPage(),pinchCdp=await page.context().newCDPSession(pinchPage);
+  await pinchPage.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([pinchPage.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(300);
+  await pinchPage.locator('.signal').evaluate(host=>{const r=host.getBoundingClientRect();scrollBy(0,r.top+r.height*.5-innerHeight*.55);});await pause(200);
+  const pinch=await pinchPage.locator('.signal').evaluate(host=>{const r=host.getBoundingClientRect();return{x:r.left+r.width*.5,y:r.top+r.height*.5,r:r.width*.23,scale:visualViewport.scale};});
+  await touch(pinchCdp,'touchStart',[{x:pinch.x-pinch.r,y:pinch.y},{x:pinch.x+pinch.r,y:pinch.y}]);await pause(60);
+  for(let i=1;i<=8;i++){await touch(pinchCdp,'touchMove',[{x:pinch.x-pinch.r-i*5,y:pinch.y},{x:pinch.x+pinch.r+i*5,y:pinch.y}]);await pause(35);}
+  result.pinchScaleRatio=await pinchPage.evaluate(()=>visualViewport.scale)/pinch.scale;assert.ok(result.pinchScaleRatio>1.1,'Native two-finger zoom remains available over the cocoon');
+  assert.equal((await shellState(pinchPage,mobile)).active,false,'Multitouch releases the single-finger shell response');
+  await touch(pinchCdp,'touchEnd',[]);await pinchPage.close();
+ }
  // Restore an untouched homepage before the existing matrix, coral and dial checks.
- await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
+ await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await page.evaluate(()=>scrollTo(0,0));await pause(700);
  return result;
 }
 
