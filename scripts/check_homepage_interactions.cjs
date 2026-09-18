@@ -4,15 +4,65 @@ const {createRequire}=require('node:module');
 const root=path.resolve(process.argv[2]||'_site');
 const {chromium}=createRequire(path.resolve(process.env.PLAYWRIGHT_PACKAGE_ROOT||process.cwd(),'package.json'))('playwright');
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const report={asOf:new Date().toISOString(),root,method:'Unmodified served HTML, seeded scene, trusted browser input, passive canvas and event observations',sceneSeed:431,htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
-function observe(){
- const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[]};
+const paintBoundaryError='MATRIX_PAINT_OUT_OF_BOUNDS ';
+const report={asOf:new Date().toISOString(),root,mode:process.env.HOMEPAGE_INTERACTIONS_ONLY==='dial-captions'?'dial-captions':'full',method:'Unmodified served HTML, seeded scene, trusted browser input, passive canvas and event observations',sceneSeed:431,htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
+function observe(boundaryErrorPrefix){
+ const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[],containment:{positivePaints:0,images:0,text:0,violations:0,minAlpha:1,firstViolation:null},dial:{current:null,latest:null,serial:0}};
  // Observe the animation clock separately from time spent waiting in the callback queue.
  const requestFrame=window.requestAnimationFrame;
  window.requestAnimationFrame=function(callback){return requestFrame.call(window,time=>{state.frameTime=time;return callback.call(window,time);});};
  const proto=CanvasRenderingContext2D.prototype,fill=proto.fillRect,draw=proto.drawImage,text=proto.fillText,move=proto.moveTo,curve=proto.quadraticCurveTo;
+ const clear=proto.clearRect,begin=proto.beginPath,line=proto.lineTo,arc=proto.arc,stroke=proto.stroke;
+ function finishDial(){if(state.dial.current){state.dial.latest=state.dial.current;state.dial.current=null;}}
+ state.finishDial=finishDial;
+ proto.clearRect=function(...args){
+  if(this.canvas.id==='dial'){
+   finishDial();state.dial.current={serial:++state.dial.serial,radius:args[2]*.385,ticks:{},bolts:{}};
+   queueMicrotask(finishDial);
+  }
+  return clear.apply(this,args);
+ };
+ proto.beginPath=function(...args){if(this.canvas.id==='dial')this.__dialPath=[];return begin.apply(this,args);};
+ proto.lineTo=function(x,y){if(this.canvas.id==='dial')this.__dialPath?.push({kind:'line',x,y});return line.call(this,x,y);};
+ proto.arc=function(x,y,r,...args){if(this.canvas.id==='dial')this.__dialPath?.push({kind:'arc',x,y,r});return arc.call(this,x,y,r,...args);};
+ proto.stroke=function(...args){
+  const frame=this.canvas.id==='dial'&&state.dial.current,parts=this.__dialPath;
+  if(frame&&parts){
+   const R=frame.radius,first=parts[0],last=parts.at(-1);let group,key,geometry;
+   if(parts.length===2&&first.kind==='move'&&last.kind==='line'&&Math.abs(Math.hypot(first.x,first.y)/R-.905)<.00001&&Math.hypot(last.x,last.y)/R>.925){
+    group=frame.ticks;key=(Math.round((Math.atan2(first.y,first.x)+Math.PI/2)*52/(Math.PI*2))+52)%52;
+    geometry=[Math.hypot(first.x,first.y)/R,Math.hypot(last.x,last.y)/R];
+   }else if(parts.length===1&&first.kind==='arc'&&Math.abs(Math.hypot(first.x,first.y)/R-.795)<.00001&&first.r/R>.012&&first.r/R<.16){
+    group=frame.bolts;key=(Math.round((Math.atan2(first.y,first.x)+Math.PI/2)*19/(Math.PI*2))+19)%19;geometry=[first.r/R];
+   }
+   if(group)(group[key]||(group[key]=[])).push({geometry,width:this.lineWidth,color:this.strokeStyle,alpha:this.globalAlpha,shadow:this.shadowBlur,shadowColor:this.shadowColor});
+  }
+  return stroke.apply(this,args);
+ };
+ function colorAlpha(value){
+  const color=String(value),rgba=color.match(/^rgba\([^,]+,[^,]+,[^,]+,\s*([\d.e+-]+)\)$/),slash=color.match(/\/\s*([\d.e+-]+)(%)?\s*\)$/);
+  return rgba?Number(rgba[1]):slash?Number(slash[1])/(slash[2]?100:1):1;
+ }
  function finish(){
   const f=state.current;if(!f||!f.ink.length)return;
+  // Check every trail and main paint, including arbitrarily faint nonzero ink.
+  // The matrix transform is fixed during a paint pass; cache it once at the clear.
+  const c=state.containment,{a,b,c:skew,d,e,f:ty}=f.transform;
+  for(const p of f.ink){
+   if(!(p.alpha>0))continue;
+   c.positivePaints++;c[p.kind==='logo'?'images':'text']++;c.minAlpha=Math.min(c.minAlpha,p.alpha);
+   const corners=[[p.x,p.y],[p.x+p.w,p.y],[p.x,p.y+p.h],[p.x+p.w,p.y+p.h]];
+   const xs=corners.map(([x,y])=>a*x+skew*y+e),ys=corners.map(([x,y])=>b*x+d*y+ty);
+   const bounds={left:Math.min(...xs),top:Math.min(...ys),right:Math.max(...xs),bottom:Math.max(...ys)};
+   if(!Object.values(bounds).every(Number.isFinite)||bounds.left<-.000001||bounds.top<-.000001||bounds.right>f.width+.000001||bounds.bottom>f.height+.000001){
+    c.violations++;
+    if(!c.firstViolation){
+     c.firstViolation={kind:p.kind,key:p.key,alpha:p.alpha,bounds,canvas:{width:f.width,height:f.height},transform:f.transform};
+     // Persist one bounded signal in Node, so resets and navigation cannot hide it.
+     console.error(boundaryErrorPrefix+JSON.stringify(c.firstViolation));
+    }
+   }
+  }
   const matrixRowStep=f.rowStep;
   if(!Number.isFinite(matrixRowStep)||matrixRowStep<=0)throw new Error('Canvas must declare a positive matrix row pitch');
   const passes=matchMedia('(prefers-reduced-motion: reduce)').matches?1:3,marks=[];
@@ -43,7 +93,12 @@ function observe(){
  }
  state.finish=finish;
  proto.fillRect=function(...args){
-  if(this.canvas.id==='mtx'){finish();const r=this.canvas.getBoundingClientRect(),p=state.input;state.current={t:performance.now(),frameTime:state.frameTime,rowStep:Number(this.canvas.dataset.rowStep),ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};}
+  if(this.canvas.id==='mtx'){
+   finish();const r=this.canvas.getBoundingClientRect(),p=state.input,t=this.getTransform();
+   state.current={t:performance.now(),frameTime:state.frameTime,rowStep:Number(this.canvas.dataset.rowStep),width:this.canvas.width,height:this.canvas.height,transform:{a:t.a,b:t.b,c:t.c,d:t.d,e:t.e,f:t.f},ink:[],links:[],input:p?{x:p.x-r.left,y:p.y-r.top,type:p.type}:null};
+   // Reduced motion can paint only once. Flush after this synchronous drawing batch.
+   queueMicrotask(finish);
+  }
   return fill.apply(this,args);
  };
  proto.drawImage=function(im,...args){
@@ -52,11 +107,11 @@ function observe(){
   return draw.call(this,im,...args);
  };
  proto.fillText=function(value,x,y,...args){
-  if(this.canvas.id==='mtx'&&state.current){const m=this.measureText(value);state.current.ink.push({kind:'text',key:value,ax:x,ay:y,x:x-m.actualBoundingBoxLeft,y:y-m.actualBoundingBoxAscent,w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,alpha:this.globalAlpha});}
+  if(this.canvas.id==='mtx'&&state.current){const m=this.measureText(value);state.current.ink.push({kind:'text',key:value,ax:x,ay:y,x:x-m.actualBoundingBoxLeft,y:y-m.actualBoundingBoxAscent,w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,alpha:this.globalAlpha*colorAlpha(this.fillStyle)});}
   if(this.canvas.id==='reef'&&value==='$'){state.reefPaint.push({t:performance.now(),x,y});if(state.reefPaint.length>60000)state.reefPaint.shift();}
   return text.call(this,value,x,y,...args);
  };
- proto.moveTo=function(x,y){if(this.canvas.id==='reef')this.__linkStart={x,y};return move.call(this,x,y);};
+ proto.moveTo=function(x,y){if(this.canvas.id==='reef')this.__linkStart={x,y};if(this.canvas.id==='dial')this.__dialPath?.push({kind:'move',x,y});return move.call(this,x,y);};
  proto.quadraticCurveTo=function(cx,cy,x,y){if(this.canvas.id==='reef'&&state.current){state.current.links.push({x,y});if(this.__linkStart)state.current.links.push(this.__linkStart);}return curve.call(this,cx,cy,x,y);};
  for(const type of ['pointermove','pointerdown','pointercancel','touchstart','touchmove','touchend','touchcancel'])document.addEventListener(type,e=>{
   const t=e.touches?.[0]||e.changedTouches?.[0]||e,r=document.getElementById('hero')?.getBoundingClientRect();
@@ -310,17 +365,113 @@ async function checkShell(page,url,mobile,reduced,cdp){
  return result;
 }
 
+
+async function dialPaint(page){
+ return page.evaluate(()=>{const s=__interactionProbe;s.finishDial();return s.dial.latest;});
+}
+function dialPaintChanges(base,actual){
+ assert.ok(actual,'Caption verification observes a rendered program dial');
+ const changed={};
+ for(const [group,count]of [['ticks',52],['bolts',19]]){
+  assert.equal(Object.keys(base[group]).length,count,'Baseline contains every '+group+' position');
+  assert.equal(Object.keys(actual[group]).length,count,'Highlighted dial preserves every '+group+' position');
+  changed[group]=Object.keys(base[group]).filter(key=>{
+   const a=base[group][key],b=actual[group][key];
+   return a.length!==b.length||a.some((p,i)=>{
+    const q=b[i];return p.color!==q.color||p.shadowColor!==q.shadowColor||Math.abs(p.width-q.width)>.005||Math.abs(p.shadow-q.shadow)>.005||Math.abs(p.alpha-q.alpha)>.005||p.geometry.some((n,j)=>Math.abs(n-q.geometry[j])>.00001);
+   });
+  }).length;
+ }
+ return changed;
+}
+async function checkDialCaptions(page,mobile,reduced,cdp){
+ const result={};report.currentCase.dialCaptions=result;
+ const buttons=page.locator('.dialfig button.dial-stat');
+ assert.equal(await buttons.count(),2,'Both dial captions are keyboard-accessible buttons');
+ const ticks=page.locator('.dialfig button.dial-stat[data-dial-highlight="ticks"]'),bolts=page.locator('.dialfig button.dial-stat[data-dial-highlight="bolts"]');
+ assert.equal(await ticks.count(),1);assert.equal(await bolts.count(),1);
+ await page.mouse.move(0,0);
+ await page.locator('.dialfig').evaluate(figure=>{const r=figure.getBoundingClientRect();scrollBy({top:r.bottom-innerHeight+48,behavior:'instant'});});await pause(350);
+ const baseline=await dialPaint(page);assert.deepEqual(dialPaintChanges(baseline,baseline),{ticks:0,bolts:0});
+ result.baseline={ticks:Object.keys(baseline.ticks).length,bolts:Object.keys(baseline.bolts).length};
+ const captionStyles=()=>buttons.evaluateAll(els=>els.map(el=>{const s=getComputedStyle(el);return {kind:el.dataset.dialHighlight,color:s.color,background:s.backgroundColor};}));
+ const baselineStyles=await captionStyles();
+ async function expect(kind,label){
+  const wanted={ticks:kind==='ticks'?52:0,bolts:kind==='bolts'?19:0},started=Date.now();let actual,changes;
+  do{
+   actual=await dialPaint(page);changes=dialPaintChanges(baseline,actual);
+   if(changes.ticks===wanted.ticks&&changes.bolts===wanted.bolts)break;
+   await pause(50);
+  }while(Date.now()-started<1500);
+  result[label]=changes;
+  if(changes.ticks!==wanted.ticks||changes.bolts!==wanted.bolts){
+   result.failedPaint={label,waitMs:Date.now()-started,baseTicks:baseline.ticks[0],actualTicks:actual.ticks[0],baseBolts:baseline.bolts[0],actualBolts:actual.bolts[0],input:await page.evaluate(()=>({focused:document.activeElement?.getAttribute('data-dial-highlight'),active:[...document.querySelectorAll('.dial-stat.is-active')].map(el=>el.dataset.dialHighlight)}))};
+  }
+  assert.deepEqual(changes,wanted,label+' changes only the matching painted dial group');
+  const styles=await captionStyles();
+  for(let i=0;i<styles.length;i++){
+   if(styles[i].kind===kind){
+    assert.notEqual(styles[i].color,baselineStyles[i].color,label+' delivers the active caption color');
+    assert.notEqual(styles[i].background,baselineStyles[i].background,label+' delivers the active caption background');
+   }else assert.deepEqual(styles[i],baselineStyles[i],label+' restores inactive caption styling');
+  }
+  result.captionStylingVerified=true;return actual;
+ }
+ async function center(button){
+  const b=await button.boundingBox();assert.ok(b);const point={x:b.x+b.width/2,y:b.y+b.height/2};
+  const viewportHeight=await page.evaluate(()=>innerHeight);result.lastInput={...point,viewportHeight};
+  assert.ok(point.y>0&&point.y<viewportHeight,'Caption contact is inside the viewport: '+JSON.stringify(result.lastInput));
+  assert.equal(await button.evaluate((el,p)=>el.contains(document.elementFromPoint(p.x,p.y)),point),true,'Trusted input hits the intended caption');return point;
+ }
+ if(!mobile){
+  for(const [kind,button]of [['ticks',ticks],['bolts',bolts]]){const p=await center(button);await page.mouse.move(p.x,p.y);await pause(850);await expect(kind,'hover-'+kind);}
+  await page.mouse.move(0,0);await pause(1000);await expect(null,'hover-release');
+  // Start before the controls, then exercise their native keyboard tab order.
+  await page.locator('.dialwrap .more').focus();await page.keyboard.press('Tab');await pause(850);
+  assert.equal(await ticks.evaluate(el=>el===document.activeElement),true);await expect('ticks','keyboard-ticks');
+  await page.keyboard.press('Tab');await pause(850);assert.equal(await bolts.evaluate(el=>el===document.activeElement),true);await expect('bolts','keyboard-bolts');
+  await page.keyboard.press('Tab');await pause(1000);await expect(null,'keyboard-release');
+ }else{
+  for(const [kind,button]of [['ticks',ticks],['bolts',bolts]]){
+   const p=await center(button);await touch(cdp,'touchStart',[p]);await pause(300);const held=await expect(kind,'touch-'+kind);
+   if(reduced){const pixels=await page.locator('#dial').evaluate(c=>c.toDataURL());await pause(150);const still=await dialPaint(page);assert.equal(still.serial,held.serial,'Reduced-motion caption holds without an animation loop');assert.equal(await page.locator('#dial').evaluate(c=>c.toDataURL()),pixels);result['static-'+kind]=true;}
+   await touch(cdp,'touchEnd',[]);await pause(150);await expect(kind,'tap-hold-'+kind);
+   await pause(1200);await expect(null,'touch-release-'+kind);
+  }
+  const p=await center(ticks),before=await page.evaluate(()=>scrollY);await reset(page);
+  await touch(cdp,'touchStart',[p]);await pause(80);
+  for(let i=1;i<=9;i++){await touch(cdp,'touchMove',[{x:p.x,y:p.y-i*10}]);await pause(30);}
+  await touch(cdp,'touchEnd',[]);await pause(1000);
+  result.captionPanPx=await page.evaluate(()=>scrollY)-before;assert.ok(result.captionPanPx>40,'A pan beginning on a caption still scrolls the page');
+  const raw=await snapshot(page);assert.ok(raw.events.some(e=>e.type==='pointercancel'&&e.trusted),'Native pan cancels the caption pointer');await expect(null,'pan-cancel');
+ }
+ return result;
+}
+
 async function checkCase(browser,url,mobile,reduced){
  const context=await browser.newContext({viewport:{width:mobile?390:1280,height:844},deviceScaleFactor:1,isMobile:mobile,hasTouch:mobile,reducedMotion:reduced?'reduce':'no-preference',colorScheme:'dark'});
  // Repeatable scene input keeps the gesture fixture independent of random startup density.
  await context.addInitScript(()=>{let seed=431;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);});
- await context.addInitScript(observe);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await context.addInitScript(observe,paintBoundaryError);
+ const errors=[],spec={name:reduced?'reduced-motion':mobile?'mobile':'desktop',pageErrors:errors};report.currentCase=spec;
+ // Listen once for every page, including the separate pinch fixture and reloads.
+ context.on('page',page=>{
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('console',message=>{const value=message.text();if(message.type()==='error'&&value.startsWith(paintBoundaryError))errors.push(value);});
+ });
+ const page=await context.newPage(),cdp=mobile?await context.newCDPSession(page):null;
  await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
- const spec={name:reduced?'reduced-motion':mobile?'mobile':'desktop'},cdp=mobile?await context.newCDPSession(page):null;
- report.currentCase=spec;
+ spec.startupContainment=await page.evaluate(()=>{__interactionProbe.finish();return __interactionProbe.containment;});
+ assert.deepEqual(errors,[],'Every positive-alpha matrix image, text glyph and trail stays inside the backing canvas');
+ assert.ok(spec.startupContainment.images>0&&spec.startupContainment.text>0,'Containment observes both images and measured text ink');
+ if(process.env.HOMEPAGE_INTERACTIONS_ONLY==='dial-captions'){
+  await checkDialCaptions(page,mobile,reduced,cdp);assert.deepEqual(errors,[]);report.cases.push(spec);delete report.currentCase;console.log(JSON.stringify(spec));await context.close();return;
+ }
  spec.shell=await checkShell(page,url,mobile,reduced,cdp);
+ assert.deepEqual(errors,[],'Shell gestures and reloads preserve matrix paint containment');
  if(!mobile&&!reduced)spec.smoothing=await checkSmoothing(page);
  if(mobile&&!reduced)spec.touchFlow=await checkTouchFlow(page,cdp);
+ await checkDialCaptions(page,mobile,reduced,cdp);
  // Start nudge checks from a fresh scene after the longer shell and flow checks.
  await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
  await reset(page);
@@ -383,7 +534,8 @@ async function checkCase(browser,url,mobile,reduced){
    await touch(cdp,'touchStart',[{x:px-pr,y:py},{x:px+pr,y:py}]);await pause(60);for(let i=1;i<=8;i++){await touch(cdp,'touchMove',[{x:px-pr-i*4,y:py},{x:px+pr+i*4,y:py}]);await pause(35);}spec.rimPinchScaleRatio=await page.evaluate(()=>visualViewport.scale)/startScale;assert.ok(spec.rimPinchScaleRatio>1.1,'native rim pinch remains available');await touch(cdp,'touchEnd',[]);await pause(350);assert.equal(await page.locator('#dial').evaluate(c=>c.classList.contains('grinding')),false);
   }
  }
- assert.deepEqual(errors,[]);spec.pageErrors=errors;report.cases.push(spec);delete report.currentCase;console.log(JSON.stringify(spec));await context.close();
+ spec.finalContainment=await page.evaluate(()=>{__interactionProbe.finish();return __interactionProbe.containment;});
+ assert.deepEqual(errors,[],'Native page errors and matrix paint containment failures');report.cases.push(spec);delete report.currentCase;console.log(JSON.stringify(spec));await context.close();
 }
 (async()=>{
  assert.ok(fs.existsSync(path.join(root,'index.html')),'target directory must contain index.html');

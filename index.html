@@ -567,12 +567,12 @@ header{
   font-size:.875rem;line-height:1.75;color:var(--ink-soft);max-width:none;
   text-shadow:0 1px 3px color-mix(in srgb, var(--void) 85%, transparent);
 }
-/* Desktop: let the curved sides overhang the headline while keeping the
-   right edge in place. Extra left padding moves the text less than the shell. */
+/* Keep the approved left contour anchored while giving the shell and its
+   text room to extend into the space below the Program card. */
 @media(min-width:1000px){
   .signal{
     transform:translateX(calc(-1.5% - 48px));
-    width:calc(100% + clamp(1rem,2vw,2.5rem) + 48px);
+    width:calc(100% + clamp(1rem,2vw,2.5rem) + 144px);
     padding-left:calc(max(1.5rem,12%) + 30.4px);
     padding-right:calc(max(1.5rem,12%) - 14.4px);
   }
@@ -604,12 +604,12 @@ header{
 }
 .signal .tag{position:relative;isolation:isolate;width:fit-content;font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.095em;text-transform:uppercase;color:var(--mint-text);display:block;margin:0 auto .9rem;text-align:center;font-weight:700}
 
-.signal-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(13rem,calc(50% - .7rem))),1fr));gap:1.1rem 1.4rem}
+.signal-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(16rem,calc(50% - .7rem))),1fr));gap:1.1rem 1.4rem}
 .signal-list li{min-width:0;line-height:1.4;text-align:center}
 .signal-list a{display:block;width:fit-content;max-width:100%;margin-inline:auto;text-align:center;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--mill-2);text-underline-offset:.2em}
 .signal-list a:hover{color:var(--accent-text);text-decoration-color:currentColor}
 .signal-list a:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px}
-.signal-list li > span{display:block;margin-top:.35rem;font-size:.75rem;line-height:1.5;color:var(--ink-soft)}
+.signal-list li > span{display:block;margin-top:.35rem;font-size:.75rem;line-height:1.5;color:var(--ink-soft);text-wrap:balance}
 .signal-published{font-weight:600;color:var(--mint-text)}
 .signal-date{
   display:block;text-align:center;
@@ -619,8 +619,8 @@ header{
   color:color-mix(in srgb,var(--brand-gold) 85%,var(--ink));
 }
 @media(max-width:479px){.signal-list{grid-template-columns:1fr;gap:.9rem}}
-.anchors{margin-top:1.9rem;font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;color:var(--ink-soft)}
-.anchors a{color:var(--ink-soft)}
+.anchors{margin-top:1.9rem;font-size:.9375rem;font-weight:600;line-height:1.8;color:var(--ink-soft)}
+.anchors a{color:var(--ink);white-space:nowrap}
 .anchors a:hover{color:var(--accent-text)}
 
 
@@ -749,10 +749,20 @@ section{position:relative;z-index:1}
 
 .dialfig canvas.grinding,.dialstage.grinding{ cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M3%201.6%20L3%2019.2%20L7.7%2014.7%20L10.6%2021%20L13.6%2019.6%20L10.7%2013.4%20L17%2013.2%20Z%27%20fill%3D%27%23fbbf24%27%20stroke%3D%27%23241a05%27%20stroke-width%3D%271.15%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E") 3 2, default; }
 .dialfig figcaption{
-  font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.075em;
-  text-transform:uppercase;color:var(--ink);text-align:center;line-height:2.1;
+  font-size:1rem;font-weight:500;
+  color:var(--ink);text-align:center;line-height:1.8;
 }
 .dialfig figcaption b{color:var(--accent-text);font-weight:700;font-size:1.05em}
+.dial-stat{
+  display:block;margin-inline:auto;min-height:44px;padding:.2rem .55rem;
+  border:0;background:transparent;color:inherit;font:inherit;line-height:inherit;
+  text-align:center;cursor:pointer;touch-action:auto;border-radius:.3rem;
+  transition:color .18s ease,background-color .18s ease;
+}
+/* beasties:include */
+.dial-stat.is-active{color:var(--accent-text);background:var(--accent-wash)}
+.dial-stat:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.dial-stat{transition:none}}
 /* margin-left MUST go back to 0 here. The desktop rule pulls the figure a
    full inch left so the dial closes the gap to the text column; once the grid
    is one column that pull has nothing to close and just shoves the dial off
@@ -1040,7 +1050,7 @@ a.plate:hover .stamp.pub{
 
 /* the footer carries navigation and a subscribe surface again: the chrome swap had
    dropped an 8-link nav, the Buttondown form and the only /privacy link on the site */
-/* Give navigation its full row until the links and signup fit side by side. */
+/* Keep navigation on its own row above the centered subscription form. */
 .foot-top{
   display:grid;grid-template-columns:minmax(0,1fr);
   gap:1.25rem;align-items:center;
@@ -1059,14 +1069,11 @@ a.plate:hover .stamp.pub{
    box landed exactly half of that, 8px, above the nav block's centre line. That
    was the residual after align-items:center and it is the whole of the reported
    offset at 1440 and 1200. */
-.foot-sub{display:flex;gap:.6rem;flex-wrap:nowrap;margin-bottom:0;width:min(100%,32rem);justify-self:end}
+.foot-sub{display:flex;gap:.6rem;flex-wrap:nowrap;margin-bottom:0;width:min(100%,32rem);justify-self:center}
 /* The email field shrinks while the subscription button keeps its full label. */
-.foot-sub__field{flex:1 1 140px;min-width:0;padding:.7rem .9rem;font-size:.75rem}
+.foot-sub__field{flex:1 1 140px;min-width:0;padding:.7rem .9rem;font-size:.75rem;text-align:center}
 .foot-sub .btn{flex:0 0 auto}
 @media (min-width:1000px){ .foot-nav{flex-wrap:nowrap} }
-@media (min-width:1400px){
-  .foot-top{grid-template-columns:max-content minmax(280px,1fr);column-gap:clamp(1.5rem,2vw,3rem)}
-}
 
 /* ── FOOTER: mark left, line centred, social right ── */
 .foot{
@@ -1595,7 +1602,10 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
               <circle id="dial-gesture-rim" cx="50" cy="50" r="36.575" fill="none" stroke="transparent" stroke-width="25.41" />
             </svg>
           </div>
-          <figcaption><b>52</b> ticks &middot; protocols audited<br><b>19</b> bolts &middot; gateways mapped</figcaption>
+          <figcaption>
+            <button class="dial-stat" type="button" data-dial-highlight="ticks" aria-controls="dial" aria-label="Highlight 52 ticks: protocols audited"><b>52</b> ticks &middot; protocols audited</button>
+            <button class="dial-stat" type="button" data-dial-highlight="bolts" aria-controls="dial" aria-label="Highlight 19 bolts: gateways mapped"><b>19</b> bolts &middot; gateways mapped</button>
+          </figcaption>
         </figure>
       </div>
     </section>
@@ -2282,9 +2292,21 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     });
   }
 
+  /* Apply one edge policy to image logos and measured text ink, including trails.
+     Whole marks fade before the vertical boundary. Logos use resting bounds;
+     currency text is checked after its pointer-driven movement. */
+  function matrixEdgeAlpha(left, top, width, height, trail){
+    /* resize floors backing dimensions; cover one physical pixel even at zoom-out. */
+    var inset = Math.max(1, 1/dpr);
+    if (left < inset || left+width > W-inset || top-trail < inset || top+height > H-inset) return 0;
+    if (reduce) return 1;
+    var t = Math.min(1, (top-trail-inset)/24, (H-inset-top-height)/24);
+    return t*t*(3-2*t);
+  }
+
   /* A local deflection of up to eight pixels, with a soft return.
      Keep it per visible slot: pool entries are shared across many columns. */
-  function nudgeMatrixIcon(c, k, item, x, y, width, height, step){
+  function nudgeMatrixIcon(c, k, item, x, y, width, height, step, trail){
     if (!c.nudges) c.nudges = [];
     var n = c.nudges[k];
     if (!n || n.item !== item) n = c.nudges[k] = { item:item, x:0, y:0 };
@@ -2300,6 +2322,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     }
     var ease = reduce ? 1 : frameEase(0.22, step);
     n.x += (tx-n.x)*ease; n.y += (ty-n.y)*ease;
+    /* Keep every painted pixel, including the upper trail, inside the field.
+       Store the applied displacement so coral targets and release agree. */
+    var inset = Math.max(1, 1/dpr);
+    n.x = Math.max(inset-x+width*0.5, Math.min(W-inset-x-width*0.5, n.x));
+    n.y = Math.max(inset-y+height*0.5+trail, Math.min(H-inset-y-height*0.5, n.y));
     return n;
   }
 
@@ -2360,6 +2387,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     mctx.fillStyle = rgb(P.trail, 1);
     mctx.fillRect(0, 0, W, H);
     matrixSpace = {};
+    /* A loaded font can replace its fallback without changing mctx.font.
+       Share measurements within this frame, never across a possible font swap. */
+    matrixTextMetrics = {};
     var trail = reduce ? 0 : 4;
 
     mctx.textAlign = 'center';
@@ -2414,7 +2444,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           if (head){ iw *= 1.14; ih *= 1.14; }
           iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
           var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
-          var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step);
+          var edgeAlpha = matrixEdgeAlpha(ix, iy, iw, ih, trail);
+          if (edgeAlpha <= 0) continue;
+          var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step, trail);
           /* Claim resting ink and its trail, then apply the live nudge.
              Transient overlap never changes admission or triggers a swap.
              Retain an old logo's reservation through its fade. A replacement
@@ -2439,7 +2471,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           }
           mark.visible = true;
           ix += nudge.x; iy += nudge.y;
-          var ia = Math.min(0.92, baseA*1.8)*mark.alpha;
+          var ia = Math.min(0.92, baseA*1.8)*mark.alpha*edgeAlpha;
           if (trail){
             mctx.globalAlpha = ia * 0.12;
             mctx.drawImage(tl, ix, iy-trail, iw, ih);
@@ -2484,15 +2516,18 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
             mctx.fillStyle = rgb(fieldC, head ? Math.min(1, a * 1.55) : a * 1.12);
           }
           var tb = matrixTextBounds(v);
+          var textEdgeAlpha = matrixEdgeAlpha(gxw-tb.left, gyw-tb.up, tb.left+tb.right, tb.up+tb.down, trail);
+          if (textEdgeAlpha <= 0) continue;
           if (!claimMatrixSpace('', gxw-tb.left, gyw-tb.up-trail, tb.left+tb.right, tb.up+tb.down+trail)) continue;
           if (trail){
-            mctx.globalAlpha = 0.12;
+            mctx.globalAlpha = 0.12*textEdgeAlpha;
             mctx.fillText(v, gxw, gyw-trail);
-            mctx.globalAlpha = 0.24;
+            mctx.globalAlpha = 0.24*textEdgeAlpha;
             mctx.fillText(v, gxw, gyw-trail*0.5);
-            mctx.globalAlpha = 1;
           }
+          mctx.globalAlpha = textEdgeAlpha;
           mctx.fillText(v, gxw, gyw);
+          mctx.globalAlpha = 1;
         }
       }
     }
@@ -3132,6 +3167,7 @@ function vaultMountDial(cv, opts){
   var gMoving = false;
   /* one ding per bolt: it lights teal as the contact point passes over it */
   var boltDing = new Array(19).fill(0);
+  var captionTarget = null, captionGlow = { ticks: 0, bolts: 0 }, captionTime = 0;
   /* the core lights while the cursor is anywhere on the dial */
   var coreGlow = 0;
   var RED   = [255, 92, 38],  YEL  = [255, 214, 96];   /* hot metal */
@@ -3192,6 +3228,75 @@ function vaultMountDial(cv, opts){
     stage.addEventListener('pointercancel', release);
     stage.addEventListener('pointerup', release);
     stage.addEventListener('lostpointercapture', function(e){ if (e.pointerId === dragId) release(e); });
+
+    /* Captions explain the two measured rings. Touch uses a brief afterglow,
+       while keyboard focus stays lit; native scrolling owns caption drags. */
+    var figure = cv.closest('.dialfig');
+    var captions = figure ? Array.from(figure.querySelectorAll('[data-dial-highlight]')) : [];
+    var captionHover = null, captionFocus = null, captionPress = null;
+    var captionPointer = null, captionPulse = null, captionTimer = null;
+    function syncCaption(){
+      captionTarget = captionPress || captionHover || captionFocus || captionPulse;
+      captions.forEach(function(button){
+        button.classList.toggle('is-active', button.dataset.dialHighlight === captionTarget);
+      });
+      if (!raf){
+        captionGlow.ticks = captionTarget === 'ticks' ? 1 : 0;
+        captionGlow.bolts = captionTarget === 'bolts' ? 1 : 0;
+        draw();
+      }
+    }
+    function clearCaptionPulse(){
+      if (captionTimer) clearTimeout(captionTimer);
+      captionTimer = null; captionPulse = null;
+    }
+    function pulseCaption(kind){
+      clearCaptionPulse(); captionPulse = kind; syncCaption();
+      captionTimer = setTimeout(function(){ captionTimer = null; captionPulse = null; syncCaption(); }, 550);
+    }
+    captions.forEach(function(button){
+      var kind = button.dataset.dialHighlight;
+      button.addEventListener('pointerenter', function(e){
+        if (e.pointerType === 'touch') return;
+        clearCaptionPulse(); captionHover = kind; syncCaption();
+      }, {passive:true});
+      button.addEventListener('pointerleave', function(e){
+        if (e.pointerType === 'touch') return;
+        captionHover = null; syncCaption();
+      }, {passive:true});
+      button.addEventListener('focus', function(){
+        if (button.matches(':focus-visible')){ captionFocus = kind; syncCaption(); }
+      });
+      button.addEventListener('blur', function(){ captionFocus = null; syncCaption(); });
+      button.addEventListener('pointerdown', function(e){
+        clearCaptionPulse(); captionFocus = null;
+        if (e.isPrimary !== false && e.pointerType !== 'mouse'){
+          captionPointer = e.pointerId; captionPress = kind;
+        }
+        syncCaption();
+      }, {passive:true});
+      button.addEventListener('pointermove', function(e){
+        if (e.pointerId !== captionPointer) return;
+        var box = button.getBoundingClientRect();
+        captionPress = e.clientX >= box.left && e.clientX <= box.right &&
+          e.clientY >= box.top && e.clientY <= box.bottom ? kind : null;
+        syncCaption();
+      }, {passive:true});
+      button.addEventListener('click', function(e){ if (e.detail === 0) pulseCaption(kind); });
+    });
+    function releaseCaption(e){
+      if (e.pointerId !== captionPointer) return;
+      var kind = captionPress;
+      captionPress = null; captionPointer = null;
+      if (e.type === 'pointerup' && kind) pulseCaption(kind);
+      else { clearCaptionPulse(); syncCaption(); }
+    }
+    window.addEventListener('pointerup', releaseCaption, {passive:true});
+    window.addEventListener('pointercancel', releaseCaption, {passive:true});
+    window.addEventListener('blur', function(){
+      captionHover = captionFocus = captionPress = captionPointer = null;
+      clearCaptionPulse(); syncCaption();
+    });
   }
 
   /* The rect read is the other half of the same bill as the style reads above:
@@ -3221,6 +3326,14 @@ function vaultMountDial(cv, opts){
     if (skinDirty) readSkin();
     var A = skinA, HOT = skinHot, INK = skinInk, dark = skinDark;
     var R = size * 0.385;
+    var captionNow = performance.now();
+    var captionEase = reduce ? 1 : 1 - Math.exp(-(captionNow - captionTime) / 100);
+    captionTime = captionNow;
+    ['ticks', 'bolts'].forEach(function(kind){
+      var target = captionTarget === kind ? 1 : 0;
+      captionGlow[kind] += (target - captionGlow[kind]) * captionEase;
+      if (Math.abs(target - captionGlow[kind]) < 0.001) captionGlow[kind] = target;
+    });
     ctx.clearRect(0, 0, size, size);
     ctx.save(); ctx.translate(size/2, size/2);
 
@@ -3237,9 +3350,11 @@ function vaultMountDial(cv, opts){
     });
 
     ctx.save(); ctx.rotate(spin * 0.55);
+    var tickGlow = captionGlow.ticks;
+    ctx.shadowColor = rgba(A, .8); ctx.shadowBlur = 8 * tickGlow;
     for (var i = 0; i < 52; i++){
       var a = (i/52)*TAU - Math.PI/2, major = i % 13 === 0;
-      var r1 = R*0.905, r2 = R*(major ? 0.955 : 0.935);
+      var r1 = R*0.905, r2 = R*((major ? 0.955 : 0.935) + (major ? .01 : .025)*tickGlow);
       ctx.beginPath();
       ctx.moveTo(Math.cos(a)*r1, Math.sin(a)*r1);
       ctx.lineTo(Math.cos(a)*r2, Math.sin(a)*r2);
@@ -3248,8 +3363,8 @@ function vaultMountDial(cv, opts){
          rhythm, but paints them in accent and thickens them, so the rim still
          reads blue at the size it is actually shown. */
       ctx.strokeStyle = compact ? (major ? rgba(A, 1) : rgba(A, .60))
-                                : (major ? rgba(A, .92) : rgba(INK, .5));
-      ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1); ctx.stroke();
+                                : (tickGlow > .01 ? rgba(A, major ? .92 + .08*tickGlow : .5 + .5*tickGlow) : (major ? rgba(A, .92) : rgba(INK, .5)));
+      ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1) + 1.7*tickGlow; ctx.stroke();
     }
     /* No index mark on the rim. One was added here on 2026-08-28 to break the
        ring's 52-fold symmetry, which is what made the header dial look frozen,
@@ -3290,8 +3405,8 @@ function vaultMountDial(cv, opts){
       ctx.lineTo(bx + Math.cos(ab)*br*0.55, by + Math.sin(ab)*br*0.55);
       ctx.strokeStyle = dark ? 'rgba(0,0,0,.55)' : 'rgba(30,40,55,.4)'; ctx.stroke();
       /* the ding: a teal ring that rings out and fades */
-      if (boltDing[b] > 0.02){
-        var dv = boltDing[b];
+      var dv = Math.max(boltDing[b], captionGlow.bolts);
+      if (dv > 0.02){
         var dr = br * (1.5 + (1 - dv) * 2.6);
         ctx.beginPath(); ctx.arc(bx, by, dr, 0, TAU);
         ctx.strokeStyle = rgbaA(TEAL, 0.7 * dv); ctx.lineWidth = 1.6 * dv; ctx.stroke();
@@ -3300,8 +3415,8 @@ function vaultMountDial(cv, opts){
         dg.addColorStop(1, rgbaA(TEAL, 0));
         ctx.fillStyle = dg;
         ctx.beginPath(); ctx.arc(bx, by, br * 2.2, 0, TAU); ctx.fill();
-        boltDing[b] = dv * 0.9;
-      } else if (boltDing[b]) { boltDing[b] = 0; }
+      }
+      boltDing[b] = boltDing[b] > 0.02 ? boltDing[b] * 0.9 : 0;
     }
     ctx.restore();
 
@@ -3543,7 +3658,15 @@ function vaultMountDial(cv, opts){
   var raf = 0, seen = true;
   function awake(){ return seen && !document.hidden && !reduce; }
   function start(){ if (!raf && awake()) raf = requestAnimationFrame(frame); }
-  function stop(){ if (raf){ cancelAnimationFrame(raf); raf = 0; } }
+  function stop(){
+    if (raf){ cancelAnimationFrame(raf); raf = 0; }
+    /* Tab navigation can scroll the dial away halfway through a fade.
+       Finish the caption response before pausing so it resumes cleanly. */
+    var ticks = captionTarget === 'ticks' ? 1 : 0, bolts = captionTarget === 'bolts' ? 1 : 0;
+    if (captionGlow.ticks !== ticks || captionGlow.bolts !== bolts){
+      captionGlow.ticks = ticks; captionGlow.bolts = bolts; draw();
+    }
+  }
   if (window.IntersectionObserver){
     new IntersectionObserver(function(es){
       seen = es[0].isIntersecting;

@@ -61,7 +61,7 @@ const matrixMotionEnd=source.indexOf('  function drawMatrix(',matrixMotionStart)
 assert.ok(matrixMotionStart>=0&&matrixMotionEnd>matrixMotionStart,'Missing operative matrix hover motion');
 const matrixMotionCode=source.slice(matrixMotionStart,matrixMotionEnd);
 const paintCode = productionFunction('matrixConflictWithin') + '\n' + productionFunction('claimMatrixSpace', false) + '\n' +
-  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('nudgeMatrixIcon') + '\n' + productionFunction('sameMatrixItem') + '\n' +
+  productionFunction('matrixTextBounds', false) + '\n' + productionFunction('matrixEdgeAlpha') + '\n' + productionFunction('nudgeMatrixIcon') + '\n' + productionFunction('sameMatrixItem') + '\n' +
   productionFunction('matrixGlyph') + '\n' + matrixMotionCode + '\n' + productionFunction('drawMatrix');
 function seededMath(seed) {
   const math = Object.create(Math);
@@ -111,7 +111,7 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
         h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,alpha});
     }
   };
-  const state = {FRAME_MS:1000/60,W:width,H:440,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
+  const state = {FRAME_MS:1000/60,W:width,H:440,dpr:1,COLW:26,MATRIX_CELL:64,matrixSpace:{},cols:[],reduce,
     mtxC:{dataset:{}},mctx:ctx,Math:seededMath(seed),iconPts:[],ICONPT_CAP:220,TINT_STEPS:6,active:false,warpTX:null,warpTY:null,matrixSpeed:0.48,ctaOK:false,
     GOLD:[251,191,36], FX:{'\u20A9':1},matrixTextMetrics:{},
     pal:()=>({trail:[0,0,0],fade:0.158,blue:[1,2,3],mint:[3,2,1],olive:[2,3,1]}),
@@ -160,6 +160,11 @@ function paintHarness(reduce = false, width = 390, seed = 103) {
 }
 function checkPainting(result, state, label) {
   const {groups}=result;
+  for(const paint of result.calls){
+    assert.ok([paint.x,paint.y,paint.w,paint.h].every(Number.isFinite),label+': finite '+paint.kind+' bounds');
+    assert.ok(paint.x>=1-1e-8 && paint.y>=1-1e-8 && paint.x+paint.w<=Math.min(state.W-1,Math.floor(state.W*state.dpr)/state.dpr)+1e-8 && paint.y+paint.h<=Math.min(state.H-1,Math.floor(state.H*state.dpr)/state.dpr)+1e-8,
+      label+': clipped '+paint.kind+' '+paint.name+' '+JSON.stringify(paint)+' in '+state.W+'x'+state.H);
+  }
   for(let i=0;i<groups.length;i++) for(let j=i+1;j<groups.length;j++) {
     const a=groups[i],b=groups[j];
     const ar=a.rest,br=b.rest;
@@ -188,6 +193,148 @@ function fixture(name, columns, expected, configure, reduce=false) {
   assert.equal(r.groups.length,expected,name+': accepted-item count');
   console.log('PASS matrix spacing: '+name);
 }
+// Inspect actual paints, including trails, at both edges and after a shrink.
+for(const reduce of [false,true]){
+  let visible=0;
+  for(const width of [320,390,1111,1440]){
+    const h=paintHarness(reduce,width);
+    for(const item of [openai,coinbase,maple,kalshi,logo('xai',true,759/290.2)]){
+      for(const x of [-13,0,13,39,width-39,width-13,width+13]){
+        h.state.cols=[column(x,160,[item])];
+        const r=h.draw();checkPainting(r,h.state,'full edge logo '+width+' '+item.d.n+' x'+x);
+        visible+=r.groups.length;
+        if(x===39||x===width-39)assert.equal(r.groups.length,1,'Whole edge marks retain their full-size slot');
+      }
+    }
+    h.state.cols=[column(width-39,160,[maple])];
+    assert.equal(h.draw().groups.length,1,'Resize fixture starts with a visible wide logo');
+    h.state.W=width-26;
+    const shrunk=h.draw();checkPainting(shrunk,h.state,'first frame after shrink');
+    assert.equal(shrunk.groups.length,0,'A wordmark that no longer fits is never partially painted');
+    h.state.W=width;
+    const restored=h.draw();checkPainting(restored,h.state,'first frame after expand');
+    assert.equal(restored.groups.length,1,'Expanding restores the complete logo');
+  }
+  assert.ok(visible>=40,'Containment checks must observe many actual full-size edge logos');
+  console.log('PASS matrix edges: full-size logos and wide xAI, first resize frame, reduced='+reduce);
+}
+{
+  const h=paintHarness(),edgePositions=[[12,160],[390-12,160],[100,18],[100,426]];
+  for(const [x,y] of edgePositions){
+    h.state.cols=[column(x,y,[openai])];h.state.cols[0].tick=-10000;
+    const base=h.draw();assert.equal(base.groups.length,1,'Nudge edge fixture is visibly painted');
+    let displaced=0;
+    for(let frame=0;frame<90;frame++){
+      Object.assign(h.state,{active:frame<60,warpTX:x+(frame<30?6:-6),warpTY:y+(frame<30?6:-6)});
+      const r=h.draw();checkPainting(r,h.state,'held edge nudge '+x+','+y+' frame'+frame);
+      assert.equal(r.groups.length,1,'Pointer movement must not hide an admitted edge logo');
+      assert.equal(r.groups[0].main.alpha,base.groups[0].main.alpha,'Pointer contact cannot change edge opacity');
+      assert.equal(r.groups[0].main.name,base.groups[0].main.name,'Edge contact cannot swap the logo');
+      displaced+=Math.hypot(r.groups[0].main.nudgeX,r.groups[0].main.nudgeY)>.3;
+    }
+    assert.ok(displaced>20,'Edge containment must be exercised by real bounded deflection');
+  }
+  console.log('PASS matrix edges: sustained corner-directed nudges stay visible without clipping or swapping');
+}
+{
+  const h=paintHarness();
+  function at(y){
+    h.state.cols=[column(100,y,[openai])];const r=h.draw();checkPainting(r,h.state,'vertical edge y'+y);
+    return r.groups[0]?.main.alpha||0;
+  }
+  const entering=[10,16,18,22,28,34,40,46].map(at);
+  const leaving=[400,406,412,418,422,426,429,434].map(at);
+  assert.equal(entering[0],0);assert.ok(entering.at(-1)>.5);
+  assert.ok(entering.every((a,i)=>!i||a>=entering[i-1]),'Whole logos ease in after clearing the upper trail boundary');
+  assert.ok(leaving[0]>.5);assert.equal(leaving.at(-1),0);
+  assert.ok(leaving.every((a,i)=>!i||a<=leaving[i-1]),'Whole logos fade before crossing the lower boundary');
+  assert.ok(entering.filter(a=>a>0&&a<entering.at(-1)).length>=4,'Entry fade contains multiple nonzero levels');
+  assert.ok(leaving.filter(a=>a>0&&a<leaving[0]).length>=4,'Exit fade contains multiple nonzero levels');
+  console.log('PASS matrix edges: complete logos fade through multiple levels at top and bottom');
+}
+
+// A fractional canvas loses up to one physical pixel when its backing size is floored.
+for(const dpr of [.25,.5,.75,1.25,2]){
+  const h=paintHarness(false,391.75);h.state.H=441.75;h.state.dpr=dpr;
+  let visible=0;
+  for(const x of [12,39,370.5,379])for(const y of [18,30,200,422,428,429.5]){
+    h.state.cols=[column(x,y,[openai])];h.state.cols[0].tick=-10000;
+    Object.assign(h.state,{active:true,warpTX:x-6,warpTY:y-6});
+    for(let frame=0;frame<12;frame++){
+      const r=h.draw();checkPainting(r,h.state,'fractional canvas DPR'+dpr);visible+=r.groups.length;
+    }
+  }
+  assert.ok(visible>=48,'Fractional backing-store checks need actual edge paints and nudges');
+}
+console.log('PASS matrix edges: fractional backing dimensions and zoomed pixel ratios');
+
+// Every configured ticker and currency uses the same measured-ink edge rule.
+const textPoolMatch=source.match(/var POOL = (\[[\s\S]*?\]);/);
+assert.ok(textPoolMatch,'Production text pool must be present');
+const allTextValues=[...new Set(vm.runInNewContext(textPoolMatch[1]))];
+assert.ok(allTextValues.includes('RLUSD')&&allTextValues.includes('T-BILL'));
+for(const reduce of [false,true]){
+  const painted=new Set();
+  for(const width of [320,390,1111]){
+    const h=paintHarness(reduce,width);
+    for(const value of allTextValues)for(const x of [4,13,48,width-48,width-13,width+13]){
+      h.state.cols=[column(x,160,[{t:0,v:value}])];
+      const r=h.draw();checkPainting(r,h.state,'whole text '+value+' width'+width+' x'+x);
+      if(x===48||x===width-48){assert.equal(r.groups.length,1,'A complete '+value+' remains visible near the edge');painted.add(value);}
+    }
+    h.state.cols=[column(width-26,160,[{t:0,v:'RLUSD'}])];
+    assert.equal(h.draw().groups.length,1,'RLUSD is present before resize');
+    h.state.W=width-26;
+    const shrunk=h.draw();checkPainting(shrunk,h.state,'RLUSD first shrink frame');assert.equal(shrunk.groups.length,0);
+    h.state.W=width;const grown=h.draw();checkPainting(grown,h.state,'RLUSD first expand frame');assert.equal(grown.groups.length,1);
+  }
+  assert.equal(painted.size,allTextValues.length,'Every real text-pool value must actually paint');
+  console.log('PASS matrix text edges: all'+painted.size+' tickers/currencies, RLUSD resize, reduced='+reduce);
+}
+for(const dpr of [.25,.5,.75,1.25,2]){
+  const h=paintHarness(false,391.75);h.state.H=441.75;h.state.dpr=dpr;
+  let visible=0;
+  for(const value of ['RLUSD','PYUSD','T-BILL','$','\u20BF'])for(const x of [13,40,365,379])for(const y of [8,18,200,430,439]){
+    h.state.cols=[column(x,y,[{t:0,v:value}])];
+    const r=h.draw();checkPainting(r,h.state,'fractional text '+value+' DPR'+dpr);visible+=r.groups.length;
+  }
+  assert.ok(visible>15,'Fractional text checks observe actual complete glyphs');
+}
+console.log('PASS matrix text edges: fractional canvas sizes and zoom levels');
+{
+  const h=paintHarness();
+  for(const value of ['$','\u20BF'])for(const [x,y]of[[-3,160],[392,160],[100,2],[100,439],[8,160],[381,160],[100,18],[100,426]]){
+    h.state.cols=[column(100,160,[{t:0,v:value}])];h.state.dollarWarp=()=>[x,y];
+    const r=h.draw();checkPainting(r,h.state,'post-warp currency '+value+' '+x+','+y);
+    if(x<0||x>h.state.W||y<5||y>438)assert.equal(r.groups.length,0,'A warped partial glyph is never painted');
+  }
+  h.state.cols=[column(100,160,[{t:0,v:'$'}])];h.state.dollarWarp=()=>[180,160];
+  assert.equal(h.draw().groups.length,1,'Whole currency glyphs still follow the pointer');
+  console.log('PASS matrix text edges: currency checked after pointer movement');
+}
+{
+  const h=paintHarness();
+  function at(y){h.state.cols=[column(100,y,[{t:0,v:'RLUSD'}])];const r=h.draw();checkPainting(r,h.state,'RLUSD vertical fade '+y);return r.groups[0]?.main.alpha||0;}
+  const entering=[6,12,14,18,24,30,38].map(at),leaving=[406,414,420,426,430,434,438].map(at);
+  assert.equal(entering[0],0);assert.ok(entering.at(-1)>.5);assert.equal(leaving.at(-1),0);
+  assert.ok(entering.every((a,i)=>!i||a>=entering[i-1]));assert.ok(leaving.every((a,i)=>!i||a<=leaving[i-1]));
+  assert.ok(entering.filter(a=>a>0&&a<entering.at(-1)).length>=3);
+  assert.ok(leaving.filter(a=>a>0&&a<leaving[0]).length>=3);
+  console.log('PASS matrix text edges: whole RLUSD text and trails fade before vertical boundaries');
+}
+
+// Font swaps can change ink bounds without changing the canvas font string.
+for(const axis of ['ascent','width']){
+  const h=paintHarness();h.state.cols=[column(axis==='width'?25:100,axis==='ascent'?18:160,[{t:0,v:'RLUSD'}])];
+  const first=h.draw();checkPainting(first,h.state,'fallback font '+axis);assert.equal(first.groups.length,1);
+  const font=h.state.mctx.font,measure=h.state.mctx.measureText.bind(h.state.mctx);
+  h.state.mctx.measureText=value=>{const m=measure(value);return axis==='ascent'?{...m,actualBoundingBoxAscent:m.actualBoundingBoxAscent+8}:{...m,actualBoundingBoxLeft:m.actualBoundingBoxLeft+20};};
+  const loaded=h.draw();assert.equal(h.state.mctx.font,font,'This fixture keeps the same CSS font description');
+  checkPainting(loaded,h.state,'loaded font '+axis);assert.equal(loaded.groups.length,0,'Re-measure the new font before painting its now-incomplete glyph');
+  h.state.cols=[column(100,160,[{t:0,v:'RLUSD'}])];const interior=h.draw();checkPainting(interior,h.state,'loaded font interior');assert.equal(interior.groups.length,1);
+}
+console.log('PASS matrix text edges: font swaps refresh ink measurements before paint');
+
 fixture('same-brand horizontal',[column(100,150,[openai]),column(140,150,[openai])],1);
 fixture('same-brand vertical',[column(100,150,[coinbase,coinbase])],1);
 // Ordinary marks occupy consecutive rows. Contact never changes their resting slots.
@@ -675,9 +822,10 @@ for(const width of [390,1280]) {
       hasPointerCapture(id){return captured.has(id);},
       releasePointerCapture(id){captured.delete(id);}
     };
-    const canvas = {closest(){return stage;},
+    const canvas = {closest(selector){return selector === '.dialstage' ? stage : null;},
       getBoundingClientRect(){return {left:10,top:20,width:100,height:100};}};
     const state = {compact,cv:canvas,size:200,cur:null,curSpeed:0,Math,
+      window:{addEventListener(){}}, // Caption paints and window input are covered by the native browser gate.
       performance:{now:()=>now},
       setTimeout(fn, delay){const id=++nextTimer; timers.set(id,{at:now+delay,fn}); return id;},
       clearTimeout(id){timers.delete(id);}
