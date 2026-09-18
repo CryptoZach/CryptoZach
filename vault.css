@@ -838,7 +838,26 @@ blockquote::before, .framework-card::before{
 .home-stat__num, .key-num, .brief-finding-num, .stat-num, .filing-no{
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
   font-variant-numeric: tabular-nums;
-  color: var(--accent-text) !important;
+}
+.home-stat__num, .stat-num, .filing-no{color:var(--accent-text) !important}
+
+/* Blue markers use the matching contrast ink instead of accent-colored numerals. */
+.brief-finding-num,
+.paper-key-numbers .key-num{
+  color:var(--accent-fill-ink) !important;
+  background:var(--accent-fill);
+  border:2px solid var(--accent-fill);
+  text-shadow:none;
+  box-shadow:none;
+  animation:none;
+}
+.brief-finding:hover .brief-finding-num{
+  filter:none;
+  box-shadow:none;
+}
+/* Keep the marker and its copy at full contrast instead of fading the row. */
+.paper-key-numbers > p{
+  opacity:1;
 }
 
 /* exhibits are contained, never cropped */
