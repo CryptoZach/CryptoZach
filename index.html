@@ -2657,13 +2657,24 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   }
 
   /* ── node mesh, gridded so it never scans every pair ── */
+  /* The grid bounds the SCAN, not the STROKES: 200 nodes inside one 55px link
+     radius is 19,900 pairs, one stroke each, and a pointer held nearly still
+     builds that cluster in seconds (measured 8,687 strokes in one frame, node
+     degree 135; an ordinary sweep peaks near 1,950 and idle near 650, in
+     scripts/check_homepage_animation_budgets.cjs). The icon web has had a
+     180-edge budget since it was written; the mesh had none. Each node now
+     links to its first MESH_DEGREE_CAP neighbours and the frame stops at
+     MESH_EDGE_CAP. A node past the degree cap is one already sitting in a
+     blob, where the extra lines only darkened it. */
   var NCELL = 55, nodeGrid = {};
   var NOFF = [[0,0],[1,0],[-1,1],[0,1],[1,1]];
+  var MESH_EDGE_CAP = 1600, MESH_DEGREE_CAP = 16;
   function drawNodeMesh(P){
     nodeGrid = {};
-    var i, n, k;
+    var i, n, k, drawn = 0;
     for (i = 0; i < nodes.length; i++){
       n = nodes[i];
+      n.deg = 0;
       k = ((n.x / NCELL) | 0) + ':' + ((n.y / NCELL) | 0);
       if (nodeGrid[k]) nodeGrid[k].push(n); else nodeGrid[k] = [n];
     }
@@ -2672,17 +2683,20 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       var sp = key.split(':'), gx = +sp[0], gy = +sp[1];
       for (var a1 = 0; a1 < bkt.length; a1++){
         var A = bkt[a1];
-        for (var o = 0; o < 5; o++){
+        for (var o = 0; o < 5 && A.deg < MESH_DEGREE_CAP; o++){
           var ob = o === 0 ? bkt : nodeGrid[(gx + NOFF[o][0]) + ':' + (gy + NOFF[o][1])];
           if (!ob) continue;
-          for (var b1 = o === 0 ? a1 + 1 : 0; b1 < ob.length; b1++){
+          for (var b1 = o === 0 ? a1 + 1 : 0; b1 < ob.length && A.deg < MESH_DEGREE_CAP; b1++){
             var B = ob[b1];
+            if (B.deg >= MESH_DEGREE_CAP) continue;
             var dx = A.x - B.x, dy = A.y - B.y, d2 = dx*dx + dy*dy;
             if (d2 > 3025 || d2 < 25) continue;
             var d = Math.sqrt(d2);
             rctx.beginPath(); rctx.moveTo(A.x, A.y); rctx.lineTo(B.x, B.y);
             rctx.strokeStyle = rgb(P.olive, Math.min(A.alpha, B.alpha) * fade * (1 - d / 55) * 0.44);
             rctx.lineWidth = 1; rctx.stroke();
+            A.deg++; B.deg++;
+            if (++drawn >= MESH_EDGE_CAP) return;
           }
         }
       }
@@ -2934,7 +2948,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     var now = performance.now();
     if (press){ vel = 1.2; }
     else if (pmx >= 0){
-      var dt = Math.max(16, now-lastMove);
+      /* Distance over TIME, so the spray reads the hand, not the event rate.
+         The floor was one 60 Hz frame, which halved vel on a 120 Hz pointer
+         and quartered it at 240 Hz for the same hand speed; 4ms only guards
+         two events landing inside the same millisecond. */
+      var dt = Math.max(4, now-lastMove);
       vel = Math.hypot(x-pmx, y-pmy) / dt * 10;
     }
     pmx = x; pmy = y; mx = x; my = y; lastMove = now;
@@ -3115,6 +3133,12 @@ function vaultMountDial(cv, opts){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
+  /* Every rate below is per 60 Hz frame. frame() scales them by the real
+     interval, the way the hero field does, because requestAnimationFrame runs
+     at the display's rate: measured 2.0x at 120 Hz on spin, grind, glow, bolt
+     fade, spark life and sparks per second before this (see
+     scripts/check_homepage_animation_budgets.cjs). */
+  var DIAL_FRAME_MS = 1000 / 60, previousFrame = null, sparkDebt = 0;
   var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   /* draw() read four computed styles off the root every frame, on both dials,
      to fetch three custom properties and the colour scheme. Each read resolves
@@ -3181,13 +3205,19 @@ function vaultMountDial(cv, opts){
   if (!compact){
     var stage = cv.closest('.dialstage') || cv;
     var rim = stage.querySelector('#dial-gesture-rim');
-    var dragId = null;
+    var dragId = null, lastTrack = 0;
     var track = function(e){
       if (e.isPrimary === false || (dragId !== null && e.pointerId !== dragId)) return;
       var b = cv.getBoundingClientRect();
       var nx = (e.clientX - b.left) * size / b.width;
       var ny = (e.clientY - b.top) * size / b.height;
-      if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
+      /* px per 60 Hz frame (1000/60 ms), whatever the event rate: a 120 Hz
+         pointer reports half the distance per event for the same hand speed,
+         and read raw it halved the sparks. The literal keeps this block
+         standalone for check_homepage_matrix.cjs, which runs it alone. */
+      var now = performance.now();
+      if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y) * (1000 / 60) / Math.max(4, now - lastTrack));
+      lastTrack = now;
       cur = { x: nx, y: ny };
     };
     stage.addEventListener('pointermove', track, {passive:true});
@@ -3373,7 +3403,8 @@ function vaultMountDial(cv, opts){
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  function draw(){
+  function draw(step){
+    if (!(step > 0)) step = 1;
     fit();
     if (skinDirty) readSkin();
     var A = skinA, HOT = skinHot, INK = skinInk, dark = skinDark;
@@ -3468,7 +3499,7 @@ function vaultMountDial(cv, opts){
         ctx.fillStyle = dg;
         ctx.beginPath(); ctx.arc(bx, by, br * 2.2, 0, TAU); ctx.fill();
       }
-      boltDing[b] = boltDing[b] > 0.02 ? boltDing[b] * 0.9 : 0;
+      boltDing[b] = boltDing[b] > 0.02 ? boltDing[b] * Math.pow(0.9, step) : 0;
     }
     ctx.restore();
 
@@ -3538,7 +3569,7 @@ function vaultMountDial(cv, opts){
     ctx.beginPath(); ctx.arc(0, 0, R*0.30, 0, TAU); ctx.fillStyle = halo; ctx.fill();
 
     /* hover glow, held INSIDE the inner ring so the core lights rather than the disc */
-    coreGlow = cur ? Math.min(1, coreGlow + 0.07) : Math.max(0, coreGlow - 0.045);
+    coreGlow = cur ? Math.min(1, coreGlow + 0.07 * step) : Math.max(0, coreGlow - 0.045 * step);
     if (coreGlow > 0.01){
       var cg2 = ctx.createRadialGradient(0, 0, 0, 0, 0, R*0.185);
       cg2.addColorStop(0,   rgba(HOT, 0.272 * coreGlow));
@@ -3568,7 +3599,7 @@ function vaultMountDial(cv, opts){
       if (dd > R*rimIn && dd < R*rimOut){ contact = true; grindA = Math.atan2(ddy, ddx); }
     }
     if (contact && !reduce){
-      grind = Math.min(1, grind + 0.2);
+      grind = Math.min(1, grind + 0.2 * step);
       /* angular travel since the last frame, wrapped into [-PI, PI] */
       if (lastA !== null){
         var da = grindA - lastA;
@@ -3584,7 +3615,7 @@ function vaultMountDial(cv, opts){
            on travel, and the rate floor was 4 against / 1.2 with, so
            `1 + random*rate` threw at least one spark per frame at zero cursor
            speed. Cutting metal is work: no travel, no sparks. */
-        else { dirHeld = Math.max(0, dirHeld - 0.16); if (dirHeld === 0) grindDir = 0; }
+        else { dirHeld = Math.max(0, dirHeld - 0.16 * step); if (dirHeld === 0) grindDir = 0; }
       }
       lastA = grindA;
       /* actively travelling, not resting. Held briefly so a pause between two
@@ -3597,7 +3628,10 @@ function vaultMountDial(cv, opts){
       if (against) strike = Math.min(1, strike + 0.55);
       if (gMoving){
         var rate = against ? (4 + curSpeed*2.4) : (1.2 + curSpeed*0.9);
-        var n = 1 + ((Math.random() * rate) | 0);
+        /* the per-frame count, owed per 60 Hz frame: a fast display pays it in
+           fractions and a slow one in lumps, so sparks per second hold */
+        sparkDebt += (1 + ((Math.random() * rate) | 0)) * step;
+        var n = sparkDebt | 0; sparkDebt -= n;
         for (var q2 = 0; q2 < n && sparks.length < SPARK_MAX; q2++){
           var tang = grindA + Math.PI/2;
           var sp = against ? (2.0 + Math.random() * (4.6 + curSpeed*1.5))
@@ -3611,7 +3645,7 @@ function vaultMountDial(cv, opts){
         }
       }
     } else {
-      grind = Math.max(0, grind - 0.055);
+      grind = Math.max(0, grind - 0.055 * step);
       lastA = null; gMoving = false; grindDir = 0; dirHeld = 0;
     }
 
@@ -3646,13 +3680,14 @@ function vaultMountDial(cv, opts){
     }
 
     ctx.lineCap = 'round';
+    var damp = Math.pow(0.986, step);
     for (var si = sparks.length - 1; si >= 0; si--){
       var sk = sparks[si];
       sk.px = sk.x; sk.py = sk.y;
-      sk.vy += 0.058;
-      sk.vx *= 0.986; sk.vy *= 0.986;
-      sk.x += sk.vx; sk.y += sk.vy;
-      sk.life -= sk.decay;
+      sk.vy += 0.058 * step;
+      sk.vx *= damp; sk.vy *= damp;
+      sk.x += sk.vx * step; sk.y += sk.vy * step;
+      sk.life -= sk.decay * step;
       if (sk.life <= 0){ sparks.splice(si, 1); continue; }
       ctx.beginPath();
       ctx.moveTo(sk.px, sk.py); ctx.lineTo(sk.x, sk.y);
@@ -3675,11 +3710,14 @@ function vaultMountDial(cv, opts){
     ctx.restore();
   }
   /* grinding drags the wheel: it turns faster while the cursor is on it */
-  function frame(){
+  function frame(timestamp){
+    var now = typeof timestamp === 'number' ? timestamp : performance.now();
+    var step = previousFrame == null ? 1 : Math.min(3, Math.max(0, (now - previousFrame) / DIAL_FRAME_MS));
+    previousFrame = now;
     /* against the rotation the friction fights it and the rim stalls; with it,
        a light assist. The wheel can be dragged to a standstill but not spun
        backwards fast. */
-    strike *= 0.78;
+    strike *= Math.pow(0.78, step);
     /* the pointer heats only while the rim is actually being cut */
     var wantGrind = grind > 0.12;
     if (wantGrind !== cv.classList.contains('grinding')){
@@ -3697,8 +3735,8 @@ function vaultMountDial(cv, opts){
        at a comparable PIXEL rate instead of a comparable angular one. 5.2x puts
        the tick layer near 5px/s at 40px and one revolution at about 22s; at
        60fps that is ~26 frames per tick period, well clear of strobing. */
-    spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag);
-    draw();
+    spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag) * step;
+    draw(step);
     raf = awake() ? requestAnimationFrame(frame) : 0;
   }
 
@@ -3712,6 +3750,7 @@ function vaultMountDial(cv, opts){
   function start(){ if (!raf && awake()) raf = requestAnimationFrame(frame); }
   function stop(){
     if (raf){ cancelAnimationFrame(raf); raf = 0; }
+    previousFrame = null;
     /* Tab navigation can scroll the dial away halfway through a fade.
        Finish the caption response before pausing so it resumes cleanly. */
     var ticks = captionTarget === 'ticks' ? 1 : 0, bolts = captionTarget === 'bolts' ? 1 : 0;

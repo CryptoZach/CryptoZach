@@ -844,6 +844,12 @@ function vaultMountDial(cv, opts){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
+  /* Every rate below is per 60 Hz frame. frame() scales them by the real
+     interval, the way the hero field does, because requestAnimationFrame runs
+     at the display's rate: measured 2.0x at 120 Hz on spin, grind, glow, bolt
+     fade, spark life and sparks per second before this (see
+     scripts/check_homepage_animation_budgets.cjs). */
+  var DIAL_FRAME_MS = 1000 / 60, previousFrame = null, sparkDebt = 0;
   var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
@@ -880,10 +886,17 @@ function vaultMountDial(cv, opts){
      attaching these would put the contact test in the wrong coordinate space
      as well as spend a rim-grind budget on a 30px ornament. */
   if (!compact){
+    var lastTrack = 0;
     cv.addEventListener('pointermove', function(e){
       var b = cv.getBoundingClientRect();
       var nx = e.clientX - b.left, ny = e.clientY - b.top;
-      if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y));
+      /* px per 60 Hz frame (1000/60 ms), whatever the event rate: a 120 Hz
+         pointer reports half the distance per event for the same hand speed,
+         and read raw it halved the sparks. The literal keeps this block
+         standalone for check_homepage_matrix.cjs, which runs it alone. */
+      var now = performance.now();
+      if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y) * (1000 / 60) / Math.max(4, now - lastTrack));
+      lastTrack = now;
       cur = { x: nx, y: ny };
     }, {passive:true});
     cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
@@ -896,7 +909,8 @@ function vaultMountDial(cv, opts){
     cv.width = size * dpr; cv.height = size * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  function draw(){
+  function draw(step){
+    if (!(step > 0)) step = 1;
     fit();
     var A = token('--accent') || '#5b9cf5';
     var HOT = token('--accent-hot') || '#7ab0ff';
@@ -974,7 +988,7 @@ function vaultMountDial(cv, opts){
         dg.addColorStop(1, rgbaA(TEAL, 0));
         ctx.fillStyle = dg;
         ctx.beginPath(); ctx.arc(bx, by, br * 2.2, 0, TAU); ctx.fill();
-        boltDing[b] = dv * 0.9;
+        boltDing[b] = dv * Math.pow(0.9, step);
       } else if (boltDing[b]) { boltDing[b] = 0; }
     }
     ctx.restore();
@@ -1045,7 +1059,7 @@ function vaultMountDial(cv, opts){
     ctx.beginPath(); ctx.arc(0, 0, R*0.30, 0, TAU); ctx.fillStyle = halo; ctx.fill();
 
     /* hover glow, held INSIDE the inner ring so the core lights rather than the disc */
-    coreGlow = cur ? Math.min(1, coreGlow + 0.07) : Math.max(0, coreGlow - 0.045);
+    coreGlow = cur ? Math.min(1, coreGlow + 0.07 * step) : Math.max(0, coreGlow - 0.045 * step);
     if (coreGlow > 0.01){
       var cg2 = ctx.createRadialGradient(0, 0, 0, 0, 0, R*0.185);
       cg2.addColorStop(0,   rgba(HOT, 0.272 * coreGlow));
@@ -1075,7 +1089,7 @@ function vaultMountDial(cv, opts){
       if (dd > R*rimIn && dd < R*rimOut){ contact = true; grindA = Math.atan2(ddy, ddx); }
     }
     if (contact && !reduce){
-      grind = Math.min(1, grind + 0.2);
+      grind = Math.min(1, grind + 0.2 * step);
       /* angular travel since the last frame, wrapped into [-PI, PI] */
       if (lastA !== null){
         var da = grindA - lastA;
@@ -1091,7 +1105,7 @@ function vaultMountDial(cv, opts){
            on travel, and the rate floor was 4 against / 1.2 with, so
            `1 + random*rate` threw at least one spark per frame at zero cursor
            speed. Cutting metal is work: no travel, no sparks. */
-        else { dirHeld = Math.max(0, dirHeld - 0.16); if (dirHeld === 0) grindDir = 0; }
+        else { dirHeld = Math.max(0, dirHeld - 0.16 * step); if (dirHeld === 0) grindDir = 0; }
       }
       lastA = grindA;
       /* actively travelling, not resting. Held briefly so a pause between two
@@ -1104,7 +1118,10 @@ function vaultMountDial(cv, opts){
       if (against) strike = Math.min(1, strike + 0.55);
       if (gMoving){
         var rate = against ? (4 + curSpeed*2.4) : (1.2 + curSpeed*0.9);
-        var n = 1 + ((Math.random() * rate) | 0);
+        /* the per-frame count, owed per 60 Hz frame: a fast display pays it in
+           fractions and a slow one in lumps, so sparks per second hold */
+        sparkDebt += (1 + ((Math.random() * rate) | 0)) * step;
+        var n = sparkDebt | 0; sparkDebt -= n;
         for (var q2 = 0; q2 < n && sparks.length < SPARK_MAX; q2++){
           var tang = grindA + Math.PI/2;
           var sp = against ? (2.0 + Math.random() * (4.6 + curSpeed*1.5))
@@ -1118,7 +1135,7 @@ function vaultMountDial(cv, opts){
         }
       }
     } else {
-      grind = Math.max(0, grind - 0.055);
+      grind = Math.max(0, grind - 0.055 * step);
       lastA = null; gMoving = false; grindDir = 0; dirHeld = 0;
     }
 
@@ -1153,13 +1170,14 @@ function vaultMountDial(cv, opts){
     }
 
     ctx.lineCap = 'round';
+    var damp = Math.pow(0.986, step);
     for (var si = sparks.length - 1; si >= 0; si--){
       var sk = sparks[si];
       sk.px = sk.x; sk.py = sk.y;
-      sk.vy += 0.058;
-      sk.vx *= 0.986; sk.vy *= 0.986;
-      sk.x += sk.vx; sk.y += sk.vy;
-      sk.life -= sk.decay;
+      sk.vy += 0.058 * step;
+      sk.vx *= damp; sk.vy *= damp;
+      sk.x += sk.vx * step; sk.y += sk.vy * step;
+      sk.life -= sk.decay * step;
       if (sk.life <= 0){ sparks.splice(si, 1); continue; }
       ctx.beginPath();
       ctx.moveTo(sk.px, sk.py); ctx.lineTo(sk.x, sk.y);
@@ -1182,11 +1200,14 @@ function vaultMountDial(cv, opts){
     ctx.restore();
   }
   /* grinding drags the wheel: it turns faster while the cursor is on it */
-  function frame(){
+  function frame(timestamp){
+    var now = typeof timestamp === 'number' ? timestamp : performance.now();
+    var step = previousFrame == null ? 1 : Math.min(3, Math.max(0, (now - previousFrame) / DIAL_FRAME_MS));
+    previousFrame = now;
     /* against the rotation the friction fights it and the rim stalls; with it,
        a light assist. The wheel can be dragged to a standstill but not spun
        backwards fast. */
-    strike *= 0.78;
+    strike *= Math.pow(0.78, step);
     /* the pointer heats only while the rim is actually being cut */
     var wantGrind = grind > 0.12;
     if (wantGrind !== cv.classList.contains('grinding')) cv.classList.toggle('grinding', wantGrind);
@@ -1201,8 +1222,8 @@ function vaultMountDial(cv, opts){
        at a comparable PIXEL rate instead of a comparable angular one. 5.2x puts
        the tick layer near 5px/s at 40px and one revolution at about 22s; at
        60fps that is ~26 frames per tick period, well clear of strobing. */
-    spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag);
-    draw(); requestAnimationFrame(frame);
+    spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag) * step;
+    draw(step); requestAnimationFrame(frame);
   }
   window.addEventListener('resize', draw);
   reduce ? draw() : frame();
