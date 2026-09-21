@@ -138,6 +138,26 @@ if test "$remote" = "origin" && test -z "${SKIP_SITE_NUMBER_PREPUSH:-}"; then
 			echo >&2 "pre-push: WARN scripts/$g could not run (exit 2); not blocking."
 		fi
 	done
+	# Producer drift: the agent-infrastructure scale stamp vs live producers.
+	# The checker lives in the workflow clone, because GROUND_TRUTH and the
+	# measurement scripts are not in this site repo. Exit 1 blocks. Exit 2
+	# warns. An absent checker warns, matching the fail-open contract above.
+	# Bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push origin ...
+	wf="${CZ_WORKFLOW_CLONE:-/Users/zach/Tokenization_Systems_Website}"
+	scale="$wf/scripts/check_agent_infra_scale_figures.py"
+	if test -f "$scale"; then
+		python3 "$scale" --html "$root/agent-infrastructure/index.html"
+		rc=$?
+		if test "$rc" -eq 1; then
+			echo >&2 "pre-push: BLOCKED by check_agent_infra_scale_figures.py (page stamp disagrees with producers)."
+			echo >&2 "  Fix the stamp, or bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push origin ..."
+			exit 1
+		elif test "$rc" -eq 2; then
+			echo >&2 "pre-push: WARN check_agent_infra_scale_figures.py could not run (exit 2); not blocking."
+		fi
+	else
+		echo >&2 "pre-push: WARN check_agent_infra_scale_figures.py absent at $scale; not blocking."
+	fi
 fi
 
 # (7) added-orphan publication-image guard: block if the push range ADDS an image under

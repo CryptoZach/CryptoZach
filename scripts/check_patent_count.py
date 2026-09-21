@@ -118,8 +118,8 @@ def main():
         problems.append(f"duplicate application number(s) in the enumeration: {sorted(dupes)}")
 
     # Scan every html and md page for count claims.
-    targets = [p for p in ROOT.rglob("*.html") if "_site" not in p.parts and ".claude" not in p.parts]
-    targets += [p for p in ROOT.rglob("*.md") if "_site" not in p.parts and ".claude" not in p.parts]
+    targets = [p for p in ROOT.rglob("*.html") if "_site" not in p.parts and ".claude" not in p.parts and ".codex" not in p.parts]
+    targets += [p for p in ROOT.rglob("*.md") if "_site" not in p.parts and ".claude" not in p.parts and ".codex" not in p.parts]
     checked = 0
     for p in sorted(targets):
         try:

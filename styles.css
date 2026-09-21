@@ -9801,6 +9801,30 @@ footer.site-footer .footer-tagline{
   .paper-badges .badge,
   .card-badges .badge{ white-space: normal; }
 }
+/* Letter status chips stay content-sized. A long badge was stretching to the
+   row and wrapping, so the border no longer matched the text. */
+.paper-badges--chips{
+  align-items: center;
+}
+.paper-badges--chips .badge{
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+}
+@media (max-width: 640px){
+  .paper-badges--chips .badge{ white-space: nowrap; }
+}
+.paper-detail-page .paper-track-badge{
+  width: fit-content;
+  max-width: 100%;
+  text-wrap: balance;
+}
+
 .badge-status-submitted{ background: #e8f0fe; color: #1a56db; }
 .badge-status-published{ background: var(--status-open-bg); color: var(--status-open-ink); }
 .badge-status-draft{ background: #fef7e0; color: #b45309; }
@@ -21549,22 +21573,89 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   margin:0 0 var(--space-md);
   max-width:none;
 }
-.agent-infra-page .ai-section-nav{
+.agent-infra-page .ai-section-nav.page-toc.structure-jump-to{
   position:sticky;
-  top:0;
-  z-index:4;
+  top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1px);
+  z-index:990;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:100%;
   margin:0 0 var(--space-xl);
-  padding:0.65rem 0.85rem;
+  padding:0.7rem 0.85rem 0.75rem;
+  gap:0.35rem 0;
   border:1px solid var(--line);
+  border-left-width:1px;
   border-radius:var(--radius-sm);
   background:color-mix(in srgb, var(--bg, var(--panel)) 88%, transparent);
   backdrop-filter:blur(10px);
-}
-.agent-infra-page .ai-section-nav .page-toc-list{
-  gap:0.35rem 0.45rem;
+  text-align:center;
 }
 .agent-infra-page .ai-section-nav .page-toc-title{
+  flex:none;
+  width:auto;
+  margin:0;
+  padding:0;
+  border-right:none;
   font-size:var(--text-xs);
+  letter-spacing:0.14em;
+  text-align:center;
+}
+.agent-infra-page .ai-section-nav.page-toc.structure-jump-to .page-toc-list,
+.agent-infra-page .ai-section-nav .page-toc-list--compact{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:68rem;
+  margin:0;
+  column-gap:0.2rem;
+  row-gap:0.2rem;
+}
+.agent-infra-page .ai-section-nav .page-toc-list > a,
+.agent-infra-page .ai-section-nav.page-toc.structure-jump-to .page-toc-list > a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0.32rem 0.72rem;
+  border-radius:999px;
+  white-space:nowrap;
+  text-align:center;
+  text-decoration:none;
+  line-height:1.35;
+}
+.agent-infra-page .ai-section-nav .page-toc-list > a + a::before,
+.agent-infra-page .ai-section-nav .page-toc-list > a.is-row-first::before{
+  content:none !important;
+  display:none;
+}
+.agent-infra-page .ai-section-nav .page-toc-sep{
+  display:none;
+}
+.agent-infra-page .ai-section-nav .page-toc-link:hover,
+.agent-infra-page .ai-section-nav .page-toc-link:focus-visible{
+  background:color-mix(in srgb, var(--accent) 14%, transparent);
+  text-decoration:none;
+}
+.agent-infra-page .ai-section-nav .page-toc-link[aria-current="true"]{
+  color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+.agent-infra-page .ai-lane h3{
+  color:var(--text);
+}
+.agent-infra-page .ai-lane--primary h3{
+  color:color-mix(in srgb, var(--accent) 88%, var(--text));
+}
+.agent-infra-page .ai-table .ai-num{
+  color:var(--text);
+  font-weight:650;
+  font-variant-numeric:tabular-nums;
 }
 .agent-infra-page .ai-problem-grid{
   list-style:none;
@@ -21789,7 +21880,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   z-index:990;
 }
 .agent-infra-page main > section[id]{
-  scroll-margin-top:calc(var(--header-h) + 4.5rem + var(--space-md));
+  scroll-margin-top:calc(var(--header-h) + 6.25rem + var(--space-md));
 }
 
 @media (max-width:1023px){
@@ -21884,7 +21975,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
     position:sticky;
   }
   .agent-infra-page main > section[id]{
-    scroll-margin-top:calc(var(--header-h) + 4.5rem + var(--space-md));
+    scroll-margin-top:calc(var(--header-h) + 6.25rem + var(--space-md));
   }
 }
 

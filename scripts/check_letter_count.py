@@ -61,8 +61,8 @@ INTERNATIONAL_SLUGS = {"fsb-ai-sound-practices"}
 # from a slug list here, so a future drafted page needs no edit to this file and cannot be
 # missed by someone who forgets to add it. The marker is the Article JSON-LD field:
 #     "creativeWorkStatus": "Draft"
-# First case: letters/fed-r1835-aml-cft-programs/ (Board Docket R-1835, drafted 2026-08-24,
-# comment period closed 2026-09-08 unfiled).
+# First case was letters/fed-r1835-aml-cft-programs/, which carried this marker until
+# the 2026-09-21 email send. The detector stays for any future draft page.
 DRAFT_STATUS_MARKER = '"creativeWorkStatus": "Draft"'
 
 
@@ -94,7 +94,7 @@ SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "res
 EXTRA_FILES = ["llms.txt", "_config.yml"]
 
 # Directory names never recursed into.
-PRUNE_DIRS = {".git", ".claude", "_build", "node_modules", "_site", "submissions"}
+PRUNE_DIRS = {".git", ".claude", ".codex", "_build", "node_modules", "_site", "submissions"}
 
 # Number words we recognize, both directions, 0-40 (plenty for a letter count).
 _ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
