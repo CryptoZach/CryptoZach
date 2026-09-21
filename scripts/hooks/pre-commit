@@ -101,6 +101,55 @@ if [ "${ALLOW_EMDASH:-}" != "1" ]; then
   fi
 fi
 
+# staged-vs-committed: a bare `git commit` uses this worktree's shared index, so a
+# peer's `git add` between this session's add and this commit is part of the
+# commit. `git commit -F <msg> -- <paths>` builds a temporary index
+# (next-index-*.lock) and cannot include that peer file.
+#
+# The message-vs-paths detector was measured on this repo's non-merge history
+# (2026-09-21, 988 commits with files): 335 of 685 multi-file commits name at
+# least one path and omit another. One confirmed peer sweep sits in that set,
+# so precision is 1/335 = 0.003. That detector is not armed. This check refuses
+# the form instead, and it does not guess which staged path is the peer.
+#
+# Stand-down: merge, cherry-pick, revert, and rebase define the index as the
+# commit. Measured in scripts/test_shared_index_commit.sh: a file staged before
+# git merge stayed staged and was not in the merge commit (1 of 1). Bypass:
+# CZ_ALLOW_SHARED_INDEX=1.
+if [ "${CZ_ALLOW_SHARED_INDEX:-}" != "1" ]; then
+  _gitdir=$(git rev-parse --git-dir)
+  case "$_gitdir" in
+    /*) ;;
+    *) _gitdir="$(pwd)/$_gitdir" ;;
+  esac
+  _stand=0
+  for _m in MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD; do
+    [ -e "$_gitdir/$_m" ] && _stand=1
+  done
+  [ -d "$_gitdir/rebase-merge" ] && _stand=1
+  [ -d "$_gitdir/rebase-apply" ] && _stand=1
+  if [ "$_stand" -eq 0 ]; then
+    _abs() {
+      local d b
+      d=$(dirname -- "$1")
+      b=$(basename -- "$1")
+      printf '%s/%s\n' "$(cd -- "$d" && pwd -P)" "$b"
+    }
+    _shared=$(_abs "$_gitdir/index")
+    _cur=$(_abs "${GIT_INDEX_FILE:-$_gitdir/index}")
+    if [ "$_cur" = "$_shared" ]; then
+      _n=$(git diff --cached --name-only | grep -c . || true)
+      if [ "$_n" -gt 0 ]; then
+        echo "[pre-commit] ERROR: staged-vs-committed shared-index commit refused ($_n path(s))." >&2
+        echo "[pre-commit] This clone shares one index across sessions. A bare git commit includes a peer's git add." >&2
+        echo "[pre-commit] Re-run: git commit -F <message-file> -- <path> [<path> ...]" >&2
+        echo "[pre-commit] Deliberate whole-index commit: CZ_ALLOW_SHARED_INDEX=1 git commit ..." >&2
+        exit 1
+      fi
+    fi
+  fi
+fi
+
 # === Cache-buster: content-hash-derived at build; manual ?v= bump not required. ===
 if git diff --cached --name-only --diff-filter=ACM | grep -Fxq 'styles.css'; then
   echo "[pre-commit] FYI: styles.css changed; the cache-buster is derived at build time (content hash), so no manual ?v= bump is needed." >&2

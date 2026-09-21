@@ -105,7 +105,8 @@ bundle exec jekyll serve                     # visually verify the changed page
 #    prohibition does not close, because no forbidden command is used. The pathspec form commits
 #    ONLY the paths you name, whatever else is sitting in the shared index, and costs nothing.
 #    DEC-223 per-session worktrees removed this race for the workflow clone; this clone has no
-#    such isolation, so the discipline is the control.
+#    such isolation. The pre-commit hook refuses a bare commit of the shared index
+#    (staged-vs-committed). The pathspec form is what the hook allows.
 git commit -F <message-file> -- <path> [<path> ...]
 git push origin main
 
@@ -120,7 +121,7 @@ Guards in place (local-only; not git-tracked):
   (`~/.claude/hooks/cz-fetch-warn-stale-main.sh`, wired in `.claude/settings.local.json`).
 - `.git/hooks/pre-push` blocks an origin push when behind origin/main
   (intentional force: `ALLOW_FORCE_PUSH_ORIGIN=1`).
-- `.git/hooks/pre-commit` blocks em/en-dash additions and workflow-path leaks.
+- `.git/hooks/pre-commit` blocks em/en-dash additions, workflow-path leaks, and a bare commit of the shared index.
 
 Cache-buster: derived automatically for both assets. `scripts/inline-critical-css.mjs`
 rewrites `styles.css?v=<sha256[:8]>` and `script.js?v=<sha256[:8]>` from the built
