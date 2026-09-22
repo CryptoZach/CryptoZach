@@ -1891,7 +1891,7 @@
       { src: '/icons/matrix/intc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/csco.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/orcl.webp', loaded: false, img: null, tinted: null },
-      { src: '/icons/matrix/dis.webp', loaded: false, img: null, tinted: null },
+      /* dis removed */
       { src: '/icons/matrix/mstr.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/mstr.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/hood.webp', loaded: false, img: null, tinted: null },
