@@ -1787,6 +1787,7 @@
       { src: '/icons/matrix/bnb.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/op.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/arb.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/arweave.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/near.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/apt.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/sui.webp', loaded: false, img: null, tinted: null },
@@ -1919,6 +1920,7 @@
       { src: '/icons/matrix/bnymellon.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/dtcc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/hsbc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/morgan-stanley.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/stt.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/plaid.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/bybit.webp', loaded: false, img: null, tinted: null },
@@ -1980,7 +1982,7 @@
     var mtxLegacyMarkRate = 0.07;
 
     /* Bust browser cache for matrix PNGs when assets change (avoids mixed old/new silhouettes after deploy). */
-    var mtxIconAssetVer = '139';
+    var mtxIconAssetVer = '142';
     function mtxIconUrl(src){
       return src + (src.indexOf('?') >= 0 ? '&' : '?') + 'v=' + mtxIconAssetVer;
     }
@@ -2855,7 +2857,7 @@
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('mstr.webp') >= 0){
           ds = 44 + Math.random() * 16;
-        } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.webp') >= 0){
+        } else if(item.def && item.def.src && item.def.src.indexOf('kinexys.webp') >= 0 || item.def.src.indexOf('morgan-stanley.webp') >= 0){
           ds = 44 + Math.random() * 16;
         } else if(item.def && item.def.src && item.def.src.indexOf('m0.webp') >= 0){
           ds = Math.min(ds + 6, 32);

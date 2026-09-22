@@ -133,10 +133,19 @@ const ICONS = [
     si: [],
     iconifyExtra: ['token-branded/optimism', 'token/optimism', 'simple-icons/optimism'],
   },
+  /* Arbitrum: attached circled lowercase a. Do not restore token-branded/arbitrum (that bake reads as an AR+ badge). */
   {
     name: 'arb',
+    localRaster: 'icons/matrix/build-sources/arb-circle-a.png',
     si: [],
     iconifyExtra: ['token-branded/arbitrum', 'token/arbitrum'],
+  },
+  /* Arweave: attached mark (hexagon weave). */
+  {
+    name: 'arweave',
+    localRaster: 'icons/matrix/build-sources/arweave-circle.png',
+    si: [],
+    iconifyExtra: ['token/arweave'],
   },
   {
     name: 'near',
