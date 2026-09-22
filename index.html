@@ -1624,14 +1624,15 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         <li><b>Every control is graded by outcome.</b> A warning can fire thousands of times and change nothing, so controls are judged by what happens after they fire, not by how often they fire.</li>
       </ol>
 
-      <p class="agent-close">The layer has run on our own fleet since March 2026. Warnings that only advised the agent often returned in the same workspace, which is why a control that can name the wrong action now stops it instead of explaining it.</p>
+      <p class="agent-close">The layer has run on our own fleet since March 2026. Two measurements decided its design: whether a mistake came back after a warning, and whether a wrong action got through a block.</p>
 
       <div class="plate plate--bolted readout">
         <div class="num">2,547<i> / 2,596</i></div>
         <div class="meta">
-          <span class="label">Hard gate held</span>
+          <span class="label">Wrong actions stopped</span>
           <div class="bar"><i style="width:98.1%"></i></div>
-          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.65rem;max-width:none">Across 2,596 measured attempts that reached one of these gates, through 21 September 2026, the system refused the action in 2,547 cases. In the other 49, the agent used the documented override and continued. The gate held in about 49 of every 50 attempts.</p>
+          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.65rem;max-width:none"><b>Warned, the mistake came back.</b> After our most common warning had appeared once in a workspace, the same mistake returned in 87 of every 100 of those workspaces in the 25 days after 4 August 2026, up from 81 in the 25 days before. A less common warning fell from 64 to 48. One got worse and one got better. Those figures show whether a mistake returned, not whether our layer caused the change.</p>
+          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.5rem;max-width:none"><b>Blocked, the action did not happen.</b> Across 2,596 measured attempts that reached one of these gates, through 21 September 2026, the system refused the action in 2,547 cases. In the other 49, the agent used the documented override and continued. When the system could name the wrong action in advance, it stopped it about 49 times in 50.</p>
         </div>
       </div>
 
