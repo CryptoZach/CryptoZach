@@ -2603,10 +2603,12 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   /* Head size is what the collision pass reserves. A wordmark wider than about
      two columns loses that pass and never paints, which is how a loaded logo
      disappears. czMatrixAdmit counts paints against those rejections. */
-  window.czMatrixAdmit = { by: {}, roster: ICONS.map(function(d){ return d.n; }) };
+  var czHost = (typeof window !== "undefined") ? window : this;
+  czHost.czMatrixAdmit = { by: {}, roster: (typeof ICONS === "undefined" ? [] : ICONS).map(function(d){ return d.n; }) };
   function czAdmit(name, kind, iw, ih){
-    var row = window.czMatrixAdmit.by[name];
-    if (!row) row = window.czMatrixAdmit.by[name] = { paint:0, edge:0, conflict:0, claim:0, w:0, h:0 };
+    var book = czHost.czMatrixAdmit;
+    var row = book.by[name];
+    if (!row) row = book.by[name] = { paint:0, edge:0, conflict:0, claim:0, w:0, h:0 };
     row[kind]++;
     if (iw){ row.w = iw; row.h = ih; }
   }
