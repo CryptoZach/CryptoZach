@@ -824,14 +824,29 @@ blockquote::before, .framework-card::before{
 }
 
 /* small-caps labels take the homepage spec */
-.kicker, .section-eyebrow, .navlink, .card-venue, .card-date, .card-venue-context,
-.badge, .badge-sm, .filing-no, .paper-audience-tag, .nav-directory__label,
-.home-stat__label, .access-link, .page-toc-title, .page-toc-link,
-.structure-nav__link, .structure-nav__sublink, .section-link a, .footer-nav a{
+.kicker, .section-eyebrow, .card-venue, .card-date, .card-venue-context,
+.badge, .badge-sm, .filing-no, .paper-audience-tag,
+.home-stat__label, .access-link{
   font-family: "JetBrains Mono", ui-monospace, Menlo, monospace !important;
   font-weight: 700 !important;
   font-size: max(.75rem, 1em) !important;
   letter-spacing: .075em !important;
+}
+/* Navigation stays in the display grotesque. Mono at 12px with wide tracking
+   was hard to read across a wrapped jump list. */
+.navlink, .nav-directory__label, .page-toc-title, .page-toc-link,
+.structure-nav__link, .structure-nav__sublink, .section-link a, .footer-nav a{
+  font-family: Archivo, "Avenir Next", "Segoe UI", sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.012em !important;
+}
+.navlink, .page-toc-link, .footer-nav a, .structure-nav__link{
+  font-size: 0.9375rem !important;
+}
+.page-toc-title, .nav-directory__label{
+  font-weight: 600 !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.11em !important;
 }
 
 /* numbers read as instrument values */
@@ -1507,7 +1522,8 @@ header .brand a span{padding-left:0 !important}
    the same eight links want 778px, 225px reclaimed, and across all 50 pages
    zero links clip and no page overflows at 1440. */
 .nav-desktop .navlink{
-  font-size:.75rem !important;
+  font-size:0.875rem !important;
+  letter-spacing:0.01em !important;
 }
 
 /* 11d. THE PAGE KICKER: DARK RAINBOW, NOT BLUE.

@@ -455,15 +455,27 @@ header{
     linear-gradient(180deg, color-mix(in srgb,var(--void) 58%, transparent), transparent 24%, color-mix(in srgb,var(--void) 62%, transparent));
 }
 .hero-inner{z-index:4;padding-block:clamp(3.5rem,7.5vw,6rem) clamp(3.25rem,5.5vw,4.75rem)}
-/* the flow line along the bottom edge, kept from the live hero */
+/* the flow line along the bottom edge. Two identical color cycles sit
+   side by side and the strip slides by exactly one cycle. A background-position
+   loop from 0% to 220% on a 220% tile moved 1.2 periods, so the join snapped. */
 .hero::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;z-index:5;
-  background:linear-gradient(90deg,transparent,var(--accent),var(--mint),var(--accent),transparent);
+  content:"";position:absolute;left:0;bottom:0;width:200%;height:1px;z-index:5;
+  pointer-events:none;
+  background-image:linear-gradient(90deg,
+    transparent 0%,
+    var(--accent) 12.5%,
+    var(--mint) 25%,
+    var(--accent) 37.5%,
+    transparent 50%,
+    var(--accent) 62.5%,
+    var(--mint) 75%,
+    var(--accent) 87.5%,
+    transparent 100%);
+  background-repeat:no-repeat;
   opacity:.55;
-  background-size:220% 100%;
   animation:flow 9s linear infinite;
 }
-@keyframes flow{from{background-position:0% 0}to{background-position:220% 0}}
+@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* Hero geometry is the live site's: a 1fr copy column beside a 280-340px trust rail,
    with the live measures (primary 92ch, h1 70ch, subhead 78ch). The earlier 58-62ch
@@ -509,16 +521,17 @@ header{
 @media (min-width:1000px){ .proof{grid-template-columns:1fr;max-width:none} }
 .proof-head{
   grid-column:1 / -1;background:color-mix(in srgb,var(--shoulder) 88%, transparent);
-  padding:.72rem 1.15rem;display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;
+  padding:.72rem 1.15rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.2rem;
 }
 .proof-head .label{color:var(--ink);letter-spacing:.14em;font-weight:700;font-size:.75rem}
 .proof-head b{font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;color:var(--mint-text);letter-spacing:.07em}
 .proof li{
   position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;
   background:color-mix(in srgb,var(--plate-2) 88%, transparent);padding:.9rem 1.15rem;
   font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;color:var(--ink-soft);
-  transition:background-color .22s, color .22s, padding-left .24s cubic-bezier(.2,.7,.3,1);
+  transition:background-color .22s, color .22s;
 }
 /* the accent edge wipes down the brick, the way a bolt seats */
 .proof li::before{
@@ -528,11 +541,11 @@ header{
 }
 .proof li:hover,.proof li:focus-within{
   background:color-mix(in srgb,var(--shoulder) 94%, transparent);
-  color:var(--ink);padding-left:1.4rem;
+  color:var(--ink);
 }
 .proof li:hover::before,.proof li:focus-within::before{transform:scaleY(1)}
 .proof li:hover a{color:var(--accent-hot)}
-.proof li a{color:var(--accent-text)}
+.proof li a{color:var(--accent-text);text-align:center}
 .proof li a:hover{color:var(--mint-text)}
 
 .cta-row{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.35rem}
@@ -1284,7 +1297,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       "@id": "https://tokenization.systems/#webpage",
       "url": "https://tokenization.systems/",
       "name": "The token is only part of the story",
-      "description": "Classify the token. Audit the operator. Independent research into tokenized financial infrastructure, stablecoins, control, equivalence, and system behavior.",
+      "description": "Classify the token. Audit the operator. Test the system. Independent research into tokenized financial infrastructure, stablecoins, control, equivalence, and system behavior.",
       "isPartOf": { "@id": "https://tokenization.systems/#website" },
       "about": { "@id": "https://tokenization.systems/#organization" },
       "inLanguage": "en"
@@ -1398,7 +1411,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
       <div class="hero-lead">
         <h1>The token is only <span class="flare">part of the story.</span></h1>
-      <p class="hero-sub"><strong>Classify the token. Audit the operator.</strong><span>A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Independent research for operators, allocators, and policymakers shaping tokenized markets.</span></p>
+      <p class="hero-sub"><strong>Classify the token. Audit the operator. Test the system.</strong><span>A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Independent research for operators, allocators, and policymakers shaping tokenized markets.</span></p>
 
       <div class="cta-row">
         <a class="btn btn-primary" href="/papers/routing-the-dollar/">Read Routing the Dollar</a>
@@ -1416,7 +1429,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   <!-- ══ DECISION MAP ══ -->
   <section class="sec" id="map" style="padding-top:clamp(3rem,6vw,5rem)">
       <div class="sec-head"><span class="label">The decision map</span></div>
-      <h2>What are you evaluating?</h2>
+      <h2>Decide what this actually is.</h2>
       <p class="agent-lede">Whatever shape the product takes, the decision map has already planned for it. Each step asks one question and opens one door; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
 
       <ol class="faults">
@@ -2070,6 +2083,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     {n:"gs",c:0,w:3,s:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACRklEQVRYCe3TzUsVURjHccd3KfMN0grUSpRIUVFRCEUopEVCRCm2cqFQGERZ9A8IguDKRRaKbl24EEJbSGi6UNKsRWJYKKVgoSBRFJpdv7/xHBqCKxfangc+9zn3OTNnzjwzExXlwnQgFAql4CFuoeffxlDLw5itM07HBI7a2n9lFprEdS1CfmDyU8b3cQkl+G7qLYy1UUUqBtCK12jCFxzHXTzCO6ShE6qt4ILWijYL5pFrsMpELVmbqSfnQnf9BH5Qz2HQgeGDiv9bwe9nqBubRgl5A8nIwjkUYQdv8XcD/ImHYheVGMBJ7EGhsY0zDH7hty0E8h/GIUM3l4/5wH+G/ryyf/P+D38+4Ct0Bx+hGEUcjmEINpYYJCLTFg7Jzcz9RNj3xLMn01o9gmaoVuF5XiG104x1oTnooqXUp6hXMVZ3jmBadWjjepTLJuu/2t+IKSwiG1tIxzfW+kQ+CBa9jXZ46LP1cJlj3uBKuPlI67GBA88zvogF6M3V3WnnIyhmt9eoDTJW/QUU+jRXyJfRgFVUcWwbOaKw74AO1qf3HON4DD27XiQhmwvVk8+iCy+h0LujlpZBz/kmuhFxBDfQwM7vcWYdbkCf0R3MQKGNxHDMK7Ke5ynY0Dr90Ms6zWbtV2Xnw+bgBq5yotqoT2nQ5G1yORTP8INjUsjV2EQw1MEJjLLJneDEYePgV1DEgRlYZoF1ncTFdJeqxVGbN7UCxu+Z08b0/HOxhhNIYG6W7MJ1wHXAdcB1wHXAdcB1wHUg4g7sA7gUFp07Rc8jAAAAAElFTkSuQmCC"},
     {n:"hsbc",c:0,w:4,s:"/icons/matrix/hsbc.webp?v=274"},
     {n:"morgan-stanley",c:0,w:4,s:"/icons/matrix/morgan-stanley.webp?v=274"},
+    {n:"borderless",c:0,w:6,z:1.2,s:"/icons/matrix/borderless.webp?v=276"},
     {n:"ice",c:0,w:3,s:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAC2UlEQVRYCe2Xv2sUQRTHb6Oi6CEqRIIgQUTtBEHUYLQQwcKAlY0pbcQ/QEHsxJBSBEsjkaRKoYKIYOxUOAsLc6AoCJGA+AtBjaDmcn6+w75hJnu7MatJiuTB997Md9689+bNzO5epbLUJZlZgGaz2QYnzIdMJ0kyPR+OS/v0FdDKlR36EN4Og9+lvbaeuAp6lBg1iyWzlYGtyq7y9IBzAf8/m4pRAxYrSsACfaUxBR6Ax2AFKLtvCtQAXeAY+AYiCSsQDoi/T7muhmTZNiU/y9zjrebnJSDbKhM1LqgiZcTmVvMmFyWgKzNFEhXpPAdFvM1F526h9mhRZTmBJVOBJgdNB1E6koWqgG6bYmVu3UIl8IXgb4F0JJmMotF/7ATPj+u4GgTueRLw2ZLMFpOHit6gej80cETX9+1hA5004FVd2bq9h/tJOyNzroCC4sWtRMHDvnlPeUtItDt8gb2Z/v2XT7qiCnoruCyt4Eg7uAKegzFwMeV3074L6uAW2Jby0bmLOj6t1g37eOlk+ALowOlatF7ZJ8ENMAw+wW9BPwHvwXmwATyEX4NGuW2j2eJaOLb4R19K2oKP4AzYATaxOn/CCXBN43Cn0Yo4hhoHR+Du0XdnSGNFZ6ANQ40L4dtQlTD+KO2agmO7mrZEtrvARrgJtIL9Akq8HUismoUJTOJYzsLgbnb6o4P1A2xP+wrAFHcDlEwdnALrgXzI9jOQ6CvJSd4Z0IQeVtAHLgE5sVOtwJaU9nwn470EdteN9jq4EXAQVOHr4CXtd+hJtLKUj1iYqLJqv/rBTOk0awa600F958l+IO2/Ro+Dm0DX4zaQ6Ba8As+A2ya03wLfgLTP8v34PQBsldJDlj12m+mfAHfgPqCVxF7UPvAdPIJ/gxbfjdoDxD8FL4AeHtkKMFBKCOIXETrI40MbtTOTmahzEZ0NMrZqaFWa466RrQROffPl/37l8dgui6/AH9GGgwXNA0a1AAAAAElFTkSuQmCC"},
     {n:"jpm",c:0,w:5,s:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAB00lEQVRYCe2XPUsDQRCGc9EU+fhVViKCHwgWISBaqGBhYaWtVhYWgoWFSNQqoikE/5YgiYUxl2eS3LGY3c1svCSNA292bmb2fec2uxvN5ZQWx/EB0FqLwiUltb8MogYogmcQaht+dk8WpQjUh4plxtehHzL8UFz1yLhTTLw1lCZtQCi6YNetZMkw4VJmGvaXBhKaY4vUaIjq02SGMWbRgNBdjCoaEQqODFHTzaoB4bwBkSE7cAnWJOuwLBsQiUeQF+X+Bw/b+PcSmJHJyXhBt5DjYwV0gM/K02pMznqsIC9FUfSlqEtLoC3y8J4G7M6btoEyDbTtHPYoDVTIfNqzabTd3wPpo9sZ3bXu2pBMSdtACGlQ7bwbGJzFoJYzLp73CgwuooxfKoTu/ytQr4DmtgxZ+qR2YRGvBvaA87IJvQUTdsXYcooqJntLFFdxB4I1+TUsgCbI0uSntuIhlD9W1+UN8izvN+MmeJLADEz20w66TdHqX0Q8dPFlL9xJcMq2j96DU4OlufIsnTbl+gpOnMJmApUzrZKjztbAuakx1of4EMg/FZPY7wauxwraClCuAtmxoWY2ULdxq2Mob4WqU98AcgyzOVkQLYM20NgHRavaN+wBrQATyrTIfrAAAAAASUVORK5CYII="},
     {n:"ma",c:0,w:4,s:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACOElEQVRYCe2VQUhVQRiF3zUKCVpEbdIoaGmECPGglEJpIUKGujKisoXQpmWLoPaKy1bVOlsooWDbhBSFRBG1aBVBWbQTzGqhr+883ruM48zcuevuD+e9mXPOzPzz35l7S6UiigoUFXBUoFKpHAV3wSuwDraBYgs8Ax32MLgr4DmQR6ExGvsS3MbfaI9x9jH3g28gK+YwnKxhMcuM/gX02Is2GESCYZT+JGgyeF/zJ4Iq0Q6++0wGf4b2DGs8Nri0qcVfgNjQ7m+BPbALBkFMFbBVYyxdWQ2ohzUh5u8XJj3v34Z5h3aHxRmyszlUTQLpOKgfHKfTIh/QVyntmIDIs5GvJHBEu79vzxToq+StHl1am0fz0b06hAdOZrU07p930N1uqZTAXwLLHt1FdyuBVpfi4T7Ct3g00RfAh4BuS2UlcMJmA31dt1MB/TSanm1snFMCe7FufFn+Q3h2c8x3WBP+yDFAL6jNgF+7VxViY1MJvI9149Pz3wj419DOB3RbWtQ17PPdEQ9/0cOLLgc0l9TTkCTJFGl9slML9C+jzTj0CbhOB++jVln7TVUktV5Xeh5On1m9dv8aul7L4v4YXFaza19muEeyRhj6LO2boP4xGqCd52P0aN/itY6+iGMgNsYx3gN3wGsQG09ci6ccs9wASxGzzeNpAs1gIcL/Fs+1dKH6rm2i3sdcpj0MdOjOgi2gK7gCpjlAc/yngf8qneugDei6HgOfwSx4ij/PQWdIEUUF/pcK/AO10r+sQj5H+wAAAABJRU5ErkJggg=="},
@@ -2120,7 +2134,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     {n:"amd",c:0,w:4,s:"/icons/matrix/amd.webp?v=170"},
     {n:"amzn",c:0,w:4,s:"/icons/matrix/amzn.webp?v=171"},
     {n:"arb",c:1,w:4,s:"/icons/matrix/arb.webp?v=273"},
-    {n:"arweave",c:1,w:4,s:"/icons/matrix/arweave.webp?v=273"},
+    {n:"arweave",c:1,w:4,z:1.6,s:"/icons/matrix/arweave.webp?v=277"},
     {n:"atom",c:1,w:4,z:1.7,s:"/icons/matrix/atom.webp?v=272"},
     {n:"bac",c:0,w:4,s:"/icons/matrix/bac.webp?v=174"},
     {n:"binance",c:0,w:4,s:"/icons/matrix/binance.webp?v=175"},
@@ -2279,7 +2293,26 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       for (k = 0; k < n; k++) tgt.push({ t: 1, d: d });
     }
   })();
+  /* matrixwatch=1 cycles every loaded mark through the field so a measurement
+     can see a logo the collision pass drops. The public page does not set it. */
+  var matrixWatch = /(?:^|[?&])matrixwatch=1(?:&|$)/.test(location.search);
+  var matrixWatchList = [], matrixWatchAt = 0;
+  function matrixWatchItem(){
+    if (!matrixWatchList.length){
+      for (var i = 0; i < ICONS.length; i++){
+        if (ICONS[i].ok) matrixWatchList.push({ t: 1, d: ICONS[i] });
+      }
+    }
+    if (!matrixWatchList.length) return null;
+    var it = matrixWatchList[matrixWatchAt % matrixWatchList.length];
+    matrixWatchAt++;
+    return it;
+  }
   function pickItem(){
+    if (matrixWatch){
+      var forced = matrixWatchItem();
+      if (forced) return forced;
+    }
     if (Math.random() < CRYPTO_RATE){
       var ci = cryptoPool[(Math.random() * cryptoPool.length) | 0];
       if (ci && ci.d.ok) return ci;
@@ -2566,6 +2599,27 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     return matrixSpeed;
   }
 
+
+  /* Head size is what the collision pass reserves. A wordmark wider than about
+     two columns loses that pass and never paints, which is how a loaded logo
+     disappears. czMatrixAdmit counts paints against those rejections. */
+  window.czMatrixAdmit = { by: {}, roster: ICONS.map(function(d){ return d.n; }) };
+  function czAdmit(name, kind, iw, ih){
+    var row = window.czMatrixAdmit.by[name];
+    if (!row) row = window.czMatrixAdmit.by[name] = { paint:0, edge:0, conflict:0, claim:0, w:0, h:0 };
+    row[kind]++;
+    if (iw){ row.w = iw; row.h = ih; }
+  }
+  function matrixIconSize(d, head){
+    var ar = d.ar || 1, iw, ih;
+    if (ar > 1.6){ iw = d.wm ? 52 : 34; ih = iw / ar; }
+    else { ih = d.wm ? 26 : 19; iw = ih * ar; }
+    var markScale = d.z || 1;
+    iw *= markScale; ih *= markScale;
+    if (head){ iw *= 1.14; ih *= 1.14; }
+    return { iw: Math.max(2, Math.round(iw)), ih: Math.max(2, Math.round(ih)) };
+  }
+
   function drawMatrix(now, boost, step){
     if (step == null) step = 1;
     var rowStep = reduce ? 20 : MATRIX_ROW_STEP;
@@ -2624,18 +2678,10 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         if (tl){
           if (pass === 2 || (pass === 0) !== !!mark.wasVisible) continue;
           /* a company or asset mark, dimmed into the olive field */
-          var ar = it.d.ar, iw, ih;
-          /* Wide wordmarks retain legible type and reserve their full width
-             across neighboring columns. Per-brand scale can reduce a heavy mark. */
-          if (ar > 1.6){ iw = it.d.wm ? 52 : 34; ih = iw / ar; }
-          else { ih = it.d.wm ? 26 : 19; iw = ih * ar; }
-          var markScale = it.d.z || 1;
-          iw *= markScale; ih *= markScale;
-          if (head){ iw *= 1.14; ih *= 1.14; }
-          iw = Math.max(2, Math.round(iw)); ih = Math.max(2, Math.round(ih));
+          var sz = matrixIconSize(it.d, head), iw = sz.iw, ih = sz.ih;
           var ix = Math.round(c.x - iw * 0.5), iy = gy - ih * 0.5;
           var edgeAlpha = matrixEdgeAlpha(ix, iy, iw, ih, trail);
-          if (edgeAlpha <= 0) continue;
+          if (edgeAlpha <= 0){ czAdmit(it.d.n, "edge", iw, ih); continue; }
           var nudge = nudgeMatrixIcon(c, k, it, ix+iw*0.5, gy, iw, ih, step, trail);
           /* Claim resting ink and its trail, then apply the live nudge.
              Transient overlap never changes admission or triggers a swap.
@@ -2650,12 +2696,16 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
               mark.retiring = true;
               mark.alpha = Math.max(0, mark.beforeAlpha-step/14);
             } else {
-              /* Do not admit a logo just long enough to flash before yielding. */
+              /* Do not admit a logo just long enough to flash before yielding.
+                 Count it: a mark rejected here never reaches drawImage, and
+                 nothing else records that it was dropped. */
+              czAdmit(it.d.n, "conflict", iw, ih);
               mark.alpha = 0; mark.wait = 12;
               continue;
             }
           }
           if (!claimMatrixSpace(it.d.n, ix, iy-trail, iw, ih+trail, c.sp)){
+            czAdmit(it.d.n, "claim", iw, ih);
             mark.alpha = 0; mark.retiring = false; mark.wait = reduce ? 0 : 18;
             continue;
           }
@@ -2670,6 +2720,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
           }
           mctx.globalAlpha = ia;
           mctx.drawImage(tl, ix, iy, iw, ih);
+          czAdmit(it.d.n, "paint", iw, ih);
           mctx.globalAlpha = 1;
           var iconY = iy+ih*0.5;
           if (iconY > 0 && iconY < H && ia > 0.14 && iconPts.length < ICONPT_CAP){

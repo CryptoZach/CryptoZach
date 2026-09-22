@@ -84,7 +84,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css?v=270" />
+  <link rel="stylesheet" href="/styles.css?v=276" />
 
   <script type="application/ld+json">
   {
@@ -115,7 +115,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="/vault.css?v=6" />
+  <link rel="stylesheet" href="/vault.css?v=8" />
   <script src="/vault.js?v=6" defer></script>
 </head>
 
@@ -251,9 +251,10 @@
       <div class="page-toc-list page-toc-list--compact">
         <a class="page-toc-link" href="#short-version">The argument</a>
         <a class="page-toc-link" href="#building">The operating layer</a>
+        <a class="page-toc-link" href="#invented-facts">Shared memory</a>
         <a class="page-toc-link" href="#scale">System scale</a>
         <a class="page-toc-link" href="#measurement">Control evidence</a>
-        <a class="page-toc-link" href="#invented-facts">Memory &amp; coordination</a>
+        <a class="page-toc-link" href="#coordination">Coordination</a>
         <a class="page-toc-link" href="#not-claimed">Scope &amp; limits</a>
         <a class="page-toc-link" href="#work-with-us">Work with us</a>
       </div>
@@ -271,7 +272,7 @@
         <blockquote class="paper-thesis-line ai-thesis">
           <p>A safeguard you have not measured is a safeguard you are only assuming you have.</p>
         </blockquote>
-        <p>The sections that follow show how the operating layer addresses these requirements, what the measurements changed, and where the evidence remains limited to one fleet.</p>
+        <p>The next section names the three jobs. Shared memory comes immediately after, because a later session should not reuse a result it cannot trace. Scale and the measurement sections follow, and the closing section states what one fleet can and cannot establish.</p>
       </div>
     </section>
 
@@ -296,15 +297,41 @@
         <p class="ai-note">Current validation boundary: every number on this page comes from one operator's fleet. The system is operational, but its transfer to a second fleet has not yet been measured. <a href="#not-claimed">See the full scope and limits</a>.</p>
         <p class="ai-inline-cta">
           <a class="action primary" href="/contact">Discuss your agent fleet</a>
-          <a class="action secondary" href="#measurement">Review the measurements</a>
+          <a class="action secondary" href="#invented-facts">See how shared results stay traceable</a>
         </p>
+      </div>
+    </section>
+
+    <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
+      <div class="explainer">
+        <h2 id="invented-facts-title">Shared memory needs identity and provenance</h2>
+        <p>The operating layer's second job is to keep a shared result from being trusted before it can be traced. Memory capacity and retrieval matter only after that. Before one agent reuses another's result, it needs four answers: does the referenced fact exist, which agent and session produced the result, what evidence and prior state did it use, and which commit wrote it into the durable record?</p>
+        <p>The failure that forced this design was not forgetting. An agent confidently cited a finding that had never been established. The next session accepted the citation as real and built more work on top of it. This is confabulation: a made-up fact stated as true. In shared memory, one invented identifier can become load-bearing within a few sessions.</p>
+        <ol class="ai-principle-list">
+          <li>
+            <h3>Require valid references when work is saved</h3>
+            <p>An agent may not invent an identifier for a finding, decision, or open question. If the record does not exist, the reference remains empty and is flagged for human review.</p>
+          </li>
+          <li>
+            <h3>Preserve attribution with the result</h3>
+            <p>Shared work records the producing agent and session, the evidence and prior state it relied on, and the committed change that placed it in the durable record.</p>
+          </li>
+          <li>
+            <h3>Verify that instructions reached the reader</h3>
+            <p>A result has no provenance for a reader who never received it. Startup procedure files have a hard size limit. Content beyond that limit can be silently omitted, so loading and size are part of whether the record arrived.</p>
+          </li>
+        </ol>
+        <blockquote class="paper-thesis-line ai-thesis">
+          <p>Shared memory is trustworthy only when records are valid, attributable, and known to have reached the reader.</p>
+        </blockquote>
+        <p>Who still holds the work after the producing session exits is covered under <a href="#coordination">coordination</a>.</p>
       </div>
     </section>
 
     <section id="scale" class="reveal explainer-section" aria-labelledby="scale-title">
       <div class="explainer">
         <h2 id="scale-title">System scale</h2>
-        <p>The operating layer runs inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
+        <p>The identity rules above, and the safeguards measured in the next sections, run inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
         <p class="ai-note">The figures below describe that workload as measured on 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
@@ -350,7 +377,6 @@
         </div>
         <figure class="ai-commit-chart">
           <img src="/agent-infrastructure/commits-per-3-days.svg?v=2" width="960" height="440" alt="Commits per three days, March through 21 September 2026. Fleet workload. Peak 3,329 from 29 August to 31 August.">
-          <figcaption>Commits per three days, March through 21 September 2026. Peak 3,329 on 29 to 31 August. Fleet workload, counted on the committer date.</figcaption>
         </figure>
         <details class="ai-method">
           <summary>Definitions, counting rules, and prior values</summary>
@@ -477,35 +503,10 @@
       </div>
     </section>
 
-    <section id="invented-facts" class="reveal explainer-section" aria-labelledby="invented-facts-title">
-      <div class="explainer">
-        <h2 id="invented-facts-title">Shared memory needs identity and provenance</h2>
-        <p>Memory capacity and retrieval matter only after the record can be trusted. Before one agent reuses another's result, it needs four answers: does the referenced fact exist, which agent and session produced the result, what evidence and prior state did it use, and which commit wrote it into the durable record?</p>
-        <p>The failure that forced this design was not forgetting. An agent confidently cited a finding that had never been established. The next session accepted the citation as real and built more work on top of it. This is confabulation: a made-up fact stated as true. In shared memory, one invented identifier can become load-bearing within a few sessions.</p>
-        <ol class="ai-principle-list">
-          <li>
-            <h3>Require valid references when work is saved</h3>
-            <p>An agent may not invent an identifier for a finding, decision, or open question. If the record does not exist, the reference remains empty and is flagged for human review.</p>
-          </li>
-          <li>
-            <h3>Preserve attribution with the result</h3>
-            <p>Shared work records the producing agent and session, the evidence and prior state it relied on, and the committed change that placed it in the durable record.</p>
-          </li>
-          <li>
-            <h3>Verify that instructions reached the reader</h3>
-            <p>Startup procedure files have a hard size limit. Content beyond that limit can be silently omitted, so loading and size are memory-correctness requirements.</p>
-          </li>
-        </ol>
-        <blockquote class="paper-thesis-line ai-thesis">
-          <p>Shared memory is trustworthy only when records are valid, attributable, and known to have reached the reader.</p>
-        </blockquote>
-      </div>
-    </section>
-
     <section id="coordination" class="reveal explainer-section" aria-labelledby="coord-title">
       <div class="explainer">
         <h2 id="coord-title">Coordination must survive the agent</h2>
-        <p>A task is not durably owned merely because a running process received a message. The early system coordinated that way. When the receiving agent exited, its task could remain marked as claimed even though no one was working on it, leaving the rest of the fleet unable to see or recover the work.</p>
+        <p>The gates above stop a bad action. They do not say who still holds the work after the agent that claimed it exits. A task is not durably owned merely because a running process received a message. The early system coordinated that way. When the receiving agent exited, its task could remain marked as claimed even though no one was working on it, leaving the rest of the fleet unable to see or recover the work.</p>
         <p>Now every claim is stored in committed state as a <strong>lease</strong>: a time-limited ownership record checked whenever the queue is read. If the lease expires or its holder is gone, the work returns to the available pool instead of remaining silently owned.</p>
         <div class="ai-distinction" role="group" aria-label="Ownership distinction">
           <div class="ai-distinction__item">
@@ -554,7 +555,7 @@
         <p><strong>Every entry must say how closure can be verified.</strong> As of 2026-08-24, 41% of open entries stated a condition a machine can evaluate, and nearly all of the rest explained the specific human judgment required. Eight entries had neither. That split was not re-measured on 2026-09-21. Requiring an answer turns “needs human review” from a vague deferral into a named decision.</p>
         <h3>A flow cannot be managed as an absolute backlog</h3>
         <p>The queue owner was originally told to assign every unclaimed entry. At 95 arrivals a day, that would require roughly 95 new assignments every day. The workable duty is a rate target: close at least as many entries as arrive.</p>
-        <p>The obsolete absolute duty remained in a startup file after the rate target replaced it. Two consecutive role holders then failed in the same way because both loaded the same impossible instruction. Replacing the person did not change the rule they received.</p>
+        <p>The obsolete absolute duty remained in a startup file after the rate target replaced it. Two consecutive role holders then failed in the same way because both loaded the same impossible instruction. Replacing the person did not change the rule they received. The same split appears when a <a href="#invented-facts">startup file loads only part of its instructions</a>, and when a <a href="#vacuous">committed rule is not the copy that executes</a>.</p>
         <blockquote class="paper-thesis-line ai-thesis">
           <p>When a rule is written in two places, the copy that reaches readers governs, whichever copy is current.</p>
         </blockquote>
@@ -567,7 +568,7 @@
     <section id="vacuous" class="reveal explainer-section" aria-labelledby="vacuous-title">
       <div class="explainer">
         <h2 id="vacuous-title">A passing check can still be wrong</h2>
-        <p>A green result shows that an assertion matched. It does not show that the check measured the intended subject, used fresh state, or could distinguish a true case from a false one.</p>
+        <p>The queue scan above carried an honest label for an incomplete pass. A green result is a sharper failure: the assertion matched, but that does not show the check measured the intended subject, used fresh state, or could distinguish a true case from a false one.</p>
         <aside class="ai-finding">
           <p class="ai-finding-label">Right answer, invalid check</p>
           <p>A verifier reported that an external record was live. The record was live, but the network request had timed out and the assertion matched bytes left behind by the previous request. The answer was correct by accident.</p>
@@ -591,7 +592,7 @@
     <section id="context" class="reveal explainer-section" aria-labelledby="context-title">
       <div class="explainer">
         <h2 id="context-title">Context is a finite operating budget</h2>
-        <p>An agent's context window limits what it can actively consider. Loading every procedure, source, and prior result at startup can crowd out the evidence needed for the current task. Four rules keep that budget usable.</p>
+        <p>Identity and provenance make a record trustworthy. The context window still limits how much of it an agent can hold at once. Loading every procedure, source, and prior result at startup can crowd out the evidence needed for the current task. Four rules keep that budget usable.</p>
         <ol class="ai-principle-list">
           <li>
             <h3>Load procedures only when they are relevant</h3>
@@ -622,16 +623,16 @@
         <p>Each failure here was quiet: nothing crashed and no error appeared. A warning fired, a claim was held, a check passed, a rule was committed, and each of those signals looked like a control doing its job. In every row, a second measurement showed the signal meant something else.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--pattern">
-            <caption>The same evidence arranged by apparent state and measured state. Each row links back to the section that documents the underlying result.</caption>
+            <caption>The same evidence arranged by apparent state and measured state, in the order the page presents it. Linked rows return to the section that documents the result. The reading-corpus row shows the same pattern and is not developed elsewhere on this page.</caption>
             <thead>
               <tr><th scope="col">Control or record</th><th scope="col">What readers believed</th><th scope="col">What measurement found</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row"><a href="#measurement">Highest-volume warning</a></th><td>The warning was teaching safer behavior</td><td class="ai-how">It returned in 85% of workspaces after first appearing</td></tr>
-              <tr><th scope="row"><a href="#armed">Failed-command deny mode</a></th><td>The hard block addressed the warning class</td><td class="ai-how">Deny mode reached 2,080 of 13,975 events; 11,886 stayed advisory</td></tr>
-              <tr><th scope="row"><a href="#armed">New-work launch gate</a></th><td>The block was protecting against conflicting work</td><td class="ai-how">Its trigger rate followed machine load</td></tr>
               <tr><th scope="row"><a href="#invented-facts">Shared finding reference</a></th><td>The citation pointed to an established fact</td><td class="ai-how">The cited record did not exist</td></tr>
               <tr><th scope="row"><a href="#invented-facts">Startup procedure</a></th><td>The instruction file loaded in full</td><td class="ai-how">Content beyond the size limit was omitted</td></tr>
+              <tr><th scope="row"><a href="#measurement">Highest-volume warning</a></th><td>The warning was teaching safer behavior</td><td class="ai-how">It returned in 84% of workspaces after first appearing</td></tr>
+              <tr><th scope="row"><a href="#armed">Failed-command deny mode</a></th><td>The hard block addressed the warning class</td><td class="ai-how">Deny mode reached 2,080 of 13,975 events; 11,886 stayed advisory</td></tr>
+              <tr><th scope="row"><a href="#armed">New-work launch gate</a></th><td>The block was protecting against conflicting work</td><td class="ai-how">Its trigger rate followed machine load</td></tr>
               <tr><th scope="row"><a href="#coordination">Claimed task</a></th><td>An active agent still owned the work</td><td class="ai-how">The holder had already exited</td></tr>
               <tr><th scope="row"><a href="#unowned">Queue-sweeping duty</a></th><td>The role holder was failing a reasonable duty</td><td class="ai-how">The absolute target could not be completed at the arrival rate</td></tr>
               <tr><th scope="row"><a href="#unowned">Open-backlog count</a></th><td>Every listed item was still unresolved</td><td class="ai-how">A time-bounded scan had not checked the full queue</td></tr>

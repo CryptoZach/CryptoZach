@@ -1921,6 +1921,7 @@
       { src: '/icons/matrix/dtcc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/hsbc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/morgan-stanley.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/borderless.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/stt.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/plaid.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/bybit.webp', loaded: false, img: null, tinted: null },
