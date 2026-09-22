@@ -231,41 +231,6 @@
     <p class="contact-subhead">Before you evaluate the token, map the system. Briefings, diligence, speaking, advisory, and roles all start here.</p>
   </section>
 
-  <section class="contact-jobs" id="name-the-job" aria-labelledby="contact-jobs-title">
-    <h2 id="contact-jobs-title">Name the job</h2>
-    <p>Tokenization introduces new infrastructure between an asset and its holder. Pick the job closest to yours and the reply starts from the right step of the <a href="/overview/#decision-map">decision map</a>.</p>
-    <div class="contact-cta-actions" role="group" aria-label="Institutional jobs">
-      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Evaluate%20a%20tokenized%20product&body=Product%20and%20the%20underlying%20asset%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="evaluate-product">Evaluate a tokenized product</a>
-      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Brief%20an%20investment%20committee&body=Product%20going%20to%20committee%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="committee-brief">Brief an investment committee</a>
-      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Map%20counterparty%20and%20control%20risk&body=Gateways%2C%20custodians%2C%20and%20banks%20in%20the%20path%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="control-risk">Map counterparty and control risk</a>
-      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Stress-test%20equivalence&body=Underlying%20asset%20and%20the%20scenario%20that%20worries%20you%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="stress-equivalence">Stress-test equivalence</a>
-      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Understand%20a%20new%20market%20structure&body=The%20structure%2C%20and%20who%20is%20asking%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="market-structure">Understand a new market structure</a>
-    </div>
-    <p class="contact-context-note">Each opens an email with the job in the subject line and the three things a useful first message names.</p>
-    <p class="contact-context-note" id="contactContextNote" hidden></p>
-  </section>
-  <script>
-  (function(){
-    var map={
-      'evaluate-product':'Evaluate a tokenized product: name the product and which of the six steps you are on.',
-      'committee-brief':'Brief an investment committee: MVEP is the entry gate. Name the product and the committee date.',
-      'control-risk':'Map counterparty and control risk: name the gateways and custodians in the path. CLII locates the control points.',
-      'stress-equivalence':'Stress-test equivalence: name the underlying asset and the scenario that worries you.',
-      'market-structure':'Understand a new market structure: name the structure and who is asking.',
-      'mvep-application':'MVEP application: name the product, the underlying asset, and the gate date.'
-    };
-    var key=new URLSearchParams(location.search).get('context');
-    var note=document.getElementById('contactContextNote');
-    if(!key||!note||!map[key])return;
-    note.textContent=map[key];note.hidden=false;
-    var chosen=null;document.querySelectorAll('[data-context]').forEach(function(a){
-      if(a.getAttribute('data-context')===key){a.classList.remove('secondary');a.classList.add('primary');a.setAttribute('aria-current','true');chosen=a;}
-    });
-    var mail=document.querySelector('.contact-email-address');
-    if(mail){mail.setAttribute('href',chosen?chosen.getAttribute('href'):'mailto:Zach@Tokenization.Systems?subject='+encodeURIComponent(map[key].split(':')[0]));}
-  })();
-  </script>
-
   <section class="contact-email-row" aria-label="Email and first message tips">
     <div class="contact-email-block">
       <div class="contact-email-identity">
@@ -295,6 +260,43 @@
       </ul>
     </div>
   </section>
+
+  <section class="contact-jobs" id="name-the-job" aria-labelledby="contact-jobs-title">
+    <h2 id="contact-jobs-title">Name the job</h2>
+    <p>Tokenization introduces new infrastructure between an asset and its holder. Pick the job closest to yours and the email opens with the prompts above already in it, so the reply can start from the right step of the <a href="/overview/#decision-map">decision map</a>.</p>
+    <div class="contact-cta-actions" role="group" aria-label="Institutional jobs">
+      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Evaluate%20a%20tokenized%20product&body=Product%20and%20the%20underlying%20asset%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="evaluate-product">Evaluate a tokenized product</a>
+      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Brief%20an%20investment%20committee&body=Product%20going%20to%20committee%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="committee-brief">Brief an investment committee</a>
+      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Map%20counterparty%20and%20control%20risk&body=Gateways%2C%20custodians%2C%20and%20banks%20in%20the%20path%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="control-risk">Map counterparty and control risk</a>
+      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Stress-test%20equivalence&body=Underlying%20asset%20and%20the%20scenario%20that%20worries%20you%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="stress-equivalence">Stress-test equivalence</a>
+      <a class="action secondary" href="mailto:Zach@Tokenization.Systems?subject=Understand%20a%20new%20market%20structure&body=The%20structure%2C%20and%20who%20is%20asking%3A%0A%0AStep%20I%20am%20on%20%28Classify%2C%20Trace%2C%20Map%2C%20Compare%2C%20Stress%2C%20Decide%29%3A%0A%0ADecision%2C%20committee%2C%20or%20deadline%20date%3A%0A" data-context="market-structure">Understand a new market structure</a>
+    </div>
+    <p class="contact-context-note">Each opens an email with the job in the subject line and the prompts already in the body.</p>
+    <p class="contact-context-note" id="contactContextNote" hidden></p>
+  </section>
+  <script>
+  (function(){
+    var map={
+      'evaluate-product':'Evaluate a tokenized product: name the product and which of the six steps you are on.',
+      'committee-brief':'Brief an investment committee: MVEP is the entry gate. Name the product and the committee date.',
+      'control-risk':'Map counterparty and control risk: name the gateways and custodians in the path. CLII locates the control points.',
+      'stress-equivalence':'Stress-test equivalence: name the underlying asset and the scenario that worries you.',
+      'market-structure':'Understand a new market structure: name the structure and who is asking.',
+      'mvep-application':'MVEP application: name the product, the underlying asset, and the gate date.'
+    };
+    var key=new URLSearchParams(location.search).get('context');
+    var note=document.getElementById('contactContextNote');
+    if(!key||!note||!map[key])return;
+    note.textContent=map[key];note.hidden=false;
+    var chosen=null;document.querySelectorAll('[data-context]').forEach(function(a){
+      if(a.getAttribute('data-context')===key){a.classList.remove('secondary');a.classList.add('primary');a.setAttribute('aria-current','true');chosen=a;}
+    });
+    var mail=document.querySelector('.contact-email-address');
+    if(mail){mail.setAttribute('href',chosen?chosen.getAttribute('href'):'mailto:Zach@Tokenization.Systems?subject='+encodeURIComponent(map[key].split(':')[0]));}
+  })();
+  </script>
+
+
 
   <section class="contact-about">
     <h2>About the founder</h2>
