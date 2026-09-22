@@ -123,7 +123,7 @@
           { "@type": "ListItem", "position": 4, "name": "3CRD (Three-Category Reserve Disclosure)", "item": "https://tokenization.systems/frameworks/#3crd" },
           { "@type": "ListItem", "position": 5, "name": "Credit Migration Model", "item": "https://tokenization.systems/frameworks/#credit-migration-model" },
           { "@type": "ListItem", "position": 6, "name": "Regime Dashboard", "item": "https://tokenization.systems/frameworks/#regime-dashboard" },
-          { "@type": "ListItem", "position": 7, "name": "Tokenized Dollar Regime Classifier (TDRC)", "item": "https://tokenization.systems/frameworks/#regime-classifier" },
+          { "@type": "ListItem", "position": 7, "name": "Tokenized Dollar Regime Classifier (TDRC)", "item": "https://tokenization.systems/frameworks/#dollar-v3-regime-classifier" },
           { "@type": "ListItem", "position": 8, "name": "Comparative Framework for Dollar Products", "item": "https://tokenization.systems/frameworks/#comparative-framework" },
           { "@type": "ListItem", "position": 9, "name": "Tokenization Infrastructure Map", "item": "https://tokenization.systems/frameworks/#infrastructure-map" },
           { "@type": "ListItem", "position": 10, "name": "Operational Risk Taxonomy", "item": "https://tokenization.systems/frameworks/#operational-risk-taxonomy" },
@@ -349,7 +349,7 @@
       <div class="brand">
         <a href="/">
           <strong>Tokenization Systems</strong>
-          <span>Digital&nbsp;Asset&nbsp;Research&nbsp;&amp; Advisory</span>
+          <span>Independent tokenization research</span>
         </a>
       </div>
       <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
@@ -358,14 +358,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/overview">Field guide</a>
           <a class="navlink active" href="/frameworks" aria-current="page">Frameworks</a>
           <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
           <a class="navlink" href="/letters">Letters</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink" href="/contact">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -384,21 +386,24 @@
   <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true" aria-label="Main navigation">
     <div class="nav-directory">
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Research &amp; product</p>
+        <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/overview">Field guide</a>
           <a class="navlink active" href="/frameworks" aria-current="page">Frameworks</a>
+          <a class="navlink" href="/research">Research</a>
           <a class="navlink" href="/letters">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Navigate</p>
+        <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Overview</a>
-          <a class="navlink" href="/resume">Roles</a>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink" href="/contact">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+        </div>
+        <p class="nav-directory__label">Separate product</p>
+        <div class="nav-directory__links">
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -533,6 +538,58 @@
       <p class="track-bridge"><a href="/research">View research library <span aria-hidden="true">→</span></a></p>
     </div>
 
+    <section class="reveal" id="decision-map" aria-labelledby="decision-map-title">
+      <div class="section-title">
+        <h2 id="decision-map-title">The decision map: six steps, one framework each</h2>
+        <p><strong>Classify the token. Audit the operator.</strong> Every tokenized product is evaluated in the same order. Each step names the question it settles and the framework that answers it; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
+      </div>
+      <ol class="stack-steps stack-steps--map">
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">1</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Classify</h3>
+            <p class="stack-step-desc"><a href="#classification-frameworks"><strong>Which object is this, before anyone scores it?</strong></a> Dollar products through the <a href="#seven-dollars-framework">Comparative Framework for Dollar Products</a>; institutional tokenization through the <a href="#three-strategies-framework">Tokenization Infrastructure Map</a>.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">2</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Trace</h3>
+            <p class="stack-step-desc"><a href="/papers/routing-the-dollar/"><strong>Can the same dollar behave differently depending on how you hold it?</strong></a> Routing the Dollar follows the token to its reserves, banks, and gateways; <a href="#3crd">3CRD</a> names what a reserve disclosure must show; the <a href="#credit-migration-model">Credit Migration Model</a> follows the deposits that move.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">3</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Map</h3>
+            <p class="stack-step-desc"><a href="#clii"><strong>Who can actually say no?</strong></a> CLII locates regulatory and operational control at each gateway; the <a href="#regime-dashboard">Regime Dashboard</a> records who owns routing defaults, sweeps, and holds.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">4</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Compare</h3>
+            <p class="stack-step-desc"><a href="#mvep"><strong>Does owning the token give you what you think you are buying?</strong></a> MVEP tests the tokenized product against direct ownership across ten categories, each with a named artifact and a pass-or-fail test.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">5</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Stress</h3>
+            <p class="stack-step-desc"><a href="#mvep"><strong>What changes when the happy path stops?</strong></a> The MVEP stress envelope specifies liquidation paths, path constraints, and stress scenarios per product; for token economies, the <a href="#operational-risk-taxonomy">Operational Risk Taxonomy</a> runs the scenario battery.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">6</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Decide</h3>
+            <p class="stack-step-desc"><a href="/contact/"><strong>Are the remaining differences acceptable for this use?</strong></a> That call belongs to the institution taking the risk. MVEP is run once before you commit; <a href="#clii">CLII</a> is the re-run trigger when a gateway crosses a tier.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="structure-page-lede">The frameworks are not substitutes for legal, regulatory, investment, or technical diligence. They are ways to ask better questions about the system being evaluated.</p>
+    </section>
+
     <section class="reveal featured-framework" id="featured-mvep" aria-labelledby="featured-mvep-title">
       <p class="featured-framework-eyebrow">Featured framework</p>
       <h2 id="featured-mvep-title" class="featured-framework-title">MVEP (Minimum Viable Equivalence Pack)</h2>
@@ -575,52 +632,11 @@
 
     <section class="reveal" id="framework-stack" aria-labelledby="framework-stack-title">
       <div class="section-title">
-        <h2 id="framework-stack-title">Framework stack</h2>
-        <p>Two parallel sequences. Both share control-layer and stress-first logic; the diligence artifacts differ.</p>
+        <h2 id="framework-stack-title">Track B sequence: token economies</h2>
+        <p>Token economies and physical networks (DePIN) are a different subject from tokenized financial products, so they keep their own four-step order. Tokenized products follow the decision map above.</p>
       </div>
 
       <div class="stack-tracks">
-        <div class="stack-track stack-track--a">
-          <h3 class="track-heading"><span class="track-heading-prefix">Track A</span><span class="track-heading-desc">Programmable money sequence</span></h3>
-          <ol class="stack-steps">
-            <li class="stack-step">
-              <span class="stack-step-num" aria-hidden="true">1</span>
-              <div class="stack-step-body">
-                <h4 class="stack-step-title">Define the object</h4>
-                <p class="stack-step-desc">Payment stablecoin, tokenized deposit, deposit token, or yield wrapper. Each starts a different rulebook (<a href="/papers/seven-dollars/"><strong>Seven Dollars</strong></a>).</p>
-              </div>
-            </li>
-            <li class="stack-step">
-              <span class="stack-step-num" aria-hidden="true">2</span>
-              <div class="stack-step-body">
-                <h4 class="stack-step-title">Test the product at launch</h4>
-                <p class="stack-step-desc"><strong>MVEP</strong>. Ten diligence categories, each with a named artifact and a pass-or-fail test.</p>
-              </div>
-            </li>
-            <li class="stack-step">
-              <span class="stack-step-num" aria-hidden="true">3</span>
-              <div class="stack-step-body">
-                <h4 class="stack-step-title">Monitor the control layer after approval</h4>
-                <p class="stack-step-desc"><strong>CLII</strong>. Approval starts the monitoring cycle; CLII is the drift detector.</p>
-              </div>
-            </li>
-            <li class="stack-step">
-              <span class="stack-step-num" aria-hidden="true">4</span>
-              <div class="stack-step-body">
-                <h4 class="stack-step-title">Map balance-sheet and system-level consequences</h4>
-                <p class="stack-step-desc"><a href="/papers/dollar-v3/"><strong>Credit Migration Model</strong></a>. Where deposits move, how funding quality changes, which banks absorb the shift.</p>
-              </div>
-            </li>
-            <li class="stack-step">
-              <span class="stack-step-num" aria-hidden="true">5</span>
-              <div class="stack-step-body">
-                <h4 class="stack-step-title">Identify who controls the operating layer</h4>
-                <p class="stack-step-desc"><a href="/papers/control-layer-war/"><strong>Regime Dashboard</strong></a>. Routing defaults, sweep ownership, hold authority, and which entities recur across strategies (<a href="/papers/three-strategies/"><strong>Three Strategies</strong></a>).</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-
         <div class="stack-track stack-track--b">
           <h3 class="track-heading"><span class="track-heading-prefix">Track B</span><span class="track-heading-desc">Token-economy sequence</span></h3>
           <ol class="stack-steps">
@@ -685,7 +701,7 @@
     <section class="reveal" id="core-frameworks" aria-labelledby="frameworks-title">
       <div class="section-title">
         <h2 id="frameworks-title">Track A frameworks: programmable money and market infrastructure</h2>
-        <p>Seven frameworks for testing stablecoin issuers, tokenized deposits, deposit tokens, yield wrappers, and the control-layer operators that sit above them. Includes MGCPT and 3CRD as derivative frameworks operationalizing MVEP categories.</p>
+        <p>The two frameworks the decision map leans on most: MVEP at Compare and Stress, CLII at Map and Decide. The five narrower Track A tools follow under their own heading.</p>
       </div>
       <div class="grid grid--halves">
         <article class="card card--polished card--accent-a" id="mvep">
@@ -704,6 +720,12 @@
           <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
+        </div>
+      <div class="section-title" id="narrower-question">
+        <h3 id="narrower-question-title">For a narrower question</h3>
+        <p>Five tools that answer one step in more depth: pass-through conditions, reserve disclosure, deposit migration, operating regimes, and dollar-regime classification. Start with the six steps; open these when a step needs a finer instrument.</p>
+      </div>
+      <div class="grid grid--halves">
         <article class="card card--polished card--accent-c" id="mgcpt">
           <h3>MGCPT (MVEP-gated Conditional Pass-Through) <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></h3>
           <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
