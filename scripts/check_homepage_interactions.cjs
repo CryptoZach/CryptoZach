@@ -102,8 +102,15 @@ function observe(boundaryErrorPrefix){
   return fill.apply(this,args);
  };
  proto.drawImage=function(im,...args){
-  if(im instanceof HTMLImageElement&&im.src.startsWith('data:image/')){if(!state.brands.has(im.src))state.brands.set(im.src,state.nextBrand++);this.canvas.__paintBrand=state.brands.get(im.src);}
-  if(this.canvas.id==='mtx'&&args.length===4&&state.current){const [x,y,w,h]=args;state.current.ink.push({kind:'logo',key:im.__paintBrand,x,y,w,h,alpha:this.globalAlpha});}
+  let brand=im.__paintBrand;
+  if(im instanceof HTMLImageElement&&im.src.startsWith('data:image/')){
+   if(!state.brands.has(im.src))state.brands.set(im.src,state.nextBrand++);
+   brand=state.brands.get(im.src);im.__paintBrand=brand;
+  }else if(im instanceof HTMLCanvasElement){
+   if(!state.brands.has(im))state.brands.set(im,state.nextBrand++);
+   brand=state.brands.get(im);
+  }
+  if(this.canvas.id==='mtx'&&args.length===4&&state.current){const [x,y,w,h]=args;state.current.ink.push({kind:'logo',key:brand,x,y,w,h,alpha:this.globalAlpha});}
   return draw.call(this,im,...args);
  };
  proto.fillText=function(value,x,y,...args){
