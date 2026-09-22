@@ -150,7 +150,7 @@
       <div class="brand">
         <a href="/">
           <strong>Tokenization Systems</strong>
-          <span>Digital&nbsp;Asset&nbsp;Research&nbsp;&amp; Advisory</span>
+          <span>Independent tokenization research</span>
         </a>
       </div>
       <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
@@ -159,14 +159,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Overview</a>
+          <a class="navlink" href="/overview">Field guide</a>
           <a class="navlink" href="/frameworks">Frameworks</a>
           <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
           <a class="navlink" href="/letters">Letters</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink active" href="/contact" aria-current="page">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -185,21 +187,24 @@
   <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true" aria-label="Main navigation">
     <div class="nav-directory">
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Research &amp; product</p>
+        <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/overview">Field guide</a>
           <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/research">Research</a>
           <a class="navlink" href="/letters">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Navigate</p>
+        <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Overview</a>
-          <a class="navlink" href="/resume">Roles</a>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink active" href="/contact" aria-current="page">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+        </div>
+        <p class="nav-directory__label">Separate product</p>
+        <div class="nav-directory__links">
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -223,8 +228,40 @@
   <section class="contact-hero">
     <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Contact</p>
     <h1>What are you working on?</h1>
-    <p class="contact-subhead">Roles, live infrastructure questions, speaking, and advisory all start here.</p>
+    <p class="contact-subhead">Before you evaluate the token, map the system. Briefings, diligence, speaking, advisory, and roles all start here.</p>
   </section>
+
+  <section class="contact-jobs" id="name-the-job" aria-labelledby="contact-jobs-title">
+    <h2 id="contact-jobs-title">Name the job</h2>
+    <p>Tokenization introduces new infrastructure between an asset and its holder. Pick the job closest to yours and the reply starts from the right step of the <a href="/overview/#decision-map">decision map</a>.</p>
+    <div class="contact-cta-actions" role="group" aria-label="Institutional jobs">
+      <a class="action secondary" href="?context=evaluate-product" data-context="evaluate-product">Evaluate a tokenized product</a>
+      <a class="action secondary" href="?context=committee-brief" data-context="committee-brief">Brief an investment committee</a>
+      <a class="action secondary" href="?context=control-risk" data-context="control-risk">Map counterparty and control risk</a>
+      <a class="action secondary" href="?context=stress-equivalence" data-context="stress-equivalence">Stress-test equivalence</a>
+      <a class="action secondary" href="?context=market-structure" data-context="market-structure">Understand a new market structure</a>
+    </div>
+    <p class="contact-context-note" id="contactContextNote" hidden></p>
+  </section>
+  <script>
+  (function(){
+    var map={
+      'evaluate-product':'Evaluate a tokenized product: name the product and which of the six steps you are on.',
+      'committee-brief':'Brief an investment committee: MVEP is the entry gate. Name the product and the committee date.',
+      'control-risk':'Map counterparty and control risk: name the gateways and custodians in the path. CLII locates the control points.',
+      'stress-equivalence':'Stress-test equivalence: name the underlying asset and the scenario that worries you.',
+      'market-structure':'Understand a new market structure: name the structure and who is asking.',
+      'mvep-application':'MVEP application: name the product, the underlying asset, and the gate date.'
+    };
+    var key=new URLSearchParams(location.search).get('context');
+    var note=document.getElementById('contactContextNote');
+    if(!key||!note||!map[key])return;
+    note.textContent=map[key];note.hidden=false;
+    document.querySelectorAll('[data-context]').forEach(function(a){
+      if(a.getAttribute('data-context')===key){a.classList.remove('secondary');a.classList.add('primary');a.setAttribute('aria-current','true');}
+    });
+  })();
+  </script>
 
   <section class="contact-email-row" aria-label="Email and first message tips">
     <div class="contact-email-block">

@@ -695,14 +695,14 @@ section{position:relative;z-index:1}
 /* the agent-infrastructure heading sits over a centred block, so it centres
    on the same axis the block does. The measure is capped so the hook sets as two
    balanced lines rather than one 76-character rule across a wide plate. */
-#agent > h2{text-align:center;max-width:38ch;margin-inline:auto}
+#agent > h2,#map > h2{text-align:center;max-width:38ch;margin-inline:auto}
 /* Author, 2026-08-30, revised 2026-09-10: the prose still centres with the heading
    above it, and only the MEASURE is centred, never the body copy. The three-fault
    list is the exception and stays left-aligned at every width: its numerals hang in
    a left gutter, and centred text under a hanging numeral has no edge to hang from. */
-#agent > .agent-lede{max-width:76ch;margin-inline:auto;text-align:center}
-#agent > .agent-close{max-width:92ch;margin:1.6rem auto 0;text-align:center}
-#agent > .more{display:table;margin:2rem auto 0}
+#agent > .agent-lede,#map > .agent-lede{max-width:76ch;margin-inline:auto;text-align:center}
+#agent > .agent-close,#map > .agent-close{max-width:92ch;margin:1.6rem auto 0;text-align:center}
+#agent > .more,#map > .more{display:table;margin:2rem auto 0}
 
 /* ── FAULT LIST: the three failures, each answered by a mechanism. Hairline-ruled
    rows with a hanging mono numeral, so the bold label is the whole skim. ── */
@@ -1258,6 +1258,55 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   .navlinks{width:100%;justify-content:flex-start}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tokenization.systems/#website",
+      "name": "Tokenization Systems",
+      "alternateName": ["Tokenization Systems Research", "tokenization.systems"],
+      "url": "https://tokenization.systems",
+      "inLanguage": "en",
+      "author": { "@id": "https://tokenization.systems/#person" },
+      "publisher": { "@id": "https://tokenization.systems/#organization" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://tokenization.systems/#organization",
+      "name": "Tokenization Systems",
+      "url": "https://tokenization.systems",
+      "founder": { "@id": "https://tokenization.systems/#person" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tokenization.systems/#webpage",
+      "url": "https://tokenization.systems/",
+      "name": "The token is only part of the story",
+      "description": "Classify the token. Audit the operator. Independent research into tokenized financial infrastructure, stablecoins, control, equivalence, and system behavior.",
+      "isPartOf": { "@id": "https://tokenization.systems/#website" },
+      "about": { "@id": "https://tokenization.systems/#organization" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ItemList",
+      "name": "The Tokenization Systems decision map",
+      "description": "The six steps for evaluating any tokenized financial product: classify, trace, map, compare, stress, decide.",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 6,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Classify", "url": "https://tokenization.systems/frameworks/#classification-frameworks" },
+        { "@type": "ListItem", "position": 2, "name": "Trace", "url": "https://tokenization.systems/papers/routing-the-dollar/" },
+        { "@type": "ListItem", "position": 3, "name": "Map", "url": "https://tokenization.systems/frameworks/#clii" },
+        { "@type": "ListItem", "position": 4, "name": "Compare", "url": "https://tokenization.systems/frameworks/#mvep" },
+        { "@type": "ListItem", "position": 5, "name": "Stress", "url": "https://tokenization.systems/overview/#stress" },
+        { "@type": "ListItem", "position": 6, "name": "Decide", "url": "https://tokenization.systems/contact/" }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -1266,17 +1315,19 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     <div class="brand">
       <a href="/" aria-label="Tokenization Systems, home">
       <canvas class="vault-headdial" aria-hidden="true"></canvas>
-        <b>Tokenization Systems</b><span>Digital&nbsp;Asset&nbsp;Research&nbsp;&amp; Advisory</span></a>
+        <b>Tokenization Systems</b><span>Independent tokenization research</span></a>
     </div>
     <nav class="navlinks" aria-label="Main">
-      <a href="/overview/">Overview</a>
+      <a href="/overview/">Field guide</a>
       <a href="/frameworks/">Frameworks</a>
       <a href="/research/">Research</a>
-      <a href="/agent-infrastructure/">Agent Infrastructure</a>
       <a href="/letters/">Letters</a>
-      <a href="/resume/">Roles</a>
+      <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
       <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
       <a href="/contact/">Contact</a>
+      <a href="/resume/">Roles</a>
+      <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+      <a href="/agent-infrastructure/">Agent Infrastructure</a>
     </nav>
     <div class="header-social" role="group" aria-label="Social links">
     <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -1338,16 +1389,47 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       <div class="hero-eyebrow"><span class="label">Independent research &middot; Programmable money, tokenization, &amp; tokenomics</span></div>
 
       <div class="hero-lead">
-        <h1>Diligence for the <span class="flare">tokenization era.</span></h1>
-      <p class="hero-sub"><strong>Know who controls a tokenized asset, how redemption behaves under stress, and where operational risk accumulates.</strong><span>Research and advisory for operators, allocators, and policymakers shaping tokenized markets.</span></p>
+        <h1>The token is only <span class="flare">part of the story.</span></h1>
+      <p class="hero-sub"><strong>Classify the token. Audit the operator.</strong><span>A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Independent research for operators, allocators, and policymakers evaluating tokenized markets.</span></p>
 
       <div class="cta-row">
         <a class="btn btn-primary" href="/papers/routing-the-dollar/">Read Routing the Dollar</a>
-        <a class="btn btn-ghost" href="/papers/mvep/">View MVEP framework</a>
+        <a class="btn btn-ghost" href="/frameworks#mvep">View MVEP framework</a>
           <a class="btn btn-book" href="/contact/">Book a consulting intro</a>
       </div>
 
-        <div class="signal" aria-labelledby="selected-work-title">
+        
+      </div>
+
+      
+    </div>
+  </section>
+
+  <!-- ══ DECISION MAP ══ -->
+  <section class="sec" id="map" style="padding-top:clamp(3rem,6vw,5rem)">
+      <div class="sec-head"><span class="label">The decision map</span></div>
+      <h2>Six steps, one door each.</h2>
+      <p class="agent-lede">Every tokenized product is evaluated in the same order. Each step names the question it settles and where the answer lives; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
+
+      <ol class="faults">
+        <li><b>Classify.</b> <a href="/frameworks#classification-frameworks">Which object is this, before anyone scores it?</a> The dollar-product and infrastructure maps name the class, and the class decides which rulebook applies.</li>
+        <li><b>Trace.</b> <a href="/papers/routing-the-dollar/">Can the same dollar behave differently depending on how you hold it?</a> Follow the token to the asset, reserves, institutions, and infrastructure underneath it.</li>
+        <li><b>Map.</b> <a href="/frameworks#clii">Who can actually say no?</a> Identify operators, gateways, counterparties, and control points.</li>
+        <li><b>Compare.</b> <a href="/frameworks#mvep">Does owning the token give you what you think you are buying?</a> Test the tokenized product against the rights and behavior of the underlying asset.</li>
+        <li><b>Stress.</b> <a href="/overview/#stress">What changes when the happy path stops?</a> Ask what changes when a critical layer fails or becomes constrained.</li>
+        <li><b>Decide.</b> <a href="/contact/">Are the remaining differences acceptable for the intended use?</a> That call belongs to the institution taking the risk. Name the step you are on.</li>
+      </ol>
+
+      <p class="agent-close"><b>Same token is not the same system. Tokenized is not equivalent. Decentralized is not no control.</b> Three ideas the six steps keep returning to.</p>
+
+      <a class="more" href="/overview/">Read the field guide &rarr;</a>
+    </section>
+
+  <!-- ══ SELECTED WORK AND PROGRAM ══ -->
+  <section class="sec" id="selected-work" aria-label="Selected work and program">
+      <div class="wrap hero-inner">
+        <div class="hero-lead">
+          <div class="signal" aria-labelledby="selected-work-title">
           <svg class="signal-shell" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
             <defs>
               <radialGradient id="selected-work-shell-surface" cx="30%" cy="20%" r="85%">
@@ -1437,9 +1519,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         <a href="/contact/">Book an intro</a> &middot;
         <a href="/resume/">Roles</a>
       </p>
-      </div>
-
-      <div class="hero-aside">
+        </div>
+        <div class="hero-aside">
       <ul class="proof" aria-label="Highlights">
         <li class="proof-head"><span class="label">Program</span><b>2026</b></li>
         <li><a href="/research/">9 SSRN papers</a></li>
@@ -1451,8 +1532,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       </ul>
 
       </div>
-    </div>
-  </section>
+      </div>
+    </section>
 
   <!-- ══ STAT BAND ══ -->
   <section aria-label="Program at a glance">
