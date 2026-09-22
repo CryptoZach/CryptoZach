@@ -210,8 +210,8 @@
       data-scale-advisory-firings="24166"
       data-scale-advisory-classes="32"
       data-scale-advisory-span-days="73"
-      data-scale-coherence-gate-checks="191"
-      data-scale-hard-fail-checks="50"
+      data-scale-coherence-gate-checks="192"
+      data-scale-hard-fail-checks="51"
       data-scale-unsuppressable-checks="2"
       data-scale-skill-library="75"
       data-scale-canonical-state-files="33"
@@ -313,9 +313,9 @@
             <p class="ai-metric-was">75th percentile; peak 48 on 2026-09-06</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">191</p>
+            <p class="ai-metric-value">192</p>
             <p class="ai-metric-label">Pre-commit checks</p>
-            <p class="ai-metric-was">50 hard-fail; 2 cannot be bypassed</p>
+            <p class="ai-metric-was">51 hard-fail; 2 cannot be bypassed</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">24,166</p>
@@ -354,7 +354,7 @@
               <tbody>
                 <tr><th scope="row">Commits</th><td class="ai-val">over 48,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">12; peak 48</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-21: median 6, typical busy overlap 12 (75th percentile), 90th percentile 19, peak 48 on 2026-09-06. The prior claim of 16 to 43, verified 2026-08-26 against a peak of 46, is not supported: the typical overlap is 12, below 16. The peak of 48 still exceeds the claimed 43. The verification record was not rewritten, because the producer refuses to store a claim it cannot support. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
-                <tr><th scope="row">Pre-commit gate</th><td class="ai-val">191 checks</td><td class="ai-how">174 top-level plus 17 sub-checks; 50 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
+                <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">24,166</td><td class="ai-how">Across 32 classes over 73 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
                 <tr><th scope="row">Hard refusals</th><td class="ai-val">2,596</td><td class="ai-how">Calls that reached an armed gate across the 7 classes that carry one, in the same span. 2,547 refused, 49 overridden with the documented escape <span class="ai-class-gloss">[was 296 reached, 254 refused]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
@@ -364,7 +364,7 @@
             </table>
           </div>
         </details>
-        <p class="ai-note">Each figure answers a specific question. For example, 191 counts all checks while 50 counts only those that stop a commit. Both are correct, but they describe different properties. The expandable table keeps each definition and prior value visible.</p>
+        <p class="ai-note">Each figure answers a specific question. For example, 192 counts all checks while 51 counts only those that stop a commit. Both are correct, but they describe different properties. The expandable table keeps each definition and prior value visible.</p>
       </div>
     </section>
 
