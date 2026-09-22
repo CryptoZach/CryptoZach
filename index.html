@@ -1266,7 +1266,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       "@type": "WebSite",
       "@id": "https://tokenization.systems/#website",
       "name": "Tokenization Systems",
-      "alternateName": ["Tokenization Systems Research", "tokenization.systems"],
+      "alternateName": ["Tokenization Systems Research", "Tokenization.Systems"],
       "url": "https://tokenization.systems",
       "inLanguage": "en",
       "author": { "@id": "https://tokenization.systems/#person" },
@@ -1307,6 +1307,14 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   ]
 }
 </script>
+<style>
+/* Selected work and the program strip, moved below the decision map (2026-09-22). The cocoon's hero bleed (negative translate, +144px width) stays in the hero; here it keeps to its column. */
+#selected-work .hero-inner{padding-block:clamp(1.25rem,2.5vw,2rem) clamp(2rem,3vw,3rem)}
+#selected-work .signal{transform:none;width:100%;padding-left:clamp(1.5rem,7%,4rem);padding-right:clamp(1.5rem,7%,4rem)}
+#selected-work .hero-aside{padding-top:.5rem}
+#selected-work .proof{margin-top:0}
+@media (max-width:900px){#selected-work .hero-inner{display:block}#selected-work .hero-aside{margin-top:1.5rem}}
+</style>
 </head>
 <body>
 
@@ -1408,8 +1416,8 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   <!-- ══ DECISION MAP ══ -->
   <section class="sec" id="map" style="padding-top:clamp(3rem,6vw,5rem)">
       <div class="sec-head"><span class="label">The decision map</span></div>
-      <h2>Six steps, one door each.</h2>
-      <p class="agent-lede">Every tokenized product is evaluated in the same order. Each step names the question it settles and where the answer lives; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
+      <h2>What are you evaluating?</h2>
+      <p class="agent-lede">Whatever the product, the evaluation runs in the same order. Each step asks one question and opens one door; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
 
       <ol class="faults">
         <li><b>Classify.</b> <a href="/frameworks#classification-frameworks">Which object is this, before anyone scores it?</a> The dollar-product and infrastructure maps name the class, and the class decides which rulebook applies.</li>
@@ -1420,7 +1428,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         <li><b>Decide.</b> <a href="/contact/">Are the remaining differences acceptable for the intended use?</a> That call belongs to the institution taking the risk. Name the step you are on.</li>
       </ol>
 
-      <p class="agent-close"><b>Same token is not the same system. Tokenized is not equivalent. Decentralized is not no control.</b> Three ideas the six steps keep returning to.</p>
+      <p class="agent-close"><b>Same token is not the same system. Tokenized is not equivalent. Decentralized is not uncontrolled.</b> Every step tests one of those three claims.</p>
 
       <a class="more" href="/overview/">Read the field guide &rarr;</a>
     </section>

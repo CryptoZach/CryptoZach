@@ -349,6 +349,19 @@
 .stack-steps--map .stack-step-desc strong{color:var(--text);font-weight:600}
 .stack-steps--map .stack-step-desc a:not(.term){color:inherit;text-decoration:none;border-bottom:1px dotted color-mix(in srgb, var(--accent) 45%, transparent)}
 .stack-steps--map .stack-step-desc a:not(.term):hover,.stack-steps--map .stack-step-desc a:not(.term):focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+.stack-steps--map{gap:var(--space-md)}
+.stack-steps--map .stack-step-title{font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);margin:0 0 2px}
+.stack-steps--map .stack-step-q{margin:0 0 .3rem;font-size:1.0625rem;font-weight:600;line-height:1.4;letter-spacing:-0.005em}
+.stack-steps--map .stack-step-q a{color:var(--text);text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--accent) 40%, transparent)}
+.stack-steps--map .stack-step-q a:hover,.stack-steps--map .stack-step-q a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+.stack-steps--map .stack-step-desc{font-size:.9rem;max-width:72ch}
+.stack-steps--map .stack-step-door{margin:.5rem 0 0;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--text-soft)}
+.stack-steps--map .stack-step-door-label{color:var(--accent);margin-right:.35rem}
+.stack-steps--map .stack-step-door a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.stack-steps--map .stack-step-door a:hover{color:var(--accent)}
+.stack-steps--map .stack-step-sep{opacity:.5;margin:0 .1rem}
+main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56px,7vw,84px)}
+.map-ideas-title{margin:clamp(40px,5vw,64px) 0 .5rem;padding-top:clamp(20px,2.5vw,32px);border-top:1px solid var(--line);font-size:1rem}
 </style>
 </head>
 
@@ -552,7 +565,7 @@
 
     <section class="reveal" id="decision-map" aria-labelledby="decision-map-title">
       <div class="section-title">
-        <h2 id="decision-map-title">The decision map: six steps, one framework each</h2>
+        <h2 id="decision-map-title">What are you evaluating? One framework per step.</h2>
         <p><strong>Classify the token. Audit the operator.</strong> Every tokenized product is evaluated in the same order. Each step names the question it settles and the framework that answers it; the <a href="/overview/">field guide</a> walks the sequence in full.</p>
       </div>
       <ol class="stack-steps stack-steps--map">
@@ -560,42 +573,54 @@
           <span class="stack-step-num" aria-hidden="true">1</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Classify</h3>
-            <p class="stack-step-desc"><a href="#classification-frameworks"><strong>Which object is this, before anyone scores it?</strong></a> Dollar products through the <a href="#seven-dollars-framework">Comparative Framework for Dollar Products</a>; institutional tokenization through the <a href="#three-strategies-framework">Tokenization Infrastructure Map</a>.</p>
+            <p class="stack-step-q"><a href="#classification-frameworks">Which object is this, before anyone scores it?</a></p>
+            <p class="stack-step-desc">What exactly is the token? The dollar-product and infrastructure maps name the class, and the class decides which rulebook applies.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#seven-dollars-framework">Comparative Framework for Dollar Products</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#three-strategies-framework">Tokenization Infrastructure Map</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">2</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Trace</h3>
-            <p class="stack-step-desc"><a href="/papers/routing-the-dollar/"><strong>Can the same dollar behave differently depending on how you hold it?</strong></a> Routing the Dollar follows the token to its reserves, banks, and gateways; <a href="#3crd">3CRD</a> names what a reserve disclosure must show; the <a href="#credit-migration-model">Credit Migration Model</a> follows the deposits that move.</p>
+            <p class="stack-step-q"><a href="/papers/routing-the-dollar/">Can the same dollar behave differently depending on how you hold it?</a></p>
+            <p class="stack-step-desc">Follow the token to the asset, reserves, institutions, and infrastructure underneath it.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/papers/routing-the-dollar/">Routing the Dollar</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">3</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Map</h3>
-            <p class="stack-step-desc"><a href="#clii"><strong>Who can actually say no?</strong></a> CLII locates regulatory and operational control at each gateway; the <a href="#regime-dashboard">Regime Dashboard</a> records who owns routing defaults, sweeps, and holds.</p>
+            <p class="stack-step-q"><a href="#clii">Who can actually say no?</a></p>
+            <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII locates control at each gateway.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#clii">CLII</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#regime-dashboard">Regime Dashboard</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">4</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Compare</h3>
-            <p class="stack-step-desc"><a href="#mvep"><strong>Does owning the token give you what you think you are buying?</strong></a> MVEP tests the tokenized product against direct ownership across ten categories, each with a named artifact and a pass-or-fail test.</p>
+            <p class="stack-step-q"><a href="#mvep">Does owning the token give you what you think you are buying?</a></p>
+            <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP is the entry gate.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#mvep">MVEP</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">5</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Stress</h3>
-            <p class="stack-step-desc"><a href="#mvep"><strong>What changes when the happy path stops?</strong></a> The MVEP stress envelope specifies liquidation paths, path constraints, and stress scenarios per product; for token economies, the <a href="#operational-risk-taxonomy">Operational Risk Taxonomy</a> runs the scenario battery.</p>
+            <p class="stack-step-q"><a href="#mvep">What changes when the happy path stops?</a></p>
+            <p class="stack-step-desc">Ask what changes when a critical layer fails or becomes constrained. The MVEP stress envelope names the scenarios.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#mvep">MVEP stress envelope</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/overview/#five-questions">Five questions</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">6</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Decide</h3>
-            <p class="stack-step-desc"><a href="/contact/"><strong>Are the remaining differences acceptable for this use?</strong></a> That call belongs to the institution taking the risk. MVEP is run once before you commit; <a href="#clii">CLII</a> is the re-run trigger when a gateway crosses a tier.</p>
+            <p class="stack-step-q"><a href="/contact/">Are the remaining differences and dependencies acceptable for the intended use?</a></p>
+            <p class="stack-step-desc">That call belongs to the institution taking the risk. MVEP is run once before you commit; CLII is the re-run trigger when a gateway crosses a tier. For a briefing on a live decision, name the step you are on.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/contact/">Name the decision</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#clii">CLII re-run trigger</a></p>
           </div>
         </li>
       </ol>

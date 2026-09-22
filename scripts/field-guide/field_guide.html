@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Token Is Only Part of the Story. A field guide to evaluating tokenized financial systems.</title>
+<!--
+  Source of /field-guide/Tokenization_Systems_Field_Guide_<date>.pdf.
+  Render: node scripts/field-guide/render_field_guide_pdf.mjs
+  Text follows the 2026-09-18 ReportLab edition; the rebuild exists so page
+  breaks fall on section boundaries (the earlier edition orphaned layer 7 on
+  page 3 and the tail of the equivalence table on page 5), the version and
+  date are stamped in the footer, and the brand casing is Tokenization.Systems.
+  Version: v1.1, 2026-09-22.
+-->
+<style>
+  :root{
+    --ink:#0f172a; --navy:#12306b; --accent:#1f4fd1; --mute:#4b5563; --soft:#6b7280;
+    --line:#d7dce6; --wash:#f3f6fb; --gold:#8a6a1a;
+  }
+  @page { size: Letter; margin: 0; }
+  html,body{margin:0;padding:0}
+  body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);font-size:10.4pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{break-after:page;page-break-after:always;min-height:9.2in;position:relative}
+  .page:last-child{break-after:auto;page-break-after:auto}
+  h1,h2,h3{color:var(--navy);margin:0;letter-spacing:-0.01em}
+  h2{font-size:17pt;line-height:1.2;margin:0 0 .45rem}
+  h2 + p{margin-top:.2rem}
+  h3{font-size:12pt;margin:1.1rem 0 .35rem}
+  p{margin:.35rem 0 .6rem}
+  .kicker{font-size:8.5pt;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 .9rem}
+  .callout{border-left:3px solid var(--accent);background:var(--wash);padding:.55rem .85rem;margin:.75rem 0 .85rem;font-size:11.2pt;font-weight:600;color:var(--navy);line-height:1.35}
+  .lede{font-size:11pt}
+  .layers{list-style:none;margin:.6rem 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:1.4rem;row-gap:.55rem}
+  .layers li{break-inside:avoid;page-break-inside:avoid;border-top:1px solid var(--line);padding-top:.45rem}
+  .layers .n{display:inline-block;font-size:8.5pt;font-weight:700;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-right:.3rem}
+  .layers b{display:block;color:var(--navy);font-size:10.6pt;margin-bottom:.15rem;letter-spacing:.04em;text-transform:uppercase}
+  .layers p{margin:0;font-size:9.8pt;color:var(--mute)}
+  .layers li.wide{grid-column:1 / -1}
+  table{width:100%;border-collapse:collapse;margin:.5rem 0 .8rem;break-inside:avoid;page-break-inside:avoid;font-size:9.8pt}
+  th,td{text-align:left;vertical-align:top;padding:.42rem .55rem;border-bottom:1px solid var(--line)}
+  th{font-size:8.6pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700;border-bottom:1.5px solid var(--navy)}
+  td:first-child{font-weight:700;color:var(--navy);white-space:nowrap}
+  .questions{margin:.6rem 0 0;padding:.65rem .9rem;border:1px solid var(--line);border-radius:4px;break-inside:avoid;page-break-inside:avoid}
+  .questions .k{font-size:8.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 .3rem}
+  .questions ul{margin:0;padding-left:1.1rem}
+  .questions li{margin:.12rem 0;color:var(--mute)}
+  .scenarios{columns:2;column-gap:1.4rem;margin:.4rem 0 .6rem;padding-left:1.1rem;color:var(--mute)}
+  .scenarios li{margin:.12rem 0;break-inside:avoid}
+  .steps{list-style:none;margin:.7rem 0 0;padding:0}
+  .steps li{display:grid;grid-template-columns:2.2rem 1fr;column-gap:.6rem;align-items:start;border-top:1px solid var(--line);padding:.55rem 0 .5rem;break-inside:avoid;page-break-inside:avoid}
+  .steps .num{width:1.55rem;height:1.55rem;border-radius:999px;background:var(--navy);color:#fff;font-weight:700;font-size:9.5pt;display:flex;align-items:center;justify-content:center;margin-top:.1rem}
+  .steps b{display:block;color:var(--navy);letter-spacing:.14em;text-transform:uppercase;font-size:9.6pt;margin-bottom:.12rem}
+  .steps p{margin:0;color:var(--mute)}
+  .ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.6rem}
+  .ideas div{border-top:2px solid var(--accent);padding-top:.45rem;break-inside:avoid;page-break-inside:avoid}
+  .ideas b{display:block;font-size:10pt;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-bottom:.2rem}
+  .ideas p{margin:0;font-size:9.6pt;color:var(--mute)}
+  .doors{margin-top:.5rem}
+  .doors div{border-top:1px solid var(--line);padding:.5rem 0}
+  .doors b{color:var(--navy);display:block;margin-bottom:.1rem}
+  .doors p{margin:0;color:var(--mute)}
+  .boundary{font-size:9.4pt;color:var(--soft);margin-top:.9rem;border-top:1px solid var(--line);padding-top:.6rem}
+  /* cover and back cover */
+  .cover{min-height:9.2in;display:flex;flex-direction:column;justify-content:space-between}
+  .cover .title{font-size:34pt;line-height:1.05;font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;color:var(--navy);max-width:6.2in}
+  .cover .sub{font-size:13pt;color:var(--mute);margin:.9rem 0 0;max-width:5.6in}
+  .cover .quote{font-size:12pt;color:var(--ink);border-left:3px solid var(--accent);padding:.5rem .85rem;margin:2.2rem 0 0;max-width:5.6in;background:var(--wash)}
+  .cover .rule{font-size:12.5pt;font-weight:700;color:var(--navy);letter-spacing:.02em}
+  .rule-block{margin-top:2.4rem;padding:1.4rem 0 1.2rem;border-top:2px solid var(--navy);border-bottom:2px solid var(--navy);text-align:center;break-inside:avoid;page-break-inside:avoid}
+  .rule-block .k{font-size:8.5pt;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 .8rem}
+  .rule-block .big{font-size:26pt;font-weight:800;line-height:1.1;letter-spacing:-0.01em;text-transform:uppercase;color:var(--navy);margin:0}
+  .rule-block p.expl{max-width:5.4in;margin:.9rem auto 0;color:var(--mute)}
+  .brand{margin-top:1.6rem;text-align:center;color:var(--mute)}
+  .brand b{display:block;color:var(--navy);font-size:12pt;letter-spacing:.02em}
+  .brand .url{display:block;font-size:12pt;color:var(--accent);font-weight:700;margin-top:.6rem;letter-spacing:.02em}
+  .brand .cta{font-size:9.6pt;margin-top:.9rem}
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="page cover">
+  <div>
+    <p class="kicker">Tokenization Systems</p>
+    <div class="title">The token is only part of the story.</div>
+    <p class="sub">A field guide to evaluating tokenized financial systems</p>
+    <div class="quote">A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works.</div>
+  </div>
+  <div class="rule">Classify the token. Audit the operator.</div>
+</section>
+
+<!-- 2. System, and the seven layers -->
+<section class="page">
+  <p class="kicker">Start here</p>
+  <h2>Start with the system, not the symbol</h2>
+  <p class="lede">Money and financial assets are moving onto digital rails. Stablecoins can represent dollars. Tokens can represent Treasuries, funds, securities, private credit, real estate, commodities, and other assets.</p>
+  <div class="callout">The token is visible. Much of the system that makes the token meaningful is not.</div>
+  <p>Behind a token may sit an issuer, reserve structure, bank, custodian, transfer agent, exchange, payment rail, smart contract, administrator, redemption process, legal agreement, compliance function, or other operator. Those layers determine what the holder can actually do and what happens when conditions change. The practical question is therefore not only <em>What is the token?</em></p>
+  <div class="callout">What system has to work for the token's promise to remain true?</div>
+
+  <h3>The seven-layer field test</h3>
+  <p>Use these seven layers as a first-pass map before treating a tokenized product as equivalent to the thing it represents.</p>
+  <ol class="layers">
+    <li><b><span class="n">1</span>The token</b><p>What does the token claim to represent? What network is it on? What contractual, economic, or governance function does the token itself perform?</p></li>
+    <li><b><span class="n">2</span>The asset</b><p>What exists outside the token? Cash? Treasuries? Fund interests? Equity? Credit? Property? Nothing at all? Who owns or controls the underlying asset?</p></li>
+    <li><b><span class="n">3</span>The operator</b><p>Who makes the connection between token and real-world value work? Identify the issuer, administrator, custodian, bank, transfer agent, platform, or other critical operator.</p></li>
+    <li><b><span class="n">4</span>The gateway</b><p>How does the holder enter, use, transfer, or exit the system? Directly? Through an exchange? Wallet provider? Broker? Payment application? Different gateways can create different rights and constraints.</p></li>
+    <li><b><span class="n">5</span>The rights</b><p>What does the holder actually receive? Redemption rights? Ownership? Economic exposure? Voting? Settlement rights? Priority in insolvency? The label on the token is not enough.</p></li>
+    <li><b><span class="n">6</span>The control layer</b><p>Who can intervene? Who can freeze, block, delay, blacklist, reroute, reverse, approve, or deny an action? Technical decentralization does not necessarily remove operational control.</p></li>
+    <li class="wide"><b><span class="n">7</span>The stress test</b><p>What changes when something breaks? Test liquidity stress, bank failure, operator failure, market closure, chain congestion, depegging, legal dispute, sanctions, custody failure, and redemption pressure.</p></li>
+  </ol>
+</section>
+
+<!-- 3. Same stablecoin, different experience -->
+<section class="page">
+  <p class="kicker">Same token, different system</p>
+  <h2>A simple example: the same stablecoin can be a different experience</h2>
+  <p class="lede">Imagine three holders of the same dollar-denominated stablecoin.</p>
+  <table>
+    <thead><tr><th>Holder</th><th>Access path</th><th>What may differ</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>Direct relationship with issuer</td><td>Redemption access, identity requirements, operating hours, minimums</td></tr>
+      <tr><td>B</td><td>Centralized exchange</td><td>Exchange liquidity, withdrawal policy, custody, account controls</td></tr>
+      <tr><td>C</td><td>Payment or wallet application</td><td>Provider rules, settlement path, banking relationships, transfer restrictions</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">Same token. Different gateway. Different controls. Potentially different behavior under stress.</div>
+  <p>This is why evaluating only the token contract or reserve asset can be incomplete. The route between the holder and the underlying value matters.</p>
+  <div class="questions">
+    <p class="k">Field questions</p>
+    <ul>
+      <li>Who can redeem directly?</li>
+      <li>What happens if the exchange or application suspends withdrawals?</li>
+      <li>Where is custody actually held?</li>
+      <li>Which banking relationships are required for conversion back to fiat?</li>
+      <li>Which layer has the practical power to say no?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. Tokenized is not equivalent -->
+<section class="page">
+  <p class="kicker">Tokenized is not equivalent</p>
+  <h2>Tokenized does not automatically mean equivalent</h2>
+  <p class="lede">A tokenized asset can track or reference an underlying asset while changing important characteristics of ownership.</p>
+  <div class="callout">Before assuming equivalence, compare the tokenized version with direct ownership.</div>
+  <table>
+    <thead><tr><th>Dimension</th><th>Ask</th></tr></thead>
+    <tbody>
+      <tr><td>Economic exposure</td><td>Does the holder receive the same gains, losses, income, and distributions?</td></tr>
+      <tr><td>Legal ownership</td><td>Who legally owns the underlying asset? What exactly does the token holder own?</td></tr>
+      <tr><td>Redemption</td><td>Can the holder exchange the token for the underlying asset or cash? Under what conditions?</td></tr>
+      <tr><td>Liquidity</td><td>Are the markets, hours, counterparties, spreads, and exit routes actually comparable?</td></tr>
+      <tr><td>Settlement</td><td>When is ownership final, and which systems must complete settlement?</td></tr>
+      <tr><td>Governance</td><td>Are voting, consent, information, or other governance rights preserved?</td></tr>
+      <tr><td>Custody</td><td>Who controls the asset and the token? What happens if a custodian fails?</td></tr>
+      <tr><td>Insolvency</td><td>Where does the holder stand if an issuer, operator, bank, or platform fails?</td></tr>
+    </tbody>
+  </table>
+  <p>The question is not whether tokenization is good or bad. The question is which characteristics survive the translation, which change, and whether those differences matter for the intended use.</p>
+</section>
+
+<!-- 5. Control and stress -->
+<section class="page">
+  <p class="kicker">Decentralized is not uncontrolled</p>
+  <h2>Decentralized does not mean control disappears</h2>
+  <p class="lede">A protocol or blockchain may be technically decentralized while practical control remains concentrated elsewhere.</p>
+  <div class="callout">Look beyond consensus and smart contracts. Map the institutions and operators that can determine whether value moves.</div>
+  <p>Control can accumulate at: issuance, custody, banking, reserve management, bridges, exchanges, wallet interfaces, compliance, identity, administration, redemption, settlement, and access.</p>
+  <div class="questions">
+    <p class="k">Field questions</p>
+    <ul>
+      <li>Who can stop a transaction?</li>
+      <li>Who can deny redemption?</li>
+      <li>Who controls the reserves or underlying assets?</li>
+      <li>Which providers are difficult to replace?</li>
+      <li>Where are multiple supposedly independent functions dependent on the same institution?</li>
+      <li>Which legal or regulatory authority can compel an operator to act?</li>
+    </ul>
+  </div>
+
+  <h3>Stress reveals the real architecture</h3>
+  <p>Systems often look interchangeable during normal conditions. Stress exposes the differences.</p>
+  <div class="callout">A useful diligence process asks what happens when the happy path stops working.</div>
+  <p style="margin-bottom:.15rem">Run scenarios such as:</p>
+  <ul class="scenarios">
+    <li>Heavy redemption demand</li>
+    <li>Failure of a reserve bank or custodian</li>
+    <li>Exchange withdrawal suspension</li>
+    <li>Market closure while the token continues trading</li>
+    <li>Blockchain congestion or outage</li>
+    <li>Smart-contract exploit</li>
+    <li>Loss of a key banking relationship</li>
+    <li>Sanctions or regulatory intervention</li>
+    <li>Operator insolvency</li>
+    <li>A mismatch between token liquidity and underlying-asset liquidity</li>
+  </ul>
+  <p>For each scenario, ask: Who acts? What can they do? What rights does the holder retain? How long can the system continue? Where does loss or delay land?</p>
+</section>
+
+<!-- 6. Decision map and three ideas -->
+<section class="page">
+  <p class="kicker">The decision map</p>
+  <h2>The Tokenization Systems decision map</h2>
+  <p class="lede">When evaluating any tokenized financial product, move through this sequence.</p>
+  <ol class="steps">
+    <li><span class="num">1</span><div><b>Classify</b><p>What exactly is the token?</p></div></li>
+    <li><span class="num">2</span><div><b>Trace</b><p>Follow the token to the asset, reserves, institutions, and infrastructure underneath it.</p></div></li>
+    <li><span class="num">3</span><div><b>Map</b><p>Identify operators, gateways, counterparties, and control points.</p></div></li>
+    <li><span class="num">4</span><div><b>Compare</b><p>Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value.</p></div></li>
+    <li><span class="num">5</span><div><b>Stress</b><p>Ask what changes when a critical layer fails or becomes constrained.</p></div></li>
+    <li><span class="num">6</span><div><b>Decide</b><p>Determine whether the remaining differences and dependencies are acceptable for the intended use.</p></div></li>
+  </ol>
+
+  <h3>Three ideas worth remembering</h3>
+  <div class="ideas">
+    <div><b>Same token &ne; same system</b><p>The gateway and operating path can change how the same token behaves.</p></div>
+    <div><b>Tokenized &ne; equivalent</b><p>Digital representation does not automatically preserve every characteristic of the underlying asset.</p></div>
+    <div><b>Decentralized &ne; uncontrolled</b><p>Control can migrate from the protocol layer to institutions and gateways around it.</p></div>
+  </div>
+</section>
+
+<!-- 7. Where the research begins; the rule -->
+<section class="page">
+  <p class="kicker">Where the deeper research begins</p>
+  <h2>Where the deeper research begins</h2>
+  <p class="lede">Tokenization Systems develops research and frameworks for examining these questions systematically. Its work includes analysis of stablecoin gateways and stress behavior, tokenization equivalence, institutional tokenization structures, control layers, and related digital financial infrastructure.</p>
+  <div class="doors">
+    <div><b>Routing the Dollar</b><p>How gateway choice can affect the behavior and risk of the same stablecoin.</p></div>
+    <div><b>MVEP, the Minimum Viable Equivalence Pack</b><p>A framework for asking whether a tokenized product preserves the characteristics that matter in the underlying asset.</p></div>
+    <div><b>CLII, the Control Layer Intensity Index</b><p>A framework for locating operational and regulatory control across critical gateways and system layers.</p></div>
+  </div>
+  <p class="boundary">The frameworks are not substitutes for legal, regulatory, investment, or technical diligence. They are ways to ask better questions about the system being evaluated.</p>
+
+  <div class="rule-block">
+    <p class="k">The Tokenization Systems rule</p>
+    <p class="big">Classify the token.<br>Audit the operator.</p>
+    <p class="expl">Understanding what a token represents is only half the work. The other half is understanding the system required to make that representation true.</p>
+  </div>
+  <div class="brand">
+    <b>Tokenization Systems</b>
+    Independent research into tokenized financial infrastructure, stablecoins, control, equivalence, and system behavior.
+    <span class="url">Tokenization.Systems</span>
+    <p class="cta">For institutional briefings, research, diligence, collaboration, or speaking, visit Tokenization.Systems or write to Zach@Tokenization.Systems.</p>
+  </div>
+</section>
+
+</body>
+</html>
