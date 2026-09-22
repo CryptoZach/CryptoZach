@@ -5,6 +5,8 @@ site by Zach Zukowski. The site publishes research, papers, frameworks,
 public-comment letters, and resume profiles on tokenized payments,
 stablecoin regulation, governance, and AI infrastructure.
 
+The live site is [tokenization.systems](https://tokenization.systems). The [agent infrastructure](https://tokenization.systems/agent-infrastructure/) page includes the fleet commit chart: commits per three days, March through 21 September 2026, with a peak of 3,329 on 29 to 31 August.
+
 ## What's here
 
 | Path | Purpose |
