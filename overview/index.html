@@ -39,7 +39,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>What is Tokenization? Definitions, Frameworks &amp; Diligence | TS</title>
+  <title>The token is only part of the story | Tokenization Systems field guide</title>
   <meta name="description" content="What is tokenization? Representation of traditional financial products on token rails. Stablecoin, tokenized deposit, gateway, control layer definitions." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="Start Here, stablecoin overview, tokenized deposit, gateway, control layer, dollar infrastructure, tokenization primer, institutional entry points" />
@@ -213,7 +213,7 @@
       <div class="brand">
         <a href="/">
           <strong>Tokenization Systems</strong>
-          <span>Digital&nbsp;Asset&nbsp;Research&nbsp;&amp; Advisory</span>
+          <span>Independent tokenization research</span>
         </a>
       </div>
       <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
@@ -222,14 +222,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink active" href="/overview" aria-current="page">Overview</a>
+          <a class="navlink active" href="/overview" aria-current="page">Field guide</a>
           <a class="navlink" href="/frameworks">Frameworks</a>
           <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
           <a class="navlink" href="/letters">Letters</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink" href="/contact">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -248,21 +250,24 @@
   <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true" aria-label="Main navigation">
     <div class="nav-directory">
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Research &amp; product</p>
+        <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink active" href="/overview" aria-current="page">Field guide</a>
           <a class="navlink" href="/frameworks">Frameworks</a>
+          <a class="navlink" href="/research">Research</a>
           <a class="navlink" href="/letters">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
-        <p class="nav-directory__label">Navigate</p>
+        <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink active" href="/overview" aria-current="page">Overview</a>
-          <a class="navlink" href="/resume">Roles</a>
           <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
           <a class="navlink" href="/contact">Contact</a>
+          <a class="navlink" href="/resume">Roles</a>
+        </div>
+        <p class="nav-directory__label">Separate product</p>
+        <div class="nav-directory__links">
+          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -332,44 +337,92 @@
   <main id="main">
 
     <section class="reveal" aria-labelledby="start-here-page-title">
-      <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Overview</p>
+      <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Field guide</p>
       <div class="section-title">
-        <h1 id="start-here-page-title">Who routes the dollar matters more than which dollar is routed.</h1>
-        <p><strong>Digital money should be programmable money.</strong> Programmable money and tokenization look simple on the surface: a dollar in a wallet, a fund share on-chain, a tokenized deposit. This site studies what those products depend on underneath: reserve custody, redemption design, routing defaults, settlement rules, and the operators who control recovery when something breaks.</p>
-        <p>One thesis, two research tracks, six decision contexts.</p>
+        <h1 id="start-here-page-title">The token is only part of the story.</h1>
+        <p><strong>Classify the token. Audit the operator.</strong> A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Behind a token may sit an issuer, a reserve structure, a bank, a custodian, a transfer agent, an exchange, a payment rail, a smart contract, an administrator, a redemption process, a legal agreement, and a compliance function. Those layers determine what the holder can actually do and what happens when conditions change.</p>
+        <p>The practical question is therefore not only what the token is. <strong>What system has to work for the token's promise to remain true?</strong></p>
       </div>
-      <div class="primer-hero-ctas primer-hero-ctas--resume-profiles">
-        <div class="frameworks-2026-flagship-links frameworks-2026-flagship-links--hero" role="group" aria-label="Flagship research">
-          <a class="action primary" href="/papers/routing-the-dollar">Read Routing the Dollar</a>
+      <div class="primer-hero-ctas">
+        <div class="frameworks-2026-flagship-links frameworks-2026-flagship-links--hero" role="group" aria-label="Field guide entry points">
+          <a class="action primary" href="#decision-map">Start with the six steps</a>
+          <a class="action secondary" href="/field-guide/Tokenization_Systems_Field_Guide_2026-09-22.pdf">Download the field guide (PDF)</a>
         </div>
-        <p class="hero-entry-label"><strong>By decision context</strong></p>
-        <nav class="primer-resume-profile-nav" aria-label="Decision context entry points">
-          <a class="action secondary" href="/resume/policy">Policy &amp; Market Infrastructure</a>
-          <a class="action secondary" href="/resume/asset-management">Asset Management &amp; Tokenization</a>
-          <a class="action secondary" href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a>
-          <a class="action secondary" href="/resume/product">Digital Asset Product</a>
-          <a class="action secondary" href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a>
-          <a class="action secondary" href="/resume/risk-controls">Risk, Controls &amp; Diligence</a>
-        </nav>
-        <p class="hero-entry-label"><strong>By research track</strong></p>
-        <nav class="primer-resume-profile-nav" aria-label="Research track entry points">
-          <a class="action secondary" href="/research">Track A: Programmable Money, Tokenization &amp; Market Infrastructure</a>
-          <a class="action secondary" href="/research#track-b">Track B: Tokenomics &amp; DePIN</a>
-        </nav>
       </div>
-      <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Start Here jump links">
+      <div class="page-toc structure-jump-to" id="jumpTo" role="navigation" aria-label="Field guide jump links">
         <p class="page-toc-title">Jump to</p>
         <div class="page-toc-list">
+          <a class="page-toc-link" href="#seven-layers">Seven layers</a>
           <a class="page-toc-link" href="#definitions">Definitions</a>
+          <a class="page-toc-link" href="#same-token">Same token, different system</a>
           <a class="page-toc-link" href="#dollar-objects">Four dollar objects</a>
-          <a class="page-toc-link" href="#why-institutions-care">Why institutions care</a>
+          <a class="page-toc-link" href="#equivalence">Tokenized is not equivalent</a>
+          <a class="page-toc-link" href="#control">Decentralized is not no control</a>
+          <a class="page-toc-link" href="#stress">Stress</a>
           <a class="page-toc-link" href="#five-questions">Five questions</a>
-          <a class="page-toc-link" href="#start-by-context">Start by context</a>
-          <a class="page-toc-link" href="#eight-papers">Nine papers</a>
-          <a class="page-toc-link" href="#what-tools">What the tools do</a>
+          <a class="page-toc-link" href="#decision-map">The decision map</a>
+          <a class="page-toc-link" href="#eight-papers">Where the research begins</a>
           <a class="page-toc-link" href="#overview-contact">Contact</a>
         </div>
       </div>
+    </section>
+
+    <section class="reveal" id="seven-layers" aria-labelledby="seven-layers-title">
+      <div class="section-title">
+        <h2 id="seven-layers-title">The seven-layer field test</h2>
+        <p>Use these seven layers as a first-pass map before treating a tokenized product as equivalent to the thing it represents. The token is visible. Much of the system that makes the token meaningful is not.</p>
+      </div>
+      <ol class="stack-steps stack-steps--map">
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">1</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The token</h3>
+            <p class="stack-step-desc">What does it claim to represent? What network is it on? What contractual, economic, or governance function does the token itself perform?</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">2</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The asset</h3>
+            <p class="stack-step-desc">What exists outside the token: cash, Treasuries, fund interests, equity, credit, property, or nothing at all? Who owns or controls the underlying asset?</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">3</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The operator</h3>
+            <p class="stack-step-desc">Who makes the connection between token and real-world value work? Identify the issuer, administrator, custodian, bank, transfer agent, platform, or other critical operator.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">4</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The gateway</h3>
+            <p class="stack-step-desc">How does the holder enter, use, transfer, or exit the system: directly, through an exchange, a wallet provider, a broker, or a payment application? Different gateways create different rights and constraints.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">5</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The rights</h3>
+            <p class="stack-step-desc">What does the holder actually receive: redemption rights, ownership, economic exposure, voting, settlement rights, priority in insolvency? The label on the token is not enough.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">6</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The control layer</h3>
+            <p class="stack-step-desc">Who can intervene? Who can freeze, block, delay, blacklist, reroute, reverse, approve, or deny an action? Technical decentralization does not necessarily remove operational control.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">7</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">The stress test</h3>
+            <p class="stack-step-desc">What changes when something breaks? Test liquidity stress, bank failure, operator failure, market closure, chain congestion, depegging, legal dispute, sanctions, custody failure, and redemption pressure.</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <section id="definitions" class="reveal explainer-intro" aria-label="Definitions">
@@ -418,6 +471,28 @@
           </article>
         </div>
       </div>
+    </section>
+
+    <section class="reveal frameworks-where-next" id="same-token" aria-labelledby="same-token-title">
+      <div class="section-title">
+        <h2 id="same-token-title">Same token, different system</h2>
+        <p><strong>Who routes the dollar matters more than which dollar is routed.</strong> Imagine three holders of the same dollar-denominated stablecoin.</p>
+      </div>
+      <div class="frameworks-routing-table-wrap">
+        <table class="frameworks-routing-table">
+          <caption class="sr-only">Three holders of the same stablecoin and what may differ between them</caption>
+          <thead>
+            <tr><th scope="col">Holder</th><th scope="col">Access path</th><th scope="col">What may differ</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>Direct relationship with the issuer</td><td>Redemption access, identity requirements, operating hours, minimums</td></tr>
+            <tr><td>B</td><td>Centralized exchange</td><td>Exchange liquidity, withdrawal policy, custody, account controls</td></tr>
+            <tr><td>C</td><td>Payment or wallet application</td><td>Provider rules, settlement path, banking relationships, transfer restrictions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Same token. Different gateway. Different controls. Potentially different behavior under stress. Evaluating only the token contract or the reserve asset is incomplete; the route between the holder and the underlying value matters. <a href="/papers/routing-the-dollar/"><strong>Can the same dollar behave differently depending on how you hold it? Routing the Dollar</strong></a> measures it across nineteen gateways.</p>
+      <p><strong>Field questions.</strong> Who can redeem directly? What happens if the exchange or application suspends withdrawals? Where is custody actually held? Which banking relationships are required for conversion back to fiat? Which layer has the practical power to say no?</p>
     </section>
 
     <section class="reveal" id="dollar-objects" aria-labelledby="three-objects-title">
@@ -474,21 +549,48 @@
       <p class="track-bridge track-bridge--pullquote"><strong>Same wallet surface, different rights, backstops, and failure sequences.</strong></p>
     </section>
 
-    <section class="reveal explainer-intro" id="why-institutions-care" aria-labelledby="why-institutions-care-title">
-      <div class="explainer">
-        <div class="frameworks-anchor-block">
-          <article class="explainer-section">
-            <h2 id="why-institutions-care-title">Why institutions care</h2>
-            <ul>
-              <li>Faster settlement and new distribution channels</li>
-              <li>New control-layer obligations and operational dependencies</li>
-              <li>New legal and compliance responsibilities</li>
-              <li>Hidden concentration in custodians, gateways, defaults, and routing</li>
-              <li>A need for pass/fail diligence before launch and monitoring after approval</li>
-            </ul>
-          </article>
-        </div>
+    <section class="reveal frameworks-where-next" id="equivalence" aria-labelledby="equivalence-title">
+      <div class="section-title">
+        <h2 id="equivalence-title">Tokenized does not automatically mean equivalent</h2>
+        <p>A tokenized asset can track or reference an underlying asset while changing important characteristics of ownership. Before assuming equivalence, compare the tokenized version with direct ownership.</p>
       </div>
+      <div class="frameworks-routing-table-wrap">
+        <table class="frameworks-routing-table">
+          <caption class="sr-only">Dimensions on which a tokenized asset can differ from direct ownership</caption>
+          <thead>
+            <tr><th scope="col">Dimension</th><th scope="col">Ask</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Economic exposure</td><td>Does the holder receive the same gains, losses, income, and distributions?</td></tr>
+            <tr><td>Legal ownership</td><td>Who legally owns the underlying asset? What exactly does the token holder own?</td></tr>
+            <tr><td>Redemption</td><td>Can the holder exchange the token for the underlying asset or cash? Under what conditions?</td></tr>
+            <tr><td>Liquidity</td><td>Are the markets, hours, counterparties, spreads, and exit routes actually comparable?</td></tr>
+            <tr><td>Settlement</td><td>When is ownership final, and which systems must complete settlement?</td></tr>
+            <tr><td>Governance</td><td>Are voting, consent, information, or other governance rights preserved?</td></tr>
+            <tr><td>Custody</td><td>Who controls the asset and the token? What happens if a custodian fails?</td></tr>
+            <tr><td>Insolvency</td><td>Where does the holder stand if an issuer, operator, bank, or platform fails?</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The question is not whether tokenization is good or bad. The question is which characteristics survive the translation, which change, and whether those differences matter for the intended use. <a href="/frameworks#mvep"><strong>Does owning the token give you what you think you are buying? MVEP</strong></a> runs that comparison across ten categories.</p>
+    </section>
+
+    <section class="reveal" id="control" aria-labelledby="control-title">
+      <div class="section-title">
+        <h2 id="control-title">Decentralized does not mean control disappears</h2>
+        <p>A protocol or blockchain may be technically decentralized while practical control remains concentrated elsewhere. Look beyond consensus and smart contracts. Map the institutions and operators that can determine whether value moves: issuance, custody, banking, reserve management, bridges, exchanges, wallet interfaces, compliance, identity, administration, redemption, settlement, and access.</p>
+      </div>
+      <p><strong>Field questions.</strong> Who can stop a transaction? Who can deny redemption? Who controls the reserves or underlying assets? Which providers are difficult to replace? Where are several supposedly independent functions dependent on the same institution? Which legal or regulatory authority can compel an operator to act?</p>
+      <p><a href="/frameworks#clii"><strong>Who can actually say no? CLII</strong></a> scores each gateway on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. A high score means more obligations, not stress resilience.</p>
+    </section>
+
+    <section class="reveal" id="stress" aria-labelledby="stress-title">
+      <div class="section-title">
+        <h2 id="stress-title">Stress reveals the real architecture</h2>
+        <p>Systems often look interchangeable during normal conditions. Stress exposes the differences. A useful diligence process asks what happens when the happy path stops working.</p>
+      </div>
+      <p>Run scenarios such as heavy redemption demand; failure of a reserve bank or custodian; an exchange withdrawal suspension; market closure while the token continues trading; blockchain congestion or outage; a smart-contract exploit; loss of a key banking relationship; sanctions or regulatory intervention; operator insolvency; and a mismatch between token liquidity and underlying-asset liquidity.</p>
+      <p>For each scenario, ask: Who acts? What can they do? What rights does the holder retain? How long can the system continue? Where does loss or delay land? The five questions below are the version of that list every tokenized product should already be able to answer; the <a href="/frameworks#mvep">MVEP stress envelope</a> specifies the scenarios per product.</p>
     </section>
 
     <section class="reveal" id="five-questions" aria-labelledby="five-questions-title">
@@ -534,60 +636,83 @@
       </div>
     </section>
 
-    <section class="reveal frameworks-where-next" id="start-by-context" aria-labelledby="start-by-context-title">
+    <div id="start-by-context" aria-hidden="true"></div>
+    <section class="reveal" id="decision-map" aria-labelledby="decision-map-title">
       <div class="section-title">
-        <h2 id="start-by-context-title">Start here by decision context</h2>
+        <h2 id="decision-map-title">The decision map</h2>
+        <p>When evaluating any tokenized financial product, move through this sequence. Each step has one door.</p>
       </div>
-      <div class="frameworks-routing-table-wrap">
-        <table class="frameworks-routing-table">
-          <caption class="sr-only">If you are in this role, start with this page</caption>
-          <thead>
-            <tr>
-              <th scope="col">If you are...</th>
-              <th scope="col">Start with</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Evaluating policy, concentration, or systemic risk</td>
-              <td><a href="/resume/policy">Policy &amp; Market Infrastructure</a></td>
-            </tr>
-            <tr>
-              <td>Evaluating a tokenized product for institutional capital</td>
-              <td><a href="/resume/asset-management">Asset Management &amp; Tokenization</a></td>
-            </tr>
-            <tr>
-              <td>Building or launching a stablecoin or tokenized-money product</td>
-              <td><a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a></td>
-            </tr>
-            <tr>
-              <td>Building or shipping a digital asset product, discovery engine, or exception workflow</td>
-              <td><a href="/resume/product">Digital Asset Product</a></td>
-            </tr>
-            <tr>
-              <td>Evaluating controls, diligence, or escalation paths</td>
-              <td><a href="/resume/risk-controls">Risk, Controls &amp; Diligence</a></td>
-            </tr>
-            <tr>
-              <td>Working on AI governance, infrastructure accountability, or technical AI policy</td>
-              <td><a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a></td>
-            </tr>
-            <tr>
-              <td>Working on DePIN, incentives, or protocol design</td>
-              <td><a href="/research#track-b">Tokenomics &amp; DePIN track</a></td>
-            </tr>
-            <tr>
-              <td>Reading the core thesis first</td>
-              <td><a href="/papers/routing-the-dollar">Routing the Dollar (5-minute read)</a></td>
-            </tr>
-          </tbody>
-        </table>
+      <ol class="stack-steps stack-steps--map">
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">1</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Classify</h3>
+            <p class="stack-step-desc"><a href="/frameworks#classification-frameworks"><strong>Which object is this, before anyone scores it?</strong></a> What exactly is the token? The dollar-product and infrastructure maps name the class, and the class decides which rulebook applies.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">2</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Trace</h3>
+            <p class="stack-step-desc"><a href="/papers/routing-the-dollar/"><strong>Can the same dollar behave differently depending on how you hold it?</strong></a> Follow the token to the asset, reserves, institutions, and infrastructure underneath it.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">3</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Map</h3>
+            <p class="stack-step-desc"><a href="/frameworks#clii"><strong>Who can actually say no?</strong></a> Identify operators, gateways, counterparties, and control points. CLII locates control at each gateway.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">4</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Compare</h3>
+            <p class="stack-step-desc"><a href="/frameworks#mvep"><strong>Does owning the token give you what you think you are buying?</strong></a> Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP is the entry gate.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">5</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Stress</h3>
+            <p class="stack-step-desc"><a href="/frameworks#mvep"><strong>What changes when the happy path stops?</strong></a> Ask what changes when a critical layer fails or becomes constrained. The MVEP stress envelope names the scenarios.</p>
+          </div>
+        </li>
+        <li class="stack-step">
+          <span class="stack-step-num" aria-hidden="true">6</span>
+          <div class="stack-step-body">
+            <h3 class="stack-step-title">Decide</h3>
+            <p class="stack-step-desc"><a href="/contact/"><strong>Are the remaining differences and dependencies acceptable for the intended use?</strong></a> That call belongs to the institution taking the risk. MVEP is run once before you commit; <a href="/frameworks#clii">CLII</a> is the re-run trigger when a gateway crosses a tier. For a briefing on a live decision, name the step you are on.</p>
+          </div>
+        </li>
+      </ol>
+      <div class="section-title">
+        <h3>Three ideas worth remembering</h3>
+        <p><strong>Same token is not the same system.</strong> The gateway and operating path can change how the same token behaves. <strong>Tokenized is not equivalent.</strong> Digital representation does not automatically preserve every characteristic of the underlying asset. <strong>Decentralized is not no control.</strong> Control can migrate from the protocol layer to the institutions and gateways around it.</p>
+        <p>The frameworks are not substitutes for legal, regulatory, investment, or technical diligence. They are ways to ask better questions about the system being evaluated.</p>
+      </div>
+    </section>
+
+    <section class="reveal explainer-intro" id="why-institutions-care" aria-labelledby="why-institutions-care-title">
+      <div class="explainer">
+        <div class="frameworks-anchor-block">
+          <article class="explainer-section">
+            <h2 id="why-institutions-care-title">Why institutions care</h2>
+            <ul>
+              <li>Faster settlement and new distribution channels</li>
+              <li>New control-layer obligations and operational dependencies</li>
+              <li>New legal and compliance responsibilities</li>
+              <li>Hidden concentration in custodians, gateways, defaults, and routing</li>
+              <li>A need for pass/fail diligence before launch and monitoring after approval</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="reveal" id="eight-papers" aria-labelledby="eight-papers-title">
       <div class="section-title">
-        <h2 id="eight-papers-title">Nine-paper research program, two tracks</h2>
+        <h2 id="eight-papers-title">Where the deeper research begins: nine papers, two tracks</h2>
       </div>
       <div class="explainer">
         <article class="explainer-section">
@@ -622,10 +747,14 @@
 
     <section class="reveal" id="overview-contact" aria-labelledby="overview-contact-title">
       <div class="section-title">
-        <h2 id="overview-contact-title">Contact</h2>
-        <p>Send a few sentences on what you&rsquo;re working on, and I&rsquo;ll follow up shortly.</p>
+        <h2 id="overview-contact-title">The Tokenization Systems rule</h2>
+        <p><strong>Classify the token. Audit the operator.</strong> Understanding what a token represents is only half the work. The other half is understanding the system required to make that representation true.</p>
       </div>
-      <p class="track-bridge"><a class="action primary" href="/contact">Interested in working together? <span aria-hidden="true">→</span></a></p>
+      <p>For institutional briefings, research, diligence, collaboration, or speaking, send a few sentences naming the product and the step you are on.</p>
+      <div class="frameworks-2026-flagship-links" role="group" aria-label="Contact and download">
+        <a class="action primary" href="/contact/">Name the decision &rarr;</a>
+        <a class="action secondary" href="/field-guide/Tokenization_Systems_Field_Guide_2026-09-22.pdf">Download the field guide (PDF)</a>
+      </div>
     </section>
 
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
