@@ -49,7 +49,7 @@ Site content and infrastructure only:
 | `_config.yml`, `Gemfile`, `package.json`, `package-lock.json`, `purgecss.config.cjs` | Build config |
 | `.github/workflows/build-deploy.yml` | CI deploy (guarded to run only on `CryptoZach/CryptoZach`) |
 | `scripts/` (4 files only) | Build tooling: `inline-critical-css.mjs`, `build-matrix-icons.mjs`, `build_matrix_icons.py`, `check-responsive.js` |
-| `LICENSE`, `LICENSE-CONTENT.md` | MIT for site code; CC BY-NC 4.0 for site content |
+| `LICENSE`, `LICENSE-CONTENT.md` | MIT for site code; CC BY 4.0 for research content. Names, logos, and brand files are outside that grant. |
 | `AI_Governance_Profile_Content.md` | Source content for `/resume/ai-governance-infrastructure/` |
 
 ## Editorial discipline (still applies to site content)

@@ -54,8 +54,8 @@ npm run build:matrix-icons   # matrix-icons builder
 
 - **Site code** (`script.js`, `styles.css`, build tooling, Jekyll config,
   GitHub Actions workflows): MIT, see `LICENSE`.
-- **Site content** (research text, paper PDFs, exhibits, images, brand
-  assets): CC BY-NC 4.0, see `LICENSE-CONTENT.md`.
+- **Site content** (research text, paper PDFs, exhibits): CC BY 4.0, see
+  `LICENSE-CONTENT.md`. Names, logos, and brand files are not included.
 
 ## Citation
 
