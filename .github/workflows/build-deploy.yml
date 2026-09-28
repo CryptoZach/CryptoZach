@@ -78,8 +78,13 @@ jobs:
           run_check scripts/check_home_stats.py --quiet
           run_check scripts/check_agent_infra_stats.py --quiet
           run_check scripts/check_jsonld_node_consistency.py --quiet
+          run_check scripts/check_domain_casing.py --quiet
           run_check scripts/render_home_stats.py --check
           run_check scripts/render_chrome.py --check
+          # The battery checking ITSELF: fails if a guard in the pre-push battery
+          # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
+          # purpose, so it cannot become a third list only one side runs.
+          run_check scripts/check_guard_battery_parity.py --quiet
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

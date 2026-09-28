@@ -123,10 +123,16 @@ fi
 # Both existed as runnable scripts and neither was in this list, which is why the
 # ninth paper going live on 2026-09-06 could leave 37 stale mentions across 17 files
 # for four days without a single push being blocked. Added 2026-09-10.
+# check_guard_battery_parity.py is the battery checking ITSELF: it fails if any guard in
+# this list is absent from the CI battery in .github/workflows/build-deploy.yml. It is in
+# BOTH lists on purpose, so it cannot become a third list that only one side runs. It also
+# warns (never blocks) on guard-shaped scripts neither battery calls, which is the state
+# check_paper_count.py and check_patent_count.py were in for their whole lives. Added
+# 2026-09-10 after the same-day drift above proved a hand-maintained pair will drift again.
 # Bypass: SKIP_SITE_NUMBER_PREPUSH=1 git push ...   See docs/SITE_REPO_SAFETY.md.
 if test "$remote" = "origin" && test -z "${SKIP_SITE_NUMBER_PREPUSH:-}"; then
 	root=$(git rev-parse --show-toplevel 2>/dev/null)
-	for g in check_letter_count.py check_paper_count.py check_patent_count.py check_home_stats.py check_agent_infra_stats.py check_jsonld_node_consistency.py check_domain_casing.py; do
+	for g in check_letter_count.py check_paper_count.py check_patent_count.py check_home_stats.py check_agent_infra_stats.py check_jsonld_node_consistency.py check_domain_casing.py check_guard_battery_parity.py; do
 		test -f "$root/scripts/$g" || continue
 		python3 "$root/scripts/$g" --quiet
 		rc=$?
