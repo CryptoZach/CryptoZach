@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Local preview server for this clone: python3 http.server on 127.0.0.1:8080, installed by
+  scripts/serve-site.sh with the install flag. Keep these keys in agreement with the other
+  tracked copy of this agent's plist: whichever copy was installed last is the one launchd runs.
+
+  ProcessType Standard, not Background: a KeepAlive HTTP server has a person waiting on every
+  request. Under Background the server ran at priority 4 on a loaded host and stopped answering
+  within 30 seconds while a priority-31 server on the same box answered in under 10; after the
+  raise to Standard (priority 20) it answered in under a second (measured 2026-09-29).
+  Logs go to ~/Library/Logs, not /tmp, which is purged at reboot.
+-->
 <plist version="1.0">
 <dict>
   <key>Label</key>
@@ -20,10 +31,15 @@
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/tmp/cz-site-preview-8080.log</string>
+  <string>/Users/zach/Library/Logs/cryptozach/cz-site-preview-8080.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/cz-site-preview-8080.err</string>
+  <string>/Users/zach/Library/Logs/cryptozach/cz-site-preview-8080.err</string>
   <key>ProcessType</key>
-  <string>Background</string>
+  <string>Standard</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/zach/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
 </dict>
 </plist>
