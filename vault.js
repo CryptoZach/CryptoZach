@@ -841,7 +841,8 @@ function vaultMountDial(cv, opts){
   var compact = !!opts.compact;
   var minSize = opts.minSize || (compact ? 120 : 200);
   var ctx = cv.getContext('2d'), TAU = Math.PI * 2;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduce = motionQuery.matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
   /* Every rate below is per 60 Hz frame. frame() scales them by the real
@@ -1223,8 +1224,28 @@ function vaultMountDial(cv, opts){
        the tick layer near 5px/s at 40px and one revolution at about 22s; at
        60fps that is ~26 frames per tick period, well clear of strobing. */
     spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag) * step;
-    draw(step); requestAnimationFrame(frame);
+    draw(step);
+    raf = reduce ? 0 : requestAnimationFrame(frame);
   }
+  /* Reduced motion can change while the page is open. This dial read it once
+     at load, so turning it on left the header mark turning on every interior
+     page, and turning it off left it still until a reload. Follow it the way
+     the homepage dials do, and settle to what a reduced-motion load draws. */
+  var raf = 0;
+  function refreshMotion(){
+    reduce = motionQuery.matches;
+    if (reduce){
+      if (raf){ cancelAnimationFrame(raf); raf = 0; }
+      previousFrame = null;
+      sparks.length = 0; sparkDebt = 0; grind = 0; strike = 0; gMoving = false;
+      draw();
+    } else if (!raf){
+      previousFrame = null;
+      frame();
+    }
+  }
+  if (motionQuery.addEventListener) motionQuery.addEventListener('change', refreshMotion);
+  else if (motionQuery.addListener) motionQuery.addListener(refreshMotion);
   window.addEventListener('resize', draw);
   reduce ? draw() : frame();
 }

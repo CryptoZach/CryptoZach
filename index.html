@@ -2005,6 +2005,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
   function refreshTheme(){
     darkCached = null;
+    /* The pile canvas repaints only when a coin moves, so a settled pile kept
+       the old theme's olive until something nudged it. */
+    pileDirty = true;
     if (reduce && W) staticFrame();
   }
 
@@ -3392,7 +3395,8 @@ function vaultMountDial(cv, opts){
   var compact = !!opts.compact;
   var minSize = opts.minSize || (compact ? 120 : 200);
   var ctx = cv.getContext('2d'), TAU = Math.PI * 2;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduce = motionQuery.matches;
   var spin = 0, size = 320, root = document.documentElement;
   var SPIN_SCALE = compact ? 5.2 : 1;
   /* Every rate below is per 60 Hz frame. frame() scales them by the real
@@ -4029,6 +4033,21 @@ function vaultMountDial(cv, opts){
   document.addEventListener('visibilitychange', function(){
     document.hidden ? stop() : start();
   });
+  /* Reduced motion can change while the page is open. The hero field follows
+     it; both dials read it once at load, so turning it on left their loops
+     running and turning it off left them still until a reload. Entering it
+     settles to what a reduced-motion load draws: no sparks in flight and no
+     grind left over from a drag. */
+  function refreshMotion(){
+    reduce = motionQuery.matches;
+    if (reduce){
+      stop();
+      sparks.length = 0; sparkDebt = 0; grind = 0; strike = 0; gMoving = false;
+      draw();
+    } else start();
+  }
+  if (motionQuery.addEventListener) motionQuery.addEventListener('change', refreshMotion);
+  else if (motionQuery.addListener) motionQuery.addListener(refreshMotion);
 
   /* This listener is the residual the 2026-08-28 fix left behind. It guarded
      the canvas REALLOCATION but left the redraw itself on an unthrottled
