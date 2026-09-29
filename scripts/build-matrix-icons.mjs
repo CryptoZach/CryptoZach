@@ -14,7 +14,6 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { chromium } from 'playwright';
 
 const OUT_DIR = path.join(process.cwd(), 'icons', 'matrix');
 const SI_VER = '16.12.0';
@@ -660,7 +659,25 @@ async function rasterizeWhite32(page, input) {
   return Buffer.from(b64, 'base64');
 }
 
+/* RETIRED 2026-09-29. This writes 32x32 PNGs into icons/matrix/, and no page
+   reads a PNG from there: index.html and script.js load icons/matrix/<name>.webp
+   (the 2026-09-17 homepage animation audit, finding 6). Running it produced
+   files that looked like an update and changed nothing. --legacy-png still
+   reproduces the old bakes on purpose. */
+const RETIRED = 'build:matrix-icons is retired: it writes 32x32 PNGs that no page reads.\n' +
+  'Add or rebuild a mark from its saved official logo:\n' +
+  '  python3 scripts/add_matrix_logo.py --src <official svg or hi-res png> --out icons/matrix/<name>.webp\n' +
+  'An embedded homepage mark also needs its row in scripts/homepage_matrix_logos.json, then npm run build:homepage-logos.\n' +
+  'To reproduce the old 32x32 PNG bakes anyway: node scripts/build-matrix-icons.mjs --legacy-png';
+
 async function main() {
+  if (!process.argv.includes('--legacy-png')) {
+    console.error(RETIRED);
+    process.exitCode = 1;
+    return;
+  }
+  /* Loaded here, after the refusal, so the refusal reads on a machine without Playwright. */
+  const { chromium } = await import('playwright');
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const browser = await chromium.launch();
   const page = await browser.newPage();

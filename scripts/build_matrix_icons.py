@@ -309,7 +309,20 @@ def fetch_url(url: str) -> bytes | None:
 
 # ── Main build ─────────────────────────────────────────────────────────────
 
+RETIRED = (
+    "build_matrix_icons.py is retired (2026-09-29): it writes 32x32 PNGs, and no page reads a PNG\n"
+    "from icons/matrix/ (index.html and script.js load icons/matrix/<name>.webp). It also resolved\n"
+    "its output to scripts/icons/matrix/, beside this file. Add or rebuild a mark from its saved\n"
+    "official logo:\n"
+    "  python3 scripts/add_matrix_logo.py --src <official svg or hi-res png> --out icons/matrix/<name>.webp\n"
+    "To reproduce the old bakes anyway: python3 scripts/build_matrix_icons.py --legacy-png\n"
+)
+
+
 def main():
+    if "--legacy-png" not in sys.argv[1:]:
+        sys.stderr.write(RETIRED)
+        return 1
     outdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icons", "matrix")
     os.makedirs(outdir, exist_ok=True)
 
@@ -627,4 +640,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
