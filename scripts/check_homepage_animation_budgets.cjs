@@ -39,7 +39,7 @@ const positional = args.filter((a, i) => !a.startsWith('--') && (vaultIdx < 0 ||
 const indexPath = positional[0] || path.join(__dirname, '..', 'index.html');
 const source = fs.readFileSync(indexPath, 'utf8');
 const vaultSource = vaultPath ? fs.readFileSync(vaultPath, 'utf8') : null;
-const out = { index: path.basename(indexPath), vault: vaultPath ? path.basename(vaultPath) : null, A: {}, B: {}, C: {} };
+const out = { index: path.basename(indexPath), vault: vaultPath ? path.basename(vaultPath) : null, A: {}, B: {}, C: {}, D: {} };
 const failures = [];
 function check(ok, message) {
   if (report) { if (!ok) failures.push(message); return; }
@@ -422,6 +422,37 @@ function dialMeasure(src, label) {
   const v = out.C.heroVel;
   check(within(ratio(v[120], v[60]), 0.9, 1.1) && within(ratio(v[240], v[60]), 0.9, 1.1), 'Hero pointer velocity must not depend on event rate (60Hz ' + v[60].toFixed(3) + ', 120Hz ' + v[120].toFixed(3) + ', 240Hz ' + v[240].toFixed(3) + ')');
   pass('hero pointer velocity at 240 px/s: 60/120/240Hz events ' + v[60].toFixed(2) + '/' + v[120].toFixed(2) + '/' + v[240].toFixed(2));
+}
+
+/* ── D. a coarse pointer seeds the field like a fine one; only a touch EVENT bursts ──
+   The burst in spawnCluster was keyed on (pointer: coarse) as well as the touch
+   event, so every phone seeded the 26 startup clusters and the idle drip at
+   2.74x the desktop's branch count before a finger landed. Same seed, same 26
+   startup calls, a coarse and a fine device: the counts must match, and a
+   touch event must still get its burst. */
+{
+  const gridCode = slice(source, '  /* Icon positions this frame', '  /* Express motion in 60 Hz steps', 'icon grid');
+  const easeCode = slice(source, '  var FRAME_MS = 1000 / 60;', '  /* Reserve actual ink bounds', 'frameEase');
+  const coralCode = slice(source, '  /* ══ CORAL REEF', '  /* ══ STACKED $', 'coral reef');
+  function seeded(coarse, touchEvent) {
+    const state = {
+      W: 1440, H: 800, Math: seededMath(5), performance: { now: () => 0 },
+      window: { matchMedia: (q) => ({ matches: coarse && /pointer:\s*coarse/.test(q) }) },
+      rctx: {}, pal: () => ({}), rgb: () => '', mixc: (a) => a
+    };
+    vm.createContext(state);
+    vm.runInContext(gridCode + '\n' + easeCode + '\n' + coralCode, state, { timeout: 5000 });
+    for (let i = 0; i < 26; i++) {
+      vm.runInContext('spawnCluster(rnd(W*0.05, W*0.95), rnd(H*0.1, H*0.9), 0.2, 0' + (touchEvent ? ', true' : '') + ')', state);
+    }
+    return state.branches.length;
+  }
+  const fine = seeded(false, false), coarse = seeded(true, false), touch = seeded(false, true);
+  out.D = { startupBranchesFine: fine, startupBranchesCoarse: coarse, startupBranchesTouchEvents: touch, coarseToFine: Number((coarse / fine).toFixed(3)) };
+  check(fine > 0, 'Fixture vacuity: the startup seeding must spawn branches (' + fine + ')');
+  check(coarse === fine, 'A coarse pointer must seed the startup field like a fine one (fine ' + fine + ', coarse ' + coarse + ' branches)');
+  check(touch > 2 * fine, 'A touch event must still get its burst (touch ' + touch + ' vs fine ' + fine + ' branches)');
+  pass('startup seeding: fine ' + fine + ', coarse ' + coarse + ', touch events ' + touch + ' branches from 26 clusters');
 }
 
 if (report) {

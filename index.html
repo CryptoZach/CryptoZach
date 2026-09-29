@@ -2808,14 +2808,16 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
      touch, pointermove fires ONLY while a finger is down, the browser competes
      for the same gesture, and pointerleave fires the moment it lifts, so the
      same constants produce a handful of small marks that are gone before they
-     register. Coarse pointers get a bigger, faster, wider burst per event so one
-     tap or short drag is legible; the mouse path is untouched. */
-  var COARSE = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+     register. A touch event gets a bigger, faster, wider burst so one tap or
+     short drag is legible; the mouse path is untouched. The burst keys on the
+     EVENT, not on the device: it was also keyed on (pointer: coarse), which
+     handed the 26 startup clusters and the idle drip 4 extra branches each on
+     every phone, 2.74x the desktop's seeded density before a finger landed. */
   function spawnCluster(cx, cy, v, now, isTouch){
     var count = (Math.random() < 0.3 ? 3 : 2) + (v > 0.8 ? 1 : 0);
     var speedMul = 1 + Math.min(0.6, v * 0.3);
     var spreadMul = 1 + Math.min(0.8, v * 0.4);
-    if (COARSE || isTouch){ count += 4; speedMul *= 1.45; spreadMul *= 1.7; }
+    if (isTouch){ count += 4; speedMul *= 1.45; spreadMul *= 1.7; }
     for (var i = 0; i < count; i++){
       var a = rnd(0, Math.PI * 2), d = rnd(3, 18) * spreadMul;
       spawnBranch(cx + Math.cos(a)*d, cy + Math.sin(a)*d, a + rnd(-0.5,0.5), 0, rnd(0.6,1.6)*speedMul);
