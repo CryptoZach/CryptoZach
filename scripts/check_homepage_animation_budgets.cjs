@@ -12,6 +12,13 @@
 //      display turned it twice as fast as the 60 Hz design;
 //   C. pointer speed was per EVENT on the dial and floored at one 60 Hz frame
 //      on the hero, so a faster pointer under-reported the same hand speed.
+// Section A also holds what the 2026-09-26 re-verification found left of
+// finding 2 (workflow dispatch site_homepage_animation_audit_remainder_...):
+// both pools admitted one past their cap (201 $, 181 branches), a $ past its
+// age still took part in the frame it expired on, and the caps bounded
+// strokes, not the distance checks behind them (a co-located cluster cost
+// 20,100 checks for 0 strokes). It now counts checks per frame at the
+// candidate seam, which reads the code the same way before and after.
 // Each section drives the real function text in a vm context with stubs and
 // judges behaviour, never wording. `--report` prints the measurements as JSON
 // and exits 0 whatever they say, which is how the before/after evidence was
@@ -61,13 +68,30 @@ function within(x, lo, hi) { return Number.isFinite(x) && x >= lo && x <= hi; }
   const coralCode = slice(source, '  /* ══ CORAL REEF', '  /* ══ STACKED $', 'coral reef');
   const capMatch = source.match(/var MESH_EDGE_CAP = (\d+)/);
   const degMatch = source.match(/MESH_DEGREE_CAP = (\d+)/);
+  const scanMatch = source.match(/MESH_SCAN_CAP = (\d+)/);
+  const poolMatch = source.match(/var MAXB = (\d+), MAXN = (\d+)/);
   out.A.meshEdgeCap = capMatch ? Number(capMatch[1]) : null;
   out.A.meshDegreeCap = degMatch ? Number(degMatch[1]) : null;
+  out.A.meshScanCap = scanMatch ? Number(scanMatch[1]) : null;
+  out.A.maxBranches = poolMatch ? Number(poolMatch[1]) : null;
+  out.A.maxNodes = poolMatch ? Number(poolMatch[2]) : null;
   const W = 1440, H = 800, FPS = 60, DT = 1000 / FPS;
+  /* A distance CHECK is one candidate pair the mesh examines, linked or not.
+     The stroke caps bound only the linked ones, so a cluster of co-located $
+     (an absorbed $ snaps onto its mark) is rejected pair by pair at no stroke
+     cost and was never bounded. The counter goes in at the candidate seam, so
+     the same instrument reads the code before and after a scan bound exists. */
+  const CANDIDATE_SEAM = 'var B = ob[b1];';
+  const seamAt = coralCode.indexOf(CANDIDATE_SEAM);
+  assert.ok(seamAt >= 0 && coralCode.indexOf(CANDIDATE_SEAM, seamAt + 1) < 0, 'The mesh candidate seam must appear exactly once: ' + CANDIDATE_SEAM);
+  const countedCoral = coralCode.replace(CANDIDATE_SEAM, CANDIDATE_SEAM + ' __check(A);');
+  /* The same code with the scan bound lifted: the control that shows whether
+     the bound shapes a frame at all. */
+  const unboundedCoral = scanMatch ? countedCoral.replace(/MESH_SCAN_CAP = \d+/, 'MESH_SCAN_CAP = 1e9') : countedCoral;
 
-  function harness(seed) {
+  function harness(seed, code) {
     let inMesh = 0;
-    const counts = { mesh: 0, total: 0 };
+    const counts = { mesh: 0, total: 0, checks: 0, perNode: new Map() };
     const rctx = {
       lineCap: 'butt', lineWidth: 1, strokeStyle: null, fillStyle: null, font: '', shadowColor: null,
       shadowBlur: 0, textAlign: '', textBaseline: '',
@@ -79,12 +103,19 @@ function within(x, lo, hi) { return Number.isFinite(x) && x >= lo && x <= hi; }
       W, H, rctx, Math: seededMath(seed), window: {}, performance: { now: () => 0 },
       pal: () => ({ olive: [1, 2, 3], blue: [4, 5, 6], mint: [7, 8, 9] }),
       rgb: (c, a) => ({ c, a }), mixc: (a) => a,
-      __enter() { inMesh++; }, __exit() { inMesh--; }
+      __enter() { inMesh++; }, __exit() { inMesh--; },
+      __check(A) { if (!inMesh) return; counts.checks++; counts.perNode.set(A, (counts.perNode.get(A) || 0) + 1); }
     };
     vm.createContext(state);
-    vm.runInContext(gridCode + '\n' + easeCode + '\n' + coralCode, state, { timeout: 5000 });
+    vm.runInContext(gridCode + '\n' + easeCode + '\n' + (code || countedCoral), state, { timeout: 5000 });
     vm.runInContext('var __mesh = drawNodeMesh; drawNodeMesh = function(P){ __enter(); try { return __mesh(P); } finally { __exit(); } };', state);
-    return { state, counts, tick(now) { counts.mesh = 0; counts.total = 0; vm.runInContext('drawReef(' + now + ', 1)', state, { timeout: 5000 }); } };
+    function reset() { counts.mesh = 0; counts.total = 0; counts.checks = 0; counts.perNode.clear(); }
+    function scanMax() { let m = 0; for (const v of counts.perNode.values()) if (v > m) m = v; return m; }
+    return {
+      state, counts, scanMax,
+      tick(now) { reset(); vm.runInContext('drawReef(' + now + ', 1)', state, { timeout: 5000 }); },
+      meshOnly() { reset(); vm.runInContext('drawNodeMesh(pal())', state, { timeout: 5000 }); }
+    };
   }
   /* Independent of the production grid: every pair the mesh WOULD link. */
   function candidates(nodes) {
@@ -104,8 +135,8 @@ function within(x, lo, hi) { return Number.isFinite(x) && x >= lo && x <= hi; }
     state.iconPts = pts;
     vm.runInContext('buildIconGrid()', state);
   }
-  function run(name, seconds, opts) {
-    const h = harness(opts.seed || 11);
+  function run(name, seconds, opts, code) {
+    const h = harness(opts.seed || 11, code);
     const s = h.state;
     if (opts.marks) marks(s, 220);
     s.active = !!opts.pointer; s.fade = opts.pointer ? 0.46 : 0.46;
@@ -124,21 +155,51 @@ function within(x, lo, hi) { return Number.isFinite(x) && x >= lo && x <= hi; }
       }
       h.tick(now);
       const c = candidates(s.nodes);
-      rows.push({ nodes: s.nodes.length, mesh: h.counts.mesh, total: h.counts.total, pairs: c.pairs, maxDeg: c.maxDeg });
+      rows.push({ nodes: s.nodes.length, branches: s.branches.length, mesh: h.counts.mesh, total: h.counts.total, pairs: c.pairs, maxDeg: c.maxDeg, checks: h.counts.checks, scan: h.scanMax() });
     }
-    const mesh = rows.map(r => r.mesh).sort((a, b) => a - b);
-    const q = p => mesh[Math.min(mesh.length - 1, Math.floor(p * mesh.length))];
+    const sorted = key => rows.map(r => r[key]).sort((a, b) => a - b);
+    const quantile = (arr, p) => arr[Math.min(arr.length - 1, Math.floor(p * arr.length))];
+    const mesh = sorted('mesh'), checks = sorted('checks');
     const peak = rows.reduce((m, r) => r.mesh > m.mesh ? r : m, rows[0]);
     const peakPairs = rows.reduce((m, r) => r.pairs > m.pairs ? r : m, rows[0]);
     const summary = {
       seconds, frames: rows.length, maxNodes: Math.max(...rows.map(r => r.nodes)),
-      meshEdgesMax: peak.mesh, meshEdgesP50: q(0.5), meshEdgesP99: q(0.99),
+      maxBranches: Math.max(...rows.map(r => r.branches)),
+      meshEdgesMax: peak.mesh, meshEdgesP50: quantile(mesh, 0.5), meshEdgesP99: quantile(mesh, 0.99),
+      meshChecksMax: checks[checks.length - 1], meshChecksP50: quantile(checks, 0.5), meshChecksP99: quantile(checks, 0.99),
+      meshScanPerNodeMax: Math.max(...rows.map(r => r.scan)),
       strokesMaxFrame: Math.max(...rows.map(r => r.total)),
       candidatePairsMax: peakPairs.pairs, candidateMaxDegree: Math.max(...rows.map(r => r.maxDeg)),
       frameOfPeak: rows.indexOf(peak)
     };
-    out.A[name] = summary;
+    if (!code) out.A[name] = summary;
+    Object.defineProperty(summary, 'meshPerFrame', { value: rows.map(r => r.mesh) });
     return summary;
+  }
+  /* Past both pools at one point: the shape a cluster of absorbed $ takes on its
+     mark, every pair inside the 5px floor, so every pair is examined and none is
+     drawn. Adding twice the pool also shows where each pool actually stops. */
+  function coLocated() {
+    const h = harness(11);
+    const s = h.state;
+    const adds = 2 * (out.A.maxNodes || 200);
+    for (let i = 0; i < adds; i++) vm.runInContext('addNode(720, 400, 0, 1000)', s);
+    for (let i = 0; i < 2 * (out.A.maxBranches || 180); i++) vm.runInContext('spawnBranch(720, 400, 0, 0)', s);
+    s.fade = 0.46;
+    h.meshOnly();
+    const n = s.nodes.length;
+    return { adds, nodes: n, branches: s.branches.length, meshChecks: h.counts.checks, meshEdges: h.counts.mesh, meshScanPerNodeMax: h.scanMax(), unboundedChecks: n * (n - 1) / 2 };
+  }
+  /* A $ past its age on this frame must take no part in it: two $ 30px apart,
+     one expired at the frame's time, would otherwise link once and then be
+     removed only after the mesh was drawn. */
+  function expiredNode() {
+    const h = harness(11);
+    const s = h.state;
+    s.fade = 0.46;
+    vm.runInContext('addNode(700, 400, 0, 0); nodes[0].maxAge = 3000; addNode(730, 400, 0, 4000); nodes[1].maxAge = 8000;', s);
+    h.tick(5000);
+    return { meshEdges: h.counts.mesh, meshChecks: h.counts.checks, nodesAfter: s.nodes.length };
   }
   const idle = run('idle', 20, {});
   const sweep = run('sweep', 8, { pointer: (t) => ({ x: 120 + ((t - 1000) * 0.3) % (W - 240), y: H / 2 + 60 * Math.sin(t / 500) }) });
@@ -160,6 +221,45 @@ function within(x, lo, hi) { return Number.isFinite(x) && x >= lo && x <= hi; }
   check(idle.meshEdgesMax < cap && sweep.meshEdgesMax < cap, 'Idle and sweep frames must never reach the global ceiling (idle ' + idle.meshEdgesMax + ', sweep ' + sweep.meshEdgesMax + ', cap ' + cap + ')');
   check(idle.meshEdgesP50 > 300, 'Fixture vacuity: the idle reef must still draw a mesh (p50 ' + idle.meshEdgesP50 + ')');
   pass('reef mesh budget: cap ' + cap + ', degree ' + out.A.meshDegreeCap + '; idle max ' + idle.meshEdgesMax + ', sweep max ' + sweep.meshEdgesMax + ', gap wiggle max ' + wiggle.meshEdgesMax + ' of ' + wiggle.candidatePairsMax + ' candidates, on marks ' + wiggleMarks.meshEdgesMax + ' of ' + wiggleMarks.candidatePairsMax);
+
+  /* The pools: MAXN and MAXB are the most the arrays may hold, never one more. */
+  check(out.A.maxNodes !== null && out.A.maxBranches !== null, 'The reef must declare MAXB and MAXN');
+  const cluster = coLocated();
+  out.A.coLocated = cluster;
+  check(cluster.adds > (out.A.maxNodes || 0), 'Fixture vacuity: the cluster must add more $ than the pool holds (' + cluster.adds + ')');
+  check(cluster.nodes === out.A.maxNodes, 'The node pool must stop at MAXN ' + out.A.maxNodes + ' (held ' + cluster.nodes + ')');
+  check(cluster.branches === out.A.maxBranches, 'The branch pool must stop at MAXB ' + out.A.maxBranches + ' (held ' + cluster.branches + ')');
+  for (const [name, s] of [['idle', idle], ['sweep', sweep], ['wiggleInGap', wiggle], ['wiggleOnMarks', wiggleMarks]]) {
+    check(s.maxNodes <= out.A.maxNodes && s.maxBranches <= out.A.maxBranches, name + ': pools exceeded (nodes ' + s.maxNodes + ' of ' + out.A.maxNodes + ', branches ' + s.maxBranches + ' of ' + out.A.maxBranches + ')');
+  }
+
+  /* The scan: checks per frame are bounded by MESH_SCAN_CAP per node, so the
+     worst frame costs at most MAXN x MESH_SCAN_CAP examinations. */
+  check(out.A.meshScanCap !== null, 'The mesh must declare MESH_SCAN_CAP, a bound on the candidates one $ examines per frame');
+  const scanCap = out.A.meshScanCap || Infinity;
+  const checkBound = scanCap * (out.A.maxNodes || 0);
+  out.A.meshChecksBound = Number.isFinite(checkBound) ? checkBound : null;
+  check(cluster.unboundedChecks > checkBound, 'Fixture vacuity: the co-located cluster must ask for more checks than the bound (' + cluster.unboundedChecks + ' vs ' + checkBound + ')');
+  check(cluster.meshChecks <= checkBound && cluster.meshScanPerNodeMax <= scanCap, 'Co-located cluster: ' + cluster.meshChecks + ' checks (bound ' + checkBound + '), ' + cluster.meshScanPerNodeMax + ' by one $ (cap ' + scanCap + ')');
+  for (const [name, s] of [['idle', idle], ['sweep', sweep], ['wiggleInGap', wiggle], ['wiggleOnMarks', wiggleMarks]]) {
+    check(s.meshChecksMax <= checkBound && s.meshScanPerNodeMax <= scanCap, name + ': ' + s.meshChecksMax + ' checks in one frame (bound ' + checkBound + '), ' + s.meshScanPerNodeMax + ' by one $ (cap ' + scanCap + ')');
+  }
+  /* Ordinary motion must not feel the scan bound: the same seeded idle and
+     sweep, with the bound lifted, draw the same mesh on every frame. */
+  if (out.A.meshScanCap !== null) {
+    const differs = (a, b) => a.meshPerFrame.reduce((n, v, i) => n + (v !== b.meshPerFrame[i] ? 1 : 0), 0);
+    const idleFree = run('idle', 20, {}, unboundedCoral);
+    const sweepFree = run('sweep', 8, { pointer: (t) => ({ x: 120 + ((t - 1000) * 0.3) % (W - 240), y: H / 2 + 60 * Math.sin(t / 500) }) }, unboundedCoral);
+    out.A.scanBoundControl = { idleFramesChanged: differs(idle, idleFree), sweepFramesChanged: differs(sweep, sweepFree), idleChecksMaxUnbounded: idleFree.meshChecksMax, sweepChecksMaxUnbounded: sweepFree.meshChecksMax };
+    check(out.A.scanBoundControl.idleFramesChanged === 0 && out.A.scanBoundControl.sweepFramesChanged === 0, 'The scan bound must not change an ordinary frame (idle ' + out.A.scanBoundControl.idleFramesChanged + ', sweep ' + out.A.scanBoundControl.sweepFramesChanged + ' frames changed)');
+  }
+
+  /* Expiry runs before the neighbour, absorb, pull and mesh passes. */
+  const expired = expiredNode();
+  out.A.expiredNode = expired;
+  check(expired.nodesAfter === 1, 'Fixture: the expired $ must be removed on its frame (held ' + expired.nodesAfter + ')');
+  check(expired.meshEdges === 0, 'An expired $ must take no part in the mesh on the frame it expires (' + expired.meshEdges + ' link(s) drawn)');
+  pass('reef pools and scan: nodes ' + cluster.nodes + ' of MAXN ' + out.A.maxNodes + ', branches ' + cluster.branches + ' of MAXB ' + out.A.maxBranches + '; co-located cluster ' + cluster.meshChecks + ' checks of ' + cluster.unboundedChecks + ' unbounded (bound ' + checkBound + '); worst ordinary frame idle ' + idle.meshChecksMax + ', sweep ' + sweep.meshChecksMax + ', gap wiggle ' + wiggle.meshChecksMax + ', on marks ' + wiggleMarks.meshChecksMax + ' checks');
 }
 
 /* ── B. the dial: the same seconds must move the same degrees at any refresh rate ── */

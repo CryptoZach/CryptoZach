@@ -2785,14 +2785,17 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   var active = false, fade = 0;
   function rnd(a, b){ return a + Math.random() * (b - a); }
 
+  /* MAXB and MAXN are the most each array holds. Both guards read `>` until
+     2026-09-29, which admitted one more: 181 branches and 201 $ (measured in
+     scripts/check_homepage_animation_budgets.cjs). */
   function spawnBranch(x, y, ang, gen, speed){
-    if (branches.length > MAXB) return;
+    if (branches.length >= MAXB) return;
     branches.push({ x:x, y:y, angle:ang, speed:speed || rnd(0.6,1.6), curve:rnd(-0.04,0.04),
                     life:0, maxLife:rnd(30,90), gen:gen||0, forked:false,
                     thickness:Math.max(0.3, 1.8 - (gen||0)*0.3), alpha:rnd(0.35,0.8) });
   }
   function addNode(x, y, gen, now){
-    if (nodes.length > MAXN) nodes.shift();
+    if (nodes.length >= MAXN) nodes.shift();
     nodes.push({ x:x, y:y, r:rnd(1.2, 3.0 - gen*0.3), alpha:rnd(0.3,0.8),
                  born:now, maxAge:rnd(3000,8000), gen:gen, pulse:rnd(0, Math.PI*2), ph:0,
                  free: now + GRACE_MS });
@@ -2908,10 +2911,18 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
      180-edge budget since it was written; the mesh had none. Each node now
      links to its first MESH_DEGREE_CAP neighbours and the frame stops at
      MESH_EDGE_CAP. A node past the degree cap is one already sitting in a
-     blob, where the extra lines only darkened it. */
+     blob, where the extra lines only darkened it.
+     Those two caps count STROKES; a pair that draws nothing still costs a
+     check. Co-located $ (an absorbed $ snaps onto its mark) are all inside the
+     5px floor, so a full pool on one point was 20,100 checks for 0 strokes.
+     MESH_SCAN_CAP bounds the candidates one $ examines per frame, so a frame
+     costs at most MAXN x 64 checks (10,720 on that cluster). Ordinary frames
+     examine at most 36 (idle) and 55 (sweep) per $, and the harness redraws
+     both with the cap lifted: no frame changes. Only a pointer held still on
+     a cluster loses a few links, inside the blob the degree cap thins. */
   var NCELL = 55, nodeGrid = {};
   var NOFF = [[0,0],[1,0],[-1,1],[0,1],[1,1]];
-  var MESH_EDGE_CAP = 1600, MESH_DEGREE_CAP = 16;
+  var MESH_EDGE_CAP = 1600, MESH_DEGREE_CAP = 16, MESH_SCAN_CAP = 64;
   function drawNodeMesh(P){
     nodeGrid = {};
     var i, n, k, drawn = 0;
@@ -2925,12 +2936,13 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       var bkt = nodeGrid[key];
       var sp = key.split(':'), gx = +sp[0], gy = +sp[1];
       for (var a1 = 0; a1 < bkt.length; a1++){
-        var A = bkt[a1];
-        for (var o = 0; o < 5 && A.deg < MESH_DEGREE_CAP; o++){
+        var A = bkt[a1], scanned = 0;
+        for (var o = 0; o < 5 && A.deg < MESH_DEGREE_CAP && scanned < MESH_SCAN_CAP; o++){
           var ob = o === 0 ? bkt : nodeGrid[(gx + NOFF[o][0]) + ':' + (gy + NOFF[o][1])];
           if (!ob) continue;
-          for (var b1 = o === 0 ? a1 + 1 : 0; b1 < ob.length && A.deg < MESH_DEGREE_CAP; b1++){
+          for (var b1 = o === 0 ? a1 + 1 : 0; b1 < ob.length && A.deg < MESH_DEGREE_CAP && scanned < MESH_SCAN_CAP; b1++){
             var B = ob[b1];
+            scanned++;
             if (B.deg >= MESH_DEGREE_CAP) continue;
             var dx = A.x - B.x, dy = A.y - B.y, d2 = dx*dx + dy*dy;
             if (d2 > 3025 || d2 < 25) continue;
@@ -2952,6 +2964,14 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     rctx.clearRect(0, 0, W, H);
     if (active && fade < 1) fade = Math.min(1, fade + 0.08 * step);
     if (!active && fade > 0.40) fade = Math.max(0.40, fade - 0.008 * step);
+
+    /* Expire first. The draw loop used to remove a $ past its age only after
+       the hold, transit, absorb, pull and mesh passes had run, so on the frame
+       it died it still sent travellers and drew links; and a full pool evicted
+       the oldest live $ for a new one while expired $ still held slots. */
+    for (var e = nodes.length - 1; e >= 0; e--){
+      if (now - nodes[e].born > nodes[e].maxAge) nodes.splice(e, 1);
+    }
 
     /* branches grow, curve, fork, and lay down nodes */
     for (var i = branches.length - 1; i >= 0; i--){
@@ -3043,7 +3063,6 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     for (var n = nodes.length - 1; n >= 0; n--){
       nd = nodes[n];
       var age = now - nd.born;
-      if (age > nd.maxAge){ nodes.splice(n, 1); continue; }
       var a = nd.alpha * fade;
       if (age > nd.maxAge * 0.7) a *= 1 - (age - nd.maxAge * 0.7) / (nd.maxAge * 0.3);
       if (nd.ph) a = Math.min(1, a * 1.3);
