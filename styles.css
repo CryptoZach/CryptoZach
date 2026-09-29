@@ -11273,12 +11273,17 @@ a.badge-access-code:hover{ background: #1a9c4b; border-color: #4ade80; color: #f
   margin-right: 0.5em;
   vertical-align: middle;
 }
+/* The heading row does not wrap, so a description that cannot shrink cannot
+   wrap either: at 320px "Programmable Money, Tokenization, and Market
+   Infrastructure" ran 229px past the research panel (measured 2026-09-29,
+   scripts/measure_text_escape.py). Shrinking lets it wrap beside the prefix. */
 .track-heading-desc{
   color: var(--muted);
   font-size: var(--font-size-min);
   font-weight: 400;
   line-height: 1.35;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .track-intro{
