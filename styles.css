@@ -3923,6 +3923,13 @@ section:has(.speaker-jump-to){
   text-align:left;
   margin:0;
   white-space:normal;
+  /* white-space:normal lets a summary pill's label wrap in the action row, but
+     the base .writing-arrow flex-shrink:0 kept the pill at its one-line width,
+     so at 320px "Control Layer summary" ran 27px past its group (measured
+     2026-09-29). A wrapping row still wraps pills before shrinking them; only
+     a pill too wide for a line on its own now narrows and wraps its label. */
+  flex-shrink:1;
+  min-width:0;
 }
 /* Same pill scale for summary CTA and SSRN / thread chips in the card action row */
 .writing-card-actions .writing-arrow,
@@ -4963,6 +4970,13 @@ section:has(.speaker-jump-to){
      slashes in the HTML keep "Policy / Markets / Stablecoins" together as a
      single unbreakable unit; this hint is the browser-level fallback. */
   text-wrap:pretty;
+  /* A unit longer than the line cannot break at all, and its min-content
+     width then widens the whole card column: at 320px on /research/ the
+     "Tokenized Cash / Treasury Operations / Operator Diligence" run pushed the
+     card's meta and evidence lines 10 to 183px past its clipped edge
+     (measured 2026-09-29, scripts/measure_text_escape.py). anywhere lets such
+     a unit break only when it cannot fit, so wide screens keep it whole. */
+  overflow-wrap:anywhere;
 }
 .writing-thread{
   display:inline-flex;
