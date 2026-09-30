@@ -6,6 +6,38 @@ const {chromium}=createRequire(path.resolve(process.env.PLAYWRIGHT_PACKAGE_ROOT|
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const paintBoundaryError='MATRIX_PAINT_OUT_OF_BOUNDS ';
 const report={asOf:new Date().toISOString(),root,mode:process.env.HOMEPAGE_INTERACTIONS_ONLY==='dial-captions'?'dial-captions':'full',method:'Unmodified served HTML, seeded scene, trusted browser input, passive canvas and event observations',sceneSeed:431,htmlSha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),cases:[]};
+// ONE HOMEPAGE LOAD, SETTLED BEFORE ITS FIRST READ (2026-09-29). goto resolves at DOMContentLoaded, and in
+// deploy run 36633453209 (commit bee02467) the read right after it, document.fonts.ready in the
+// reduced-motion case, failed with "Execution context was destroyed, most likely because of a
+// navigation" although the page has no navigation code; the same commit passed on rerun. So every load
+// waits for the load event (bounded; the steps after it time their own settling). If the first read
+// still loses its context, the loss is recorded in report.contextLosses and on stderr, and the homepage
+// is loaded again by a navigation of the gate's own and read once more: re-reading in place is not
+// enough, because until the page's own navigation commits, the frame still reports the old document's
+// URL and load state. One loss per run is absorbed as a browser race; a second loss in the run, a read
+// that loses its context again after the reload, or a page that ends on another URL (ignoring the
+// #fragment) fails the gate.
+// scripts/test_homepage_open_home.cjs drives each of those outcomes against pages that navigate on cue.
+const contextLost=e=>/Execution context was destroyed|Cannot find context with specified id/.test(String(e&&e.message||e));
+async function openHome(page,url,settleMs){
+ for(let retried=false;;retried=true){
+  await page.goto(url,{waitUntil:'domcontentloaded'});
+  await page.waitForLoadState('load',{timeout:15000}).catch(e=>{(report.loadWaits=report.loadWaits||[]).push({case:report.currentCase?report.currentCase.name:null,error:String(e&&e.message||e).split('\n')[0]});});
+  try{await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);break;}
+  catch(e){
+   if(!contextLost(e)||retried)throw e;
+   const losses=report.contextLosses=report.contextLosses||[];
+   const loss={case:report.currentCase?report.currentCase.name:null,url:page.url(),error:String(e.message||e).split('\n')[0]};
+   losses.push(loss);console.error('homepage read lost its context after load; recorded, loading the page again: '+JSON.stringify(loss));
+   assert.ok(losses.length<=1,'one lost context per run is a browser race; a second means the page navigates: '+JSON.stringify(losses));
+   // Let a navigation the page started commit before the gate's own replaces it.
+   await pause(500);
+  }
+ }
+ // A same-document #fragment (script.js rewrites it for jump links) is not a navigation away.
+ assert.equal(page.url().split('#')[0],url.split('#')[0],'the homepage stays on its own URL after load');
+ if(settleMs)await pause(settleMs);
+}
 function observe(boundaryErrorPrefix){
  const state=window.__interactionProbe={frames:[],events:[],reefPaint:[],input:null,current:null,brands:new Map(),nextBrand:1,errors:[],containment:{positivePaints:0,images:0,text:0,violations:0,minAlpha:1,firstViolation:null},dial:{current:null,latest:null,serial:0}};
  // Observe the animation clock separately from time spent waiting in the callback queue.
@@ -374,7 +406,7 @@ async function checkShell(page,url,mobile,reduced,cdp){
  if(mobile){
   // Isolate native zoom so its visual viewport cannot leak into later gesture checks.
   const pinchPage=await page.context().newPage(),pinchCdp=await page.context().newCDPSession(pinchPage);
-  await pinchPage.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([pinchPage.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(300);
+  await openHome(pinchPage,url,300);
   await pinchPage.locator('.signal').evaluate(host=>{const r=host.getBoundingClientRect();scrollBy(0,r.top+r.height*.5-innerHeight*.55);});await pause(200);
   const pinch=await pinchPage.locator('.signal').evaluate(host=>{const r=host.getBoundingClientRect();return{x:r.left+r.width*.5,y:r.top+r.height*.5,r:r.width*.23,scale:visualViewport.scale};});
   await touch(pinchCdp,'touchStart',[{x:pinch.x-pinch.r,y:pinch.y},{x:pinch.x+pinch.r,y:pinch.y}]);await pause(60);
@@ -384,7 +416,7 @@ async function checkShell(page,url,mobile,reduced,cdp){
   await touch(pinchCdp,'touchEnd',[]);await pinchPage.close();
  }
  // Restore an untouched homepage before the existing matrix, coral and dial checks.
- await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await page.evaluate(()=>scrollTo(0,0));await pause(700);
+ await openHome(page,url,0);await page.evaluate(()=>scrollTo(0,0));await pause(700);
  return result;
 }
 
@@ -526,7 +558,7 @@ async function checkCase(browser,url,mobile,reduced){
   page.on('console',message=>{const value=message.text();if(message.type()==='error'&&value.startsWith(paintBoundaryError))errors.push(value);});
  });
  const page=await context.newPage(),cdp=mobile?await context.newCDPSession(page):null;
- await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
+ await openHome(page,url,700);
  spec.startupContainment=await page.evaluate(()=>{__interactionProbe.finish();return __interactionProbe.containment;});
  assert.deepEqual(errors,[],'Every positive-alpha matrix image, text glyph and trail stays inside the backing canvas');
  assert.ok(spec.startupContainment.images>0&&spec.startupContainment.text>0,'Containment observes both images and measured text ink');
@@ -539,7 +571,7 @@ async function checkCase(browser,url,mobile,reduced){
  if(mobile&&!reduced)spec.touchFlow=await checkTouchFlow(page,cdp);
  await checkDialCaptions(page,mobile,reduced,cdp);
  // Start nudge checks from a fresh scene after the longer shell and flow checks.
- await page.goto(url,{waitUntil:'domcontentloaded'});await Promise.race([page.evaluate(()=>document.fonts.ready),pause(4000)]);await pause(700);
+ await openHome(page,url,700);
  await reset(page);
  if(reduced){
   const before=await page.locator('#mtx').evaluate(c=>c.toDataURL());await touch(cdp,'touchStart',[{x:90,y:600}]);
@@ -603,7 +635,8 @@ async function checkCase(browser,url,mobile,reduced){
  spec.finalContainment=await page.evaluate(()=>{__interactionProbe.finish();return __interactionProbe.containment;});
  assert.deepEqual(errors,[],'Native page errors and matrix paint containment failures');report.cases.push(spec);delete report.currentCase;console.log(JSON.stringify(spec));await context.close();
 }
-(async()=>{
+// Run as a gate only when invoked directly; scripts/test_homepage_open_home.cjs requires this file for openHome.
+if(require.main===module)(async()=>{
  assert.ok(fs.existsSync(path.join(root,'index.html')),'target directory must contain index.html');
  const mime={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.woff2':'font/woff2','.json':'application/json'};
  const server=http.createServer((req,res)=>{try{let file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}if(fs.statSync(file).isDirectory())file=path.join(file,'index.html');res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream','Cache-Control':'no-store'});fs.createReadStream(file).pipe(res);}catch{res.writeHead(404).end();}});
@@ -612,3 +645,4 @@ async function checkCase(browser,url,mobile,reduced){
  catch(e){report.pass=false;report.error=e.stack;process.exitCode=1;console.error(e.stack);}
  finally{console.log(JSON.stringify(report,null,2));if(process.env.HOMEPAGE_INTERACTIONS_REPORT)fs.writeFileSync(process.env.HOMEPAGE_INTERACTIONS_REPORT,JSON.stringify(report,null,2)+'\n');if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
+module.exports={openHome,contextLost,report};

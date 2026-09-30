@@ -133,6 +133,12 @@ jobs:
         timeout-minutes: 5
         run: npx playwright install --with-deps chromium
 
+      - name: Homepage load helper test (the gate's openHome)
+        # Pages that lose their execution context on cue: the gate's loader must absorb
+        # one browser race per run and still fail a page that navigates or redirects.
+        timeout-minutes: 3
+        run: node scripts/test_homepage_open_home.cjs
+
       - name: Built homepage native interaction gate
         # Test the post-processed artifact that Pages will publish. A source-only
         # helper test cannot prove the loaded page still delivers the interaction.
