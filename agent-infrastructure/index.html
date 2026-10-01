@@ -210,10 +210,10 @@
       <div class="section-title">
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
-        <p class="ai-hero-support">The evidence is below: dated measurements from more than 54,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
-        <p class="ai-measured-as">Updated <time datetime="2026-09-30">2026-09-30</time>. Every figure is regenerated from its producer at each revision, and changes from prior measurements remain visible.</p>
+        <p class="ai-hero-support">The evidence is below: dated measurements from more than 55,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
+        <p class="ai-measured-as">Updated <time datetime="2026-10-01">2026-10-01</time>. Every figure is regenerated from its producer at each revision, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
-      data-scale-commits-floored="54000"
+      data-scale-commits-floored="55000"
       data-scale-concurrency-p75="14"
       data-scale-concurrency-peak="61"
       data-scale-advisory-firings="22349"
@@ -238,7 +238,7 @@
 
       </div>
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
-        <div class="ai-proof-item" role="listitem"><strong>54,000+</strong><span>commits observed since March</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>55,000+</strong><span>commits observed since March</span></div>
         <div class="ai-proof-item" role="listitem"><strong>14</strong><span>typical overlap; peak 61</span></div>
         <div class="ai-proof-item" role="listitem"><strong>22,349</strong><span>advisory outcomes graded</span></div>
         <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>49 in 50</strong><span>armed gates held</span></div>
@@ -340,7 +340,7 @@
         <p class="ai-note">The figures below describe that workload as measured on 2026-09-30; the concurrency figures are from 2026-09-28, and the pre-commit, hard-gate and queue figures are from 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
-            <p class="ai-metric-value">54,000+</p>
+            <p class="ai-metric-value">55,000+</p>
             <p class="ai-metric-label">Commits observed</p>
             <p class="ai-metric-was">since 5 March 2026</p>
           </article>
@@ -392,7 +392,7 @@
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Commits</th><td class="ai-val">over 54,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
+                <tr><th scope="row">Commits</th><td class="ai-val">over 55,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">14; peak 61</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-28 across both hosts: median 7, typical busy overlap 14 (75th percentile), 90th percentile 21, peak 61 on 2026-09-05. The claim of 12 to 55 concurrent agents, set 2026-09-26, is supported at both ends: the typical overlap of 14 is at least 12, and the peak of 61 exceeds 55. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">22,349</td><td class="ai-how">Across 28 classes over 31 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
