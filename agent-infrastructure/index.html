@@ -222,7 +222,7 @@
       data-scale-coherence-gate-checks="192"
       data-scale-hard-fail-checks="51"
       data-scale-unsuppressable-checks="2"
-      data-scale-skill-library="77"
+      data-scale-skill-library="78"
       data-scale-canonical-state-files="33"
       data-scale-uspto-applications="37"
       data-scale-uspto-families="27"
@@ -337,7 +337,7 @@
       <div class="explainer">
         <h2 id="scale-title">System scale</h2>
         <p>The identity rules above, and the safeguards measured in the next sections, run inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
-        <p class="ai-note">The figures below describe that workload as measured on 2026-09-30; the concurrency figures are from 2026-09-28, and the pre-commit, hard-gate and queue figures are from 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
+        <p class="ai-note">The figures below describe that workload as measured on 2026-09-30; the skill count is from 2026-10-01, the concurrency figures are from 2026-09-28, and the pre-commit, hard-gate and queue figures are from 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
             <p class="ai-metric-value">55,000+</p>
@@ -370,7 +370,7 @@
             <p class="ai-metric-was">5,329 filed, 2,814 closed</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">77</p>
+            <p class="ai-metric-value">78</p>
             <p class="ai-metric-label">Program skills</p>
             <p class="ai-metric-was">load only when a task requires them</p>
           </article>
@@ -387,7 +387,7 @@
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the concurrency row was measured 2026-09-28, and the pre-commit gate, hard-refusal and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the skill library row was measured 2026-10-01, the concurrency row was measured 2026-09-28, and the pre-commit gate, hard-refusal and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
@@ -398,7 +398,7 @@
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">22,349</td><td class="ai-how">Across 28 classes over 31 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
                 <tr><th scope="row">Hard refusals</th><td class="ai-val">2,596</td><td class="ai-how">Calls that reached an armed gate across the 7 classes that carry one, over the 73 days through 2026-09-21. 2,547 refused, 49 overridden with the documented escape <span class="ai-class-gloss">[was 296 reached, 254 refused]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
-                <tr><th scope="row">Skill library</th><td class="ai-val">77</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
+                <tr><th scope="row">Skill library</th><td class="ai-val">78</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
                 <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
               </tbody>
             </table>
@@ -601,7 +601,7 @@
         <ol class="ai-principle-list">
           <li>
             <h3>Load procedures only when they are relevant</h3>
-            <p>The system has 77 program skills, but none loads automatically at session start. Each skill exposes a short description first; its full instructions load only when the task requires them.</p>
+            <p>The system has 78 program skills, but none loads automatically at session start. Each skill exposes a short description first; its full instructions load only when the task requires them.</p>
           </li>
           <li>
             <h3>Write large results to durable storage</h3>
