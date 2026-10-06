@@ -51,6 +51,8 @@ def plan_line(line, n, rel):
             span_text = m.group(0).lower()
             if any(mark in span_text for mark in clc.DECOMP_MARKERS):
                 continue
+            if clc.is_narrative(line, m.start("n")):
+                continue
             tok = m.group("n")
             val = clc.token_to_int(tok)
             if val is None or val == n:

@@ -107,36 +107,62 @@ for _w, _v in _TENS.items():
     for _i, _o in enumerate(_ONES[1:10], start=1):
         WORD_TO_INT[f"{_w}-{_o}"] = _v + _i
         WORD_TO_INT[f"{_w} {_o}"] = _v + _i
-INT_TO_WORD = {v: k for k, v in WORD_TO_INT.items()}
+# Written form: the hyphenated compound ("twenty-one"), never the spaced one.
+INT_TO_WORD = {}
+for _k, _v in WORD_TO_INT.items():
+    if " " not in _k:
+        INT_TO_WORD.setdefault(_v, _k)
+
+# The count token. A compound ("twenty-one", "twenty one") is tried first: with
+# a bare [A-Za-z]+ the hyphen stopped the match, so "twenty-one federal comment
+# letters" was read as ONE and the renderer proposed "Twenty one" (2026-10-05,
+# the twenty-first filing).
+COUNT_TOKEN = (r"(?P<n>(?:twenty|thirty|forty)[- ](?:one|two|three|four|five|six|seven|eight|nine)"
+               r"|[A-Za-z]+|\d+)")
+# A number word in a non-captured position (agencies, dockets).
+NUMBER_WORD = r"(?:[A-Za-z]+(?:-[A-Za-z]+)?|\d+)"
 
 # Total-count patterns. Each captures the count token in group 'n'. These target
 # the WHOLE-PROGRAM federal-letter figure only, not its decomposition.
 COUNT_PATTERNS = [
-    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+federal\s+comment\s+letters?", re.I),
+    re.compile(COUNT_TOKEN + r"\s+federal\s+comment\s+letters?", re.I),
     # "N federal regulatory comment letters": the same total figure with "regulatory"
     # inserted. Six mentions across resume/policy, resume/product, and
     # agent-infrastructure sat at "fifteen" through the sixteenth filing (2026-08-24)
     # while this guard reported OK, because the pattern above requires the two words
     # to be adjacent.
-    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+federal\s+regulatory\s+comment\s+letters?", re.I),
-    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+comment\s+letters?\s+filed", re.I),
+    re.compile(COUNT_TOKEN + r"\s+federal\s+regulatory\s+comment\s+letters?", re.I),
+    re.compile(COUNT_TOKEN + r"\s+comment\s+letters?\s+filed", re.I),
     # Verb-first order: "filed fifteen comment letters". The noun-first pattern above
     # does not match it, which is how research/index.html sat at "fourteen" through the
     # 15th filing while this guard reported OK (2026-07-24).
-    re.compile(r"filed\s+(?P<n>[A-Za-z]+|\d+)\s+comment\s+letters?", re.I),
-    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+letters?,\s+(?:seven|eight|nine|six|five|four)\s+(?:federal\s+)?agenc", re.I),
-    re.compile(r"(?P<n>[A-Za-z]+|\d+)\s+letters?\s+across\s+(?:nine|eight|seven|six|five|ten)\s+docket", re.I),
-    re.compile(r"Program\s+\((?P<n>[A-Za-z]+|\d+)\s+letters?", re.I),
-    re.compile(r"The\s+(?P<n>[A-Za-z]+|\d+)\s+letters?\s*<", re.I),
+    re.compile(r"filed\s+" + COUNT_TOKEN + r"\s+comment\s+letters?", re.I),
+    re.compile(COUNT_TOKEN + r"\s+letters?,\s+" + NUMBER_WORD + r"\s+(?:federal\s+)?agenc", re.I),
+    re.compile(COUNT_TOKEN + r"\s+letters?\s+across\s+" + NUMBER_WORD + r"\s+docket", re.I),
+    re.compile(r"Program\s+\(" + COUNT_TOKEN + r"\s+letters?", re.I),
+    re.compile(r"The\s+" + COUNT_TOKEN + r"\s+letters?\s*<", re.I),
     # "All N letters" nav copy: <a class="access-link">All fifteen letters</a> plus the
     # sibling <span> blurb, on every letter page. This phrasing carried 28 of the 32
     # stale mentions found 2026-07-24 while this guard reported OK.
-    re.compile(r"All\s+(?P<n>[A-Za-z]+|\d+)\s+letters\b", re.I),
+    re.compile(r"All\s+" + COUNT_TOKEN + r"\s+letters\b", re.I),
 ]
 
 # Substrings that mark a match as a decomposition, not the total. Skip if present
 # in the matched span itself.
 DECOMP_MARKERS = ("principal", "supplement")
+
+# A point-in-time narrative, not a current claim: "bringing the program to eighteen
+# letters across thirteen dockets", "brought it to nineteen letters". The letters
+# showcase and the overview narrate each filing this way, and those figures stay
+# correct after the next filing. Matched against the text just BEFORE the count token.
+NARRATIVE_LEAD = re.compile(
+    r"(?:bring|brings|bringing|brought)\s+(?:the\s+program|it)\s+to\s+(?:<strong>\s*)?$",
+    re.I)
+
+
+def is_narrative(text, token_start):
+    """True when the count token at token_start completes a point-in-time narrative."""
+    return bool(NARRATIVE_LEAD.search(text[max(0, token_start - 80):token_start]))
 
 # Intentional non-current mentions, exempted by (path-suffix, token-lower).
 # The overview page narrates the program's growth (April batch of eight, then
@@ -280,6 +306,8 @@ def scan(root, n):
                 for m in pat.finditer(line):
                     span = m.group(0).lower()
                     if any(mark in span for mark in DECOMP_MARKERS):
+                        continue
+                    if is_narrative(line, m.start("n")):
                         continue
                     val = token_to_int(m.group("n"))
                     if val is None:
