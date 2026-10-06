@@ -145,6 +145,14 @@ COUNT_PATTERNS = [
     # sibling <span> blurb, on every letter page. This phrasing carried 28 of the 32
     # stale mentions found 2026-07-24 while this guard reported OK.
     re.compile(r"All\s+" + COUNT_TOKEN + r"\s+letters\b", re.I),
+    # Three phrasings that sat at "nineteen"/"19" through the twenty-first filing
+    # (2026-10-06) while this guard reported OK on 79 mentions: the homepage hero
+    # tile "19 federal letters", the letter-page nav "All nineteen filed letters"
+    # (two on the R-1835 page; the two new pages use the same form), and the
+    # speaker page's Offer JSON-LD "Track record: nineteen letters filed".
+    re.compile(COUNT_TOKEN + r"\s+federal\s+letters?\b", re.I),
+    re.compile(r"All\s+" + COUNT_TOKEN + r"\s+filed\s+letters\b", re.I),
+    re.compile(COUNT_TOKEN + r"\s+letters?\s+filed\b", re.I),
 ]
 
 # Substrings that mark a match as a decomposition, not the total. Skip if present
