@@ -672,15 +672,35 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
 
     <section class="reveal mvep-scorecard" id="mvep-scorecard" aria-labelledby="mvep-scorecard-title">
       <div class="section-title">
-        <h2 id="mvep-scorecard-title">Score a product against MVEP</h2>
-        <p class="structure-page-lede">The ten categories with the artifact each requires and the test each applies, as the paper specifies them. Record a verdict per category; the summary states whether the gate is open, and the link carries your verdicts so a colleague can open the same scorecard. Nothing leaves your browser.</p>
+        <h2 id="mvep-scorecard-title">The MVEP scorecard: fourteen products the paper scored, and yours</h2>
+        <p class="structure-page-lede">Exhibit 1 of the <a href="/papers/mvep/">MVEP paper</a> scores fourteen tokenized dollar products on the ten categories and the Cash Settlement Asset companion test: 154 verdicts, each tied to the place in the paper that establishes it. Exhibit 3 turns each column into a rating by its weakest cell. Both are loaded here, unchanged.</p>
       </div>
-      <form class="mvep-sc" id="mvep-sc" autocomplete="off">
-        <div class="mvep-sc__head">
-          <label for="mvep-sc-product">Product under review</label>
-          <input id="mvep-sc-product" name="product" type="text" maxlength="80" placeholder="e.g. a tokenized money market fund share" autocomplete="off">
-          <label for="mvep-sc-reviewer">Reviewed by (optional)</label>
-          <input id="mvep-sc-reviewer" name="reviewer" type="text" maxlength="60" placeholder="Name or team" autocomplete="off">
+      <div class="mvep-sc__how" role="list">
+        <div class="mvep-sc__how-item" role="listitem"><span class="mvep-sc__step" aria-hidden="true">1</span><p><strong>Read a product the paper scored.</strong> Choose it from the list. Each category shows the paper's verdict and its source; the rating panel shows the three equivalence dimensions, what binds, and the strength score.</p></div>
+        <div class="mvep-sc__how-item" role="listitem"><span class="mvep-sc__step" aria-hidden="true">2</span><p><strong>Score your own product.</strong> Choose "Your own product", record a verdict per category in the paper's vocabulary, and the paper's rule rates it beside a comparator you pick. Nothing leaves your browser; "Copy link" carries your verdicts to a colleague.</p></div>
+      </div>
+      <form class="mvep-sc" id="mvep-sc" autocomplete="off" data-mode="read">
+        <div class="mvep-sc__controls">
+          <div class="mvep-sc__control">
+            <label for="mvep-sc-product">Product</label>
+            <select id="mvep-sc-product" name="product"><option value="USDC">USDC (Circle)</option></select>
+          </div>
+          <div class="mvep-sc__control mvep-sc__own" data-own hidden>
+            <label for="mvep-sc-name">Name of your product</label>
+            <input id="mvep-sc-name" name="name" type="text" maxlength="80" placeholder="e.g. a tokenized money market fund share" autocomplete="off">
+          </div>
+          <div class="mvep-sc__control mvep-sc__own" data-own hidden>
+            <label for="mvep-sc-reviewer">Reviewed by (optional)</label>
+            <input id="mvep-sc-reviewer" name="reviewer" type="text" maxlength="60" placeholder="Name or team" autocomplete="off">
+          </div>
+          <div class="mvep-sc__control mvep-sc__own" data-own hidden>
+            <label for="mvep-sc-compare">Compare with</label>
+            <select id="mvep-sc-compare" name="compare"><option value="">No comparator</option></select>
+          </div>
+        </div>
+        <div class="mvep-sc__legend" aria-label="Verdict vocabulary">
+          <span class="mvep-v mvep-v--pass">Pass</span> <span class="mvep-v mvep-v--partial">Partial</span> <span class="mvep-v mvep-v--ambiguous">Ambiguous</span> <span class="mvep-v mvep-v--fail">Fail</span> <span class="mvep-v mvep-v--nd">Not disclosed</span> <span class="mvep-v mvep-v--unassessed">Unassessed</span>
+          <p>Not disclosed is an assessed verdict: a documented search found no published issuer artifact for the category. Unassessed means no verdict of record exists. A category's rating tier is set by its weakest cell on the ladder Pass, Partial, Ambiguous, Not disclosed, Fail; the strength score is the mean rung (1.0 to 5.0) and orders products within a tier without ever lifting it.</p>
         </div>
         <ol class="mvep-sc__list">
           <li class="mvep-sc__row" data-cat="1" data-critical="1">
@@ -689,14 +709,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify the tokenized representation preserves legal rights equivalent to the underlying instrument.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> rights-parity memo with counsel sign-off. <strong>Pass:</strong> claim holder enjoys the same redemption, recourse, and information rights as a holder of the underlying. <strong>Fail:</strong> any right is degraded, gated, or contingent on operator discretion.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Rights Parity</legend>
-              <label><input type="radio" name="c1" value="P"> Pass</label>
-              <label><input type="radio" name="c1" value="F"> Fail</label>
-              <label><input type="radio" name="c1" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c1" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Rights Parity</legend>
+              <label><input type="radio" name="c1" value="P"> Pass</label><label><input type="radio" name="c1" value="T"> Partial</label><label><input type="radio" name="c1" value="A"> Ambiguous</label><label><input type="radio" name="c1" value="F"> Fail</label><label><input type="radio" name="c1" value="N"> Not disclosed</label><label><input type="radio" name="c1" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Rights Parity</span><input type="text" name="n1" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Rights Parity</span><input type="text" name="n1" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="2">
             <div class="mvep-sc__cat">
@@ -704,14 +722,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Identify the authoritative ledger of ownership and the procedure that reconciles on-chain state with off-chain books.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> system-of-record designation memo plus reconciliation cadence policy. <strong>Pass:</strong> a single authoritative record exists with a documented reconciliation procedure. <strong>Fail:</strong> conflicting records or undefined reconciliation.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for System of Record</legend>
-              <label><input type="radio" name="c2" value="P"> Pass</label>
-              <label><input type="radio" name="c2" value="F"> Fail</label>
-              <label><input type="radio" name="c2" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c2" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for System of Record</legend>
+              <label><input type="radio" name="c2" value="P"> Pass</label><label><input type="radio" name="c2" value="T"> Partial</label><label><input type="radio" name="c2" value="A"> Ambiguous</label><label><input type="radio" name="c2" value="F"> Fail</label><label><input type="radio" name="c2" value="N"> Not disclosed</label><label><input type="radio" name="c2" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for System of Record</span><input type="text" name="n2" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for System of Record</span><input type="text" name="n2" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="3">
             <div class="mvep-sc__cat">
@@ -719,14 +735,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify mechanism for reconciling the on-chain token supply against the off-chain reserve or underlying.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> reconciliation procedure document plus attestation cadence. <strong>Pass:</strong> continuous or daily reconciliation with auditor sign-off. <strong>Fail:</strong> reconciliation gap, manual override path, or missing attestation.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Records and Reconciliation</legend>
-              <label><input type="radio" name="c3" value="P"> Pass</label>
-              <label><input type="radio" name="c3" value="F"> Fail</label>
-              <label><input type="radio" name="c3" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c3" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Records and Reconciliation</legend>
+              <label><input type="radio" name="c3" value="P"> Pass</label><label><input type="radio" name="c3" value="T"> Partial</label><label><input type="radio" name="c3" value="A"> Ambiguous</label><label><input type="radio" name="c3" value="F"> Fail</label><label><input type="radio" name="c3" value="N"> Not disclosed</label><label><input type="radio" name="c3" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Records and Reconciliation</span><input type="text" name="n3" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Records and Reconciliation</span><input type="text" name="n3" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="4" data-critical="1">
             <div class="mvep-sc__cat">
@@ -734,14 +748,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify segregation model for reserves or underlying, custody agreement terms, and customer-property characterization under stress.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> segregation model plus custody agreement plus customer-property memo. <strong>Pass:</strong> reserves are bankruptcy-remote and segregated under enforceable agreement. <strong>Fail:</strong> commingling, undocumented custody chain, or customer-property uncertainty.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Custody and Customer Property</legend>
-              <label><input type="radio" name="c4" value="P"> Pass</label>
-              <label><input type="radio" name="c4" value="F"> Fail</label>
-              <label><input type="radio" name="c4" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c4" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Custody and Customer Property</legend>
+              <label><input type="radio" name="c4" value="P"> Pass</label><label><input type="radio" name="c4" value="T"> Partial</label><label><input type="radio" name="c4" value="A"> Ambiguous</label><label><input type="radio" name="c4" value="F"> Fail</label><label><input type="radio" name="c4" value="N"> Not disclosed</label><label><input type="radio" name="c4" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Custody and Customer Property</span><input type="text" name="n4" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Custody and Customer Property</span><input type="text" name="n4" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="5" data-critical="1">
             <div class="mvep-sc__cat">
@@ -749,14 +761,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify what happens to token holders if the issuer, custodian, or operator enters insolvency.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> bankruptcy-priority memo with scenario analysis. <strong>Pass:</strong> clear priority class for holders, with worked stress scenarios. <strong>Fail:</strong> undefined priority, subordination risk, or no scenario analysis.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Insolvency Posture</legend>
-              <label><input type="radio" name="c5" value="P"> Pass</label>
-              <label><input type="radio" name="c5" value="F"> Fail</label>
-              <label><input type="radio" name="c5" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c5" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Insolvency Posture</legend>
+              <label><input type="radio" name="c5" value="P"> Pass</label><label><input type="radio" name="c5" value="T"> Partial</label><label><input type="radio" name="c5" value="A"> Ambiguous</label><label><input type="radio" name="c5" value="F"> Fail</label><label><input type="radio" name="c5" value="N"> Not disclosed</label><label><input type="radio" name="c5" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Insolvency Posture</span><input type="text" name="n5" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Insolvency Posture</span><input type="text" name="n5" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="6" data-critical="1">
             <div class="mvep-sc__cat">
@@ -764,14 +774,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Identify when a token transfer is final under the chain&#x27;s consensus and under applicable law.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> settlement-finality memo addressing both layers. <strong>Pass:</strong> documented finality at both layers with reorganization handling. <strong>Fail:</strong> finality gap between layers, or chain-reorg risk without recovery plan.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Settlement Finality</legend>
-              <label><input type="radio" name="c6" value="P"> Pass</label>
-              <label><input type="radio" name="c6" value="F"> Fail</label>
-              <label><input type="radio" name="c6" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c6" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Settlement Finality</legend>
+              <label><input type="radio" name="c6" value="P"> Pass</label><label><input type="radio" name="c6" value="T"> Partial</label><label><input type="radio" name="c6" value="A"> Ambiguous</label><label><input type="radio" name="c6" value="F"> Fail</label><label><input type="radio" name="c6" value="N"> Not disclosed</label><label><input type="radio" name="c6" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Settlement Finality</span><input type="text" name="n6" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Settlement Finality</span><input type="text" name="n6" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="7">
             <div class="mvep-sc__cat">
@@ -779,14 +787,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify procedures for chain reorganizations, smart-contract exploits, validator collusion, custody breach, and other exception conditions.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> exception-handling runbook with decision authority. <strong>Pass:</strong> documented runbook covering material exception classes. <strong>Fail:</strong> any failure mode with no documented recovery path.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Reorganization and Exception Handling</legend>
-              <label><input type="radio" name="c7" value="P"> Pass</label>
-              <label><input type="radio" name="c7" value="F"> Fail</label>
-              <label><input type="radio" name="c7" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c7" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Reorganization and Exception Handling</legend>
+              <label><input type="radio" name="c7" value="P"> Pass</label><label><input type="radio" name="c7" value="T"> Partial</label><label><input type="radio" name="c7" value="A"> Ambiguous</label><label><input type="radio" name="c7" value="F"> Fail</label><label><input type="radio" name="c7" value="N"> Not disclosed</label><label><input type="radio" name="c7" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Reorganization and Exception Handling</span><input type="text" name="n7" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Reorganization and Exception Handling</span><input type="text" name="n7" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="8" data-critical="1">
             <div class="mvep-sc__cat">
@@ -794,14 +800,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify governance authority for protocol upgrades, parameter changes, and emergency interventions.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> governance charter plus change-control procedure plus emergency-pause documentation. <strong>Pass:</strong> clear authority chain with procedural gates. <strong>Fail:</strong> undocumented upgrade authority or unilateral emergency power.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Governance and Change Control</legend>
-              <label><input type="radio" name="c8" value="P"> Pass</label>
-              <label><input type="radio" name="c8" value="F"> Fail</label>
-              <label><input type="radio" name="c8" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c8" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Governance and Change Control</legend>
+              <label><input type="radio" name="c8" value="P"> Pass</label><label><input type="radio" name="c8" value="T"> Partial</label><label><input type="radio" name="c8" value="A"> Ambiguous</label><label><input type="radio" name="c8" value="F"> Fail</label><label><input type="radio" name="c8" value="N"> Not disclosed</label><label><input type="radio" name="c8" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Governance and Change Control</span><input type="text" name="n8" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Governance and Change Control</span><input type="text" name="n8" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="9" data-critical="1">
             <div class="mvep-sc__cat">
@@ -809,14 +813,12 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">Verify substantive disclosure of reserve composition, custody, redemption rights, governance, and stress posture at the point-of-use.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> disclosure register mapped to MVEP categories. <strong>Pass:</strong> holder can answer the key diligence questions from disclosed materials. <strong>Fail:</strong> critical fact buried, omitted, or only available on request.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Disclosures</legend>
-              <label><input type="radio" name="c9" value="P"> Pass</label>
-              <label><input type="radio" name="c9" value="F"> Fail</label>
-              <label><input type="radio" name="c9" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c9" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Disclosures</legend>
+              <label><input type="radio" name="c9" value="P"> Pass</label><label><input type="radio" name="c9" value="T"> Partial</label><label><input type="radio" name="c9" value="A"> Ambiguous</label><label><input type="radio" name="c9" value="F"> Fail</label><label><input type="radio" name="c9" value="N"> Not disclosed</label><label><input type="radio" name="c9" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Disclosures</span><input type="text" name="n9" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Disclosures</span><input type="text" name="n9" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
           <li class="mvep-sc__row" data-cat="10">
             <div class="mvep-sc__cat">
@@ -824,30 +826,104 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <p class="mvep-sc__verify">If the tokenized product will serve as collateral on derivatives venues or repo markets, verify collateral framework treats the token equivalently to its underlying.</p>
               <p class="mvep-sc__tests"><strong>Artifact:</strong> collateral acceptance documentation per venue. <strong>Pass:</strong> collateral haircuts and acceptance criteria are transparent and equivalent. <strong>Fail:</strong> opaque eligibility or differential haircuts across functionally-equivalent tokenized products.</p>
             </div>
-            <fieldset class="mvep-sc__verdict">
-              <legend class="visually-hidden">Verdict for Collateral Operability</legend>
-              <label><input type="radio" name="c10" value="P"> Pass</label>
-              <label><input type="radio" name="c10" value="F"> Fail</label>
-              <label><input type="radio" name="c10" value="A"> Ambiguous</label>
-              <label><input type="radio" name="c10" value="N" checked> Not assessed</label>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Collateral Operability</legend>
+              <label><input type="radio" name="c10" value="P"> Pass</label><label><input type="radio" name="c10" value="T"> Partial</label><label><input type="radio" name="c10" value="A"> Ambiguous</label><label><input type="radio" name="c10" value="F"> Fail</label><label><input type="radio" name="c10" value="N"> Not disclosed</label><label><input type="radio" name="c10" value="U" checked> Unassessed</label>
             </fieldset>
-            <label class="mvep-sc__note"><span class="visually-hidden">Note for Collateral Operability</span><input type="text" name="n10" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Collateral Operability</span><input type="text" name="n10" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
+          </li>
+          <li class="mvep-sc__row" data-cat="CSA">
+            <div class="mvep-sc__cat">
+              <h3><span class="mvep-sc__n" aria-hidden="true">+</span> <span class="mvep-sc__name">Cash Settlement Asset (companion test)</span></h3>
+              <p class="mvep-sc__verify">Verify the asset the product subscribes and redeems in. A product whose redemption routes through another token inherits that token&#x27;s verdicts: the paper&#x27;s recursive test, and the row where otherwise comparable products separate. RLUSD is the only column in the paper that passes it.</p>
+              
+            </div>
+            <div class="mvep-sc__paper" data-paper></div>
+            <fieldset class="mvep-sc__verdict" data-own hidden>
+              <legend class="visually-hidden">Your verdict for Cash Settlement Asset (companion test)</legend>
+              <label><input type="radio" name="cCSA" value="P"> Pass</label><label><input type="radio" name="cCSA" value="T"> Partial</label><label><input type="radio" name="cCSA" value="A"> Ambiguous</label><label><input type="radio" name="cCSA" value="F"> Fail</label><label><input type="radio" name="cCSA" value="N"> Not disclosed</label><label><input type="radio" name="cCSA" value="U" checked> Unassessed</label>
+            </fieldset>
+            <label class="mvep-sc__note" data-own hidden><span class="visually-hidden">Note for Cash Settlement Asset (companion test)</span><input type="text" name="nCSA" maxlength="140" placeholder="Note (optional)" autocomplete="off"></label>
           </li>
         </ol>
-        <div class="mvep-sc__summary" aria-live="polite">
-          <p class="mvep-sc__gate" data-gate>Gate: not assessed. Record a verdict for each category.</p>
-          <p class="mvep-sc__counts" data-counts></p>
-          <p class="mvep-sc__crit-note" data-crit></p>
+        <div class="mvep-sc__rating" aria-live="polite">
+          <h3 class="mvep-sc__rating-title">Rating: <span data-rating-for>USDC</span></h3>
+          <dl class="mvep-sc__dims">
+            <div><dt>Legal equivalence</dt><dd data-dim="legal"></dd></div>
+            <div><dt>Operational equivalence</dt><dd data-dim="operational"></dd></div>
+            <div><dt>Economic equivalence</dt><dd data-dim="economic"></dd></div>
+            <div><dt>Headline</dt><dd data-dim="headline"></dd></div>
+            <div><dt>Binds on (weakest link)</dt><dd data-dim="binding"></dd></div>
+            <div><dt>Disclosure (Category 9)</dt><dd data-dim="disclosure"></dd></div>
+            <div><dt>Coverage and confidence</dt><dd data-dim="coverage"></dd></div>
+            <div><dt>Overall strength</dt><dd data-dim="overall"></dd></div>
+          </dl>
+          <p class="mvep-sc__gate" data-gate></p>
+          <p class="mvep-sc__ratenote" data-ratenote></p>
         </div>
         <div class="mvep-sc__actions">
-          <button type="button" class="action primary" data-act="copy">Copy summary</button>
-          <button type="button" class="action secondary" data-act="link">Copy link to this scorecard</button>
-          <button type="button" class="action secondary" data-act="print">Print</button>
-          <button type="button" class="action secondary" data-act="reset">Reset</button>
+          <button type="button" class="action primary" data-act="copy">Copy as text</button>
+          <button type="button" class="action secondary" data-act="link">Copy link</button>
+          <button type="button" class="action secondary" data-act="print" data-own hidden>Print</button>
+          <button type="button" class="action secondary" data-act="reset" data-own hidden>Reset</button>
+          <a class="action secondary" href="/Publication-Images/a2-mvep-exhibit-01-scorecard.png" target="_blank" rel="noopener noreferrer" data-read>Open Exhibit 1 image</a>
           <span class="mvep-sc__status" data-status role="status"></span>
         </div>
-        <p class="mvep-sc__foot">The categories, artifacts and tests are those of the <a href="/papers/mvep/">MVEP paper</a>, and so is the gate rule: a missing artifact or a failed test in any category blocks the gate. The six categories marked pass-through-critical (1, 4, 5, 6, 8 and 9) are the ones the <a href="/letters/fdic-ag19-ppsi-activities/">FDIC AG19 letter</a> conditions pass-through deposit insurance on. The scorecard records verdicts; it does not supply them. The paper's own fourteen-product scorecard and composite rating are on the paper page, and a review of a specific product is an <a href="/speaker-and-advisory/#adv-diligence">advisory engagement</a>.</p>
+        <details class="mvep-sc__raw">
+          <summary>Exhibit 1 and Exhibit 3 as tables, all fourteen products</summary>
+          <!-- mvep:table START (generated from data/mvep/*.csv; refresh the CSVs, then: python3 scripts/render_mvep_scorecard.py --write) -->
+          <div class="mvep-sc__tablewrap" role="region" aria-label="Exhibit 1: verdicts by product" tabindex="0">
+            <table class="mvep-sc__table">
+              <caption>Exhibit 1: the paper's verdict for each product and category, with the source tag that locates it in the paper</caption>
+              <thead><tr><th scope="col">Category</th><th scope="col">USDC<br><small>Circle</small></th><th scope="col">USDT<br><small>Tether</small></th><th scope="col">USDG<br><small>Paxos</small></th><th scope="col">PYUSD<br><small>PayPal</small></th><th scope="col">DAI<br><small>MakerDAO</small></th><th scope="col">BUIDL<br><small>BlackRock</small></th><th scope="col">OUSG<br><small>Ondo</small></th><th scope="col">BENJI<br><small>Franklin Templeton</small></th><th scope="col">JPMD<br><small>JPMorgan</small></th><th scope="col">USDY<br><small>Ondo</small></th><th scope="col">USYC<br><small>Circle/Hashnote</small></th><th scope="col">USD1<br><small>WLF/BitGo</small></th><th scope="col">SoFiUSD<br><small>SoFi Bank</small></th><th scope="col">RLUSD<br><small>Ripple</small></th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1. Rights Parity</th><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">2. System of Record</th><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F6</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">3. Records and Reconciliation</th><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>F5</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>F5</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>F5</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F6</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">4. Custody and Customer Property</th><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F5</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F5</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">5. Insolvency Posture</th><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>F5/JX</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>JX</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>F5/JX</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3/JX</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>F6/JX</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>T2/JX</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>T2/JX</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2/JX</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>JX</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2/JX</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>JX</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW2/JX</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW4/JX</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">6. Settlement Finality</th><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">7. Reorganization and Exception Handling</th><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F6</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">8. Governance and Change Control</th><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">9. Disclosures</th><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>F6</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--nd">Not disclosed</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW/RWA</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">10. Collateral Operability</th><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW3</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>T2</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW/RWA</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--ambiguous">Ambiguous</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW5</small></td></tr>
+                <tr><th scope="row">Cash Settlement Asset (companion test)</th><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>SUM/WE</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>CP</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW</small></td><td><span class="mvep-v mvep-v--fail">Fail</span><br><small>NEW2</small></td><td><span class="mvep-v mvep-v--partial">Partial</span><br><small>NEW4</small></td><td><span class="mvep-v mvep-v--pass">Pass</span><br><small>NEW5</small></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mvep-sc__tablewrap" role="region" aria-label="Exhibit 3: composite rating by product" tabindex="0">
+            <table class="mvep-sc__table mvep-sc__table--rating">
+              <caption>Exhibit 3: the composite rating. Each dimension's tier is its weakest cell; the number is the mean rung (1.0 to 5.0) and orders products within a tier</caption>
+              <thead><tr><th scope="col">Product</th><th scope="col">Legal</th><th scope="col">Operational</th><th scope="col">Economic</th><th scope="col">Headline</th><th scope="col">Overall strength</th><th scope="col">Binds on</th><th scope="col">Disclosure</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">BENJI</th><td>Non-Equivalent (3.7)</td><td>Non-Equivalent (3.2)</td><td>Non-Equivalent (3.0)</td><td>Non-Equivalent</td><td>3.5</td><td>Economic / Collateral Operability FAIL</td><td>Adequate</td></tr>
+                <tr><th scope="row">RLUSD</th><td>Non-Equivalent (3.0)</td><td>Non-Equivalent (3.5)</td><td>Substantially Eq. (4.3)</td><td>Non-Equivalent</td><td>3.5</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">JPMD</th><td>Indeterminate (3.7)</td><td>Non-Equivalent (3.0)</td><td>Indeterminate (3.7)</td><td>Non-Equivalent</td><td>3.3</td><td>Operational / Governance &amp; Change Control FAIL</td><td>None published</td></tr>
+                <tr><th scope="row">BUIDL</th><td>Non-Equivalent (3.0)</td><td>Non-Equivalent (3.7)</td><td>Non-Equivalent (3.3)</td><td>Non-Equivalent</td><td>3.2</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USDY</th><td>Non-Equivalent (3.3)</td><td>Non-Equivalent (3.5)</td><td>Non-Equivalent (3.0)</td><td>Non-Equivalent</td><td>3.2</td><td>Economic / Cash Settlement Asset FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USDG</th><td>Non-Equivalent (3.3)</td><td>Non-Equivalent (3.2)</td><td>Non-Equivalent (3.0)</td><td>Non-Equivalent</td><td>3.0</td><td>Economic / Settlement Finality FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">DAI</th><td>Non-Equivalent (1.0)</td><td>Non-Equivalent (3.3)</td><td>Non-Equivalent (2.7)</td><td>Non-Equivalent</td><td>2.9</td><td>Legal / Rights Parity FAIL</td><td>Adequate</td></tr>
+                <tr><th scope="row">PYUSD</th><td>Non-Equivalent (2.7)</td><td>Non-Equivalent (3.0)</td><td>Non-Equivalent (3.0)</td><td>Non-Equivalent</td><td>2.8</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USDC</th><td>Non-Equivalent (3.3)</td><td>Non-Equivalent (3.2)</td><td>Non-Equivalent (2.0)</td><td>Non-Equivalent</td><td>2.7</td><td>Economic / Settlement Finality FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">OUSG</th><td>Non-Equivalent (2.3)</td><td>Non-Equivalent (2.7)</td><td>Non-Equivalent (2.7)</td><td>Non-Equivalent</td><td>2.6</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USYC</th><td>Non-Equivalent (2.7)</td><td>Non-Equivalent (2.3)</td><td>Non-Equivalent (2.0)</td><td>Non-Equivalent</td><td>2.5</td><td>Economic / Collateral Operability FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">SoFiUSD</th><td>Non-Equivalent (2.3)</td><td>Non-Equivalent (2.3)</td><td>Non-Equivalent (2.7)</td><td>Non-Equivalent</td><td>2.5</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USD1</th><td>Non-Equivalent (2.3)</td><td>Non-Equivalent (2.7)</td><td>Non-Equivalent (1.7)</td><td>Non-Equivalent</td><td>2.4</td><td>Economic / Settlement Finality FAIL</td><td>Partial</td></tr>
+                <tr><th scope="row">USDT</th><td>Non-Equivalent (1.0)</td><td>Non-Equivalent (2.5)</td><td>Non-Equivalent (2.0)</td><td>Non-Equivalent</td><td>2.1</td><td>Legal / Rights Parity FAIL</td><td>Partial</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- mvep:table END -->
+        </details>
+        <div class="mvep-sc__foot">
+          <p><strong>Where the verdicts come from.</strong> Each cell's tag names the place in the paper that establishes it: T2 is Section 5.4, Table 4; SUM the summary table; F5 and F6 Findings 5 and 6; WE the worked examples in the Supplementary Materials; JX the Exhibit 2 jurisdiction matrix; CP the coverage-completion scoring; NEW to NEW5 the comparator scorings (USYC, USD1, the partial-evidence cells, SoFiUSD, RLUSD); RWA the rwa.xyz snapshot of June 14, 2026. The two data files are mirrored byte for byte from the paper's <a href="https://github.com/CryptoZach/mvep-replication" target="_blank" rel="noopener noreferrer">replication repository</a> and served on the <a href="/data/">data page</a>.</p>
+          <p><strong>What the rating means.</strong> Legal equivalence floors Categories 1, 5 and 4; operational floors 2, 3, 7, 8, 4 and 10; economic floors 6, 10 and the companion test; the headline is the weakest of the three, and the binding line names the cell that sets it. Category 9 enters as a disclosure modifier. Your own product is rated by the same rule; the paper's fourteen use the Exhibit 3 values as published. The six categories marked pass-through-critical (1, 4, 5, 6, 8 and 9) are the ones the <a href="/letters/fdic-ag19-ppsi-activities/">FDIC AG19 letter</a> conditions pass-through deposit insurance on. A review of a specific product is an <a href="/speaker-and-advisory/#adv-diligence">advisory engagement</a>.</p>
+        </div>
       </form>
+      <!-- mvep:data START (generated from data/mvep/*.csv; refresh the CSVs, then: python3 scripts/render_mvep_scorecard.py --write) -->
+      <script type="application/json" id="mvep-sc-data">{"source":{"paper":"Minimum Viable Equivalence Pack (MVEP), SSRN 6363138","paper_url":"https://tokenization.systems/papers/mvep/","exhibits":"Exhibit 1 (scorecard) and Exhibit 3 (composite rating)","repository":"https://github.com/CryptoZach/mvep-replication","mirror":"https://tokenization.systems/data/mvep/","mirrored_on":"2026-10-12"},"categories":[{"key":"1","name":"Rights Parity","critical":true},{"key":"2","name":"System of Record","critical":false},{"key":"3","name":"Records and Reconciliation","critical":false},{"key":"4","name":"Custody and Customer Property","critical":true},{"key":"5","name":"Insolvency Posture","critical":true},{"key":"6","name":"Settlement Finality","critical":true},{"key":"7","name":"Reorganization and Exception Handling","critical":false},{"key":"8","name":"Governance and Change Control","critical":true},{"key":"9","name":"Disclosures","critical":true},{"key":"10","name":"Collateral Operability","critical":false},{"key":"CSA","name":"Cash Settlement Asset (companion test)","critical":false}],"verdicts":{"PASS":{"label":"Pass","meaning":"The required artifact exists and the category's test is met."},"PARTIAL":{"label":"Partial","meaning":"The artifact or the test is met in part; the gap is documented."},"AMBIGUOUS":{"label":"Ambiguous","meaning":"The evidence does not settle the test either way."},"FAIL":{"label":"Fail","meaning":"The test is failed, or the fail trigger is present."},"NOT_DISCLOSED":{"label":"Not disclosed","meaning":"An assessed verdict: a documented search found no published issuer artifact for the category."},"UNASSESSED":{"label":"Unassessed","meaning":"No verdict of record: no assessment was performed."}},"ladder":{"PASS":5,"PARTIAL":4,"AMBIGUOUS":3,"NOT_DISCLOSED":2,"FAIL":1},"tiers":{"5":"Equivalent","4":"Substantially Eq.","3":"Indeterminate","2":"Opaque","1":"Non-Equivalent","0":"Unrated"},"dimensions":{"Legal":["1","5","4"],"Operational":["2","3","7","8","4","10"],"Economic":["6","10","CSA"]},"disclosure_category":"9","disclosure_labels":{"PASS":"Adequate","PARTIAL":"Partial","AMBIGUOUS":"Indeterminate","NOT_DISCLOSED":"None published","FAIL":"Inadequate","UNASSESSED":"Unassessed","NA":"N/A"},"tags":{"T2":"Section 5.4, Table 4 (the full ten-category assessment of BUIDL, BENJI, OUSG and USDY)","SUM":"the summary table (Category 1, Category 6 and the Cash Settlement Asset test for the nine-product sample)","F5":"Finding 5 (Tier 2 custody, reconciliation and insolvency cells)","F6":"Finding 6 (DAI's operational cells)","WE":"the per-product worked examples in the Supplementary Materials","NEW":"the USYC offshore-comparator scoring (see the paper's caveat)","NEW2":"the USD1 GENIUS-era comparator scoring (see the paper's caveat)","NEW3":"the fourteen partial-evidence cells across USDC, USDT, USDG, PYUSD, DAI and JPMD, scored against primary documents and on-chain state","NEW4":"the SoFiUSD insured-national-bank comparator scoring (2026-06-12)","NEW5":"the RLUSD NYDFS-trust-charter comparator scoring","JX":"derived from the Exhibit 2 Category 5 jurisdiction matrix under its scoring rules","CP":"the coverage-completion scoring of previously unassessed operational, disclosure, collateral and recursive-settlement cells","RWA":"grounded in the rwa.xyz platform snapshot of 2026-06-14"},"products":[{"key":"USDC","issuer":"Circle","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["SUM","WE"]},"2":{"v":"AMBIGUOUS","tags":["NEW3"]},"3":{"v":"PARTIAL","tags":["F5"]},"4":{"v":"PASS","tags":["F5"]},"5":{"v":"PARTIAL","tags":["F5","JX"]},"6":{"v":"FAIL","tags":["SUM","WE"]},"7":{"v":"NOT_DISCLOSED","tags":["CP"]},"8":{"v":"FAIL","tags":["CP"]},"9":{"v":"PARTIAL","tags":["NEW3"]},"10":{"v":"PARTIAL","tags":["CP"]},"CSA":{"v":"FAIL","tags":["SUM","WE"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.3,"operational":"Non-Equivalent","operational_strength":3.2,"economic":"Non-Equivalent","economic_strength":2.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.7,"binding":"Economic / Settlement Finality FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"USDT","issuer":"Tether","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["SUM","WE"]},"2":{"v":"AMBIGUOUS","tags":["CP"]},"3":{"v":"PARTIAL","tags":["CP"]},"4":{"v":"FAIL","tags":["NEW3"]},"5":{"v":"FAIL","tags":["JX"]},"6":{"v":"FAIL","tags":["SUM","WE"]},"7":{"v":"NOT_DISCLOSED","tags":["CP"]},"8":{"v":"FAIL","tags":["CP"]},"9":{"v":"PARTIAL","tags":["NEW3"]},"10":{"v":"PARTIAL","tags":["CP"]},"CSA":{"v":"FAIL","tags":["SUM","WE"]}},"rating":{"legal":"Non-Equivalent","legal_strength":1.0,"operational":"Non-Equivalent","operational_strength":2.5,"economic":"Non-Equivalent","economic_strength":2.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.1,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"USDG","issuer":"Paxos","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["SUM"]},"2":{"v":"AMBIGUOUS","tags":["NEW3"]},"3":{"v":"PARTIAL","tags":["F5"]},"4":{"v":"PASS","tags":["F5"]},"5":{"v":"PARTIAL","tags":["F5","JX"]},"6":{"v":"FAIL","tags":["SUM"]},"7":{"v":"NOT_DISCLOSED","tags":["NEW3"]},"8":{"v":"FAIL","tags":["CP"]},"9":{"v":"PARTIAL","tags":["CP"]},"10":{"v":"PARTIAL","tags":["CP"]},"CSA":{"v":"PARTIAL","tags":["SUM"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.3,"operational":"Non-Equivalent","operational_strength":3.2,"economic":"Non-Equivalent","economic_strength":3.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":3.0,"binding":"Economic / Settlement Finality FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"PYUSD","issuer":"PayPal","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["SUM"]},"2":{"v":"AMBIGUOUS","tags":["NEW3"]},"3":{"v":"PARTIAL","tags":["F5"]},"4":{"v":"PARTIAL","tags":["NEW3"]},"5":{"v":"AMBIGUOUS","tags":["NEW3","JX"]},"6":{"v":"FAIL","tags":["SUM"]},"7":{"v":"NOT_DISCLOSED","tags":["NEW3"]},"8":{"v":"FAIL","tags":["NEW3"]},"9":{"v":"PARTIAL","tags":["CP"]},"10":{"v":"PARTIAL","tags":["CP"]},"CSA":{"v":"PARTIAL","tags":["SUM"]}},"rating":{"legal":"Non-Equivalent","legal_strength":2.7,"operational":"Non-Equivalent","operational_strength":3.0,"economic":"Non-Equivalent","economic_strength":3.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.8,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"DAI","issuer":"MakerDAO","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["SUM"]},"2":{"v":"PASS","tags":["F6"]},"3":{"v":"PASS","tags":["F6"]},"4":{"v":"FAIL","tags":["NEW3"]},"5":{"v":"FAIL","tags":["F6","JX"]},"6":{"v":"PARTIAL","tags":["SUM"]},"7":{"v":"PASS","tags":["F6"]},"8":{"v":"FAIL","tags":["NEW3"]},"9":{"v":"PASS","tags":["F6"]},"10":{"v":"AMBIGUOUS","tags":["CP"]},"CSA":{"v":"FAIL","tags":["SUM"]}},"rating":{"legal":"Non-Equivalent","legal_strength":1.0,"operational":"Non-Equivalent","operational_strength":3.3,"economic":"Non-Equivalent","economic_strength":2.7,"disclosure":"Adequate","headline":"Non-Equivalent","overall_strength":2.9,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"BUIDL","issuer":"BlackRock","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["T2"]},"2":{"v":"PASS","tags":["T2"]},"3":{"v":"PARTIAL","tags":["T2"]},"4":{"v":"PASS","tags":["T2"]},"5":{"v":"AMBIGUOUS","tags":["T2","JX"]},"6":{"v":"PARTIAL","tags":["T2"]},"7":{"v":"NOT_DISCLOSED","tags":["T2"]},"8":{"v":"FAIL","tags":["T2"]},"9":{"v":"PARTIAL","tags":["T2"]},"10":{"v":"PASS","tags":["T2"]},"CSA":{"v":"FAIL","tags":["SUM","WE"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.0,"operational":"Non-Equivalent","operational_strength":3.7,"economic":"Non-Equivalent","economic_strength":3.3,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":3.2,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"OUSG","issuer":"Ondo","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["T2"]},"2":{"v":"AMBIGUOUS","tags":["T2"]},"3":{"v":"PARTIAL","tags":["T2"]},"4":{"v":"AMBIGUOUS","tags":["T2"]},"5":{"v":"AMBIGUOUS","tags":["T2","JX"]},"6":{"v":"PARTIAL","tags":["T2"]},"7":{"v":"NOT_DISCLOSED","tags":["T2"]},"8":{"v":"FAIL","tags":["T2"]},"9":{"v":"PARTIAL","tags":["T2"]},"10":{"v":"AMBIGUOUS","tags":["T2"]},"CSA":{"v":"FAIL","tags":["SUM","WE"]}},"rating":{"legal":"Non-Equivalent","legal_strength":2.3,"operational":"Non-Equivalent","operational_strength":2.7,"economic":"Non-Equivalent","economic_strength":2.7,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.6,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"BENJI","issuer":"Franklin Templeton","group":"sample","verdicts":{"1":{"v":"FAIL","tags":["T2"]},"2":{"v":"PASS","tags":["T2"]},"3":{"v":"PASS","tags":["T2"]},"4":{"v":"PASS","tags":["T2"]},"5":{"v":"PASS","tags":["T2","JX"]},"6":{"v":"PARTIAL","tags":["T2"]},"7":{"v":"NOT_DISCLOSED","tags":["T2"]},"8":{"v":"FAIL","tags":["T2"]},"9":{"v":"PASS","tags":["T2"]},"10":{"v":"FAIL","tags":["T2"]},"CSA":{"v":"PARTIAL","tags":["SUM"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.7,"operational":"Non-Equivalent","operational_strength":3.2,"economic":"Non-Equivalent","economic_strength":3.0,"disclosure":"Adequate","headline":"Non-Equivalent","overall_strength":3.5,"binding":"Economic / Collateral Operability FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"JPMD","issuer":"JPMorgan","group":"sample","verdicts":{"1":{"v":"PARTIAL","tags":["SUM","WE"]},"2":{"v":"PASS","tags":["CP"]},"3":{"v":"PARTIAL","tags":["CP"]},"4":{"v":"AMBIGUOUS","tags":["NEW3"]},"5":{"v":"PARTIAL","tags":["JX"]},"6":{"v":"PARTIAL","tags":["SUM","WE"]},"7":{"v":"NOT_DISCLOSED","tags":["CP"]},"8":{"v":"FAIL","tags":["NEW3"]},"9":{"v":"NOT_DISCLOSED","tags":["CP"]},"10":{"v":"AMBIGUOUS","tags":["NEW3"]},"CSA":{"v":"PARTIAL","tags":["SUM","WE"]}},"rating":{"legal":"Indeterminate","legal_strength":3.7,"operational":"Non-Equivalent","operational_strength":3.0,"economic":"Indeterminate","economic_strength":3.7,"disclosure":"None published","headline":"Non-Equivalent","overall_strength":3.3,"binding":"Operational / Governance & Change Control FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"USDY","issuer":"Ondo","group":"comparator","verdicts":{"1":{"v":"FAIL","tags":["T2"]},"2":{"v":"PASS","tags":["T2"]},"3":{"v":"PARTIAL","tags":["T2"]},"4":{"v":"PASS","tags":["T2"]},"5":{"v":"PARTIAL","tags":["T2","JX"]},"6":{"v":"PARTIAL","tags":["T2"]},"7":{"v":"NOT_DISCLOSED","tags":["T2"]},"8":{"v":"FAIL","tags":["T2"]},"9":{"v":"PARTIAL","tags":["T2"]},"10":{"v":"PARTIAL","tags":["T2"]},"CSA":{"v":"FAIL","tags":["CP"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.3,"operational":"Non-Equivalent","operational_strength":3.5,"economic":"Non-Equivalent","economic_strength":3.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":3.2,"binding":"Economic / Cash Settlement Asset FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"USYC","issuer":"Circle/Hashnote","group":"comparator","verdicts":{"1":{"v":"FAIL","tags":["NEW"]},"2":{"v":"AMBIGUOUS","tags":["NEW"]},"3":{"v":"PARTIAL","tags":["NEW"]},"4":{"v":"AMBIGUOUS","tags":["NEW"]},"5":{"v":"PARTIAL","tags":["JX"]},"6":{"v":"PARTIAL","tags":["NEW"]},"7":{"v":"NOT_DISCLOSED","tags":["NEW"]},"8":{"v":"FAIL","tags":["NEW"]},"9":{"v":"PARTIAL","tags":["NEW","RWA"]},"10":{"v":"FAIL","tags":["NEW","RWA"]},"CSA":{"v":"FAIL","tags":["NEW"]}},"rating":{"legal":"Non-Equivalent","legal_strength":2.7,"operational":"Non-Equivalent","operational_strength":2.3,"economic":"Non-Equivalent","economic_strength":2.0,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.5,"binding":"Economic / Collateral Operability FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"USD1","issuer":"WLF/BitGo","group":"comparator","verdicts":{"1":{"v":"FAIL","tags":["NEW2"]},"2":{"v":"AMBIGUOUS","tags":["NEW2"]},"3":{"v":"PARTIAL","tags":["NEW2"]},"4":{"v":"AMBIGUOUS","tags":["NEW2"]},"5":{"v":"AMBIGUOUS","tags":["NEW2","JX"]},"6":{"v":"FAIL","tags":["NEW2"]},"7":{"v":"NOT_DISCLOSED","tags":["NEW2"]},"8":{"v":"FAIL","tags":["NEW2"]},"9":{"v":"PARTIAL","tags":["NEW2"]},"10":{"v":"AMBIGUOUS","tags":["NEW2"]},"CSA":{"v":"FAIL","tags":["NEW2"]}},"rating":{"legal":"Non-Equivalent","legal_strength":2.3,"operational":"Non-Equivalent","operational_strength":2.7,"economic":"Non-Equivalent","economic_strength":1.7,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.4,"binding":"Economic / Settlement Finality FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"SoFiUSD","issuer":"SoFi Bank","group":"comparator","verdicts":{"1":{"v":"FAIL","tags":["NEW4"]},"2":{"v":"AMBIGUOUS","tags":["NEW4"]},"3":{"v":"NOT_DISCLOSED","tags":["NEW4"]},"4":{"v":"AMBIGUOUS","tags":["NEW4"]},"5":{"v":"AMBIGUOUS","tags":["NEW4","JX"]},"6":{"v":"FAIL","tags":["NEW4"]},"7":{"v":"NOT_DISCLOSED","tags":["NEW4"]},"8":{"v":"FAIL","tags":["NEW4"]},"9":{"v":"PARTIAL","tags":["NEW4"]},"10":{"v":"AMBIGUOUS","tags":["NEW4"]},"CSA":{"v":"PARTIAL","tags":["NEW4"]}},"rating":{"legal":"Non-Equivalent","legal_strength":2.3,"operational":"Non-Equivalent","operational_strength":2.3,"economic":"Non-Equivalent","economic_strength":2.7,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":2.5,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}},{"key":"RLUSD","issuer":"Ripple","group":"comparator","verdicts":{"1":{"v":"FAIL","tags":["NEW5"]},"2":{"v":"PARTIAL","tags":["NEW5"]},"3":{"v":"PARTIAL","tags":["NEW5"]},"4":{"v":"PARTIAL","tags":["NEW5"]},"5":{"v":"PARTIAL","tags":["NEW5"]},"6":{"v":"PARTIAL","tags":["NEW5"]},"7":{"v":"PARTIAL","tags":["NEW5"]},"8":{"v":"FAIL","tags":["NEW5"]},"9":{"v":"PARTIAL","tags":["NEW5"]},"10":{"v":"PARTIAL","tags":["NEW5"]},"CSA":{"v":"PASS","tags":["NEW5"]}},"rating":{"legal":"Non-Equivalent","legal_strength":3.0,"operational":"Non-Equivalent","operational_strength":3.5,"economic":"Substantially Eq.","economic_strength":4.3,"disclosure":"Partial","headline":"Non-Equivalent","overall_strength":3.5,"binding":"Legal / Rights Parity FAIL","coverage":"11/11","confidence":"HIGH"}}]}</script>
+      <!-- mvep:data END -->
     </section>
 
     <section class="reveal" id="framework-stack" aria-labelledby="framework-stack-title">

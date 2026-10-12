@@ -1,0 +1,17 @@
+MVEP scorecard data mirrored on tokenization.systems
+
+mvep_scorecard_data.csv         Exhibit 1 of the MVEP paper: the consolidated MVEP v4 scorecard,
+                                eleven rows (the ten categories plus the recursive Cash Settlement
+                                Asset companion test) by fourteen products, 154 cells, each a verdict
+                                with a source tag pointing to where the paper establishes it.
+mvep_composite_rating_data.csv  Exhibit 3: the per-product composite rating record, computed from
+                                Exhibit 1 by the floor (worst-verdict) rule per dimension plus a
+                                1.0 to 5.0 strength score.
+
+Upstream: https://github.com/CryptoZach/mvep-replication (exhibits/exhibit_01_mvep_scorecard and
+exhibits/exhibit_03_mvep_composite_rating), the replication package of "Minimum Viable Equivalence
+Pack: An Institutional Diligence Framework for Tokenized Products", SSRN abstract 6363138.
+Mirrored 2026-10-12 from the main branch, byte for byte. The verdict vocabulary, the source tags and
+the rating rule are documented in each exhibit's CAPTION.md upstream and in the paper's
+Supplementary Materials. These two files drive the interactive scorecard on /frameworks/
+(scripts/render_mvep_scorecard.py stamps them into the page; --check in CI).

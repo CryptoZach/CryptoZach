@@ -6330,84 +6330,243 @@
 })();
 
 /* ---------------------------------------------------------------------------
-   MVEP scorecard (frameworks page, 2026-10-12). Ten categories, one verdict each
-   (P pass, F fail, A ambiguous, N not assessed) and an optional note. The state
-   lives in the form; the share link carries the ten verdicts and the product name
-   in the URL hash (#sc=PFANNNNNNN&p=...), so a colleague opens the same scorecard.
-   Nothing is sent anywhere. The gate rule is the paper's: any failed category
-   blocks the gate; ambiguous or unassessed categories leave it incomplete.
+   MVEP scorecard (frameworks page, 2026-10-12). Carries the paper's Exhibit 1
+   verdicts and Exhibit 3 ratings (the JSON block the renderer stamps into the
+   page) and rates a visitor's own product with the paper's rule, ported from
+   the replication script: tier = the weakest cell of a dimension on the ladder
+   Pass 5, Partial 4, Ambiguous 3, Not disclosed 2, Fail 1; strength = the mean
+   rung; headline = the weakest dimension. Read mode shows a paper column; own
+   mode records verdicts, optionally beside a comparator. The share link carries
+   the verdicts (#sc=, eleven letters), the product name (&p=) and the comparator
+   (&c=); #mvep=USDC opens a paper column. Nothing is sent anywhere.
    --------------------------------------------------------------------------- */
 (function(){
+  var CODE = { P: 'PASS', T: 'PARTIAL', A: 'AMBIGUOUS', F: 'FAIL', N: 'NOT_DISCLOSED', U: 'UNASSESSED' };
+  var CODE_OF = { PASS: 'P', PARTIAL: 'T', AMBIGUOUS: 'A', FAIL: 'F', NOT_DISCLOSED: 'N', UNASSESSED: 'U' };
+  var CLS = { PASS: 'pass', PARTIAL: 'partial', AMBIGUOUS: 'ambiguous', FAIL: 'fail', NOT_DISCLOSED: 'nd', UNASSESSED: 'unassessed', NA: 'na' };
+  var TIER_CLS = { 'Equivalent': 'pass', 'Substantially Eq.': 'partial', 'Indeterminate': 'ambiguous', 'Opaque': 'nd', 'Non-Equivalent': 'fail', 'Unrated': 'unassessed' };
+  var SHORT = { '1': 'Rights Parity', '2': 'System of Record', '3': 'Records & Reconciliation', '4': 'Custody', '5': 'Insolvency Posture',
+                '6': 'Settlement Finality', '7': 'Reorg & Exception Handling', '8': 'Governance & Change Control', '9': 'Disclosures',
+                '10': 'Collateral Operability', 'CSA': 'Cash Settlement Asset' };
+  var KEYS = ['1','2','3','4','5','6','7','8','9','10','CSA'];
+
+  function round1(x){
+    /* Python's round(x, 1): half to even, so the port matches the upstream CSV. */
+    var y = x * 10, f = Math.floor(y), d = y - f;
+    if(Math.abs(d - 0.5) < 1e-9) return ((f % 2 === 0) ? f : f + 1) / 10;
+    return Math.round(y) / 10;
+  }
+  function rate(D, verdicts){
+    var tierOf = D.tiers, ladder = D.ladder, inv = {};
+    Object.keys(tierOf).forEach(function(k){ inv[tierOf[k]] = +k; });
+    var dims = {}, strengths = {}, binds = {};
+    Object.keys(D.dimensions).forEach(function(dname){
+      var floor = null, bind = [null, null], levels = [];
+      D.dimensions[dname].forEach(function(c){
+        var v = verdicts[c] || 'UNASSESSED';
+        if(!(v in ladder)) return;
+        var lvl = ladder[v];
+        levels.push(lvl);
+        if(floor === null || lvl < floor){ floor = lvl; bind = [c, v]; }
+      });
+      if(floor === null){ dims[dname] = 'Unrated'; strengths[dname] = 0; binds[dname] = [null, null]; return; }
+      dims[dname] = tierOf[String(floor)];
+      strengths[dname] = round1(levels.reduce(function(a, b){ return a + b; }, 0) / levels.length);
+      binds[dname] = bind;
+    });
+    var rated = Object.keys(dims).filter(function(d){ return dims[d] !== 'Unrated'; });
+    var headline = 'Unrated', binding = 'no coverage';
+    if(rated.length){
+      var worst = rated[0];
+      rated.forEach(function(d){
+        var a = [inv[dims[d]], strengths[d]], b = [inv[dims[worst]], strengths[worst]];
+        if(a[0] < b[0] || (a[0] === b[0] && a[1] < b[1])) worst = d;
+      });
+      headline = dims[worst];
+      binding = worst + ' / ' + SHORT[binds[worst][0]] + ' ' + binds[worst][1];
+    }
+    var all = [];
+    KEYS.forEach(function(k){ var v = verdicts[k] || 'UNASSESSED'; if(v in ladder) all.push(ladder[v]); });
+    var overall = all.length ? round1(all.reduce(function(a, b){ return a + b; }, 0) / all.length) : 0;
+    var disc = verdicts[D.disclosure_category] || 'UNASSESSED';
+    var applicable = 0, assessed = 0;
+    KEYS.forEach(function(k){ var v = verdicts[k] || 'UNASSESSED'; if(v === 'NA') return; applicable++; if(v in ladder) assessed++; });
+    var frac = applicable ? assessed / applicable : 0;
+    return { legal: dims.Legal, legal_strength: strengths.Legal, operational: dims.Operational, operational_strength: strengths.Operational,
+             economic: dims.Economic, economic_strength: strengths.Economic, headline: headline, binding: binding,
+             disclosure: D.disclosure_labels[disc] || disc, overall_strength: overall,
+             coverage: assessed + '/' + applicable, confidence: frac >= 0.8 ? 'HIGH' : (frac >= 0.5 ? 'MEDIUM' : 'LOW') };
+  }
+
   function init(){
     var form = document.getElementById('mvep-sc');
-    if(!form) return;
+    var dataEl = document.getElementById('mvep-sc-data');
+    if(!form || !dataEl) return;
+    var D;
+    try { D = JSON.parse(dataEl.textContent); } catch(e){ return; }
+    var byKey = {};
+    D.products.forEach(function(p){ byKey[p.key] = p; });
     var rows = Array.prototype.slice.call(form.querySelectorAll('.mvep-sc__row'));
-    var gateEl = form.querySelector('[data-gate]');
-    var countsEl = form.querySelector('[data-counts]');
-    var critEl = form.querySelector('[data-crit]');
-    var statusEl = form.querySelector('[data-status]');
-    var product = form.querySelector('#mvep-sc-product');
+    var rowOf = {};
+    rows.forEach(function(r){ rowOf[r.getAttribute('data-cat')] = r; });
+    var sel = form.querySelector('#mvep-sc-product');
+    var cmp = form.querySelector('#mvep-sc-compare');
+    var nameEl = form.querySelector('#mvep-sc-name');
     var reviewer = form.querySelector('#mvep-sc-reviewer');
-    var LABEL = { P: 'Pass', F: 'Fail', A: 'Ambiguous', N: 'Not assessed' };
+    var statusEl = form.querySelector('[data-status]');
+    var gateEl = form.querySelector('[data-gate]');
+    var noteEl = form.querySelector('[data-ratenote]');
+    var forEl = form.querySelector('[data-rating-for]');
+    window.__mvepMismatch = 0;
 
-    function verdict(row){
-      var checked = row.querySelector('input[type="radio"]:checked');
-      return checked ? checked.value : 'N';
-    }
-    function name(row){ return row.querySelector('.mvep-sc__name').textContent.trim(); }
-    function note(row){ var n = row.querySelector('.mvep-sc__note input'); return n ? n.value.trim() : ''; }
-    function tally(){
-      var t = { P: 0, F: 0, A: 0, N: 0, failed: [], ambiguous: [], unassessed: [], critFail: [] };
-      rows.forEach(function(row){
-        var v = verdict(row);
-        row.setAttribute('data-verdict', v);
-        t[v]++;
-        var n = row.getAttribute('data-cat') + ' ' + name(row);
-        if(v === 'F'){ t.failed.push(n); if(row.hasAttribute('data-critical')) t.critFail.push(n); }
-        if(v === 'A') t.ambiguous.push(n);
-        if(v === 'N') t.unassessed.push(n);
+    /* product lists */
+    function label(p){ return p.key + ' (' + p.issuer + ')'; }
+    function fillSelect(el, ownOption){
+      el.innerHTML = '';
+      var groups = [['Nine-product sample', 'sample'], ['Comparators', 'comparator']];
+      if(!ownOption){ var none = document.createElement('option'); none.value = ''; none.textContent = 'No comparator'; el.appendChild(none); }
+      groups.forEach(function(g){
+        var og = document.createElement('optgroup'); og.label = g[0];
+        D.products.filter(function(p){ return p.group === g[1]; }).forEach(function(p){
+          var o = document.createElement('option'); o.value = p.key; o.textContent = label(p); og.appendChild(o);
+        });
+        el.appendChild(og);
       });
-      return t;
+      if(ownOption){ var own = document.createElement('option'); own.value = '__own'; own.textContent = 'Your own product'; el.appendChild(own); }
     }
-    function gateText(t){
-      if(t.F > 0) return ['blocked', 'Gate: blocked. ' + t.F + (t.F === 1 ? ' category fails' : ' categories fail') + ' (' + t.failed.join('; ') + ').'];
-      if(t.N > 0 || t.A > 0) return ['incomplete', 'Gate: not yet open. ' + (t.N ? t.N + ' not assessed' : '') + (t.N && t.A ? ', ' : '') + (t.A ? t.A + ' ambiguous' : '') + '; the paper requires each category to pass.'];
-      return ['open', 'Gate: open. All ten categories pass on the recorded verdicts.'];
+    fillSelect(sel, true);
+    fillSelect(cmp, false);
+
+    function chip(v, extra){
+      var lab = (D.verdicts[v] && D.verdicts[v].label) || v;
+      return '<span class="mvep-v mvep-v--' + (CLS[v] || 'unassessed') + '"' + (D.verdicts[v] ? ' title="' + D.verdicts[v].meaning.replace(/"/g, '&quot;') + '"' : '') + '>' + lab + '</span>' + (extra || '');
     }
+    function tierChip(tier, strength){
+      return '<span class="mvep-v mvep-v--' + (TIER_CLS[tier] || 'unassessed') + '">' + tier + '</span>' + (strength ? ' <span class="mvep-sc__strength">' + strength.toFixed(1) + '</span>' : '');
+    }
+    function esc(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function tagsText(tags){
+      if(!tags || !tags.length) return '';
+      return ' <span class="mvep-sc__src" title="' + tags.map(function(t){ return t + ': ' + (D.tags[t] || t); }).join('; ').replace(/"/g, '&quot;') + '">Source: ' + tags.join(', ') + '</span>';
+    }
+
+    function mode(){ return sel.value === '__own' ? 'own' : 'read'; }
+    function ownVerdict(k){
+      var checked = rowOf[k].querySelector('input[type="radio"]:checked');
+      return CODE[checked ? checked.value : 'U'];
+    }
+    function ownVerdicts(){ var out = {}; KEYS.forEach(function(k){ out[k] = ownVerdict(k); }); return out; }
+    function noteOf(k){ var n = rowOf[k].querySelector('.mvep-sc__note input'); return n ? n.value.trim() : ''; }
+
+    function renderRating(r, who, note){
+      forEl.textContent = who;
+      var set = function(name, htmlText){ form.querySelector('[data-dim="' + name + '"]').innerHTML = htmlText; };
+      set('legal', tierChip(r.legal, r.legal_strength));
+      set('operational', tierChip(r.operational, r.operational_strength));
+      set('economic', tierChip(r.economic, r.economic_strength));
+      set('headline', tierChip(r.headline));
+      set('binding', esc(r.binding));
+      set('disclosure', esc(r.disclosure));
+      set('coverage', esc(r.coverage) + ' assessed, confidence ' + esc(String(r.confidence).toLowerCase()));
+      set('overall', '<span class="mvep-sc__strength mvep-sc__strength--big">' + (r.overall_strength ? r.overall_strength.toFixed(1) : '0.0') + '</span> of 5.0');
+      noteEl.textContent = note;
+    }
+    function gateLine(verdicts){
+      var n = { PASS: 0, PARTIAL: 0, AMBIGUOUS: 0, FAIL: 0, NOT_DISCLOSED: 0, UNASSESSED: 0 };
+      KEYS.slice(0, 10).forEach(function(k){ n[verdicts[k] || 'UNASSESSED']++; });
+      var short = 10 - n.PASS;
+      if(short === 0) return ['open', 'Committee gate: open. All ten categories pass.'];
+      var parts = [];
+      if(n.FAIL) parts.push(n.FAIL + ' fail');
+      if(n.PARTIAL) parts.push(n.PARTIAL + ' partial');
+      if(n.AMBIGUOUS) parts.push(n.AMBIGUOUS + ' ambiguous');
+      if(n.NOT_DISCLOSED) parts.push(n.NOT_DISCLOSED + ' not disclosed');
+      if(n.UNASSESSED) parts.push(n.UNASSESSED + ' unassessed');
+      return [n.FAIL ? 'blocked' : 'incomplete', 'Committee gate: closed. The paper opens it only when every category passes; ' + short + ' of ten ' + (short === 1 ? 'does' : 'do') + ' not (' + parts.join(', ') + ').'];
+    }
+
     function render(){
-      var t = tally();
-      var g = gateText(t);
+      var m = mode();
+      form.setAttribute('data-mode', m);
+      Array.prototype.forEach.call(form.querySelectorAll('[data-own]'), function(el){ el.hidden = (m !== 'own'); });
+      Array.prototype.forEach.call(form.querySelectorAll('[data-read]'), function(el){ el.hidden = (m !== 'read'); });
+      var verdicts, rating, who, note, comparator = null;
+      if(m === 'read'){
+        var p = byKey[sel.value] || D.products[0];
+        verdicts = {};
+        KEYS.forEach(function(k){ verdicts[k] = (p.verdicts[k] || {}).v || 'UNASSESSED'; });
+        rows.forEach(function(row){
+          var k = row.getAttribute('data-cat'), cell = p.verdicts[k] || { v: 'UNASSESSED', tags: [] };
+          row.setAttribute('data-verdict', CODE_OF[cell.v] || 'U');
+          var slot = row.querySelector('[data-paper]');
+          slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(p.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags);
+          slot.hidden = false;
+        });
+        rating = p.rating;
+        var recomputed = rate(D, verdicts);
+        ['legal', 'operational', 'economic', 'headline', 'binding', 'disclosure', 'coverage', 'confidence'].forEach(function(f){
+          if(String(recomputed[f]) !== String(rating[f])) window.__mvepMismatch++;
+        });
+        ['legal_strength', 'operational_strength', 'economic_strength', 'overall_strength'].forEach(function(f){
+          if(Math.abs(recomputed[f] - rating[f]) > 0.051) window.__mvepMismatch++;
+        });
+        who = p.key + ' (' + p.issuer + '), as published';
+        note = 'Exhibit 3 values for ' + p.key + '. The paper rates every product Non-Equivalent at the headline; the dimensions and the strength score are where products differ.';
+      } else {
+        verdicts = ownVerdicts();
+        comparator = cmp.value ? byKey[cmp.value] : null;
+        rows.forEach(function(row){
+          var k = row.getAttribute('data-cat');
+          row.setAttribute('data-verdict', CODE_OF[verdicts[k]] || 'U');
+          var slot = row.querySelector('[data-paper]');
+          if(comparator){
+            var cell = comparator.verdicts[k] || { v: 'UNASSESSED', tags: [] };
+            slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(comparator.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags);
+            slot.hidden = false;
+          } else {
+            slot.innerHTML = '';
+            slot.hidden = true;
+          }
+        });
+        rating = rate(D, verdicts);
+        who = (nameEl.value.trim() || 'your product') + ', from your verdicts';
+        note = 'Rated with the paper\'s Exhibit 3 rule from the verdicts you recorded' + (comparator ? ', shown beside ' + comparator.key + '\'s published verdicts' : '') + '. Unassessed categories do not count; a rating from a few cells is a sketch, not a finding.';
+      }
+      renderRating(rating, who, note);
+      var g = gateLine(verdicts);
       gateEl.setAttribute('data-state', g[0]);
       gateEl.textContent = g[1];
-      countsEl.textContent = 'Pass ' + t.P + ' / Fail ' + t.F + ' / Ambiguous ' + t.A + ' / Not assessed ' + t.N + ' of 10.';
-      critEl.textContent = t.critFail.length
-        ? 'Pass-through-critical categories failing: ' + t.critFail.join('; ') + '.'
-        : (t.P + t.F + t.A === 10 ? 'No pass-through-critical category fails.' : '');
     }
-    function summary(){
-      var t = tally();
-      var lines = ['MVEP scorecard' + (product.value.trim() ? ': ' + product.value.trim() : '') + (reviewer && reviewer.value.trim() ? ' (reviewed by ' + reviewer.value.trim() + ')' : ''),
-                   'Date: ' + new Date().toISOString().slice(0, 10),
-                   gateText(t)[1],
-                   'Pass ' + t.P + ', Fail ' + t.F + ', Ambiguous ' + t.A + ', Not assessed ' + t.N + ' of 10.'];
-      rows.forEach(function(row){
-        var v = verdict(row);
-        lines.push(row.getAttribute('data-cat') + '. ' + name(row) + ': ' + LABEL[v] + (note(row) ? ' (' + note(row) + ')' : ''));
-      });
-      lines.push('Categories, artifacts and tests: https://tokenization.systems/frameworks/#mvep-scorecard (MVEP paper: https://tokenization.systems/papers/mvep/)');
+
+    /* text, link, print, reset */
+    function summaryText(){
+      var m = mode(), lines = [];
+      if(m === 'read'){
+        var p = byKey[sel.value] || D.products[0];
+        lines.push('MVEP scorecard, ' + p.key + ' (' + p.issuer + '): the paper\'s verdicts (Exhibit 1) and rating (Exhibit 3)');
+        KEYS.forEach(function(k){ var c = p.verdicts[k] || { v: 'UNASSESSED', tags: [] }; lines.push((k === 'CSA' ? '+' : k) + '. ' + SHORT[k] + ': ' + D.verdicts[c.v].label + (c.tags.length ? ' [' + c.tags.join('/') + ']' : '')); });
+        var r = p.rating;
+        lines.push('Legal ' + r.legal + ' (' + r.legal_strength.toFixed(1) + '); Operational ' + r.operational + ' (' + r.operational_strength.toFixed(1) + '); Economic ' + r.economic + ' (' + r.economic_strength.toFixed(1) + '); headline ' + r.headline + '; binds on ' + r.binding + '; overall strength ' + r.overall_strength.toFixed(1));
+      } else {
+        var v = ownVerdicts(), rr = rate(D, v), comparator = cmp.value ? byKey[cmp.value] : null;
+        lines.push('MVEP scorecard' + (nameEl.value.trim() ? ': ' + nameEl.value.trim() : '') + (reviewer.value.trim() ? ' (reviewed by ' + reviewer.value.trim() + ')' : '') + ', ' + new Date().toISOString().slice(0, 10));
+        KEYS.forEach(function(k){ lines.push((k === 'CSA' ? '+' : k) + '. ' + SHORT[k] + ': ' + D.verdicts[v[k]].label + (comparator ? ' (' + comparator.key + ': ' + D.verdicts[(comparator.verdicts[k] || {}).v || 'UNASSESSED'].label + ')' : '') + (noteOf(k) ? ' | ' + noteOf(k) : '')); });
+        lines.push('Rated by the paper\'s rule: Legal ' + rr.legal + ' (' + rr.legal_strength.toFixed(1) + '); Operational ' + rr.operational + ' (' + rr.operational_strength.toFixed(1) + '); Economic ' + rr.economic + ' (' + rr.economic_strength.toFixed(1) + '); headline ' + rr.headline + '; binds on ' + rr.binding + '; coverage ' + rr.coverage + '; overall strength ' + rr.overall_strength.toFixed(1));
+        lines.push(gateLine(v)[1]);
+      }
+      lines.push('https://tokenization.systems/frameworks/#mvep-scorecard (paper: https://tokenization.systems/papers/mvep/)');
       return lines.join('\n');
     }
     function shareLink(){
-      var code = rows.map(verdict).join('');
-      var hash = '#sc=' + code;
-      if(product.value.trim()) hash += '&p=' + encodeURIComponent(product.value.trim().slice(0, 80));
-      return location.origin + location.pathname + hash;
+      var base = location.origin + location.pathname;
+      if(mode() === 'read') return base + '#mvep=' + encodeURIComponent(sel.value);
+      var hash = '#sc=' + KEYS.map(function(k){ return CODE_OF[ownVerdict(k)]; }).join('');
+      if(nameEl.value.trim()) hash += '&p=' + encodeURIComponent(nameEl.value.trim().slice(0, 80));
+      if(cmp.value) hash += '&c=' + encodeURIComponent(cmp.value);
+      return base + hash;
     }
     function copyText(text, okMsg){
       function done(ok){ statusEl.textContent = ok ? okMsg : 'Copy failed; select the text and copy it by hand.'; setTimeout(function(){ statusEl.textContent = ''; }, 4000); }
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ fallback(); });
-      } else { fallback(); }
       function fallback(){
         var ta = document.createElement('textarea');
         ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
@@ -6417,29 +6576,41 @@
         document.body.removeChild(ta);
         done(ok);
       }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ done(true); }, fallback);
+      } else { fallback(); }
     }
     function applyHash(){
-      var m = /[#&]sc=([PFAN]{10})/.exec(location.hash);
-      if(!m) return;
-      var code = m[1];
-      rows.forEach(function(row, i){
-        var input = row.querySelector('input[type="radio"][value="' + code.charAt(i) + '"]');
+      var h = location.hash || '';
+      var mm = /[#&]mvep=([A-Za-z0-9]+)/.exec(h);
+      if(mm && byKey[mm[1]]){ sel.value = mm[1]; return true; }
+      var sc = /[#&]sc=([PTAFNU]{11})/.exec(h);
+      if(!sc) return false;
+      sel.value = '__own';
+      var code = sc[1];
+      KEYS.forEach(function(k, i){
+        var input = rowOf[k].querySelector('input[type="radio"][value="' + code.charAt(i) + '"]');
         if(input) input.checked = true;
       });
-      var pm = /[#&]p=([^&]*)/.exec(location.hash);
-      if(pm){ try { product.value = decodeURIComponent(pm[1]).slice(0, 80); } catch(e){ /* malformed */ } }
+      var pm = /[#&]p=([^&]*)/.exec(h);
+      if(pm){ try { nameEl.value = decodeURIComponent(pm[1]).slice(0, 80); } catch(e){ /* malformed */ } }
+      var cm = /[#&]c=([A-Za-z0-9]+)/.exec(h);
+      if(cm && byKey[cm[1]]) cmp.value = cm[1];
+      return true;
     }
+
     form.addEventListener('change', render);
+    form.addEventListener('input', function(e){ if(e.target === nameEl) render(); });
     form.addEventListener('submit', function(e){ e.preventDefault(); });
     form.addEventListener('click', function(e){
       var btn = e.target.closest('button[data-act]');
       if(!btn) return;
       var act = btn.getAttribute('data-act');
-      if(act === 'copy') copyText(summary(), 'Summary copied.');
+      if(act === 'copy') copyText(summaryText(), mode() === 'read' ? 'Column copied as text.' : 'Summary copied.');
       else if(act === 'link'){
         var link = shareLink();
-        try { history.replaceState(null, '', link); } catch(err){ /* file: or sandboxed */ }
-        copyText(link, 'Link copied; it carries the ten verdicts and the product name.');
+        try { history.replaceState(null, '', link); } catch(err){ /* sandboxed */ }
+        copyText(link, mode() === 'read' ? 'Link copied; it opens this product.' : 'Link copied; it carries your verdicts, the product name and the comparator.');
       }
       else if(act === 'print'){
         document.body.classList.add('mvep-printing');
@@ -6449,16 +6620,15 @@
         setTimeout(off, 2000);
       }
       else if(act === 'reset'){
-        form.reset();
-        rows.forEach(function(row){ row.querySelector('input[value="N"]').checked = true; });
+        rows.forEach(function(row){ row.querySelector('input[value="U"]').checked = true; var n = row.querySelector('.mvep-sc__note input'); if(n) n.value = ''; });
+        nameEl.value = ''; reviewer.value = ''; cmp.value = '';
         try { history.replaceState(null, '', location.pathname + '#mvep-scorecard'); } catch(err){ /* sandboxed */ }
         render();
       }
     });
+    window.addEventListener('hashchange', function(){ if(applyHash()) render(); });
     applyHash();
     render();
-    /* A shared link opened from this page changes only the hash; apply it the same way. */
-    window.addEventListener('hashchange', function(){ if(/[#&]sc=/.test(location.hash)){ applyHash(); render(); } });
   }
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', init);
