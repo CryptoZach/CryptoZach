@@ -710,7 +710,7 @@ def gen_recs_jsonld(m):
             f'  "url": "{SITE}/letters/recommendations/",',
             f'  "mainEntityOfPage": {{ "@type": "WebPage", "@id": "{SITE}/letters/recommendations/" }},',
             f'  "publisher": {{ "@type": "Organization", "name": "Tokenization Systems", "url": "{SITE}" }},',
-            f'  "isPartOf": {{ "@type": "CollectionPage", "@id": "{SITE}/letters/" }},',
+            f'  "isPartOf": {{ "@type": "WebPage", "@id": "{SITE}/letters/" }},',
             '  "mainEntity": {',
             '    "@type": "ItemList",',
             f'    "name": {json.dumps(f"Recommendations by letter ({m.n_recs} in {word(len(letters))} letters)")},',

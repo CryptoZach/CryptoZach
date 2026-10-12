@@ -187,3 +187,46 @@ engagement signals all reward consistent publication cadence.
 - AI-generated content for ranking. Google's spam policies penalize
   scaled AI-only content; the research program publishes original work,
   which is exactly what Google rewards.
+
+## 6. The brand query "tokenization systems" (added 2026-10-12)
+
+What was measured on 2026-10-12: Googlebot fetches the homepage with a 200 and
+the full HTML; http, www and cryptozach.com all 301 to the apex; the sitemap
+(54 URLs, lastmod from git) is linked from robots.txt; no canonical page is
+noindexed. The query itself is read by Google as informational: the top
+results are payment and data-security tokenization (Wikipedia, IBM, USPTO
+patents). The site can take a page-one slot as the navigational result for
+its own name, not by outranking Wikipedia for the generic meaning, and that
+needs the entity signals this commit adds (the About page, the Organization
+node with sameAs, logo and alternateName, the brand name in the hero copy and
+in every title) plus the offsite steps below. Index coverage and the query's
+current position cannot be checked from outside Search Console.
+
+Checklist, in order:
+
+1. Search Console: confirm the property is verified (DNS TXT through
+   Cloudflare is the durable method). Submit `sitemap.xml`. URL-inspect and
+   request indexing for `/`, `/about/`, `/letters/`, `/research/` and
+   `/frameworks/`. Then read Performance for the query "tokenization
+   systems": no impressions means the pages are not indexed or not associated
+   with the name (fix: indexing requests, entity signals); a position between
+   11 and 30 means an authority gap (fix: mentions and links below).
+2. Bing Webmaster Tools: import the site from Search Console (section 1).
+3. Name the practice, with a link, everywhere the author already has a
+   profile: the LinkedIn profile's website field and a LinkedIn Company Page
+   called "Tokenization Systems"; the X bio link; the SSRN author
+   affiliation; the ORCID employment entry; the Google Scholar affiliation;
+   the GitHub organization profile; the Medium bio. Each is a cheap,
+   consistent mention of the exact name with the URL, which is how Google
+   learns that "Tokenization Systems" is this site.
+4. Every future comment letter: keep the practice name and the URL on the
+   letterhead and in the signature block, so each regulations.gov filing is
+   a .gov page that names and links the site.
+5. Decide the AI-crawler policy. robots.txt blocks OAI-SearchBot,
+   PerplexityBot, ClaudeBot and Google-Extended, among others. The first two
+   are the crawlers behind ChatGPT search and Perplexity citations, so the
+   site cannot be cited there while they are blocked; Google-Extended affects
+   Gemini training only, not Search ranking. Unblocking the search crawlers
+   while keeping the training crawlers blocked is the usual middle path.
+6. Monthly: a manual `site:tokenization.systems` search in Google and the
+   Search Console query report, logged next to the date.
