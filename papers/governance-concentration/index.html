@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,19 +35,18 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Governance Concentration Beyond Token Allocation | TS</title>
-  <meta name="description" content="A live-governance audit of 52 token protocols after protocol-controlled-address correction. Launch allocation is uninformative about governance concentration; post-distribution insider retention, sector, and delegation design are the operative correlates." />
+  <title>Governance Concentration Beyond Token Allocation | Tokenization Systems</title>
+  <meta name="description" content="A live-governance audit of 52 token protocols: launch allocation says little about governance concentration; insider retention, sector, and delegation do." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="governance concentration, live-governance audit, DePIN, DeFi, protocol-controlled addresses, PCA exclusion, token allocation, delegation amplification, vote-escrow, insider retention, Herfindahl-Hirschman Index, voting power, republican non-domination" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Auditing Governance Concentration Beyond Token Allocation" />
-  <meta property="og:description" content="A live-governance audit of 52 token protocols after protocol-controlled-address correction. Launch allocation is uninformative about governance concentration; post-distribution insider retention, sector, and delegation design are the operative correlates." />
+  <meta property="og:description" content="A live-governance audit of 52 token protocols: launch allocation says little about governance concentration; insider retention, sector, and delegation do." />
   <meta property="og:url" content="https://tokenization.systems/papers/governance-concentration/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/B2_Sector_Concentration_N52.png" />
   <meta property="og:image:width" content="2643" />
@@ -58,7 +58,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Auditing Governance Concentration Beyond Token Allocation" />
-  <meta name="twitter:description" content="A live-governance audit of 52 token protocols after protocol-controlled-address correction. Launch allocation is uninformative about governance concentration; post-distribution insider retention, sector, and delegation design are the operative correlates." />
+  <meta name="twitter:description" content="A live-governance audit of 52 token protocols: launch allocation says little about governance concentration; insider retention, sector, and delegation do." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/B2_Sector_Concentration_N52.png" />
   <meta name="twitter:image:alt" content="Governance concentration by architecture across the 52-protocol cross-section: post-exclusion governance HHI is higher for DePIN (mean 0.067) than for DeFi (0.026) and L1/Infra (Kruskal-Wallis p = 0.005)" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -68,16 +68,22 @@
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
   <link rel="preconnect" href="https://www.frontiersin.org" />
   <link rel="dns-prefetch" href="https://www.frontiersin.org" />
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=261" />
   <script type="application/ld+json">
     {
@@ -208,6 +214,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -219,16 +226,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -249,22 +256,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -283,7 +290,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Auditing Governance Concentration Beyond Token Allocation
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Auditing Governance Concentration Beyond Token Allocation
       </nav>
 
       <span class="paper-track-badge paper-track-badge--b">Track B: Tokenomics</span>
@@ -455,7 +462,7 @@
         <p>Initial insider allocation is not associated with post-distribution concentration: Pearson r = 0.09, p = 0.55, N = 50 (Spearman rho = 0.19, p = 0.18). The result is not specific to one measure. Team allocation (r = -0.03), investor allocation (r = 0.19), protocol maturity (r = 0.10), circulating-to-total supply (r = 0.03), and market-cap-to-fully-diluted-valuation (FDV) (r = 0.21) are each uninformative as well. The allocation battery runs on the N = 50 sectors-only sample (the full insider-populated set is N = 51). This is a bounded null, not a mere failure to find an effect: a two-one-sided-tests (TOST) equivalence procedure shows the correlation is statistically equivalent to zero within the range the sample is powered to detect (TOST p = 0.02 within |r| = 0.38). A joint launch-design block (team, investor, maturity) explains 4.2 percent of HHI variance (F(3, 41) = 0.60, p = 0.62). An initial 24-month temporal endpoint correlation is also descriptively consistent with the null (r = -0.14, N = 13). Initial tokenomics is metadata about a launch, not evidence about who holds governance power today.</p>
 
         <h3>3. Insider-wallet retention is the operating mechanism</h3>
-        <p>Protocols with more insider wallets among their post-exclusion top holders are more concentrated: Spearman rho = 0.44, p = 0.005, N = 39, significant in all 39 leave-one-out iterations. A non-insider HHI tautology check confirms the relationship is more than mechanical (count-based rho = 0.54, p = 0.001, N = 34), and a within-sector partial rank correlation (r = 0.47, p = 0.005, N = 34) shows the retention signal is not absorbed by the sector dummy. This is the mechanism that explains the allocation null: what concentrates voting power over time is which insiders keep and exercise their holdings, not who received tokens at launch.</p>
+        <p>Protocols with more insider wallets among their post-exclusion top holders are more concentrated: Spearman rho = 0.44, p = 0.005, N = 39, significant in all 39 leave-one-out iterations. A non-insider HHI tautology check indicates the relationship is more than mechanical (count-based rho = 0.54, p = 0.001, N = 34), and a within-sector partial rank correlation (r = 0.47, p = 0.005, N = 34) shows the retention signal is not absorbed by the sector dummy. This is the mechanism that explains the allocation null: what concentrates voting power over time is which insiders keep and exercise their holdings, not who received tokens at launch.</p>
 
         <h3>4. Sector membership matters, with treatment-dependent magnitude</h3>
         <p>DePIN governance is more concentrated than DeFi after correction (mean HHI 0.067 vs 0.026): Mann-Whitney p = 0.028, Cohen's d = 0.65 on the balanced 15-vs-15 contrast under the voter-inclusive staking pass-through treatment of record; the uniform staking-aggregation exclusion robustness check gives d = 0.75 at p = 0.018, significant on every test. The direction is robust across all 30 leave-one-out iterations, a 100,000-reassignment permutation test (p = 0.009 under the uniform exclusion), bootstrap intervals that exclude zero, the directionally consistent full-frame contrast (15 DePIN vs 24 DeFi; significance there is sensitive to the staking-aggregation treatment), and a powered multivariate model (N = 50, log-HHI p = 0.0107).</p>
@@ -486,7 +493,7 @@
 
         <h3>PCA exclusion methodology</h3>
         <p><strong>Protocol-controlled addresses are excluded before any concentration metric is computed.</strong> These addresses (burn destinations, foundation and treasury custody, staking-aggregation contracts, bridge and migration custody, and centralized-exchange custody) hold tokens without exercising independent governance, and including them inflates measured concentration.</p>
-        <p>The paper applies 133 PCA exclusions across 38 protocols via the generalizable five-class typology, identified through Blockscout and Etherscan verification, Nansen entity labels, and transaction-pattern signatures. A separate exchange-custody completion audit removes a further 64 Nansen-labeled centralized-exchange deposit wallets across 21 protocols. Exclusion corrects a median 2.3x (maximum roughly 18x) inflation in affected protocols. The methodology is sample-independent and is also inherited by the companion paper <a href="/papers/who-burns-the-tokens">Who Burns the Tokens?</a> for its GeoDePIN deep-dive.</p>
+        <p>The paper applies 133 PCA exclusions across 38 protocols via the generalizable five-class typology, identified through Blockscout and Etherscan verification, Nansen entity labels, and transaction-pattern signatures. A separate exchange-custody completion audit removes a further 64 Nansen-labeled centralized-exchange deposit wallets across 21 protocols. Exclusion corrects a median 2.3x (maximum roughly 18x) inflation in affected protocols. The methodology is sample-independent and is also inherited by the companion paper <a href="/papers/who-burns-the-tokens/">Who Burns the Tokens?</a> for its GeoDePIN deep-dive.</p>
         <p>The exclusion discipline extends to the voting layer. Across 13 Snapshot-sourced protocols, holder-side PCA exclusion detects zero PCA voters, because the off-chain accounts that sign Snapshot votes do not overlap with the on-chain holder addresses the typology screens. The voting layer needs its own screen. Four signer-side actors hold substantial voting weight and are registered in a separate signer-side exclusions log: the Compound Foundation (25.01 percent of COMP voting weight), the Balancer DAO multisig (51.95 percent of BAL), the Gitcoin maintainer (27.93 percent of GTC), and a vested WeatherXM insider position (74.04 percent of WXM).</p>
 
         <h3>Normative framing and companion papers</h3>
@@ -534,21 +541,21 @@
         </ul>
 
         <h2>Related role profiles</h2>
-        <p>This paper supports protocol-design and governance-research audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
+        <p>This paper supports protocol-design and governance-research audiences. For institutional hiring, see <a href="/resume/">Resume</a> and <a href="/research/#track-b">Tokenomics &amp; DePIN track</a>.</p>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/who-burns-the-tokens" class="companion-card">
+          <a href="/papers/who-burns-the-tokens/" class="companion-card">
             <strong>Who Burns the Tokens?</strong>
             <span>Applies this paper's exclusion methodology and Ostromian framing to a GeoDePIN deep-dive. Fiscal sustainability (S2R) and demand concentration in Helium and GEODNET.</span>
           </a>
-          <a href="/papers/operational-risk" class="companion-card">
+          <a href="/papers/operational-risk/" class="companion-card">
             <strong>Operational Risk in Token Economies</strong>
             <span>Simulation-based study of how operational failures interact with adaptive controllers and reputation systems.</span>
           </a>
-          <a href="/papers/adaptive-tokenomics" class="companion-card">
+          <a href="/papers/adaptive-tokenomics/" class="companion-card">
             <strong>Adaptive Tokenomics</strong>
             <span>Simulation-based study of PID emission control on the MeshNet framework. Track B thematic companion (no data dependency).</span>
           </a>
@@ -563,14 +570,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -586,7 +593,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

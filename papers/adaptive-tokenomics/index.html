@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Adaptive Tokenomics: Stress-Tested Token Design | TS</title>
+  <title>Adaptive Tokenomics: Stress-Tested Token Design | Tokenization Systems</title>
   <meta name="description" content="Static token emission fails under contraction. PID-controlled adaptive emissions compress worst-case variance 6x across 240 simulations, four scenarios." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="tokenomics, systems engineering, agent-based simulation, DePIN, PID control, burn-mint equilibrium, governance concentration, mechanism design, adaptive emissions" />
@@ -66,16 +66,22 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=261" />
   <script type="application/ld+json">
     {
@@ -181,6 +187,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -192,16 +199,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -222,22 +229,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -256,7 +263,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Adaptive Tokenomics
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Adaptive Tokenomics
       </nav>
 
       <figure class="paper-cover" aria-hidden="true">
@@ -451,7 +458,7 @@
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
         <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
-        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Cross-sectional governance concentration patterns referenced in this paper are addressed empirically in the companion paper <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>, which uses a 52-protocol cross-section spanning DePIN, DeFi, L1/L2 infrastructure, and social tokens with a five-class exclusion typology removing 133 protocol-controlled addresses across 38 protocols.</p>
+        <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Cross-sectional governance concentration patterns referenced in this paper are addressed empirically in the companion paper <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>, which uses a 52-protocol cross-section spanning DePIN, DeFi, L1/L2 infrastructure, and social tokens with a five-class exclusion typology removing 133 protocol-controlled addresses across 38 protocols.</p>
 
         <div class="paper-key-numbers">
           <h2>Key numbers</h2>
@@ -473,25 +480,25 @@
           <p><span class="key-num" aria-hidden="true">6</span><span class="key-num-copy"><strong>Adversarial defense</strong><br>
           Proof-of-coverage reduces modeled fraudulent reward capture from 3.0% to 0.09%</span></p>
           <p><span class="key-num" aria-hidden="true">7</span><span class="key-num-copy"><strong>Governance concentration (modeled setup)</strong><br>
-          Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the simulated MeshNet setup. Cross-sectional empirical governance concentration patterns are addressed in the companion paper <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>; see that paper for the 52-protocol cross-section, the balanced DePIN vs DeFi comparison, and the exclusion methodology.</span></p>
+          Reputation weighting compresses effective voting-power inequality from Gini 0.89 to 0.72 in the simulated MeshNet setup. Cross-sectional empirical governance concentration patterns are addressed in the companion paper <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>; see that paper for the 52-protocol cross-section, the balanced DePIN vs DeFi comparison, and the exclusion methodology.</span></p>
         </div>
 
         <h2>Related role profiles</h2>
-        <p>Track B work supports protocol and token-design audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
+        <p>Track B work supports protocol and token-design audiences. For institutional hiring, see <a href="/resume/">Resume</a> and <a href="/research/#track-b">Tokenomics &amp; DePIN track</a>.</p>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/operational-risk" class="companion-card">
+          <a href="/papers/operational-risk/" class="companion-card">
             <strong>Operational Risk in Token Economies</strong>
             <span>Infrastructure shocks widen adaptive controllers' variance advantage while threshold-gated reputation collapses. Extends this paper's MeshNet ensemble.</span>
           </a>
-          <a href="/papers/governance-concentration" class="companion-card">
+          <a href="/papers/governance-concentration/" class="companion-card">
             <strong>Auditing Governance Concentration Beyond Token Allocation</strong>
             <span>Empirical cross-section of 52 protocols across DePIN and DeFi. Allocation null, sector significant, delegation amplifies. Track B thematic companion (no data dependency on this paper).</span>
           </a>
-          <a href="/papers/who-burns-the-tokens" class="companion-card">
+          <a href="/papers/who-burns-the-tokens/" class="companion-card">
             <strong>Who Burns the Tokens?</strong>
             <span>GeoDePIN deep-dive into fiscal sustainability and demand concentration. Helium S2R = 1.84 over 34-month window; BME crossed parity in November 2025.</span>
           </a>
@@ -506,14 +513,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -529,7 +536,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

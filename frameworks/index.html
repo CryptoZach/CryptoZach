@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-    <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools | TS</title>
+  <title>Frameworks: CLII, MVEP &amp; Tokenomics Risk Tools</title>
   <meta name="description" content="MVEP: the ten-category institutional diligence standard for tokenized money and securities. Thirteen frameworks across two research tracks." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="CLII, MVEP, stablecoin risk framework, tokenomics framework, operational risk taxonomy, burn mechanism, governance concentration, adaptive tokenomics, institutional diligence, control layer, digital asset regulation, operator risk scoring" />
@@ -66,8 +66,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -76,14 +74,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <style>
     #featured-mvep, #framework-stack, #framework-lives, #classification-frameworks, #seven-dollars-framework, #three-strategies-framework, #core-frameworks, #clii, #mvep, #mgcpt, #tcrd, #\33 crd, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #track-b-frameworks, #operational-risk-taxonomy, #burn-mechanism-classification, #governance-concentration-diagnostic, #adaptive-tokenomics, #frameworks-in-rulemaking, #ai-extension, #how-the-work-runs, #go-deeper { scroll-margin-top: 8rem; }
@@ -372,6 +374,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -383,16 +386,16 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink active" href="/frameworks" aria-current="page">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -413,22 +416,22 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink active" href="/frameworks" aria-current="page">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -560,7 +563,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p class="operating-model-stack__body"><em class="operating-model-stack__thesis">Who earns the token matters more than who holds it. Classify the token, but regulate and audit the operator.</em></p>
         </div>
       </div>
-      <p class="track-bridge"><a href="/research">View research library <span aria-hidden="true">→</span></a></p>
+      <p class="track-bridge"><a href="/research/">View research library <span aria-hidden="true">→</span></a></p>
     </div>
 
     <section class="reveal" id="decision-map" aria-labelledby="decision-map-title">
@@ -662,8 +665,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </div>
       </div>
       <div class="featured-framework-actions">
-        <a class="action primary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a>
-        <a class="action secondary" href="/contact?context=mvep-application">Request MVEP application <span aria-hidden="true">→</span></a>
+        <a class="action primary" href="/papers/mvep/">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a>
+        <a class="action secondary" href="/contact/?context=mvep-application">Request MVEP application <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -675,7 +678,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
 
       <div class="stack-tracks">
         <div class="stack-track stack-track--b">
-          <h3 class="track-heading"><span class="track-heading-prefix">Track B</span><span class="track-heading-desc">Token-economy sequence</span></h3>
+          <h3 class="track-heading"><span class="track-heading-prefix">Track B</span> <span class="track-heading-desc">Token-economy sequence</span></h3>
           <ol class="stack-steps">
             <li class="stack-step">
               <span class="stack-step-num" aria-hidden="true">1</span>
@@ -722,7 +725,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Positions seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) across two independent dimensions: operator regulation and product equivalence. Each requires a structurally different evidence package.</p>
           <p><strong>Why it matters.</strong> Operator regulation and product equivalence are separate dimensions. Conflating them produces the diligence error that allowed Circle (CLII 0.92) to break during the SVB (Silicon Valley Bank) failure in March 2023 while less-regulated operators held.</p>
           <p><strong>What triggers re-evaluation.</strong> A new product class, a regulatory regime change that re-positions an issuer, or a structural shift in how an existing product is collateralized or wrapped.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/seven-dollars">Open Seven Dollars <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/seven-dollars/">Open Seven Dollars <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="three-strategies-framework">
           <h3>Tokenization Infrastructure Map</h3>
@@ -730,7 +733,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Classifies institutional US-securities tokenization as three strategies: a regulated collateral circuit (tokenized Treasuries + bank-issued deposit tokens), a multi-issuer yield stack (five fund issuers with a smart redemption router), and tokenized equity rails on Nasdaq and NYSE. Maps which entities recur across strategies.</p>
           <p><strong>Why it matters.</strong> System-level risk lives in the entities that connect the strategies, not in the strategies themselves. Securitize, an SEC-registered transfer agent, sits in all three; any new strategy that depends on the same transfer agent, custodian, or redemption router inherits that concentration by default.</p>
           <p><strong>What triggers re-evaluation.</strong> A fourth strategy emerging, a structural change at a cross-strategy entity, or a regulatory change that re-partitions which entity types can participate.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/three-strategies">Open Three Tokenization Strategies <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/three-strategies/">Open Three Tokenization Strategies <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
@@ -747,7 +750,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorganization and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
           <p><strong>Why it matters.</strong> A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
           <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep/">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="clii">
           <h3>CLII (Control Layer Intensity Index)</h3>
@@ -755,7 +758,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
           <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
           <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar/">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
         </article>
         </div>
       <div class="section-title" id="narrower-question">
@@ -778,7 +781,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Customer-facing disclosure template derived from MVEP Categories 1, 4, and 5 (Rights Parity, Custody and Customer Property, Insolvency Posture). Surfaces three substantive disclosure items at the point-of-use: legal claim (the holder&apos;s claim on the reserve), reserve composition (what the reserves are made of), and reserve location and custody (where the reserves sit, with which custodian).</p>
           <p><strong>Why it matters.</strong> MVEP scores the artifact (rights-parity memo with counsel sign-off, segregation model with custody agreement, bankruptcy-priority memo with scenario analysis); 3CRD is the displayable summary surfacing that artifact&apos;s substantive content where holders actually see it. MVEP without 3CRD leaves the diligence content invisible to holders; 3CRD without MVEP leaves the displayable summary unanchored to verifiable artifacts. Cross-letter operationalized across OCC supplemental, Treasury Section II, and FDIC AG19 Recommendations 1 to 6.</p>
           <p><strong>What triggers re-evaluation.</strong> A change in the underlying MVEP Categories 1, 4, or 5 artifacts; a new disclosure rule in PPSI rulemaking; or new cross-letter operationalization that extends the template.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/mvep/">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-e" id="credit-migration-model">
           <h3>Credit Migration Model <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></h3>
@@ -786,7 +789,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Tracks where deposit balances sit and how they move as stablecoin reserve growth scales: which banks gain or lose funding, how funding quality changes, and whether reserves reduce, recycle, or restructure deposits.</p>
           <p><strong>Why it matters.</strong> Bank funding can become more concentrated (fewer banks hold larger shares), more skewed toward institutional depositors than retail, and more vulnerable to rapid withdrawal as stablecoin-serving banks absorb reserves. That is the mechanism the Federal Reserve highlights in its December 2025 note. The essay&apos;s term &quot;deposit mutation&quot; is the author&apos;s synthesis; the Fed describes the underlying mechanism as deposits being reduced, recycled, or restructured.</p>
           <p><strong>What triggers re-evaluation.</strong> A change in which assets issuers hold as reserves, concentration of reserves at fewer banks, a shift in how redemptions are processed, or a change in which banks absorb new reserve inflows.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3/">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-a" id="regime-dashboard">
           <h3>Regime Dashboard</h3>
@@ -794,8 +797,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Tracks who controls the operating layer right now: interface ownership, default routing, sweep ownership, hold authority, fee structures, and disclosure obligations.</p>
           <p><strong>Why it matters.</strong> CLARITY Act provisions (the House-passed digital-asset market-structure bill analyzed here) attach compliance where it becomes operational: at the interface, in routing defaults, in hold-and-release workflows, and in audit logs. The question is whether the entity that bears compliance also captures the economics (fees, float, data), or whether the two end up at different points in the stack.</p>
           <p><strong>What triggers re-evaluation.</strong> A shift in front-end interface ownership, default routing control, where yield is allowed to live, or where hold and reporting obligations attach.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
-          <p class="framework-card-action"><a class="action secondary" href="/contact?context=regime-dashboard">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/control-layer-war/">Open The Control Layer War <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/contact/?context=regime-dashboard">Request Regime Dashboard <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
           <h3>Tokenized Dollar Regime Classifier (TDRC)</h3>
@@ -803,7 +806,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Classifies the U.S. dollar operating-layer equilibrium along two axes, each scored 0 to 6 via three components. ControlScore = obligated-interface share of flows + default sweep and wrapper penetration + holds-or-freeze usage as operating norm. IssuerScore = settlement-object concentration + reserve carry retention + direct mint and burn authority. Classification rule (3-month rolling average, weekly in stress): Control-dominant (ControlScore &ge; 4 and beats IssuerScore by &ge; 2), Issuer-dominant (mirror test), or Split / Contested otherwise.</p>
           <p><strong>Why it matters.</strong> Names which layer captures the economics, who bears the regulatory burden, and whether policy is shifting the equilibrium. Tracks structural power allocation, not safety or solvency.</p>
           <p><strong>What triggers re-evaluation.</strong> Three or more of six leading policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes; SEC-CFTC 2026 Joint Final Rule on Crypto Taxonomy), or two or more component scores flipping in a quarter.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3/">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
@@ -820,15 +823,15 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Maps 74 risk vectors to 64 testable controls and 36 control objectives across a 624-configuration simulation battery. Calibrated from Ethereum, Helium, GEODNET, and Filecoin production data using ValOS (Validator Operation Standard) and NORS (Node Operator Risk Standard) frameworks.</p>
           <p><strong>Why it matters.</strong> Economic-only simulations miss the infrastructure failures that change token-economy behavior. Reputation systems gated by hard thresholds can become unworkable under routine operational risk; adaptive emission control can be more resilient than static designs under the same stress.</p>
           <p><strong>What triggers re-evaluation.</strong> A new failure pattern, a node-operator concentration shift, a reputation-system threshold crossing, or a previously unmodeled correlation between economic and operational stress.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/operational-risk">Open Operational Risk in Token Economies <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/operational-risk/">Open Operational Risk in Token Economies <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="burn-mechanism-classification">
           <h3>Burn Mechanism Classification</h3>
           <p class="card-eyebrow">Classification &middot; Fiscal sustainability</p>
           <p><strong>What it does.</strong> Classifies token networks by payment architecture and payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates direct-payment architectures, where the customer base is observable on-chain, from buy-and-burn, single-relayer, and credit-intermediated models, where it is not.</p>
           <p><strong>Why it matters.</strong> Payment architecture determines whether a network's demand concentration can be observed on-chain at all. Helium's direct-burn model: burn-signer HHI 0.27, Top-5 demand sources roughly 90% of burn volume. Livepeer's direct-fee model: fee-payer HHI 0.31. GEODNET's Foundation buy-and-burn relocates demand off-chain, where it is not measurable. Helium's burn-mint parity crossing was driven by the August 2025 emission halving and the full carrier-revenue burn policy, not separable on-chain without a formal event study.</p>
-          <p><strong>What triggers re-evaluation.</strong> A change in S2R trajectory (not just level), an emission halving or other supply-compression event, a shift in demand concentration or payment architecture, or a fiscal-parity crossing.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
+          <p><strong>What triggers re-evaluation.</strong> A change in S2R trajectory (as distinct from level), an emission halving or other supply-compression event, a shift in demand concentration or payment architecture, or a fiscal-parity crossing.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens/">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="governance-concentration-diagnostic">
           <h3>Governance-Concentration Diagnostic</h3>
@@ -836,7 +839,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 52-protocol PCA (principal component analysis)-corrected cross-section across DePIN, DeFi (decentralized finance), L1/L2 (Layer 1 and Layer 2) infrastructure, and social tokens. Lead correlation is null: insider allocation does not predict post-distribution concentration (Pearson r = 0.09, p = 0.55, N = 50).</p>
           <p><strong>Why it matters.</strong> Sector membership predicts concentration (DePIN more concentrated than DeFi after correction, Mann-Whitney p = 0.028, Cohen's d = 0.65); insider-wallet retention is the operating mechanism (Spearman rho = 0.44, p = 0.005); delegation amplifies voting concentration above holdings in 13 of 18 protocols. The methodological core is a generalizable five-class protocol-controlled-address exclusion typology that removes 133 addresses across 38 protocols and corrects a median 2.3x (maximum roughly 18x) inflation in prior holder-list studies.</p>
           <p><strong>What triggers re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration/">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="adaptive-tokenomics">
           <h3>Adaptive-Tokenomics Stress Audit</h3>
@@ -844,7 +847,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Integrates productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional-integral-derivative feedback controller, a standard control architecture used to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios.</p>
           <p><strong>Why it matters.</strong> Integrated design surfaces structural properties that no single-mechanism analysis can. Results are mechanism demonstrations under stated assumptions, not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used to illustrate the framework.</p>
           <p><strong>What triggers re-evaluation.</strong> A new stress scenario, a parameter range not previously modeled, or a real-deployment data point that contradicts the simulation.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/adaptive-tokenomics">Open Adaptive Tokenomics <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/adaptive-tokenomics/">Open Adaptive Tokenomics <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
     </section>
@@ -907,7 +910,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           </tbody>
         </table>
       </div>
-      <p class="track-bridge"><a class="action secondary" href="/letters">View all letters <span aria-hidden="true">→</span></a></p>
+      <p class="track-bridge"><a class="action secondary" href="/letters/">View all letters <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="reveal" id="ai-extension" aria-labelledby="ai-extension-title">
@@ -915,7 +918,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <h2 id="ai-extension-title">Extending the frameworks to AI operators</h2>
         <p>CLII and MVEP carry from stablecoin gateways to AI deployments without losing their structure. The <strong>CLII-AI</strong> and <strong>MVEP-AI</strong> extension tracks transfer the control-layer vocabulary (routing defaults, hold authority, monitoring hooks, exception handling) to AI infrastructure and governance questions. First external deployment: the FSB <em>Sound Practices for Responsible Adoption of AI</em> consultation response (July 2026).</p>
       </div>
-      <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure">View AI Governance profile <span aria-hidden="true">→</span></a></p>
+      <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure/">View AI Governance profile <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="reveal" id="framework-lives" aria-labelledby="framework-lives-title">
@@ -1058,23 +1061,23 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <h2 id="go-deeper-title">Go deeper</h2>
       </div>
       <div class="go-deeper-grid">
-        <a class="go-deeper-card" href="/overview">
-          <span class="go-deeper-card-title">Overview</span>
+        <a class="go-deeper-card" href="/overview/">
+          <span class="go-deeper-card-title">Field guide</span>
           <span class="go-deeper-card-desc">Definitions and entry points</span>
         </a>
-        <a class="go-deeper-card" href="/research">
+        <a class="go-deeper-card" href="/research/">
           <span class="go-deeper-card-title">Research Library</span>
           <span class="go-deeper-card-desc">Papers and summaries</span>
         </a>
-        <a class="go-deeper-card" href="/resume">
+        <a class="go-deeper-card" href="/resume/">
           <span class="go-deeper-card-title">Framework author</span>
           <span class="go-deeper-card-desc">Six decision-context resumes from the author of these frameworks (policy, allocator, payments, product, AI governance, risk)</span>
         </a>
-        <a class="go-deeper-card" href="/research#track-b">
+        <a class="go-deeper-card" href="/research/#track-b">
           <span class="go-deeper-card-title">Tokenomics &amp; DePIN track</span>
           <span class="go-deeper-card-desc">Mechanism design and operational failure research</span>
         </a>
-        <a class="go-deeper-card" href="/contact">
+        <a class="go-deeper-card" href="/contact/">
           <span class="go-deeper-card-title">Request access</span>
           <span class="go-deeper-card-desc">Dashboard and memo set</span>
         </a>
@@ -1086,14 +1089,14 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -1109,7 +1112,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

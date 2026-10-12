@@ -42,6 +42,13 @@ GitHub Pages auto-build via `.github/workflows/build-deploy.yml`:
    (`scripts/inline-critical-css.mjs`).
 3. Deploy via `actions/deploy-pages@v4`.
 
+Two scripts run before the Jekyll build on every deploy: `scripts/check_internal_links.py`
+(part of the consistency gate; fails on an internal link to a directory page without its
+trailing slash) and `scripts/update_sitemap_lastmod.py` (sets each sitemap `<lastmod>` from
+the last commit that touched the page; needs the full-history checkout the workflow uses).
+Fonts are self-hosted from `fonts/` (variable WOFF2, SIL OFL) and declared inline in each
+page head, so no page depends on fonts.googleapis.com.
+
 The build only runs on `CryptoZach/CryptoZach` (guarded by an `if:`
 condition on both jobs). The custom domain `tokenization.systems` is
 configured via `CNAME` and Cloudflare DNS.

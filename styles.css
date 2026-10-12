@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&display=swap");
+/* Self-hosted variable fonts (fonts/, SIL OFL 1.1). The Google Fonts @import that was here cost 0.9 to 1.0 s of render blocking on mobile (2026-10-12 audit); the same @font-face block is inlined in each page head with a preload. */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}
 /* ─────────────────────────────────────────────────────────────────────────────
    CryptoZach: Premium editorial design system
    Research-forward, institutional, high-trust
@@ -22126,3 +22128,49 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
      binding still governs everywhere the row has room. */
   .header-inner > .brand a > span{overflow-wrap:anywhere}
 }
+
+/* ── 2026-10-12 accessibility pass (axe-core and Lighthouse on the live site) ──
+   Contrast: the track prefix (4.4:1), the active nav link, the brand tagline and the
+   contact labels sat under 4.5:1 in one or both themes; figcaptions were painted at
+   opacity .55. Honesty: .structure-nav kept the hidden attribute while CSS forced it
+   to display, so assistive technology and sighted users disagreed about it. */
+.track-heading-prefix{color:#174a94}
+:root[data-theme="dark"] .track-heading-prefix{color:#8fbcff}
+.navlink.active{color:#174a94}
+:root[data-theme="dark"] .navlink.active{color:#8fbcff}
+.brand span{color:color-mix(in srgb, #7a4a05 35%, var(--text-soft))}
+:root[data-theme="dark"] .brand span{color:color-mix(in srgb, #fbbf24 35%, var(--text-soft))}
+body.contact-page .contact-page-foreground > .contact-page .about-label{color:#174a94}
+:root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-label{color:#8fbcff}
+.brief-figure figcaption,.paper-exhibit-figure figcaption{opacity:.82}
+.structure-nav[hidden]{visibility:hidden}
+@media (max-width:480px){
+  .brand span{display:none}
+}
+
+/* Letters hub: agency filter chips (same look as the research filters, own hooks so
+   the research filter script never binds to them). */
+.letters-filters{margin:var(--space-md) 0 var(--space-lg)}
+.letters-filters .filter-group{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+.letters-filters .filter-label{font-size:var(--font-size-min);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.letters-filters .filter-btn{appearance:none;border:1px solid color-mix(in srgb, currentColor 22%, transparent);background:transparent;color:inherit;font:inherit;font-size:var(--font-size-min);padding:.38rem .8rem;border-radius:999px;cursor:pointer;min-height:var(--interactive-height-sm,36px)}
+.letters-filters .filter-btn:hover{border-color:var(--accent)}
+.letters-filters .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.letters-filters .filter-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.letters-filters .filter-count{font-size:var(--font-size-min);color:var(--muted)}
+.letters-lede{max-width:70ch}
+.is-filtered-out{display:none !important}
+
+/* Specificity-matched overrides for the two findings the generic rules above did not reach:
+   the track prefix is coloured by h2#track-a / h2#track-b rules, the contact labels by
+   :nth-child rules. Hues kept, lightness moved to clear 4.5:1 in both themes. */
+.research-library-page h2#track-a .track-heading-prefix,.research-library-page h2#track-b .track-heading-prefix{color:#174a94}
+:root[data-theme="dark"] .research-library-page h2#track-a .track-heading-prefix,:root[data-theme="dark"] .research-library-page h2#track-b .track-heading-prefix{color:#8fbcff}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1) .about-label{color:#174a94}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2) .about-label{color:#0b5f55}
+body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3) .about-label{color:#4a3b9f}
+:root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(1) .about-label{color:#8fbcff}
+:root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(2) .about-label{color:#7fd3c6}
+:root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3) .about-label{color:#b7adff}
+.letters-filters .filter-count-wrap{margin:.45rem 0 0;padding:0;border:0;background:none;min-height:0;box-shadow:none}
+.letters-filters .filter-count-wrap[hidden]{display:none}

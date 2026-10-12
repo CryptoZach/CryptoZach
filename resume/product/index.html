@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0c10" />
   <meta name="author" content="Zach Zukowski" />
 
-  <title>Product Resume | Digital Asset Product Management | TS</title>
+  <title>Product Resume | Digital Asset Product Management | Tokenization Systems</title>
   <meta name="description" content="Digital asset product resume: customer discovery, end-to-end life cycle, exception operations, matrixed delivery for stablecoin and tokenized money." />
   <meta name="keywords" content="product manager resume, digital asset product, stablecoin product manager, blockchain payments PM, tokenization product, Kinexys, deposit token product, MVEP, CLII, MGCPT, TCRD, Tokenization Systems" />
 
@@ -65,8 +65,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -75,14 +73,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -152,6 +154,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -163,16 +166,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -193,22 +196,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -241,12 +244,12 @@
         <a class="action secondary" href="#supporting-research">Supporting research</a>
       </div>
       <div class="page-top-link">
-        <a href="/resume">Back to Resume Hub</a>
+        <a href="/resume/">Back to Resume Hub</a>
       </div>
       <div class="resume-summary-grid resume-summary-grid--single">
         <article class="resume-summary-card">
           <h3>Decision lens</h3>
-          <p>Built for PM leads on stablecoin, deposit-token, tokenized-MMF, and on-chain payment products inside banks, fintech platforms, and digital-asset issuers. The lens focuses on voice-of-customer discovery at institutional density, end-to-end life-cycle decisions from intake to launch, the exception backlog that surfaces after launch, and the matrixed partner network (legal, compliance, risk, engineering, jurisdictional regulators) a tokenized product depends on. Discovery is the intake gate; the MVEP-graded life cycle and the post-launch exception backlog are the operational instruments. This is the product-craft lens; for the operator-strategy lens (reserve design, routing defaults, hold authority, go-live thresholds), see the <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a> profile.</p>
+          <p>Built for PM leads on stablecoin, deposit-token, tokenized-MMF, and on-chain payment products inside banks, fintech platforms, and digital-asset issuers. The lens focuses on voice-of-customer discovery at institutional density, end-to-end life-cycle decisions from intake to launch, the exception backlog that surfaces after launch, and the matrixed partner network (legal, compliance, risk, engineering, jurisdictional regulators) a tokenized product depends on. Discovery is the intake gate; the MVEP-graded life cycle and the post-launch exception backlog are the operational instruments. This is the product-craft lens; for the operator-strategy lens (reserve design, routing defaults, hold authority, go-live thresholds), see the <a href="/resume/stablecoin-payments/">Stablecoin &amp; Payments Strategy</a> profile.</p>
         </article>
       </div>
     </section>
@@ -293,7 +296,7 @@
           </article>
         </div>
         <div class="resume-downloads">
-          Need more? <a href="/contact">Request a writing sample</a> · <a href="/contact">Discuss a product role</a>
+          Need more? <a href="/contact/">Request a writing sample</a> · <a href="/contact/">Discuss a product role</a>
         </div>
       </div>
     </section>
@@ -309,42 +312,42 @@
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Routing the Dollar</h3>
           <p>How gateway infrastructure concentrates control, routes settlement, and determines operator accountability under stress. On Ethereum, unique counterparties fell 25% and cross-gateway connections dropped from 5.8% to 2.6% even as volume doubled. The CLII classifies compliance posture across 19 gateways as the post-approval drift detector.</p>
-          <a class="research-card-action" href="/papers/routing-the-dollar">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/routing-the-dollar/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <picture><source type="image/webp" srcset="/Publication-Images/MVEP_Cover_v2-thumb.webp" /><img class="card-thumb" src="/Publication-Images/MVEP_Cover_v2.png" width="1200" height="732" alt="Minimum Viable Equivalence Pack, ten-category committee checklist cover" loading="lazy" /></picture>
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Minimum Viable Equivalence Pack</h3>
           <p>Three equivalence claims (legal, operational, economic) tested through ten diligence categories with required artifacts and pass-or-fail tests: rights parity, custody segregation, settlement finality, insolvency posture, governance controls, collateral operability, and continuous monitoring through the CLII drift detector. Translates cleanly into product-launch gates and roadmap intake.</p>
-          <a class="research-card-action" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/mvep/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb card-thumb--contain" src="/Publication-Images/Three_Strategies_Infrastructure_Map.webp?v=20260514a" width="1814" height="1196" alt="Three Tokenization Strategies: Institutional Tokenization Infrastructure Map" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Three Tokenization Strategies</h3>
           <p>The Regulated Collateral Circuit (deposit-token and bank-integrated payment architecture), the Multi-Issuer Yield Stack, and Tokenized Equity Rails, scored across the same MVEP categories. Surfaces Securitize as a shared single point of risk across two of the three strategies. The architectural playbook for which product shape fits which regulatory and counterparty environment.</p>
-          <a class="research-card-action" href="/papers/three-strategies">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/three-strategies/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb card-thumb--contain" src="/Publication-Images/Seven_Dollars_Regulation_Equivalence.webp" width="1950" height="1300" alt="Seven Dollars: scatter plot of CLII (regulatory intensity) vs collateral eligibility" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Seven Dollars</h3>
           <p>Cross-product framework for the major dollar-denominated digital products. Which structural dimensions drive product-level diligence, how CLII and MVEP scores decouple, and how stress moves through dependency chains (SVB, Circle pool, the Paxos natural experiment).</p>
-          <a class="research-card-action" href="/papers/seven-dollars">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/seven-dollars/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb thumb-wide" src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies: ValOS-NORS standards bridge table" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Operational Risk in Token Economies</h3>
           <p>A 74-risk-vector / 64-testable-control / 36-control-objective taxonomy mapped to a 624-configuration battery, with the Lido V3 staking-vault case study as the worked example. The framework for exception-scenario operations after launch.</p>
-          <a class="research-card-action" href="/research#operational-risk">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/research/#operational-risk">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb card-thumb--contain" src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 policy map" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Dollar v3</h3>
           <p>Four digital-dollar objects, Layer 0, and deposit mutation. Maps how payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers inherit different control environments, backstop expectations, and failure modes, the typology a PM uses to scope product shape and counterparty topology.</p>
-          <a class="research-card-action" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/dollar-v3/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
       </div>
     </section>
@@ -354,11 +357,11 @@
         <h2 id="related-profiles-title">Related role profiles</h2>
       </div>
       <p class="resume-related-profiles">
-        <a href="/resume/policy">Policy &amp; Market Infrastructure</a>
-        · <a href="/resume/asset-management">Asset Management &amp; Tokenization</a>
-        · <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a>
-        · <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a>
-        · <a href="/resume/risk-controls">Risk, Controls &amp; Diligence</a>
+        <a href="/resume/policy/">Policy &amp; Market Infrastructure</a>
+        · <a href="/resume/asset-management/">Asset Management &amp; Tokenization</a>
+        · <a href="/resume/stablecoin-payments/">Stablecoin &amp; Payments Strategy</a>
+        · <a href="/resume/ai-governance-infrastructure/">AI Governance &amp; Infrastructure</a>
+        · <a href="/resume/risk-controls/">Risk, Controls &amp; Diligence</a>
       </p>
     </section>
 
@@ -368,9 +371,9 @@
         <p>Product strategy, discovery, life-cycle ownership, or exception management for tokenized-money and on-chain payment products. Tell me what you&rsquo;re building and I&rsquo;ll send the most relevant paper, resume version, or supporting material.</p>
       </div>
       <div class="hero-actions">
-        <a class="action primary" href="/contact">Discuss a product roadmap</a>
-        <a class="action secondary" href="/research">View all research</a>
-        <a class="action secondary" href="/frameworks">View Frameworks</a>
+        <a class="action primary" href="/contact/">Discuss a product roadmap</a>
+        <a class="action secondary" href="/research/">View all research</a>
+        <a class="action secondary" href="/frameworks/">View Frameworks</a>
       </div>
     </section>
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
@@ -378,14 +381,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -401,7 +404,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

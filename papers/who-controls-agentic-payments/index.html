@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,19 +35,18 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Who Controls Agentic Payments? | TS</title>
-  <meta name="description" content="First control-layer measurement of agentic payments: x402 facilitator concentration clears both merger-guidelines thresholds on every chain, the count layer and the value layer have different monopolists, and headline volume is dominated by subsidized and proxy pipelines that buyer cardinality exposes." />
+  <title>Who Controls Agentic Payments? | Tokenization Systems</title>
+  <meta name="description" content="Control-layer measurement of agentic payments: x402 facilitator concentration clears merger-guidelines thresholds on every chain; monopolists differ by layer." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="agentic payments, x402, facilitator concentration, stablecoins, USDC, payment facilitators, market concentration, autonomous agents, consumer protection, settlement finality, buyer cardinality, subsidy pipeline, composition chain, accountability, Herfindahl-Hirschman Index, EIP-3009, Base, Solana, Polygon" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Who Controls Agentic Payments?" />
-  <meta property="og:description" content="First control-layer measurement of agentic payments: x402 facilitator concentration clears both merger-guidelines thresholds on every chain, the count layer and the value layer have different monopolists, and headline volume is dominated by subsidized and proxy pipelines that buyer cardinality exposes." />
+  <meta property="og:description" content="Control-layer measurement of agentic payments: x402 facilitator concentration clears merger-guidelines thresholds on every chain; monopolists differ by layer." />
   <meta property="og:url" content="https://tokenization.systems/papers/who-controls-agentic-payments/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
   <meta property="og:image:width" content="1200" />
@@ -58,7 +58,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Who Controls Agentic Payments?" />
-  <meta name="twitter:description" content="First control-layer measurement of agentic payments: x402 facilitator concentration clears both merger-guidelines thresholds on every chain, the count layer and the value layer have different monopolists, and headline volume is dominated by subsidized and proxy pipelines that buyer cardinality exposes." />
+  <meta name="twitter:description" content="Control-layer measurement of agentic payments: x402 facilitator concentration clears merger-guidelines thresholds on every chain; monopolists differ by layer." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
   <meta name="twitter:image:alt" content="Control layer diagram for agentic payments: buyers authorize, facilitators settle, and the facilitator layer is where operational power sits." />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -66,16 +66,22 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=268" />
   <script type="application/ld+json">
     {
@@ -186,6 +192,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -197,16 +204,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -227,22 +234,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -261,7 +268,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Controls Agentic Payments?
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Controls Agentic Payments?
       </nav>
 
       <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
@@ -274,7 +281,7 @@
       <h1 id="paper-title">Who Controls Agentic Payments? Facilitator Concentration, Subsidy Pipelines, and Settlement Accountability in x402</h1>
 
       <p class="paper-metadata-strip">Working paper &middot; SSRN 7396241 &middot; DOI 10.2139/ssrn.7396241</p>
-      <p class="paper-description-note">Posted to SSRN on September 5, 2026. Concentration figures are anchored to the July 2026 snapshot, with May 2026 retained throughout as the payment-level-validated baseline. The companion <a href="/papers/agentic-payments-control-layer">control-layer measurement memo</a> is the empirical core and carries the reproduction detail; this paper is the separate scholarly treatment.</p>
+      <p class="paper-description-note">Posted to SSRN on September 5, 2026. Concentration figures are anchored to the July 2026 snapshot, with May 2026 retained throughout as the payment-level-validated baseline. The companion <a href="/papers/agentic-payments-control-layer/">control-layer measurement memo</a> is the empirical core and carries the reproduction detail; this paper is the separate scholarly treatment.</p>
 
       <div class="paper-thesis">
         <p>Agentic payments are usually described by their tokens and their throughput. The more consequential question is who routes them. When an agent pays over x402, the value moves as a familiar stablecoin, but the payment clears through a facilitator: the operator that verifies the authorization, submits settlement on chain, and pays the gas. The buyer never broadcasts.</p>
@@ -300,7 +307,7 @@
         <div class="access-primary">
           <a class="action primary cta-primary" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7396241" target="_blank" rel="noopener noreferrer" aria-label="Read Who Controls Agentic Payments on SSRN" title="Read the paper on SSRN">Read the paper on SSRN</a>
           <a class="access-link" href="https://doi.org/10.2139/ssrn.7396241" target="_blank" rel="noopener noreferrer">DOI 10.2139/ssrn.7396241</a>
-          <a class="access-link" href="/papers/agentic-payments-control-layer">Companion measurement memo</a>
+          <a class="access-link" href="/papers/agentic-payments-control-layer/">Companion measurement memo</a>
         </div>
         <div class="access-secondary">
           <a class="access-link access-request" href="mailto:Zach@Tokenization.Systems?subject=Who%20Controls%20Agentic%20Payments%20-%20dataset%20and%20queries%20request">Request the dataset and queries</a>
@@ -378,11 +385,11 @@
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/agentic-payments-control-layer" class="companion-card">
+          <a href="/papers/agentic-payments-control-layer/" class="companion-card">
             <strong>The Control Layer of Agentic Payments</strong>
             <span>The companion measurement memo and the paper's empirical core: the monthly facilitator series, the concentration recompute, and the reproduction detail behind every number here.</span>
           </a>
-          <a href="/papers/routing-the-dollar" class="companion-card">
+          <a href="/papers/routing-the-dollar/" class="companion-card">
             <strong>Routing the Dollar</strong>
             <span>The stablecoin gateway-layer concentration measurement this paper's method ports from, and the layer the facilitator layer sits on top of.</span>
           </a>
@@ -397,14 +404,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -420,7 +427,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

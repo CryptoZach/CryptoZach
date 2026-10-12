@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,7 +35,6 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0c10" />
   <meta name="author" content="Zach Zukowski" />
@@ -65,8 +65,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -75,14 +73,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=262" />
   <script type="application/ld+json">
     {
@@ -317,6 +319,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -328,16 +331,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink active" href="/speaker-and-advisory" aria-current="page">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -358,22 +361,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink active" href="/speaker-and-advisory" aria-current="page">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -435,13 +438,13 @@
         <div id="adv-diligence" class="advisory-card card card--polished card--accent-a">
           <p class="card-eyebrow">For asset managers &amp; issuers</p>
           <h3>Tokenization diligence review</h3>
-          <p><strong>Can this product be defended in front of an investment committee or supervisor before the first stress event tests it?</strong></p>
+          <p><strong>Can this product be defended in front of an investment committee or supervisor before the first stress episode tests it?</strong></p>
           <p>MVEP-based review of a specific product or proposal: three equivalence claims (legal, operational, economic) tested through ten diligence categories. Tests whether the tokenized version preserves rights parity, operational resilience, and economic behavior under stress.</p>
           <p><strong>Deliverable:</strong> Pass/fail report with remediation roadmap and monitoring triggers.</p>
           <p><strong>Timeline:</strong> 2 to 4 weeks.</p>
           <p><strong>Best for:</strong> Asset managers, issuers preparing for committee review, custodians benchmarking a new offering.</p>
           <p><strong>Recent application:</strong> Diligence methods developed across ~250 investments backed and 100 portfolio companies advised at Borderless Capital (2019 to Feb 2026), including sourcing the LayerZero seed round (~80x return) and modeling Thorchain's $200M collapse 13 months in advance.</p>
-          <p class="advisory-cta"><a class="cta-link" href="/contact">Request a diligence review <span aria-hidden="true">→</span></a></p>
+          <p class="advisory-cta"><a class="cta-link" href="/contact/">Request a diligence review <span aria-hidden="true">→</span></a></p>
         </div>
         <div id="adv-structuring" class="advisory-card card card--polished card--accent-b">
           <p class="card-eyebrow">For banks, asset managers &amp; fintechs</p>
@@ -452,7 +455,7 @@
           <p><strong>Timeline:</strong> 4 to 8 weeks for the structuring memo; ongoing retainer available through build.</p>
           <p><strong>Best for:</strong> Banks, asset managers, payments firms, and fintechs designing new tokenized offerings pre-launch.</p>
           <p><strong>Recent application:</strong> Structuring methods draw from the MVEP framework (ten diligence categories applied prospectively to product design), the <em>Routing the Dollar</em> analysis of settlement infrastructure, and structuring work for the Uniswap Foundation governance committee that designed delegate structure ahead of the protocol fee switch.</p>
-          <p class="advisory-cta"><a class="cta-link" href="/contact">Request a structuring engagement <span aria-hidden="true">→</span></a></p>
+          <p class="advisory-cta"><a class="cta-link" href="/contact/">Request a structuring engagement <span aria-hidden="true">→</span></a></p>
         </div>
         <div id="adv-token" class="advisory-card card card--polished card--accent-c">
           <p class="card-eyebrow">For protocol teams &amp; foundations</p>
@@ -463,7 +466,7 @@
           <p><strong>Timeline:</strong> 4 to 8 weeks.</p>
           <p><strong>Best for:</strong> Protocol teams pre-launch, foundations redesigning emissions, investors underwriting a token economy.</p>
           <p><strong>Recent application:</strong> <em>Introduction to Tokenomics</em> framework applied across 9 accelerator programs and 100+ tokenomics engagements (50+ multi-session), advising founders on incentive design, governance attack surfaces, and sustainability constraints. Current engagements draw on the 240-run Adaptive Tokenomics simulation for pre-launch stress-testing of emission schedules and governance structures.</p>
-          <p class="advisory-cta"><a class="cta-link" href="/contact">Request a design review <span aria-hidden="true">→</span></a></p>
+          <p class="advisory-cta"><a class="cta-link" href="/contact/">Request a design review <span aria-hidden="true">→</span></a></p>
         </div>
         <div id="adv-policy" class="advisory-card card card--polished card--accent-d">
           <p class="card-eyebrow">For policy shops, stablecoin issuers &amp; risk teams</p>
@@ -474,7 +477,7 @@
           <p><strong>Timeline:</strong> Retained or project-based.</p>
           <p><strong>Best for:</strong> Stablecoin issuers, payments teams, banks entering tokenized markets, policy shops translating legislation into product requirements.</p>
           <p><strong>Recent application:</strong> Twenty-one federal comment letters drafted (OCC, FDIC, FinCEN, OFAC, Treasury, NCUA, SEC, Board of Governors, CFTC), plus policy briefing work on GENIUS / CLARITY-style provisions and the gateway-layer control framework.</p>
-          <p class="advisory-cta"><a class="cta-link" href="/contact">Request an advisory conversation <span aria-hidden="true">→</span></a></p>
+          <p class="advisory-cta"><a class="cta-link" href="/contact/">Request an advisory conversation <span aria-hidden="true">→</span></a></p>
         </div>
       </div>
     </section>
@@ -508,7 +511,7 @@
             <p class="card-eyebrow">Audience &middot; Investment committees &amp; risk leads</p>
             <h3>Institutional diligence session &middot; 45-60 minutes</h3>
             <p>For investment committees, tokenization teams, and risk leads.</p>
-            <p><strong>How do you tell whether a tokenized product is institution-ready before the first stress event reveals it is not?</strong></p>
+            <p><strong>How do you tell whether a tokenized product is institution-ready before the first stress episode reveals it is not?</strong></p>
             <p>Walks through the ten-category MVEP framework (three equivalence claims: legal, operational, economic), the failures that SVB weekend exposed, and the evidence gates that separate credible equivalence claims from marketing language.</p>
             <p><strong>You leave with:</strong> a usable diligence checklist, the core equivalence tests, and the three categories (system of record, reconciliation, custody) that are hardest to retrofit after launch.</p>
             <details class="talk-format-topics">
@@ -557,7 +560,7 @@
         </div>
         <div class="experience-block">
           <h3>Foresight Institute</h3>
-          <p>Participant in the AI Ethics &amp; Governance working group. Carries control-layer methods (CLII, MVEP) into AI infrastructure-accountability conversations. See the <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure profile</a>.</p>
+          <p>Participant in the AI Ethics &amp; Governance working group. Carries control-layer methods (CLII, MVEP) into AI infrastructure-accountability conversations. See the <a href="/resume/ai-governance-infrastructure/">AI Governance &amp; Infrastructure profile</a>.</p>
         </div>
         <div class="experience-block">
           <h3>Borderless Capital<br><span class="experience-block__meta">Founding research analyst, 2019 to Feb 2026</span></h3>
@@ -588,7 +591,7 @@
         <h2 id="booking-title">Booking</h2>
       </div>
       <div class="speaker-prose">
-        <p>For consulting, advisory, or press inquiries, <a href="/contact">send a note</a>.</p>
+        <p>For consulting, advisory, or press inquiries, <a href="/contact/">send a note</a>.</p>
       </div>
     </section>
 
@@ -606,7 +609,7 @@
           <h3>Tokenomics for World-Changing Systems</h3>
           <p class="talk-meta">AngelHack Lisk Accelerator Program · 60 minutes</p>
           <p>A live workshop building a complete token economy from scratch for a fictional decentralized wireless protocol (MeshNet), the same case study that became the foundation for the Adaptive Tokenomics paper. Covers three failure cases, burn-mint equilibrium, emission control loops, conviction voting, reputation-weighted governance, and a red-team exercise where teams try to break each other&rsquo;s designs.</p>
-          <p class="talk-bridge">The MeshNet case study introduced in this workshop became the foundation for <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a>, a systems-engineering design laboratory now published on SSRN.</p>
+          <p class="talk-bridge">The MeshNet case study introduced in this workshop became the foundation for <a href="/papers/adaptive-tokenomics/">Adaptive Tokenomics</a>, a systems-engineering design laboratory now published on SSRN.</p>
           <p class="talk-audience">Delivered to early-stage teams; adaptable for protocol foundations, investor offsites, and academic audiences.</p>
           <p><a href="https://www.youtube.com/watch?v=V6ycS9BwjEU" target="_blank" rel="noopener noreferrer" class="cta-link">Watch the talk (60 min) <span aria-hidden="true">→</span></a></p>
         </div>
@@ -667,14 +670,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -690,7 +693,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

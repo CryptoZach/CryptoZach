@@ -250,6 +250,12 @@ async function main() {
     // Do not prune the linked stylesheet after inlining; the deferred
     // fetch loads the full stylesheet for below-the-fold rules.
     pruneSource: false,
+    // Leave existing <style> blocks alone. Beasties otherwise reduces them to the
+    // selectors that match the static DOM, which dropped every
+    // :root[data-theme="light"] rule from the homepage (no element carries the
+    // attribute at build time), so the live homepage could never render its
+    // light theme (2026-10-12 audit). The homepage carries all of its CSS inline.
+    reduceInlineStyles: false,
     // Minimize the inlined critical CSS.
     compress: true,
     // Log level: silent to suppress harmless "Empty sub-selector"

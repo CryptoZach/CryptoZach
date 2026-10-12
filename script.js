@@ -5880,6 +5880,7 @@
 
       var bar = document.createElement('div');
       bar.className = 'paper-action-bar';
+      bar.setAttribute('role', 'region');
       bar.setAttribute('aria-label', 'Paper actions');
       var inner = document.createElement('div');
       inner.className = 'paper-action-bar-inner';
@@ -6039,6 +6040,7 @@
       aside.setAttribute('aria-label', 'In-page contents');
       var nav = document.createElement('nav');
       nav.className = 'paper-toc-nav';
+      nav.setAttribute('aria-label', 'On this page');
       var title = document.createElement('p');
       title.className = 'paper-toc-title';
       title.textContent = 'On this page';

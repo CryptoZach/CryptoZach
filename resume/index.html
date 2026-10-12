@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,7 +35,6 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0c10" />
   <meta name="author" content="Zach Zukowski" />
@@ -65,8 +65,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -75,14 +73,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <style>
     .resume-card-credentials {
@@ -141,6 +143,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -152,16 +155,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -182,22 +185,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -234,12 +237,12 @@
       <nav class="resume-quick-nav" aria-labelledby="resume-quick-nav-label">
         <p id="resume-quick-nav-label" class="resume-quick-nav-label">Choose a profile</p>
         <div class="resume-quick-nav-buttons">
-          <a class="action primary" href="/resume/policy">Policy &amp; market infrastructure</a>
-          <a class="action primary" href="/resume/asset-management">Asset management &amp; tokenization</a>
-          <a class="action primary" href="/resume/stablecoin-payments">Stablecoin &amp; payments strategy</a>
-          <a class="action primary" href="/resume/product">Digital asset product</a>
-          <a class="action primary" href="/resume/ai-governance-infrastructure">AI governance &amp; infrastructure</a>
-          <a class="action primary" href="/resume/risk-controls">Risk, controls &amp; diligence</a>
+          <a class="action primary" href="/resume/policy/">Policy &amp; market infrastructure</a>
+          <a class="action primary" href="/resume/asset-management/">Asset management &amp; tokenization</a>
+          <a class="action primary" href="/resume/stablecoin-payments/">Stablecoin &amp; payments strategy</a>
+          <a class="action primary" href="/resume/product/">Digital asset product</a>
+          <a class="action primary" href="/resume/ai-governance-infrastructure/">AI governance &amp; infrastructure</a>
+          <a class="action primary" href="/resume/risk-controls/">Risk, controls &amp; diligence</a>
         </div>
       </nav>
 
@@ -253,16 +256,16 @@
           <p class="resume-card-opening">You assess how stablecoin and tokenized-dollar infrastructure concentrates risk, transmits monetary policy, and determines who is accountable when the system is under stress.</p>
           <p class="resume-card-credentials"><em>Twenty-one federal comment letters and an FSB AI Sound Practices consultation response (2026); dialogues across national-security research, securities exchanges, central securities depositories, payments messaging, tier-1 banks, and SEC-registered transfer agents.</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/policy">View profile</a>
+            <a class="action primary" href="/resume/policy/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Policy.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/seven-dollars">Seven Dollars</a>
-            <a href="/papers/dollar-v3">Dollar v3</a>
-            <a href="/papers/control-layer-war">The Control Layer War</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/seven-dollars/">Seven Dollars</a>
+            <a href="/papers/dollar-v3/">Dollar v3</a>
+            <a href="/papers/control-layer-war/">The Control Layer War</a>
           </div>
         </article>
 
@@ -274,17 +277,17 @@
           <p class="resume-card-opening">You evaluate whether a tokenized product can prove legal, operational, and economic equivalence to its traditional counterpart, and what evidence should exist before commitment.</p>
           <p class="resume-card-credentials"><em>~$500M deployed at Borderless; 250 investments across 1,000+ deal funnel; ~75 DATs analyzed, 18 invested; daily mNAV dashboard; LayerZero seed sourcing (~80x return).</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/asset-management">View profile</a>
+            <a class="action primary" href="/resume/asset-management/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Asset_Management.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/papers/seven-dollars">Seven Dollars</a>
-            <a href="/papers/three-strategies">Three Tokenization Strategies</a>
-            <a href="/papers/tokenized-equity">Tokenized Equity Vehicles</a>
-            <a href="/papers/dollar-v3">Dollar v3</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/papers/seven-dollars/">Seven Dollars</a>
+            <a href="/papers/three-strategies/">Three Tokenization Strategies</a>
+            <a href="/papers/tokenized-equity/">Tokenized Equity Vehicles</a>
+            <a href="/papers/dollar-v3/">Dollar v3</a>
           </div>
         </article>
 
@@ -296,16 +299,16 @@
           <p class="resume-card-opening">You build products whose reserve structure, redemption mechanics, and routing design must survive regulatory scrutiny and market stress before launch.</p>
           <p class="resume-card-credentials"><em>LayerZero seed sourcing (~80x); CLII across 19 stablecoin gateways; 100 portfolio companies advised 1-on-1; nine SSRN papers; twenty-one federal comment letters.</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/stablecoin-payments">View profile</a>
+            <a class="action primary" href="/resume/stablecoin-payments/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Operator.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/control-layer-war">The Control Layer War</a>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/adaptive-tokenomics">Adaptive Tokenomics</a>
-            <a href="/papers/dollar-v3">Dollar v3</a>
+            <a href="/papers/control-layer-war/">The Control Layer War</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/adaptive-tokenomics/">Adaptive Tokenomics</a>
+            <a href="/papers/dollar-v3/">Dollar v3</a>
           </div>
         </article>
 
@@ -317,17 +320,17 @@
           <p class="resume-card-opening">You own product strategy, discovery, end-to-end life cycle, and exception management for stablecoin, deposit-token, tokenized-MMF, or on-chain payment products inside a bank, fintech platform, or digital-asset issuer.</p>
           <p class="resume-card-credentials"><em>1,000+ deal funnel feeding 250 portfolio investments; ~100 portfolio companies advised 1-on-1 on reserves, redemption, yield wrappers; active dialogues across major securities exchanges, central securities depositories, tier-1 bank tokenization platforms, and SEC-registered transfer agents.</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/product">View profile</a>
+            <a class="action primary" href="/resume/product/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Product.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/three-strategies">Three Tokenization Strategies</a>
-            <a href="/papers/seven-dollars">Seven Dollars</a>
-            <a href="/research#operational-risk">Operational Risk in Token Economies</a>
-            <a href="/papers/dollar-v3">Dollar v3</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/three-strategies/">Three Tokenization Strategies</a>
+            <a href="/papers/seven-dollars/">Seven Dollars</a>
+            <a href="/research/#operational-risk">Operational Risk in Token Economies</a>
+            <a href="/papers/dollar-v3/">Dollar v3</a>
           </div>
         </article>
 
@@ -339,16 +342,16 @@
           <p class="resume-card-opening">You translate the control-layer logic, audit trails, and equivalence evidence proven at stablecoin scale into AI governance, oversight, and infrastructure-accountability work.</p>
           <p class="resume-card-credentials"><em>FSB AI Sound Practices consultation response (2026); 22 MCP and API data connections; AI-assisted diligence workflows shortened review time per deal from 4hr to 1hr; Governance Concentration published at Frontiers in Blockchain.</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/ai-governance-infrastructure">View profile</a>
+            <a class="action primary" href="/resume/ai-governance-infrastructure/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_AI_Governance_Infrastructure.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>
-            <a href="/papers/who-burns-the-tokens">Who Burns the Tokens?</a>
-            <a href="/papers/tokenized-equity">Tokenized Equity Vehicles</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>
+            <a href="/papers/who-burns-the-tokens/">Who Burns the Tokens?</a>
+            <a href="/papers/tokenized-equity/">Tokenized Equity Vehicles</a>
           </div>
         </article>
 
@@ -360,24 +363,24 @@
           <p class="resume-card-opening">You assess whether a digital-asset product&rsquo;s controls, monitoring infrastructure, and escalation paths hold up under committee review, regulatory scrutiny, and operational stress.</p>
           <p class="resume-card-credentials"><em>Modeled Thorchain step-by-step collapse 13 months before the predicted scenario played out and led to $200M loss; 74-vector operational-risk taxonomy mapped to 64 testable controls / 36 control objectives across a 624-configuration simulation battery.</em></p>
           <div class="resume-actions resume-actions--inline">
-            <a class="action primary" href="/resume/risk-controls">View profile</a>
+            <a class="action primary" href="/resume/risk-controls/">View profile</a>
             <a class="action secondary" href="/resumes/Zukowski_Resume_Risk.pdf?v=20261009" target="_blank" rel="noopener noreferrer">View resume (PDF)</a>
           </div>
           <div class="resume-evidence">
             <strong>Supporting research</strong>
-            <a href="/papers/mvep">Minimum Viable Equivalence Pack</a>
-            <a href="/papers/routing-the-dollar">Routing the Dollar</a>
-            <a href="/research#operational-risk">Operational Risk in Token Economies</a>
-            <a href="/papers/who-burns-the-tokens">Who Burns the Tokens?</a>
-            <a href="/papers/dollar-v3">Dollar v3</a>
-            <a href="/papers/control-layer-war">The Control Layer War</a>
+            <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>
+            <a href="/papers/routing-the-dollar/">Routing the Dollar</a>
+            <a href="/research/#operational-risk">Operational Risk in Token Economies</a>
+            <a href="/papers/who-burns-the-tokens/">Who Burns the Tokens?</a>
+            <a href="/papers/dollar-v3/">Dollar v3</a>
+            <a href="/papers/control-layer-war/">The Control Layer War</a>
           </div>
         </article>
 
       </div>
 
       <div class="resume-closing">
-        <p>For consulting, advisory, or press inquiries, see the <a href="/speaker-and-advisory">advisory &amp; speaking page</a>.</p>
+        <p>For consulting, advisory, or press inquiries, see the <a href="/speaker-and-advisory/">advisory &amp; speaking page</a>.</p>
       </div>
     </section>
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
@@ -385,14 +388,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -408,7 +411,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>
@@ -430,35 +433,35 @@
           <tbody>
             <tr>
               <td>Evaluating policy, concentration, or systemic risk</td>
-              <td><a href="/resume/policy">Policy &amp; Market Infrastructure</a></td>
+              <td><a href="/resume/policy/">Policy &amp; Market Infrastructure</a></td>
             </tr>
             <tr>
               <td>Evaluating a tokenized product for institutional capital</td>
-              <td><a href="/resume/asset-management">Asset Management &amp; Tokenization</a></td>
+              <td><a href="/resume/asset-management/">Asset Management &amp; Tokenization</a></td>
             </tr>
             <tr>
               <td>Building or launching a stablecoin or tokenized-money product</td>
-              <td><a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a></td>
+              <td><a href="/resume/stablecoin-payments/">Stablecoin &amp; Payments Strategy</a></td>
             </tr>
             <tr>
               <td>Building or shipping a digital asset product, discovery engine, or exception workflow</td>
-              <td><a href="/resume/product">Digital Asset Product</a></td>
+              <td><a href="/resume/product/">Digital Asset Product</a></td>
             </tr>
             <tr>
               <td>Evaluating controls, diligence, or escalation paths</td>
-              <td><a href="/resume/risk-controls">Risk, Controls &amp; Diligence</a></td>
+              <td><a href="/resume/risk-controls/">Risk, Controls &amp; Diligence</a></td>
             </tr>
             <tr>
               <td>Working on AI governance, infrastructure accountability, or technical AI policy</td>
-              <td><a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a></td>
+              <td><a href="/resume/ai-governance-infrastructure/">AI Governance &amp; Infrastructure</a></td>
             </tr>
             <tr>
               <td>Working on DePIN, incentives, or protocol design</td>
-              <td><a href="/research#track-b">Tokenomics &amp; DePIN track</a></td>
+              <td><a href="/research/#track-b">Tokenomics &amp; DePIN track</a></td>
             </tr>
             <tr>
               <td>Reading the core thesis first</td>
-              <td><a href="/papers/routing-the-dollar">Routing the Dollar (5-minute read)</a></td>
+              <td><a href="/papers/routing-the-dollar/">Routing the Dollar (5-minute read)</a></td>
             </tr>
           </tbody>
         </table>

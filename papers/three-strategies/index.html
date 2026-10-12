@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Three Tokenization Strategies & Settlement Architecture | TS</title>
+  <title>Three Tokenization Strategies & Settlement Architecture</title>
   <meta name="description" content="Three tokenization strategies for institutional US securities: regulated collateral, multi-issuer yield stack, and tokenized equity on Nasdaq and NYSE." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="tokenization, tokenized securities, BUIDL, JPMD, Ubyx, Securitize, Canton Network, Nasdaq, NYSE, DTC, deposit tokens, MVEP, CLII, settlement infrastructure, corporate actions, market structure" />
@@ -66,16 +66,22 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -170,6 +176,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -181,16 +188,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -211,22 +218,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -245,7 +252,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Three Tokenization Strategies
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Three Tokenization Strategies
       </nav>
 
       <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
@@ -340,7 +347,7 @@
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>
-        <p>The paper maps each strategy against the <a href="/frameworks#mvep">MVEP</a>'s ten diligence categories, develops nine stress scenarios traced through the category failure chains, and identifies the four cross-cutting findings that shape the institutional-tokenization roadmap. The analysis is prospective: the collateral circuit is live in controlled production, the yield stack is composed from operating products, and the tokenized equity rails went from SEC approval (Nasdaq, March 18, 2026) to a signed MoU (NYSE with Securitize, March 24, 2026) in the week before the paper went to draft.</p>
+        <p>The paper maps each strategy against the <a href="/frameworks/#mvep">MVEP</a>'s ten diligence categories, develops nine stress scenarios traced through the category failure chains, and identifies the four cross-cutting findings that shape the institutional-tokenization roadmap. The analysis is prospective: the collateral circuit is live in controlled production, the yield stack is composed from operating products, and the tokenized equity rails went from SEC approval (Nasdaq, March 18, 2026) to a signed MoU (NYSE with Securitize, March 24, 2026) in the week before the paper went to draft.</p>
 
         <figure class="paper-figure-callout" aria-label="Figure 1 caption">
           <figcaption>
@@ -355,7 +362,7 @@
         <h2>Finding 2. Securitize concentration is a system-level risk that entity-level scoring does not capture</h2>
         <p>Securitize is the transfer agent for BUIDL (BlackRock's tokenized US Treasury money-market fund and the largest on-chain institutional tokenized product), for the BUIDL layer of Strategy 2's yield stack, and for NYSE's digital-asset trading platform. It is also the first digital transfer agent approved to mint on NYSE's Digital Trading Platform and an expected broker-dealer participant there. The same entity therefore connects the collateral asset layer, the yield-stack underlying layer, and the equity-venue register.</p>
         <p>A 72-hour Securitize operational failure, from any cause, would freeze the authoritative register in all three strategies simultaneously. No fallback digital transfer agent is documented in the BUIDL operating documents or in the public NYSE Digital Trading Platform materials. Entity-level regulatory scoring rates Securitize high, consistent with its SEC registration and institutional client base. System-effective regulatory strength, measured as the degree of independent redundancy across the three strategies, is lower.</p>
-        <p><strong>What this means.</strong> Regulatory frameworks calibrated for entity-level assessment (<a href="/frameworks#clii">CLII</a>, transfer-agent licensing, cybersecurity rules) are necessary but not sufficient. A second diligence pass is required at the system level: which entities appear in more than one strategy, and what fallback infrastructure exists for each.</p>
+        <p><strong>What this means.</strong> Regulatory frameworks calibrated for entity-level assessment (<a href="/frameworks/#clii">CLII</a>, transfer-agent licensing, cybersecurity rules) are necessary but not sufficient. A second diligence pass is required at the system level: which entities appear in more than one strategy, and what fallback infrastructure exists for each.</p>
 
         <h2>Finding 3. Strategy 3's corporate-actions gap requires an explicit architecture choice</h2>
         <p>Corporate actions are the business-day events that change share counts, ownership, or economic rights: stock splits, dividends, mergers, and the record dates and ex-dates that govern them. A stock split announced Friday at 4pm with a Monday record date (the date on which a holder must be on the register to receive the corresponding adjustment) illustrates the gap. Tokenized shares of the same CUSIP trade all weekend. If a tokenized share changes hands six times between Friday close and Monday open, the DTC register (updated Monday) and the blockchain ledger (updated continuously) show different holders at the same timestamp. This is the corporate actions reconciliation gap, and it is the most novel failure mode in the tokenized-equities strategy.</p>
@@ -380,7 +387,7 @@
         <p><strong>Investors and market-structure teams.</strong> The three strategies produce complementary MVEP profiles; the corporate-actions gap in Strategy 3 is the most novel operational risk on the roadmap; the deposit-token competition is the control-layer question for institutional settlement.</p>
 
         <h2>Dollar-infrastructure context</h2>
-        <p>Three Tokenization Strategies is the fourth and most forward-looking paper in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and the gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. The Seven Dollars work applies both frameworks to seven dollar-denominated digital products. This paper extends the same control-layer logic to institutional settlement infrastructure: tokenized Treasuries, tokenized equities, and bank-issued deposit tokens.</p>
+        <p>Three Tokenization Strategies is the fourth and most forward-looking paper in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar/">Routing the Dollar</a> establishes the CLII and the gateway-level variation in stablecoin transmission. <a href="/papers/mvep/">MVEP</a> develops the ten-category diligence framework from the SVB case. The Seven Dollars work applies both frameworks to seven dollar-denominated digital products. This paper extends the same control-layer logic to institutional settlement infrastructure: tokenized Treasuries, tokenized equities, and bank-issued deposit tokens.</p>
 
         <blockquote class="paper-thesis-line">
           <p>Three strategies, one transfer agent, one clearing layer. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
@@ -423,35 +430,35 @@
 
         <h2>Related frameworks</h2>
         <div class="paper-framework-buttons" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem;">
-          <a class="action secondary" href="/frameworks#clii">Control Layer Intensity Index (CLII)</a>
-          <a class="action secondary" href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>
+          <a class="action secondary" href="/frameworks/#clii">Control Layer Intensity Index (CLII)</a>
+          <a class="action secondary" href="/frameworks/#mvep">Minimum Viable Equivalence Pack (MVEP)</a>
         </div>
         <p class="paper-framework-descriptions" style="margin-top: 0.5rem;">CLII: five-dimension operator regulation score (introduced in Routing the Dollar). MVEP: ten-category product diligence framework (introduced in MVEP).</p>
 
         <h2>Related role profiles</h2>
         <div class="paper-role-buttons" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem;">
-          <a class="action secondary" href="/resume/policy">Policy &amp; market infrastructure</a>
-          <a class="action secondary" href="/resume/asset-management">Asset management &amp; tokenization</a>
-          <a class="action secondary" href="/resume/stablecoin-payments">Stablecoin &amp; payments strategy</a>
+          <a class="action secondary" href="/resume/policy/">Policy &amp; market infrastructure</a>
+          <a class="action secondary" href="/resume/asset-management/">Asset management &amp; tokenization</a>
+          <a class="action secondary" href="/resume/stablecoin-payments/">Stablecoin &amp; payments strategy</a>
         </div>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/seven-dollars" class="companion-card">
+          <a href="/papers/seven-dollars/" class="companion-card">
             <strong>Seven Dollars</strong>
             <span>Cross-product diligence comparison across USDC, USDT, and related dollar-denominated products. Read before the infrastructure map in this paper.</span>
           </a>
-          <a href="/papers/routing-the-dollar" class="companion-card">
+          <a href="/papers/routing-the-dollar/" class="companion-card">
             <strong>Routing the Dollar</strong>
             <span>Gateway-level variation in stablecoin transmission. Establishes the CLII.</span>
           </a>
-          <a href="/papers/mvep" class="companion-card">
+          <a href="/papers/mvep/" class="companion-card">
             <strong>Minimum Viable Equivalence Pack</strong>
             <span>The ten-category diligence framework reverse-engineered from SVB. Composed-product dependency chains.</span>
           </a>
-          <a href="/papers/tokenized-equity" class="companion-card">
+          <a href="/papers/tokenized-equity/" class="companion-card">
             <strong>Tokenized Equity Vehicles</strong>
             <span>Companion: comparable launch architectures for legal claim, custody, and liquidity rails. Earlier read on the equity-rails strategy now formalized as Strategy 3.</span>
           </a>
@@ -466,14 +473,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -489,7 +496,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

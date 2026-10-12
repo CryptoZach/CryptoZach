@@ -34,6 +34,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # Full history: scripts/update_sitemap_lastmod.py dates each sitemap entry
+          # from the last commit touching its source file.
+          fetch-depth: 0
 
       - name: Site consistency gate (counts + hero stats + chrome)
         # Build-time enforcement of the single-source-of-truth surfaces: block the
@@ -79,12 +83,18 @@ jobs:
           run_check scripts/check_agent_infra_stats.py --quiet
           run_check scripts/check_jsonld_node_consistency.py --quiet
           run_check scripts/check_domain_casing.py --quiet
+          run_check scripts/check_internal_links.py --quiet
           run_check scripts/render_home_stats.py --check
           run_check scripts/render_chrome.py --check
           # The battery checking ITSELF: fails if a guard in the pre-push battery
           # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
           # purpose, so it cannot become a third list only one side runs.
           run_check scripts/check_guard_battery_parity.py --quiet
+
+      - name: Sitemap lastmod from git history
+        # Derives <lastmod> for every sitemap URL from the last commit that touched
+        # its source file (exit 2 on a shallow clone is a warning, not a block).
+        run: python3 scripts/update_sitemap_lastmod.py || [ $? -eq 2 ]
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

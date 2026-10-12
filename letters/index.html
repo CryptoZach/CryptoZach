@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,19 +35,18 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
   <title>Federal Comment Letters | Tokenization Systems</title>
-  <meta name="description" content="Twenty-one comment letters filed across nine federal agencies and sixteen dockets, spanning the GENIUS Act implementation cycle, the SEC draft strategic plan, and the CFTC clearing-organization collection (April 10 to October 5, 2026)." />
+  <meta name="description" content="Twenty-one federal comment letters across nine agencies and sixteen dockets, from the GENIUS Act rulemakings to the SEC strategic plan and CFTC clearing rules." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="federal comment letters, GENIUS Act, PPSI, regulations.gov, OCC, FDIC, FinCEN, Treasury, NCUA, OFAC, SEC, draft strategic plan, MVEP, CLII, control layer, tokenized finance, stablecoin regulation" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Federal Comment Letters: twenty-one letters, nine agencies" />
-  <meta property="og:description" content="Twenty-one comment letters filed across nine federal agencies and sixteen dockets, spanning the GENIUS Act implementation cycle, the SEC draft strategic plan, and the CFTC clearing-organization collection (April 10 to October 5, 2026)." />
+  <meta property="og:description" content="Twenty-one federal comment letters across nine agencies and sixteen dockets, from the GENIUS Act rulemakings to the SEC strategic plan and CFTC clearing rules." />
   <meta property="og:url" content="https://tokenization.systems/letters/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Three_Strategies_Infrastructure_Map.png" />
   <meta property="og:image:width" content="1814" />
@@ -58,22 +58,30 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Federal Comment Letters: twenty-one letters, nine agencies" />
-  <meta name="twitter:description" content="Twenty-one comment letters filed across nine federal agencies and sixteen dockets, spanning the GENIUS Act implementation cycle, the SEC draft strategic plan, and the CFTC clearing-organization collection (April 10 to October 5, 2026)." />
+  <meta name="twitter:description" content="Twenty-one federal comment letters across nine agencies and sixteen dockets, from the GENIUS Act rulemakings to the SEC strategic plan and CFTC clearing rules." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Three_Strategies_Infrastructure_Map.png" />
   <meta name="twitter:image:alt" content="Three Strategies tokenization infrastructure map: framework anchoring the federal comment letter program" />
   <meta name="twitter:creator" content="@CryptoZach" />
 
-  <link rel="icon" href="/Publication-Images/Zachcoin.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin.png" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -135,6 +143,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -146,16 +155,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink active" href="/letters" aria-current="page">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -176,22 +185,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink active" href="/letters" aria-current="page">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -216,9 +225,171 @@
       <div class="section-title">
         <h1 id="letters-title">Federal Comment Letters: twenty-one letters, nine agencies.</h1>
         <p class="letters-meta-strip">April 10 to October 5, 2026 &middot; GENIUS Act and related rulemakings, the SEC draft strategic plan, and the CFTC clearing-organization collection.</p>
-        <p><strong>Sixteen dockets, nine agencies, three frameworks applied.</strong> The Federal Comment Letter Program used CLII (operator regulatory intensity), MVEP (institutional product diligence), and the control-layer view across the GENIUS Act implementation cycle, the SEC's draft strategic plan, the Board of Governors' anti-money-laundering program rule (Docket No. R-1835), the CFTC's clearing-organization information collection, and the FDIC's disclosure-of-information proposal. One hundred fourteen recommendations across eighteen principal letters, with three supplements: two June FinCEN supplements that add first-party empirical evidence, and a June 22 NCUA actionability supplement. The nineteenth letter, filed by email on September 21, 2026, is addressed to the Board of Governors. The twentieth and twenty-first, both filed on October 5, 2026, are the program's first comment to the CFTC and its comment on the FDIC's proposal to open aggregated supervisory data to outside analysis. Each letter summarizes what the proposed rule or plan does, identifies gaps, and proposes specific recommendations.</p>
+        <p class="letters-lede">Each letter below leads with its substantive finding; open one for the rule summary, the gaps identified, and the recommendations. The program summary, the three positions it established, and the filing timeline follow the list.</p>
+
       </div>
 
+      <div class="paper-abstract">
+        <h2 id="the-letters">The twenty-one letters</h2>
+      <div class="letters-filters" role="group" aria-label="Filter letters by agency" hidden>
+        <div class="filter-group">
+          <span class="filter-label">Agency:</span>
+          <button type="button" class="filter-btn active" data-agency="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-btn" data-agency="OCC" aria-pressed="false">OCC</button>
+          <button type="button" class="filter-btn" data-agency="FDIC" aria-pressed="false">FDIC</button>
+          <button type="button" class="filter-btn" data-agency="FinCEN" aria-pressed="false">FinCEN</button>
+          <button type="button" class="filter-btn" data-agency="NCUA" aria-pressed="false">NCUA</button>
+          <button type="button" class="filter-btn" data-agency="Treasury" aria-pressed="false">Treasury</button>
+          <button type="button" class="filter-btn" data-agency="Federal Reserve" aria-pressed="false">Federal Reserve</button>
+          <button type="button" class="filter-btn" data-agency="SEC" aria-pressed="false">SEC</button>
+          <button type="button" class="filter-btn" data-agency="CFTC" aria-pressed="false">CFTC</button>
+          <button type="button" class="filter-btn" data-agency="Joint" aria-pressed="false">Joint</button>
+          <button type="button" class="filter-btn" data-agency="FSB" aria-pressed="false">FSB</button>
+        </div>
+        <p class="filter-count-wrap" hidden><span class="filter-count" aria-live="polite"></span></p>
+      </div>
+
+        <div class="companion-cards">
+          <a href="/letters/occ-mvep-v4/" class="companion-card" data-agency="OCC">
+            <strong>1. OCC PPSI MVEP (anchor)</strong>
+            <span class="card-thesis">Three tokenized U.S. Treasury products under three regulatory regimes receive comparable collateral treatment on Binance through Ceffu, with no counterparty disclosure about which instrument backs any given trade.</span>
+            <span class="card-gaps"><em>Gaps:</em> collateral interoperability is unregulated; MSB capital runs roughly 22-to-1 below the banking-law equivalent for a $40B issuer.</span>
+            <span class="card-meta">2026-04-10 &middot; OCC &middot; MVEP &middot; 3 recs</span>
+          </a>
+          <a href="/letters/occ-supplemental/" class="companion-card" data-agency="OCC">
+            <strong>2. OCC Supplemental (control-layer)</strong>
+            <span class="card-thesis">A user transacting in a PPSI-issued stablecoin through an SEC-CUIP-covered interface receives none of the twelve interface-conduct conditions; the protection gradient is inverted.</span>
+            <span class="card-gaps"><em>Gaps:</em> interface-layer asymmetry between crypto-asset-securities and payment-stablecoin transactions on the same interface; no third-party diligence framework attaches.</span>
+            <span class="card-meta">2026-04-13 &middot; OCC &middot; Control-layer + CLII &middot; 1 rec</span>
+          </a>
+          <a href="/letters/treasury-genius-state-similarity/" class="companion-card" data-agency="Treasury">
+            <strong>3. Treasury GENIUS (state-similarity)</strong>
+            <span class="card-thesis">Treasury must evaluate fifty state regulatory frameworks as substantially similar to the federal GENIUS Act framework; the proposed principles frame this as section-by-section assessment against statutory text.</span>
+            <span class="card-gaps"><em>Gaps:</em> text-matching cannot detect functional-dimension drift across reserve transparency, capital adequacy, activity scope, insolvency, and interface-layer conduct.</span>
+            <span class="card-meta">2026-04-15 &middot; Treasury &middot; Control-layer + CLII + MVEP &middot; 6 recs</span>
+          </a>
+          <a href="/letters/fdic-ag20-ppsi-application/" class="companion-card" data-agency="FDIC">
+            <strong>4. FDIC AG20 (application)</strong>
+            <span class="card-thesis">The AG20 application is the FDIC's first and foundational opportunity to map a prospective PPSI's control-layer topology, shaping both the approval decision and the baseline for ongoing supervision.</span>
+            <span class="card-gaps"><em>Gaps:</em> §303.252 filing content does not surface the structural features (operator, custodian, interface, sweep) that are consequential for either decision.</span>
+            <span class="card-meta">2026-04-18 &middot; FDIC &middot; MVEP + CLII &middot; 4 recs</span>
+          </a>
+          <a href="/letters/fincen-aml-cft/" class="companion-card" data-agency="FinCEN">
+            <strong>5. FinCEN AML/CFT NPRM</strong>
+            <span class="card-thesis">AML regulation has always been control-layer regulation: the Bank Secrecy Act attaches obligations to intermediaries, not to transactions or instruments.</span>
+            <span class="card-gaps"><em>Gaps:</em> tokenized-finance intermediation disaggregates across issuer, custodian, interface, router, sweep, and hold-and-freeze layers; the proposed risk-based directive does not articulate this compatibility.</span>
+            <span class="card-meta">2026-04-18 &middot; FinCEN &middot; Control-layer + CLII &middot; 7 recs</span>
+          </a>
+          <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card" data-agency="FinCEN">
+            <strong>6. FinCEN-OFAC PPSI (sanctions)</strong>
+            <span class="card-thesis">The joint NPRM operationalizes the first statutory control-layer mandate in U.S. financial regulation: GENIUS Act §1033.240's block, freeze, and reject technical capability across primary and secondary market activity.</span>
+            <span class="card-gaps"><em>Gaps:</em> implementing technical capability without explicit MVEP-mapped diligence categories leaves both compliance evidence and supervisory observability under-specified.</span>
+            <span class="card-meta">2026-04-18 &middot; FinCEN + OFAC &middot; CLII + MVEP + Control-layer &middot; 10 recs, 50 of 58 NPRM Qs</span>
+          </a>
+          <a href="/letters/banking-agencies-joint-aml/" class="companion-card" data-agency="Joint">
+            <strong>7. Banking agencies AML (joint)</strong>
+            <span class="card-thesis">Banks increasingly perform control-layer functions in tokenized finance: PPSI reserve custody, tokenized deposit issuance, tokenized securities custody, Federal qualified PPSI operation, and correspondent services to issuers and interfaces.</span>
+            <span class="card-gaps"><em>Gaps:</em> 2026 re-issuance dropped the Federal Reserve Board from the 2024 proposal; the resulting consistency gap is addressed by Recommendation 6.</span>
+            <span class="card-meta">2026-04-18 &middot; OCC + FDIC + NCUA &middot; CLII &middot; 7 recs</span>
+          </a>
+          <a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card" data-agency="FDIC">
+            <strong>8. FDIC AG19 PPSI activities</strong>
+            <span class="card-thesis">Recommendation 7 proposes an MVEP-gated conditional deposit insurance pass-through replacing §330.11(a)(3)'s categorical foreclosure, with pass-through attaching to the reserve deposit at the IDI rather than the payment stablecoin itself.</span>
+            <span class="card-gaps"><em>Gaps:</em> categorical foreclosure forecloses incentive-aligned design; current market-state pass-through claims would not qualify under MVEP-gated assessment.</span>
+            <span class="card-meta">2026-04-20 &middot; FDIC &middot; MVEP + CLII &middot; 12 recs</span>
+          </a>
+          <a href="/letters/fincen-aml-cft-supplemental/" class="companion-card" data-agency="FinCEN">
+            <strong>9. FinCEN AML/CFT supplemental</strong>
+            <span class="card-thesis">A deadline-day supplement strengthening Recommendation 4: the United States based AML/CFT officer should hold effective supervisory control, not a nominal title.</span>
+            <span class="card-gaps"><em>New evidence:</em> in a 52-protocol study of token-governed systems, effective voting control diverged from the nominal locus of holdings in 13 of 18 protocols, by 2.5x to 25.6x.</span>
+            <span class="card-meta">2026-06-09 &middot; FinCEN &middot; Control-layer &middot; supplements FINCEN-2026-0034-0008</span>
+          </a>
+          <a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/" class="companion-card" data-agency="FinCEN">
+            <strong>10. FinCEN-OFAC PPSI supplemental</strong>
+            <span class="card-thesis">A deadline-day supplement strengthening Recommendation 6: PPSI risk assessments must address reserve-custody concentration.</span>
+            <span class="card-gaps"><em>New evidence:</em> a within-unit event study of the SVB shock shows a 9.77-point USDC depeg whose recovery broke at the federal backstop announcement (Chow F = 7.41, p = 0.0012).</span>
+            <span class="card-meta">2026-06-09 &middot; FinCEN + OFAC &middot; Control-layer &middot; supplements FINCEN-2026-0100-0005</span>
+          </a>
+          <a href="/letters/ncua-genius/" class="companion-card" data-agency="NCUA">
+            <strong>11. NCUA GENIUS stablecoin (completes coverage)</strong>
+            <span class="card-thesis">Stablecoin issuance standards for NCUA-licensed credit unions, the credit-union analogue of the OCC rule. Completes coverage of every GENIUS-implementing agency.</span>
+            <span class="card-gaps"><em>Distinctive contribution:</em> cross-agency parity, flagging where the NCUA proposal and the OCC and FDIC rules diverge in ways that invite charter arbitrage.</span>
+            <span class="card-meta">2026-06-22 &middot; NCUA &middot; MVEP + CLII &middot; 11 recs</span>
+          </a>
+          <a href="/letters/ncua-genius-supplemental/" class="companion-card" data-agency="NCUA">
+            <strong>12. NCUA GENIUS supplemental</strong>
+            <span class="card-thesis">A same-day actionability supplement to the NCUA comment of record: a routing table keyed to the questions, a cross-agency alignment map, and suggested rule text for the five highest-priority asks.</span>
+            <span class="card-gaps"><em>Adds no new recommendations;</em> it lowers the cost for agency staff to route and act on the eleven.</span>
+            <span class="card-meta">2026-06-22 &middot; NCUA &middot; Routing + suggested text &middot; supplements NCUA-2026-1024</span>
+          </a>
+          <a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card" data-agency="FDIC">
+            <strong>13. FDIC AG29 BSA and sanctions (PPSI)</strong>
+            <span class="card-thesis">The FDIC's supervision-and-coordination layer over a PPSI AML and sanctions program works only when the FDIC and FinCEN read the same measured control posture of the same operator.</span>
+            <span class="card-gaps"><em>Gaps:</em> the effective-program disposition is left attestation-shaped; nothing keys the FDIC-to-FinCEN consultation to a shared, reproducible control-posture record.</span>
+            <span class="card-meta">2026-06-30 &middot; FDIC &middot; MVEP + CLII &middot; 6 recs</span>
+          </a>
+          <a href="/letters/sec-dsp3-draft-strategic-plan/" class="companion-card" data-agency="SEC">
+            <strong>14. SEC Draft Strategic Plan (first SEC comment)</strong>
+            <span class="card-thesis">The plan's digital-asset objectives turn on a measurement capability the plan does not yet name: where a framework depends on whether a system is decentralized, that decentralization must be measured against a reproducible standard, not asserted.</span>
+            <span class="card-gaps"><em>Gaps:</em> naive holder lists inflate measured concentration 2.3x median (up to ~18x); launch allocation does not predict where control settles (r = 0.09).</span>
+            <span class="card-meta">2026-07-02 &middot; SEC &middot; CLII + MVEP &middot; 4 recs</span>
+          </a>
+          <a href="/letters/occ-af55-bsa-sanctions/" class="companion-card" data-agency="OCC">
+            <strong>15. OCC AF55 BSA and sanctions (PPSI)</strong>
+            <span class="card-thesis">The OCC's supervision-and-coordination layer over a PPSI AML and sanctions program works only when the OCC and FinCEN read the same measured control posture of the same operator, extended to reserve assets, entity types, and alignment with the parallel FDIC rule.</span>
+            <span class="card-gaps"><em>Gaps:</em> the effective-program disposition is attestation-shaped; nothing keys the OCC-to-FinCEN consultation to a shared control-posture record; the OCC and FDIC consultation thresholds diverge (assets against outstanding issuance value), inviting arbitrage.</span>
+            <span class="card-meta">2026-07-23 &middot; OCC &middot; MVEP + CLII &middot; 8 recs</span>
+          </a>
+          <a href="/letters/fincen-ab74-ppsi-cip/" class="companion-card" data-agency="FinCEN">
+            <strong>16. FinCEN AB74 PPSI customer identification program</strong>
+            <span class="card-thesis">The account definition is doing two different jobs in the GENIUS Act framework, and this proposal codifies only one of them while disclaiming the other in a footnote; the disclaimer belongs in regulatory text, where it will bind.</span>
+            <span class="card-gaps"><em>Gaps:</em> a narrow codified account definition sits beside a codified lawful-order cross-reference with only footnote 57 between them; the population estimate counts on-chain counterparties while the obligation attaches to formal relationships; the government-list comparison obligation has no designated lists.</span>
+            <span class="card-meta">2026-08-21 &middot; FinCEN (joint with OCC, Board, FDIC, NCUA) &middot; Control-layer + on-chain measurement &middot; 8 recs</span>
+          </a>
+          <a href="/letters/fdic-ag21-resolution-submissions/" class="companion-card" data-agency="FDIC">
+            <strong>17. FDIC AG21 resolution submissions</strong>
+            <span class="card-thesis">The rule narrows what covered institutions must submit for resolution planning, and the content it removes is disproportionately the content that predicts a run.</span>
+            <span class="card-gaps"><em>Gaps:</em> uninsured-deposit concentration and key-depositor detail, the variables March 2023 showed to be decisive, would be deleted while coverage is keyed to asset size alone; the receivership perimeter does not identify tokenized-deposit or stablecoin-reserve-custody arrangements or the operational controls at that boundary.</span>
+            <span class="card-meta">2026-08-24 &middot; FDIC &middot; Run-risk measurement + control layer &middot; 6 recs</span>
+          </a>
+          <a href="/letters/fdic-ag27-assessments/" class="companion-card" data-agency="FDIC">
+            <strong>18. FDIC AG27 assessments</strong>
+            <span class="card-thesis">The cohort the assessment rule reclassifies carries measurably higher run risk than the cohort it is priced against, and the framework prices size and resolvability but not novel-activity exposure.</span>
+            <span class="card-gaps"><em>Gaps:</em> reclassified banks show higher uninsured and insured brokered deposit shares than the comparison cohort; no indicator reaches crypto-asset or stablecoin-reserve-custody exposure; a voluntary rate-incentivized readiness mechanism selects for the banks least likely to fail, so its loss-reduction rationale is weakest in the non-electing tail.</span>
+            <span class="card-meta">2026-08-24 &middot; FDIC &middot; Run-risk measurement &middot; 4 recs</span>
+          </a>
+          <a href="/letters/fed-r1835-aml-cft-programs/" class="companion-card" data-agency="Federal Reserve">
+            <strong>19. Federal Reserve R-1835 AML and CFT programs</strong>
+            <span class="card-thesis">Four agencies are writing one anti-money-laundering program rule four times, and the only substantive divergence between the Board's version and its three siblings is the coordination mechanism itself.</span>
+            <span class="card-gaps"><em>Gaps:</em> the Board's proposed Section 208.63 omits the two FinCEN consultation and information-sharing provisions the OCC, FDIC, and NCUA proposals carry, while the Board's Alternatives Considered section states that the proposal includes them.</span>
+            <span class="card-meta">2026-09-21 &middot; Board of Governors &middot; Control-layer &middot; 9 recs</span>
+          </a>
+          <a href="/letters/cftc-3038-0076-dco-requirements/" class="companion-card" data-agency="CFTC">
+            <strong>20. CFTC 3038-0076 clearing organization requirements</strong>
+            <span class="card-thesis">CFTC staff now expect clearing organizations to determine, instrument by instrument, whether a tokenized form of an asset conveys the rights of the traditional asset, and to be able to demonstrate it; the information the Commission collects captures that determination in no defined form.</span>
+            <span class="card-gaps"><em>Gaps:</em> a supervisor can see that a haircut was applied but not whether the instrument conveys the rights the haircut assumes; liquidation-path and redemption-path concentration analysis goes unrecorded; the determination carries no revisit date while haircuts are re-evaluated monthly.</span>
+            <span class="card-meta">2026-10-05 &middot; CFTC &middot; MVEP + CLII &middot; 4 recs</span>
+          </a>
+          <a href="/letters/fdic-ag30-disclosure-of-information/" class="companion-card" data-agency="FDIC">
+            <strong>21. FDIC AG30 disclosure of information</strong>
+            <span class="card-thesis">Supervisory material reaches the public today by exception; a standing, safeguarded channel for aggregated analysis would let the supervisory process be examined before a failure rather than after one.</span>
+            <span class="card-gaps"><em>Gaps:</em> the channel appears only in the preamble, with no regulatory text, purpose, or safeguards; eligibility runs only to law firms and trade associations; a minimum count alone does not protect the largest institutions.</span>
+            <span class="card-meta">2026-10-05 &middot; FDIC &middot; Statistical disclosure control &middot; 4 recs</span>
+          </a>
+        </div>
+
+        <h2>International standard-setter responses</h2>
+        <p>A distinct series from the federal comment-letter program above: responses to international standard-setting bodies. The first extends the program's frameworks to AI infrastructure, and does not change the federal count.</p>
+
+        <div class="companion-cards">
+          <a href="/letters/fsb-ai-sound-practices/" class="companion-card" data-agency="FSB">
+            <strong>FSB: Sound Practices for Responsible Adoption of AI</strong>
+            <span class="card-thesis">A response to all seven consultation questions, anchored by the first control-layer measurement of live agentic payments: a market where autonomous agents already execute irreversible payments through an unsupervised settlement layer no institution governs.</span>
+            <span class="card-gaps"><em>Contribution:</em> two uncovered risk areas (cross-operator composition; integrity of AI-adoption statistics), a measured nonbank case study, three practice additions, and two glossary refinements.</span>
+            <span class="card-meta">2026-07-01 &middot; Financial Stability Board &middot; MVEP-AI + CLII-AI &middot; first international filing</span>
+          </a>
+        </div>
+      <h2 id="program-positions">What the program established</h2>
       <div class="paper-takeaways">
         <div class="paper-takeaway">
           <span class="paper-takeaway-number" aria-hidden="true">1</span>
@@ -234,150 +405,10 @@
         </div>
       </div>
 
-      <div class="paper-abstract">
-        <h2>The twenty-one letters</h2>
-        <p>Each card leads with the substantive finding. Click through for the full rule summary, gaps, and proposed recommendations. Three are supplements: two June deadline-day FinCEN supplements that strengthen April recommendations with first-party evidence, and a same-day NCUA actionability supplement that routes the principal NCUA comment.</p>
 
-        <div class="companion-cards">
-          <a href="/letters/occ-mvep-v4/" class="companion-card">
-            <strong>1. OCC PPSI MVEP (anchor)</strong>
-            <span class="card-thesis">Three tokenized U.S. Treasury products under three regulatory regimes receive comparable collateral treatment on Binance through Ceffu, with no counterparty disclosure about which instrument backs any given trade.</span>
-            <span class="card-gaps"><em>Gaps:</em> collateral interoperability is unregulated; MSB capital runs roughly 22-to-1 below the banking-law equivalent for a $40B issuer.</span>
-            <span class="card-meta">2026-04-10 &middot; OCC &middot; MVEP &middot; 3 recs</span>
-          </a>
-          <a href="/letters/occ-supplemental/" class="companion-card">
-            <strong>2. OCC Supplemental (control-layer)</strong>
-            <span class="card-thesis">A user transacting in a PPSI-issued stablecoin through an SEC-CUIP-covered interface receives none of the twelve interface-conduct conditions; the protection gradient is inverted.</span>
-            <span class="card-gaps"><em>Gaps:</em> interface-layer asymmetry between crypto-asset-securities and payment-stablecoin transactions on the same interface; no third-party diligence framework attaches.</span>
-            <span class="card-meta">2026-04-13 &middot; OCC &middot; Control-layer + CLII &middot; 1 rec</span>
-          </a>
-          <a href="/letters/treasury-genius-state-similarity/" class="companion-card">
-            <strong>3. Treasury GENIUS (state-similarity)</strong>
-            <span class="card-thesis">Treasury must evaluate fifty state regulatory frameworks as substantially similar to the federal GENIUS Act framework; the proposed principles frame this as section-by-section assessment against statutory text.</span>
-            <span class="card-gaps"><em>Gaps:</em> text-matching cannot detect functional-dimension drift across reserve transparency, capital adequacy, activity scope, insolvency, and interface-layer conduct.</span>
-            <span class="card-meta">2026-04-15 &middot; Treasury &middot; Control-layer + CLII + MVEP &middot; 6 recs</span>
-          </a>
-          <a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
-            <strong>4. FDIC AG20 (application)</strong>
-            <span class="card-thesis">The AG20 application is the FDIC's first and foundational opportunity to map a prospective PPSI's control-layer topology, shaping both the approval decision and the baseline for ongoing supervision.</span>
-            <span class="card-gaps"><em>Gaps:</em> §303.252 filing content does not surface the structural features (operator, custodian, interface, sweep) that are consequential for either decision.</span>
-            <span class="card-meta">2026-04-18 &middot; FDIC &middot; MVEP + CLII &middot; 4 recs</span>
-          </a>
-          <a href="/letters/fincen-aml-cft/" class="companion-card">
-            <strong>5. FinCEN AML/CFT NPRM</strong>
-            <span class="card-thesis">AML regulation has always been control-layer regulation: the Bank Secrecy Act attaches obligations to intermediaries, not to transactions or instruments.</span>
-            <span class="card-gaps"><em>Gaps:</em> tokenized-finance intermediation disaggregates across issuer, custodian, interface, router, sweep, and hold-and-freeze layers; the proposed risk-based directive does not articulate this compatibility.</span>
-            <span class="card-meta">2026-04-18 &middot; FinCEN &middot; Control-layer + CLII &middot; 7 recs</span>
-          </a>
-          <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card">
-            <strong>6. FinCEN-OFAC PPSI (sanctions)</strong>
-            <span class="card-thesis">The joint NPRM operationalizes the first statutory control-layer mandate in U.S. financial regulation: GENIUS Act §1033.240's block, freeze, and reject technical capability across primary and secondary market activity.</span>
-            <span class="card-gaps"><em>Gaps:</em> implementing technical capability without explicit MVEP-mapped diligence categories leaves both compliance evidence and supervisory observability under-specified.</span>
-            <span class="card-meta">2026-04-18 &middot; FinCEN + OFAC &middot; CLII + MVEP + Control-layer &middot; 10 recs, 50 of 58 NPRM Qs</span>
-          </a>
-          <a href="/letters/banking-agencies-joint-aml/" class="companion-card">
-            <strong>7. Banking agencies AML (joint)</strong>
-            <span class="card-thesis">Banks increasingly perform control-layer functions in tokenized finance: PPSI reserve custody, tokenized deposit issuance, tokenized securities custody, Federal qualified PPSI operation, and correspondent services to issuers and interfaces.</span>
-            <span class="card-gaps"><em>Gaps:</em> 2026 re-issuance dropped the Federal Reserve Board from the 2024 proposal; the resulting consistency gap is addressed by Recommendation 6.</span>
-            <span class="card-meta">2026-04-18 &middot; OCC + FDIC + NCUA &middot; CLII &middot; 7 recs</span>
-          </a>
-          <a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
-            <strong>8. FDIC AG19 PPSI activities</strong>
-            <span class="card-thesis">Recommendation 7 proposes an MVEP-gated conditional deposit insurance pass-through replacing §330.11(a)(3)'s categorical foreclosure, with pass-through attaching to the reserve deposit at the IDI rather than the payment stablecoin itself.</span>
-            <span class="card-gaps"><em>Gaps:</em> categorical foreclosure forecloses incentive-aligned design; current market-state pass-through claims would not qualify under MVEP-gated assessment.</span>
-            <span class="card-meta">2026-04-20 &middot; FDIC &middot; MVEP + CLII &middot; 12 recs</span>
-          </a>
-          <a href="/letters/fincen-aml-cft-supplemental/" class="companion-card">
-            <strong>9. FinCEN AML/CFT supplemental</strong>
-            <span class="card-thesis">A deadline-day supplement strengthening Recommendation 4: the United States based AML/CFT officer should hold effective supervisory control, not a nominal title.</span>
-            <span class="card-gaps"><em>New evidence:</em> in a 52-protocol study of token-governed systems, effective voting control diverged from the nominal locus of holdings in 13 of 18 protocols, by 2.5x to 25.6x.</span>
-            <span class="card-meta">2026-06-09 &middot; FinCEN &middot; Control-layer &middot; supplements FINCEN-2026-0034-0008</span>
-          </a>
-          <a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/" class="companion-card">
-            <strong>10. FinCEN-OFAC PPSI supplemental</strong>
-            <span class="card-thesis">A deadline-day supplement strengthening Recommendation 6: PPSI risk assessments must address reserve-custody concentration.</span>
-            <span class="card-gaps"><em>New evidence:</em> a within-unit event study of the SVB shock shows a 9.77-point USDC depeg whose recovery broke at the federal backstop announcement (Chow F = 7.41, p = 0.0012).</span>
-            <span class="card-meta">2026-06-09 &middot; FinCEN + OFAC &middot; Control-layer &middot; supplements FINCEN-2026-0100-0005</span>
-          </a>
-          <a href="/letters/ncua-genius/" class="companion-card">
-            <strong>11. NCUA GENIUS stablecoin (completes coverage)</strong>
-            <span class="card-thesis">Stablecoin issuance standards for NCUA-licensed credit unions, the credit-union analogue of the OCC rule. Completes coverage of every GENIUS-implementing agency.</span>
-            <span class="card-gaps"><em>Distinctive contribution:</em> cross-agency parity, flagging where the NCUA proposal and the OCC and FDIC rules diverge in ways that invite charter arbitrage.</span>
-            <span class="card-meta">2026-06-22 &middot; NCUA &middot; MVEP + CLII &middot; 11 recs</span>
-          </a>
-          <a href="/letters/ncua-genius-supplemental/" class="companion-card">
-            <strong>12. NCUA GENIUS supplemental</strong>
-            <span class="card-thesis">A same-day actionability supplement to the NCUA comment of record: a routing table keyed to the questions, a cross-agency alignment map, and suggested rule text for the five highest-priority asks.</span>
-            <span class="card-gaps"><em>Adds no new recommendations;</em> it lowers the cost for agency staff to route and act on the eleven.</span>
-            <span class="card-meta">2026-06-22 &middot; NCUA &middot; Routing + suggested text &middot; supplements NCUA-2026-1024</span>
-          </a>
-          <a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card">
-            <strong>13. FDIC AG29 BSA and sanctions (PPSI)</strong>
-            <span class="card-thesis">The FDIC's supervision-and-coordination layer over a PPSI AML and sanctions program works only when the FDIC and FinCEN read the same measured control posture of the same operator.</span>
-            <span class="card-gaps"><em>Gaps:</em> the effective-program disposition is left attestation-shaped; nothing keys the FDIC-to-FinCEN consultation to a shared, reproducible control-posture record.</span>
-            <span class="card-meta">2026-06-30 &middot; FDIC &middot; MVEP + CLII &middot; 6 recs</span>
-          </a>
-          <a href="/letters/sec-dsp3-draft-strategic-plan/" class="companion-card">
-            <strong>14. SEC Draft Strategic Plan (first SEC comment)</strong>
-            <span class="card-thesis">The plan's digital-asset objectives turn on a measurement capability the plan does not yet name: where a framework depends on whether a system is decentralized, that decentralization must be measured against a reproducible standard, not asserted.</span>
-            <span class="card-gaps"><em>Gaps:</em> naive holder lists inflate measured concentration 2.3x median (up to ~18x); launch allocation does not predict where control settles (r = 0.09).</span>
-            <span class="card-meta">2026-07-02 &middot; SEC &middot; CLII + MVEP &middot; 4 recs</span>
-          </a>
-          <a href="/letters/occ-af55-bsa-sanctions/" class="companion-card">
-            <strong>15. OCC AF55 BSA and sanctions (PPSI)</strong>
-            <span class="card-thesis">The OCC's supervision-and-coordination layer over a PPSI AML and sanctions program works only when the OCC and FinCEN read the same measured control posture of the same operator, extended to reserve assets, entity types, and alignment with the parallel FDIC rule.</span>
-            <span class="card-gaps"><em>Gaps:</em> the effective-program disposition is attestation-shaped; nothing keys the OCC-to-FinCEN consultation to a shared control-posture record; the OCC and FDIC consultation thresholds diverge (assets against outstanding issuance value), inviting arbitrage.</span>
-            <span class="card-meta">2026-07-23 &middot; OCC &middot; MVEP + CLII &middot; 8 recs</span>
-          </a>
-          <a href="/letters/fincen-ab74-ppsi-cip/" class="companion-card">
-            <strong>16. FinCEN AB74 PPSI customer identification program</strong>
-            <span class="card-thesis">The account definition is doing two different jobs in the GENIUS Act framework, and this proposal codifies only one of them while disclaiming the other in a footnote; the disclaimer belongs in regulatory text, where it will bind.</span>
-            <span class="card-gaps"><em>Gaps:</em> a narrow codified account definition sits beside a codified lawful-order cross-reference with only footnote 57 between them; the population estimate counts on-chain counterparties while the obligation attaches to formal relationships; the government-list comparison obligation has no designated lists.</span>
-            <span class="card-meta">2026-08-21 &middot; FinCEN (joint with OCC, Board, FDIC, NCUA) &middot; Control-layer + on-chain measurement &middot; 8 recs</span>
-          </a>
-          <a href="/letters/fdic-ag21-resolution-submissions/" class="companion-card">
-            <strong>17. FDIC AG21 resolution submissions</strong>
-            <span class="card-thesis">The rule narrows what covered institutions must submit for resolution planning, and the content it removes is disproportionately the content that predicts a run.</span>
-            <span class="card-gaps"><em>Gaps:</em> uninsured-deposit concentration and key-depositor detail, the variables March 2023 showed to be decisive, would be deleted while coverage is keyed to asset size alone; the receivership perimeter does not identify tokenized-deposit or stablecoin-reserve-custody arrangements or the operational controls at that boundary.</span>
-            <span class="card-meta">2026-08-24 &middot; FDIC &middot; Run-risk measurement + control layer &middot; 6 recs</span>
-          </a>
-          <a href="/letters/fdic-ag27-assessments/" class="companion-card">
-            <strong>18. FDIC AG27 assessments</strong>
-            <span class="card-thesis">The cohort the assessment rule reclassifies carries measurably higher run risk than the cohort it is priced against, and the framework prices size and resolvability but not novel-activity exposure.</span>
-            <span class="card-gaps"><em>Gaps:</em> reclassified banks show higher uninsured and insured brokered deposit shares than the comparison cohort; no indicator reaches crypto-asset or stablecoin-reserve-custody exposure; a voluntary rate-incentivized readiness mechanism selects for the banks least likely to fail, so its loss-reduction rationale is weakest in the non-electing tail.</span>
-            <span class="card-meta">2026-08-24 &middot; FDIC &middot; Run-risk measurement &middot; 4 recs</span>
-          </a>
-          <a href="/letters/fed-r1835-aml-cft-programs/" class="companion-card">
-            <strong>19. Federal Reserve R-1835 AML and CFT programs</strong>
-            <span class="card-thesis">Four agencies are writing one anti-money-laundering program rule four times, and the only substantive divergence between the Board's version and its three siblings is the coordination mechanism itself.</span>
-            <span class="card-gaps"><em>Gaps:</em> the Board's proposed Section 208.63 omits the two FinCEN consultation and information-sharing provisions the OCC, FDIC, and NCUA proposals carry, while the Board's Alternatives Considered section states that the proposal includes them.</span>
-            <span class="card-meta">2026-09-21 &middot; Board of Governors &middot; Control-layer &middot; 9 recs</span>
-          </a>
-          <a href="/letters/cftc-3038-0076-dco-requirements/" class="companion-card">
-            <strong>20. CFTC 3038-0076 clearing organization requirements</strong>
-            <span class="card-thesis">CFTC staff now expect clearing organizations to determine, instrument by instrument, whether a tokenized form of an asset conveys the rights of the traditional asset, and to be able to demonstrate it; the information the Commission collects captures that determination in no defined form.</span>
-            <span class="card-gaps"><em>Gaps:</em> a supervisor can see that a haircut was applied but not whether the instrument conveys the rights the haircut assumes; liquidation-path and redemption-path concentration analysis goes unrecorded; the determination carries no revisit date while haircuts are re-evaluated monthly.</span>
-            <span class="card-meta">2026-10-05 &middot; CFTC &middot; MVEP + CLII &middot; 4 recs</span>
-          </a>
-          <a href="/letters/fdic-ag30-disclosure-of-information/" class="companion-card">
-            <strong>21. FDIC AG30 disclosure of information</strong>
-            <span class="card-thesis">Supervisory material reaches the public today by exception; a standing, safeguarded channel for aggregated analysis would let the supervisory process be examined before a failure rather than after one.</span>
-            <span class="card-gaps"><em>Gaps:</em> the channel appears only in the preamble, with no regulatory text, purpose, or safeguards; eligibility runs only to law firms and trade associations; a minimum count alone does not protect the largest institutions.</span>
-            <span class="card-meta">2026-10-05 &middot; FDIC &middot; Statistical disclosure control &middot; 4 recs</span>
-          </a>
-        </div>
+      <h2 id="program-summary">Program summary</h2>
+        <p><strong>Sixteen dockets, nine agencies, three frameworks applied.</strong> The Federal Comment Letter Program used CLII (operator regulatory intensity), MVEP (institutional product diligence), and the control-layer view across the GENIUS Act implementation cycle, the SEC's draft strategic plan, the Board of Governors' anti-money-laundering program rule (Docket No. R-1835), the CFTC's clearing-organization information collection, and the FDIC's disclosure-of-information proposal. One hundred fourteen recommendations across eighteen principal letters, with three supplements: two June FinCEN supplements that add first-party empirical evidence, and a June 22 NCUA actionability supplement. The nineteenth letter, filed by email on September 21, 2026, is addressed to the Board of Governors. The twentieth and twenty-first, both filed on October 5, 2026, are the program's first comment to the CFTC and its comment on the FDIC's proposal to open aggregated supervisory data to outside analysis. Each letter summarizes what the proposed rule or plan does, identifies gaps, and proposes specific recommendations.</p>
 
-        <h2>International standard-setter responses</h2>
-        <p>A distinct series from the federal comment-letter program above: responses to international standard-setting bodies. The first extends the program's frameworks to AI infrastructure, and does not change the federal count.</p>
-
-        <div class="companion-cards">
-          <a href="/letters/fsb-ai-sound-practices/" class="companion-card">
-            <strong>FSB: Sound Practices for Responsible Adoption of AI</strong>
-            <span class="card-thesis">A response to all seven consultation questions, anchored by the first control-layer measurement of live agentic payments: a market where autonomous agents already execute irreversible payments through an unsupervised settlement layer no institution governs.</span>
-            <span class="card-gaps"><em>Contribution:</em> two uncovered risk areas (cross-operator composition; integrity of AI-adoption statistics), a measured nonbank case study, three practice additions, and two glossary refinements.</span>
-            <span class="card-meta">2026-07-01 &middot; Financial Stability Board &middot; MVEP-AI + CLII-AI &middot; first international filing</span>
-          </a>
-        </div>
 
         <h2>Program timeline</h2>
         <p>Submission channels: twelve via regulations.gov; six via <code>Comments@fdic.gov</code> email (FDIC does not use regulations.gov or a website filing form for these dockets); one by email to the Board of Governors; one joint filing submitted concurrently at three agency dockets with mixed channels; one via the SEC internet comment form.</p>
@@ -421,8 +452,8 @@
 
         <h2>Program context</h2>
         <p>Six dockets opened simultaneously in April in the GENIUS Act implementation cycle: three AML rulemakings published April 10, 2026 (FinCEN 0034, FinCEN-OFAC 0100, banking joint 91 FR 18304), two FDIC PPSI rulemakings (AG20, AG19), the OCC PPSI rule already in comment period, and Treasury's state-similarity rulemaking. Filing as one coordinated program let the recommendations cross-reference: the OCC MVEP anchor (cited by five subsequent filings) seeded the diligence vocabulary; the OCC Supplemental introduced the control-layer frame; later letters extended both to new domains. The four AML comment periods closed June 9, 2026; on that deadline the program filed two supplements to the FinCEN dockets, adding first-party evidence to Recommendations 4 and 6. The NCUA published its own GENIUS implementing proposal on May 18, 2026 (91 Fed. Reg. 28956); the program filed its principal NCUA comment and a same-day actionability supplement on June 22, 2026, completing coverage of every GENIUS-implementing agency. On June 30, 2026 the program filed its third FDIC comment, on the FDIC Bank Secrecy Act and sanctions compliance standards for PPSIs (RIN 3064-AG29, 91 Fed. Reg. 34171). On July 2, 2026, the comment-period close date, it filed its first SEC comment, on the Draft Strategic Plan for Fiscal Years 2026 through 2030 (File Number DSP-3), extending it from the GENIUS-implementing banking agencies to the securities regulator. On July 23, 2026 the program filed its third OCC comment, on the OCC Bank Secrecy Act and sanctions compliance standards for OCC-supervised PPSIs (RIN 1557-AF55, Docket OCC-2026-0463, 91 Fed. Reg. 37840), the OCC-side twin of the FDIC AG29 rule, bringing the program to its fifteenth letter, across ten dockets and seven agencies. On August 21, 2026, the closing day of that comment window, the program filed its fifth FinCEN comment, on the permitted payment stablecoin issuer customer identification program (RIN 1506-AB74, Docket FINCEN-2026-0101, 91 Fed. Reg. 37234), a rule FinCEN proposed jointly with the OCC, the Board of Governors of the Federal Reserve System, the FDIC, and the NCUA, bringing the program to eighteen letters across thirteen dockets and eight federal agencies. On September 21, 2026 the program filed its comment on Board Docket No. R-1835 by email, which brings the program to nineteen letters across fourteen dockets. Agencies remain eight. The email channel issues no regulations.gov tracking number. The Board of Governors is the eighth: an agency counts as engaged once the program has filed in a proceeding to which it is a party, whether as the agency addressed or as a co-issuer of a joint rulemaking, and each agency counts once however many comments it later receives. That is the convention the ledger had already been applying to NCUA and OFAC, written down when this filing made it decide something. On October 5, 2026, the closing day of both windows, the program filed its first comment to the Commodity Futures Trading Commission, on the renewal of the clearing-organization information collection 3038-0076 (Docket CFTC-2026-1685), and its comment on the FDIC's proposal to let outside parties analyze aggregated supervisory data (RIN 3064-AG30), bringing the program to twenty-one letters across sixteen dockets and nine federal agencies; the CFTC is the ninth. The GENIUS Act statutory rulemaking deadline of July 18, 2026 governs the PPSI implementing rules.</p>
-        <p><strong>Framework deployment (thirteen principal letters).</strong> CLII applied in 11 of 13; MVEP in 9; control-layer five-element in 4. The two June FinCEN supplements both apply the control-layer frame, to effective compliance-officer control and to reserve-custody concentration respectively; the NCUA supplement is a routing-and-suggested-text supplement. The SEC strategic-plan letter adds the corrected concentration methodology from the <a href="/papers/governance-concentration">52-protocol governance audit (B2)</a> as a third instrument class. Per <a href="/frameworks">Frameworks</a>: CLII is the continuous-monitoring drift detector, MVEP is the entry gate, the control-layer framework is the structural spine both operate on.</p>
-        <p><strong>Related research.</strong> The letter program is the applied-regulatory expression of the Track A papers: <a href="/papers/routing-the-dollar">Routing the Dollar</a> (CLII), <a href="/papers/mvep">MVEP</a>, <a href="/papers/seven-dollars">Seven Dollars</a> (independence of the two frameworks), <a href="/papers/three-strategies">Three Tokenization Strategies</a>. See also <a href="/overview#federal-comment-letters">Overview: Federal Comment Letter Program</a>.</p>
+        <p><strong>Framework deployment (thirteen principal letters).</strong> CLII applied in 11 of 13; MVEP in 9; control-layer five-element in 4. The two June FinCEN supplements both apply the control-layer frame, to effective compliance-officer control and to reserve-custody concentration respectively; the NCUA supplement is a routing-and-suggested-text supplement. The SEC strategic-plan letter adds the corrected concentration methodology from the <a href="/papers/governance-concentration/">52-protocol governance audit (B2)</a> as a third instrument class. Per <a href="/frameworks/">Frameworks</a>: CLII is the continuous-monitoring drift detector, MVEP is the entry gate, the control-layer framework is the structural spine both operate on.</p>
+        <p><strong>Related research.</strong> The letter program is the applied-regulatory expression of the Track A papers: <a href="/papers/routing-the-dollar/">Routing the Dollar</a> (CLII), <a href="/papers/mvep/">MVEP</a>, <a href="/papers/seven-dollars/">Seven Dollars</a> (independence of the two frameworks), <a href="/papers/three-strategies/">Three Tokenization Strategies</a>. See also <a href="/overview/#federal-comment-letters">Overview: Federal Comment Letter Program</a>.</p>
       </div>
 
       <p class="paper-contact-strip">Questions about the letters? <a href="mailto:Zach@Tokenization.Systems?subject=Federal%20Comment%20Letter%20Program">Zach@Tokenization.Systems</a></p>
@@ -433,14 +464,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -456,7 +487,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>
@@ -465,5 +496,20 @@
 
   <script defer src="/script.js?v=236"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+  (function(){
+    var box=document.querySelector('.letters-filters'); if(!box) return;
+    var cards=Array.prototype.slice.call(document.querySelectorAll('.companion-card[data-agency]'));
+    var btns=box.querySelectorAll('.filter-btn'), count=box.querySelector('.filter-count');
+    box.hidden=false;
+    function apply(agency){
+      var shown=0;
+      cards.forEach(function(c){ var on=(agency==='all')||c.getAttribute('data-agency')===agency; c.classList.toggle('is-filtered-out',!on); if(on) shown++; });
+      Array.prototype.forEach.call(btns,function(b){ var on=b.getAttribute('data-agency')===agency; b.classList.toggle('active',on); b.setAttribute('aria-pressed',on?'true':'false'); });
+      if(count){ count.textContent=(agency==='all')?'':(shown+' of '+cards.length+' letters'); count.parentElement.hidden=(agency==='all'); }
+    }
+    Array.prototype.forEach.call(btns,function(b){ b.addEventListener('click',function(){ apply(b.getAttribute('data-agency')); }); });
+  })();
+  </script>
 </body>
 </html>

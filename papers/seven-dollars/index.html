@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Seven Dollars: Comparative Framework for Stablecoins | TS</title>
+  <title>Seven Dollars: Comparative Framework for Stablecoins</title>
   <meta name="description" content="Seven dollar-denominated digital products share a denomination, little else for diligence. A five-marker design scorecard sharpens US-holder eligibility." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="seven dollars, dollar tokens, USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG, CLII, MVEP, collateral eligibility, SVB depeg, Circle pool, Paxos, Tokenization Systems" />
@@ -66,16 +66,22 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <script>
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=261" />
   <script type="application/ld+json">
     {
@@ -97,7 +103,7 @@
       "author": { "@id": "https://tokenization.systems/#person" },
       "datePublished": "2026-03-28",
       "inLanguage": "en",
-      "description": "Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. The CLII scores the operator; the MVEP scores the product. A complementary five-marker design scorecard partitions an eleven-product sample into For-US-holders, Offshore-targeted, and boundary classes at approximately 82 percent clean-classification. Two production stress events (SVB March 2023, Circle pool March 2025) document contagion flowing simple-to-complex.",
+      "description": "Seven dollar-denominated digital products share a denomination and a target price. They share little else of relevance to institutional diligence. The CLII scores the operator; the MVEP scores the product. A complementary five-marker design scorecard partitions an eleven-product sample into For-US-holders, Offshore-targeted, and boundary classes at approximately 82 percent clean-classification. Two production stress episodes (SVB March 2023, Circle pool March 2025) document contagion flowing simple-to-complex.",
       "url": "https://tokenization.systems/papers/seven-dollars/",
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/papers/seven-dollars/" },
       "image": "https://tokenization.systems/Publication-Images/Seven_Dollars_Regulation_Equivalence.png?v=20260716b",
@@ -172,6 +178,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -183,16 +190,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -213,22 +220,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -247,7 +254,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Seven Dollars
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Seven Dollars
       </nav>
 
       <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
@@ -269,7 +276,7 @@
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />Why do seven dollar-denominated digital products that all trade at one dollar require structurally different institutional diligence?</p>
         <p><strong>Answer</strong><br />Because they share a denomination and a target price but little else of relevance to diligence: USDC, USDT, USDG, and PYUSD are payment stablecoins under four different regulatory regimes, DAI is overcollateralized, USDe is a synthetic-dollar token, and OUSG is a tokenized US Treasury wrapper. Operator regulation and product equivalence are separate dimensions: Circle scored highest on the Control Layer Intensity Index yet took a depeg of 10 percent (volume-weighted DEX pricing) to 13 percent (centralized-exchange intraday) during the SVB weekend, while Tether scored lower and held its peg, because regulation was not designed to predict stress performance. The CLII is the right instrument for supervising the gateway; the Minimum Viable Equivalence Pack is the right instrument for assessing the product.</p>
-        <p><strong>Evidence base</strong><br />Seven products scored across five regulatory regimes, with extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress events (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from 78 million dollars to 3.9 billion dollars in 31 months under the same issuer and state regulator).</p>
+        <p><strong>Evidence base</strong><br />Seven products scored across five regulatory regimes, with extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress episodes (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from 78 million dollars to 3.9 billion dollars in 31 months under the same issuer and state regulator).</p>
       </aside>
 
       <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
@@ -331,7 +338,7 @@
 
       <div class="paper-abstract">
         <h2>Evidence base</h2>
-        <p>Seven products scored across five regulatory regimes (US state money transmitter, US trust charter (a New York charter until Paxos's OCC national trust conversion, conditionally approved December 12, 2025), British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress events (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>
+        <p>Seven products scored across five regulatory regimes (US state money transmitter, US trust charter (a New York charter until Paxos's OCC national trust conversion, conditionally approved December 12, 2025), British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress episodes (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>
         <p><strong>Composite eligibility (eight products, A through D tiers, manuscript table primary):</strong> USDC 0.777 (A), PYUSD 0.753 (A), USDS 0.657 (B), USDT 0.657 (B), USDe 0.604 (B), DAI 0.589 (C), USDG 0.495 (C), OUSG 0.295 (D). (Three-year USDT window sensitivity lifts USDT in robustness; see the abstract block and the Key numbers section on this page.)</p>
 
         <figure class="paper-figure-callout" aria-label="Figure 1 caption">
@@ -342,7 +349,7 @@
 
         <h2>What this paper changes</h2>
         <p>The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
-        <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
+        <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks/#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
 
         <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
         <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in Routing the Dollar, the companion paper, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
@@ -359,8 +366,8 @@
         <p><strong>What this means.</strong> Contagion modeling that assumes failures cascade from complex products down to their simpler components has the direction reversed. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
 
         <h2>Operational controls: the October 2025 PYUSD overmint</h2>
-        <p>A production event on October 15, 2025 shows the limit of an operator-level score. A Paxos minting address created 300 trillion PYUSD in a single transaction, roughly five orders of magnitude above the circulating supply, and burned it 22 minutes later; the peg held, with DEX pricing within 0.03 percent of par. The CLII scores whether an operator holds freeze and mint authority, and Paxos scores high on that dimension. It does not score the quality of the operational controls around that authority: a supply cap, a per-transaction limit, and multisig minting were all absent. The event confirms that the capability the CLII measures is a real operational risk, while showing that capability and control quality are separate questions.</p>
-        <p><strong>What this means.</strong> An operator can carry a strong regulatory posture and a high freeze-and-mint capability score and still lack the operational-control discipline that prevents a mint error. Assessing the product means checking the controls, not just the capability.</p>
+        <p>A production event on October 15, 2025 shows the limit of an operator-level score. A Paxos minting address created 300 trillion PYUSD in a single transaction, roughly five orders of magnitude above the circulating supply, and burned it 22 minutes later; the peg held, with DEX pricing within 0.03 percent of par. The CLII scores whether an operator holds freeze and mint authority, and Paxos scores high on that dimension. It does not score the quality of the operational controls around that authority: a supply cap, a per-transaction limit, and multisig minting were all absent. The event illustrates that the capability the CLII measures is a real operational risk, while showing that capability and control quality are separate questions.</p>
+        <p><strong>What this means.</strong> An operator can carry a strong regulatory posture and a high freeze-and-mint capability score and still lack the operational-control discipline that prevents a mint error. Assessing the product means checking the controls as well as the capability.</p>
 
         <h2>US-holder design axis (Q2 extension)</h2>
         <p>A complementary five-marker design scorecard classifies products by the markers that determine whether a product is built for US holders or for offshore distribution. The scorecard is additive to the structural framework that determines MVEP binding categories and is most useful for the AG19 payment-stablecoin eligibility question, where the bifurcation between For-US-holders and Offshore-targeted products is sharp.</p>
@@ -375,7 +382,7 @@
         <p><strong>Investors and market-structure teams.</strong> Two products trading at one dollar can require structurally different diligence packages. The four-dimension taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile) is the first-pass filter that determines which MVEP categories are binding for each product before the full ten-category assessment begins.</p>
 
         <h2>Dollar-infrastructure context</h2>
-        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
+        <p>Seven Dollars is one of four papers in the Track A dollar-infrastructure sequence. <a href="/papers/routing-the-dollar/">Routing the Dollar</a> establishes the CLII and documents gateway-level variation in stablecoin transmission. <a href="/papers/mvep/">MVEP</a> develops the ten-category diligence framework from the SVB case. <a href="/papers/three-strategies/">Three Strategies</a> applies both frameworks to tokenized securities and deposit tokens. Seven Dollars is the cross-product comparison that documents the two frameworks as independent dimensions.</p>
 
         <blockquote class="paper-thesis-line">
           <p>Seven products. Seven structurally different diligence packages. The dollar denomination is the least informative thing about them.</p>
@@ -389,7 +396,7 @@
           <li>Eight-metric collateral eligibility framework scored across the seven products.</li>
           <li>Those eligibility composites operationalized metric by metric (Section 7.3): one explicit scoring rule per metric, each grounded only in a fact the paper already states, so a reader can check the scores rather than take them on trust. The mechanical composites reproduce the published rank ordering, and the residuals are printed rather than hidden (mean absolute gap 0.049).</li>
           <li>Five-marker US-holder design scorecard tabulated across an eleven-product sample (Section 3.2), sorting each product into for-US-holders, offshore-targeted, or boundary case.</li>
-          <li>Two production stress events analyzed (SVB March 2023, Circle pool March 2025).</li>
+          <li>Two production stress episodes analyzed (SVB March 2023, Circle pool March 2025).</li>
           <li>SVB counterfactual applied to current structures for each product.</li>
           <li>Within-operator natural experiment documented (Paxos BUSD wind-down vs PYUSD scale-up under the same NYDFS trust charter).</li>
         </ul>
@@ -400,7 +407,7 @@
         <p><strong>Classification (Section 2).</strong> Four-dimension taxonomy predicts which MVEP categories are binding for each product. Payment stablecoins cluster on Categories 1, 4, 5 (rights parity, custody, insolvency). DAI clusters on Categories 2, 8, 10 (system of record, governance, collateral operability). OUSG clusters on Categories 2, 5, 10 (multi-layer records, GP concentration, constrained liquidation).</p>
         <p><strong>CLII extension (Section 3).</strong> Circle 0.92, Paxos (USDG) 0.83, Ondo 0.61, Tether 0.52, MakerDAO/Sky 0.15. Evidence consistent with a regulatory-intensity ranking that does not predict stress performance.</p>
         <p><strong>Collateral eligibility (Section 4).</strong> USDC 0.777, PYUSD 0.753, USDS 0.657, USDT 0.657, USDe 0.604, DAI 0.589, USDG 0.495, OUSG 0.295. Eight metrics: secondary market depth, instant redemption, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, contagion independence.</p>
-        <p><strong>Contagion analysis (Section 5).</strong> Direction confirmed simple-to-complex in both observed stress events. USDC depeg propagated to DAI through the PSM (pre-SVB PSM USDC balance approximately $2.1B; surged to $4.1B during crisis). BUIDL instant-redemption stress propagated to OUSG through the Circle-operated pool.</p>
+        <p><strong>Contagion analysis (Section 5).</strong> Direction ran simple-to-complex in both observed stress episodes. USDC depeg propagated to DAI through the PSM (pre-SVB PSM USDC balance approximately $2.1B; surged to $4.1B during crisis). BUIDL instant-redemption stress propagated to OUSG through the Circle-operated pool.</p>
         <p><strong>Risk migration (Section 6).</strong> Structural comparison of pre-SVB and post-SVB concentration points across the seven products. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG: segregated architecture, single banking partner. OUSG: diversified underlyings, single instant-redemption pool.</p>
         <p><strong>Robustness.</strong> USDT maximum depeg (42.7%) is historical (2018 banking disruption). A three-year rolling window lifts USDT's composite to approximately 0.80 (Tier A). Full-history specification is primary; three-year sensitivity is included as robustness.</p>
         <p><strong>Scope boundary.</strong> Dependency matrix is 7x7 direct dependencies. Indirect dependencies through shared infrastructure (Ethereum congestion, exchange counterparty risk) are discussed but not quantified. CLII scores for Paxos and Ondo are author-assessed from public information. USDe CEX counterparty risk is a qualitative factor, not a metric score.</p>
@@ -421,31 +428,31 @@
 
         <h2>Related frameworks</h2>
         <div class="paper-framework-buttons" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem;">
-          <a class="action secondary" href="/frameworks#clii">Control Layer Intensity Index (CLII)</a>
-          <a class="action secondary" href="/frameworks#mvep">Minimum Viable Equivalence Pack (MVEP)</a>
+          <a class="action secondary" href="/frameworks/#clii">Control Layer Intensity Index (CLII)</a>
+          <a class="action secondary" href="/frameworks/#mvep">Minimum Viable Equivalence Pack (MVEP)</a>
         </div>
         <p class="paper-framework-descriptions" style="margin-top: 0.5rem;">CLII: five-dimension operator regulation score (introduced in Routing the Dollar). MVEP: ten-category product diligence framework (introduced in MVEP).</p>
 
         <h2>Related role profiles</h2>
         <div class="paper-role-buttons" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem;">
-          <a class="action secondary" href="/resume/policy">Policy &amp; market infrastructure</a>
-          <a class="action secondary" href="/resume/stablecoin-payments">Stablecoin &amp; payments strategy</a>
-          <a class="action secondary" href="/resume/asset-management">Asset management &amp; tokenization</a>
+          <a class="action secondary" href="/resume/policy/">Policy &amp; market infrastructure</a>
+          <a class="action secondary" href="/resume/stablecoin-payments/">Stablecoin &amp; payments strategy</a>
+          <a class="action secondary" href="/resume/asset-management/">Asset management &amp; tokenization</a>
         </div>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/routing-the-dollar" class="companion-card">
+          <a href="/papers/routing-the-dollar/" class="companion-card">
             <strong>Routing the Dollar</strong>
             <span>Gateway-level variation in stablecoin transmission. Establishes the CLII used in this paper.</span>
           </a>
-          <a href="/papers/mvep" class="companion-card">
+          <a href="/papers/mvep/" class="companion-card">
             <strong>Minimum Viable Equivalence Pack</strong>
             <span>The ten-category diligence framework developed from the SVB case. Applied here to seven dollar-denominated products.</span>
           </a>
-          <a href="/papers/three-strategies" class="companion-card">
+          <a href="/papers/three-strategies/" class="companion-card">
             <strong>Three Tokenization Strategies</strong>
             <span>Deposit tokens and tokenized securities extend the same control-layer logic to institutional settlement infrastructure.</span>
           </a>
@@ -460,14 +467,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -483,7 +490,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

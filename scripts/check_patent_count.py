@@ -99,9 +99,14 @@ def enumerated_count(text):
 
 
 def main():
-    index = ROOT / "index.html"
+    # The enumeration moved from the homepage About block to its own page on
+    # 2026-10-12 (the homepage keeps a count and a pointer). Prefer the page that
+    # carries the block; fall back to index.html so an older tree still checks.
+    index = ROOT / "patents" / "index.html"
+    if not index.is_file() or '<div class="patent-areas">' not in index.read_text(errors="replace"):
+        index = ROOT / "index.html"
     if not index.is_file():
-        sys.exit("check_patent_count: index.html not found")
+        sys.exit("check_patent_count: neither patents/index.html nor index.html found")
     text = index.read_text(errors="replace")
 
     truth, found = enumerated_count(text)

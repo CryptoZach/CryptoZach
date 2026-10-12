@@ -1270,17 +1270,28 @@ vaultMountDial(document.getElementById('dial'));
   if (!brand) return;
   /* the homepage already has its own animated mark; never double up */
   if (document.querySelector('header .brand-mark')) return;
-  if (document.querySelector('.vault-headdial')) return;
   if (typeof vaultMountDial !== 'function') return;
 
   /* Mount on .brand, NOT on the <a> inside it. Measured on the interior chrome:
      .brand is flex-direction:row / align-items:center, but .brand a is
      flex-direction:COLUMN, so a canvas inserted into the link becomes a row
-     stacked ABOVE the wordmark instead of an instrument beside it. */
-  var cv = document.createElement('canvas');
-  cv.className = 'vault-headdial';
-  cv.setAttribute('aria-hidden', 'true');
-  brand.insertBefore(cv, brand.firstChild);
+     stacked ABOVE the wordmark instead of an instrument beside it.
+
+     Prefer the canvas the header partial already carries. Inserting a fresh
+     canvas here was the site's largest layout shift (CLS 0.96 to 1.98 on every
+     interior page, 2026-10-12 audit): a canvas created without dimensions lays
+     out at 300x150 until fit() sizes it, so the whole page moved twice after
+     first paint. The partial's static canvas has its box from the first
+     paint, and mounting into it moves nothing. */
+  var cv = brand.querySelector('canvas.vault-headdial');
+  if (!cv){
+    if (document.querySelector('.vault-headdial')) return;
+    cv = document.createElement('canvas');
+    cv.className = 'vault-headdial';
+    cv.width = 120; cv.height = 120;
+    cv.setAttribute('aria-hidden', 'true');
+    brand.insertBefore(cv, brand.firstChild);
+  }
   vaultMountDial(cv, { compact: true });
 })();
 

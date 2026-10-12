@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Control Layer War: CLARITY Act & Tokenized Rails | TS</title>
+  <title>Control Layer War: CLARITY Act & Tokenized Rails | Tokenization Systems</title>
   <meta name="description" content="CLARITY-style provisions assign compliance to whoever controls routing defaults, holds, and audit logs. The control layer is where policy becomes operations." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="CLARITY Act, control layer, stablecoin regulation, routing defaults, gateway compliance, digital dollar policy, tokenization supervision" />
@@ -71,10 +71,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -164,6 +172,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -175,16 +184,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -205,22 +214,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -239,7 +248,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> The Control Layer War
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> The Control Layer War
       </nav>
 
       <figure class="paper-cover paper-cover--control-layer" aria-hidden="true">
@@ -309,9 +318,9 @@
           <a class="action secondary cta-x" href="https://x.com/CryptoZach/status/2015986700745351501" target="_blank" rel="noopener noreferrer"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread on X</a>
         </div>
         <div class="access-secondary">
-          <a id="request-memo" class="access-link" href="/contact">Request the full 30-page memo</a>
+          <a id="request-memo" class="access-link" href="/contact/">Request the full 30-page memo</a>
           <span aria-hidden="true"> · </span>
-          <a class="access-link" href="/papers/dollar-v3">Read companion: Dollar v3</a>
+          <a class="access-link" href="/papers/dollar-v3/">Read companion: Dollar v3</a>
         </div>
       </div>
 
@@ -330,7 +339,7 @@
         <h3>3. Three fault lines that flip the switch</h3>
         <p><strong>Rewards: where yield is allowed to live.</strong> If token-level interest is constrained, yield migrates to wrappers, sweeps, and default allocators. Whoever controls that allocation layer captures the economics.</p>
         <p><strong>App-layer scope: control-based versus code-based perimeter.</strong> The core DeFi question: do obligations attach to who can route and modify outcomes, or to who wrote the software? The essay argues that &ldquo;routing control&rdquo; is becoming the practical test. Entities that can run compliance at scale convert it into distribution advantage.</p>
-        <p><strong>Tokenization: loophole narratives versus operational stack reality.</strong> Institutions scale tokenization when liability is legible, records reconcile, and finality is defensible. The infrastructure that can produce repeatable, auditable equivalence evidence captures value. This connects directly to the <a href="/papers/mvep">Minimum Viable Equivalence Pack (MVEP)</a> framework, a ten-category diagnostic for assessing whether a tokenized product&rsquo;s structural architecture provides the functional equivalents of traditional financial instrument protections.</p>
+        <p><strong>Tokenization: loophole narratives versus operational stack reality.</strong> Institutions scale tokenization when liability is legible, records reconcile, and finality is defensible. The infrastructure that can produce repeatable, auditable equivalence evidence captures value. This connects directly to the <a href="/papers/mvep/">Minimum Viable Equivalence Pack (MVEP)</a> framework, a ten-category diagnostic for assessing whether a tokenized product&rsquo;s structural architecture provides the functional equivalents of traditional financial instrument protections.</p>
 
         <h3>4. &ldquo;Truth-in-equivalence&rdquo; is the price of institutional scale</h3>
         <p>Every serious tokenized product needs an equivalence pack: rights mapping (legal and economic equivalence), records and reconciliation (how ledgers match, how breaks are resolved), custody and segregation (including insolvency posture), finality and exception handling (reorgs, reversals, dispute resolution), and governance and audit logs (who can change what; how it is proven after the fact). Without documented equivalence, a product is a pilot, not an institutional offering.</p>
@@ -361,8 +370,8 @@
         <ul>
           <li><strong>CLARITY Act</strong> (H.R. 5403, 119th Congress), in the House-passed form analyzed here, including anti-fraud, venue, recordkeeping, intermediary-registration, custody, and customer-protection provisions that can push compliance toward interfaces, defaults, logs, and hold workflows. Public-law citation pending Senate consideration; check Congress.gov for current status.</li>
           <li><strong>GENIUS Act</strong> (Guiding and Establishing National Innovation for U.S. Stablecoins Act, Public Law 119-27, enacted July 18, 2025), which defines the payment-stablecoin perimeter that market-structure rules under the CLARITY Act (House-passed form analyzed here) would sit on top of.</li>
-          <li><a href="/papers/dollar-v3"><strong>Dollar v3</strong></a> as the companion essay, which provides the three-object framework, Layer 0 (the pre-technical regulatory and legal infrastructure governing the operator and router layer), and deposit-effects framework this piece operationalizes.</li>
-          <li><a href="/papers/mvep"><strong>MVEP</strong></a>, which supplies the institutional &ldquo;truth-in-equivalence&rdquo; standard referenced in the institutional-scale section.</li>
+          <li><a href="/papers/dollar-v3/"><strong>Dollar v3</strong></a> as the companion essay, which provides the three-object framework, Layer 0 (the pre-technical regulatory and legal infrastructure governing the operator and router layer), and deposit-effects framework this piece operationalizes.</li>
+          <li><a href="/papers/mvep/"><strong>MVEP</strong></a>, which supplies the institutional &ldquo;truth-in-equivalence&rdquo; standard referenced in the institutional-scale section.</li>
         </ul>
         <p>The three enforcement equilibria and operating metrics are the author&rsquo;s analytical framework. They describe where compliance could concentrate under the House-passed text analyzed here, conditional on implementation choices and later revisions.</p>
 
@@ -378,7 +387,7 @@
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/dollar-v3" class="companion-card">
+          <a href="/papers/dollar-v3/" class="companion-card">
             <strong>Dollar v3</strong>
             <span>The policy essay this analysis extends.</span>
           </a>
@@ -393,14 +402,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -416,7 +425,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

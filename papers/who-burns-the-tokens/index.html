@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,19 +35,18 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>Who Burns the Tokens? Burn Mechanism Analysis | TS</title>
-  <meta name="description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols and is high where measurable (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31)." />
+  <title>Who Burns the Tokens? Burn Mechanism Analysis | Tokenization Systems</title>
+  <meta name="description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols, and high where measurable (Helium HHI 0.27, Livepeer 0.31)." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="DePIN, GeoDePIN, Subsidy-to-Revenue ratio, burn-and-mint equilibrium, demand concentration, Helium, GEODNET, Livepeer, service verification, token velocity, HIP-147, SuperHex" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Who Burns the Tokens? Burn Mechanism Analysis" />
-  <meta property="og:description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols and is high where measurable (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31)." />
+  <meta property="og:description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols, and high where measurable (Helium HHI 0.27, Livepeer 0.31)." />
   <meta property="og:url" content="https://tokenization.systems/papers/who-burns-the-tokens/" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Who_Burns_S2R_HHI.png" />
   <meta property="og:image:width" content="2949" />
@@ -58,7 +58,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:title" content="Who Burns the Tokens? Burn Mechanism Analysis" />
-  <meta name="twitter:description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols and is high where measurable (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31)." />
+  <meta name="twitter:description" content="GeoDePIN study: demand concentration is measurable on-chain only for direct-payment protocols, and high where measurable (Helium HHI 0.27, Livepeer 0.31)." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Who_Burns_S2R_HHI.png" />
   <meta name="twitter:image:alt" content="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI. Helium (burn-signer HHI 0.27) and Livepeer (fee-payer HHI 0.31) plotted at measured concentration; GEODNET, DIMO, and Hivemapper shown in a shaded off-axis lane where demand is off-chain and not measurable. Horizontal line marks S2R = 1.0 fiscal parity" />
   <meta name="twitter:creator" content="@CryptoZach" />
@@ -70,10 +70,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=261" />
   <script type="application/ld+json">
     {
@@ -168,6 +176,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -179,16 +188,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -209,22 +218,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -243,7 +252,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Burns the Tokens?
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Who Burns the Tokens?
       </nav>
 
       <span class="paper-track-badge paper-track-badge--b">Track B: Tokenomics</span>
@@ -384,7 +393,7 @@
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design than by the absolute size of current revenue. The paper is a study of 13 DePIN protocols (10 GeoDePIN plus 3 DeVIN comparison cases) anchored by a 34-month Helium longitudinal case, and its distinctive empirical contribution is a measurability boundary: payment architecture determines whether a network's demand concentration can be observed on-chain at all.</p>
-        <p>The paper inherits the protocol-controlled-address exclusion methodology developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>: its own GeoDePIN governance readings are reported pre-exclusion (HHI 0.034 to 0.593), with post-exclusion corrections drawn from that companion cross-section where available (most prominently for DIMO). It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
+        <p>The paper inherits the protocol-controlled-address exclusion methodology developed in <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>: its own GeoDePIN governance readings are reported pre-exclusion (HHI 0.034 to 0.593), with post-exclusion corrections drawn from that companion cross-section where available (most prominently for DIMO). It shares that paper's grounding in Ostromian self-governance and republican non-domination, though the full normative apparatus is developed in companion theory papers rather than in either empirical study.</p>
 
         <h2>Core findings</h2>
 
@@ -438,7 +447,7 @@
         <p><strong>S2R measures burns versus mining emissions only, excluding vesting dilution.</strong> This is a first-order caveat: vesting unlocks from team, investor, and ecosystem allocations add to circulating supply without passing through emission accounting, so S2R can read healthy while vesting silently expands the float. The disclosure is surfaced at first mention of S2R in the main text, not only in the limitations section.</p>
 
         <h3>Exclusion methodology (inherited from Governance Concentration)</h3>
-        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the DIMO Foundation address reduces governance HHI from 0.305 (pre-exclusion) to 0.025 (post-exclusion, per the companion cross-section); skipping the exclusion overstates DIMO's governance concentration by roughly an order of magnitude.</p>
+        <p>Protocol-controlled addresses (staking contracts, bridges, custodians, vesting locks, team multisigs, treasuries) are excluded before concentration calculations. The methodology is developed in <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>. Applied to DIMO, exclusion of the DIMO Foundation address reduces governance HHI from 0.305 (pre-exclusion) to 0.025 (post-exclusion, per the companion cross-section); skipping the exclusion overstates DIMO's governance concentration by roughly an order of magnitude.</p>
 
         <h3>Philosophy disposition</h3>
         <p>This is not a philosophy paper. It uses Ostromian self-governance as the framing for governance distribution and draws its measurement methodology from Auditing Governance Concentration Beyond Token Allocation (reference [34]); the broader normative apparatus is developed in companion theory papers, not in either empirical study. Scope is narrowed to the empirical Helium/GEODNET focus.</p>
@@ -475,21 +484,21 @@
         <p>This briefing tracks the manuscript of record (currently the journal-submission version). When the editorial decision lands, the badges, description note, and key numbers are refreshed in the same update.</p>
 
         <h2>Related role profiles</h2>
-        <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume">Resume</a> and <a href="/research#track-b">Tokenomics &amp; DePIN track</a>.</p>
+        <p>This paper supports DePIN protocol design and tokenomics audiences. For institutional hiring, see <a href="/resume/">Resume</a> and <a href="/research/#track-b">Tokenomics &amp; DePIN track</a>.</p>
       </div>
 
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/governance-concentration" class="companion-card">
+          <a href="/papers/governance-concentration/" class="companion-card">
             <strong>Auditing Governance Concentration Beyond Token Allocation</strong>
             <span>Cross-sectional empirical foundation (52 protocols across DePIN, DeFi, L1/L2 infrastructure, and social tokens) for this paper's within-sector GeoDePIN vertical. Source of the protocol-controlled-address exclusion methodology.</span>
           </a>
-          <a href="/papers/adaptive-tokenomics" class="companion-card">
+          <a href="/papers/adaptive-tokenomics/" class="companion-card">
             <strong>Adaptive Tokenomics</strong>
             <span>Simulation-based study of PID emission control on the MeshNet framework. Track B thematic companion; no data dependency.</span>
           </a>
-          <a href="/papers/operational-risk" class="companion-card">
+          <a href="/papers/operational-risk/" class="companion-card">
             <strong>Operational Risk in Token Economies</strong>
             <span>624-configuration simulation of operational failures interacting with adaptive controllers and reputation systems. Calibrates partly on Helium and GEODNET failure profiles.</span>
           </a>
@@ -504,14 +513,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -527,7 +536,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

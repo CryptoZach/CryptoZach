@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>MVEP & Tokenized Cash Management (TCMAG) Diligence | TS</title>
+  <title>MVEP & Tokenized Cash Management (TCMAG) Diligence</title>
   <meta name="description" content="Maps TCMAG's twelve buyer-side principles for tokenized corporate cash to the supply-side MVEP framework. Three gap categories for any future MVEP v2." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="TCMAG, Tokenized Cash Management Advisory Group, MVEP, Minimum Viable Equivalence Pack, tokenized deposits, corporate treasury, multi-issuer architecture, settlement finality, deposit-token clearing, Ubyx, GLEIF, LEI, operator-layer regulation" />
@@ -70,10 +70,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -169,6 +177,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -180,16 +189,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -210,22 +219,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink active" href="/research" aria-current="page">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -244,7 +253,7 @@
   <main id="main" class="paper-detail-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="paper-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Cash Principles
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/research/">Research</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Tokenized Cash Principles
       </nav>
 
       <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
@@ -403,7 +412,7 @@
         </div>
 
         <h2>Why "Multi-Bank / Multi-Issuer" is load-bearing</h2>
-        <p>TCMAG's second principle explicitly rejects single-provider dependency. The Tokenization Systems research program has an empirical anchor for why this matters. The deposit-token competition finding from <a href="/papers/three-strategies">Three Tokenization Strategies</a> (SSRN 6483198) shows that the entity issuing the dominant deposit token captures settlement-layer rent. If JPMorgan's JPMD becomes the dominant deposit token, JPMorgan owns the settlement layer for tokenized corporate cash; competing banks become rent-payers rather than peers. The market structure outcome is determined by clearing infrastructure: with no cross-institution clearing layer, the deposit-token market consolidates around one or two issuers within 24 months of launch; with cross-institution clearing infrastructure such as Ubyx's pre-funding clearing model, the deposit-token market preserves a competitive equilibrium.</p>
+        <p>TCMAG's second principle explicitly rejects single-provider dependency. The Tokenization Systems research program has an empirical anchor for why this matters. The deposit-token competition finding from <a href="/papers/three-strategies/">Three Tokenization Strategies</a> (SSRN 6483198) shows that the entity issuing the dominant deposit token captures settlement-layer rent. If JPMorgan's JPMD becomes the dominant deposit token, JPMorgan owns the settlement layer for tokenized corporate cash; competing banks become rent-payers rather than peers. The market structure outcome is determined by clearing infrastructure: with no cross-institution clearing layer, the deposit-token market consolidates around one or two issuers within 24 months of launch; with cross-institution clearing infrastructure such as Ubyx's pre-funding clearing model, the deposit-token market preserves a competitive equilibrium.</p>
         <p>This is not a theoretical concern. Ubyx is a TCMAG sponsor, and Ubyx's CEO Tony McLaughlin (former Citi executive, Regulated Liability Network designer) has engaged the deposit-token clearing thesis directly. The clearing layer is the structural mechanism that makes TCMAG's Multi-Bank principle operational rather than aspirational. Without it, the principle is a corporate preference that the market cannot enforce.</p>
         <p>Implication for MVEP: a future MVEP v2 should add a Multi-Issuer Compatibility category that scores whether an operator's technical and governance architecture supports corporates holding balances across multiple issuers without operational penalty. This becomes the supply-side measurement that gives the buyer-side requirement teeth.</p>
 
@@ -413,7 +422,7 @@
 
         <h2>The operator-layer thesis underneath both frameworks</h2>
         <p>Both TCMAG's principles and MVEP's categories operationalize a deeper claim: that the appropriate locus of regulatory and diligence attention is the operator and router layer, not the token itself. TCMAG's twelve principles do not score the token; they score whether the operator behind the token can demonstrate compliance, security, interoperability, controls, finality, and resilience. The token is the carrier; the operator is the unit of accountability.</p>
-        <p>This is the same orientation <a href="/papers/routing-the-dollar">Routing the Dollar</a> (SSRN 6267698) develops at the regulatory-policy level. When an institutional stablecoin failure cascaded through Dai's Peg Stability Module to USDP and GUSD during the SVB weekend in March 2023, the operator-layer transmission channels (PSM mechanics, reserve-bank concentration, redemption-pathway design) determined the contagion path. TCMAG's principles, MVEP's categories, and the program's broader operator-layer regulatory thesis converge on the same locus.</p>
+        <p>This is the same orientation <a href="/papers/routing-the-dollar/">Routing the Dollar</a> (SSRN 6267698) develops at the regulatory-policy level. When an institutional stablecoin failure cascaded through Dai's Peg Stability Module to USDP and GUSD during the SVB weekend in March 2023, the operator-layer transmission channels (PSM mechanics, reserve-bank concentration, redemption-pathway design) determined the contagion path. TCMAG's principles, MVEP's categories, and the program's broader operator-layer regulatory thesis converge on the same locus.</p>
 
         <h2>MVEP v2 expansion candidates</h2>
         <p>Three TCMAG principles without clean MVEP equivalents are worth treating as candidate categories for a future MVEP v2 cycle:</p>
@@ -441,15 +450,15 @@
       <section class="companions" aria-labelledby="companions-heading">
         <h3 id="companions-heading">Read next</h3>
         <div class="companion-cards">
-          <a href="/papers/mvep" class="companion-card">
+          <a href="/papers/mvep/" class="companion-card">
             <strong>Minimum Viable Equivalence Pack</strong>
             <span>The ten-category supply-side diagnostic framework this briefing maps against TCMAG.</span>
           </a>
-          <a href="/papers/three-strategies" class="companion-card">
+          <a href="/papers/three-strategies/" class="companion-card">
             <strong>Three Tokenization Strategies</strong>
             <span>Where the deposit-token competition finding (Ubyx as competitive-equilibrium clearing layer) is developed.</span>
           </a>
-          <a href="/papers/routing-the-dollar" class="companion-card">
+          <a href="/papers/routing-the-dollar/" class="companion-card">
             <strong>Routing the Dollar</strong>
             <span>The operator-layer transmission frame underlying both TCMAG and MVEP.</span>
           </a>
@@ -464,14 +473,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -487,7 +496,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

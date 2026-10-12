@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,18 +35,17 @@
       }
     })();
   </script>
-    <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#0a0c10" />
 
-  <title>The token is only part of the story | TS</title>
+  <title>Field Guide: How to Evaluate a Tokenized Product | Tokenization Systems</title>
   <meta name="description" content="What is tokenization? Representation of traditional financial products on token rails. Stablecoin, tokenized deposit, gateway, control layer definitions." />
   <meta name="author" content="Zach Zukowski" />
   <meta name="keywords" content="Start Here, stablecoin overview, tokenized deposit, gateway, control layer, dollar infrastructure, tokenization primer, institutional entry points" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="What is Tokenization? Definitions, Frameworks & Diligence" />
+  <meta property="og:title" content="Field Guide: How to Evaluate a Tokenized Product | Tokenization Systems" />
   <meta property="og:description" content="What is tokenization? Representation of traditional financial products on token rails. Stablecoin, tokenized deposit, gateway, control layer definitions." />
   <meta property="og:url" content="https://tokenization.systems/overview/" />
   <meta property="og:site_name" content="Tokenization Systems" />
@@ -57,7 +57,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
-  <meta name="twitter:title" content="What is Tokenization? Definitions, Frameworks & Diligence" />
+  <meta name="twitter:title" content="Field Guide: How to Evaluate a Tokenized Product | Tokenization Systems" />
   <meta name="twitter:description" content="What is tokenization? Representation of traditional financial products on token rails. Stablecoin, tokenized deposit, gateway, control layer definitions." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta name="twitter:image:alt" content="Routing the Dollar: stablecoin gateway CLII analysis (Tokenization Systems)" />
@@ -66,8 +66,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -76,14 +74,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=255" />
   <script type="application/ld+json">
     {
@@ -236,6 +238,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -247,16 +250,16 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink active" href="/overview" aria-current="page">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -277,22 +280,22 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink active" href="/overview" aria-current="page">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink" href="/resume">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -313,7 +316,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <div class="structure-nav__breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="structure-nav__bc-sep" aria-hidden="true">/</span>
-        <span class="structure-nav__bc-current">Overview</span>
+        <span class="structure-nav__bc-current">Field guide</span>
       </div>
       <ol class="structure-nav__links" role="list">
         <li class="structure-nav__group" id="navDefGroup">
@@ -364,7 +367,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <section class="reveal" aria-labelledby="start-here-page-title">
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Field guide</p>
       <div class="section-title">
-        <h1 id="start-here-page-title">The token is only part of the story.</h1>
+        <h1 id="start-here-page-title">Field guide: how to evaluate a tokenized product.</h1>
         <p><strong>Classify the token. Audit the operator. Test the system.</strong> A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Behind a token may sit an issuer, a reserve structure, a bank, a custodian, a transfer agent, an exchange, a payment rail, a smart contract, an administrator, a redemption process, a legal agreement, and a compliance function. Those layers determine what the holder can actually do and what happens when conditions change.</p>
         <p>The practical question is not only what the token is. <strong>What system has to work for the token's promise to remain true?</strong></p>
       </div>
@@ -478,7 +481,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <article class="explainer-section">
             <h2>What is an operator?</h2>
             <p>An operator is the entity or entities that control a tokenized product's infrastructure: the issuer who mints the token, the exchange or custodian who holds it, the transfer agent who keeps the record of legal ownership, the validator who orders transactions, and the protocol maintainer who can upgrade the contract. The research program's central analytical move separates two questions: classify the token (what is it legally?) and regulate and audit the operator (who controls its behavior under stress?). The same token inherits different compliance obligations, stress performance, and accountability depending on who operates the stack around it.</p>
-            <p>A <strong>gateway</strong> is the specific operator that routes tokenized value at an entry or exit point: the issuer, exchange, or protocol processing a transfer. Gateway is the central unit of analysis in the stablecoin program (<a href="/papers/routing-the-dollar">Routing the Dollar</a>); operator is the broader category that <a href="/frameworks#clii">CLII</a> scores continuously and <a href="/frameworks#mvep">MVEP</a> evaluates at the product gate.</p>
+            <p>A <strong>gateway</strong> is the specific operator that routes tokenized value at an entry or exit point: the issuer, exchange, or protocol processing a transfer. Gateway is the central unit of analysis in the stablecoin program (<a href="/papers/routing-the-dollar/">Routing the Dollar</a>); operator is the broader category that <a href="/frameworks/#clii">CLII</a> scores continuously and <a href="/frameworks/#mvep">MVEP</a> evaluates at the product gate.</p>
           </article>
         </div>
 
@@ -492,7 +495,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <div id="what-tokenomics" class="frameworks-anchor-block">
           <article class="explainer-section">
             <h2>What is tokenomics?</h2>
-            <p>Tokenomics is the systems-level economic design of a token network: how supply schedules, staking and burn mechanics, governance rules, and value capture paths interact over time. The practitioner question is not whether a design looks attractive at launch but whether it holds up under stress. Infrastructure failures, secondary-market dynamics, and burn-concentration outcomes shape what a design actually does in production, often in ways economic-only simulations miss. Track B of the research program treats token design as systems engineering: measurable economics, named mechanisms, and tested failure modes. See <a href="/research#adaptive-tokenomics">Adaptive Tokenomics</a>, <a href="/research#governance-concentration">Governance Concentration</a>, <a href="/research#who-burns-the-tokens">Who Burns the Tokens</a>, and <a href="/research#operational-risk">Operational Risk</a>.</p>
+            <p>Tokenomics is the systems-level economic design of a token network: how supply schedules, staking and burn mechanics, governance rules, and value capture paths interact over time. The practitioner question is not whether a design looks attractive at launch but whether it holds up under stress. Infrastructure failures, secondary-market dynamics, and burn-concentration outcomes shape what a design actually does in production, often in ways economic-only simulations miss. Track B of the research program treats token design as systems engineering: measurable economics, named mechanisms, and tested failure modes. See <a href="/research/#adaptive-tokenomics">Adaptive Tokenomics</a>, <a href="/research/#governance-concentration">Governance Concentration</a>, <a href="/research/#who-burns-the-tokens">Who Burns the Tokens</a>, and <a href="/research/#operational-risk">Operational Risk</a>.</p>
           </article>
         </div>
       </div>
@@ -597,7 +600,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           </tbody>
         </table>
       </div>
-      <p>The question is not whether tokenization is good or bad. The question is which characteristics survive the translation, which change, and whether those differences matter for the intended use. <a href="/frameworks#mvep"><strong>Does owning the token give you what you think you are buying? MVEP</strong></a> runs that comparison across ten categories.</p>
+      <p>The question is not whether tokenization is good or bad. The question is which characteristics survive the translation, which change, and whether those differences matter for the intended use. <a href="/frameworks/#mvep"><strong>Does owning the token give you what you think you are buying? MVEP</strong></a> runs that comparison across ten categories.</p>
     </section>
 
     <section class="reveal" id="control" aria-labelledby="control-title">
@@ -606,7 +609,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <p>A protocol or blockchain may be technically decentralized while practical control remains concentrated elsewhere. Look beyond consensus and smart contracts. Map the institutions and operators that can determine whether value moves: issuance, custody, banking, reserve management, bridges, exchanges, wallet interfaces, compliance, identity, administration, redemption, settlement, and access.</p>
       </div>
       <p><strong>Field questions.</strong> Who can stop a transaction? Who can deny redemption? Who controls the reserves or underlying assets? Which providers are difficult to replace? Where are several supposedly independent functions dependent on the same institution? Which legal or regulatory authority can compel an operator to act?</p>
-      <p><a href="/frameworks#clii"><strong>Who can actually say no? CLII</strong></a> scores each gateway on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. A high score means more obligations, not stress resilience.</p>
+      <p><a href="/frameworks/#clii"><strong>Who can actually say no? CLII</strong></a> scores each gateway on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. A high score means more obligations, not stress resilience.</p>
     </section>
 
     <section class="reveal" id="stress" aria-labelledby="stress-title">
@@ -615,7 +618,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <p>Systems often look interchangeable during normal conditions. Stress exposes the differences. A useful diligence process asks what happens when the happy path stops working.</p>
       </div>
       <p>Run scenarios such as heavy redemption demand; failure of a reserve bank or custodian; an exchange withdrawal suspension; market closure while the token continues trading; blockchain congestion or outage; a smart-contract exploit; loss of a key banking relationship; sanctions or regulatory intervention; operator insolvency; and a mismatch between token liquidity and underlying-asset liquidity.</p>
-      <p>For each scenario, ask: Who acts? What can they do? What rights does the holder retain? How long can the system continue? Where does loss or delay land? The five questions below are the version of that list every tokenized product should already be able to answer; the <a href="/frameworks#mvep">MVEP stress envelope</a> specifies the scenarios per product.</p>
+      <p>For each scenario, ask: Who acts? What can they do? What rights does the holder retain? How long can the system continue? Where does loss or delay land? The five questions below are the version of that list every tokenized product should already be able to answer; the <a href="/frameworks/#mvep">MVEP stress envelope</a> specifies the scenarios per product.</p>
     </section>
 
     <section class="reveal" id="five-questions" aria-labelledby="five-questions-title">
@@ -655,7 +658,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <div id="q5" class="question-block">
           <article class="explainer-section qa-item">
             <h3>What fails first, who absorbs the loss, and how fast does the system recover?</h3>
-            <p>Every product has a failure sequence. If that sequence has not been documented before launch, the product is not ready. The <a href="/frameworks#mvep">MVEP</a> framework defines the minimum evidence that must exist; the <a href="/frameworks#clii">CLII</a> monitors whether the control layer degrades after approval.</p>
+            <p>Every product has a failure sequence. If that sequence has not been documented before launch, the product is not ready. The <a href="/frameworks/#mvep">MVEP</a> framework defines the minimum evidence that must exist; the <a href="/frameworks/#clii">CLII</a> monitors whether the control layer degrades after approval.</p>
           </article>
         </div>
       </div>
@@ -672,9 +675,9 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <span class="stack-step-num" aria-hidden="true">1</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Classify</h3>
-            <p class="stack-step-q"><a href="/frameworks#classification-frameworks">Which object is this, before anyone scores it?</a></p>
+            <p class="stack-step-q"><a href="/frameworks/#classification-frameworks">Which object is this, before anyone scores it?</a></p>
             <p class="stack-step-desc">What exactly is the token? The dollar-product and infrastructure maps name the class, and the class decides which rulebook applies.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks#seven-dollars-framework">Comparative Framework for Dollar Products</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks#three-strategies-framework">Tokenization Infrastructure Map</a></p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#seven-dollars-framework">Comparative Framework for Dollar Products</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks/#three-strategies-framework">Tokenization Infrastructure Map</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -690,27 +693,27 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <span class="stack-step-num" aria-hidden="true">3</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Map</h3>
-            <p class="stack-step-q"><a href="/frameworks#clii">Who can actually say no?</a></p>
+            <p class="stack-step-q"><a href="/frameworks/#clii">Who can actually say no?</a></p>
             <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII locates control at each gateway.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks#clii">CLII</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks#regime-dashboard">Regime Dashboard</a></p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#clii">CLII</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks/#regime-dashboard">Regime Dashboard</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">4</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Compare</h3>
-            <p class="stack-step-q"><a href="/frameworks#mvep">Does owning the token give you what you think you are buying?</a></p>
+            <p class="stack-step-q"><a href="/frameworks/#mvep">Does owning the token give you what you think you are buying?</a></p>
             <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP is the entry gate.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks#mvep">MVEP</a></p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#mvep">MVEP</a></p>
           </div>
         </li>
         <li class="stack-step">
           <span class="stack-step-num" aria-hidden="true">5</span>
           <div class="stack-step-body">
             <h3 class="stack-step-title">Stress</h3>
-            <p class="stack-step-q"><a href="/frameworks#mvep">What changes when the happy path stops?</a></p>
+            <p class="stack-step-q"><a href="/frameworks/#mvep">What changes when the happy path stops?</a></p>
             <p class="stack-step-desc">Ask what changes when a critical layer fails or becomes constrained. The MVEP stress envelope names the scenarios.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks#mvep">MVEP stress envelope</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#five-questions">Five questions</a></p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#mvep">MVEP stress envelope</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#five-questions">Five questions</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -719,7 +722,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             <h3 class="stack-step-title">Decide</h3>
             <p class="stack-step-q"><a href="/contact/#name-the-job">Are the remaining differences and dependencies acceptable for the intended use?</a></p>
             <p class="stack-step-desc">That call belongs to the institution taking the risk. MVEP is run once before you commit; CLII tells you when to audit the gateways again. For a briefing on a live decision, name the step you are on.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/contact/#name-the-job">Name the job</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks#clii">CLII, when to audit again</a></p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/contact/#name-the-job">Name the job</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks/#clii">CLII, when to audit again</a></p>
           </div>
         </li>
       </ol>
@@ -753,9 +756,9 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="explainer-section">
           <h3>Track A: Programmable money, tokenization, and market infrastructure</h3>
           <p><strong>Routing the Dollar.</strong> Gateway concentration, regime-dependent monetary-policy transmission, and operator accountability under stress. The CLII measures how heavily regulated each gateway is across five dimensions. A high score means more regulatory obligations; stress performance depends on reserve-bank exposure and other entity-specific conditions.</p>
-          <p><strong><a href="/papers/mvep">Minimum Viable Equivalence Pack</a>.</strong> Ten-category diligence pack for entry-gate evaluation before launch or committee approval. See <a href="/frameworks#mvep">Frameworks: MVEP</a> for the three equivalence claims (legal, operational, economic) and the MVEP-plus-CLII pairing logic.</p>
-          <p><strong>Seven Dollars.</strong> A cross-product comparison of seven dollar-denominated digital products (and eight where the paper expands) across legal claim, ledger, insolvency, and liquidation; CLII and MVEP are treated as independent scores. <a href="/papers/seven-dollars">SSRN 6483118</a>.</p>
-          <p><strong>Three Tokenization Strategies.</strong> Institutional US securities tokenization in three live strategies, with a shared set of building-block entities. Securitize is the transfer agent across all three, which concentrates system-level risk at the control layer. <a href="/papers/three-strategies">SSRN 6483198</a>.</p>
+          <p><strong><a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>.</strong> Ten-category diligence pack for entry-gate evaluation before launch or committee approval. See <a href="/frameworks/#mvep">Frameworks: MVEP</a> for the three equivalence claims (legal, operational, economic) and the MVEP-plus-CLII pairing logic.</p>
+          <p><strong>Seven Dollars.</strong> A cross-product comparison of seven dollar-denominated digital products (and eight where the paper expands) across legal claim, ledger, insolvency, and liquidation; CLII and MVEP are treated as independent scores. <a href="/papers/seven-dollars/">SSRN 6483118</a>.</p>
+          <p><strong>Three Tokenization Strategies.</strong> Institutional US securities tokenization in three live strategies, with a shared set of building-block entities. Securitize is the transfer agent across all three, which concentrates system-level risk at the control layer. <a href="/papers/three-strategies/">SSRN 6483198</a>.</p>
           <p><strong>Dollar v3.</strong> Three dollar objects (payment stablecoins, tokenized deposits, yield wrappers), Layer 0, and deposit mutation. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment. The site narrative now also tracks deposit tokens as a fourth object emerging since the essay.</p>
           <p><strong>The Control Layer War.</strong> How CLARITY-style provisions (House-passed form analyzed here) attach compliance at the control layer: interfaces, routing defaults, hold workflows, and audit logs.</p>
         </article>
@@ -763,21 +766,21 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>Track B: Tokenomics and physical network systems (DePIN)</h3>
           <p><strong>Adaptive Tokenomics.</strong> Systems-engineering design laboratory stress-tested with a 240-run Monte Carlo simulation. Adaptive emissions as downside insurance; slashing dominates token burns during the early growth phase.</p>
           <p><strong>Operational Risk in Token Economies.</strong> 624-configuration simulation (1,126 runs): the adaptive controller's dispersion advantage over static emission holds in every stress scenario and widens under a sustained regulatory withdrawal. Reputation-weighted governance collapses when the designer sets the recovery threshold above what operators can reliably achieve (99%); lowering it to 95% stabilizes the system.</p>
-          <p><strong><a href="/papers/governance-concentration">Auditing Governance Concentration Beyond Token Allocation</a>.</strong> Cross-sectional analysis of 52 protocols spanning DePIN, DeFi, infrastructure, and social tokens. Allocation design does not predict governance concentration (insider allocation Pearson r = 0.09, p = 0.55, N = 50); the audit instead distinguishes sectors descriptively, with DePIN more concentrated than DeFi after correction (Cohen's d = 0.65, Mann-Whitney p = 0.028). Five-lens institutional-design framework. <a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1853465/full" target="_blank" rel="noopener noreferrer">Published at <em>Frontiers in Blockchain</em></a> (Blockchain Economics specialty), August 5, 2026; <em>Frontiers in Blockchain</em> 9:1853465, doi 10.3389/fbloc.2026.1853465. Also on SSRN 6599278.</p>
-          <p><strong><a href="/papers/who-burns-the-tokens">Who Burns the Tokens? (GeoDePIN)</a>.</strong> Fiscal sustainability and demand concentration in Helium and GEODNET, with Subsidy-to-Revenue, burn-mint equilibrium, and burn-mechanism design as the operative split. Pairs with <a href="/papers/governance-concentration">Governance Concentration</a> on protocol politics.</p>
+          <p><strong><a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>.</strong> Cross-sectional analysis of 52 protocols spanning DePIN, DeFi, infrastructure, and social tokens. Allocation design does not predict governance concentration (insider allocation Pearson r = 0.09, p = 0.55, N = 50); the audit instead distinguishes sectors descriptively, with DePIN more concentrated than DeFi after correction (Cohen's d = 0.65, Mann-Whitney p = 0.028). Five-lens institutional-design framework. <a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1853465/full" target="_blank" rel="noopener noreferrer">Published at <em>Frontiers in Blockchain</em></a> (Blockchain Economics specialty), August 5, 2026; <em>Frontiers in Blockchain</em> 9:1853465, doi 10.3389/fbloc.2026.1853465. Also on SSRN 6599278.</p>
+          <p><strong><a href="/papers/who-burns-the-tokens/">Who Burns the Tokens? (GeoDePIN)</a>.</strong> Fiscal sustainability and demand concentration in Helium and GEODNET, with Subsidy-to-Revenue, burn-mint equilibrium, and burn-mechanism design as the operative split. Pairs with <a href="/papers/governance-concentration/">Governance Concentration</a> on protocol politics.</p>
         </article>
         <h3 id="federal-comment-letters" class="explainer-subhed">Federal Comment Letter Program</h3>
-        <p>Between April 10 and April 20, 2026 the program submitted <strong>eight</strong> federal comment letters on GENIUS Act and related dockets: <strong>seven</strong> distinct rulemakings, <strong>six</strong> docket IDs, to <strong>five</strong> federal agencies. The eighth letter landed on the same calendar day the eighth paper went live on SSRN. Two June deadline-day FinCEN supplements and a June 22 NCUA comment and supplement then extended the program to twelve letters. A third FDIC comment on the Bank Secrecy Act and sanctions compliance standards for PPSIs (RIN 3064-AG29), filed June 30, 2026, brought the program to thirteen letters across eight dockets and six agencies. A first SEC comment on the Draft Strategic Plan for Fiscal Years 2026 through 2030 (File Number DSP-3), filed July 2, 2026, extended the program to the securities regulator: fourteen letters across nine dockets and seven agencies. A third OCC comment on the Bank Secrecy Act and sanctions compliance standards for OCC-supervised PPSIs (RIN 1557-AF55), filed July 23, 2026, then brought the program to fifteen letters across ten dockets and seven agencies. A fifth FinCEN comment on the permitted payment stablecoin issuer customer identification program (RIN 1506-AB74, Docket FINCEN-2026-0101), a rule proposed jointly with the OCC, the Federal Reserve Board, the FDIC, and the NCUA and filed August 21, 2026 on the closing day of its comment window, brought the program to sixteen letters across eleven dockets and eight agencies, the Board of Governors being the eighth as a party to that joint rulemaking. Two FDIC comments filed the same day, August 24, 2026, on the resolution submissions proposal (RIN 3064-AG21) and its companion assessments proposal (RIN 3064-AG27), both published June 30, 2026 on the same FDIC rulemaking issue, brought the program to eighteen letters across thirteen dockets and eight agencies. The Board of Governors comment on its AML program rule (Docket No. R-1835), sent September 21, 2026, brought the program to nineteen letters across fourteen dockets. Two closing-day comments on October 5, 2026, the program's first to the CFTC (information collection 3038-0076) and a comment on the FDIC's disclosure-of-information proposal (RIN 3064-AG30), brought it to <strong>twenty-one</strong> letters across sixteen dockets and nine agencies. See the full program at <a href="/letters">Letters</a>: law summaries, gaps identified, and fixes proposed for each letter, with as-filed PDFs and docket links.</p>
-        <p class="track-bridge"><a class="action secondary" href="/research">View full research library <span aria-hidden="true">→</span></a></p>
+        <p>Between April 10 and April 20, 2026 the program submitted <strong>eight</strong> federal comment letters on GENIUS Act and related dockets: <strong>seven</strong> distinct rulemakings, <strong>six</strong> docket IDs, to <strong>five</strong> federal agencies. The eighth letter landed on the same calendar day the eighth paper went live on SSRN. Two June deadline-day FinCEN supplements and a June 22 NCUA comment and supplement then extended the program to twelve letters. A third FDIC comment on the Bank Secrecy Act and sanctions compliance standards for PPSIs (RIN 3064-AG29), filed June 30, 2026, brought the program to thirteen letters across eight dockets and six agencies. A first SEC comment on the Draft Strategic Plan for Fiscal Years 2026 through 2030 (File Number DSP-3), filed July 2, 2026, extended the program to the securities regulator: fourteen letters across nine dockets and seven agencies. A third OCC comment on the Bank Secrecy Act and sanctions compliance standards for OCC-supervised PPSIs (RIN 1557-AF55), filed July 23, 2026, then brought the program to fifteen letters across ten dockets and seven agencies. A fifth FinCEN comment on the permitted payment stablecoin issuer customer identification program (RIN 1506-AB74, Docket FINCEN-2026-0101), a rule proposed jointly with the OCC, the Federal Reserve Board, the FDIC, and the NCUA and filed August 21, 2026 on the closing day of its comment window, brought the program to sixteen letters across eleven dockets and eight agencies, the Board of Governors being the eighth as a party to that joint rulemaking. Two FDIC comments filed the same day, August 24, 2026, on the resolution submissions proposal (RIN 3064-AG21) and its companion assessments proposal (RIN 3064-AG27), both published June 30, 2026 on the same FDIC rulemaking issue, brought the program to eighteen letters across thirteen dockets and eight agencies. The Board of Governors comment on its AML program rule (Docket No. R-1835), sent September 21, 2026, brought the program to nineteen letters across fourteen dockets. Two closing-day comments on October 5, 2026, the program's first to the CFTC (information collection 3038-0076) and a comment on the FDIC's disclosure-of-information proposal (RIN 3064-AG30), brought it to <strong>twenty-one</strong> letters across sixteen dockets and nine agencies. See the full program at <a href="/letters/">Letters</a>: law summaries, gaps identified, and fixes proposed for each letter, with as-filed PDFs and docket links.</p>
+        <p class="track-bridge"><a class="action secondary" href="/research/">View full research library <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
     <section class="reveal" id="what-tools" aria-labelledby="what-tools-title">
       <div class="section-title">
         <h2 id="what-tools-title">What the tools do</h2>
-        <p>The field guide defines the objects. <a href="/frameworks">Frameworks</a> tests, classifies, and monitors them: <a href="/frameworks#mvep">MVEP</a> for entry-gate diligence, <a href="/frameworks#clii">CLII</a> for gateway monitoring, the <a href="/frameworks#credit-migration-model">Credit Migration Model</a> for deposit and funding-structure analysis, and the <a href="/frameworks#regime-dashboard">Regime Dashboard</a> for control-layer and operating-regime classification.</p>
+        <p>The field guide defines the objects. <a href="/frameworks/">Frameworks</a> tests, classifies, and monitors them: <a href="/frameworks/#mvep">MVEP</a> for entry-gate diligence, <a href="/frameworks/#clii">CLII</a> for gateway monitoring, the <a href="/frameworks/#credit-migration-model">Credit Migration Model</a> for deposit and funding-structure analysis, and the <a href="/frameworks/#regime-dashboard">Regime Dashboard</a> for control-layer and operating-regime classification.</p>
       </div>
-      <p class="track-bridge"><a class="action secondary" href="/frameworks">View Frameworks <span aria-hidden="true">→</span></a></p>
+      <p class="track-bridge"><a class="action secondary" href="/frameworks/">View Frameworks <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="reveal" id="overview-contact" aria-labelledby="overview-contact-title">
@@ -797,14 +800,14 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -820,7 +823,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

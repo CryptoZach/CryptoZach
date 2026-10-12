@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -34,12 +35,11 @@
       }
     })();
   </script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0c10" />
   <meta name="author" content="Zach Zukowski" />
 
-  <title>Risk Resume | Controls &amp; Diligence | TS</title>
+  <title>Risk Resume | Controls &amp; Diligence | Tokenization Systems</title>
   <meta name="description" content="Risk resume: settlement controls, MVEP committee gates, CLII drift monitoring, TCRD reserve disclosure, market-infrastructure diligence." />
   <meta name="keywords" content="risk resume, controls, MVEP, CLII, MGCPT, TCRD, settlement, market infrastructure, second line, Tokenization Systems" />
 
@@ -65,8 +65,6 @@
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
 
-  <link rel="preconnect" href="https://papers.ssrn.com" />
-  <link rel="dns-prefetch" href="https://papers.ssrn.com" />
   <link rel="dns-prefetch" href="https://x.com" />
   <link rel="dns-prefetch" href="https://www.linkedin.com" />
   <link rel="dns-prefetch" href="https://medium.com" />
@@ -75,14 +73,18 @@
     (function() {
       try {
         var savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== 'light') {
-          document.documentElement.setAttribute('data-theme', 'dark');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
         }
+        document.documentElement.setAttribute('data-theme', savedTheme);
       } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
       }
     })();
   </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
   <link rel="stylesheet" href="/styles.css?v=257" />
   <script type="application/ld+json">
     {
@@ -161,6 +163,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
+        <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
         <a href="/">
           <strong>Tokenization Systems</strong>
           <span>Independent tokenization research</span>
@@ -172,16 +175,16 @@
         </button>
       <nav class="nav-desktop" aria-label="Main navigation">
         <div class="nav-links nav-links--desktop">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
           <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
         <div class="header-social" role="group" aria-label="Social links">
           <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -202,22 +205,22 @@
       <div class="nav-directory__col">
         <p class="nav-directory__label">Evaluate</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/overview">Field guide</a>
-          <a class="navlink" href="/frameworks">Frameworks</a>
-          <a class="navlink" href="/research">Research</a>
-          <a class="navlink" href="/letters">Letters</a>
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nav-directory__col">
         <p class="nav-directory__label">Work with us</p>
         <div class="mobile-nav-linkset">
-          <a class="navlink" href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a class="navlink" href="/contact">Contact</a>
-          <a class="navlink active" href="/resume" aria-current="page">Roles</a>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
         </div>
         <p class="nav-directory__label">Separate product</p>
         <div class="nav-directory__links">
-          <a class="navlink" href="/agent-infrastructure">Agent Infrastructure</a>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nav-directory__col nav-directory__col--connect">
@@ -250,7 +253,7 @@
         <a class="action secondary" href="#supporting-research">Supporting research</a>
       </div>
       <div class="page-top-link">
-        <a href="/resume">Back to Resume Hub</a>
+        <a href="/resume/">Back to Resume Hub</a>
       </div>
       <div class="resume-summary-grid resume-summary-grid--single">
         <article class="resume-summary-card">
@@ -312,7 +315,7 @@
           </article>
         </div>
         <div class="resume-downloads">
-          Need more? <a href="/contact">Request a writing sample</a> · <a href="/contact">Discuss a role</a>
+          Need more? <a href="/contact/">Request a writing sample</a> · <a href="/contact/">Discuss a role</a>
         </div>
       </div>
     </section>
@@ -328,49 +331,49 @@
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Minimum Viable Equivalence Pack</h3>
           <p>Three equivalence claims (legal, operational, economic) tested through ten diligence categories with named artifacts and pass or fail tests. MVEP is the entry gate; CLII is the drift detector layered on top. Two MVEP-derivative frameworks operationalize specific risk surfaces: <a href="/frameworks/#mgcpt">MGCPT</a> (MVEP-gated Conditional Pass-Through; FDIC pass-through deposit insurance gating) and <a href="/frameworks/#tcrd">TCRD</a> (Three-Category Reserve Disclosure; customer-facing reserve disclosure template). Anchored on the SVB weekend&rsquo;s cascading infrastructure failures.</p>
-          <a class="research-card-action" href="/papers/mvep">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/mvep/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <picture><source type="image/webp" srcset="/Publication-Images/Routing_The_Dollar_CLII-thumb.webp" /><img class="card-thumb thumb-clii" src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar cover" loading="lazy" /></picture>
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Routing the Dollar</h3>
           <p>Gateway concentration, regime-dependent monetary-policy transmission, and operator accountability under stress. Introduces the CLII, which measures how heavily regulated each gateway is across five dimensions. A high score means more regulatory obligations; stress performance depends on reserve-bank exposure and other entity-specific conditions.</p>
-          <a class="research-card-action" href="/papers/routing-the-dollar">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/routing-the-dollar/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb thumb-wide" src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Operational Risk in Token Economies</h3>
           <p>624-configuration simulation (1,126 runs): the adaptive controller's dispersion advantage over static emission holds in every stress scenario and widens under a sustained regulatory withdrawal, while reputation-weighted governance collapses when the recovery threshold is set above what operators can reliably achieve. The fix is the recovery threshold (0.95 restores a workable floor), not the decay rate.</p>
-          <a class="research-card-action" href="/papers/operational-risk">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/operational-risk/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <picture><source type="image/webp" srcset="/Publication-Images/exhibit_01_discipline_map.webp" /><img class="card-thumb card-thumb--contain" src="/Publication-Images/exhibit_01_discipline_map.png" width="1016" height="943" alt="Adaptive Tokenomics discipline map exhibit" loading="lazy" /></picture>
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Adaptive Tokenomics</h3>
           <p>Industrial control engineering (PID controller) applied to token-supply emission as a programmable risk-control mechanism; 240-scenario Monte Carlo simulation. Adaptive emissions function as downside insurance: worst-case node-count variance compresses from CV (coefficient of variation) 0.544 (static emission) to 0.087 (PID) under competitor-shock attack.</p>
-          <a class="research-card-action" href="/papers/adaptive-tokenomics">Open paper summary <span aria-hidden="true">&rarr;</span></a>
+          <a class="research-card-action" href="/papers/adaptive-tokenomics/">Open paper summary <span aria-hidden="true">&rarr;</span></a>
         </article>
         <article class="card">
           <img class="card-thumb card-thumb--contain" src="/Publication-Images/Who_Burns_S2R_HHI.webp" width="2949" height="2068" alt="Who Burns the Tokens: S2R vs direct-payer demand-concentration HHI; Helium and Livepeer at measured concentration, GEODNET, DIMO, and Hivemapper off-axis (demand off-chain)" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Who Burns the Tokens?</h3>
           <p>Track B companion to Operational Risk: GeoDePIN case study of burn mechanics, subsidy-to-revenue paths, and demand concentration under issuance pressure. Helium and GEODNET show how payment architecture sets fiscal outcomes and whether demand concentration is even observable on-chain.</p>
-          <a class="research-card-action" href="/papers/who-burns-the-tokens">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/who-burns-the-tokens/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb card-thumb--contain" src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 policy map" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>Dollar v3</h3>
           <p>Four digital-dollar objects, Layer 0, and deposit mutation. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.</p>
-          <a class="research-card-action" href="/papers/dollar-v3">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/dollar-v3/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
         <article class="card">
           <img class="card-thumb" src="/Publication-Images/Control_Layer.webp" width="1400" height="933" alt="The Control Layer War cover" loading="lazy" />
           <div class="card-badges"><span class="badge badge-public">Public</span></div>
           <h3>The Control Layer War</h3>
           <p>How CLARITY-style provisions (House-passed form analyzed here) attach compliance at the control layer: interfaces, routing defaults, hold workflows, and audit logs.</p>
-          <a class="research-card-action" href="/papers/control-layer-war">Open paper summary <span aria-hidden="true">→</span></a>
+          <a class="research-card-action" href="/papers/control-layer-war/">Open paper summary <span aria-hidden="true">→</span></a>
         </article>
       </div>
     </section>
@@ -380,11 +383,11 @@
         <h2 id="related-profiles-title">Related role profiles</h2>
       </div>
       <p class="resume-related-profiles">
-        <a href="/resume/policy">Policy &amp; Market Infrastructure</a>
-        · <a href="/resume/asset-management">Asset Management &amp; Tokenization</a>
-        · <a href="/resume/stablecoin-payments">Stablecoin &amp; Payments Strategy</a>
-        · <a href="/resume/product">Digital Asset Product</a>
-        · <a href="/resume/ai-governance-infrastructure">AI Governance &amp; Infrastructure</a>
+        <a href="/resume/policy/">Policy &amp; Market Infrastructure</a>
+        · <a href="/resume/asset-management/">Asset Management &amp; Tokenization</a>
+        · <a href="/resume/stablecoin-payments/">Stablecoin &amp; Payments Strategy</a>
+        · <a href="/resume/product/">Digital Asset Product</a>
+        · <a href="/resume/ai-governance-infrastructure/">AI Governance &amp; Infrastructure</a>
       </p>
     </section>
 
@@ -394,9 +397,9 @@
         <p>Risk, controls, governance, or market-infrastructure diligence. Send a few sentences on what you&rsquo;re evaluating, and I&rsquo;ll follow up shortly.</p>
       </div>
       <div class="hero-actions">
-        <a class="action primary" href="/contact">Building a risk-controls function?</a>
-        <a class="action secondary" href="/research">View all research</a>
-        <a class="action secondary" href="/frameworks">View Frameworks</a>
+        <a class="action primary" href="/contact/">Building a risk-controls function?</a>
+        <a class="action secondary" href="/research/">View all research</a>
+        <a class="action secondary" href="/frameworks/">View Frameworks</a>
       </div>
     </section>
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
@@ -404,14 +407,14 @@
       <div class="footer-top">
         <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/overview">Overview</a>
-          <a href="/frameworks">Frameworks</a>
-          <a href="/research">Research</a>
-          <a href="/agent-infrastructure">Agent Infrastructure</a>
-          <a href="/letters">Letters</a>
-          <a href="/resume">Resume</a>
-          <a href="/speaker-and-advisory">Advisory &amp; Speaking</a>
-          <a href="/contact">Contact</a>
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/contact/">Contact</a>
         </nav>
         <div class="footer-links">
           <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -427,7 +430,7 @@
           <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
           <button class="footer-newsletter__button" type="submit">Subscribe</button>
         </form>
-        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy">Privacy</a>.</p>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
       </div>
       <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
     </footer>

@@ -116,3 +116,61 @@ Re-enable Managed Robots in the Cloudflare dashboard.
   overstripping. Defer until separately validated.
 - **GTM unused JS (66 KiB)**: gtag loads async, so does not block render.
   Deferring further would trade analytics fidelity for a small TBT win.
+
+## 3. Turn off Email Address Obfuscation (added 2026-10-12)
+
+**Audit finding (2026-10-12)**: 43 served pages carry
+`href="/cdn-cgi/l/email-protection#..."` in place of their `mailto:` links.
+That is Cloudflare's Scrape Shield rewriting the address at the edge. With
+JavaScript the decode script restores the link; without it (crawlers, link
+checkers, RSS readers, Lighthouse's link audit, readers with scripts off)
+the href is a 404. The decode script is also the one blocking third-party
+request on the homepage (87 ms of main-thread time in the audit run).
+
+The repo already writes the address in title case everywhere
+(`Zach@Tokenization.Systems`, enforced by `scripts/check_domain_casing.py`),
+and the contact page carries a copy-to-clipboard control, so obfuscation adds
+nothing the site relies on.
+
+### Steps (Cloudflare dashboard)
+
+1. Select the `tokenization.systems` zone.
+2. Navigate to **Scrape Shield**.
+3. Set **Email Address Obfuscation** to **Off**.
+
+### Verification
+
+```bash
+curl -s 'https://tokenization.systems/contact/' | grep -c 'cdn-cgi/l/email-protection'   # expect 0
+curl -s 'https://tokenization.systems/contact/' | grep -o 'mailto:[^"]*' | head -3
+```
+
+## 4. Bulk Redirects for the legacy `.html` URLs (added 2026-10-12)
+
+GitHub Pages cannot answer a 301, so the legacy URLs (`/frameworks.html`,
+`/contact.html`, `/resume.html`, `/speaker.html`, `/start-here.html`,
+`/papers/routing-the-dollar.html` and the rest listed in `_redirects`) answer
+200 with a meta-refresh stub that carries `noindex` and a canonical link.
+That is correct as far as the origin can go; Cloudflare can finish the job.
+
+### Steps (Cloudflare dashboard)
+
+1. **Bulk Redirects** > **Create Bulk Redirect List**: name it
+   `legacy-html-paths`, then add each `source -> target` pair from
+   `_redirects` (status 301, preserve query string on, subpath matching off).
+2. **Create Bulk Redirect Rule** that uses the list, then **Enable**.
+
+### Verification
+
+```bash
+curl -sI 'https://tokenization.systems/frameworks.html' | grep -iE '^(HTTP|location)'   # expect 301 and /frameworks/
+```
+
+## 5. Status of section 1 (cache TTL), checked 2026-10-12
+
+Live assets still answer `cache-control: max-age=600` (the GitHub Pages
+origin value), so the cache rule in section 1 has not been deployed yet.
+Every stylesheet, script, font and image URL is content-hashed at build
+time (`?v=<sha256[:8]>`), so the one-year browser TTL in section 1 remains
+safe. Lighthouse flags 97 short-lived resources on the homepage and 5 to 7
+on every inner page until the rule is in place.
