@@ -9,9 +9,9 @@ The live site is [tokenization.systems](https://tokenization.systems).
 
 ## Fleet commits
 
-Commits per three days, March through 21 September 2026. The series is fleet workload. Peak 3,329 from 29 August to 31 August.
+Commits per three days, March through 9 October 2026. The series is fleet workload. Peak 3,329 from 29 August to 31 August.
 
-![Fleet commits per three days, March through 21 September 2026. Peak 3,329 from 29 August to 31 August.](agent-infrastructure/commits-per-3-days.png)
+![Fleet commits per three days, March through 9 October 2026. Peak 3,329 from 29 August to 31 August.](agent-infrastructure/commits-per-3-days.png)
 
 The same chart is on the [agent infrastructure](https://tokenization.systems/agent-infrastructure/) page, under the system scale section.
 
