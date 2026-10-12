@@ -6458,13 +6458,13 @@
     function ownVerdicts(){ var out = {}; KEYS.forEach(function(k){ out[k] = ownVerdict(k); }); return out; }
     function noteOf(k){ var n = rowOf[k].querySelector('.mvep-sc__note input'); return n ? n.value.trim() : ''; }
 
-    function renderRating(r, who, note){
+    function renderRating(r, who, note, provisional){
       forEl.textContent = who;
       var set = function(name, htmlText){ form.querySelector('[data-dim="' + name + '"]').innerHTML = htmlText; };
       set('legal', tierChip(r.legal, r.legal_strength));
       set('operational', tierChip(r.operational, r.operational_strength));
       set('economic', tierChip(r.economic, r.economic_strength));
-      set('headline', tierChip(r.headline));
+      set('headline', tierChip(r.headline) + (provisional ? ' <span class="mvep-sc__status">provisional, ' + esc(r.coverage) + ' assessed</span>' : ''));
       set('binding', esc(r.binding));
       set('disclosure', esc(r.disclosure));
       set('coverage', esc(r.coverage) + ' assessed, confidence ' + esc(String(r.confidence).toLowerCase()));
@@ -6475,7 +6475,12 @@
       var n = { PASS: 0, PARTIAL: 0, AMBIGUOUS: 0, FAIL: 0, NOT_DISCLOSED: 0, UNASSESSED: 0 };
       KEYS.slice(0, 10).forEach(function(k){ n[verdicts[k] || 'UNASSESSED']++; });
       var short = 10 - n.PASS;
-      if(short === 0) return ['open', 'Committee gate: open. All ten categories pass.'];
+      if(short === 0){
+        /* The gate reads the ten categories; the companion test is the eleventh row. Say so when it is not a
+           Pass, or the line reads "open" beside a headline the companion test has pulled down. */
+        var csa = verdicts.CSA || 'UNASSESSED';
+        return ['open', 'Committee gate: open. All ten categories pass.' + (csa === 'PASS' ? '' : ' The Cash Settlement Asset companion test is not one of the ten; here it reads ' + ((D.verdicts[csa] && D.verdicts[csa].label) || csa) + ', and the rating above counts it.')];
+      }
       var parts = [];
       if(n.FAIL) parts.push(n.FAIL + ' fail');
       if(n.PARTIAL) parts.push(n.PARTIAL + ' partial');
@@ -6490,7 +6495,7 @@
       form.setAttribute('data-mode', m);
       Array.prototype.forEach.call(form.querySelectorAll('[data-own]'), function(el){ el.hidden = (m !== 'own'); });
       Array.prototype.forEach.call(form.querySelectorAll('[data-read]'), function(el){ el.hidden = (m !== 'read'); });
-      var verdicts, rating, who, note, comparator = null;
+      var verdicts, rating, who, note, comparator = null, provisional = false;
       if(m === 'read'){
         var p = byKey[sel.value] || D.products[0];
         verdicts = {};
@@ -6531,11 +6536,20 @@
         rating = rate(D, verdicts);
         who = (nameEl.value.trim() || 'your product') + ', from your verdicts';
         note = 'Rated with the paper\'s Exhibit 3 rule from the verdicts you recorded' + (comparator ? ', shown beside ' + comparator.key + '\'s published verdicts' : '') + '. Unassessed categories do not count; a rating from a few cells is a sketch, not a finding.';
+        /* A rating from part of the grid is labelled as one, and names what is still open. */
+        var open = KEYS.filter(function(k){ return verdicts[k] === 'UNASSESSED'; }).map(function(k){ return SHORT[k]; });
+        if(open.length === KEYS.length){
+          note = 'No verdicts recorded yet. Choose a verdict for each category; the rating fills in as you go.';
+        } else if(open.length){
+          provisional = true;
+          note = 'Provisional: ' + open.length + ' of ' + KEYS.length + ' still unassessed (' + open.join(', ') + '). ' + note;
+        }
       }
-      renderRating(rating, who, note);
+      renderRating(rating, who, note, provisional);
       var g = gateLine(verdicts);
       gateEl.setAttribute('data-state', g[0]);
       gateEl.textContent = g[1];
+      syncHash();
     }
 
     /* text, link, print, reset */
@@ -6565,8 +6579,16 @@
       if(cmp.value) hash += '&c=' + encodeURIComponent(cmp.value);
       return base + hash;
     }
+    /* One status line, one timer: a second message is never blanked by the first one's timer. ms = 0 keeps
+       the message until the next message or the next change to the form. */
+    var statusTimer = null;
+    function setStatus(msg, ms){
+      if(statusTimer){ clearTimeout(statusTimer); statusTimer = null; }
+      statusEl.textContent = msg;
+      if(ms) statusTimer = setTimeout(function(){ statusEl.textContent = ''; statusTimer = null; }, ms);
+    }
     function copyText(text, okMsg){
-      function done(ok){ statusEl.textContent = ok ? okMsg : 'Copy failed; select the text and copy it by hand.'; setTimeout(function(){ statusEl.textContent = ''; }, 4000); }
+      function done(ok){ setStatus(ok ? okMsg : 'Copy failed; select the text and copy it by hand.', 4000); }
       function fallback(){
         var ta = document.createElement('textarea');
         ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
@@ -6580,14 +6602,30 @@
         navigator.clipboard.writeText(text).then(function(){ done(true); }, fallback);
       } else { fallback(); }
     }
+    /* Deep links. Product keys match without regard to case; a key the exhibit does not carry, or a verdict
+       code of the wrong shape, says so instead of silently showing the first product. */
+    var keyByLower = {};
+    D.products.forEach(function(p){ keyByLower[p.key.toLowerCase()] = p.key; });
+    function isToolHash(h){ return /[#&](mvep|sc)=/.test(h || ''); }
     function applyHash(){
       var h = location.hash || '';
-      var mm = /[#&]mvep=([A-Za-z0-9]+)/.exec(h);
-      if(mm && byKey[mm[1]]){ sel.value = mm[1]; return true; }
-      var sc = /[#&]sc=([PTAFNU]{11})/.exec(h);
-      if(!sc) return false;
+      var mm = /[#&]mvep=([^&]*)/.exec(h);
+      if(mm){
+        var asked = mm[1];
+        try { asked = decodeURIComponent(asked); } catch(e){ /* malformed */ }
+        var key = keyByLower[asked.toLowerCase()];
+        if(key){ sel.value = key; return true; }
+        sel.value = D.products[0].key;
+        setStatus('This link names "' + asked.slice(0, 40) + '", which is not one of the fourteen products in Exhibit 1. Showing ' + D.products[0].key + '.', 0);
+        return true;
+      }
+      var sc = /[#&]sc=([PTAFNU]{11})(?![A-Za-z])/i.exec(h);
+      if(!sc){
+        if(/[#&]sc=/.test(h)) setStatus('This link\'s verdict code is not eleven letters from P, T, A, F, N and U, so no verdicts were loaded.', 0);
+        return false;
+      }
       sel.value = '__own';
-      var code = sc[1];
+      var code = sc[1].toUpperCase();
       KEYS.forEach(function(k, i){
         var input = rowOf[k].querySelector('input[type="radio"][value="' + code.charAt(i) + '"]');
         if(input) input.checked = true;
@@ -6595,11 +6633,33 @@
       var pm = /[#&]p=([^&]*)/.exec(h);
       if(pm){ try { nameEl.value = decodeURIComponent(pm[1]).slice(0, 80); } catch(e){ /* malformed */ } }
       var cm = /[#&]c=([A-Za-z0-9]+)/.exec(h);
-      if(cm && byKey[cm[1]]) cmp.value = cm[1];
+      if(cm && keyByLower[cm[1].toLowerCase()]) cmp.value = keyByLower[cm[1].toLowerCase()];
       return true;
     }
+    /* Keep a deep link in step with what is on screen, so the address bar can be copied, bookmarked or
+       reloaded. Only a link the visitor already has is rewritten: a product link follows the product; a
+       verdict link follows the verdicts; choosing "Your own product" from a product link drops the product
+       from the address and puts no verdicts there (they go into a link only through "Copy link"). */
+    function syncHash(){
+      var h = location.hash || '';
+      if(!isToolHash(h)) return;
+      var target = (mode() === 'own' && !/[#&]sc=/.test(h)) ? (location.origin + location.pathname + '#mvep-scorecard') : shareLink();
+      if(target !== location.href){ try { history.replaceState(null, '', target); } catch(err){ /* sandboxed */ } }
+    }
+    /* A deep link names no element, so the browser does not scroll to the tool by itself. */
+    var section = document.getElementById('mvep-scorecard');
+    var visitorMoved = false;
+    function bringIntoView(){
+      if(!section) return;
+      /* Measured from the header as it is drawn (it is taller than --header-h on a phone), and instant,
+         not the page's smooth scroll: a link that opens the tool should open on it. */
+      var header = document.querySelector('header');
+      var hb = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+      var top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - hb - 16);
+      try { window.scrollTo({ top: top, behavior: 'instant' }); } catch(e){ window.scrollTo(0, top); }
+    }
 
-    form.addEventListener('change', render);
+    form.addEventListener('change', function(){ if(!statusTimer) setStatus('', 0); render(); });
     form.addEventListener('input', function(e){ if(e.target === nameEl) render(); });
     form.addEventListener('submit', function(e){ e.preventDefault(); });
     form.addEventListener('click', function(e){
@@ -6626,9 +6686,18 @@
         render();
       }
     });
-    window.addEventListener('hashchange', function(){ if(applyHash()) render(); });
-    applyHash();
+    window.addEventListener('hashchange', function(){ if(applyHash()){ render(); bringIntoView(); } });
+    var deep = applyHash();
     render();
+    if(deep){
+      bringIntoView();
+      /* Fonts and images above the tool can still move it after this point; align once more when the page
+         has finished loading, unless the visitor has already started moving. */
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(t){
+        window.addEventListener(t, function(){ visitorMoved = true; }, { once: true, passive: true });
+      });
+      if(document.readyState !== 'complete') window.addEventListener('load', function(){ if(!visitorMoved) bringIntoView(); }, { once: true });
+    }
   }
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', init);

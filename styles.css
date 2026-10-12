@@ -22487,13 +22487,17 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc__how-item p{margin:0;font-size:.95rem;line-height:1.5;color:var(--text-soft)}
 .mvep-sc__step{flex:0 0 auto;display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;font-size:.9rem}
 :root[data-theme="dark"] .mvep-sc__step{color:#0a0c10}
-.mvep-sc{display:grid;gap:var(--space-md)}
+.mvep-sc{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-md)}
 .mvep-sc__controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem .9rem;align-items:end;max-width:60rem}
 .mvep-sc__control{display:grid;gap:.25rem}
 .mvep-sc__control label{font-size:.85rem;font-weight:600;color:var(--muted)}
 .mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{font:inherit;font-size:.95rem;padding:.45rem .6rem;border:1px solid color-mix(in srgb, currentColor 22%, transparent);border-radius:8px;background:transparent;color:inherit;width:100%;min-width:0}
 .mvep-sc__control select{background:color-mix(in srgb, currentColor 4%, transparent)}
 .mvep-sc__control select:focus-visible,.mvep-sc__control input:focus-visible,.mvep-sc__note input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.mvep-sc__control input::placeholder,.mvep-sc__note input::placeholder{color:var(--muted);opacity:1}
+.mvep-sc select,.mvep-sc input,.mvep-sc button,.mvep-sc summary,.mvep-sc .action,.mvep-sc__tablewrap{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem);scroll-margin-bottom:var(--space-md)}
+.mvep-scorecard{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
+html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
 .mvep-sc__legend{font-size:.9rem;color:var(--text-soft);line-height:1.6;max-width:72ch}
 .mvep-sc__legend p{margin:.4rem 0 0;font-size:.88rem;color:var(--muted)}
 .mvep-v{display:inline-block;padding:.08rem .55rem;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.02em;line-height:1.45;color:#fff;white-space:nowrap;vertical-align:middle}
@@ -22543,7 +22547,11 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc__actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 .mvep-sc__status{font-size:.9rem;color:var(--muted)}
 .mvep-sc__raw summary{cursor:pointer;font-weight:600}
-.mvep-sc__tablewrap{overflow-x:auto;margin:.8rem 0}
+.mvep-sc__tablewrap{overflow-x:auto;margin:.8rem 0;-webkit-overflow-scrolling:touch}
+.mvep-sc__tablewrap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (min-width: 721px){
+  .mvep-sc__table tbody th,.mvep-sc__table thead th:first-child{position:sticky;left:0;z-index:1;background:var(--bg)}
+}
 .mvep-sc__table{border-collapse:collapse;font-size:.82rem;min-width:900px}
 .mvep-sc__table caption{text-align:left;font-size:.85rem;color:var(--muted);padding:.3rem 0 .5rem}
 .mvep-sc__table th,.mvep-sc__table td{padding:.35rem .5rem;border-bottom:1px solid color-mix(in srgb, currentColor 12%, transparent);text-align:left;vertical-align:top}
