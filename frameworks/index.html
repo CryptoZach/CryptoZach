@@ -682,6 +682,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <div class="mvep-sc__how-item" role="listitem"><span class="mvep-sc__step" aria-hidden="true">2</span><p><strong>Score your own product.</strong> Choose "Your own product", record a verdict per category in the paper's vocabulary, and the paper's rule rates it beside a comparator you pick. Nothing leaves your browser; "Copy link" carries your verdicts to a colleague.</p></div>
       </div>
       <form class="mvep-sc" id="mvep-sc" autocomplete="off" data-mode="read">
+        <noscript><p class="mvep-sc__ratenote">The interactive scorecard needs JavaScript. With scripts off, the paper's verdicts and ratings for all fourteen products are still on this page: open "Exhibit 1 and Exhibit 3 as tables" below.</p></noscript>
         <div class="mvep-sc__controls">
           <div class="mvep-sc__control">
             <label for="mvep-sc-product">Product</label>
@@ -700,7 +701,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             <select id="mvep-sc-compare" name="compare"><option value="">No comparator</option></select>
           </div>
         </div>
-        <div class="mvep-sc__legend" aria-label="Verdict vocabulary">
+        <div class="mvep-sc__legend" role="group" aria-label="Verdict vocabulary">
           <span class="mvep-v mvep-v--pass">Pass</span> <span class="mvep-v mvep-v--partial">Partial</span> <span class="mvep-v mvep-v--ambiguous">Ambiguous</span> <span class="mvep-v mvep-v--fail">Fail</span> <span class="mvep-v mvep-v--nd">Not disclosed</span> <span class="mvep-v mvep-v--unassessed">Unassessed</span>
           <p>Not disclosed is an assessed verdict: a documented search found no published issuer artifact for the category. Unassessed means no verdict of record exists. A category's rating tier is set by its weakest cell on the ladder Pass, Partial, Ambiguous, Not disclosed, Fail; the strength score is the mean rung (1.0 to 5.0) and orders products within a tier without ever lifting it.</p>
         </div>

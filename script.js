@@ -6553,6 +6553,11 @@
     }
 
     /* text, link, print, reset */
+    function localDate(){
+      /* The reviewer's own calendar date; toISOString() gives the UTC date, a day ahead in the evening west of Greenwich. */
+      var d = new Date(), z = function(n){ return (n < 10 ? '0' : '') + n; };
+      return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+    }
     function summaryText(){
       var m = mode(), lines = [];
       if(m === 'read'){
@@ -6563,7 +6568,7 @@
         lines.push('Legal ' + r.legal + ' (' + r.legal_strength.toFixed(1) + '); Operational ' + r.operational + ' (' + r.operational_strength.toFixed(1) + '); Economic ' + r.economic + ' (' + r.economic_strength.toFixed(1) + '); headline ' + r.headline + '; binds on ' + r.binding + '; overall strength ' + r.overall_strength.toFixed(1));
       } else {
         var v = ownVerdicts(), rr = rate(D, v), comparator = cmp.value ? byKey[cmp.value] : null;
-        lines.push('MVEP scorecard' + (nameEl.value.trim() ? ': ' + nameEl.value.trim() : '') + (reviewer.value.trim() ? ' (reviewed by ' + reviewer.value.trim() + ')' : '') + ', ' + new Date().toISOString().slice(0, 10));
+        lines.push('MVEP scorecard' + (nameEl.value.trim() ? ': ' + nameEl.value.trim() : '') + (reviewer.value.trim() ? ' (reviewed by ' + reviewer.value.trim() + ')' : '') + ', ' + localDate());
         KEYS.forEach(function(k){ lines.push((k === 'CSA' ? '+' : k) + '. ' + SHORT[k] + ': ' + D.verdicts[v[k]].label + (comparator ? ' (' + comparator.key + ': ' + D.verdicts[(comparator.verdicts[k] || {}).v || 'UNASSESSED'].label + ')' : '') + (noteOf(k) ? ' | ' + noteOf(k) : '')); });
         lines.push('Rated by the paper\'s rule: Legal ' + rr.legal + ' (' + rr.legal_strength.toFixed(1) + '); Operational ' + rr.operational + ' (' + rr.operational_strength.toFixed(1) + '); Economic ' + rr.economic + ' (' + rr.economic_strength.toFixed(1) + '); headline ' + rr.headline + '; binds on ' + rr.binding + '; coverage ' + rr.coverage + '; overall strength ' + rr.overall_strength.toFixed(1));
         lines.push(gateLine(v)[1]);

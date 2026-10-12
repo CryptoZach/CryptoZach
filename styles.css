@@ -7353,6 +7353,14 @@ footer.site-footer .footer-tagline{
   opacity:1;
   transform:translateY(0);
 }
+/* With scripts off nothing adds .visible, so every revealed section would stay invisible. */
+@media (scripting: none){
+  .reveal{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+}
 
 @media (prefers-reduced-motion: reduce){
   html{
@@ -22491,7 +22499,7 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc__controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem .9rem;align-items:end;max-width:60rem}
 .mvep-sc__control{display:grid;gap:.25rem}
 .mvep-sc__control label{font-size:.85rem;font-weight:600;color:var(--muted)}
-.mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{font:inherit;font-size:.95rem;padding:.45rem .6rem;border:1px solid color-mix(in srgb, currentColor 22%, transparent);border-radius:8px;background:transparent;color:inherit;width:100%;min-width:0}
+.mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{font:inherit;font-size:.95rem;padding:.45rem .6rem;border:1px solid color-mix(in srgb, currentColor 50%, transparent);border-radius:8px;background:transparent;color:inherit;width:100%;min-width:0}
 .mvep-sc__control select{background:color-mix(in srgb, currentColor 4%, transparent)}
 .mvep-sc__control select:focus-visible,.mvep-sc__control input:focus-visible,.mvep-sc__note input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .mvep-sc__control input::placeholder,.mvep-sc__note input::placeholder{color:var(--muted);opacity:1}
@@ -22561,15 +22569,27 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .mvep-sc__table .mvep-v{font-size:.72rem;padding:.02rem .4rem}
 .mvep-sc__foot{font-size:.9rem;color:var(--muted);max-width:76ch}
 .mvep-sc__foot p{margin:0 0 .6rem}
+/* The scorecard's controls, rating panel and copy buttons are filled by script; with scripts off they are
+   empty frames. The category rows, the note that says so, and the exhibit tables remain. */
+@media (scripting: none){
+  .mvep-sc .mvep-sc__controls,.mvep-sc .mvep-sc__rating,.mvep-sc .mvep-sc__actions button{display:none}
+}
 @media (max-width: 720px){
   .mvep-sc__row{grid-template-columns:1fr}
   .mvep-sc__paper{justify-self:start;max-width:none}
+  /* Touch targets: each verdict is a 44 px pill, and the fields and the tables toggle are as tall. */
+  .mvep-sc__verdict{gap:.45rem .5rem}
+  .mvep-sc__verdict label{min-height:2.75rem;padding:0 .7rem;border:1px solid color-mix(in srgb, currentColor 18%, transparent);border-radius:999px}
+  .mvep-sc__verdict label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb, var(--accent) 10%, transparent)}
+  .mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{min-height:2.75rem}
+  .mvep-sc__raw summary{padding:.65rem 0}
 }
 @media print{
-  body.mvep-printing header,body.mvep-printing footer,body.mvep-printing nav,body.mvep-printing .back-to-top,body.mvep-printing main > section:not(#mvep-scorecard),body.mvep-printing .mvep-sc__actions,body.mvep-printing .mvep-sc__how,body.mvep-printing .mvep-sc__raw{display:none !important}
+  body.mvep-printing header,body.mvep-printing footer,body.mvep-printing nav,body.mvep-printing .back-to-top,body.mvep-printing main > :not(#mvep-scorecard),body.mvep-printing .mvep-sc__actions,body.mvep-printing .mvep-sc__how,body.mvep-printing .mvep-sc__raw{display:none !important}
   body.mvep-printing .mvep-sc__row{break-inside:avoid;border:1px solid #999}
   body.mvep-printing .mvep-sc__verdict label{display:none}
   body.mvep-printing .mvep-sc__verdict label:has(input:checked){display:inline-flex}
+  body.mvep-printing .mvep-sc__note:has(input:placeholder-shown){display:none}
 }
 
 /* Work-with-me block on the advisory page (2026-10-12). */
