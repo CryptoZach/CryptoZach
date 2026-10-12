@@ -20048,6 +20048,23 @@ body #contact .about-card .about-card-header h2{
     gap: var(--space-2xl, 3rem);
   }
 }
+/* One track left in the stack (Track A's sequence became the decision map above): it takes the full width,
+   and its steps sit two abreast, so the box lines up with the sections around it. */
+@media (min-width: 769px){
+  .structure-page #framework-stack .stack-tracks > .stack-track:only-child{
+    grid-column: 1 / -1;
+  }
+  .structure-page #framework-stack .stack-track:only-child .stack-steps{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg) var(--space-2xl, 3rem);
+  }
+  /* list items after the first carry a top margin meant for a single column; side by side it drops the
+     right-hand step below its neighbour */
+  .structure-page #framework-stack .stack-track:only-child .stack-step{
+    margin-top: 0;
+  }
+}
 .structure-page #framework-stack .stack-track{
   display: flex;
   flex-direction: column;
