@@ -852,7 +852,34 @@ function vaultMountDial(cv, opts){
      scripts/check_homepage_animation_budgets.cjs). */
   var DIAL_FRAME_MS = 1000 / 60, previousFrame = null, sparkDebt = 0;
   var COARSE_DIAL = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
-  function token(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
+  /* draw() read four computed styles off the root every frame, on both dials,
+     to fetch three custom properties and the colour scheme. Each read resolves
+     the whole root style. Measured at 390x844 dpr3: 5,094 style resolutions in
+     three idle seconds, ~1,700 a second for values that change only when the
+     theme does. Resolve them on a flag instead, and set the flag from the two
+     things that can actually change them. */
+  var skinDirty = true, skinA, skinHot, skinInk, skinDark;
+  function readSkin(){
+    skinDirty = false;
+    var cs = getComputedStyle(root);
+    skinA    = cs.getPropertyValue('--accent').trim()     || '#5b9cf5';
+    skinHot  = cs.getPropertyValue('--accent-hot').trim() || '#7ab0ff';
+    skinInk  = cs.getPropertyValue('--ink-mute').trim()   || '#9ca3af';
+    skinDark = cs.colorScheme.indexOf('dark') > -1;
+  }
+  /* The loop can be stopped when the theme flips (off screen, hidden tab,
+     reduced motion), and a stopped loop would leave the old palette baked into
+     a canvas that is about to come back into view. Mark the skin stale, and
+     repaint here if nothing else is going to. */
+  function reskin(){ skinDirty = true; if (!raf) draw(); }
+  if (window.MutationObserver){
+    new MutationObserver(reskin)
+      .observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+  (function(){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener ? mq.addEventListener('change', reskin) : mq.addListener(reskin);
+  })();
   function rgbaA(c, a){ return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function rgba(hex, a){
     hex = hex.replace('#','');
@@ -876,6 +903,7 @@ function vaultMountDial(cv, opts){
   var gMoving = false;
   /* one ding per bolt: it lights teal as the contact point passes over it */
   var boltDing = new Array(19).fill(0);
+  var captionTarget = null, captionGlow = { ticks: 0, bolts: 0 }, captionTime = 0;
   /* the core lights while the cursor is anywhere on the dial */
   var coreGlow = 0;
   var RED   = [255, 92, 38],  YEL  = [255, 214, 96];   /* hot metal */
@@ -887,10 +915,14 @@ function vaultMountDial(cv, opts){
      attaching these would put the contact test in the wrong coordinate space
      as well as spend a rim-grind budget on a 30px ornament. */
   if (!compact){
-    var lastTrack = 0;
-    cv.addEventListener('pointermove', function(e){
+    var stage = cv.closest('.dialstage') || cv;
+    var rim = stage.querySelector('#dial-gesture-rim');
+    var dragId = null, lastTrack = 0;
+    var track = function(e){
+      if (e.isPrimary === false || (dragId !== null && e.pointerId !== dragId)) return;
       var b = cv.getBoundingClientRect();
-      var nx = e.clientX - b.left, ny = e.clientY - b.top;
+      var nx = (e.clientX - b.left) * size / b.width;
+      var ny = (e.clientY - b.top) * size / b.height;
       /* px per 60 Hz frame (1000/60 ms), whatever the event rate: a 120 Hz
          pointer reports half the distance per event for the same hand speed,
          and read raw it halved the sparks. The literal keeps this block
@@ -899,25 +931,204 @@ function vaultMountDial(cv, opts){
       if (cur) curSpeed = Math.min(3, Math.hypot(nx - cur.x, ny - cur.y) * (1000 / 60) / Math.max(4, now - lastTrack));
       lastTrack = now;
       cur = { x: nx, y: ny };
+    };
+    stage.addEventListener('pointermove', track, {passive:true});
+    /* A tap gets a short glow. A rim drag retains its pointer even when the
+       finger leaves the ring, and touch-action decides ownership before the
+       browser can turn a vertical segment into a page scroll. */
+    var HOLD_MS = 260, holdUntil = 0, holdTimer = null;
+    stage.addEventListener('pointerdown', function(e){
+      if (e.isPrimary === false || dragId !== null) return;
+      if (holdTimer){ clearTimeout(holdTimer); holdTimer = null; }
+      curSpeed = 0; track(e);
+      holdUntil = performance.now() + HOLD_MS;
+      if (rim && e.target === rim){
+        dragId = e.pointerId;
+        stage.setPointerCapture(e.pointerId);
+      }
     }, {passive:true});
-    cv.addEventListener('pointerleave', function(){ cur = null; curSpeed = 0; });
+    var clear = function(){ cur = null; curSpeed = 0; holdTimer = null; };
+    var release = function(e){
+      if (dragId !== null && e.pointerId !== dragId) return;
+      var ended = dragId;
+      dragId = null;
+      if (ended !== null && stage.hasPointerCapture(ended)) stage.releasePointerCapture(ended);
+      if (e.type === 'pointercancel'){
+        if (holdTimer) clearTimeout(holdTimer);
+        clear();
+        return;
+      }
+      var left = holdUntil - performance.now();
+      if (left > 0){
+        if (!holdTimer) holdTimer = setTimeout(clear, left);
+        return;
+      }
+      if (holdTimer) clearTimeout(holdTimer);
+      clear();
+    };
+    stage.addEventListener('pointerleave', function(e){ if (dragId === null) release(e); });
+    stage.addEventListener('pointercancel', release);
+    stage.addEventListener('pointerup', release);
+    stage.addEventListener('lostpointercapture', function(e){ if (e.pointerId === dragId) release(e); });
+
+    /* Captions explain the two measured rings. Touch uses a brief afterglow,
+       while keyboard focus stays lit; native scrolling owns caption drags. */
+    var figure = cv.closest('.dialfig');
+    var captions = figure ? Array.from(figure.querySelectorAll('[data-dial-highlight]')) : [];
+    var captionHover = null, captionFocus = null, captionPress = null;
+    var captionPointer = null, captionPulse = null, captionTimer = null;
+    var captionTouchId = null, captionTouchBlocked = false, captionClient = null;
+    function syncCaption(){
+      var next = captionPress || captionHover || captionFocus || captionPulse;
+      if (next === captionTarget) return;
+      captionTarget = next;
+      captions.forEach(function(button){
+        button.classList.toggle('is-active', button.dataset.dialHighlight === captionTarget);
+      });
+      if (!raf){
+        captionGlow.ticks = captionTarget === 'ticks' ? 1 : 0;
+        captionGlow.bolts = captionTarget === 'bolts' ? 1 : 0;
+        draw();
+      }
+    }
+    function clearCaptionPulse(){
+      if (captionTimer) clearTimeout(captionTimer);
+      captionTimer = null; captionPulse = null;
+    }
+    function pulseCaption(kind){
+      clearCaptionPulse(); captionPulse = kind; syncCaption();
+      captionTimer = setTimeout(function(){ captionTimer = null; captionPulse = null; syncCaption(); }, 550);
+    }
+    captions.forEach(function(button){
+      var kind = button.dataset.dialHighlight;
+      button.addEventListener('pointerenter', function(e){
+        if (e.pointerType === 'touch') return;
+        clearCaptionPulse(); captionHover = kind; syncCaption();
+      }, {passive:true});
+      button.addEventListener('pointerleave', function(e){
+        if (e.pointerType === 'touch') return;
+        captionHover = null; syncCaption();
+      }, {passive:true});
+      button.addEventListener('focus', function(){
+        if (button.matches(':focus-visible')){ captionFocus = kind; syncCaption(); }
+      });
+      button.addEventListener('blur', function(){ captionFocus = null; syncCaption(); });
+      button.addEventListener('pointerdown', function(e){
+        if (e.pointerType === 'touch') return;
+        clearCaptionPulse(); captionFocus = null;
+        if (e.isPrimary !== false && e.pointerType !== 'mouse'){
+          captionPointer = e.pointerId; captionPress = kind;
+        }
+        syncCaption();
+      }, {passive:true});
+      button.addEventListener('pointermove', function(e){
+        if (e.pointerId !== captionPointer) return;
+        var box = button.getBoundingClientRect();
+        captionPress = e.clientX >= box.left && e.clientX <= box.right &&
+          e.clientY >= box.top && e.clientY <= box.bottom ? kind : null;
+        syncCaption();
+      }, {passive:true});
+      button.addEventListener('click', function(){ pulseCaption(kind); });
+    });
+    function releaseCaption(e){
+      if (e.pointerId !== captionPointer) return;
+      var kind = captionPress;
+      captionPress = null; captionPointer = null;
+      if (e.type === 'pointerup' && kind) pulseCaption(kind);
+      else { clearCaptionPulse(); syncCaption(); }
+    }
+    window.addEventListener('pointerup', releaseCaption, {passive:true});
+    window.addEventListener('pointercancel', releaseCaption, {passive:true});
+
+    /* A native pan cancels pointer events, but touch events keep their original
+       target. Hit-test the current finger position so slides can enter either
+       label, cross between them, and keep working while the page scrolls. */
+    function trackCaptionTouch(touch){
+      captionClient = {clientX:touch.clientX, clientY:touch.clientY};
+      var hit = document.elementFromPoint(touch.clientX, touch.clientY);
+      var button = hit && hit.closest ? hit.closest('[data-dial-highlight]') : null;
+      captionPress = captions.indexOf(button) >= 0 ? button.dataset.dialHighlight : null;
+      syncCaption();
+    }
+    function endCaptionTouch(afterglow){
+      var kind = captionPress;
+      captionTouchId = null; captionClient = null; captionPress = null;
+      if (afterglow && kind) pulseCaption(kind);
+      else { clearCaptionPulse(); syncCaption(); }
+    }
+    function clearCaptionInput(){
+      captionHover = captionFocus = captionPress = captionPointer = null;
+      captionTouchId = null; captionClient = null; captionTouchBlocked = false;
+      clearCaptionPulse(); syncCaption();
+    }
+    if (captions.length){
+      document.addEventListener('touchstart', function(e){
+        clearCaptionPulse(); captionHover = captionFocus = captionPointer = null;
+        if (e.touches.length !== 1){
+          captionTouchBlocked = true; endCaptionTouch(false); return;
+        }
+        captionTouchBlocked = false; captionTouchId = e.touches[0].identifier;
+        trackCaptionTouch(e.touches[0]);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchmove', function(e){
+        if (e.touches.length !== 1){
+          captionTouchBlocked = true; endCaptionTouch(false); return;
+        }
+        if (captionTouchBlocked || captionTouchId === null) return;
+        var touch = e.touches[0];
+        if (touch.identifier === captionTouchId) trackCaptionTouch(touch);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchend', function(e){
+        captionTouchBlocked = e.touches.length > 0;
+        endCaptionTouch(!captionTouchBlocked);
+      }, {passive:true,capture:true});
+      document.addEventListener('touchcancel', function(e){
+        captionTouchBlocked = e.touches.length > 0; endCaptionTouch(false);
+      }, {passive:true,capture:true});
+      document.addEventListener('scroll', function(){
+        if (captionTouchId !== null && captionClient && !captionTouchBlocked) trackCaptionTouch(captionClient);
+      }, {passive:true,capture:true});
+      document.addEventListener('visibilitychange', function(){ if (document.hidden) clearCaptionInput(); });
+    }
+    window.addEventListener('blur', clearCaptionInput);
   }
 
+  /* The rect read is the other half of the same bill as the style reads above:
+     getBoundingClientRect forces a layout flush, and fit() ran from draw(),
+     once per frame, on two dials. The dial's box only moves on a resize or a
+     font load, so measure on a flag too. setTransform stays unconditional and
+     costs no flush, and it has to, because a reallocation clears it. */
+  var boxDirty = true, dpr = 1;
   function fit(){
-    var r = cv.getBoundingClientRect();
-    size = Math.max(minSize, r.width || 320);
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cv.width = size * dpr; cv.height = size * dpr;
+    if (boxDirty){
+      boxDirty = false;
+      var r = cv.getBoundingClientRect();
+      size = Math.max(minSize, r.width || 320);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* Assigning canvas.width or canvas.height destroys and reallocates the
+         backing store even when the value is unchanged. That was 120 full
+         canvas reallocations a second, which is what iOS Safari runs out of
+         memory on while it is also rasterizing the page at a pinch-zoom
+         scale. Reallocate only on a real size change. */
+      var w = Math.floor(size * dpr), h = w;
+      if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; }
+    }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function draw(step){
     if (!(step > 0)) step = 1;
     fit();
-    var A = token('--accent') || '#5b9cf5';
-    var HOT = token('--accent-hot') || '#7ab0ff';
-    var INK = token('--ink-mute') || '#9ca3af';
-    var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
+    if (skinDirty) readSkin();
+    var A = skinA, HOT = skinHot, INK = skinInk, dark = skinDark;
     var R = size * 0.385;
+    var captionNow = performance.now();
+    var captionEase = reduce ? 1 : 1 - Math.exp(-(captionNow - captionTime) / 100);
+    captionTime = captionNow;
+    ['ticks', 'bolts'].forEach(function(kind){
+      var target = captionTarget === kind ? 1 : 0;
+      captionGlow[kind] += (target - captionGlow[kind]) * captionEase;
+      if (Math.abs(target - captionGlow[kind]) < 0.001) captionGlow[kind] = target;
+    });
     ctx.clearRect(0, 0, size, size);
     ctx.save(); ctx.translate(size/2, size/2);
 
@@ -934,9 +1145,11 @@ function vaultMountDial(cv, opts){
     });
 
     ctx.save(); ctx.rotate(spin * 0.55);
+    var tickGlow = captionGlow.ticks;
+    ctx.shadowColor = rgba(A, .8); ctx.shadowBlur = 8 * tickGlow;
     for (var i = 0; i < 52; i++){
       var a = (i/52)*TAU - Math.PI/2, major = i % 13 === 0;
-      var r1 = R*0.905, r2 = R*(major ? 0.955 : 0.935);
+      var r1 = R*0.905, r2 = R*((major ? 0.955 : 0.935) + (major ? .01 : .025)*tickGlow);
       ctx.beginPath();
       ctx.moveTo(Math.cos(a)*r1, Math.sin(a)*r1);
       ctx.lineTo(Math.cos(a)*r2, Math.sin(a)*r2);
@@ -945,8 +1158,8 @@ function vaultMountDial(cv, opts){
          rhythm, but paints them in accent and thickens them, so the rim still
          reads blue at the size it is actually shown. */
       ctx.strokeStyle = compact ? (major ? rgba(A, 1) : rgba(A, .60))
-                                : (major ? rgba(A, .92) : rgba(INK, .5));
-      ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1); ctx.stroke();
+                                : (tickGlow > .01 ? rgba(A, major ? .92 + .08*tickGlow : .5 + .5*tickGlow) : (major ? rgba(A, .92) : rgba(INK, .5)));
+      ctx.lineWidth = compact ? (major ? 3 : 1.7) : (major ? 2 : 1) + 1.7*tickGlow; ctx.stroke();
     }
     /* No index mark on the rim. One was added here on 2026-08-28 to break the
        ring's 52-fold symmetry, which is what made the header dial look frozen,
@@ -966,7 +1179,15 @@ function vaultMountDial(cv, opts){
         var abs = ab - spin * 0.32;
         var hx = Math.cos(abs) * R * 0.795, hy = Math.sin(abs) * R * 0.795;
         var mdx = (cur.x - size/2) - hx, mdy = (cur.y - size/2) - hy;
-        if (Math.sqrt(mdx*mdx + mdy*mdy) < R * 0.028 * 1.9) boltDing[b] = 1;
+        /* A FINGER CANNOT FIND A 6px DISC, the same fault the rim band already
+           carries a coarse branch for. 0.028R at 1.9 is a 6.0px radius on the
+           295px dial a 390px phone renders, against a contact patch tens of
+           pixels across, so a drag crossed the bolts and dinged nothing. The
+           bolts sit at 0.795R, which puts 29.8px between neighbours there, so
+           the coarse target is capped just under half that: it is reachable by
+           touch and still cannot light two bolts at once. */
+        var boltHit = R * 0.028 * (COARSE_DIAL ? 4.5 : 1.9);
+        if (Math.sqrt(mdx*mdx + mdy*mdy) < boltHit) boltDing[b] = 1;
       }
       var bx = Math.cos(ab)*R*0.795, by = Math.sin(ab)*R*0.795,
           br = R*(compact ? 0.045 : 0.028);
@@ -979,8 +1200,8 @@ function vaultMountDial(cv, opts){
       ctx.lineTo(bx + Math.cos(ab)*br*0.55, by + Math.sin(ab)*br*0.55);
       ctx.strokeStyle = dark ? 'rgba(0,0,0,.55)' : 'rgba(30,40,55,.4)'; ctx.stroke();
       /* the ding: a teal ring that rings out and fades */
-      if (boltDing[b] > 0.02){
-        var dv = boltDing[b];
+      var dv = Math.max(boltDing[b], captionGlow.bolts);
+      if (dv > 0.02){
         var dr = br * (1.5 + (1 - dv) * 2.6);
         ctx.beginPath(); ctx.arc(bx, by, dr, 0, TAU);
         ctx.strokeStyle = rgbaA(TEAL, 0.7 * dv); ctx.lineWidth = 1.6 * dv; ctx.stroke();
@@ -989,8 +1210,8 @@ function vaultMountDial(cv, opts){
         dg.addColorStop(1, rgbaA(TEAL, 0));
         ctx.fillStyle = dg;
         ctx.beginPath(); ctx.arc(bx, by, br * 2.2, 0, TAU); ctx.fill();
-        boltDing[b] = dv * Math.pow(0.9, step);
-      } else if (boltDing[b]) { boltDing[b] = 0; }
+      }
+      boltDing[b] = boltDing[b] > 0.02 ? boltDing[b] * Math.pow(0.9, step) : 0;
     }
     ctx.restore();
 
@@ -1211,7 +1432,10 @@ function vaultMountDial(cv, opts){
     strike *= Math.pow(0.78, step);
     /* the pointer heats only while the rim is actually being cut */
     var wantGrind = grind > 0.12;
-    if (wantGrind !== cv.classList.contains('grinding')) cv.classList.toggle('grinding', wantGrind);
+    if (wantGrind !== cv.classList.contains('grinding')){
+      cv.classList.toggle('grinding', wantGrind);
+      if (stage) stage.classList.toggle('grinding', wantGrind);
+    }
     var drag = grindDir < 0 ? -grind * 0.0052 : grind * 0.0032;
     /* ANGULAR velocity is scale-free; PERCEIVED motion is not. The hero figure
        turns its tick layer at spin*0.55, about 3 degrees a second, and at 320px
@@ -1225,29 +1449,73 @@ function vaultMountDial(cv, opts){
        60fps that is ~26 frames per tick period, well clear of strobing. */
     spin += Math.max(-0.0012, 0.0016 * SPIN_SCALE + drag) * step;
     draw(step);
-    raf = reduce ? 0 : requestAnimationFrame(frame);
+    raf = awake() ? requestAnimationFrame(frame) : 0;
   }
-  /* Reduced motion can change while the page is open. This dial read it once
-     at load, so turning it on left the header mark turning on every interior
-     page, and turning it off left it still until a reload. Follow it the way
-     the homepage dials do, and settle to what a reduced-motion load draws. */
-  var raf = 0;
+
+  /* Same reasoning as the hero field: a dial scrolled off the screen, or in a
+     hidden tab, is painting 52 ticks, 19 bolts, four gradients and up to 340
+     sparks for nobody, and it was doing it right through the pinch that killed
+     the tab. Nothing here keys on zoom. The header dial is sticky, so it stays
+     intersecting and keeps turning; it is the 505px hero dial that stops. */
+  var raf = 0, seen = true;
+  function awake(){ return seen && !document.hidden && !reduce; }
+  function start(){ if (!raf && awake()) raf = requestAnimationFrame(frame); }
+  function stop(){
+    if (raf){ cancelAnimationFrame(raf); raf = 0; }
+    previousFrame = null;
+    /* Tab navigation can scroll the dial away halfway through a fade.
+       Finish the caption response before pausing so it resumes cleanly. */
+    var ticks = captionTarget === 'ticks' ? 1 : 0, bolts = captionTarget === 'bolts' ? 1 : 0;
+    if (captionGlow.ticks !== ticks || captionGlow.bolts !== bolts){
+      captionGlow.ticks = ticks; captionGlow.bolts = bolts; draw();
+    }
+  }
+  if (window.IntersectionObserver){
+    new IntersectionObserver(function(es){
+      seen = es[0].isIntersecting;
+      seen ? start() : stop();
+    }, { threshold: 0 }).observe(cv);
+  }
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? stop() : start();
+  });
+  /* Reduced motion can change while the page is open. The hero field follows
+     it; both dials read it once at load, so turning it on left their loops
+     running and turning it off left them still until a reload. Entering it
+     settles to what a reduced-motion load draws: no sparks in flight and no
+     grind left over from a drag. */
   function refreshMotion(){
     reduce = motionQuery.matches;
     if (reduce){
-      if (raf){ cancelAnimationFrame(raf); raf = 0; }
-      previousFrame = null;
+      stop();
       sparks.length = 0; sparkDebt = 0; grind = 0; strike = 0; gMoving = false;
       draw();
-    } else if (!raf){
-      previousFrame = null;
-      frame();
-    }
+    } else start();
   }
   if (motionQuery.addEventListener) motionQuery.addEventListener('change', refreshMotion);
   else if (motionQuery.addListener) motionQuery.addListener(refreshMotion);
-  window.addEventListener('resize', draw);
-  reduce ? draw() : frame();
+
+  /* This listener is the residual the 2026-08-28 fix left behind. It guarded
+     the canvas REALLOCATION but left the redraw itself on an unthrottled
+     resize, and draw() is the expensive half: iOS fires resize continuously
+     through a pinch, so a two-second gesture ran ~120 full dial repaints per
+     dial on top of the animation loop already running. Measured at 390x844
+     dpr3, 120 resize events scheduled 16ms apart took 6,039ms of wall clock
+     instead of 1,920, i.e. the main thread was saturated more than 3x over.
+     The dial's layout box does not move during a pinch, so every one of those
+     repaints was redundant. Settle first, and only then re-measure and paint. */
+  var reTimer = null;
+  window.addEventListener('resize', function(){
+    if (reTimer) clearTimeout(reTimer);
+    reTimer = setTimeout(function(){
+      reTimer = null; boxDirty = true; skinDirty = true;
+      draw();
+    }, 200);
+  }, { passive: true });
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ boxDirty = true; });
+  }
+  reduce ? draw() : start();
 }
 
 /* the homepage figure, unchanged: full instrument, no options */

@@ -190,26 +190,10 @@ header{
   border-bottom:1px solid var(--mill);
 }
 .hdr{display:flex;align-items:center;gap:1.5rem;padding-block:.85rem}
-.brand{display:flex;flex-direction:row;align-items:center;margin-right:auto}
-.brand a{display:flex;flex-direction:row;align-items:center;gap:.7rem;cursor:pointer}
-.brand a:active .brand-mark{transform:scale(.92);transition:transform .1s}
 .brand-mark{width:26px;height:26px;flex:none;color:var(--accent)}
-.brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.147rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--ink)}
 /* Brand tagline gold, taken from the live site: quietly gold at rest, warming with a
    soft halo on hover. --brand-gold is #fbbf24 in dark, #a16207 in light. */
-.brand span{
-  font-size:.917rem;font-weight:700;letter-spacing:.085em;text-transform:uppercase;
-  font-family:"JetBrains Mono",monospace;white-space:nowrap;
-  /* a quarter inch of air from the wordmark; .7rem of it is the flex gap */
-  margin-left:calc(0.25in - .7rem);
-  color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink));
-  transition:color .15s, text-shadow .15s;
-}
-.brand a:hover span,.brand a:focus-visible span{
-  color:var(--brand-gold);
-  text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent),
-              0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);
-}
+
 .navlinks{display:flex;gap:1.35rem;flex-wrap:wrap}
 .navlinks a{
   font-family:"JetBrains Mono",monospace;font-size:.75rem;font-weight:700;letter-spacing:.075em;
@@ -476,14 +460,6 @@ section{position:relative;z-index:1}
    The rings wind inward and vanish, the core implodes then flares through an
    accretion ring, and everything settles back. One shot, class removed on end. ── */
 .brand-mark .core,.brand-mark .accretion{transform-origin:12px 12px}
-.brand a .brand-mark{transition:filter .32s ease}
-.brand a:hover .brand-mark,.brand a:focus-visible .brand-mark{
-  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 62%, transparent));
-}
-.brand a:hover .ring-o{animation-duration:7s}
-.brand a:hover .ring-i{animation-duration:3.6s}
-.brand a:hover .core{animation:coreSwell 1.5s ease-in-out infinite}
-.brand a:hover .accretion{animation:accretionIdle 1.5s ease-in-out infinite}
 @keyframes coreSwell{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.3);opacity:1}}
 @keyframes accretionIdle{0%,100%{transform:scale(.9);opacity:0}50%{transform:scale(1.18);opacity:.5}}
 
@@ -1112,20 +1088,7 @@ main section > h2:first-child{
    the tagline UNDER the name; this theme had turned .brand a into a row. Restoring the
    two-line lockup returns that width to the nav and the collision goes away on its own.
    Do not chase this with flex tricks on the nav; the nav was never the problem. */
-.brand a{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:center;
-  line-height:1.2;
-  gap:1px;
-}
-.brand a > span{
-  display:block;
-  font-size:.625rem;
-  letter-spacing:.09em;
-  white-space:nowrap;
-}
+
 .header-inner{align-items:center}
 /* 7b. Stacking the tagline recovered 344px (scrollWidth 2084 -> 1740). The last 66px come
    from the 4 header social marks, which are duplicated in the footer, so retiring them below
@@ -1139,13 +1102,11 @@ main section > h2:first-child{
    same line above 769px. Wrapping it instead was tried and rejected: it turned
    the two-line lockup into four and took the bar from 73px to 117px. */
 @media (max-width:768px){
-  .brand{min-width:0}
-  .brand a{min-width:0}
   /* Wrap rather than truncate: an ellipsised tagline reads as a rendering
      failure. The words before Advisory are joined with non-breaking spaces in
      the markup, so the line can only ever break in one place and the lockup is
      either one line or two, never a ragged three. */
-  .brand a > span{white-space:normal; max-width:100%; margin-left:0}
+  
 }
 /* 7c. Author: move the brand lockup further left. The header gutter was 32px; taking it to
    14px moves the lockup left and returns that width to the nav row, which still needed 66px
@@ -1410,9 +1371,6 @@ ol[class*="principle"] > li > h3{
    misaligned by ~15px.
    ============================================================ */
 @media (min-width: 769px) {
-  header .brand a strong,
-  header .brand a span { padding-left: 28px; margin-left: 0; }
-  header .brand a { justify-content: center; }
 }
 
 /* ============================================================
@@ -1481,29 +1439,8 @@ ol[class*="principle"] > li > h3{
    gutter the orb needed. The orb is gone and the dial is a real element with
    real width, so that gutter is now dead space in front of the text; reclaim
    it. C's actual fix, the two lines sharing one left edge, is untouched. */
-header .brand a strong::before,
-header .brand a strong::after{content:none !important}
-header .brand a strong,
-header .brand a span{padding-left:0 !important}
 
-.vault-headdial{
-  /* 34 to 40 on author request 2026-08-28; the header content box is 46px
-     tall at 73px of header, so 40 fits with air and 44 would not. */
-  width:40px;
-  height:40px;
-  flex:none;
-  display:block;
-  border-radius:50%;
-  margin-inline-end:.6rem;
-  transition:filter .32s ease, transform .1s;
-}
-.brand:hover .vault-headdial,
-.brand:focus-within .vault-headdial{
-  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent));
-}
-.brand:active .vault-headdial{transform:scale(.92)}
 @media (max-width:640px){
-  .vault-headdial{width:32px;height:32px}
 }
 
 /* 11c. WHY THE NAV WAS OVER BUDGET AT ALL.

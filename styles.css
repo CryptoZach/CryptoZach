@@ -360,79 +360,11 @@ header.scrolled{
   gap:var(--space-md);
 }
 
-.brand{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  min-width:0;
-  /* Hold the brand at its natural width so a wide nav cannot squeeze it to 0
-     and let the brand text overflow into the nav column visually. */
-  flex-shrink:0;
-}
-.brand a{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  text-decoration:none;
-  min-width:0;
-  color:inherit;
-  border-radius:var(--radius-sm);
-  /* Breathing room on the left of the orb so the disk envelope's wing-tip
-     extension (::after at left:-10px relative to the strong) does not
-     clip against the header / brand-container boundary on hover. Subtitle
-     moves right by the same amount, preserving its alignment with the
-     orb's leftmost visible extent. */
-  padding-left:14px;
-}
-.brand a:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
-.brand strong{
-  font-size:20px;
-  font-weight:700;
-  letter-spacing:-0.01em;
-  color:var(--accent);
-  transition:color .15s var(--ease-standard);
-  /* Keep the brand title on a single line; the brand container holds its
-     full intrinsic width thanks to flex-shrink:0 above. */
-  white-space:nowrap;
-}
-.brand:hover strong{
-  color:var(--accent);
-}
-.brand span{
-  font-size:var(--font-size-min);
-  color:color-mix(in srgb, #a16207 30%, var(--text-soft));
-  letter-spacing:.02em;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  transition:color .15s var(--ease-standard), text-shadow .15s var(--ease-standard);
-}
-
-:root[data-theme="dark"] .brand span{
-  color:color-mix(in srgb, var(--brand-amber-bright) 18%, var(--text-soft));
-}
-
 /* Tagline gold: quietly gold at rest (both themes, via the muted mixes above);
    hovering or keyboard-focusing the brand link warms and brightens it with a
    soft halo. Deep-gold ink in light theme (bright gold lacks contrast on
    white); bright glow in dark. */
-.brand a:hover span,
-.brand a:focus-visible span{
-  color:#a16207;
-  text-shadow:
-    0 0 8px color-mix(in srgb, #a16207 30%, transparent),
-    0 0 18px color-mix(in srgb, #a16207 14%, transparent);
-}
-:root[data-theme="dark"] .brand a:hover span,
-:root[data-theme="dark"] .brand a:focus-visible span{
-  color:var(--brand-amber-bright);
-  text-shadow:
-    0 0 8px color-mix(in srgb, var(--brand-amber-bright) 45%, transparent),
-    0 0 18px color-mix(in srgb, var(--brand-amber-bright) 22%, transparent);
-}
+
 
 nav{
   display:flex;
@@ -7433,7 +7365,6 @@ footer.site-footer .footer-tagline{
    the tagline. Its resting gold is a deliberate brand signal, so hiding it
    read as the styling having been reverted. */
 @media (max-width: 768px){
-  header .brand span{display:none}
 }
 
 /* Collapse the desktop nav to the hamburger menu until the full row fits.
@@ -7457,8 +7388,7 @@ footer.site-footer .footer-tagline{
   /* The brand was flex-shrink:0 with a nowrap wordmark, so on a narrow phone,
      or any device whose system font sets the name wider, it could push the
      cluster off the right edge instead of giving way. Let it yield. */
-  .header-inner > .brand{flex-shrink:1; min-width:0}
-  .header-inner > .brand a{min-width:min-content}
+  
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
@@ -7512,15 +7442,6 @@ footer.site-footer .footer-tagline{
     padding:0 var(--space-md);
     height:var(--header-h);
     flex-wrap:nowrap;
-  }
-  .brand strong{font-size:17px}
-  .brand span{
-    font-size:var(--font-size-min);
-    white-space:normal;
-    overflow:visible;
-    text-overflow:clip;
-    word-wrap:break-word;
-    overflow-wrap:break-word;
   }
   .hero-primary,
   .hero-points,
@@ -7583,8 +7504,6 @@ footer.site-footer .footer-tagline{
     flex-shrink:0;
     flex-grow:0;
   }
-  .header-inner > .brand{flex-shrink:1; min-width:0}
-  .header-inner > .brand a{min-width:min-content}
   .menu-toggle{display:inline-flex; min-width:44px; min-height:44px; width:44px; height:44px}
   .theme-toggle{min-width:44px; min-height:44px; width:44px; height:44px}
   .nav-links--desktop{display:none}
@@ -8267,8 +8186,6 @@ footer.site-footer .footer-tagline{
     --space-lg:24px;
   }
   .header-inner{padding:0 var(--space-sm)}
-  .brand strong{font-size:17px}
-  .brand span{font-size:var(--font-size-min)}
 
   h1{font-size:18px}
   .hero-name{font-size:24px}
@@ -13545,17 +13462,6 @@ header{
   padding-bottom: var(--space-sm);
 }
 
-.brand strong{
-  line-height: 1.1;
-}
-
-.brand span{
-  line-height: 1.35;
-  white-space: normal;
-  overflow: visible;
-  text-overflow: unset;
-}
-
 /* Make primary nav feel more intentional and uniform */
 .nav-links--desktop .navlink{
   min-height: var(--interactive-height-sm);
@@ -14791,18 +14697,6 @@ header.scrolled {
   }
   .header-inner {
     gap: var(--space-md);
-  }
-  .brand {
-    min-width: 0;
-    flex-shrink: 0;
-  }
-  .brand a {
-    min-width: 0;
-  }
-  .brand span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   .nav-links--desktop {
     /* keep display: contents so children participate in nav's flex layout */
@@ -16643,13 +16537,7 @@ header .navlink.active::after{
 /* Brand: breathing accent dot next to the strong title. Uses a pseudo-
    element on the a element so the anchor area stays clickable without
    extra HTML. */
-header .brand a strong{
-  position: relative;
-  /* Padding-left holds the orb area; bumped from 16px so the disk envelope's
-     right edge (::after extends to ~22px from strong's left) clears the
-     start of "Tokenization Systems" by ~6px instead of overlapping. */
-  padding-left: 28px;
-}
+
 
 /* Brand orb: dark rainbow aura with pseudo-3D lighting. Conic-gradient
    sweeps muted versions of the site's 5-accent rotation (dark blue,
@@ -16659,60 +16547,7 @@ header .brand a strong{
    inset shadows (dark bottom-right + light top-left) deepen the depth
    cue. Outer aura pulses via box-shadow animation instead of transform
    so the specular stays anchored. */
-header .brand a strong::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  /* Plain translateY (not translate3d) so the orb is NOT promoted to
-     its own GPU compositor layer. Translate3d forces a layer; the
-     brand text in the same strong element ends up on a separate layer
-     and at extreme pinch-zoom the two layers can re-rasterize out of
-     sync (visible as text flicker). Keeping the orb on the strong's
-     layer lets text and orb render together coherently. */
-  transform: translateY(-50%);
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 30% 25%,
-      rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 255, 255, 0.1) 28%,
-      transparent 55%
-    ),
-    conic-gradient(
-      from 200deg,
-      #1e3a8a 0deg,
-      #4c1d95 72deg,
-      #9f1239 144deg,
-      #854d0e 216deg,
-      #0f766e 288deg,
-      #1e3a8a 360deg
-    );
-  /* Single outer glow + insets for 3D. Plain rgba (no color-mix) to keep
-     the box-shadow paint cheap; color-mix forces the browser to evaluate
-     the function during every paint, which made the orb's static layer
-     too slow to re-rasterize at extreme pinch-zoom and produced visible
-     flicker on the brand text rendered nearby. */
-  box-shadow:
-    0 0 8px rgba(124, 58, 237, 0.32),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.45),
-    inset 1px 1px 1px rgba(255, 255, 255, 0.15);
-  opacity: 0.95;
-  /* No continuous animation in base state. A former brandOrbPulse keyframe
-     (since removed, it was never assigned) animated box-shadow over a 44px
-     region that overlapped the title and subtitle text. At extreme pinch-zoom,
-     re-rasterizing this region every frame caused visible flicker on
-     the text. The orb remains visually rich via its static gradients +
-     shadows; the disk activates on hover. */
-  transition:
-    width .35s var(--ease-standard),
-    height .35s var(--ease-standard),
-    transform .35s var(--ease-standard),
-    background .35s var(--ease-standard),
-    box-shadow .35s var(--ease-standard);
-}
+
 
 /* Hover: morph the brand orb into a physics-faithful Interstellar
    "Gargantua" black hole with FLOWING matter through a static silhouette.
@@ -16751,63 +16586,11 @@ header .brand a strong::before{
    prevents the disk's mask + conic-gradient from leaking through the
    opacity:0 layer at extreme pinch-zoom on Safari (which was visible
    as floating halo blobs without the central sphere). */
-header .brand a strong::after{
-  content: "";
-  position: absolute;
-  left: -10px;         /* center 32px-wide envelope on the 16px sphere */
-  top: 50%;
-  width: 32px;
-  height: 26px;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-50%);
-  transition: opacity .35s var(--ease-standard);
-}
+
 
 /* Hover: ::before becomes the event-horizon sphere with a thin bright
    photon ring. Both static. */
-header .brand a strong:hover::before{
-  width: 16px;
-  height: 16px;
-  background:
-    /* Solid-black event horizon, fading at the very edge */
-    radial-gradient(
-      circle at center,
-      #000 0%,
-      #000 38%,
-      rgba(0, 0, 0, 0.85) 42%,
-      transparent 47%
-    ),
-    /* Thin bright photon ring just outside the event horizon. Uses a
-       warm cream tone to read as light that has grazed the sphere
-       before escaping. */
-    radial-gradient(
-      circle at center,
-      transparent 42%,
-      rgba(255, 220, 180, 0.7) 45%,
-      rgba(159, 18, 57, 0.45) 49%,
-      transparent 54%
-    ),
-    /* Faint outer color cast (same dark rainbow palette as pre-hover orb)
-       so the morph feels continuous. */
-    conic-gradient(
-      from 200deg,
-      rgba(30, 58, 138, 0.4),
-      rgba(76, 29, 149, 0.4),
-      rgba(159, 18, 57, 0.4),
-      rgba(133, 77, 14, 0.4),
-      rgba(15, 118, 110, 0.4),
-      rgba(30, 58, 138, 0.4)
-    );
-  /* Hover glow: black core shadow + single dark-violet outer glow + inset.
-     Plain rgba (no color-mix) per the same flicker-reduction rationale as
-     the base ::before box-shadow above. Reduced from 5 stops to 3. */
-  box-shadow:
-    0 0 7px rgba(0, 0, 0, 0.85),
-    0 0 18px rgba(76, 29, 149, 0.42),
-    inset 0 0 5px rgba(0, 0, 0, 0.95);
-  animation: none;
-}
+
 
 /* Hover: ::after reveals as the Gargantua silhouette. Static (no
    animation). The hue-rotate flow animation that previously cycled the
@@ -16817,37 +16600,9 @@ header .brand a strong:hover::before{
    on "Tokenization Systems"). The static silhouette preserves the
    physics-faithful Gargantua shape and the dark rainbow palette;
    only the orbital-flow effect is lost. */
-header .brand a strong:hover::after{
-  opacity: 1;
-  background: conic-gradient(
-    from 0deg,
-    rgba(76, 29, 149, 0.95) 0deg,    /* dark violet */
-    rgba(159, 18, 57, 0.95) 72deg,   /* dark rose */
-    rgba(133, 77, 14, 0.92) 144deg,  /* dark amber */
-    rgba(15, 118, 110, 0.88) 216deg, /* dark teal */
-    rgba(30, 58, 138, 0.9) 288deg,   /* dark blue */
-    rgba(76, 29, 149, 0.95) 360deg   /* loop back to violet */
-  );
-  /* Composite mask: equatorial disk + top halo arch + bottom halo arch.
-     The three combined silhouette is the Gargantua shape. */
-  -webkit-mask-image:
-    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
-  mask-image:
-    radial-gradient(ellipse 95% 11% at 50% 50%, #000 30%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 18%, #000 25%, transparent 70%),
-    radial-gradient(ellipse 55% 22% at 50% 82%, #000 25%, transparent 70%);
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
-}
+
 
 @media (prefers-reduced-motion: reduce){
-  header .brand a strong::before,
-  header .brand a strong:hover::before,
-  header .brand a strong:hover::after{
-    animation: none;
-  }
 }
 
 /* Header social links: ghost treatment with accent glow on hover.
@@ -22141,8 +21896,6 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
    73px, unchanged, from 344 up. This costs nothing until the row actually runs
    out of room. */
 @media (max-width:374px){
-  .header-inner > .brand{min-width:min-content}
-  .header-inner > .brand strong{white-space:normal}
   /* The floor min-content resolves to is the widest unbreakable run in the
      lockup, and that is NOT the wordmark: it is the tagline, whose first four
      words are bound with non-breaking spaces so the line breaks before Advisory
@@ -22151,7 +21904,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
      overflow-wrap:anywhere lets the binding yield at this width only, so the
      floor falls back to the wordmark and the controls stay reachable. The
      binding still governs everywhere the row has room. */
-  .header-inner > .brand a > span{overflow-wrap:anywhere}
+  
 }
 
 /* ── 2026-10-12 accessibility pass (axe-core and Lighthouse on the live site) ──
@@ -22163,14 +21916,11 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 :root[data-theme="dark"] .track-heading-prefix{color:#8fbcff}
 .navlink.active{color:#174a94}
 :root[data-theme="dark"] .navlink.active{color:#8fbcff}
-.brand span{color:color-mix(in srgb, #7a4a05 35%, var(--text-soft))}
-:root[data-theme="dark"] .brand span{color:color-mix(in srgb, #fbbf24 35%, var(--text-soft))}
 body.contact-page .contact-page-foreground > .contact-page .about-label{color:#174a94}
 :root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-label{color:#8fbcff}
 .brief-figure figcaption,.paper-exhibit-figure figcaption{opacity:.82}
 .structure-nav[hidden]{visibility:hidden}
 @media (max-width:480px){
-  .brand span{display:none}
 }
 
 /* Letters hub: agency filter chips (same look as the research filters, own hooks so
@@ -22636,3 +22386,40 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .speaker-page .advisory-card p a{color:var(--accent)}
 .speaker-page .talk-bridge a{color:var(--accent)}
 .speaker-page .featured-talk .talk-bridge{opacity:1;color:var(--muted)}
+
+/* site-brand:css START (generated from _partials/brand.css; edit that file, then: python3 scripts/render_brand.py --write) */
+/* The brandmark: dial, wordmark, tagline. ONE copy of these rules; scripts/render_brand.py stamps it into
+   the home page's inline stylesheet and the end of styles.css. The first two rules make the block
+   self-contained, so it draws the same on a page whose own link and text rules differ.
+   On a screen 420 px wide or less the tagline may wrap where a page's header row is narrower than the home
+   page's; the rules are the same, the room is not. */
+.brand a{text-decoration:none;line-height:1.62}
+.brand a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.brand{display:flex;flex-direction:row;align-items:center;margin-right:auto}
+.brand a{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto; align-items:center;column-gap:.7rem;cursor:pointer}
+.brand a > .vault-headdial{grid-row:1 / span 2;align-self:center}
+.brand b{grid-column:2;grid-row:1;white-space:nowrap}
+.brand a > span{grid-column:2;grid-row:2;margin-left:0}
+.brand a:active .vault-headdial{transform:scale(.92);transition:transform .1s}
+.vault-headdial{width:40px;height:40px;flex:none;display:block;border-radius:50%; color:var(--accent); transition:filter .32s ease, transform .1s;}
+.brand:hover .vault-headdial, .brand:focus-within .vault-headdial{filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent));}
+@media (max-width:640px){
+  .vault-headdial{width:32px;height:32px}
+}
+.vault-headdial.collapse{animation:markCollapse .8s cubic-bezier(.55,0,.8,.2)}
+.brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--accent)}
+.brand span{font-size:.625rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase; font-family:"JetBrains Mono",monospace;white-space:nowrap; margin-left:calc(0.25in - .7rem); color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink)); transition:color .15s, text-shadow .15s;}
+.brand a:hover span,.brand a:focus-visible span{color:var(--brand-gold); text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent), 0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);}
+@media (max-width:1279px){
+  .brand a > span{font-size:.6875rem;letter-spacing:.06em}
+}
+@media (max-width:720px){
+  .brand{min-width:0;flex:1 1 auto}
+  .brand a{min-width:0;flex-wrap:wrap}
+  .brand a > span{display:block; font-size:.6875rem; letter-spacing:.05em; white-space:normal;}
+}
+@media (max-width:420px){
+  .brand a b{font-size:1.0625rem}
+  .brand a > span{font-size:.6875rem;letter-spacing:.03em}
+}
+/* site-brand:css END */

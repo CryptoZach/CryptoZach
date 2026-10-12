@@ -86,6 +86,8 @@ jobs:
           run_check scripts/check_internal_links.py --quiet
           run_check scripts/render_home_stats.py --check
           run_check scripts/render_chrome.py --check
+          # render_brand.py --check verifies the brandmark (markup, rules, dial code) is one copy on every page.
+          run_check scripts/render_brand.py --check
           # render_letters.py --check verifies the letters hub, every letter page's
           # outcome and related regions, the recommendation index and the Atom feed
           # against scripts/letters_registry.json (the letters registry).
