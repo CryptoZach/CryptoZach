@@ -3,7 +3,16 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const source = fs.readFileSync(process.argv[2] || path.join(__dirname, '..', 'index.html'), 'utf8');
+const indexPath = process.argv[2] || path.join(__dirname, '..', 'index.html');
+let source = fs.readFileSync(indexPath, 'utf8');
+// The hero engine and the dial are served from home.js next to the page (2026-10-12).
+// Read it in as one more script block, so the syntax pass and the production-function
+// extractions below see exactly the code the page runs.
+for (const m of source.matchAll(/<script[^>]*\ssrc="\/(home\.js)(?:\?[^"]*)?"[^>]*>\s*<\/script>/g)) {
+  const file = path.join(path.dirname(indexPath), m[1]);
+  assert.ok(fs.existsSync(file), 'Missing external homepage script: ' + m[1]);
+  source += '\n<script>\n' + fs.readFileSync(file, 'utf8') + '\n</script>\n';
+}
 // Generated object keys and logo data must also be valid in the full page.
 let scriptCount = 0;
 for (const match of source.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {

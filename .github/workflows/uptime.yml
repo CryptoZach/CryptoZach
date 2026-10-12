@@ -1,0 +1,70 @@
+name: Uptime check
+
+# Every thirty minutes, fetch the pages that matter and the letters feed from the live
+# site; each must answer 200 and carry the site name. A failure opens one issue labelled
+# "uptime" (or adds to the open one); a later success closes it. Nothing here touches the
+# site itself.
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  probe:
+    if: github.repository == 'CryptoZach/CryptoZach'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Probe the live pages
+        id: probe
+        shell: bash
+        run: |
+          set -u
+          failures=""
+          for p in / /research/ /letters/ /frameworks/ /trackers/genius-act/ /letters/feed.xml; do
+            url="https://tokenization.systems$p"
+            code=$(curl -sS -o /tmp/body -w '%{http_code}' --max-time 30 -H 'User-Agent: tokenization-systems-uptime' "$url" 2>/dev/null || echo 000)
+            if [ "$code" != "200" ] || ! grep -q "Tokenization Systems" /tmp/body; then
+              failures="$failures<br>- $url answered $code"
+            fi
+          done
+          if [ -n "$failures" ]; then
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+            { echo "failures<<EOF"; echo "$failures"; echo "EOF"; } >> "$GITHUB_OUTPUT"
+            echo "::error::uptime probe failed:$failures"
+          else
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+            echo "all probes answered 200 with the site name"
+          fi
+
+      - name: Open or update the uptime issue
+        if: steps.probe.outputs.failed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          FAILURES: ${{ steps.probe.outputs.failures }}
+        run: |
+          gh label create uptime --description "Live-site probe failed" --color B60205 --force >/dev/null 2>&1 || true
+          existing=$(gh issue list --label uptime --state open --json number --jq '.[0].number')
+          body="Probe at $(date -u +'%Y-%m-%d %H:%M UTC') (run ${{ github.run_id }}):${FAILURES}"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "Uptime: live site probe failed" --label uptime --body "$body"
+          fi
+
+      - name: Close the uptime issue after recovery
+        if: steps.probe.outputs.failed == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          existing=$(gh issue list --label uptime --state open --json number --jq '.[0].number' 2>/dev/null || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Probe recovered at $(date -u +'%Y-%m-%d %H:%M UTC'): every page answered 200."
+          fi

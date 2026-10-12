@@ -6328,3 +6328,141 @@
     init();
   }
 })();
+
+/* ---------------------------------------------------------------------------
+   MVEP scorecard (frameworks page, 2026-10-12). Ten categories, one verdict each
+   (P pass, F fail, A ambiguous, N not assessed) and an optional note. The state
+   lives in the form; the share link carries the ten verdicts and the product name
+   in the URL hash (#sc=PFANNNNNNN&p=...), so a colleague opens the same scorecard.
+   Nothing is sent anywhere. The gate rule is the paper's: any failed category
+   blocks the gate; ambiguous or unassessed categories leave it incomplete.
+   --------------------------------------------------------------------------- */
+(function(){
+  function init(){
+    var form = document.getElementById('mvep-sc');
+    if(!form) return;
+    var rows = Array.prototype.slice.call(form.querySelectorAll('.mvep-sc__row'));
+    var gateEl = form.querySelector('[data-gate]');
+    var countsEl = form.querySelector('[data-counts]');
+    var critEl = form.querySelector('[data-crit]');
+    var statusEl = form.querySelector('[data-status]');
+    var product = form.querySelector('#mvep-sc-product');
+    var reviewer = form.querySelector('#mvep-sc-reviewer');
+    var LABEL = { P: 'Pass', F: 'Fail', A: 'Ambiguous', N: 'Not assessed' };
+
+    function verdict(row){
+      var checked = row.querySelector('input[type="radio"]:checked');
+      return checked ? checked.value : 'N';
+    }
+    function name(row){ return row.querySelector('.mvep-sc__name').textContent.trim(); }
+    function note(row){ var n = row.querySelector('.mvep-sc__note input'); return n ? n.value.trim() : ''; }
+    function tally(){
+      var t = { P: 0, F: 0, A: 0, N: 0, failed: [], ambiguous: [], unassessed: [], critFail: [] };
+      rows.forEach(function(row){
+        var v = verdict(row);
+        row.setAttribute('data-verdict', v);
+        t[v]++;
+        var n = row.getAttribute('data-cat') + ' ' + name(row);
+        if(v === 'F'){ t.failed.push(n); if(row.hasAttribute('data-critical')) t.critFail.push(n); }
+        if(v === 'A') t.ambiguous.push(n);
+        if(v === 'N') t.unassessed.push(n);
+      });
+      return t;
+    }
+    function gateText(t){
+      if(t.F > 0) return ['blocked', 'Gate: blocked. ' + t.F + (t.F === 1 ? ' category fails' : ' categories fail') + ' (' + t.failed.join('; ') + ').'];
+      if(t.N > 0 || t.A > 0) return ['incomplete', 'Gate: not yet open. ' + (t.N ? t.N + ' not assessed' : '') + (t.N && t.A ? ', ' : '') + (t.A ? t.A + ' ambiguous' : '') + '; the paper requires each category to pass.'];
+      return ['open', 'Gate: open. All ten categories pass on the recorded verdicts.'];
+    }
+    function render(){
+      var t = tally();
+      var g = gateText(t);
+      gateEl.setAttribute('data-state', g[0]);
+      gateEl.textContent = g[1];
+      countsEl.textContent = 'Pass ' + t.P + ' / Fail ' + t.F + ' / Ambiguous ' + t.A + ' / Not assessed ' + t.N + ' of 10.';
+      critEl.textContent = t.critFail.length
+        ? 'Pass-through-critical categories failing: ' + t.critFail.join('; ') + '.'
+        : (t.P + t.F + t.A === 10 ? 'No pass-through-critical category fails.' : '');
+    }
+    function summary(){
+      var t = tally();
+      var lines = ['MVEP scorecard' + (product.value.trim() ? ': ' + product.value.trim() : '') + (reviewer && reviewer.value.trim() ? ' (reviewed by ' + reviewer.value.trim() + ')' : ''),
+                   'Date: ' + new Date().toISOString().slice(0, 10),
+                   gateText(t)[1],
+                   'Pass ' + t.P + ', Fail ' + t.F + ', Ambiguous ' + t.A + ', Not assessed ' + t.N + ' of 10.'];
+      rows.forEach(function(row){
+        var v = verdict(row);
+        lines.push(row.getAttribute('data-cat') + '. ' + name(row) + ': ' + LABEL[v] + (note(row) ? ' (' + note(row) + ')' : ''));
+      });
+      lines.push('Categories, artifacts and tests: https://tokenization.systems/frameworks/#mvep-scorecard (MVEP paper: https://tokenization.systems/papers/mvep/)');
+      return lines.join('\n');
+    }
+    function shareLink(){
+      var code = rows.map(verdict).join('');
+      var hash = '#sc=' + code;
+      if(product.value.trim()) hash += '&p=' + encodeURIComponent(product.value.trim().slice(0, 80));
+      return location.origin + location.pathname + hash;
+    }
+    function copyText(text, okMsg){
+      function done(ok){ statusEl.textContent = ok ? okMsg : 'Copy failed; select the text and copy it by hand.'; setTimeout(function(){ statusEl.textContent = ''; }, 4000); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ fallback(); });
+      } else { fallback(); }
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+        document.body.removeChild(ta);
+        done(ok);
+      }
+    }
+    function applyHash(){
+      var m = /[#&]sc=([PFAN]{10})/.exec(location.hash);
+      if(!m) return;
+      var code = m[1];
+      rows.forEach(function(row, i){
+        var input = row.querySelector('input[type="radio"][value="' + code.charAt(i) + '"]');
+        if(input) input.checked = true;
+      });
+      var pm = /[#&]p=([^&]*)/.exec(location.hash);
+      if(pm){ try { product.value = decodeURIComponent(pm[1]).slice(0, 80); } catch(e){ /* malformed */ } }
+    }
+    form.addEventListener('change', render);
+    form.addEventListener('submit', function(e){ e.preventDefault(); });
+    form.addEventListener('click', function(e){
+      var btn = e.target.closest('button[data-act]');
+      if(!btn) return;
+      var act = btn.getAttribute('data-act');
+      if(act === 'copy') copyText(summary(), 'Summary copied.');
+      else if(act === 'link'){
+        var link = shareLink();
+        try { history.replaceState(null, '', link); } catch(err){ /* file: or sandboxed */ }
+        copyText(link, 'Link copied; it carries the ten verdicts and the product name.');
+      }
+      else if(act === 'print'){
+        document.body.classList.add('mvep-printing');
+        var off = function(){ document.body.classList.remove('mvep-printing'); window.removeEventListener('afterprint', off); };
+        window.addEventListener('afterprint', off);
+        window.print();
+        setTimeout(off, 2000);
+      }
+      else if(act === 'reset'){
+        form.reset();
+        rows.forEach(function(row){ row.querySelector('input[value="N"]').checked = true; });
+        try { history.replaceState(null, '', location.pathname + '#mvep-scorecard'); } catch(err){ /* sandboxed */ }
+        render();
+      }
+    });
+    applyHash();
+    render();
+    /* A shared link opened from this page changes only the hash; apply it the same way. */
+    window.addEventListener('hashchange', function(){ if(/[#&]sc=/.test(location.hash)){ applyHash(); render(); } });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

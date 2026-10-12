@@ -257,12 +257,17 @@
           <button type="button" class="filter-btn" data-filter="status" data-value="accepted">Published at Frontiers</button>
           <button type="button" class="filter-btn" data-filter="status" data-value="requestable">Available on request</button>
         </div>
+        <div class="filter-group" role="group" aria-label="View">
+          <span class="filter-label">View:</span>
+          <button type="button" class="filter-btn active" data-view="cards" aria-pressed="true">Cards</button>
+          <button type="button" class="filter-btn" data-view="list" aria-pressed="false">List</button>
+        </div>
         <p class="filter-count-wrap"><span class="filter-count" aria-live="polite"></span></p>
       </div>
 
       <section id="best-first-read" class="featured-research reveal" aria-labelledby="best-first-read-title">
         <h2 id="best-first-read-title" class="visually-hidden">Featured papers</h2>
-        <article id="institutional-design" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="protocol-design policy" data-track="track-b" data-status="accepted">
+        <article id="institutional-design" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="protocol-design policy" data-track="track-b" data-status="accepted" data-key="52 protocols; 133 protocol-controlled-address exclusions">
           <a class="writing-link writing-link--thumb" href="/papers/governance-concentration/">
             <div class="writing-meta">
               <div class="card-badges">
@@ -297,7 +302,7 @@
           </details>
         </article>
 
-        <article id="mvep" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="asset-management risk-committee tokenization policy" data-track="track-a" data-status="public">
+        <article id="mvep" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="asset-management risk-committee tokenization policy" data-track="track-a" data-status="public" data-key="10 categories; 14-product scorecard; 20-regime insolvency matrix">
           <a class="writing-link writing-link--thumb" href="/papers/mvep/">
             <div class="writing-meta">
               <div class="card-badges">
@@ -343,12 +348,12 @@
       </nav>
 
       <section class="start-here-rail" aria-labelledby="start-here-title">
-        <h2 id="start-here-title">Start here</h2>
+        <h2 id="start-here-title">Start here, by role</h2>
         <ul class="start-here-list">
-          <li><strong>If you are briefing policy or central-bank readers →</strong> <a href="/papers/routing-the-dollar/">Routing the Dollar</a></li>
-          <li><strong>If you are taking a tokenized product to committee →</strong> <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a></li>
-          <li><strong>If you are designing a digital-dollar product or payment stack →</strong> <a href="/papers/dollar-v3/">Dollar v3</a> and <a href="/papers/control-layer-war/">The Control Layer War</a></li>
-          <li><strong>If you are designing incentives and token supply rules →</strong> <a href="/papers/adaptive-tokenomics/">Adaptive Tokenomics</a></li>
+          <li><strong>If you are briefing policy or central-bank readers →</strong> <a href="/papers/routing-the-dollar/">Routing the Dollar</a> <button type="button" class="start-here-filter" data-audience-filter="policy">Show all policy papers</button></li>
+          <li><strong>If you are taking a tokenized product to committee →</strong> <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a> <button type="button" class="start-here-filter" data-audience-filter="asset-management">Show all asset management papers</button></li>
+          <li><strong>If you are designing a digital-dollar product or payment stack →</strong> <a href="/papers/dollar-v3/">Dollar v3</a> and <a href="/papers/control-layer-war/">The Control Layer War</a> <button type="button" class="start-here-filter" data-audience-filter="stablecoin">Show all stablecoin and payments papers</button></li>
+          <li><strong>If you are designing incentives and token supply rules →</strong> <a href="/papers/adaptive-tokenomics/">Adaptive Tokenomics</a> <button type="button" class="start-here-filter" data-audience-filter="protocol-design">Show all protocol design papers</button></li>
           <li><strong>If you are stress-testing governance under real infrastructure conditions →</strong> <a href="/papers/operational-risk/">Operational Risk in Token Economies</a></li>
           <li><strong>If you are working on AI governance or infrastructure accountability →</strong> <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a> (transferable control-layer instrument). See the <a href="/resume/ai-governance-infrastructure/">AI Governance &amp; Infrastructure profile</a>.</li>
         </ul>
@@ -363,7 +368,7 @@
 
       <ul class="writing-list">
 
-        <li id="routing-the-dollar" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="public">
+        <li id="routing-the-dollar" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="public" data-key="19 gateways; 51 addresses; 9 chains; $60.6T transfer volume">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/routing-the-dollar/">
               <div class="writing-meta">
@@ -399,7 +404,7 @@
           </article>
         </li>
 
-        <li id="who-controls-agentic-payments" data-audience="policy market-infrastructure stablecoin central-bank" data-track="track-a" data-status="public">
+        <li id="who-controls-agentic-payments" data-audience="policy market-infrastructure stablecoin central-bank" data-track="track-a" data-status="public" data-key="Settlement census across three chains, validated at payment level">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/who-controls-agentic-payments/">
               <div class="writing-meta">
@@ -554,7 +559,7 @@
           </article>
         </li>
 
-        <li id="seven-dollars" data-audience="policy stablecoin asset-management risk-committee market-infrastructure" data-track="track-a" data-status="public requestable">
+        <li id="seven-dollars" data-audience="policy stablecoin asset-management risk-committee market-infrastructure" data-track="track-a" data-status="public requestable" data-key="7 products; 5 operators; 5 regulatory regimes">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/seven-dollars/">
               <div class="writing-meta">
@@ -591,7 +596,7 @@
           </article>
         </li>
 
-        <li id="three-strategies" data-audience="policy central-bank market-infrastructure asset-management tokenization risk-committee exchange-operator transfer-agent clearinghouse" data-track="track-a" data-status="public requestable">
+        <li id="three-strategies" data-audience="policy central-bank market-infrastructure asset-management tokenization risk-committee exchange-operator transfer-agent clearinghouse" data-track="track-a" data-status="public requestable" data-key="8 entities; 3 strategies; 9 stress scenarios">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/three-strategies/">
               <div class="writing-meta">
@@ -723,7 +728,7 @@
       </p>
 
       <ul class="writing-list">
-        <li id="adaptive-tokenomics" data-audience="protocol-design depin" data-track="track-b" data-status="public">
+        <li id="adaptive-tokenomics" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="240-run ensemble; coefficient of variation 0.544 to 0.087 under competitor shock">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/adaptive-tokenomics/">
               <div class="writing-meta">
@@ -758,7 +763,7 @@
           </article>
         </li>
 
-        <li id="operational-risk" data-audience="protocol-design depin" data-track="track-b" data-status="public">
+        <li id="operational-risk" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="About 624 runs; 3x to 6x dispersion compression">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/operational-risk/">
               <div class="writing-meta">
@@ -793,7 +798,7 @@
           </article>
         </li>
 
-        <li id="geodepin" data-audience="protocol-design depin" data-track="track-b" data-status="public">
+        <li id="geodepin" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="34-month Helium panel; 13-protocol cross-section">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/who-burns-the-tokens/">
               <div class="writing-meta">
@@ -1026,6 +1031,8 @@
           <a href="/research/">Research</a>
           <a href="/agent-infrastructure/">Agent Infrastructure</a>
           <a href="/letters/">Letters</a>
+          <a href="/trackers/genius-act/">GENIUS tracker</a>
+          <a href="/notes/">Notes</a>
           <a href="/resume/">Resume</a>
           <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
           <a href="/about/">About</a>
@@ -1076,14 +1083,99 @@
     if (!filterEl) return;
     filterEl.hidden = false;
     var filters = { audience: 'all', track: 'all', status: 'all' };
-    var cards = document.querySelectorAll('.research-card');
-    var buttons = document.querySelectorAll('.research-filters-js .filter-btn');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.research-card'));
+    var buttons = document.querySelectorAll('.research-filters-js .filter-btn[data-filter]');
+    var store = {
+      get: function(k){ try { return window.localStorage.getItem(k); } catch(e){ return null; } },
+      set: function(k, v){ try { window.localStorage.setItem(k, v); } catch(e){ /* private mode */ } }
+    };
     function getCardData(card) {
       var el = card.dataset.audience !== undefined || card.dataset.track !== undefined ? card : card.parentElement;
       return el || card;
     }
+    function text(el, sel) {
+      var n = el.querySelector(sel);
+      return n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+    var MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+    function dateKey(meta) {
+      var m = /([A-Za-z]{3})[a-z]*\.? (\d{4})/.exec(meta);
+      return m ? (+m[2]) * 100 + (MONTHS[m[1].toLowerCase()] || 0) : 0;
+    }
+    function linkLabel(a) {
+      var h = a.getAttribute('href') || '';
+      if (h.indexOf('ssrn.com') !== -1) return 'SSRN';
+      if (h.indexOf('frontiersin.org') !== -1) return 'Frontiers';
+      if (h.indexOf('x.com') !== -1 || h.indexOf('twitter.com') !== -1) return 'Thread';
+      if (h.indexOf('medium.com') !== -1) return 'Medium';
+      return (a.getAttribute('title') || a.textContent).replace(/\s+/g, ' ').trim() || 'Link';
+    }
+    /* The list view is built once, from the cards, so it can never disagree with them. */
+    var listWrap = null, rowOf = [];
+    function buildList() {
+      if (listWrap) return;
+      listWrap = document.createElement('div');
+      listWrap.className = 'research-list-wrap letters-timeline-table';
+      listWrap.setAttribute('role', 'region');
+      listWrap.setAttribute('aria-label', 'Research as a list');
+      listWrap.hidden = true;
+      var items = cards.map(function(card, i) {
+        var data = getCardData(card);
+        var meta = text(card, '.writing-meta-line');
+        var parts = meta.split(/\s[·]\s/);
+        var open = card.querySelector('.writing-arrow') || card.querySelector('.writing-link');
+        var links = [];
+        Array.prototype.forEach.call(card.querySelectorAll('.writing-thread'), function(a) {
+          links.push({ href: a.getAttribute('href'), label: linkLabel(a) });
+        });
+        return {
+          i: i, card: card, key: dateKey(meta),
+          date: parts[0] || '', venue: parts.slice(1).join(' · '),
+          title: text(card, '.writing-title'), thesis: text(card, '.writing-thesis'),
+          number: data.dataset.key || text(card, '.writing-evidence-type').replace(/^Evidence type:\s*/, ''),
+          href: open ? open.getAttribute('href') : '', external: !!(open && /^https?:/.test(open.getAttribute('href') || '')),
+          links: links
+        };
+      });
+      items.sort(function(a, b) { return (b.key - a.key) || (a.i - b.i); });
+      var table = document.createElement('table');
+      table.className = 'letters-timeline research-list letters-stackable';
+      var html = '<thead><tr><th>Date</th><th>Paper</th><th>Thesis</th><th>Key numbers</th><th>Read</th></tr></thead><tbody>';
+      function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+      items.forEach(function(it) {
+        var read = it.href ? '<a href="' + esc(it.href) + '"' + (it.external ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + (it.external ? 'Open' : 'Summary') + '</a>' : '';
+        it.links.forEach(function(l) { read += (read ? ' · ' : '') + '<a href="' + esc(l.href) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label) + '</a>'; });
+        html += '<tr data-card="' + it.i + '"><td data-label="Date">' + esc(it.date) + '</td>' +
+          '<td data-label="Paper"><strong>' + (it.href ? '<a href="' + esc(it.href) + '">' + esc(it.title) + '</a>' : esc(it.title)) + '</strong>' +
+          (it.venue ? '<br><span class="letters-outcome-id">' + esc(it.venue) + '</span>' : '') + '</td>' +
+          '<td data-label="Thesis">' + esc(it.thesis) + '</td>' +
+          '<td data-label="Key numbers">' + esc(it.number) + '</td>' +
+          '<td data-label="Read">' + read + '</td></tr>';
+      });
+      table.innerHTML = html + '</tbody>';
+      listWrap.appendChild(table);
+      Array.prototype.forEach.call(table.querySelectorAll('tbody > tr'), function(tr) { rowOf[+tr.getAttribute('data-card')] = tr; });
+      var featured = document.getElementById('best-first-read');
+      featured.parentNode.insertBefore(listWrap, featured);
+    }
+    var cardBlocks = ['#best-first-read', '.research-track', '.writing-more', '.jump-bar'];
+    function setView(v) {
+      var list = v === 'list';
+      if (list) buildList();
+      if (listWrap) listWrap.hidden = !list;
+      cardBlocks.forEach(function(sel) {
+        Array.prototype.forEach.call(document.querySelectorAll(sel), function(el) { el.hidden = list; });
+      });
+      Array.prototype.forEach.call(filterEl.querySelectorAll('.filter-btn[data-view]'), function(b) {
+        var on = b.getAttribute('data-view') === v;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      filterEl.setAttribute('data-view', v);
+    }
     function applyFilters() {
-      cards.forEach(function(card) {
+      var visible = 0;
+      cards.forEach(function(card, i) {
         var data = getCardData(card);
         var audience = (data.dataset.audience || '').trim();
         var track = data.dataset.track || '';
@@ -1097,27 +1189,40 @@
         if (card.parentElement && card.parentElement.tagName === 'LI') {
           card.parentElement.style.display = show ? '' : 'none';
         }
-      });
-      var visible = 0;
-      cards.forEach(function(card) {
-        if (card.style.display === 'none') return;
-        visible++;
+        if (rowOf[i]) rowOf[i].hidden = !show;
+        if (show) visible++;
       });
       var counter = document.querySelector('.filter-count');
       if (counter) {
         counter.textContent = 'Showing ' + visible + (visible === 1 ? ' item' : ' items');
       }
     }
+    function setFilter(filterType, value) {
+      filters[filterType] = value;
+      Array.prototype.forEach.call(filterEl.querySelectorAll('.filter-btn[data-filter="' + filterType + '"]'), function(b) {
+        b.classList.toggle('active', b.dataset.value === value);
+      });
+      applyFilters();
+    }
     buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() { setFilter(btn.dataset.filter, btn.dataset.value); });
+    });
+    Array.prototype.forEach.call(filterEl.querySelectorAll('.filter-btn[data-view]'), function(btn) {
       btn.addEventListener('click', function() {
-        var filterType = btn.dataset.filter;
-        var value = btn.dataset.value;
-        btn.closest('.filter-group').querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        filters[filterType] = value;
+        setView(btn.getAttribute('data-view'));
+        store.set('research-view', btn.getAttribute('data-view'));
         applyFilters();
       });
     });
+    /* The role rail: one click filters the library to that audience and brings the toolbar into view. */
+    Array.prototype.forEach.call(document.querySelectorAll('.start-here-filter[data-audience-filter]'), function(btn) {
+      btn.addEventListener('click', function() {
+        setFilter('audience', btn.getAttribute('data-audience-filter'));
+        filterEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    var narrow = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+    setView(store.get('research-view') || (narrow ? 'list' : 'cards'));
     applyFilters();
   })();
   </script>

@@ -134,9 +134,12 @@ async function computeAssetVersion(buildPath, assetRelPath) {
 // anchored to a path-segment "/script.js" (or the bare quote) so it cannot match
 // look-alike filenames such as transcript.js; it sets ?v=<hash>, replacing any
 // existing ?v=.
-function applyJsCacheBuster(html, jsVersion) {
-  if (!jsVersion) return html;
-  return html.replace(/(src="(?:[^"]*\/)?script\.js)(?:\?v=[^"]*)?(")/g, `$1?v=${jsVersion}$2`);
+function applyJsCacheBuster(html, jsVersion, homeVersion) {
+  let out = html;
+  if (jsVersion) out = out.replace(/(src="(?:[^"]*\/)?script\.js)(?:\?v=[^"]*)?(")/g, `$1?v=${jsVersion}$2`);
+  // home.js (the homepage's own engine, external since 2026-10-12) gets its own hash.
+  if (homeVersion) out = out.replace(/(src="(?:[^"]*\/)?home\.js)(?:\?v=[^"]*)?(")/g, `$1?v=${homeVersion}$2`);
+  return out;
 }
 
 // Beasties 0.4.2 with preload: 'swap' (and most other preload modes)
@@ -266,6 +269,7 @@ async function main() {
 
   const cssVersion = await computeAssetVersion(buildPath, 'styles.css');
   const jsVersion = await computeAssetVersion(buildPath, 'script.js');
+  const homeVersion = await computeAssetVersion(buildPath, 'home.js');
   // Hash every stylesheet at the build root, not just styles.css, so each one's
   // ?v= tracks its own content. Keyed by basename because that is what the href
   // resolves to whether the page writes /styles.css or ../styles.css.
@@ -300,7 +304,7 @@ async function main() {
       const inputSize = stripped.length;
       const processed = await beasties.process(stripped);
       const deduped = removeRedundantStylesheetLink(processed);
-      const restored = applyJsCacheBuster(restoreCacheBusters(deduped, versions, cssVersion, cssVersions), jsVersion);
+      const restored = applyJsCacheBuster(restoreCacheBusters(deduped, versions, cssVersion, cssVersions), jsVersion, homeVersion);
       const inlinedBytes = restored.length - inputSize;
       if (inlinedBytes > 0) totalInlinedBytes += inlinedBytes;
       await fs.writeFile(file, restored, 'utf-8');

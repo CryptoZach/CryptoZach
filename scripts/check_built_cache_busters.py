@@ -56,7 +56,7 @@ import tempfile
 # Assets whose ?v= the build derives from content. Anything else is left alone on purpose:
 # images are handled by cache-bust-images.mjs with the same discipline but a different step,
 # and a third-party URL is none of our business.
-HASHED_ASSETS = ("styles.css", "script.js")
+HASHED_ASSETS = ("styles.css", "script.js", "home.js")
 
 REF = re.compile(r'(?:href|src)="(?P<url>[^"]*?(?P<asset>' +
                  "|".join(a.replace(".", r"\.") for a in HASHED_ASSETS) +

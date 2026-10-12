@@ -36,6 +36,10 @@ async function openHome(page,url,settleMs){
  }
  // A same-document #fragment (script.js rewrites it for jump links) is not a navigation away.
  assert.equal(page.url().split('#')[0],url.split('#')[0],'the homepage stays on its own URL after load');
+ // The hero paints one still frame on load and starts its loop on the visitor's first
+ // interaction (home.js, 2026-10-12). Every case below assumes a running field, so wake it
+ // the way a visitor would: one trusted pointer move, outside the hero.
+ await page.mouse.move(2,2);
  if(settleMs)await pause(settleMs);
 }
 function observe(boundaryErrorPrefix){

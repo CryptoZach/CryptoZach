@@ -36,6 +36,18 @@ except the feed, which is generated whole):
         recommendations    every recommendation in one filterable table
         recs-jsonld        the page's ItemList
     letters/feed.xml       Atom feed of the series (whole file)
+    letters/letters.json   machine-readable export of the registry: letters, proceedings,
+                           watch list (whole file; linked from /data/)
+    letters/recommendations.csv
+                           every recommendation as one CSV row (whole file; linked from /data/)
+    trackers/genius-act/index.html
+        tracker            the GENIUS Act rulemaking tracker: one row per implementing
+                           rulemaking, from the genius-cycle proceedings plus the
+                           registry's trackers.genius-act.actions (rulemakings the program
+                           did not comment on)
+        tracker-jsonld     the page's ItemList
+    trackers/genius-act/genius-act.json
+                           the same rows as JSON (whole file)
 
 Modes:
     --check   (default) verify every generated surface matches what the registry would
@@ -48,7 +60,9 @@ Resolves the tree from cwd (falling back to the script's clone), so it runs from
 either clone. Depends only on the stdlib.
 """
 import argparse
+import csv
 import difflib
+import io
 import html
 import json
 import os
@@ -60,6 +74,10 @@ REGISTRY_REL = os.path.join("scripts", "letters_registry.json")
 HUB_REL = os.path.join("letters", "index.html")
 RECS_REL = os.path.join("letters", "recommendations", "index.html")
 FEED_REL = os.path.join("letters", "feed.xml")
+LETTERS_JSON_REL = os.path.join("letters", "letters.json")
+RECS_CSV_REL = os.path.join("letters", "recommendations.csv")
+TRACKER_REL = os.path.join("trackers", "genius-act", "index.html")
+TRACKER_JSON_REL = os.path.join("trackers", "genius-act", "genius-act.json")
 SITE = "https://tokenization.systems"
 START_TMPL = ("<!-- letters:{name} START (generated from scripts/letters_registry.json;"
               " edit the registry, then: python3 scripts/render_letters.py --write) -->")
@@ -188,6 +206,7 @@ class Model:
         self.cycles = self.reg["cycles"]
         self.frameworks = self.reg["frameworks"]
         self.verified_on = self.reg["_meta"]["verified_on"]
+        self.tracker = (self.reg.get("trackers") or {}).get("genius-act")
         self.federal = [l for l in self.letters if l["series"] == "federal"]
         self.n_federal = len(self.federal)
         self.n_recs = sum(l["rec_count"] for l in self.federal)
@@ -418,7 +437,9 @@ def gen_index(m):
 
 
 def gen_outcomes(m):
-    out = [f'<p class="letters-outcomes-lede">One row per rulemaking or consultation, in filing order; a joint rulemaking filed at several agency dockets is one row. Status as of {esc(fmt_date(m.verified_on))}.</p>',
+    tracker_link = (' The GENIUS Act rulemakings, including those the program did not comment on, are followed on the '
+                    '<a href="/trackers/genius-act/">GENIUS Act rulemaking tracker</a>.' if m.tracker else '')
+    out = [f'<p class="letters-outcomes-lede">One row per rulemaking or consultation, in filing order; a joint rulemaking filed at several agency dockets is one row. Status as of {esc(fmt_date(m.verified_on))}.{tracker_link}</p>',
            '<details class="letters-fold" open>',
            '  <summary>Outcomes by proceeding, and next dates</summary>',
            '<div class="letters-timeline-table" role="region" aria-label="Outcomes by proceeding">',
@@ -758,6 +779,194 @@ def gen_feed(m):
 
 
 # ----------------------------------------------------------------------------- driver
+
+# ----------------------------------------------------------------------------- exports
+def public_letter(l):
+    """A letter record without the renderer's private fields, plus its site URL."""
+    out = {k: v for k, v in l.items() if not k.startswith("_")}
+    out["url"] = f"{SITE}/letters/{l['slug']}/"
+    out["pdf_url"] = SITE + l["pdf"]
+    return out
+
+
+def gen_letters_json(m):
+    data = {
+        "_generated": "render_letters.py from scripts/letters_registry.json; do not edit",
+        "site": SITE,
+        "verified_on": m.verified_on,
+        "outcome_states": m.reg["_meta"]["outcome_states"],
+        "recommendation_statuses": m.reg["_meta"]["recommendation_statuses"],
+        "letters": [public_letter(l) for l in m.filing_order()],
+        "proceedings": m.procs,
+        "watch": m.reg.get("watch", []),
+    }
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
+def gen_recs_csv(m):
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\n")
+    w.writerow(["letter_number", "letter_slug", "letter_title", "agency", "filed", "proceeding",
+                "docket", "rec_n", "rec_id", "ask", "text", "topics", "status", "status_note", "url"])
+    for l in m.filing_order():
+        for r in l["recommendations"]:
+            w.writerow([l["number"] or "", l["slug"], l["title"], l["agency"], l["filed"], l["proceeding"],
+                        l["docket"]["label"], r["n"], r["id"], r.get("ask", ""), r["text"],
+                        " ".join(r.get("topics", [])), r["status"], r.get("status_note", "") or "",
+                        f"{SITE}/letters/{l['slug']}/#{r['id']}"])
+    return buf.getvalue()
+
+
+# ----------------------------------------------------------------------------- tracker
+def tracker_rows(m):
+    """One row per GENIUS Act rulemaking: commented proceedings plus uncommented actions."""
+    rows = []
+    for key, p in m.procs.items():
+        ls = [l for l in m.filing_order() if l["proceeding"] == key]
+        if not ls or not any(l["cycle"] == "genius" for l in ls):
+            continue
+        opens = sorted(l["comment_period"].get("open") for l in ls if l["comment_period"].get("open"))
+        closes = sorted(l["comment_period"].get("close") for l in ls if l["comment_period"].get("close"))
+        o = p["outcome"]
+        rows.append({"key": key, "agency": ls[0]["agency"], "agency_long": p["agency"], "name": p["name"],
+                     "identifier": p["identifier"], "fr": p.get("fr"), "kind": p["kind"], "url": p.get("url"),
+                     "published": opens[0] if opens else None, "comment_close": closes[-1] if closes else None,
+                     "comment_close_note": None, "state": o["state"],
+                     "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
+                     "note": o.get("note"), "sources": o.get("sources", []), "final_action": o.get("final_action"),
+                     "letters": ls, "commented": True})
+    for a in (m.tracker or {}).get("actions", []):
+        o = a["outcome"]
+        rows.append({"key": a["key"], "agency": a["agency"], "agency_long": a["agency_long"], "name": a["name"],
+                     "identifier": a["identifier"], "fr": a.get("fr"), "kind": a["kind"], "url": a.get("url"),
+                     "published": a.get("published"), "comment_close": a.get("comment_close"),
+                     "comment_close_note": a.get("comment_close_note"), "state": o["state"],
+                     "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
+                     "note": o.get("note"), "sources": o.get("sources", []), "final_action": o.get("final_action"),
+                     "letters": [], "commented": False})
+    rows.sort(key=lambda r: (r["published"] or "9999", r["name"]))
+    return rows
+
+
+def split_name(name):
+    """'OCC: GENIUS Act implementation ...' -> ('OCC', 'GENIUS Act implementation ...')."""
+    if ": " in name:
+        head, tail = name.split(": ", 1)
+        return head, tail
+    return None, name
+
+
+def gen_tracker(m):
+    t = m.tracker
+    rows = tracker_rows(m)
+    n = len(rows)
+    n_comm = sum(1 for r in rows if r["commented"])
+    n_open = sum(1 for r in rows if r["state"] == "open")
+    n_final = sum(1 for r in rows if r["state"] == "final")
+    n_pending = sum(1 for r in rows if r["state"] == "closed-pending")
+    bits = [f"{n} rulemakings", f"{n_comm} with a program letter", f"{n_open} open for comment",
+            f"{n_pending} awaiting final action", f"{n_final} in effect"]
+    out = [f'<p class="letters-meta-strip">{" &middot; ".join(esc(b) for b in bits)}</p>',
+           f'<p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. Rows with a letter link to the program\'s comment; the others are listed so the implementation picture is complete. Status as of {esc(fmt_date(m.verified_on))}.</p>',
+           '<div class="letters-timeline-table" role="region" aria-label="GENIUS Act rulemakings">',
+           '  <table class="letters-timeline letters-outcomes letters-stackable tracker-table">',
+           "    <thead>",
+           "      <tr><th>Rulemaking</th><th>Published</th><th>Comments</th><th>Status</th><th>Program letter</th></tr>",
+           "    </thead>",
+           "    <tbody>"]
+    for r in rows:
+        head, tail = split_name(r["name"])
+        agency = esc(head or r["agency"])
+        title = (f'<a href="{attr(r["url"])}" target="_blank" rel="noopener noreferrer">{esc(tail)}</a>' if r.get("url") else esc(tail))
+        ident = esc(r["identifier"]) + (f"; {esc(r['fr'])}" if r.get("fr") else "")
+        if r["comment_close"]:
+            comments = ("open until " if r["state"] == "open" else "closed ") + fmt_date(r["comment_close"])
+            if r.get("comment_close_note"):
+                comments += f' <span class="letters-outcome-id">({esc(r["comment_close_note"])})</span>'
+        else:
+            comments = "n/a"
+        status = f'<span class="status-chip status-chip--{attr(STATE_CLASS.get(r["state"], "pending"))}">{esc(r["status_label"])}</span>'
+        if r.get("final_action"):
+            fa = r["final_action"]
+            status += f'<br><span class="letters-outcome-id">{esc(fa.get("citation", ""))}{" (" + esc(fmt_date(fa["date"])) + ")" if fa.get("date") else ""}</span>'
+        if r["letters"]:
+            letters = ", ".join(f'<a href="/letters/{attr(l["slug"])}/">{esc(m.number_label(l))}</a>' for l in r["letters"])
+        else:
+            letters = '<span class="tracker-none">none filed</span>'
+        out += ["      <tr" + (' class="tracker-row--commented"' if r["commented"] else "") + ">",
+                f'        <td data-label="Rulemaking"><span class="tracker-agency">{agency}</span> {title}<br><span class="letters-outcome-id">{esc(r["kind"])}; {ident}</span></td>',
+                f'        <td data-label="Published">{esc(fmt_date(r["published"])) if r["published"] else "n/a"}</td>',
+                f'        <td data-label="Comments">{comments}</td>',
+                f'        <td data-label="Status">{status}</td>',
+                f'        <td data-label="Program letter">{letters}</td>',
+                "      </tr>"]
+        if r.get("note"):
+            srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">{esc(s_["title"])}</a>' for s_ in r.get("sources", []))
+            out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(r["note"])}{(" " + srcs) if srcs else ""}</td></tr>')
+    out += ["    </tbody>", "  </table>", "</div>"]
+    st = (t or {}).get("statute")
+    if st:
+        out.append('<h2 id="statutory-frame">Statutory frame</h2>')
+        out.append('<ul class="letters-watch tracker-statute">')
+        out.append(f'  <li><time datetime="{attr(st["enacted"])}">{esc(fmt_date(st["enacted"]))}</time>: {esc(st["name"])} signed into law.</li>')
+        out.append(f'  <li><time datetime="{attr(st["rulemaking_deadline"])}">{esc(fmt_date(st["rulemaking_deadline"]))}</time>: statutory rulemaking deadline. {esc(st.get("rulemaking_deadline_note", ""))}</li>')
+        out.append(f'  <li>Effective date: {esc(st["effective_note"])}</li>')
+        out.append(f'  <li><time datetime="{attr(st["dasp_restriction"])}">{esc(fmt_date(st["dasp_restriction"]))}</time>: {esc(st["dasp_restriction_note"])}</li>')
+        srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">{esc(s_["title"])}</a>' for s_ in st.get("sources", []))
+        if srcs:
+            out.append(f'  <li class="tracker-statute__source">Text: {srcs}</li>')
+        out.append("</ul>")
+    watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
+    if watch:
+        out.append('<h2 id="next-dates">Next dates</h2>')
+        out.append('<ul class="letters-watch">')
+        for w in watch:
+            srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">source</a>' for s_ in w.get("sources", []))
+            out.append(f'  <li><time datetime="{attr(w["date"])}">{esc(fmt_date(w["date"]))}</time>: {esc(w["text"])}{(" (" + srcs + ")") if srcs else ""}</li>')
+        out.append("</ul>")
+    out.append(f'<p class="letters-asof">Last checked {esc(fmt_date(m.verified_on))}. The same rows are published as <a href="/trackers/genius-act/genius-act.json">JSON</a>; the program\'s own letters and their outcomes are on the <a href="/letters/#program-outcomes">letters page</a>.</p>')
+    return out
+
+
+def gen_tracker_jsonld(m):
+    rows = tracker_rows(m)
+    items = []
+    for i, r in enumerate(rows, 1):
+        item = {"@type": "Legislation", "name": r["name"], "legislationIdentifier": r["identifier"],
+                "legislationType": r["kind"],
+                "publisher": {"@type": "GovernmentOrganization", "name": r["agency_long"]}}
+        if r.get("url"):
+            item["url"] = r["url"]
+        if r.get("published"):
+            item["datePublished"] = r["published"]
+        items.append({"@type": "ListItem", "position": i, "item": item})
+    data = {"@context": "https://schema.org", "@type": "ItemList",
+            "name": "GENIUS Act implementing rulemakings",
+            "description": f"Implementing rulemakings under the GENIUS Act with publication date, comment close and status, as of {m.verified_on}.",
+            "url": f"{SITE}/trackers/genius-act/", "numberOfItems": len(items), "itemListElement": items}
+    text = json.dumps(data, indent=2, ensure_ascii=False)
+    return ['<script type="application/ld+json">'] + text.split("\n") + ["</script>"]
+
+
+def gen_tracker_json(m):
+    rows = []
+    for r in tracker_rows(m):
+        rows.append({"key": r["key"], "agency": r["agency"], "agency_long": r["agency_long"], "name": r["name"],
+                     "identifier": r["identifier"], "federal_register": r.get("fr"), "kind": r["kind"], "url": r.get("url"),
+                     "published": r["published"], "comment_close": r["comment_close"],
+                     "comment_close_note": r.get("comment_close_note"), "status_state": r["state"],
+                     "status_label": r["status_label"], "note": r.get("note"), "sources": r.get("sources", []),
+                     "final_action": r.get("final_action"),
+                     "program_letters": [{"number": l["number"], "slug": l["slug"], "filed": l["filed"],
+                                          "url": f"{SITE}/letters/{l['slug']}/"} for l in r["letters"]]})
+    data = {"_generated": "render_letters.py from scripts/letters_registry.json; do not edit",
+            "title": (m.tracker or {}).get("title"), "url": f"{SITE}/trackers/genius-act/",
+            "verified_on": m.verified_on, "statute": (m.tracker or {}).get("statute"),
+            "status_states": m.reg["_meta"]["outcome_states"], "rulemakings": rows,
+            "watch": m.reg.get("watch", [])}
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
 def verify_registry_against_pages(m, problems):
     for l in m.letters:
         rel = f"letters/{l['slug']}/index.html"
@@ -816,10 +1025,23 @@ def build(m):
     else:
         problems.append(f"{RECS_REL}: missing (create the page skeleton with the two marker pairs)")
     outputs[FEED_REL] = gen_feed(m)
+    outputs[LETTERS_JSON_REL] = gen_letters_json(m)
+    outputs[RECS_CSV_REL] = gen_recs_csv(m)
+    # GENIUS Act tracker
+    if m.tracker:
+        tracker_path = os.path.join(m.root, TRACKER_REL)
+        if os.path.isfile(tracker_path):
+            text = read(tracker_path)
+            text = stamp(text, "tracker", gen_tracker(m), problems, TRACKER_REL)
+            text = stamp(text, "tracker-jsonld", gen_tracker_jsonld(m), problems, TRACKER_REL)
+            outputs[TRACKER_REL] = text
+        else:
+            problems.append(f"{TRACKER_REL}: missing (create the page skeleton with the two marker pairs)")
+        outputs[TRACKER_JSON_REL] = gen_tracker_json(m)
     # editorial discipline: no em or en dashes in generated text (hand-written page
     # text is out of scope here; the pre-commit hook covers it)
     for rel, text in outputs.items():
-        gen = text if rel == FEED_REL else "".join(re.findall(
+        gen = text if rel in (FEED_REL, LETTERS_JSON_REL, RECS_CSV_REL, TRACKER_JSON_REL) else "".join(re.findall(
             r"<!--\s*letters:[\w-]+ START\b.*?<!--\s*letters:[\w-]+ END\s*-->", text, flags=re.S))
         if re.search("[\\u2014\\u2013]", gen):
             problems.append(f"{rel}: generated text contains an em or en dash")

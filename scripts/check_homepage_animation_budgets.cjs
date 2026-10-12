@@ -37,7 +37,14 @@ const vaultIdx = args.indexOf('--vault');
 const vaultPath = vaultIdx >= 0 ? args[vaultIdx + 1] : null;
 const positional = args.filter((a, i) => !a.startsWith('--') && (vaultIdx < 0 || i !== vaultIdx + 1));
 const indexPath = positional[0] || path.join(__dirname, '..', 'index.html');
-const source = fs.readFileSync(indexPath, 'utf8');
+let source = fs.readFileSync(indexPath, 'utf8');
+// The hero engine and the dial are served from home.js next to the page (2026-10-12);
+// read it in so the production seams below are found exactly as the page runs them.
+for (const m of source.matchAll(/<script[^>]*\ssrc="\/(home\.js)(?:\?[^"]*)?"[^>]*>\s*<\/script>/g)) {
+  const file = path.join(path.dirname(indexPath), m[1]);
+  assert.ok(fs.existsSync(file), 'Missing external homepage script: ' + m[1]);
+  source += '\n<script>\n' + fs.readFileSync(file, 'utf8') + '\n</script>\n';
+}
 const vaultSource = vaultPath ? fs.readFileSync(vaultPath, 'utf8') : null;
 const out = { index: path.basename(indexPath), vault: vaultPath ? path.basename(vaultPath) : null, A: {}, B: {}, C: {}, D: {} };
 const failures = [];

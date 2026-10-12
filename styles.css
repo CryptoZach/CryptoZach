@@ -22445,3 +22445,111 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
   body.letters-landing .letters-list th:nth-child(4){width:17%}
   body.letters-landing .letters-list th:nth-child(5){width:9%}
 }
+/* Research list view (2026-10-12): the library's cards rendered as one table, built by the
+   page's own script from the cards; phones stack each row, wider screens get fixed tracks. */
+.research-filters-js .filter-btn[data-view]{min-width:4.5em}
+.research-list-wrap{margin:var(--space-md) 0 var(--space-lg);overflow-x:auto}
+.research-list{width:100%;border-collapse:collapse;font-size:.95rem;line-height:1.45}
+.research-list th{text-align:left;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:.45rem .6rem .45rem 0;border-bottom:1px solid color-mix(in srgb, currentColor 18%, transparent);vertical-align:bottom}
+.research-list td{padding:.6rem .6rem .6rem 0;border-bottom:1px solid color-mix(in srgb, currentColor 10%, transparent);vertical-align:top;overflow-wrap:anywhere}
+.research-list td a{text-decoration:none}
+.research-list td a:hover{text-decoration:underline}
+.research-list td strong a{font-weight:700}
+.research-list td[data-label="Date"]{white-space:nowrap;color:var(--muted);font-size:.9em}
+.research-list .letters-outcome-id{display:block;margin-top:.15rem}
+@media (min-width: 721px){
+  .research-list{table-layout:fixed}
+  .research-list th:nth-child(1){width:10%}
+  .research-list th:nth-child(2){width:30%}
+  .research-list th:nth-child(3){width:28%}
+  .research-list th:nth-child(4){width:20%}
+  .research-list th:nth-child(5){width:12%}
+}
+@media (max-width: 720px){
+  .research-list thead{display:none}
+  .research-list,.research-list tbody{display:block;width:100%}
+  .research-list tbody tr{display:grid;grid-template-columns:1fr;gap:.15rem;padding:.7rem 0;border-bottom:1px solid color-mix(in srgb, currentColor 10%, transparent)}
+  .research-list td{display:block;padding:0;border:0;min-width:0}
+  .research-list td::before{content:attr(data-label) ": ";font-weight:600;color:var(--muted)}
+  .research-list td[data-label="Paper"]::before,.research-list td[data-label="Date"]::before{content:""}
+  .research-list td[data-label="Date"]{white-space:normal}
+}
+.start-here-filter{appearance:none;border:1px solid color-mix(in srgb, currentColor 22%, transparent);background:transparent;color:var(--accent);font:inherit;font-size:.82em;padding:.1rem .55rem;border-radius:999px;cursor:pointer;margin-left:.25rem;vertical-align:baseline}
+.start-here-filter:hover,.start-here-filter:focus-visible{border-color:var(--accent);background:color-mix(in srgb, var(--accent) 10%, transparent)}
+
+/* MVEP scorecard on the frameworks page (2026-10-12). */
+.mvep-scorecard .section-title{margin-bottom:var(--space-md)}
+.mvep-sc{display:grid;gap:var(--space-md)}
+.mvep-sc__head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.5rem .8rem;align-items:center;max-width:52rem}
+.mvep-sc__head label{font-size:.9rem;font-weight:600;color:var(--muted)}
+.mvep-sc__head input,.mvep-sc__note input{font:inherit;font-size:.95rem;padding:.45rem .6rem;border:1px solid color-mix(in srgb, currentColor 22%, transparent);border-radius:8px;background:transparent;color:inherit;width:100%;min-width:0}
+.mvep-sc__head input:focus-visible,.mvep-sc__note input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.mvep-sc__list{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.mvep-sc__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem 1.2rem;padding:.9rem 1rem;border:1px solid color-mix(in srgb, currentColor 12%, transparent);border-radius:12px;background:color-mix(in srgb, currentColor 3%, transparent)}
+.mvep-sc__row[data-verdict="P"]{border-color:color-mix(in srgb, #2e8b57 55%, transparent)}
+.mvep-sc__row[data-verdict="F"]{border-color:color-mix(in srgb, #c0392b 60%, transparent);background:color-mix(in srgb, #c0392b 6%, transparent)}
+.mvep-sc__row[data-verdict="A"]{border-color:color-mix(in srgb, #b45309 60%, transparent)}
+.mvep-sc__cat h3{margin:0 0 .3rem;font-size:1.02rem;line-height:1.3}
+.mvep-sc__n{display:inline-grid;place-items:center;min-width:1.5em;height:1.5em;border-radius:999px;background:var(--accent);color:#fff;font-size:.78em;font-weight:700;margin-right:.3rem;vertical-align:middle}
+.mvep-sc__crit{display:inline-block;margin-left:.4rem;font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);border-radius:999px;padding:.05rem .45rem;vertical-align:middle}
+.mvep-sc__verify{margin:0 0 .35rem;font-size:.92rem;color:var(--text-soft);line-height:1.5}
+.mvep-sc__tests{margin:0;font-size:.86rem;color:var(--muted);line-height:1.5}
+.mvep-sc__verdict{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem .9rem;align-content:start;font-size:.9rem}
+.mvep-sc__verdict label{display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap;cursor:pointer}
+.mvep-sc__verdict input{accent-color:var(--accent);margin:0}
+.mvep-sc__note{grid-column:1 / -1}
+.mvep-sc__summary{padding:var(--space-md) 1rem;border-radius:12px;border:1px solid color-mix(in srgb, currentColor 14%, transparent)}
+.mvep-sc__summary p{margin:0 0 .35rem;max-width:none}
+.mvep-sc__gate{font-weight:700;font-size:1.05rem}
+.mvep-sc__gate[data-state="blocked"]{color:#c0392b}
+.mvep-sc__gate[data-state="open"]{color:#2e8b57}
+.mvep-sc__gate[data-state="incomplete"]{color:#b45309}
+.mvep-sc__counts,.mvep-sc__crit-note{font-size:.92rem;color:var(--text-soft)}
+.mvep-sc__actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.mvep-sc__status{font-size:.9rem;color:var(--muted)}
+.mvep-sc__foot{font-size:.9rem;color:var(--muted);max-width:72ch;margin:0}
+@media (max-width: 720px){
+  .mvep-sc__row{grid-template-columns:1fr}
+  .mvep-sc__head{grid-template-columns:1fr}
+}
+@media print{
+  body.mvep-printing header,body.mvep-printing footer,body.mvep-printing nav,body.mvep-printing .back-to-top,body.mvep-printing main > section:not(#mvep-scorecard),body.mvep-printing .mvep-sc__actions{display:none !important}
+  body.mvep-printing .mvep-sc__row{break-inside:avoid;border:1px solid #999}
+  body.mvep-printing .mvep-sc__verdict label{display:none}
+  body.mvep-printing .mvep-sc__verdict label:has(input:checked){display:inline-flex}
+}
+
+/* Work-with-me block on the advisory page (2026-10-12). */
+.work-with{display:grid;gap:var(--space-md);max-width:60rem}
+.work-with__steps{margin:0;padding-left:1.3rem;color:var(--text-soft);line-height:1.6}
+.work-with__steps li{margin:.4rem 0}
+.work-with__types{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem}
+.work-with__types a{display:block;padding:.85rem 1rem;border:1px solid color-mix(in srgb, currentColor 14%, transparent);border-radius:12px;text-decoration:none;color:inherit}
+.work-with__types a:hover,.work-with__types a:focus-visible{border-color:var(--accent)}
+.work-with__types strong{display:block;margin-bottom:.25rem}
+.work-with__types span{font-size:.9rem;color:var(--muted);line-height:1.45}
+.work-with__label{margin:0 0 .3rem;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.work-with__proof ul{margin:0;padding-left:1.2rem;color:var(--text-soft);line-height:1.6}
+.work-with__alt{margin:0;color:var(--muted);font-size:.95rem}
+/* Contrast and link affordance on the generated ledgers (2026-10-12): links inside note rows
+   and date lists are underlined so they read as links beside muted text, and the two
+   elements that put white on the accent get dark text in the dark theme, where the accent is
+   light (#5b9cf5: white on it is 2.8:1, #0a0c10 on it is 7:1). */
+.letters-outcome-note a,.letters-watch a,.tracker-statute a{text-decoration:underline;text-underline-offset:.12em}
+:root[data-theme="dark"] .letters-follow__button{color:#0a0c10}
+:root[data-theme="dark"] .mvep-sc__n{color:#0a0c10}
+/* Scorecard gate line: state colours that clear AA on both themes (2026-10-12). */
+.mvep-sc__gate[data-state="blocked"]{color:#a93226}
+.mvep-sc__gate[data-state="open"]{color:#1e6b43}
+.mvep-sc__gate[data-state="incomplete"]{color:#9a4607}
+:root[data-theme="dark"] .mvep-sc__gate[data-state="blocked"]{color:#f1948a}
+:root[data-theme="dark"] .mvep-sc__gate[data-state="open"]{color:#58d68d}
+:root[data-theme="dark"] .mvep-sc__gate[data-state="incomplete"]{color:#f0b35a}
+.work-with__steps .cta-link{text-decoration:underline;text-underline-offset:.12em}
+/* Advisory page, two pre-existing AA misses found by the scorecard round's axe pass: the hero
+   credentials sat at 75 percent opacity (3.95:1) and in-card links took the generic link colour
+   on the card surface (4.35:1). */
+.speaker-page .speaker-credentials{opacity:1;color:var(--muted)}
+.speaker-page .advisory-card p a{color:var(--accent)}
+.speaker-page .talk-bridge a{color:var(--accent)}
+.speaker-page .featured-talk .talk-bridge{opacity:1;color:var(--muted)}

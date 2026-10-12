@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Keep the homepage's embedded matrix logos in sync with their committed assets."""
+"""Keep the homepage's embedded matrix logos in sync with their committed assets.
+
+The logo table (var ICONS and var WORDMARK) lives in home.js, the homepage's own script
+file, since 2026-10-12; before that it was inline in index.html.
+"""
 import argparse
 import base64
 import json
@@ -60,7 +64,7 @@ def main():
     mode.add_argument("--write", action="store_true")
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    page = ROOT / "index.html"
+    page = ROOT / "home.js"
     source = page.read_text()
     expected = render(source)
     if args.write:

@@ -90,6 +90,9 @@ jobs:
           # outcome and related regions, the recommendation index and the Atom feed
           # against scripts/letters_registry.json (the letters registry).
           run_check scripts/render_letters.py --check
+          # render_notes.py --check verifies the notes index and feed against
+          # scripts/notes_registry.json and that every note page carries its date.
+          run_check scripts/render_notes.py --check
           # The battery checking ITSELF: fails if a guard in the pre-push battery
           # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
           # purpose, so it cannot become a third list only one side runs.
