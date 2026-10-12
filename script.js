@@ -6160,6 +6160,11 @@
 
           var params = new URLSearchParams();
           params.append('email', email);
+          /* Optional Buttondown tags carried by the form (the letters hub tags
+             new-letter subscribers so they can be mailed on each filing). */
+          Array.prototype.forEach.call(form.querySelectorAll('input[type="hidden"][name="tag"]'), function(t){
+            if(t.value) params.append('tag', t.value);
+          });
 
           try {
             fetch(form.action, {

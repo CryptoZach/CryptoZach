@@ -403,9 +403,16 @@ def gen_index(m):
         counts[ch] = counts.get(ch, 0) + 1
     chans = ", ".join(f"{esc(ch)} ({n})" for ch, n in sorted(counts.items(), key=lambda kv: -kv[1]))
     intl = [l for l in m.letters if l["series"] == "international"]
+    combined = os.path.join(m.root, "letters", "all-letters.pdf")
+    pdf_note = ""
+    if os.path.isfile(combined):
+        mb = os.path.getsize(combined) / 1e6
+        pdf_note = (f' All {word(m.n_federal)} are also compiled, with a contents page and bookmarks, in '
+                    f'<a href="/letters/all-letters.pdf">one PDF for reviewers</a> ({mb:.1f} MB).')
     note = (f"The {word(m.n_federal)} federal letters were filed via {chans}. "
             + (f"The international series ({', '.join(esc(l['agency']) for l in intl)}) is listed for completeness and does not change the federal count. " if intl else "")
-            + f'Every recommendation is also listed in the <a href="/letters/recommendations/">recommendation index</a>.')
+            + f'Every recommendation is also listed in the <a href="/letters/recommendations/">recommendation index</a>.'
+            + pdf_note)
     out.append(f'<p class="letters-note">{note}</p>')
     return out
 
@@ -417,7 +424,7 @@ def gen_outcomes(m):
            '<div class="letters-timeline-table" role="region" aria-label="Outcomes by proceeding">',
            '  <table class="letters-timeline letters-outcomes letters-stackable">',
            "    <thead>",
-           "      <tr><th>Proceeding</th><th>Letters</th><th>Comments closed</th><th>Status</th><th>Recommendations</th></tr>",
+           "      <tr><th>Proceeding</th><th>Letters</th><th>Comments closed</th><th>Status</th><th>Recommen&shy;dations</th></tr>",
            "    </thead>",
            "    <tbody>"]
     seen = []
@@ -666,7 +673,7 @@ def gen_recommendations(m):
             '<div class="letters-timeline-table" role="region" aria-label="All recommendations">',
             '  <table class="letters-timeline rec-index letters-stackable" id="rec-index">',
             "    <thead>",
-            "      <tr><th>No.</th><th>Letter</th><th>Recommendation</th><th>Topics</th><th>Status</th></tr>",
+            "      <tr><th>No.</th><th>Letter</th><th>Recommen&shy;dation</th><th>Topics</th><th>Status</th></tr>",
             "    </thead>",
             "    <tbody>"]
     for l in letters:
