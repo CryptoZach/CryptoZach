@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "Joint OCC, FDIC, NCUA AML rule. Seven recommendations addressing bank control-layer functions in tokenized finance. Filed at all three agency dockets concurrently.",
       "url": "https://tokenization.systems/letters/banking-agencies-joint-aml/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/banking-agencies-joint-aml/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/banking-agencies-joint-aml/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on 91 Fed. Reg. 18304 with the OCC + FDIC + NCUA (joint)",
+      "about": {
+        "@type": "Legislation",
+        "name": "OCC, FDIC and NCUA: anti-money laundering and countering the financing of terrorism program requirements for banks",
+        "legislationIdentifier": "RIN 1557-AF14; RIN 3064-AF34; RIN 3133-AG08; 91 Fed. Reg. 18304",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.federalregister.gov/citation/91-FR-18304",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Office of the Comptroller of the Currency, Federal Deposit Insurance Corporation and National Credit Union Administration" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Office of the Comptroller of the Currency (OCC), Federal Deposit Insurance Corporation (FDIC), and National Credit Union Administration (NCUA), joint rulemaking" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -204,6 +213,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 18, 2026</span>
         <span class="badge">7 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Banking agencies joint AML/CFT comment: banks increasingly perform control-layer functions in tokenized finance</h1>
@@ -230,9 +242,16 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The joint NPRM at 91 Fed. Reg. 18304 is a re-issuance of a 2024 joint rule (89 Fed. Reg. 65242) that previously included the Federal Reserve Board. The 2026 version preserves the four-pillar AML program architecture (internal policies, independent testing, designated officer, training) while adding risk assessment processes, a US-based AML/CFT officer requirement, AML/CFT Priorities consideration, and a culture of compliance requirement. Aligns bank AML with the AML Act of 2020.</p>
-
+        <h2>Recommendations</h2>
+        <ol>
+              <li id="rec-1"><strong>Control-layer function mapping in bank risk assessments</strong> for tokenized finance activities. Business activities must include the specific control-layer functions the bank performs.</li>
+              <li id="rec-2"><strong>Bank risk assessments must address reserve custody relationships with PPSIs.</strong> Concentration, operational, and custodial-channel contagion risk.</li>
+              <li id="rec-3"><strong>Coordination between parent bank AML program and PPSI subsidiary AML program</strong>, including joint SAR filing arrangements and FinCEN supervisory coordination.</li>
+              <li id="rec-4"><strong>US-based AML/CFT officer requirement for banks operating in tokenized finance.</strong> Effective supervisory control over US-nexus operations regardless of where technical operations are headquartered.</li>
+              <li id="rec-5"><strong>Culture of compliance requirement should include control-layer function performance</strong>, not only documentary and procedural compliance.</li>
+              <li id="rec-6"><strong>Address FRB non-participation.</strong> Three provisions: accommodating language for FRB joinder or separation; coordination mechanism in FRB absence; navigation guidance for multi-supervised banks.</li>
+              <li id="rec-7"><strong>Coordination with parallel FinCEN rulemakings</strong> (<a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a> and <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>).</li>
+            </ol>
         <h2>Gaps identified</h2>
         <ul>
               <li><strong>FRB non-participation creates a supervisory-consistency gap.</strong> State member banks, BHCs, SLHCs, and US operations of foreign banks subject to FRB supervision are not covered by the joint rule; the 2024 proposal included the Board.</li>
@@ -241,40 +260,51 @@
               <li><strong>Parent-bank and subsidiary-PPSI AML program coordination is unspecified.</strong> Joint SAR filing under proposed 31 CFR 1033.320(d)(1)(ii)(B); FinCEN supervisory coordination.</li>
               <li><strong>Culture of compliance requirement is underspecified</strong> for control-layer function performance (not only documentary and procedural compliance).</li>
             </ul>
-
-        <h2>Recommendations</h2>
-        <ol>
-              <li><strong>Control-layer function mapping in bank risk assessments</strong> for tokenized finance activities. Business activities must include the specific control-layer functions the bank performs.</li>
-              <li><strong>Bank risk assessments must address reserve custody relationships with PPSIs.</strong> Concentration, operational, and custodial-channel contagion risk.</li>
-              <li><strong>Coordination between parent bank AML program and PPSI subsidiary AML program</strong>, including joint SAR filing arrangements and FinCEN supervisory coordination.</li>
-              <li><strong>US-based AML/CFT officer requirement for banks operating in tokenized finance.</strong> Effective supervisory control over US-nexus operations regardless of where technical operations are headquartered.</li>
-              <li><strong>Culture of compliance requirement should include control-layer function performance</strong>, not only documentary and procedural compliance.</li>
-              <li><strong>Address FRB non-participation.</strong> Three provisions: accommodating language for FRB joinder or separation; coordination mechanism in FRB absence; navigation guidance for multi-supervised banks.</li>
-              <li><strong>Coordination with parallel FinCEN rulemakings</strong> (<a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a> and <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>).</li>
-            </ol>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The joint NPRM at 91 Fed. Reg. 18304 is a re-issuance of a 2024 joint rule (89 Fed. Reg. 65242) that previously included the Federal Reserve Board. The 2026 version preserves the four-pillar AML program architecture (internal policies, independent testing, designated officer, training) while adding risk assessment processes, a US-based AML/CFT officer requirement, AML/CFT Priorities consideration, and a culture of compliance requirement. Aligns bank AML with the AML Act of 2020.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>7 recommendations filed; no final action yet</dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-aml-cft/">No. 5</a>, <a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">No final rule located as of the verification date.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Multi-docket bank-side companion to FinCEN AML letters. The FRB non-participation response lives here as Recommendation 6. Same PDF filed at all three agency dockets per joint-rulemaking convention.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card">
-            <strong>&larr; Previous letter: FinCEN-OFAC PPSI</strong>
-            <span>April 18, 2026 &middot; FinCEN + OFAC (joint) &middot; FINCEN-2026-0100 (RIN 1506-AB73)</span>
-          </a><a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
-            <strong>Next letter: FDIC AG19 (closing) &rarr;</strong>
-            <span>April 20, 2026 &middot; FDIC &middot; RIN 3064-AG19 (91 Fed. Reg. 18534)</span>
-          </a><a href="/letters/fincen-aml-cft/" class="companion-card">
-            <strong>Companion AML rulemaking: FinCEN AML/CFT</strong>
-            <span>April 18, 2026 &middot; FinCEN &middot; FINCEN-2026-0034. Tri-rulemaking AML/CFT package companion.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/letters/fincen-aml-cft/" class="companion-card">
+            <strong>Same cycle: FinCEN AML/CFT &rarr;</strong>
+            <span>April 18, 2026 &middot; FinCEN &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fincen-aml-cft-supplemental/" class="companion-card">
+            <strong>Same cycle: FinCEN AML/CFT supplemental &rarr;</strong>
+            <span>June 9, 2026 &middot; FinCEN &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/routing-the-dollar/" class="companion-card">
+            <strong>Paper: Routing the Dollar (A1) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%2091%20Fed.%20Reg.%2018304">Zach@Tokenization.Systems</a></p>
     </article>

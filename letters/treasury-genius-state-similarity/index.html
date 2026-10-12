@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "Six recommendations for the Treasury substantial-similarity assessment. MVEP as the diagnostic framework; custodial diversification; interface-layer conduct standards.",
       "url": "https://tokenization.systems/letters/treasury-genius-state-similarity/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/treasury-genius-state-similarity/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/treasury-genius-state-similarity/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on TREAS-DO-2026-0232 (RIN 1505-AC90; 91 FR 16844) with the Treasury",
+      "about": {
+        "@type": "Legislation",
+        "name": "Treasury: principles for determining that a state regulatory regime is substantially similar",
+        "legislationIdentifier": "RIN 1505-AC90; Docket TREAS-DO-2026-0232; 91 Fed. Reg. 16844",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/docket/TREAS-DO-2026-0232",
+        "publisher": { "@type": "GovernmentOrganization", "name": "U.S. Department of the Treasury" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "U.S. Department of the Treasury" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -204,6 +213,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 15, 2026</span>
         <span class="badge">6 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Treasury GENIUS Act state-similarity comment: six recommendations for the substantial-similarity assessment</h1>
@@ -230,9 +242,15 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>Treasury's proposed §1521 principles frame the evaluation of whether a state regulatory regime is "substantially similar" to the federal GENIUS Act framework, enabling state-qualified PPSIs to operate under state regimes that "meet or exceed" the federal baseline. Proposed §1521.2(b)(1) requires that implementation of each state-calibrated requirement "leads to regulatory outcomes that are at least as stringent and protective as the Federal regulatory framework." §1521.5 addresses custody and insolvency separately from §1521.3's reserve and capital standards. §1521.6 permits states to impose additional requirements beyond the federal framework.</p>
-
+        <h2>Recommendations</h2>
+        <ol>
+              <li id="rec-1"><strong>Adopt a standardized diagnostic framework</strong> (MVEP or comparable) for the substantial-similarity assessment, structured around functional holder-protection dimensions rather than statutory sections.</li>
+              <li id="rec-2"><strong>Incorporate the three-category reserve disclosure</strong> (legal claim, composition, location/custody) as uniform cross-state data fields for Stablecoin Certification Review Committee comparability.</li>
+              <li id="rec-3"><strong>Require disclosure of redemption pathway dependencies.</strong> A regime meeting two-business-day redemption but not disclosing when the sole redemption route depends on another tokenized instrument (as BUIDL depends on USDC) leaves holders exposed.</li>
+              <li id="rec-4"><strong>Permit states to narrow but not expand permitted reserve assets.</strong> Narrowing strengthens holder protection; expanding enables arbitrage.</li>
+              <li id="rec-5"><strong>Operational backstop should include custodial diversification.</strong> The SVB episode indicates concentration, not operating-capital inadequacy, as the transmission channel.</li>
+              <li id="rec-6"><strong>Explicitly recognize interface-layer conduct standards under §1521.6</strong> as permissible and encouraged additional state requirements, preserved from future federal preemption under section 7(f)(4) consumer-protection carve-out.</li>
+            </ol>
         <h2>Gaps identified</h2>
         <ul>
               <li><strong>Section-by-section assessment misses cross-cutting weaknesses.</strong> Holder-protection failures cluster: rights parity, insolvency posture, and settlement finality fail together because they trace to the same weak legal claim on reserves.</li>
@@ -242,39 +260,50 @@
               <li><strong>Some federal protections are structurally unreplicable at the state level.</strong> Bankruptcy priority (Section 507 amended by GENIUS §11); UCC Article 12 take-free variance by state; OCC examination authority over nationally chartered custodians.</li>
               <li><strong>Activities that functionally defeat the Act.</strong> Section 4(a)(7)(B) permits state discretion that could license activity mixes producing holder-protection outcomes inconsistent with the Act's intent.</li>
             </ul>
-
-        <h2>Recommendations</h2>
-        <ol>
-              <li><strong>Adopt a standardized diagnostic framework</strong> (MVEP or comparable) for the substantial-similarity assessment, structured around functional holder-protection dimensions rather than statutory sections.</li>
-              <li><strong>Incorporate the three-category reserve disclosure</strong> (legal claim, composition, location/custody) as uniform cross-state data fields for Stablecoin Certification Review Committee comparability.</li>
-              <li><strong>Require disclosure of redemption pathway dependencies.</strong> A regime meeting two-business-day redemption but not disclosing when the sole redemption route depends on another tokenized instrument (as BUIDL depends on USDC) leaves holders exposed.</li>
-              <li><strong>Permit states to narrow but not expand permitted reserve assets.</strong> Narrowing strengthens holder protection; expanding enables arbitrage.</li>
-              <li><strong>Operational backstop should include custodial diversification.</strong> The SVB episode indicates concentration, not operating-capital inadequacy, as the transmission channel.</li>
-              <li><strong>Explicitly recognize interface-layer conduct standards under §1521.6</strong> as permissible and encouraged additional state requirements, preserved from future federal preemption under section 7(f)(4) consumer-protection carve-out.</li>
-            </ol>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>Treasury's proposed §1521 principles frame the evaluation of whether a state regulatory regime is "substantially similar" to the federal GENIUS Act framework, enabling state-qualified PPSIs to operate under state regimes that "meet or exceed" the federal baseline. Proposed §1521.2(b)(1) requires that implementation of each state-calibrated requirement "leads to regulatory outcomes that are at least as stringent and protective as the Federal regulatory framework." §1521.5 addresses custody and insolvency separately from §1521.3's reserve and capital standards. §1521.6 permits states to impose additional requirements beyond the federal framework.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 3 to June 2, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>6 recommendations filed; no final action yet</dd></div>
+        </dl>
+        <p class="letter-outcome-note">On September 30, 2026 Treasury, for the Stablecoin Certification Review Committee, issued a separate interim final rule setting the forms and procedures for state certifications under section 4(c), with comments accepted through November 30, 2026. The substantial-similarity principles rule itself has not been finalized. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Extends the control-layer framework from issuer-level (OCC anchor) and interface-level (OCC supplemental) to the state-similarity layer. Sets up the federal-framework baseline against which the subsequent AML and FDIC letters build. Responsive to 26 of the Treasury NPRM questions across six sections.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
           <a href="/letters/occ-supplemental/" class="companion-card">
-            <strong>&larr; Previous letter: OCC Supplemental</strong>
-            <span>April 13, 2026 &middot; OCC &middot; OCC-2025-0372-0069 (supplements -0057)</span>
-          </a><a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
-            <strong>Next letter: FDIC AG20 &rarr;</strong>
-            <span>April 18, 2026 &middot; FDIC &middot; RIN 3064-AG20 (90 Fed. Reg. 59409)</span>
-          </a><a href="/letters/occ-mvep-v4/" class="companion-card">
-            <strong>MVEP precedent: OCC PPSI core</strong>
-            <span>April 10, 2026 &middot; OCC &middot; OCC-2025-0372-0057. Anchor letter introducing MVEP framework applied to state-similarity assessment.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+            <strong>Same cycle: OCC Supplemental (control-layer) &rarr;</strong>
+            <span>April 13, 2026 &middot; OCC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
+            <strong>Same cycle: FDIC AG20 application &rarr;</strong>
+            <span>April 18, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/routing-the-dollar/" class="companion-card">
+            <strong>Paper: Routing the Dollar (A1) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20TREAS-DO-2026-0232%20(RIN%201505-AC90;%2091%20FR%2016844)">Zach@Tokenization.Systems</a></p>
     </article>

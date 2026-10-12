@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "Eleven recommendations to the NCUA on stablecoin issuance by credit unions under the GENIUS Act, applying the MVEP and CLII control-layer frameworks. Cross-agency parity with the OCC and FDIC rules is the distinctive contribution.",
       "url": "https://tokenization.systems/letters/ncua-genius/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/ncua-genius/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/ncua-genius/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on Docket NCUA-2026-1024 (RIN 3133-AG10; 91 Fed. Reg. 28956) with the National Credit Union Administration",
+      "about": {
+        "@type": "Legislation",
+        "name": "NCUA: GENIUS Act implementation for the issuance of stablecoins by entities subject to NCUA jurisdiction",
+        "legislationIdentifier": "RIN 3133-AG10; Docket NCUA-2026-1024; 91 Fed. Reg. 28956",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/document/NCUA-2026-1024-0001",
+        "publisher": { "@type": "GovernmentOrganization", "name": "National Credit Union Administration" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "National Credit Union Administration (NCUA)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -205,6 +214,9 @@
         <span class="badge">June 22, 2026</span>
         <span class="badge">Completes GENIUS-agency coverage</span>
         <span class="badge">11 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">NCUA GENIUS stablecoin comment: cross-agency parity for credit-union stablecoin issuance</h1>
@@ -229,9 +241,40 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The NCUA's proposed rule establishes standards for the issuance of payment stablecoins by NCUA-licensed Permitted Payment Stablecoin Issuers (PPSIs), the credit-union analogue of the OCC's March 2026 stablecoin proposal. Headline provisions: reserve diversification at proposed Section 706.202(c) (presented as Option A, a principles-based standard with an optional quantitative safe harbor, or Option B, the same standards as mandatory requirements); a monthly public reserve report at Section 706.202(e); a technology-neutral amendment to the share-insurance rules at part 745; redemption, capital, insolvency, and reporting standards; and an interagency-coordination posture flagged at the proposal's own footnote 160. It supplements the NCUA's February 2026 licensing proposal.</p>
-
+        <h2>Recommendations</h2>
+        <h3>Group I: Reserve diversification and transparency (Recommendations 1 to 2)</h3>
+        <ol>
+          <li id="rec-1"><strong>Make the core quantitative diversification standards requirements, not an optional safe harbor</strong> (at least the single-institution concentration cap and the daily and weekly liquidity minimums). The SVB record: roughly 8 percent reserve concentration at one institution coincided with material USDC peg deviation. Aligns with the FDIC's 40 percent cap presented as a requirement at proposed Section 350.4(f). (Q58, Q68, Q69)</li>
+          <li id="rec-2"><strong>Require the monthly public reserve report to name the institutions holding reserve deposits and to separate insured from uninsured amounts.</strong> (Q83, Q86, Q87)</li>
+        </ol>
+        <h3>Group II: Share insurance and tokenized shares (Recommendations 3 to 5)</h3>
+        <ol start="3">
+          <li id="rec-3"><strong>Finalize the technology-neutral amendment to part 745 as proposed.</strong> (Q173 to Q176)</li>
+          <li id="rec-4"><strong>Pair the no-pass-through determination with a mandatory holder-facing disclosure, and coordinate the pass-through posture with the FDIC before finalization.</strong> (Q39, Q167 to Q172)</li>
+          <li id="rec-5"><strong>Classify a digital asset that represents only a claim on a Share Account as a payment stablecoin backed by tokenized shares,</strong> not as the tokenized share itself. (Q180)</li>
+        </ol>
+        <h3>Group III: Redemption (Recommendations 6 to 7)</h3>
+        <ol start="6">
+          <li id="rec-6"><strong>Require redemption for any holder who completes screening and onboarding,</strong> and require disclosure of the number of accounts with direct redemption rights. (Q103)</li>
+          <li id="rec-7"><strong>Cap redemption fees at documented cost during the extended-redemption state, deliver fee-change notices to all holders, and unify the redemption disclosures.</strong> (Q97, Q99, Q101, Q102)</li>
+        </ol>
+        <h3>Group IV: Capital (Recommendation 8)</h3>
+        <ol start="8">
+          <li id="rec-8"><strong>Pair the individualized capital requirement with an objective variable floor scaled to Outstanding Issuance Value,</strong> consistent with the OCC's proposed $5 million de novo floor at proposed 12 CFR 15.41(a)(1)(i)(B). (Q153, Q154)</li>
+        </ol>
+        <h3>Group V: Insolvency and resolution (Recommendation 9)</h3>
+        <ol start="9">
+          <li id="rec-9"><strong>Adopt implementing rules for the GENIUS Act insolvency provisions,</strong> require resolution planning scaled to issuance and reserve traceability, and make custodial-priority waivers visible. (Q37, Q86, Q143, Q188)</li>
+        </ol>
+        <h3>Group VI: Cross-agency coordination (Recommendation 10)</h3>
+        <ol start="10">
+          <li id="rec-10"><strong>Coordinate reporting formats and primary-regulator designation on an interagency basis,</strong> and resolve the discretionary-redemption-limitation authority question (footnote 160) explicitly. (Q1, Q2, Q126, Q131)</li>
+        </ol>
+        <h3>Group VII: Stress testing (Recommendation 11)</h3>
+        <ol start="11">
+          <li id="rec-11"><strong>Require size-scaled stress testing, with a mandatory scenario calibrated to the reserve-concentration channel of the March 2023 depeg, and make summary results public.</strong> (Q194)</li>
+        </ol>
+        <p><strong>Observation (Q-backstop).</strong> Operational backstop calibration: align the twelve-month operational backstop with the parity position taken in the FDIC AG19 comment.</p>
         <h2>Gaps identified</h2>
         <ul>
           <li><strong>The core diversification standards are optional.</strong> The single-institution concentration cap and the daily and weekly liquidity minimums bind only as a safe harbor under Option A, leaving the supervisor to discover excessive concentration by examination rather than by rule.</li>
@@ -243,61 +286,55 @@
           <li><strong>Reporting formats and primary-regulator designation are not coordinated interagency,</strong> and the discretionary-redemption-limitation authority question (footnote 160) is unresolved.</li>
           <li><strong>No size-scaled stress testing is required.</strong></li>
         </ul>
-
-        <h2>Recommendations</h2>
-        <h3>Group I: Reserve diversification and transparency (Recommendations 1 to 2)</h3>
-        <ol>
-          <li><strong>Make the core quantitative diversification standards requirements, not an optional safe harbor</strong> (at least the single-institution concentration cap and the daily and weekly liquidity minimums). The SVB record: roughly 8 percent reserve concentration at one institution coincided with material USDC peg deviation. Aligns with the FDIC's 40 percent cap presented as a requirement at proposed Section 350.4(f). (Q58, Q68, Q69)</li>
-          <li><strong>Require the monthly public reserve report to name the institutions holding reserve deposits and to separate insured from uninsured amounts.</strong> (Q83, Q86, Q87)</li>
-        </ol>
-        <h3>Group II: Share insurance and tokenized shares (Recommendations 3 to 5)</h3>
-        <ol start="3">
-          <li><strong>Finalize the technology-neutral amendment to part 745 as proposed.</strong> (Q173 to Q176)</li>
-          <li><strong>Pair the no-pass-through determination with a mandatory holder-facing disclosure, and coordinate the pass-through posture with the FDIC before finalization.</strong> (Q39, Q167 to Q172)</li>
-          <li><strong>Classify a digital asset that represents only a claim on a Share Account as a payment stablecoin backed by tokenized shares,</strong> not as the tokenized share itself. (Q180)</li>
-        </ol>
-        <h3>Group III: Redemption (Recommendations 6 to 7)</h3>
-        <ol start="6">
-          <li><strong>Require redemption for any holder who completes screening and onboarding,</strong> and require disclosure of the number of accounts with direct redemption rights. (Q103)</li>
-          <li><strong>Cap redemption fees at documented cost during the extended-redemption state, deliver fee-change notices to all holders, and unify the redemption disclosures.</strong> (Q97, Q99, Q101, Q102)</li>
-        </ol>
-        <h3>Group IV: Capital (Recommendation 8)</h3>
-        <ol start="8">
-          <li><strong>Pair the individualized capital requirement with an objective variable floor scaled to Outstanding Issuance Value,</strong> consistent with the OCC's proposed $5 million de novo floor at proposed 12 CFR 15.41(a)(1)(i)(B). (Q153, Q154)</li>
-        </ol>
-        <h3>Group V: Insolvency and resolution (Recommendation 9)</h3>
-        <ol start="9">
-          <li><strong>Adopt implementing rules for the GENIUS Act insolvency provisions,</strong> require resolution planning scaled to issuance and reserve traceability, and make custodial-priority waivers visible. (Q37, Q86, Q143, Q188)</li>
-        </ol>
-        <h3>Group VI: Cross-agency coordination (Recommendation 10)</h3>
-        <ol start="10">
-          <li><strong>Coordinate reporting formats and primary-regulator designation on an interagency basis,</strong> and resolve the discretionary-redemption-limitation authority question (footnote 160) explicitly. (Q1, Q2, Q126, Q131)</li>
-        </ol>
-        <h3>Group VII: Stress testing (Recommendation 11)</h3>
-        <ol start="11">
-          <li><strong>Require size-scaled stress testing, with a mandatory scenario calibrated to the reserve-concentration channel of the March 2023 depeg, and make summary results public.</strong> (Q194)</li>
-        </ol>
-        <p><strong>Observation (Q-backstop).</strong> Operational backstop calibration: align the twelve-month operational backstop with the parity position taken in the FDIC AG19 comment.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The NCUA's proposed rule establishes standards for the issuance of payment stablecoins by NCUA-licensed Permitted Payment Stablecoin Issuers (PPSIs), the credit-union analogue of the OCC's March 2026 stablecoin proposal. Headline provisions: reserve diversification at proposed Section 706.202(c) (presented as Option A, a principles-based standard with an optional quantitative safe harbor, or Option B, the same standards as mandatory requirements); a monthly public reserve report at Section 706.202(e); a technology-neutral amendment to the share-insurance rules at part 745; redemption, capital, insolvency, and reporting standards; and an interagency-coordination posture flagged at the proposal's own footnote 160. It supplements the NCUA's February 2026 licensing proposal.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>May 18 to July 17, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>11 recommendations filed; no final action yet</dd></div>
+          <div><dt>Supplemented by</dt><dd><a href="/letters/ncua-genius-supplemental/">No. 12: NCUA GENIUS supplemental</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Eleventh letter in the Federal Comment Letter Program and the one that completes coverage of every GENIUS-implementing agency. Cross-agency parity is the distinctive contribution: only a commenter who has analyzed each sibling proposal can flag where the NCUA rule and the OCC and FDIC rules diverge in ways that invite charter arbitrage. The comment applies the Control Layer Intensity Index (CLII) and the Minimum Viable Equivalence Pack (MVEP), both on SSRN.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
+          <a href="/letters/ncua-genius-supplemental/" class="companion-card">
+            <strong>Supplemented by: NCUA GENIUS supplemental &rarr;</strong>
+            <span>June 22, 2026 &middot; NCUA &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card">
+            <strong>Same cycle: FDIC AG29 BSA and sanctions &rarr;</strong>
+            <span>June 30, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
           <a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/" class="companion-card">
-            <strong>&larr; Previous letter: FinCEN-OFAC PPSI sanctions supplemental</strong>
-            <span>June 9, 2026 &middot; FinCEN + OFAC &middot; FINCEN-2026-0100</span>
-          </a><a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
-            <strong>Cross-agency parity anchor: FDIC AG19 activities</strong>
-            <span>April 20, 2026 &middot; FDIC &middot; RIN 3064-AG19. Source of the 40 percent concentration cap and the reserve-report and backstop positions this letter aligns to.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+            <strong>Same cycle: FinCEN-OFAC PPSI supplemental &rarr;</strong>
+            <span>June 9, 2026 &middot; FinCEN + OFAC &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20Docket%20NCUA-2026-1024%20(RIN%203133-AG10)">Zach@Tokenization.Systems</a></p>
     </article>

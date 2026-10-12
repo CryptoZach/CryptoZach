@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "The first statutory control-layer mandate. Ten recommendations plus five-MVEP-category mapping to proposed §1033.210. 50 of 58 NPRM questions engaged.",
       "url": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on FINCEN-2026-0100 (RIN 1506-AB73) with FinCEN + OFAC (joint)",
+      "about": {
+        "@type": "Legislation",
+        "name": "FinCEN and OFAC: permitted payment stablecoin issuer AML/CFT program and sanctions compliance program requirements",
+        "legislationIdentifier": "RIN 1506-AB73; Docket FINCEN-2026-0100; 91 Fed. Reg. 18582",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/docket/FINCEN-2026-0100",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network and Office of Foreign Assets Control" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network (FinCEN) and Office of Foreign Assets Control (OFAC), joint rulemaking" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -204,6 +213,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 18, 2026</span>
         <span class="badge">10 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FinCEN-OFAC PPSI comment: the first statutory control-layer mandate in U.S. financial regulation</h1>
@@ -230,9 +242,20 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>Under 31 U.S.C. 5312(a)(2)(Y), FinCEN designates PPSIs as financial institutions subject to the BSA. GENIUS Act proposed 31 CFR 1033.240 requires PPSIs to have technical capability to block, freeze, and reject transactions and to comply with any lawful order, applied to both primary and secondary market activity. Proposed §502.201(b) sets out a five-element sanctions compliance program (senior management commitment, risk assessment, internal controls, testing/auditing, training). Proposed §1010.100(ff)(8)(iii) removes PPSIs from the MSB definition, creating a clean partition: PPSIs under this rule; non-PPSI stablecoins remain under <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>'s MSB framework.</p>
-
+        <h2>Recommendations</h2>
+        <ol>
+              <li id="rec-1"><strong>Control-layer function mapping in PPSI risk assessments.</strong> Operational topology as the unit of AML analysis.</li>
+              <li id="rec-2"><strong>Operational verification of block/freeze/reject capability through independent testing</strong> for both primary and secondary market transactions. Preserve the NPRM's flexibility on technical methods; add a verification requirement.</li>
+              <li id="rec-3"><strong>"Account" in §1010.100(rrr) must include wallet addresses.</strong> Structural necessity for lawful-order execution against routing-layer capability.</li>
+              <li id="rec-4"><strong>Sanctions compliance program integration with AML/CFT program</strong> at governance and operational levels.</li>
+              <li id="rec-5"><strong>Graduated secondary market SAR framework</strong> tied to 314(a) requests and executed block/freeze/reject actions, with explicit SAR-to-capability interaction rules.</li>
+              <li id="rec-6"><strong>Reserve custody relationships in PPSI risk assessments</strong>: concentration, jurisdictional, operational risk.</li>
+              <li id="rec-7"><strong>AML/CFT officer felony conviction prohibition scope clarification.</strong></li>
+              <li id="rec-8"><strong>Information sharing framework for interface operators</strong>: the PPSI channel for interface-layer engagement.</li>
+              <li id="rec-9"><strong>Coordination with <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a> and <a href="/letters/banking-agencies-joint-aml/">91 FR 18304</a></strong> (three-rulemaking coordination; FRB non-participation gap).</li>
+              <li id="rec-10"><strong>Effective date and phased implementation</strong> calibrated to operational-verification readiness.</li>
+            </ol>
+            <p><strong>MVEP mapping preamble (Questions 8-19).</strong> Five MVEP categories map to specific provisions of proposed §1033.210 and related sections: Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control.</p>
         <h2>Gaps identified</h2>
         <ul>
               <li><strong>Technical capability cannot be presumed from existence of smart-contract functions.</strong> Without operational verification, block/freeze/reject obligations risk being paper-only.</li>
@@ -244,41 +267,56 @@
               <li><strong>AML/CFT officer felony conviction prohibition scope</strong> needs clarification.</li>
               <li><strong>Effective date and phased implementation</strong> need calibration to operational-verification readiness.</li>
             </ul>
-
-        <h2>Recommendations</h2>
-        <ol>
-              <li><strong>Control-layer function mapping in PPSI risk assessments.</strong> Operational topology as the unit of AML analysis.</li>
-              <li><strong>Operational verification of block/freeze/reject capability through independent testing</strong> for both primary and secondary market transactions. Preserve the NPRM's flexibility on technical methods; add a verification requirement.</li>
-              <li><strong>"Account" in §1010.100(rrr) must include wallet addresses.</strong> Structural necessity for lawful-order execution against routing-layer capability.</li>
-              <li><strong>Sanctions compliance program integration with AML/CFT program</strong> at governance and operational levels.</li>
-              <li><strong>Graduated secondary market SAR framework</strong> tied to 314(a) requests and executed block/freeze/reject actions, with explicit SAR-to-capability interaction rules.</li>
-              <li><strong>Reserve custody relationships in PPSI risk assessments</strong>: concentration, jurisdictional, operational risk.</li>
-              <li><strong>AML/CFT officer felony conviction prohibition scope clarification.</strong></li>
-              <li><strong>Information sharing framework for interface operators</strong>: the PPSI channel for interface-layer engagement.</li>
-              <li><strong>Coordination with <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a> and <a href="/letters/banking-agencies-joint-aml/">91 FR 18304</a></strong> (three-rulemaking coordination; FRB non-participation gap).</li>
-              <li><strong>Effective date and phased implementation</strong> calibrated to operational-verification readiness.</li>
-            </ol>
-            <p><strong>MVEP mapping preamble (Questions 8-19).</strong> Five MVEP categories map to specific provisions of proposed §1033.210 and related sections: Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>Under 31 U.S.C. 5312(a)(2)(Y), FinCEN designates PPSIs as financial institutions subject to the BSA. GENIUS Act proposed 31 CFR 1033.240 requires PPSIs to have technical capability to block, freeze, and reject transactions and to comply with any lawful order, applied to both primary and secondary market activity. Proposed §502.201(b) sets out a five-element sanctions compliance program (senior management commitment, risk assessment, internal controls, testing/auditing, training). Proposed §1010.100(ff)(8)(iii) removes PPSIs from the MSB definition, creating a clean partition: PPSIs under this rule; non-PPSI stablecoins remain under <a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>'s MSB framework.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>10 recommendations filed; no final action yet</dd></div>
+          <div><dt>Supplemented by</dt><dd><a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/">No. 10: FinCEN-OFAC PPSI supplemental</a></dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-aml-cft/">No. 5</a>, <a href="/letters/banking-agencies-joint-aml/">No. 7</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Most framework-intensive letter in the program. All three program frameworks applied (CLII, MVEP, control-layer five-element). The "first statutory control-layer mandate" framing makes this letter the apex of the program's five federal-applications control-layer synthesis. Engages 50 of 58 NPRM questions (86% coverage).</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/fincen-aml-cft/" class="companion-card">
-            <strong>&larr; Previous letter: FinCEN AML/CFT</strong>
-            <span>April 18, 2026 &middot; FinCEN &middot; FINCEN-2026-0034 (RIN 1506-AB72)</span>
-          </a><a href="/letters/banking-agencies-joint-aml/" class="companion-card">
-            <strong>Next letter: Banking agencies joint AML &rarr;</strong>
-            <span>April 18, 2026 &middot; OCC + FDIC + NCUA (joint) &middot; 91 Fed. Reg. 18304</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/" class="companion-card">
+            <strong>Supplemented by: FinCEN-OFAC PPSI supplemental &rarr;</strong>
+            <span>June 9, 2026 &middot; FinCEN + OFAC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
+            <strong>Same cycle: FDIC AG20 application &rarr;</strong>
+            <span>April 18, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
+            <strong>Same cycle: FDIC AG19 PPSI activities &rarr;</strong>
+            <span>April 20, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/routing-the-dollar/" class="companion-card">
+            <strong>Paper: Routing the Dollar (A1) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20FINCEN-2026-0100%20(RIN%201506-AB73)">Zach@Tokenization.Systems</a></p>
     </article>

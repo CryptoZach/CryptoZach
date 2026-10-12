@@ -86,6 +86,10 @@ jobs:
           run_check scripts/check_internal_links.py --quiet
           run_check scripts/render_home_stats.py --check
           run_check scripts/render_chrome.py --check
+          # render_letters.py --check verifies the letters hub, every letter page's
+          # outcome and related regions, the recommendation index and the Atom feed
+          # against scripts/letters_registry.json (the letters registry).
+          run_check scripts/render_letters.py --check
           # The battery checking ITSELF: fails if a guard in the pre-push battery
           # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
           # purpose, so it cannot become a third list only one side runs.

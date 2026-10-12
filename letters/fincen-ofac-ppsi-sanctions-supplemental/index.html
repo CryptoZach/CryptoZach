@@ -100,9 +100,18 @@
       "inLanguage": "en",
       "description": "A single-point supplement to the program's April 18, 2026 joint FinCEN-OFAC PPSI comment, adding first-party causal evidence that a single-bank reserve-custody concentration shock produced a large, abrupt stablecoin depeg.",
       "url": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions-supplemental/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions-supplemental/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fincen-ofac-ppsi-sanctions-supplemental/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on FINCEN-2026-0100 (supplements FINCEN-2026-0100-0005) with the Financial Crimes Enforcement Network and the Office of Foreign Assets Control",
+      "about": {
+        "@type": "Legislation",
+        "name": "FinCEN and OFAC: permitted payment stablecoin issuer AML/CFT program and sanctions compliance program requirements",
+        "legislationIdentifier": "RIN 1506-AB73; Docket FINCEN-2026-0100; 91 Fed. Reg. 18582",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/docket/FINCEN-2026-0100",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network and Office of Foreign Assets Control" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network (FinCEN) and Office of Foreign Assets Control (OFAC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -202,6 +211,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">June 9, 2026</span>
         <span class="badge">Supplemental comment</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FinCEN-OFAC PPSI sanctions supplemental comment: reserve-custody concentration as a peg risk</h1>
@@ -230,30 +242,49 @@
       <div class="paper-abstract">
         <h2>What this supplements</h2>
         <p>This is a supplemental comment to the comment Tokenization Systems filed on this joint FinCEN-OFAC docket on April 18, 2026, on the public record as comment <a href="https://www.regulations.gov/comment/FINCEN-2026-0100-0005" target="_blank" rel="noopener noreferrer">FINCEN-2026-0100-0005</a>. It adds one focused point and does not restate the prior comment. The point concerns Recommendation 6, which urged the agencies to require that Permitted Payment Stablecoin Issuer risk assessments address reserve-custody relationships, including concentration risk. As filed, that recommendation rested on a single third-party descriptive source, the Federal Reserve FEDS Note by Du, Sonawane, and Watsky, which documents the custodial concentration channel during the March 2023 Silicon Valley Bank episode. That source shows the channel exists; it does not establish the causal magnitude or timing of the resulting peg disruption.</p>
-
         <h2>The new evidence</h2>
         <p>Since the April filing, first-party causal evidence on exactly that question has matured. A working paper produced within the research program, "Did Reserve Concentration Cause Stablecoin Fragility? Evidence from the SVB Shock," entered the record on June 8, 2026, and so could not have been cited in the original comment. A within-unit event study of USDC's hourly price path documents a depeg trough of 9.77 percentage points at the tenth hour of the event window, measured against flat pre-event trends. The recovery breaks at the joint Federal Reserve, Treasury, and Federal Deposit Insurance Corporation backstop announcement, and that break is detected by a formal joint structural-break (Chow) test significant at the announcement hour (F = 7.41, p = 0.0012). Two placebo tests are consistent with an event-specific channel rather than generalized market stress: a non-event weekend (p = 0.322) and the Silvergate Bank collapse (p = 0.300), the latter a crypto-focused bank that held no stablecoin reserves and therefore opened no reserve-loss channel.</p>
         <p>The exposure that produced this trough was approximately 8 percent of the issuer's total reserves, a small share in percentage terms. Even a complete loss of that exposure would have left roughly 92 cents on the dollar of reserve backing, yet at its minute-level intraday low the token traded near 89 cents, below that worst-case floor. With the reserve bank in receivership and weekend banking closed, the issuer's primary-market redemption throughput fell over the weekend to roughly seven percent of its seizure-day level, impairing the arbitrage that normally holds the token at par. The market was pricing not only the potential loss of the concentrated reserves but the impairment of the redemption mechanism itself; a reserve-custody concentration transmits through both channels at once.</p>
-
         <h2>Why it matters</h2>
         <p>This evidence indicates that a single-bank reserve-custody concentration shock produced a large and abrupt deviation from peg whose recovery trajectory broke at the policy backstop announcement, a path consistent with policy-driven recovery rather than market self-correction. The shock operated through the issuer-to-reserve-bank relationship, not through the issuer's direct customer relationships. That is precisely the relationship Recommendation 6 asked the agencies to bring within the special-standards-of-diligence framework. The attached PDF develops this single point in full.</p>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Supplements</dt><dd><a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6: FinCEN-OFAC PPSI sanctions</a>, Recommendation 6</dd></div>
+        </dl>
+        <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
           <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card">
-            <strong>&larr; The comment this supplements</strong>
-            <span>April 18, 2026 &middot; FinCEN + OFAC &middot; FINCEN-2026-0100-0005 (ten recommendations)</span>
-          </a><a href="/letters/fincen-aml-cft-supplemental/" class="companion-card">
-            <strong>Companion supplement: FinCEN AML/CFT &rarr;</strong>
-            <span>June 9, 2026 &middot; FinCEN &middot; effective-control evidence</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+            <strong>Supplements: FinCEN-OFAC PPSI sanctions &rarr;</strong>
+            <span>April 18, 2026 &middot; FinCEN + OFAC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/ncua-genius/" class="companion-card">
+            <strong>Same cycle: NCUA GENIUS stablecoin &rarr;</strong>
+            <span>June 22, 2026 &middot; NCUA &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/ncua-genius-supplemental/" class="companion-card">
+            <strong>Same cycle: NCUA GENIUS supplemental &rarr;</strong>
+            <span>June 22, 2026 &middot; NCUA &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20FINCEN-2026-0100%20(supplemental)">Zach@Tokenization.Systems</a></p>
     </article>

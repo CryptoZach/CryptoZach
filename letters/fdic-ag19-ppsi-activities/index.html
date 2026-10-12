@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "Twelve recommendations on reserves, deposit insurance, and observability. MVEP-gated conditional pass-through insurance: the program's principal substantive contribution.",
       "url": "https://tokenization.systems/letters/fdic-ag19-ppsi-activities/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fdic-ag19-ppsi-activities/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fdic-ag19-ppsi-activities/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on RIN 3064-AG19 (91 Fed. Reg. 18534) with the FDIC",
+      "about": {
+        "@type": "Legislation",
+        "name": "FDIC: GENIUS Act requirements and standards for FDIC-supervised permitted payment stablecoin issuers",
+        "legislationIdentifier": "RIN 3064-AG19; 91 Fed. Reg. 18534",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.federalregister.gov/documents/2026/04/10/2026-06974/genius-act-requirements-and-standards-for-fdic-supervised-permitted-payment-stablecoin-issuers-and",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation (FDIC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -204,6 +213,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 20, 2026</span>
         <span class="badge">12 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG19 PPSI activities comment: MVEP-gated conditional deposit insurance pass-through</h1>
@@ -228,9 +240,29 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The FDIC AG19 substantive rule defines the ongoing operational-supervision regime for FDIC-supervised PPSIs under the GENIUS Act. Headline provisions: 40 percent single-institution reserve concentration cap at §350.4(f); proposed §330.11(a)(3) default non-availability of pass-through deposit insurance for payment stablecoins; §350.6(b) private key management controls; §350.7(g) confidential weekly supervisory report; capital framework at §350.4 and related. Companion to <a href="/letters/fdic-ag20-ppsi-application/">AG20</a> (application rule, filed April 18). Together AG19 and AG20 define the FDIC's complete PPSI supervisory regime.</p>
-
+        <h2>Recommendations</h2>
+        <h3>Group I: Reserves, concentration, and the SVB lesson (Recommendations 1 to 6)</h3>
+            <ol>
+              <li id="rec-1"><strong>Retain the 40 percent single-institution concentration cap at §350.4(f).</strong> The SVB lesson: 8 percent reserve concentration at a single non-GSIB institution produced material peg deviation of USDC. The cap is calibrated correctly.</li>
+              <li id="rec-2"><strong>Cap uninsured deposits as reserve assets; require disclosure of uninsured exposure.</strong> Complement to the per-institution cap.</li>
+              <li id="rec-3"><strong>Add a principles-based diversification requirement</strong> beyond the per-institution cap. (Q50, Q55)</li>
+              <li id="rec-4"><strong>Do not exempt a PPSI subsidiary of an FDIC-supervised IDI from §350.4(f) on the basis of parent-bank size.</strong> The concentration risk attaches to the PPSI reserve level. (Q51)</li>
+              <li id="rec-5"><strong>Require PPSIs to monitor financial condition of eligible financial institutions holding reserve assets.</strong> (Q67)</li>
+              <li id="rec-6"><strong>Establish IDI-side limits on PPSI reserve deposits exceeding a specified percentage of IDI total deposits.</strong> (Q57)</li>
+            </ol>
+            <h3>Group II: Deposit insurance, tokenized deposits, rights parity (Recommendations 7 to 10)</h3>
+            <ol start="7">
+              <li id="rec-7"><strong>Reconsider §330.11(a)(3) categorical foreclosure of pass-through deposit insurance; adopt conditional pass-through gated on MVEP qualification.</strong> (Q125, Q130) Pass-through attaches to the reserve deposit at the IDI (not to the payment stablecoin itself) for verified beneficial holders of PPSIs meeting MVEP thresholds across six pass-through-critical categories: Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures. Consistent with 12 U.S.C. 5903(e)(1)-(2); the stablecoin itself remains uninsured and unmarketed as insured. <em>Program's principal substantive contribution to the rulemaking cycle.</em></li>
+              <li id="rec-8"><strong>Strengthen disclosure framework</strong> so holders of non-MVEP-qualifying PPSI stablecoins understand pass-through absence. (Q38, Q130)</li>
+              <li id="rec-9"><strong>Support the technology-neutral clarification of "deposit"</strong> at proposed §330.1(e) and §330.3(k). (Q131, Q134)</li>
+              <li id="rec-10"><strong>Classify a digital asset representing a claim on a deposit</strong> (but not itself a tokenized deposit) as a payment stablecoin backed by tokenized deposits, not as a tokenized deposit. (Q138)</li>
+            </ol>
+            <h3>Group III: Risk management, private keys, control-layer observability (Recommendations 11 to 12)</h3>
+            <ol start="11">
+              <li id="rec-11"><strong>Require operational verification of private key management controls in §350.6(b).</strong> (Q83) Elevate from documentation review.</li>
+              <li id="rec-12"><strong>Calibrate §350.7(g) confidential weekly report to include control-layer observability data points</strong>: reserve custody exposures, block-freeze-reject counts, largest secondary holders. (Q91)</li>
+            </ol>
+            <p><strong>Structural observation (Q100).</strong> Capital framework calibration. Evidence-consistent baseline rather than strict quantitative prescription.</p>
         <h2>Gaps identified</h2>
         <ul>
               <li><strong>Reserve concentration cap needs companion asks.</strong> 40 percent single-institution cap is correct but does not address uninsured-deposit exposure specifically or principles-based diversification beyond the per-institution cap.</li>
@@ -242,50 +274,51 @@
               <li><strong>Private key management at §350.6(b) relies on documentation review, not operational verification.</strong></li>
               <li><strong>§350.7(g) confidential weekly report does not surface control-layer observability data:</strong> reserve custody exposures, block-freeze-reject counts, largest secondary holders.</li>
             </ul>
-
-        <h2>Recommendations</h2>
-        <h3>Group I: Reserves, concentration, and the SVB lesson (Recommendations 1 to 6)</h3>
-            <ol>
-              <li><strong>Retain the 40 percent single-institution concentration cap at §350.4(f).</strong> The SVB lesson: 8 percent reserve concentration at a single non-GSIB institution produced material peg deviation of USDC. The cap is calibrated correctly.</li>
-              <li><strong>Cap uninsured deposits as reserve assets; require disclosure of uninsured exposure.</strong> Complement to the per-institution cap.</li>
-              <li><strong>Add a principles-based diversification requirement</strong> beyond the per-institution cap. (Q50, Q55)</li>
-              <li><strong>Do not exempt a PPSI subsidiary of an FDIC-supervised IDI from §350.4(f) on the basis of parent-bank size.</strong> The concentration risk attaches to the PPSI reserve level. (Q51)</li>
-              <li><strong>Require PPSIs to monitor financial condition of eligible financial institutions holding reserve assets.</strong> (Q67)</li>
-              <li><strong>Establish IDI-side limits on PPSI reserve deposits exceeding a specified percentage of IDI total deposits.</strong> (Q57)</li>
-            </ol>
-            <h3>Group II: Deposit insurance, tokenized deposits, rights parity (Recommendations 7 to 10)</h3>
-            <ol start="7">
-              <li><strong>Reconsider §330.11(a)(3) categorical foreclosure of pass-through deposit insurance; adopt conditional pass-through gated on MVEP qualification.</strong> (Q125, Q130) Pass-through attaches to the reserve deposit at the IDI (not to the payment stablecoin itself) for verified beneficial holders of PPSIs meeting MVEP thresholds across six pass-through-critical categories: Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures. Consistent with 12 U.S.C. 5903(e)(1)-(2); the stablecoin itself remains uninsured and unmarketed as insured. <em>Program's principal substantive contribution to the rulemaking cycle.</em></li>
-              <li><strong>Strengthen disclosure framework</strong> so holders of non-MVEP-qualifying PPSI stablecoins understand pass-through absence. (Q38, Q130)</li>
-              <li><strong>Support the technology-neutral clarification of "deposit"</strong> at proposed §330.1(e) and §330.3(k). (Q131, Q134)</li>
-              <li><strong>Classify a digital asset representing a claim on a deposit</strong> (but not itself a tokenized deposit) as a payment stablecoin backed by tokenized deposits, not as a tokenized deposit. (Q138)</li>
-            </ol>
-            <h3>Group III: Risk management, private keys, control-layer observability (Recommendations 11 to 12)</h3>
-            <ol start="11">
-              <li><strong>Require operational verification of private key management controls in §350.6(b).</strong> (Q83) Elevate from documentation review.</li>
-              <li><strong>Calibrate §350.7(g) confidential weekly report to include control-layer observability data points</strong>: reserve custody exposures, block-freeze-reject counts, largest secondary holders. (Q91)</li>
-            </ol>
-            <p><strong>Structural observation (Q100).</strong> Capital framework calibration. Evidence-consistent baseline rather than strict quantitative prescription.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The FDIC AG19 substantive rule defines the ongoing operational-supervision regime for FDIC-supervised PPSIs under the GENIUS Act. Headline provisions: 40 percent single-institution reserve concentration cap at §350.4(f); proposed §330.11(a)(3) default non-availability of pass-through deposit insurance for payment stablecoins; §350.6(b) private key management controls; §350.7(g) confidential weekly supervisory report; capital framework at §350.4 and related. Companion to <a href="/letters/fdic-ag20-ppsi-application/">AG20</a> (application rule, filed April 18). Together AG19 and AG20 define the FDIC's complete PPSI supervisory regime.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>12 recommendations filed; no final action yet</dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fdic-ag29-bsa-sanctions/">No. 13</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. The statutory July 18, 2026 rulemaking deadline passed without a final rule. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Filed April 20, 2026, on permitted payment stablecoin activities, during a ten-day window across seven rulemakings, six dockets, and six federal agencies (April 10 to April 20, 2026). Comment letters have continued since. Filed the same calendar day the 8th paper (Governance Concentration) went SSRN-live, completing 8-of-8 SSRN: first same-day dual 8-of-8 milestone in program history. Recommendation 7 introduces the MVEP-gated conditional pass-through framework: the program's principal substantive contribution to the rulemaking cycle.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/banking-agencies-joint-aml/" class="companion-card">
-            <strong>&larr; Previous letter: Banking agencies joint AML</strong>
-            <span>April 18, 2026 &middot; OCC + FDIC + NCUA (joint) &middot; 91 Fed. Reg. 18304</span>
-          </a><a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
-            <strong>Sister rule: FDIC AG20 application</strong>
-            <span>April 18, 2026 &middot; FDIC &middot; RIN 3064-AG20. Application content for prospective PPSIs; sister to AG19's substantive activities rule.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
+            <strong>Same cycle: FDIC AG20 application &rarr;</strong>
+            <span>April 18, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card">
+            <strong>Same cycle: FinCEN-OFAC PPSI sanctions &rarr;</strong>
+            <span>April 18, 2026 &middot; FinCEN + OFAC &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20RIN%203064-AG19%20(91%20Fed.%20Reg.%2018534)">Zach@Tokenization.Systems</a></p>
     </article>

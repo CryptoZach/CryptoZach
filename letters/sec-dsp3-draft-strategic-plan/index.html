@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "The plan's digital-asset objectives turn on a measurement capability the plan does not yet name. Four recommendations: a measured, reproducible decentralization standard, operator-level oversight framing, measured boundary determinations, and reproducible on-chain instruments in advanced analytics.",
       "url": "https://tokenization.systems/letters/sec-dsp3-draft-strategic-plan/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/sec-dsp3-draft-strategic-plan/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/sec-dsp3-draft-strategic-plan/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on File Number DSP-3 (Draft Strategic Plan for Fiscal Years 2026 through 2030) with the U.S. Securities and Exchange Commission",
+      "about": {
+        "@type": "Legislation",
+        "name": "SEC: Draft Strategic Plan for fiscal years 2026 through 2030",
+        "legislationIdentifier": "File Number DSP-3",
+        "legislationType": "Draft strategic plan",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.sec.gov/comments/dsp-3/draft-fy-2026-fy-2030-sec-strategic-plan",
+        "publisher": { "@type": "GovernmentOrganization", "name": "U.S. Securities and Exchange Commission" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "U.S. Securities and Exchange Commission (SEC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -205,6 +214,9 @@
         <span class="badge">July 2, 2026</span>
         <span class="badge">4 recommendations</span>
         <span class="badge">First SEC comment</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final plan pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">SEC DSP-3 comment: a measured, reproducible decentralization standard for the digital-asset regulatory foundation</h1>
@@ -230,39 +242,51 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the plan proposes</h2>
-        <p>The Draft Strategic Plan for Fiscal Years 2026 through 2030 sets the Commission's goals and objectives for the period. Objective 1.1 commits the Commission to "provide a firm regulatory foundation for digital assets and distributed ledger technologies through a rational, coherent, and principled approach," including modernized oversight so that "custody, trading, and staking services can operate under appropriate oversight without duplicative or conflicting requirements," clarified boundaries of securities law as applied to digital assets, and clarified jurisdictional questions between the SEC and the Commodity Futures Trading Commission. Objective 3.2 commits the Commission to modernize its technological infrastructure and support advanced analytics, with the plan stating that "the responsible use of artificial intelligence and blockchain technologies can further improve oversight, reduce costs, and unlock new efficiencies." The Goal 1 narrative states that "rules must be grounded in rigorous, unbiased assessments of costs and benefits."</p>
-
-        <h2>The problem identified</h2>
-        <p>Each of those commitments turns, at some point, on whether a crypto asset or system is decentralized, and the indicators most readily reached for that determination systematically misstate it. A fifty-two-protocol live-governance audit, accepted for publication at Frontiers in Blockchain, documents that naive holder lists inflate measured concentration by a median factor of 2.3 times, and up to approximately 18 times, once protocol-controlled addresses are removed. Launch insider allocation is uninformative about steady-state concentration (Pearson r = 0.09), and delegation amplifies voting power above token holdings in thirteen of eighteen protocols with sufficient governance data, by 2.5 to 25.6 times. Current insider retention, by contrast, is informative (Spearman rho = 0.44): decentralization is measurable from current on-chain state even where launch design is uninformative.</p>
-
         <h2>Recommendations</h2>
         <ol>
-              <li><strong>Name reproducible measurement as the foundation capability</strong> (Objective 1.1). Name independent, reproducible measurement of digital-asset concentration and control as the capability the regulatory foundation rests on, so that any threshold the Commission later adopts rests on a method an outside party can reproduce from public on-chain data.</li>
-              <li><strong>Frame oversight at the operator level, not the token level alone</strong> (Objective 1.1; custody, trading, and staking). Structural risk frequently concentrates at the operator rather than the token: the operator scoring highest on regulatory intensity experienced a 10 to 13 percent depeg during the March 2023 stress while a lower-scoring operator held its peg, and a single transfer agent serves all three documented tokenization strategies. Assess an operator across its full portfolio alongside token-level classification.</li>
-              <li><strong>Measure decentralization wherever a boundary or jurisdictional determination turns on it</strong> (Objective 1.1; boundaries of securities law and jurisdiction). Where the securities-law boundary or the SEC-CFTC allocation rests on the degree of a system's decentralization, measure that degree from current on-chain state, supported by indicators of current concentration and realized voting control, rather than inferring it from holder counts or disclosed allocations.</li>
-              <li><strong>Build reproducible on-chain instruments into advanced analytics</strong> (Objective 3.2). Two dollar stablecoins on the same chain carried top-100 holder concentrations roughly five times apart in a single snapshot; reproducible concentration and control instruments, developed on public data, are adaptable to the registered products the Commission reviews. The offer is method transfer, not findings about registered products.</li>
+              <li id="rec-1"><strong>Name reproducible measurement as the foundation capability</strong> (Objective 1.1). Name independent, reproducible measurement of digital-asset concentration and control as the capability the regulatory foundation rests on, so that any threshold the Commission later adopts rests on a method an outside party can reproduce from public on-chain data.</li>
+              <li id="rec-2"><strong>Frame oversight at the operator level, not the token level alone</strong> (Objective 1.1; custody, trading, and staking). Structural risk frequently concentrates at the operator rather than the token: the operator scoring highest on regulatory intensity experienced a 10 to 13 percent depeg during the March 2023 stress while a lower-scoring operator held its peg, and a single transfer agent serves all three documented tokenization strategies. Assess an operator across its full portfolio alongside token-level classification.</li>
+              <li id="rec-3"><strong>Measure decentralization wherever a boundary or jurisdictional determination turns on it</strong> (Objective 1.1; boundaries of securities law and jurisdiction). Where the securities-law boundary or the SEC-CFTC allocation rests on the degree of a system's decentralization, measure that degree from current on-chain state, supported by indicators of current concentration and realized voting control, rather than inferring it from holder counts or disclosed allocations.</li>
+              <li id="rec-4"><strong>Build reproducible on-chain instruments into advanced analytics</strong> (Objective 3.2). Two dollar stablecoins on the same chain carried top-100 holder concentrations roughly five times apart in a single snapshot; reproducible concentration and control instruments, developed on public data, are adaptable to the registered products the Commission reviews. The offer is method transfer, not findings about registered products.</li>
             </ol>
-
+        <h2>The problem identified</h2>
+        <p>Each of those commitments turns, at some point, on whether a crypto asset or system is decentralized, and the indicators most readily reached for that determination systematically misstate it. A fifty-two-protocol live-governance audit, accepted for publication at Frontiers in Blockchain, documents that naive holder lists inflate measured concentration by a median factor of 2.3 times, and up to approximately 18 times, once protocol-controlled addresses are removed. Launch insider allocation is uninformative about steady-state concentration (Pearson r = 0.09), and delegation amplifies voting power above token holdings in thirteen of eighteen protocols with sufficient governance data, by 2.5 to 25.6 times. Current insider retention, by contrast, is informative (Spearman rho = 0.44): decentralization is measurable from current on-chain state even where launch design is uninformative.</p>
+        <details class="letter-background">
+          <summary><h2>What the plan proposes</h2></summary>
+        <p>The Draft Strategic Plan for Fiscal Years 2026 through 2030 sets the Commission's goals and objectives for the period. Objective 1.1 commits the Commission to "provide a firm regulatory foundation for digital assets and distributed ledger technologies through a rational, coherent, and principled approach," including modernized oversight so that "custody, trading, and staking services can operate under appropriate oversight without duplicative or conflicting requirements," clarified boundaries of securities law as applied to digital assets, and clarified jurisdictional questions between the SEC and the Commodity Futures Trading Commission. Objective 3.2 commits the Commission to modernize its technological infrastructure and support advanced analytics, with the plan stating that "the responsible use of artificial intelligence and blockchain technologies can further improve oversight, reduce costs, and unlock new efficiencies." The Goal 1 narrative states that "rules must be grounded in rigorous, unbiased assessments of costs and benefits."</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>June 2 to July 2, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final plan pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>4 recommendations filed; no final action yet</dd></div>
+        </dl>
+        <p class="letter-outcome-note">No final strategic plan located as of the verification date.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>The program's first comment to the SEC and its fourteenth federal submission, extending the Federal Comment Letter Program from the GENIUS-implementing banking agencies to the securities regulator; the SEC is the seventh agency engaged. Filed July 2, 2026 via the SEC internet comment form on the comment-period close date. The letter carries a recommendation routing table keyed to the plan provisions it responds to, suggested plan language, anticipated objections, and a sources appendix; the recommendations are direction-level, and none expands the plan's scope.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card">
-            <strong>&larr; Previous letter: FDIC AG29 BSA and sanctions</strong>
-            <span>June 30, 2026 &middot; FDIC &middot; RIN 3064-AG29. The supervision-and-coordination layer for PPSI AML and sanctions programs.</span>
-          </a><a href="/letters/fincen-aml-cft-supplemental/" class="companion-card">
-            <strong>Sister evidence: FinCEN AML/CFT supplemental</strong>
-            <span>June 9, 2026 &middot; FinCEN &middot; The 13-of-18 delegation-divergence finding that this comment's measured-boundary recommendation rests on.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20SEC%20File%20Number%20DSP-3">Zach@Tokenization.Systems</a></p>
     </article>

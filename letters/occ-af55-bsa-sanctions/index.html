@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "The OCC's supervision-and-coordination layer for PPSI AML/CFT and sanctions. Eight recommendations for an observable effective-program disposition, a shared OCC-FinCEN control-posture record, and OCC-specific reserve-asset, entity-type, and OCC-FDIC-alignment surfaces.",
       "url": "https://tokenization.systems/letters/occ-af55-bsa-sanctions/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/occ-af55-bsa-sanctions/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/occ-af55-bsa-sanctions/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on Docket OCC-2026-0463 (RIN 1557-AF55, 91 Fed. Reg. 37840) with the OCC",
+      "about": {
+        "@type": "Legislation",
+        "name": "OCC: Bank Secrecy Act and sanctions compliance standards for OCC-supervised permitted payment stablecoin issuers",
+        "legislationIdentifier": "RIN 1557-AF55; Docket OCC-2026-0463; 91 Fed. Reg. 37840",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/docket/OCC-2026-0463",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Office of the Comptroller of the Currency" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Office of the Comptroller of the Currency (OCC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -205,6 +214,9 @@
         <span class="badge">July 23, 2026</span>
         <span class="badge">8 recommendations</span>
         <span class="badge">Third OCC comment</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">OCC AF55 comment: one measured control posture, extended to reserve assets, entity types, and OCC-FDIC alignment</h1>
@@ -229,50 +241,67 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The AF55 rule sets Bank Secrecy Act and sanctions compliance standards for OCC-supervised permitted payment stablecoin issuers (PPSIs). It amends the OCC's March 2, 2026 proposed rule implementing the GENIUS Act (91 Fed. Reg. 10202) by adding proposed Section 15.13(c); adds a supervision and enforcement framework at new subpart R of part 19 (proposed Sections 19.260 through 19.262); and adds an information-sharing provision at new Section 4.19 of part 4. Section 15.13(c) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. As the OCC states, the proposal would not add requirements beyond FinCEN's and OFAC's; the substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582. This rule is therefore principally a supervision-and-coordination instrument, specifying how the OCC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
-
-        <h2>The problem identified</h2>
-        <p>The coordination architecture works as intended only if the OCC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the OCC itself identifies in Question 10. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The comment then extends the same measured-object logic to three surfaces distinctive to the OCC's proposal, which the roughly 29 affected issuers span across bank affiliates, issuers not currently OCC-regulated, and white-label or consortium arrangements: uniform treatment across entity types (Questions 1 and 2), reserve-asset and holder-monetization protection (Questions 3, 4, and 5), and alignment with the parallel FDIC rule (Question 6).</p>
-
         <h2>Recommendations</h2>
         <ol>
-              <li><strong>Observable effective-program criteria</strong> (Question 8; proposed Section 19.262). Rest the effective-program disposition on observable, reproducible indicators drawn from the FinCEN program requirements, not attestation alone, so a program is not treated as effective merely because policies or attestations exist. Prevents the disposition from becoming a paper-program safe harbor.</li>
-              <li><strong>A shared control-posture record</strong> (Question 10; proposed Section 19.261(b)). Make a reproducible control-posture record a standing component of the OCC-to-FinCEN advance-notice package, so both agencies reason over the same measured object rather than reconstructing two records inside the notice window.</li>
-              <li><strong>Thresholds keyed to posture</strong> (Questions 8 and 9; proposed Sections 19.260 and 19.261). Pair any asset threshold or PPSI-requested consultation option with a control-posture trigger keyed to the same record, and account for a revocation of approval to issue premised in part on AML/CFT deficiencies.</li>
-              <li><strong>Operational test of block, freeze, and reject capability</strong> (proposed Section 15.13(c)). Confirm by examination evidence that the sanctions capability works across both primary and secondary channels, with examination intensity scaled to measured holder concentration, rather than inferring it from the parent program or from the presence of on-chain functions.</li>
-              <li><strong>An accountable line and a uniform standard across entity types</strong> (Questions 1 and 2; proposed Section 15.13(c)). Confirm that one identifiable accountable line holds both the control-posture information and the authority to act, and that the measured standard is uniform across entity types (national trust banks, bank affiliates, and non-bank issuers), addressing the overlap with part 21.</li>
-              <li><strong>Coverage across holding-location obligor changes</strong> (proposed Sections 15.13(c), 19.261, and 19.262). Where a single tokenized instrument changes its obligor and applicable regime based on holding location, confirm that AML and sanctions coverage follows the instrument across the transition, treating the boundary crossing as a monitored event with continuity of identity and lawful-order controls, and with OCC-FinCEN consultation so the unexamined leg is not a blind spot.</li>
-              <li><strong>Alignment with the parallel FDIC rule</strong> (Question 6; proposed Sections 15.13(c), 19.261, 19.262, and 4.19). Align the OCC and FDIC supervision, consultation, and disclosure provisions on a common measured object, and reconcile the divergent consultation thresholds: 10 billion dollars in assets at the OCC (Question 9) against 10 billion dollars in outstanding issuance value at the FDIC (AG29 Question 3). This is the signature contribution of a commenter present on both dockets; an unreconciled divergence invites regulatory arbitrage.</li>
-              <li><strong>Reserve-asset security and holder monetization keyed to measured concentration</strong> (Questions 3, 4, and 5; proposed Sections 15.11 and 15.13). Treat reserve-asset identifiability, eligible-institution safeguards keyed to measured reserve-custody concentration, and a holder-monetization backstop keyed to measured secondary-market concentration as observable controls, and support the OCC direct-redemption option triggered on observable monetization-failure indicators.</li>
+              <li id="rec-1"><strong>Observable effective-program criteria</strong> (Question 8; proposed Section 19.262). Rest the effective-program disposition on observable, reproducible indicators drawn from the FinCEN program requirements, not attestation alone, so a program is not treated as effective merely because policies or attestations exist. Prevents the disposition from becoming a paper-program safe harbor.</li>
+              <li id="rec-2"><strong>A shared control-posture record</strong> (Question 10; proposed Section 19.261(b)). Make a reproducible control-posture record a standing component of the OCC-to-FinCEN advance-notice package, so both agencies reason over the same measured object rather than reconstructing two records inside the notice window.</li>
+              <li id="rec-3"><strong>Thresholds keyed to posture</strong> (Questions 8 and 9; proposed Sections 19.260 and 19.261). Pair any asset threshold or PPSI-requested consultation option with a control-posture trigger keyed to the same record, and account for a revocation of approval to issue premised in part on AML/CFT deficiencies.</li>
+              <li id="rec-4"><strong>Operational test of block, freeze, and reject capability</strong> (proposed Section 15.13(c)). Confirm by examination evidence that the sanctions capability works across both primary and secondary channels, with examination intensity scaled to measured holder concentration, rather than inferring it from the parent program or from the presence of on-chain functions.</li>
+              <li id="rec-5"><strong>An accountable line and a uniform standard across entity types</strong> (Questions 1 and 2; proposed Section 15.13(c)). Confirm that one identifiable accountable line holds both the control-posture information and the authority to act, and that the measured standard is uniform across entity types (national trust banks, bank affiliates, and non-bank issuers), addressing the overlap with part 21.</li>
+              <li id="rec-6"><strong>Coverage across holding-location obligor changes</strong> (proposed Sections 15.13(c), 19.261, and 19.262). Where a single tokenized instrument changes its obligor and applicable regime based on holding location, confirm that AML and sanctions coverage follows the instrument across the transition, treating the boundary crossing as a monitored event with continuity of identity and lawful-order controls, and with OCC-FinCEN consultation so the unexamined leg is not a blind spot.</li>
+              <li id="rec-7"><strong>Alignment with the parallel FDIC rule</strong> (Question 6; proposed Sections 15.13(c), 19.261, 19.262, and 4.19). Align the OCC and FDIC supervision, consultation, and disclosure provisions on a common measured object, and reconcile the divergent consultation thresholds: 10 billion dollars in assets at the OCC (Question 9) against 10 billion dollars in outstanding issuance value at the FDIC (AG29 Question 3). This is the signature contribution of a commenter present on both dockets; an unreconciled divergence invites regulatory arbitrage.</li>
+              <li id="rec-8"><strong>Reserve-asset security and holder monetization keyed to measured concentration</strong> (Questions 3, 4, and 5; proposed Sections 15.11 and 15.13). Treat reserve-asset identifiability, eligible-institution safeguards keyed to measured reserve-custody concentration, and a holder-monetization backstop keyed to measured secondary-market concentration as observable controls, and support the OCC direct-redemption option triggered on observable monetization-failure indicators.</li>
             </ol>
             <p><strong>A note on Question 7.</strong> The letter takes no position on the choice between the two information-sharing options under proposed Section 4.19, deferring the attorney-client-privilege question to commenters with the relevant expertise, and observes only that a record of observed control facts reduces the volume of privilege-sensitive material that must change hands.</p>
-
+        <h2>The problem identified</h2>
+        <p>The coordination architecture works as intended only if the OCC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the OCC itself identifies in Question 10. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The comment then extends the same measured-object logic to three surfaces distinctive to the OCC's proposal, which the roughly 29 affected issuers span across bank affiliates, issuers not currently OCC-regulated, and white-label or consortium arrangements: uniform treatment across entity types (Questions 1 and 2), reserve-asset and holder-monetization protection (Questions 3, 4, and 5), and alignment with the parallel FDIC rule (Question 6).</p>
         <h2>Worked example: the dual-character token</h2>
         <p>The letter illustrates the coverage gap with the Hazel Network, a publicly announced arrangement described in a June 2026 white paper jointly published by Vantage Bank Texas and Custodia Bank, Inc. A single unified token is a deposit liability of Vantage Bank Texas, an FDIC-insured member bank, while held within the consortium, and becomes a payment stablecoin issued by Custodia Bank, a Wyoming special-purpose depository institution, when transferred outside it, with no settlement event marking the transition. The example is offered as a supervisable failure mode, not as an allegation of wrongdoing, and neither named institution is presented as an OCC-supervised PPSI under this rule. It shows how the state in which the instrument is least clearly accountable can be the state the design routes to the entity less integrated into the Federal banking supervisory perimeter, which is the coverage seam Recommendations 5 and 6 ask the OCC's examination and consultation machinery to close.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The AF55 rule sets Bank Secrecy Act and sanctions compliance standards for OCC-supervised permitted payment stablecoin issuers (PPSIs). It amends the OCC's March 2, 2026 proposed rule implementing the GENIUS Act (91 Fed. Reg. 10202) by adding proposed Section 15.13(c); adds a supervision and enforcement framework at new subpart R of part 19 (proposed Sections 19.260 through 19.262); and adds an information-sharing provision at new Section 4.19 of part 4. Section 15.13(c) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. As the OCC states, the proposal would not add requirements beyond FinCEN's and OFAC's; the substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582. This rule is therefore principally a supervision-and-coordination instrument, specifying how the OCC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>June 24 to July 24, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>8 recommendations filed; no final action yet</dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">No final rule located as of the verification date.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>AF55 is the program's third OCC comment, after the core payment-stablecoin-issuance rule and its interface-conduct supplement (both on Docket OCC-2025-0372, RIN 1557-AF41), and its fifteenth federal comment across seven agencies. Filed July 23, 2026 at regulations.gov on Docket OCC-2026-0463, Comment Tracking Number mry-7y1z-53lw, two days before the July 24 comment close. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule (91 Fed. Reg. 18582), the OCC's March 2, 2026 issuance rule (91 Fed. Reg. 10202), and the FDIC's parallel BSA and sanctions rule (<a href="/letters/fdic-ag29-bsa-sanctions/">AG29</a>) rather than duplicating them.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/sec-dsp3-draft-strategic-plan/" class="companion-card">
-            <strong>&larr; Previous letter: SEC Draft Strategic Plan</strong>
-            <span>July 2, 2026 &middot; SEC &middot; File Number DSP-3. The program's first SEC comment: a measured, reproducible decentralization standard.</span>
-          </a><a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card">
-            <strong>Sister rule: FDIC AG29 BSA and sanctions</strong>
-            <span>June 30, 2026 &middot; FDIC &middot; RIN 3064-AG29. The FDIC-side twin of this rule; AF55 aligns the two on a common measured object and reconciles the consultation-threshold divergence between them.</span>
-          </a><a href="/letters/occ-mvep-v4/" class="companion-card">
-            <strong>Prior OCC comment: PPSI MVEP anchor</strong>
-            <span>April 10, 2026 &middot; OCC &middot; RIN 1557-AF41. The program's OCC anchor comment; AF55 is the third OCC comment and carries its diligence vocabulary into the AML and sanctions channel.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/letters/fdic-ag29-bsa-sanctions/" class="companion-card">
+            <strong>Same cycle: FDIC AG29 BSA and sanctions &rarr;</strong>
+            <span>June 30, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fincen-ab74-ppsi-cip/" class="companion-card">
+            <strong>Same cycle: FinCEN AB74 PPSI customer identification &rarr;</strong>
+            <span>August 21, 2026 &middot; FinCEN (joint with OCC, Board, FDIC, NCUA) &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20RIN%201557-AF55%20(Docket%20OCC-2026-0463)">Zach@Tokenization.Systems</a></p>
     </article>

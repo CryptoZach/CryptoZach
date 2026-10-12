@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "Structured section-4-activity mapping; reserve custody concentration; customer-agreement rights-parity; enterprise-wide AML program integration.",
       "url": "https://tokenization.systems/letters/fdic-ag20-ppsi-application/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fdic-ag20-ppsi-application/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fdic-ag20-ppsi-application/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on RIN 3064-AG20 (90 Fed. Reg. 59409) with the FDIC",
+      "about": {
+        "@type": "Legislation",
+        "name": "FDIC: approval requirements for issuance of payment stablecoins by subsidiaries of FDIC-supervised institutions",
+        "legislationIdentifier": "RIN 3064-AG20; 90 Fed. Reg. 59409",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.federalregister.gov/documents/2025/12/19/2025-23510/approval-requirements-for-issuance-of-payment-stablecoins-by-subsidiaries-of-fdic-supervised-insured",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation (FDIC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -204,6 +213,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 18, 2026</span>
         <span class="badge">4 recommendations</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG20 comment: the application as the FDIC's first control-layer topology map</h1>
@@ -228,9 +240,14 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The FDIC AG20 application rule implements GENIUS Act Section 5, establishing the procedural pathway for an insured depository institution to obtain FDIC approval for a subsidiary PPSI. Proposed §303.252 specifies filing content: description of proposed activities, reserve assets and composition plan, customer agreements, BSA/AML/OFAC compliance, and related materials. The information the FDIC collects at the application stage becomes both the approval-decision basis and the baseline for ongoing supervision under Section 4 and Section 6.</p>
-
+        <h2>Recommendations</h2>
+        <ol>
+              <li id="rec-1"><strong>Structured section-4-activity mapping</strong> under §303.252(d)(1): two-axis matrix of (a) activity categories 4(a)(7)(A)(i) through 4(a)(7)(B) against (b) performing entity (PPSI, parent IDI, affiliate, third-party, combined). Coordinates with parallel FinCEN 0100 topology mapping.</li>
+              <li id="rec-2"><strong>Preserve §5(c)(5) flexibility.</strong> Final rule preamble should state that declining to add factors now does not foreclose later additions. Four candidate considerations for future factors: control-layer observability; smart contract immutability; public blockchain dependencies; reserve custody concentration beyond composition.</li>
+              <li id="rec-3"><strong>Expand §303.252(d)(2) asset management plan</strong> to include named custodians, per-institution concentration limits as percentage of total reserves, diversification rationale with single-institution failure analysis, and specific treatment of parent-IDI-as-custodian concentration.</li>
+              <li id="rec-4"><strong>Customer agreements must include a rights-parity assessment</strong> under §303.252(d)(4): (a) contractual-claim-not-deposit-claim characterization; (b) redemption limit circumstances including UCC Article 12 qualifying-purchaser scenarios; (c) Article 12 asymmetric-effects disclosure; (d) PPSI-IDI solvency relationship disclosure.</li>
+            </ol>
+            <p><strong>Structural observation (Q11).</strong> §303.252(d)(4) should signal that the FDIC will evaluate enterprise-wide AML/CFT program integration between the subsidiary PPSI (under FINCEN-2026-0100) and the parent IDI (under 91 FR 18304): governance, information sharing, unified testing, enterprise-wide risk assessment.</p>
         <h2>Gaps identified</h2>
         <ul>
               <li><strong>§303.252(d)(1) activity description is underspecified.</strong> Requires "identities, roles, and responsibilities of entities involved" but no structured mapping to GENIUS Act Section 4 activity categories.</li>
@@ -239,38 +256,51 @@
               <li><strong>Enterprise-wide AML/CFT program integration is not expressly evaluated.</strong> A subsidiary PPSI's AML program (under FINCEN-2026-0100) and parent IDI's program (under 91 FR 18304) integrate at the FDIC supervisory layer, but §303.252(d)(4) does not require the applicant to describe how.</li>
               <li><strong>§5(c)(5) factors deferred without flexibility preservation.</strong> Rule declines to add factors now but does not preserve flexibility to add them as substantive rulemakings surface relevant considerations.</li>
             </ul>
-
-        <h2>Recommendations</h2>
-        <ol>
-              <li><strong>Structured section-4-activity mapping</strong> under §303.252(d)(1): two-axis matrix of (a) activity categories 4(a)(7)(A)(i) through 4(a)(7)(B) against (b) performing entity (PPSI, parent IDI, affiliate, third-party, combined). Coordinates with parallel FinCEN 0100 topology mapping.</li>
-              <li><strong>Preserve §5(c)(5) flexibility.</strong> Final rule preamble should state that declining to add factors now does not foreclose later additions. Four candidate considerations for future factors: control-layer observability; smart contract immutability; public blockchain dependencies; reserve custody concentration beyond composition.</li>
-              <li><strong>Expand §303.252(d)(2) asset management plan</strong> to include named custodians, per-institution concentration limits as percentage of total reserves, diversification rationale with single-institution failure analysis, and specific treatment of parent-IDI-as-custodian concentration.</li>
-              <li><strong>Customer agreements must include a rights-parity assessment</strong> under §303.252(d)(4): (a) contractual-claim-not-deposit-claim characterization; (b) redemption limit circumstances including UCC Article 12 qualifying-purchaser scenarios; (c) Article 12 asymmetric-effects disclosure; (d) PPSI-IDI solvency relationship disclosure.</li>
-            </ol>
-            <p><strong>Structural observation (Q11).</strong> §303.252(d)(4) should signal that the FDIC will evaluate enterprise-wide AML/CFT program integration between the subsidiary PPSI (under FINCEN-2026-0100) and the parent IDI (under 91 FR 18304): governance, information sharing, unified testing, enterprise-wide risk assessment.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The FDIC AG20 application rule implements GENIUS Act Section 5, establishing the procedural pathway for an insured depository institution to obtain FDIC approval for a subsidiary PPSI. Proposed §303.252 specifies filing content: description of proposed activities, reserve assets and composition plan, customer agreements, BSA/AML/OFAC compliance, and related materials. The information the FDIC collects at the application stage becomes both the approval-decision basis and the baseline for ongoing supervision under Section 4 and Section 6.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>December 19, 2025 to May 18, 2026 (extended from original February 17, 2026 via Federal Register notice 2026-02-11; approximately three-month extension)</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>4 recommendations filed; no final action yet</dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fdic-ag19-ppsi-activities/">No. 8</a>, <a href="/letters/fdic-ag29-bsa-sanctions/">No. 13</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Part of the AML-plus-FDIC batch filed April 18, 2026. Companion to AG19 (filed April 20, 2026). Completes the FDIC-side of the control-layer-topology mapping thread. Filed via <code>Comments@fdic.gov</code> email per SUBMISSION_PASS Action 4; FDIC does not accept this docket via regulations.gov or a website filing form.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
-          <a href="/letters/treasury-genius-state-similarity/" class="companion-card">
-            <strong>&larr; Previous letter: Treasury state-similarity</strong>
-            <span>April 15, 2026 &middot; Treasury &middot; TREAS-DO-2026-0232 (RIN 1505-AC90; 91 FR 16844)</span>
-          </a><a href="/letters/fincen-aml-cft/" class="companion-card">
-            <strong>Next letter: FinCEN AML/CFT &rarr;</strong>
-            <span>April 18, 2026 &middot; FinCEN &middot; FINCEN-2026-0034 (RIN 1506-AB72)</span>
-          </a><a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
-            <strong>Sister rule: FDIC AG19 activities</strong>
-            <span>April 20, 2026 &middot; FDIC &middot; RIN 3064-AG19. Substantive activities rule; sister to AG20's application rule.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+          <a href="/letters/fincen-ofac-ppsi-sanctions/" class="companion-card">
+            <strong>Same cycle: FinCEN-OFAC PPSI sanctions &rarr;</strong>
+            <span>April 18, 2026 &middot; FinCEN + OFAC &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
+            <strong>Same cycle: FDIC AG19 PPSI activities &rarr;</strong>
+            <span>April 20, 2026 &middot; FDIC &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20RIN%203064-AG20%20(90%20Fed.%20Reg.%2059409)">Zach@Tokenization.Systems</a></p>
     </article>

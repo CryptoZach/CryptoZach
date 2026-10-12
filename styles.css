@@ -22174,3 +22174,151 @@ body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child
 :root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-item:nth-child(3) .about-label{color:#b7adff}
 .letters-filters .filter-count-wrap{margin:.45rem 0 0;padding:0;border:0;background:none;min-height:0;box-shadow:none}
 .letters-filters .filter-count-wrap[hidden]{display:none}
+
+/* Letters upgrade (2026-10-12): toolbar, list view, status chips, outcome ledger,
+   recommendation index, rule-background disclosure. Markup from scripts/render_letters.py. */
+.letters-toolbar[hidden]{display:none}
+.letters-toolbar{margin:var(--space-md) 0 var(--space-lg);display:grid;gap:.6rem}
+.letters-toolbar .letters-filters{margin:0;display:grid;gap:.45rem}
+.letters-toolbar .filter-group{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+.letters-toolbar .filter-label{font-size:var(--font-size-min);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-right:.25rem;min-width:6.5rem}
+.letters-toolbar .filter-btn{appearance:none;border:1px solid color-mix(in srgb, currentColor 22%, transparent);background:transparent;color:inherit;font:inherit;font-size:var(--font-size-min);padding:.38rem .8rem;border-radius:999px;cursor:pointer;min-height:var(--interactive-height-sm,36px);line-height:1.2}
+.letters-toolbar .filter-btn:hover{border-color:var(--accent)}
+.letters-toolbar .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.letters-toolbar .filter-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.letters-toolbar .filter-n{opacity:.72;font-variant-numeric:tabular-nums;margin-left:.2rem}
+.letters-toolbar .letters-controls{display:flex;flex-wrap:wrap;gap:.45rem 1.5rem;align-items:center;padding-top:.5rem;border-top:1px solid color-mix(in srgb, currentColor 12%, transparent)}
+.letters-toolbar .filter-count-wrap{margin:0;padding:0;border:0;background:none;min-height:0;box-shadow:none;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.letters-toolbar .filter-count-wrap[hidden]{display:none}
+.letters-toolbar .filter-count{font-size:var(--font-size-min);color:var(--muted)}
+.letters-toolbar .filter-reset{appearance:none;border:0;background:none;color:var(--accent);font:inherit;font-size:var(--font-size-min);text-decoration:underline;cursor:pointer;padding:0}
+.letters-index .is-filtered-out{display:none !important}
+.letters-index.view-cards .letters-list-wrap{display:none}
+.letters-index.view-list .letters-cards{display:none}
+.rec-index .is-filtered-out{display:none !important}
+body.letters-landing .letter-card .card-number{display:block;font-size:var(--font-size-min);font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+body.letters-landing .letters-list .list-number{font-size:var(--font-size-min);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-right:.3rem;white-space:nowrap}
+.status-chip{display:inline-block;font-size:var(--font-size-min);line-height:1.3;padding:.1rem .5rem;border-radius:3px;white-space:nowrap;background:#f0f0f0;color:#555}
+.status-chip--pending,.badge-status-pending{background:#fef7e0;color:#b45309}
+.status-chip--open,.badge-status-open{background:#e8f0fe;color:#1a56db}
+.status-chip--final,.badge-status-final{background:var(--status-open-bg);color:var(--status-open-ink)}
+.status-chip--withdrawn,.badge-status-withdrawn{background:#f0f0f0;color:#555}
+:root[data-theme="dark"] .status-chip{background:rgba(255,255,255,.08);color:var(--muted)}
+:root[data-theme="dark"] .status-chip--pending,:root[data-theme="dark"] .badge-status-pending{background:rgba(180,83,9,.25);color:#f0b87a}
+:root[data-theme="dark"] .status-chip--open,:root[data-theme="dark"] .badge-status-open{background:rgba(26,86,219,.25);color:#7eb8ff}
+:root[data-theme="dark"] .status-chip--final,:root[data-theme="dark"] .badge-status-final{background:rgba(96,108,62,.42);color:var(--status-open-ink-dark)}
+.rec-status{display:inline-block;font-size:var(--font-size-min);line-height:1.3;padding:.05rem .45rem;border-radius:3px;margin-left:.35rem;vertical-align:middle;white-space:nowrap;background:#f0f0f0;color:#555}
+.rec-status--adopted{background:var(--status-open-bg);color:var(--status-open-ink)}
+.rec-status--partly-adopted{background:#fef7e0;color:#b45309}
+.rec-status--noted{background:#e8f0fe;color:#1a56db}
+.rec-status--not-adopted{background:#fdecea;color:#a12622}
+:root[data-theme="dark"] .rec-status{background:rgba(255,255,255,.08);color:var(--muted)}
+:root[data-theme="dark"] .rec-status--adopted{background:rgba(96,108,62,.42);color:var(--status-open-ink-dark)}
+:root[data-theme="dark"] .rec-status--partly-adopted{background:rgba(180,83,9,.25);color:#f0b87a}
+:root[data-theme="dark"] .rec-status--noted{background:rgba(26,86,219,.25);color:#7eb8ff}
+:root[data-theme="dark"] .rec-status--not-adopted{background:rgba(161,38,34,.3);color:#f3a09c}
+.rec-index td .rec-status{margin-left:0}
+.letters-note,.letters-outcomes-lede,.letters-asof{font-size:.95rem;color:var(--muted);max-width:72ch}
+.letters-asof{margin-top:var(--space-md)}
+.letters-outcome-id{font-size:var(--font-size-min);color:var(--muted)}
+body.letters-landing .letters-timeline tr.letters-outcome-note td{font-size:var(--font-size-min);color:var(--muted);padding-top:0;border-top:0}
+.letters-watch{margin:0 0 var(--space-md);padding-left:1.2rem}
+.letters-watch li{margin:.3rem 0}
+.letters-watch time{font-variant-numeric:tabular-nums;font-weight:600}
+.letter-outcome{display:grid;grid-template-columns:max-content 1fr;gap:.45rem 1.1rem;margin:0 0 var(--space-md);font-size:.97rem}
+.letter-outcome > div{display:contents}
+.letter-outcome dt{font-weight:600;color:var(--muted);font-size:var(--font-size-min);text-transform:uppercase;letter-spacing:.04em;padding-top:.2rem}
+.letter-outcome dd{margin:0;min-width:0}
+.letter-outcome-note{font-size:.95rem;color:var(--muted);max-width:72ch}
+.letter-outcome-recs{margin:0 0 var(--space-md);padding-left:1.2rem}
+.letter-background{margin:var(--space-xl) 0 var(--space-md);border-top:1px solid color-mix(in srgb, currentColor 12%, transparent);padding-top:var(--space-md)}
+.letter-background summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.letter-background summary::-webkit-details-marker{display:none}
+.letter-background summary::before{content:"+";font-weight:700;color:var(--accent);font-size:1.05rem;line-height:1}
+.letter-background[open] summary::before{content:"\2212"}
+.letter-background summary::after{content:"background";font-size:var(--font-size-min);color:var(--muted)}
+.paper-abstract .letter-background summary h2{margin:0;display:inline}
+.letter-background > :not(summary){margin-top:var(--space-md)}
+.letter-background summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+.rec-anchor{font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width: 720px){
+  .letters-toolbar .filter-label{min-width:0;flex-basis:100%}
+  body.letters-landing .letters-timeline.letters-stackable thead{display:none}
+  body.letters-landing .letters-timeline.letters-stackable,
+  body.letters-landing .letters-timeline.letters-stackable tbody{display:block;width:100%}
+  body.letters-landing .letters-timeline.letters-stackable tbody tr{display:grid;grid-template-columns:1fr;gap:.15rem;padding:.7rem 0;border-top:1px solid color-mix(in srgb, currentColor 12%, transparent)}
+  body.letters-landing .letters-timeline.letters-stackable tbody tr.letters-outcome-note{padding-top:0;border-top:0}
+  body.letters-landing .letters-timeline.letters-stackable td{display:block;padding:0;border:0;min-width:0}
+  body.letters-landing .letters-timeline.letters-stackable td::before{content:attr(data-label) ": ";font-weight:600;color:var(--muted);font-size:var(--font-size-min);text-transform:uppercase;letter-spacing:.04em}
+  body.letters-landing .letters-timeline.letters-stackable td[data-label="Letter"]::before,
+  body.letters-landing .letters-timeline.letters-stackable td[data-label="Recommendation"]::before,
+  body.letters-landing .letters-timeline.letters-stackable td[data-label="Proceeding"]::before,
+  body.letters-landing .letters-timeline.letters-stackable tr.letters-outcome-note td::before{content:""}
+  .letter-outcome{grid-template-columns:1fr;gap:.15rem .5rem}
+  .letter-outcome dt{padding-top:.5rem}
+}
+/* Letters upgrade: the timeline column fonts tracked the old five-column table
+   (Filed, Letter, Agency, Docket, Frameworks). The outcomes ledger and the
+   recommendation index have different first and fourth columns. */
+body.letters-landing .letters-outcomes td:nth-child(1),
+body.letters-landing .rec-index td:nth-child(4){font-family:inherit;font-size:inherit;white-space:normal}
+body.letters-landing .letters-outcomes td:nth-child(4){white-space:normal}
+body.letters-landing .rec-index td:nth-child(1){white-space:nowrap}
+body.letters-landing .letters-list td:nth-child(2),
+body.letters-landing .letters-outcomes td:nth-child(2),
+body.letters-landing .rec-index td:nth-child(3){min-width:14rem}
+@media (max-width: 720px){
+  /* Phone layout for the three stackable tables: one compact block per row. */
+  body.letters-landing .letters-timeline.letters-stackable tbody tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .45rem}
+  body.letters-landing .letters-timeline.letters-stackable td{display:inline;padding:0;border:0;min-width:0}
+  body.letters-landing .letters-timeline.letters-stackable td::before{content:none}
+  body.letters-landing .letters-list td[data-label="Letter"],
+  body.letters-landing .letters-outcomes td[data-label="Proceeding"],
+  body.letters-landing .rec-index td[data-label="Recommendation"]{display:block;flex-basis:100%;min-width:14rem}
+  body.letters-landing .letters-list td[data-label="Letter"]{order:0}
+  body.letters-landing .letters-list td[data-label="Filed"]{order:1}
+  body.letters-landing .letters-list td[data-label="Agency"]{order:2}
+  body.letters-landing .letters-list td[data-label="Status"]{order:3}
+  body.letters-landing .letters-list td[data-label="PDF"]{order:4}
+  body.letters-landing .letters-list td[data-label="Proceeding"],
+  body.letters-landing .letters-list td[data-label="Recs"]{display:none}
+  body.letters-landing .letters-list td[data-label="Filed"]::after,
+  body.letters-landing .letters-list td[data-label="Agency"]::after,
+  body.letters-landing .letters-list td[data-label="Status"]::after,
+  body.letters-landing .letters-outcomes td[data-label="Letters"]::after,
+  body.letters-landing .letters-outcomes td[data-label="Comments closed"]::after,
+  body.letters-landing .letters-outcomes td[data-label="Status"]::after,
+  body.letters-landing .rec-index td[data-label="No."]::after,
+  body.letters-landing .rec-index td[data-label="Topics"]::after{content:"\00b7";color:var(--muted);margin-left:.45rem}
+  body.letters-landing .letters-outcomes td[data-label="Letters"]::before,
+  body.letters-landing .letters-outcomes td[data-label="Comments closed"]::before,
+  body.letters-landing .letters-outcomes td[data-label="Recommendations"]::before,
+  body.letters-landing .rec-index td[data-label="Topics"]::before{content:attr(data-label) ": ";color:var(--muted);font-size:var(--font-size-min)}
+  body.letters-landing .letters-outcomes td[data-label="Recommendations"]{display:block;flex-basis:100%}
+  body.letters-landing .rec-index td[data-label="No."]{order:0}
+  body.letters-landing .rec-index td[data-label="Letter"]{order:1;font-size:var(--font-size-min)}
+  body.letters-landing .rec-index td[data-label="Letter"] br{display:none}
+  body.letters-landing .rec-index td[data-label="Letter"] .letters-outcome-id{margin-left:.35rem}
+  body.letters-landing .rec-index td[data-label="Recommendation"]{order:2}
+  body.letters-landing .rec-index td[data-label="Topics"]{order:3;font-size:var(--font-size-min)}
+  body.letters-landing .rec-index td[data-label="Status"]{order:4}
+  body.letters-landing .letters-timeline.letters-stackable tr.letters-outcome-note td{display:block;flex-basis:100%}
+}
+/* Letters upgrade: wrap long proceeding labels in the list; fold the ledger on phones;
+   one scrollable line per filter axis on phones. */
+body.letters-landing .letters-list td:nth-child(4){white-space:normal}
+.letters-fold summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.5rem;font-weight:600;color:var(--accent);margin:.25rem 0 var(--space-md)}
+.letters-fold summary::-webkit-details-marker{display:none}
+.letters-fold summary::before{content:"+";font-weight:700}
+.letters-fold[open] summary::before{content:"\2212"}
+.letters-fold summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+@media (min-width: 721px){
+  .letters-fold summary{display:none}
+}
+@media (max-width: 720px){
+  .letters-toolbar .filter-group{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.3rem;scrollbar-width:thin}
+  .letters-toolbar .filter-label{min-width:auto;flex:0 0 auto;flex-basis:auto}
+  .letters-toolbar .filter-btn{white-space:nowrap;flex:0 0 auto}
+  .letters-toolbar .letters-controls{flex-wrap:wrap;gap:.3rem 1rem}
+  .letters-toolbar .letters-controls .filter-group{overflow:visible}
+}

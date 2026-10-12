@@ -100,9 +100,18 @@
       "inLanguage": "en",
       "description": "A single-point supplement to the program's April 18, 2026 FinCEN AML/CFT comment, adding first-party measurement that effective control and nominal designation diverge by a large factor in most delegated systems.",
       "url": "https://tokenization.systems/letters/fincen-aml-cft-supplemental/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fincen-aml-cft-supplemental/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fincen-aml-cft-supplemental/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on FINCEN-2026-0034 (supplements FINCEN-2026-0034-0008) with the Financial Crimes Enforcement Network",
+      "about": {
+        "@type": "Legislation",
+        "name": "FinCEN: anti-money laundering and countering the financing of terrorism program requirements",
+        "legislationIdentifier": "RIN 1506-AB72; Docket FINCEN-2026-0034",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.regulations.gov/docket/FINCEN-2026-0034",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Financial Crimes Enforcement Network (FinCEN)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -202,6 +211,9 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">June 9, 2026</span>
         <span class="badge">Supplemental comment</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FinCEN AML/CFT supplemental comment: effective control over the compliance officer</h1>
@@ -230,29 +242,52 @@
       <div class="paper-abstract">
         <h2>What this supplements</h2>
         <p>This is a supplemental comment to the comment Tokenization Systems filed on this docket on April 18, 2026, on the public record as comment <a href="https://www.regulations.gov/comment/FINCEN-2026-0034-0008" target="_blank" rel="noopener noreferrer">FINCEN-2026-0034-0008</a>. It adds one focused point and does not restate the seven recommendations already on the record. The point concerns Recommendation 4, which urged FinCEN to preserve the requirement that the AML/CFT officer be located in the United States and argued that the officer should hold effective supervisory control over the United States nexus operations rather than a nominal title. The proposed rule frames the requirement on the same axis: the preamble at Section V.D.3 states that the rule is not primarily concerned with the formal title of the officer, but with the officer's position in the organizational structure that enables the officer to effectively establish and implement the program.</p>
-
         <h2>The new evidence</h2>
         <p>The April comment made that argument as a reasoned position. It did not offer first-party measurement of how far the nominal locus of responsibility can in practice diverge from the effective locus of control. Since the April filing, that measurement has become available in a fifty-two protocol empirical study of governance concentration in token-governed systems, accepted for publication at the peer-reviewed journal <em>Frontiers in Blockchain</em>. In that sample, effective voting control concentrated above the nominal locus of holdings in thirteen of eighteen protocols with sufficient governance data, by a measured factor ranging from 2.5 times to 25.6 times among those thirteen. The study's sample consists of decentralized protocols that are not payment stablecoin issuers, not Bank Secrecy Act institutions, and not subject to this rule; it is offered as transferable method and cautionary pattern only.</p>
-
         <h2>Why it matters</h2>
         <p>This evidence gives empirical weight to Recommendation 4. The United States location requirement for the AML/CFT officer is most likely to achieve its purpose if it is paired with an explicit requirement that the officer hold effective supervisory control, because measurement of delegated systems indicates that nominal designation and effective control diverge by a large factor in most cases. Where authority is formally delegated, the effective and nominal loci of control separate by a large and measurable margin in most cases, not only in rare or exceptional ones. The attached PDF develops this single point in full.</p>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Supplements</dt><dd><a href="/letters/fincen-aml-cft/">No. 5: FinCEN AML/CFT</a>, Recommendation 4</dd></div>
+        </dl>
+        <p class="letter-outcome-note">No final rule located as of the verification date. The proposal provides a twelve-month implementation period after a final rule issues.</p>
+        <!-- letters:outcome END -->
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
           <a href="/letters/fincen-aml-cft/" class="companion-card">
-            <strong>&larr; The comment this supplements</strong>
-            <span>April 18, 2026 &middot; FinCEN &middot; FINCEN-2026-0034-0008 (seven recommendations)</span>
-          </a><a href="/letters/fincen-ofac-ppsi-sanctions-supplemental/" class="companion-card">
-            <strong>Companion supplement: FinCEN-OFAC PPSI sanctions &rarr;</strong>
-            <span>June 9, 2026 &middot; FinCEN + OFAC &middot; reserve-custody concentration evidence</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+            <strong>Supplements: FinCEN AML/CFT &rarr;</strong>
+            <span>April 18, 2026 &middot; FinCEN &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/banking-agencies-joint-aml/" class="companion-card">
+            <strong>Same cycle: Banking agencies joint AML &rarr;</strong>
+            <span>April 18, 2026 &middot; OCC + FDIC + NCUA &middot; Final rule pending</span>
+          </a>
+          <a href="/letters/fed-r1835-aml-cft-programs/" class="companion-card">
+            <strong>Same cycle: Federal Reserve R-1835 AML and CFT programs &rarr;</strong>
+            <span>September 21, 2026 &middot; Board of Governors &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/governance-concentration/" class="companion-card">
+            <strong>Evidence: Auditing Governance Concentration Beyond Token Allocation &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20FINCEN-2026-0034%20(supplemental)">Zach@Tokenization.Systems</a></p>
     </article>

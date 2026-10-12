@@ -102,9 +102,15 @@
       "inLanguage": "en",
       "description": "A response to all seven questions of the Financial Stability Board consultation on Sound Practices for Responsible Adoption of Artificial Intelligence (AI), applying the MVEP-AI and CLII-AI frameworks. Anchored by the first control-layer measurement of live agentic payments across the x402 protocol.",
       "url": "https://tokenization.systems/letters/fsb-ai-sound-practices/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fsb-ai-sound-practices/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fsb-ai-sound-practices/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "International standard-setter consultation response filed with the Financial Stability Board on its Sound Practices for Responsible Adoption of Artificial Intelligence (AI) consultation report",
+      "about": {
+        "@type": "Report",
+        "name": "FSB: Sound Practices for Responsible Adoption of Artificial Intelligence (consultation report)",
+        "url": "https://www.fsb.org/2026/06/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-consultation-report/",
+        "publisher": { "@type": "Organization", "name": "Financial Stability Board" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "Organization", "name": "Financial Stability Board (FSB)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -206,6 +212,9 @@
         <span class="badge">First international standard-setter filing</span>
         <span class="badge">3 practice additions + 2 glossary refinements</span>
         <span class="badge">7 of 7 questions</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final report pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FSB AI Sound Practices response: composition-chain accountability, measured in live agentic payments</h1>
@@ -233,9 +242,15 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the consultation asks</h2>
-        <p>The FSB's June 2026 consultation report sets out twelve sound practices for the responsible adoption of AI by financial institutions, spanning governance, risk management, data, third-party dependencies, and monitoring, together with case studies and a glossary. It gives early and specific attention to agentic AI, and it invites additional case studies, particularly for nonbanks. The consultation poses seven questions, on the benefits and risks described, the comprehensiveness and clarity of the practices, the balance between all AI and emerging forms, flexibility over time, case studies for nonbanks, actionable insights, and the glossary. Responses were due July 22, 2026.</p>
-
+        <h2>Requested edits</h2>
+        <p>Five edits, each compatible with the report's menu approach and proportionality principle. They clarify how the existing menu applies when AI systems can execute transactions; they do not ask the FSB to convert the report into a prescriptive standard.</p>
+        <ol>
+          <li id="rec-1"><strong>Composition-chain documentation.</strong> For AI use cases with execution authority, document the full operator chain through settlement, including non-contractual settlement layers, and record who can halt, reverse, or remediate a transaction at each layer. (Sound Practices 3 and 12)</li>
+          <li id="rec-2"><strong>Execution-authority evidence package.</strong> Name a minimum evidence package before any AI system receives authority to move funds or bind the institution, including a reconstructible authorization-context record, not merely a settlement record. (Sound Practices 5 and 10)</li>
+          <li id="rec-3"><strong>System-level dependency monitoring.</strong> Acknowledge measured system-level concentration of shared AI-payment dependencies as a complement to institution-level registers, which cannot observe market-wide facilitator concentration. (Sound Practice 12)</li>
+          <li id="rec-4"><strong>Agentic-AI glossary distinction.</strong> Distinguish agentic AI generally from agentic AI with execution authority; advisory autonomy and irreversible transaction authority differ in kind. (Glossary and Sound Practice 10)</li>
+          <li id="rec-5"><strong>Supply-chain scope.</strong> Reconsider the service-relationship limit in "supply chain," or add "composition chain" as a companion term that reaches operators outside direct service relationships. (Glossary, Sound Practices 3 and 12)</li>
+        </ol>
         <h2>What Tokenization Systems contributes</h2>
         <p>The submission's value is empirical. In June 2026 Tokenization Systems completed what it understands to be the first control-layer measurement of live agentic payments, and the response uses it to name two risk areas the report's institution-internal frame does not reach, and to offer the nonbank case study the report invites.</p>
         <ul>
@@ -243,36 +258,41 @@
           <li><strong>Integrity of AI-adoption statistics.</strong> Agents make transaction volume arbitrarily cheap to manufacture, so unweighted activity counts select for whichever operator has the strongest incentive to manufacture them. Adoption indicators built on raw activity counts in agentic markets will systematically mismeasure adoption.</li>
         </ul>
         <p><strong>The measured case study (May 2026, three chains).</strong> Settlement-facilitator concentration is above the highly-concentrated threshold on every reading (payment-count HHI 6,009 on Base, 4,203 on Solana; corrected-volume HHI 4,040 and 4,915; effective single-operator service on Polygon). The count-dominant and value-dominant operators differ on two separate chains. The largest single count contributor is a chain operator's official facilitator under a public gas-rebate program, which produced 5.04 million May payments, 56.8 percent of cross-chain counts, from a fleet of 35 buyer wallets. Measured at the value layer the market is currently small: corrected cross-chain May volume is $940,323 across 8.87 million payments, 0.0000376 percent of USDC transfer value on the same rails. Settlement is irreversible at the protocol layer, and none of the top 25 sellers by dollar volume resolves to a named operator from public records. No impropriety is implied by any figure; the measured subsidy program is public, and the claims are about market structure, not conduct.</p>
-
-        <h2>Requested edits</h2>
-        <p>Five edits, each compatible with the report's menu approach and proportionality principle. They clarify how the existing menu applies when AI systems can execute transactions; they do not ask the FSB to convert the report into a prescriptive standard.</p>
-        <ol>
-          <li><strong>Composition-chain documentation.</strong> For AI use cases with execution authority, document the full operator chain through settlement, including non-contractual settlement layers, and record who can halt, reverse, or remediate a transaction at each layer. (Sound Practices 3 and 12)</li>
-          <li><strong>Execution-authority evidence package.</strong> Name a minimum evidence package before any AI system receives authority to move funds or bind the institution, including a reconstructible authorization-context record, not merely a settlement record. (Sound Practices 5 and 10)</li>
-          <li><strong>System-level dependency monitoring.</strong> Acknowledge measured system-level concentration of shared AI-payment dependencies as a complement to institution-level registers, which cannot observe market-wide facilitator concentration. (Sound Practice 12)</li>
-          <li><strong>Agentic-AI glossary distinction.</strong> Distinguish agentic AI generally from agentic AI with execution authority; advisory autonomy and irreversible transaction authority differ in kind. (Glossary and Sound Practice 10)</li>
-          <li><strong>Supply-chain scope.</strong> Reconsider the service-relationship limit in "supply chain," or add "composition chain" as a companion term that reaches operators outside direct service relationships. (Glossary, Sound Practices 3 and 12)</li>
-        </ol>
-
+        <details class="letter-background">
+          <summary><h2>What the consultation asks</h2></summary>
+        <p>The FSB's June 2026 consultation report sets out twelve sound practices for the responsible adoption of AI by financial institutions, spanning governance, risk management, data, third-party dependencies, and monitoring, together with case studies and a glossary. It gives early and specific attention to agentic AI, and it invites additional case studies, particularly for nonbanks. The consultation poses seven questions, on the benefits and risks described, the comprehensiveness and clarity of the practices, the balance between all AI and emerging forms, flexibility over time, case studies for nonbanks, actionable insights, and the glossary. Responses were due July 22, 2026.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>June 10 to July 22, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final report pending</span> as of October 12, 2026</dd></div>
+        </dl>
+        <p class="letter-outcome-note">The FSB has said it aims to finalize the report in late 2026 as a deliverable to the G20. Source: <a href="https://www.fsb.org/2026/07/opening-remarks-on-sound-practices-for-artificial-intelligence/" target="_blank" rel="noopener noreferrer">FSB, Opening remarks on sound practices for artificial intelligence (July 2026)</a>.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>Tokenization Systems' first submission to an international standard-setting body, distinct from its Federal Comment Letter Program, and the first external deployment of the MVEP-AI and CLII-AI frameworks. It is anchored by the June 2026 research memo <a href="/papers/agentic-payments-control-layer/">The Control Layer of Agentic Payments</a>, from which every figure in the response reproduces via committed queries and scripts. The offer to the FSB is the same one the program makes to national authorities: independent, reproducible measurement, offered here as the underlying dataset, the memo, and reproduction code for the consultation record.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
           <a href="/papers/agentic-payments-control-layer/" class="companion-card">
-            <strong>The evidence: Control Layer of Agentic Payments</strong>
-            <span>June 2026 research memo &middot; the first control-layer measurement of live agentic payments (x402 facilitator concentration across Base, Polygon, Solana). Every figure in this response reproduces from it.</span>
-          </a><a href="/papers/mvep/" class="companion-card">
-            <strong>The framework: MVEP</strong>
-            <span>The Minimum Viable Equivalence Pack, the institutional diligence framework being extended to AI infrastructure as MVEP-AI in this response.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>All letters</strong>
-            <span>The Tokenization Systems comment-letter program: twenty-one federal comment letters plus this first international standard-setter response.</span>
+            <strong>Memo: Control Layer of Agentic Payments &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this response? <a href="mailto:Zach@Tokenization.Systems?subject=FSB%20AI%20Sound%20Practices%20consultation%20response">Zach@Tokenization.Systems</a></p>
     </article>

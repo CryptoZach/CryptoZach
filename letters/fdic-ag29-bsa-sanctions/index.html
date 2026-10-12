@@ -102,9 +102,18 @@
       "inLanguage": "en",
       "description": "The FDIC's supervision-and-coordination layer for PPSI AML/CFT and sanctions. Six recommendations for an observable effective-program disposition and a shared control-posture record read by both the FDIC and FinCEN.",
       "url": "https://tokenization.systems/letters/fdic-ag29-bsa-sanctions/",
+      "associatedMedia": { "@type": "DigitalDocument", "name": "Filed letter (PDF)", "encodingFormat": "application/pdf", "url": "https://tokenization.systems/letters/fdic-ag29-bsa-sanctions/letter.pdf" },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://tokenization.systems/letters/fdic-ag29-bsa-sanctions/" },
       "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems" },
-      "about": "Federal regulatory comment letter filed on RIN 3064-AG29 (91 Fed. Reg. 34171) with the FDIC",
+      "about": {
+        "@type": "Legislation",
+        "name": "FDIC: Bank Secrecy Act and sanctions compliance standards for permitted payment stablecoin issuers",
+        "legislationIdentifier": "RIN 3064-AG29; 91 Fed. Reg. 34171",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.federalregister.gov/citation/91-FR-34171",
+        "publisher": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation" }
+      },
       "articleSection": "Regulatory commentary",
       "audience": { "@type": "GovernmentOrganization", "name": "Federal Deposit Insurance Corporation (FDIC)" },
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["#letter-title", ".paper-thesis"] }
@@ -205,6 +214,9 @@
         <span class="badge">June 30, 2026</span>
         <span class="badge">6 recommendations</span>
         <span class="badge">Third FDIC comment</span>
+        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <span class="badge badge-status-pending">Final rule pending</span>
+        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG29 comment: a shared, reproducible control-posture record for PPSI supervision</h1>
@@ -229,51 +241,65 @@
       </div>
 
       <div class="paper-abstract">
-        <h2>What the rule proposes</h2>
-        <p>The AG29 rule sets Bank Secrecy Act and sanctions compliance standards for FDIC-supervised permitted payment stablecoin issuers (PPSIs). It amends subpart A of 12 CFR part 350 to add proposed Section 350.6(d) and establishes a new subpart C (Sections 350.200 to 350.204) with supervision and enforcement provisions for PPSI AML/CFT programs. Section 350.6(d) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. The substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582; this rule is principally a supervision-and-coordination instrument, specifying how the FDIC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
-
-        <h2>The problem identified</h2>
-        <p>The coordination architecture works as intended only if the FDIC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the FDIC itself identifies in Question 4. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The same problem recurs at the boundary of a dual-character instrument: where the token does not change, but its obligor, legal regime, and supervisory perimeter do.</p>
-
         <h2>Recommendations</h2>
         <ol>
-              <li><strong>Observable effective-program criteria</strong> (Question 1; Section 350.201). Rest the effective-program disposition on observable, reproducible indicators drawn from the FinCEN program requirements, not attestation alone, so a program is not treated as effective merely because policies or attestations exist. Prevents the disposition, which by the rule's terms shields a qualifying PPSI from AML/CFT enforcement, from becoming a paper-program safe harbor.</li>
-              <li><strong>A shared control-posture record</strong> (Question 4; Section 350.202(b)(1)). Make a reproducible control-posture record a standing component of the FDIC-to-FinCEN notice package, so both agencies reason over the same measured object rather than reconstructing two records inside the notice window.</li>
-              <li><strong>Thresholds keyed to posture</strong> (Questions 2 and 3; Sections 350.200 and 350.202). Pair any outstanding-issuance-value threshold or PPSI-requested consultation option with a control-posture trigger keyed to the same record, and account for a GENIUS Act section 6(b) suspension or revocation premised in part on AML/CFT deficiencies.</li>
-              <li><strong>Operational test of block, freeze, and reject capability</strong> (Section 350.6(d); Section IV.C). Require examination evidence that the sanctions capability works across both primary and secondary channels, with examination intensity scaled to measured holder concentration, rather than inferring it from the parent program or from the presence of on-chain functions.</li>
-              <li><strong>An accountable line for parent-program reliance</strong> (Question 1; Section 350.6(d)). Where a PPSI leverages its parent institution's program, confirm that one identifiable accountable line holds both the PPSI-specific control-posture information and the authority to act on it, so delegation does not diffuse responsibility.</li>
-              <li><strong>Coverage across holding-location obligor changes</strong> (Question 1; Sections 350.201, 350.202, and 350.6(d)). Where a single tokenized instrument changes its obligor and applicable regime based on holding location, confirm that AML and sanctions coverage follows the instrument across the transition, treating the boundary crossing as a monitored event with continuity of identity and lawful-order controls.</li>
+              <li id="rec-1"><strong>Observable effective-program criteria</strong> (Question 1; Section 350.201). Rest the effective-program disposition on observable, reproducible indicators drawn from the FinCEN program requirements, not attestation alone, so a program is not treated as effective merely because policies or attestations exist. Prevents the disposition, which by the rule's terms shields a qualifying PPSI from AML/CFT enforcement, from becoming a paper-program safe harbor.</li>
+              <li id="rec-2"><strong>A shared control-posture record</strong> (Question 4; Section 350.202(b)(1)). Make a reproducible control-posture record a standing component of the FDIC-to-FinCEN notice package, so both agencies reason over the same measured object rather than reconstructing two records inside the notice window.</li>
+              <li id="rec-3"><strong>Thresholds keyed to posture</strong> (Questions 2 and 3; Sections 350.200 and 350.202). Pair any outstanding-issuance-value threshold or PPSI-requested consultation option with a control-posture trigger keyed to the same record, and account for a GENIUS Act section 6(b) suspension or revocation premised in part on AML/CFT deficiencies.</li>
+              <li id="rec-4"><strong>Operational test of block, freeze, and reject capability</strong> (Section 350.6(d); Section IV.C). Require examination evidence that the sanctions capability works across both primary and secondary channels, with examination intensity scaled to measured holder concentration, rather than inferring it from the parent program or from the presence of on-chain functions.</li>
+              <li id="rec-5"><strong>An accountable line for parent-program reliance</strong> (Question 1; Section 350.6(d)). Where a PPSI leverages its parent institution's program, confirm that one identifiable accountable line holds both the PPSI-specific control-posture information and the authority to act on it, so delegation does not diffuse responsibility.</li>
+              <li id="rec-6"><strong>Coverage across holding-location obligor changes</strong> (Question 1; Sections 350.201, 350.202, and 350.6(d)). Where a single tokenized instrument changes its obligor and applicable regime based on holding location, confirm that AML and sanctions coverage follows the instrument across the transition, treating the boundary crossing as a monitored event with continuity of identity and lawful-order controls.</li>
             </ol>
             <p><strong>A note on Question 5.</strong> The letter takes no position on the choice between the two information-sharing options under proposed Section 350.203, deferring the attorney-client-privilege question to commenters with the relevant expertise, and observes only that a record of observed control facts reduces the volume of privilege-sensitive material that must change hands.</p>
-
+        <h2>The problem identified</h2>
+        <p>The coordination architecture works as intended only if the FDIC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the FDIC itself identifies in Question 4. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The same problem recurs at the boundary of a dual-character instrument: where the token does not change, but its obligor, legal regime, and supervisory perimeter do.</p>
         <h2>Worked example: the dual-character token</h2>
         <p>The letter illustrates the coverage gap with the Hazel Network, a publicly announced arrangement described in a June 2026 white paper jointly published by Vantage Bank Texas and Custodia Bank, Inc. A single unified token is a deposit liability of Vantage Bank Texas, an FDIC-insured member bank, while held within the consortium, and becomes a payment stablecoin issued by Custodia Bank, a Wyoming special-purpose depository institution, when transferred outside it, with no settlement event marking the transition. The example is offered as a supervisable failure mode, not as an allegation of wrongdoing, and neither named institution is presented as an FDIC-supervised PPSI under this rule. It shows how the state in which the instrument is least clearly accountable can be the state the design routes to the entity less integrated into the Federal banking supervisory perimeter, which is the coverage seam Recommendations 5 and 6 ask the FDIC's examination and consultation machinery to close.</p>
-
+        <details class="letter-background">
+          <summary><h2>What the rule proposes</h2></summary>
+        <p>The AG29 rule sets Bank Secrecy Act and sanctions compliance standards for FDIC-supervised permitted payment stablecoin issuers (PPSIs). It amends subpart A of 12 CFR part 350 to add proposed Section 350.6(d) and establishes a new subpart C (Sections 350.200 to 350.204) with supervision and enforcement provisions for PPSI AML/CFT programs. Section 350.6(d) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. The substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582; this rule is principally a supervision-and-coordination instrument, specifying how the FDIC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
+        </details>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <h2 id="what-happened-next">What happened next</h2>
+        <dl class="letter-outcome">
+          <div><dt>Comment period</dt><dd>June 5 to August 4, 2026</dd></div>
+          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 12, 2026</dd></div>
+          <div><dt>Recommendations</dt><dd>6 recommendations filed; no final action yet</dd></div>
+          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/occ-af55-bsa-sanctions/">No. 15</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a></dd></div>
+        </dl>
+        <p class="letter-outcome-note">No final rule located as of the verification date.</p>
+        <!-- letters:outcome END -->
         <h2>Program role</h2>
         <p>AG29 is the program's third FDIC comment, after the prudential activities rule (<a href="/letters/fdic-ag19-ppsi-activities/">AG19</a>) and the application-process rule (<a href="/letters/fdic-ag20-ppsi-application/">AG20</a>), and its thirteenth federal comment across six agencies. Filed June 30, 2026 via <code>Comments@fdic.gov</code> with RIN 3064-AG29 in the subject line and the FDIC Federal Register publications portal; the FDIC does not accept this docket via regulations.gov. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule and the FDIC prudential and application rules rather than duplicating them.</p>
       </div>
 
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
-        <h3 id="companions-heading">Read next</h3>
+        <h3 id="companions-heading">Related</h3>
         <div class="companion-cards">
+          <a href="/letters/ncua-genius/" class="companion-card">
+            <strong>Same cycle: NCUA GENIUS stablecoin &rarr;</strong>
+            <span>June 22, 2026 &middot; NCUA &middot; Final rule pending</span>
+          </a>
           <a href="/letters/ncua-genius-supplemental/" class="companion-card">
-            <strong>&larr; Previous letter: NCUA GENIUS supplemental</strong>
-            <span>June 22, 2026 &middot; NCUA &middot; NCUA-2026-1024 (same-day actionability supplement)</span>
-          </a><a href="/letters/sec-dsp3-draft-strategic-plan/" class="companion-card">
-            <strong>Next letter: SEC Draft Strategic Plan &rarr;</strong>
-            <span>July 2, 2026 &middot; SEC &middot; File Number DSP-3. The program's first SEC comment: a measured, reproducible decentralization standard.</span>
-          </a><a href="/letters/fdic-ag19-ppsi-activities/" class="companion-card">
-            <strong>Sister rule: FDIC AG19 activities</strong>
-            <span>April 20, 2026 &middot; FDIC &middot; RIN 3064-AG19. Prudential activities rule; AG29 carries its operational-verification principle into the AML and sanctions channel.</span>
-          </a><a href="/letters/fdic-ag20-ppsi-application/" class="companion-card">
-            <strong>Sister rule: FDIC AG20 application</strong>
-            <span>April 18, 2026 &middot; FDIC &middot; RIN 3064-AG20. Application-process rule; AG29 extends its enterprise-wide integration point to the accountable line.</span>
-          </a><a href="/letters/" class="companion-card">
-            <strong>Program overview</strong>
-            <span>All twenty-one letters in the Federal Comment Letter Program. Timeline, framework deployment, and cross-letter narrative.</span>
+            <strong>Same cycle: NCUA GENIUS supplemental &rarr;</strong>
+            <span>June 22, 2026 &middot; NCUA &middot; Final rule pending</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP (A2) &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/letters/" class="companion-card">
+            <strong>All letters: the program hub &rarr;</strong>
+            <span>Twenty-one federal letters and one international response; filter by agency, cycle or framework; outcomes by proceeding.</span>
+          </a>
+          <a href="/letters/recommendations/" class="companion-card">
+            <strong>Recommendation index: all 114 asks in one table &rarr;</strong>
+            <span>Filter by agency, topic and status.</span>
           </a>
         </div>
       </section>
+      <!-- letters:related END -->
 
       <p class="paper-contact-strip">Questions about this letter? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20letter%20on%20RIN%203064-AG29%20(91%20Fed.%20Reg.%2034171)">Zach@Tokenization.Systems</a></p>
     </article>
