@@ -221,8 +221,8 @@
       data-scale-commits-floored="61000"
       data-scale-concurrency-p75="14"
       data-scale-concurrency-peak="61"
-      data-scale-advisory-firings="56111"
-      data-scale-advisory-classes="35"
+      data-scale-advisory-firings="56368"
+      data-scale-advisory-classes="36"
       data-scale-advisory-span-days="94"
       data-scale-coherence-gate-checks="192"
       data-scale-hard-fail-checks="51"
@@ -245,7 +245,7 @@
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
         <div class="ai-proof-item" role="listitem"><strong>61,000+</strong><span>commits observed since March</span></div>
         <div class="ai-proof-item" role="listitem"><strong>14</strong><span>typical overlap; peak 61</span></div>
-        <div class="ai-proof-item" role="listitem"><strong>56,111</strong><span>advisory outcomes graded</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>56,368</strong><span>advisory outcomes graded</span></div>
         <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>49 in 50</strong><span>armed gates held</span></div>
       </div>
       <p class="ai-note ai-strip-gloss">All figures come from one operator's fleet. The measurement sections define the repeat and override rates behind these headline results.</p>
@@ -360,9 +360,9 @@
             <p class="ai-metric-was">51 hard-fail; 2 cannot be bypassed</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">56,111</p>
+            <p class="ai-metric-value">56,368</p>
             <p class="ai-metric-label">Warning outcomes graded</p>
-            <p class="ai-metric-was">35 classes across 94 days</p>
+            <p class="ai-metric-was">36 classes across 94 days</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">11,528</p>
@@ -400,7 +400,7 @@
                 <tr><th scope="row">Commits</th><td class="ai-val">over 61,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">14; peak 61</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-28 across both hosts: median 7, typical busy overlap 14 (75th percentile), 90th percentile 21, peak 61 on 2026-09-05. The claim of 12 to 55 concurrent agents, set 2026-09-26, is supported at both ends: the typical overlap of 14 is at least 12, and the peak of 61 exceeds 55. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
-                <tr><th scope="row">Advisory warnings</th><td class="ai-val">56,111</td><td class="ai-how">Across 35 classes over 94 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
+                <tr><th scope="row">Advisory warnings</th><td class="ai-val">56,368</td><td class="ai-how">Across 36 classes over 94 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
                 <tr><th scope="row">Hard refusals</th><td class="ai-val">11,528</td><td class="ai-how">Calls that reached an armed gate across the 12 classes that carry one, on both of the fleet's machines, through 2026-10-12. 11,470 refused, 58 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">78</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
