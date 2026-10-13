@@ -6417,6 +6417,7 @@
     var gateEl = form.querySelector('[data-gate]');
     var noteEl = form.querySelector('[data-ratenote]');
     var forEl = form.querySelector('[data-rating-for]');
+    var sumEl = form.querySelector('[data-summary]');
     window.__mvepMismatch = 0;
 
     /* product lists */
@@ -6445,9 +6446,17 @@
       return '<span class="mvep-v mvep-v--' + (TIER_CLS[tier] || 'unassessed') + '">' + tier + '</span>' + (strength ? ' <span class="mvep-sc__strength">' + strength.toFixed(1) + '</span>' : '');
     }
     function esc(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-    function tagsText(tags){
+    /* The source tag is a control, not a tooltip: a button that opens, in the row, what each tag stands for
+       and where the paper shows it. Which row is open survives a re-render (openSrc), so choosing a verdict
+       or a product does not close what the visitor just opened on another row unless that row has no tags. */
+    var openSrc = null;
+    function tagsText(tags, cat){
       if(!tags || !tags.length) return '';
-      return ' <span class="mvep-sc__src" title="' + tags.map(function(t){ return t + ': ' + (D.tags[t] || t); }).join('; ').replace(/"/g, '&quot;') + '">Source: ' + tags.join(', ') + '</span>';
+      var open = (openSrc === cat), id = 'mvep-sc-src-' + cat;
+      return ' <button type="button" class="mvep-sc__src" data-src="' + cat + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + id + '">Source: ' + tags.join(', ') + '</button>' +
+        '<span class="mvep-sc__srcnote" id="' + id + '"' + (open ? '' : ' hidden') + '>' +
+        tags.map(function(t){ return '<span class="mvep-sc__srcline"><strong>' + esc(t) + '</strong>: ' + esc(D.tags[t] || 'see the paper') + '.</span>'; }).join('') +
+        '<a href="/papers/mvep/#mvep-exhibit-1">Open Exhibit 1 on the paper page</a></span>';
     }
 
     function mode(){ return sel.value === '__own' ? 'own' : 'read'; }
@@ -6504,7 +6513,7 @@
           var k = row.getAttribute('data-cat'), cell = p.verdicts[k] || { v: 'UNASSESSED', tags: [] };
           row.setAttribute('data-verdict', CODE_OF[cell.v] || 'U');
           var slot = row.querySelector('[data-paper]');
-          slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(p.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags);
+          slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(p.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags, k);
           slot.hidden = false;
         });
         rating = p.rating;
@@ -6526,7 +6535,7 @@
           var slot = row.querySelector('[data-paper]');
           if(comparator){
             var cell = comparator.verdicts[k] || { v: 'UNASSESSED', tags: [] };
-            slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(comparator.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags);
+            slot.innerHTML = '<span class="mvep-sc__paper-label">' + esc(comparator.key) + '</span> ' + chip(cell.v) + tagsText(cell.tags, k);
             slot.hidden = false;
           } else {
             slot.innerHTML = '';
@@ -6546,6 +6555,19 @@
         }
       }
       renderRating(rating, who, note, provisional);
+      /* The rating panel sits below eleven rows, and many products share their first verdicts, so a change of
+         product could leave nothing different in view. Say the chosen product's scores right under the control. */
+      if(sumEl){
+        var cnt = {}, fx = function(x){ return (typeof x === 'number' && x) ? x.toFixed(1) : '0.0'; };
+        KEYS.forEach(function(k){ var v = verdicts[k] || 'UNASSESSED'; cnt[v] = (cnt[v] || 0) + 1; });
+        var tallies = ['PASS', 'PARTIAL', 'AMBIGUOUS', 'NOT_DISCLOSED', 'FAIL', 'UNASSESSED'].filter(function(v){ return cnt[v]; })
+          .map(function(v){ return cnt[v] + ' ' + ((D.verdicts[v] && D.verdicts[v].label) || v); });
+        sumEl.innerHTML = '<strong>' + esc(who) + '</strong> ' + tierChip(rating.headline) + (provisional ? ' <span class="mvep-sc__status">provisional</span>' : '') +
+          '<span class="mvep-sc__sumline">Overall strength <b>' + fx(rating.overall_strength) + '</b> of 5.0. Legal ' + esc(rating.legal) + ' ' + fx(rating.legal_strength) +
+          ', operational ' + esc(rating.operational) + ' ' + fx(rating.operational_strength) + ', economic ' + esc(rating.economic) + ' ' + fx(rating.economic_strength) + '.</span>' +
+          '<span class="mvep-sc__sumline">' + tallies.join(', ') + '. <a href="#mvep-sc-rating">Full rating below</a></span>';
+        sumEl.classList.remove('is-fresh'); void sumEl.offsetWidth; sumEl.classList.add('is-fresh');
+      }
       var g = gateLine(verdicts);
       gateEl.setAttribute('data-state', g[0]);
       gateEl.textContent = g[1];
@@ -6667,7 +6689,22 @@
     form.addEventListener('change', function(){ if(!statusTimer) setStatus('', 0); render(); });
     form.addEventListener('input', function(e){ if(e.target === nameEl) render(); });
     form.addEventListener('submit', function(e){ e.preventDefault(); });
+    form.addEventListener('keydown', function(e){
+      if(e.key !== 'Escape' || openSrc === null) return;
+      var cat = openSrc; openSrc = null; render();
+      var back = form.querySelector('button[data-src="' + cat + '"]');
+      if(back) back.focus();
+    });
     form.addEventListener('click', function(e){
+      var src = e.target.closest('button[data-src]');
+      if(src){
+        var cat = src.getAttribute('data-src');
+        openSrc = (openSrc === cat) ? null : cat;
+        render();
+        var again = form.querySelector('button[data-src="' + cat + '"]');
+        if(again) again.focus();
+        return;
+      }
       var btn = e.target.closest('button[data-act]');
       if(!btn) return;
       var act = btn.getAttribute('data-act');

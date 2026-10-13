@@ -22273,6 +22273,12 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc select,.mvep-sc input,.mvep-sc button,.mvep-sc summary,.mvep-sc .action,.mvep-sc__tablewrap{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem);scroll-margin-bottom:var(--space-md)}
 .mvep-scorecard{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
 html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
+.mvep-sc__summary{margin:0;padding:.7rem .9rem;border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);border-radius:10px;background:color-mix(in srgb, var(--accent) 5%, transparent);font-size:.95rem;line-height:1.55;max-width:60rem}
+.mvep-sc__summary:empty{display:none}
+.mvep-sc__sumline{display:block;font-size:.88rem;color:var(--text-soft)}
+.mvep-sc__summary.is-fresh{animation:mvepFresh .9s ease-out}
+@keyframes mvepFresh{from{background:color-mix(in srgb, var(--accent) 24%, transparent)}to{background:color-mix(in srgb, var(--accent) 5%, transparent)}}
+@media (prefers-reduced-motion: reduce){.mvep-sc__summary.is-fresh{animation:none}}
 .mvep-sc__legend{font-size:.9rem;color:var(--text-soft);line-height:1.6;max-width:72ch}
 .mvep-sc__legend p{margin:.4rem 0 0;font-size:.88rem;color:var(--muted)}
 .mvep-v{display:inline-block;padding:.08rem .55rem;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.02em;line-height:1.45;color:#fff;white-space:nowrap;vertical-align:middle}
@@ -22297,7 +22303,14 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .mvep-sc__paper{font-size:.9rem;color:var(--text-soft);display:flex;flex-wrap:wrap;gap:.3rem .5rem;align-items:center;justify-self:end;max-width:18rem}
 .mvep-sc__paper[hidden]{display:none}
 .mvep-sc__paper-label{font-weight:700;font-size:.82rem;letter-spacing:.03em}
-.mvep-sc__src{font-size:.8rem;color:var(--muted);text-decoration:underline dotted;text-underline-offset:.15em;cursor:help}
+.mvep-sc__src{font:inherit;font-size:.8rem;color:var(--muted);background:none;border:0;padding:.15rem 0;margin:0;text-decoration:underline dotted;text-underline-offset:.15em;cursor:pointer;border-radius:4px}
+.mvep-sc__src:hover,.mvep-sc__src[aria-expanded="true"]{color:var(--accent);text-decoration-style:solid}
+.mvep-sc__src:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mvep-sc__srcnote{flex-basis:100%;display:block;font-size:.84rem;line-height:1.5;color:var(--text-soft);padding:.45rem .6rem;border-left:2px solid var(--accent);background:color-mix(in srgb, currentColor 4%, transparent);border-radius:0 6px 6px 0}
+.mvep-sc__srcnote[hidden]{display:none}
+.mvep-sc__srcline{display:block;margin-bottom:.25rem}
+.mvep-sc__srcnote a{display:inline-block;margin-top:.15rem}
+.mvep-sc__paper:has(.mvep-sc__srcnote:not([hidden])){max-width:none;justify-self:stretch;grid-column:1 / -1}
 .mvep-sc__verdict{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem .8rem;align-content:start;font-size:.9rem;grid-column:1 / -1}
 .mvep-sc__verdict label{display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap;cursor:pointer}
 .mvep-sc__verdict input{accent-color:var(--accent);margin:0}
@@ -22350,6 +22363,7 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
   .mvep-sc__verdict label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb, var(--accent) 10%, transparent)}
   .mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{min-height:2.75rem}
   .mvep-sc__raw summary{padding:.65rem 0}
+  .mvep-sc__src{min-height:2.75rem;padding:0 .2rem}
 }
 @media print{
   body.mvep-printing header,body.mvep-printing footer,body.mvep-printing nav,body.mvep-printing .back-to-top,body.mvep-printing main > :not(#mvep-scorecard),body.mvep-printing .mvep-sc__actions,body.mvep-printing .mvep-sc__how,body.mvep-printing .mvep-sc__raw{display:none !important}
@@ -22357,6 +22371,7 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
   body.mvep-printing .mvep-sc__verdict label{display:none}
   body.mvep-printing .mvep-sc__verdict label:has(input:checked){display:inline-flex}
   body.mvep-printing .mvep-sc__note:has(input:placeholder-shown){display:none}
+  body.mvep-printing .mvep-sc__srcnote{display:none}
 }
 
 /* Work-with-me block on the advisory page (2026-10-12). */
