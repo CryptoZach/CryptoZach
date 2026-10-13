@@ -365,9 +365,9 @@
             <p class="ai-metric-was">35 classes across 94 days</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">2,596</p>
+            <p class="ai-metric-value">11,528</p>
             <p class="ai-metric-label">Actions reached a hard gate</p>
-            <p class="ai-metric-was">2,547 stopped; 49 overridden</p>
+            <p class="ai-metric-was">11,470 stopped; 58 overridden</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">2,515</p>
@@ -392,7 +392,7 @@
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the commits row was measured 2026-10-12, the advisory warnings row was measured 2026-10-12, the skill library row was measured 2026-10-01, the concurrency row was measured 2026-09-28, and the pre-commit gate, hard-refusal and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the commits row was measured 2026-10-12, the advisory warnings row was measured 2026-10-12, the skill library row was measured 2026-10-01, the concurrency row was measured 2026-09-28, and the hard-refusal row was measured 2026-10-12 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
@@ -401,7 +401,7 @@
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">14; peak 61</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-28 across both hosts: median 7, typical busy overlap 14 (75th percentile), 90th percentile 21, peak 61 on 2026-09-05. The claim of 12 to 55 concurrent agents, set 2026-09-26, is supported at both ends: the typical overlap of 14 is at least 12, and the peak of 61 exceeds 55. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">56,111</td><td class="ai-how">Across 35 classes over 94 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
-                <tr><th scope="row">Hard refusals</th><td class="ai-val">2,596</td><td class="ai-how">Calls that reached an armed gate across the 7 classes that carry one, over the 73 days through 2026-09-21. 2,547 refused, 49 overridden with the documented escape <span class="ai-class-gloss">[was 296 reached, 254 refused]</span></td></tr>
+                <tr><th scope="row">Hard refusals</th><td class="ai-val">11,528</td><td class="ai-how">Calls that reached an armed gate across the 12 classes that carry one, on both of the fleet's machines, through 2026-10-12. 11,470 refused, 58 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">78</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
                 <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
@@ -481,7 +481,7 @@
         <p>A hard gate refuses an action instead of only warning about it. The table shows every armed gate class, how often it blocked an action, and how often an agent bypassed the block.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness ai-table--refusals">
-            <caption>Hard-gate results over the 73 days through 2026-09-21, ranked by times blocked. An override means the agent used the documented escape and continued. Every block and override leaves a log entry. For the two oldest gate classes, “First seen” marks the start of the log; the gates may have been armed earlier.</caption>
+            <caption>Hard-gate results over the 73 days through 2026-09-21, ranked by times blocked. An override means the agent used the documented escape and continued. Every block and override leaves a log entry. For the two oldest gate classes, “First seen” marks the start of the log; the gates may have been armed earlier. Measured again on 2026-10-12 over both of the fleet's machines: 11,470 blocked and 58 overrides across 12 gate classes.</caption>
             <thead>
               <tr><th scope="col">Action the gate stopped</th><th scope="col" class="ai-num-head">Times blocked</th><th scope="col" class="ai-num-head">Overrides</th><th scope="col" class="ai-num-head">Override rate</th><th scope="col">First seen</th></tr>
             </thead>
