@@ -29,7 +29,8 @@ except the feed, which is generated whole):
         outcome            "What happened next": comment period, status, recommendation
                            dispositions, internal cross-references
         related            the Related cards (supplements, same proceeding, same cycle,
-                           the paper, the hub, the recommendation index)
+                           every paper the registry lists, the hub, the
+                           recommendation index)
         (in place)         a status chip on each recommendation <li id="rec-N"> whose
                            status is not "pending"; removed again when it is
     letters/recommendations/index.html
@@ -52,9 +53,17 @@ except the feed, which is generated whole):
 Modes:
     --check   (default) verify every generated surface matches what the registry would
               generate, and that the registry agrees with the pages it describes (filed
-              date, recommendation ids). Exit 1 on drift; exit 2 if the guard itself
-              cannot run. Wired into CI (build-deploy.yml).
+              date, recommendation ids). It also refuses a framework key missing from the
+              frameworks map (a topic such as "measurement" is not a framework), a letter
+              that applies a framework without listing its defining paper (framework_papers:
+              CLII is defined in Routing the Dollar, MVEP in the MVEP paper), an internal
+              paper id such as "(A2)" in a paper label or a letter page's framework and paper
+              tags, and tags that do not link every paper the registry lists. Exit 1 on
+              drift; exit 2 if the guard itself cannot run. Wired into CI (build-deploy.yml).
     --write   regenerate every surface in place.
+    --selftest
+              prove each frameworks-and-papers check fires on a synthetic bad case (and
+              stays quiet on a good one and on a section reference such as "3(a)").
 
 Resolves the tree from cwd (falling back to the script's clone), so it runs from
 either clone. Depends only on the stdlib.
@@ -205,6 +214,7 @@ class Model:
         self.procs = self.reg["proceedings"]
         self.cycles = self.reg["cycles"]
         self.frameworks = self.reg["frameworks"]
+        self.framework_papers = self.reg.get("framework_papers") or {}
         self.verified_on = self.reg["_meta"]["verified_on"]
         self.tracker = (self.reg.get("trackers") or {}).get("genius-act")
         self.federal = [l for l in self.letters if l["series"] == "federal"]
@@ -284,7 +294,7 @@ def gen_summary(m):
     first = min(l["filed"] for l in m.federal)
     last = max(l["filed"] for l in m.federal)
     intl = [l for l in m.letters if l["series"] == "international"]
-    bits = [fmt_range(first, last), f"{m.n_recs} recommendations", "three frameworks"]
+    bits = [fmt_range(first, last), f"{m.n_recs} recommendations", f"{word(len(m.frameworks))} frameworks"]
     if intl:
         bits.append(f"plus {word(len(intl))} international {'response' if len(intl) == 1 else 'responses'}")
     return [f'<p class="letters-meta-strip">{" &middot; ".join(esc(b) for b in bits)}</p>']
@@ -616,9 +626,13 @@ def gen_related(m, l):
     same_cycle.sort(key=lambda o: abs((int(o["filed"].replace("-", "")) - int(l["filed"].replace("-", "")))))
     for other in same_cycle[:2]:
         add(other, "Same cycle")
-    if l.get("papers"):
-        p = l["papers"][0]
-        cards += related_card(p["url"], p["kind"].capitalize(), p["label"], "The research behind this letter.")
+    # every paper the registry lists, not only the first: a letter that applies CLII and MVEP
+    # links both defining papers, and says which framework each one defines
+    for p in l.get("papers") or []:
+        defines = [f for f in l["frameworks"] if m.framework_papers.get(f) == p["url"]]
+        sub = (f"Defines the {m.frameworks[defines[0]]} framework this letter applies." if defines
+               else "The research behind this letter.")
+        cards += related_card(p["url"], p["kind"].capitalize(), p["label"], sub)
     intl = [x for x in m.letters if x["series"] == "international"]
     hub_sub = f"{word(m.n_federal).capitalize()} federal letters" + (
         f" and {word(len(intl))} international {'response' if len(intl) == 1 else 'responses'}" if intl else "")
@@ -967,7 +981,97 @@ def gen_tracker_json(m):
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
+# An internal paper id (A1, A2, B2, C4, ...) is how the research workflow names a paper; a reader
+# of the public site cannot resolve one, so it never belongs in a paper label or in a letter
+# page's framework and paper tags. Measured 2026-10-15 before this check existed: 46 leaks on 18
+# of the 22 letter pages ("MVEP (A2)" alone 27 times), copied from the registry labels into the
+# Related cards and from the letter-page skill's example into the hand-written tags.
+PAPER_ID_RE = re.compile(r"\(\s*[A-D][1-9]\d?\b[^)]*\)")
+TAGS_RE = re.compile(r'<div class="paper-audience-tags"[^>]*>(.*?)</div>', re.S)
+
+
+def check_frameworks_and_papers(letters, frameworks, framework_papers, pages):
+    """Problems with each letter's frameworks and paper links. Pure, so --selftest can drive it.
+
+    1. every framework a letter lists is in the frameworks map (a topic or a method, such as
+       "measurement", is not a framework, and would otherwise surface as a hub filter chip);
+    2. a letter that applies a framework links the paper that defines it (framework_papers),
+       so a page reading "Framework: CLII" also links Routing the Dollar;
+    3. no paper label carries an internal paper id;
+    4. the page's hand-written tags carry no internal paper id and link every paper the
+       registry lists, so the tags and the generated Related cards cannot disagree.
+    """
+    problems = []
+    for l in letters:
+        rel = f"letters/{l['slug']}/index.html"
+        papers = l.get("papers") or []
+        urls = [p["url"] for p in papers]
+        for f in l["frameworks"]:
+            if f not in frameworks:
+                problems.append(f"registry: {l['slug']} lists framework {f!r}, which is not in the frameworks "
+                                f"map ({', '.join(frameworks)}); a topic or method is not a framework")
+            home = framework_papers.get(f)
+            if home and home not in urls:
+                problems.append(f"registry: {l['slug']} applies {frameworks.get(f, f)} but does not list "
+                                f"its defining paper {home}")
+        for p in papers:
+            if PAPER_ID_RE.search(p["label"]):
+                problems.append(f"registry: {l['slug']} paper label {p['label']!r} carries an internal paper id")
+        page = pages.get(l["slug"])
+        if not page:
+            continue
+        mt = TAGS_RE.search(page)
+        if not mt:
+            if papers:
+                problems.append(f"{rel}: no paper-audience-tags block, so the registry's paper links have no tags")
+            continue
+        tags = mt.group(1)
+        for hit in PAPER_ID_RE.findall(re.sub(r"<[^>]+>", "", tags)):
+            problems.append(f"{rel}: the framework and paper tags carry an internal paper id {hit!r}")
+        for u in urls:
+            if f'href="{u}"' not in tags:
+                problems.append(f"{rel}: the framework and paper tags do not link {u}, which the registry lists")
+    return problems
+
+
+def selftest():
+    """Prove each frameworks-and-papers check can FAIL on a synthetic bad case, and passes a good one."""
+    fw = {"mvep": "MVEP", "clii": "CLII"}
+    fp = {"mvep": "/papers/mvep/", "clii": "/papers/routing-the-dollar/"}
+    good_papers = [{"kind": "paper", "label": "MVEP", "url": "/papers/mvep/"},
+                   {"kind": "paper", "label": "Routing the Dollar", "url": "/papers/routing-the-dollar/"}]
+    good_page = ('<div class="paper-audience-tags"><span>Framework: CLII</span>'
+                 '<span>Paper: <a href="/papers/mvep/">MVEP</a></span>'
+                 '<span>Paper: <a href="/papers/routing-the-dollar/">Routing the Dollar</a></span></div>')
+
+    def run(frameworks=("mvep", "clii"), papers=None, page=good_page):
+        l = {"slug": "x", "frameworks": list(frameworks), "papers": good_papers if papers is None else papers}
+        return check_frameworks_and_papers([l], fw, fp, {"x": page})
+
+    cases = [
+        ("good letter passes", run(), 0),
+        ("a non-framework key fires", run(frameworks=("mvep", "clii", "measurement")), 1),
+        ("CLII without its paper fires", run(papers=good_papers[:1],
+                                             page=good_page.replace("routing-the-dollar", "elsewhere")), 1),
+        ("an id in a label fires", run(papers=[dict(good_papers[0], label="MVEP (A2)"), good_papers[1]]), 1),
+        ("an id with a qualifier fires", run(page=good_page.replace(">MVEP<", ">MVEP (A7, forthcoming)<")), 1),
+        ("an id in the tags fires", run(page=good_page.replace(">MVEP<", ">MVEP (A2)<")), 1),
+        ("an id in the tags fires on a letter with no registry papers",
+         run(frameworks=(), papers=[], page=good_page.replace(">MVEP<", ">MVEP (B2)<")), 1),
+        ("a registry paper missing from the tags fires",
+         run(page=good_page.replace('href="/papers/routing-the-dollar/"', 'href="/papers/other/"')), 1),
+        ("a section reference is not an id", run(page=good_page.replace(">MVEP<", ">MVEP, Section 3(a)<")), 0),
+    ]
+    bad = [(name, len(got), want) for name, got, want in cases if len(got) != want]
+    for name, got, want in bad:
+        print(f"render_letters selftest: FAIL {name}: {got} problem(s), wanted {want}", file=sys.stderr)
+    if not bad:
+        print(f"render_letters selftest: OK ({len(cases)} cases)")
+    return 1 if bad else 0
+
+
 def verify_registry_against_pages(m, problems):
+    problems.extend(check_frameworks_and_papers(m.letters, m.frameworks, m.framework_papers, m.pages))
     for l in m.letters:
         rel = f"letters/{l['slug']}/index.html"
         page = m.pages.get(l["slug"])
@@ -1053,8 +1157,12 @@ def main():
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--check", action="store_true", help="verify (default)")
     mode.add_argument("--write", action="store_true", help="regenerate in place")
+    mode.add_argument("--selftest", action="store_true",
+                      help="prove the frameworks-and-papers checks can fail, then exit")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
+    if args.selftest:
+        return selftest()
     try:
         root = repo_root()
         m = Model(root)
