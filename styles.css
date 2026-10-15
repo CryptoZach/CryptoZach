@@ -7713,7 +7713,7 @@ footer.site-footer .footer-tagline{
 
   .section-title h1,
   .section-title h2{font-size:16px}
-  .section-title p{font-size:var(--font-size-min); padding-left:calc(var(--space-md) + 3px)}
+  .section-title p{font-size:var(--font-size-min)}
 
   .writing-link{
     flex-direction:column;
@@ -21936,7 +21936,6 @@ body.contact-page .contact-page-foreground > .contact-page .about-label{color:#1
 .letters-filters .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .letters-filters .filter-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .letters-filters .filter-count{font-size:var(--font-size-min);color:var(--muted)}
-.letters-lede{max-width:70ch}
 .is-filtered-out{display:none !important}
 
 /* Specificity-matched overrides for the two findings the generic rules above did not reach:
@@ -21996,7 +21995,7 @@ body.letters-landing .letters-list .list-number{font-size:var(--font-size-min);c
 :root[data-theme="dark"] .rec-status--noted{background:rgba(26,86,219,.25);color:#7eb8ff}
 :root[data-theme="dark"] .rec-status--not-adopted{background:rgba(161,38,34,.3);color:#f3a09c}
 .rec-index td .rec-status{margin-left:0}
-.letters-note,.letters-outcomes-lede,.letters-asof{font-size:.95rem;color:var(--muted);max-width:72ch}
+.letters-note,.letters-outcomes-lede,.letters-asof{font-size:.95rem;color:var(--muted)}
 .letters-asof{margin-top:var(--space-md)}
 .letters-outcome-id{font-size:var(--font-size-min);color:var(--muted)}
 body.letters-landing .letters-timeline tr.letters-outcome-note td{font-size:var(--font-size-min);color:var(--muted);padding-top:0;border-top:0}
@@ -22007,7 +22006,7 @@ body.letters-landing .letters-timeline tr.letters-outcome-note td{font-size:var(
 .letter-outcome > div{display:contents}
 .letter-outcome dt{font-weight:600;color:var(--muted);font-size:var(--font-size-min);text-transform:uppercase;letter-spacing:.04em;padding-top:.2rem}
 .letter-outcome dd{margin:0;min-width:0}
-.letter-outcome-note{font-size:.95rem;color:var(--muted);max-width:72ch}
+.letter-outcome-note{font-size:.95rem;color:var(--muted)}
 .letter-outcome-recs{margin:0 0 var(--space-md);padding-left:1.2rem}
 .letter-background{margin:var(--space-xl) 0 var(--space-md);border-top:1px solid color-mix(in srgb, currentColor 12%, transparent);padding-top:var(--space-md)}
 .letter-background summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
@@ -22146,8 +22145,8 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .letters-follow{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin:var(--space-md) 0 var(--space-lg);padding:var(--space-md) 0;border-top:1px solid color-mix(in srgb, currentColor 12%, transparent);border-bottom:1px solid color-mix(in srgb, currentColor 12%, transparent)}
 .letters-follow__label{margin:0;font-size:var(--font-size-min);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .letters-follow__feed{font-size:.95rem}
-.letters-follow__form{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:0;min-width:0}
-.letters-follow__input{font:inherit;font-size:.95rem;padding:.45rem .7rem;border:1px solid color-mix(in srgb, currentColor 25%, transparent);border-radius:6px;background:transparent;color:inherit;min-width:0;width:16rem;max-width:100%}
+.letters-follow__form{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:0;min-width:0;flex:1 1 24rem}
+.letters-follow__input{font:inherit;font-size:.95rem;padding:.45rem .7rem;border:1px solid color-mix(in srgb, currentColor 25%, transparent);border-radius:6px;background:transparent;color:inherit;min-width:0;flex:1 1 14rem;width:auto;max-width:100%}
 .letters-follow__input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .letters-follow__button{font:inherit;font-size:.95rem;padding:.45rem .9rem;border:1px solid var(--accent);border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
 .letters-follow__button:hover{filter:brightness(1.08)}
@@ -22155,6 +22154,7 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .letters-follow .newsletter-thanks{font-size:.95rem;color:var(--status-open-ink)}
 :root[data-theme="dark"] .letters-follow .newsletter-thanks{color:var(--status-open-ink-dark)}
 .letters-follow__note{flex-basis:100%;margin:0;font-size:var(--font-size-min);color:var(--muted)}
+@media (max-width:480px){.letters-follow__form{flex-basis:100%}.letters-follow__input,.letters-follow__button{flex:1 1 100%}}
 /* Letters tables (2026-10-12, third pass): tablet tracks tuned so headers, dates, docket ids
    and status chips keep whole words; chips take at most two lines. */
 @media (min-width: 721px){
@@ -22282,7 +22282,7 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .mvep-sc__summary.is-fresh{animation:mvepFresh .9s ease-out}
 @keyframes mvepFresh{from{background:color-mix(in srgb, var(--accent) 24%, transparent)}to{background:color-mix(in srgb, var(--accent) 5%, transparent)}}
 @media (prefers-reduced-motion: reduce){.mvep-sc__summary.is-fresh{animation:none}}
-.mvep-sc__legend{font-size:.9rem;color:var(--text-soft);line-height:1.6;max-width:72ch}
+.mvep-sc__legend{font-size:.9rem;color:var(--text-soft);line-height:1.6}
 .mvep-sc__legend p{margin:.4rem 0 0;font-size:.88rem;color:var(--muted)}
 .mvep-v{display:inline-block;padding:.08rem .55rem;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.02em;line-height:1.45;color:#fff;white-space:nowrap;vertical-align:middle}
 .mvep-v--pass{background:#2e7d32}
@@ -22336,7 +22336,7 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 :root[data-theme="dark"] .mvep-sc__gate[data-state="blocked"]{color:#f1948a}
 :root[data-theme="dark"] .mvep-sc__gate[data-state="open"]{color:#58d68d}
 :root[data-theme="dark"] .mvep-sc__gate[data-state="incomplete"]{color:#f0b35a}
-.mvep-sc__ratenote{margin:0;font-size:.88rem;color:var(--muted);max-width:72ch}
+.mvep-sc__ratenote{margin:0;font-size:.88rem;color:var(--muted)}
 .mvep-sc__actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 .mvep-sc__status{font-size:.9rem;color:var(--muted)}
 .mvep-sc__raw summary{cursor:pointer;font-weight:600}
@@ -22352,7 +22352,7 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .mvep-sc__table tbody th{font-weight:600;white-space:nowrap}
 .mvep-sc__table small{display:block;color:var(--muted);font-size:.72rem}
 .mvep-sc__table .mvep-v{font-size:.72rem;padding:.02rem .4rem}
-.mvep-sc__foot{font-size:.9rem;color:var(--muted);max-width:76ch}
+.mvep-sc__foot{font-size:.9rem;color:var(--muted)}
 .mvep-sc__foot p{margin:0 0 .6rem}
 /* The scorecard's controls, rating panel and copy buttons are filled by script; with scripts off they are
    empty frames. The category rows, the note that says so, and the exhibit tables remain. */

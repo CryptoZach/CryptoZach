@@ -82,6 +82,24 @@ TAGS = {
     "CP": "the coverage-completion scoring of previously unassessed operational, disclosure, collateral and recursive-settlement cells",
     "RWA": "grounded in the rwa.xyz platform snapshot of 2026-06-14",
 }
+# What a reader sees for each tag. The tags themselves are the replication data's keys and stay in the
+# mirrored CSVs; on the page they were bare codes ("Source: NEW3, CP"), which read as noise (author,
+# 2026-10-15). build() refuses a tag that has no label here, so a new tag cannot surface as a code.
+TAG_LABELS = {
+    "T2": "Table 4",
+    "SUM": "Summary table",
+    "F5": "Finding 5",
+    "F6": "Finding 6",
+    "WE": "Worked examples",
+    "NEW": "USYC comparator",
+    "NEW2": "USD1 comparator",
+    "NEW3": "Partial-evidence cells",
+    "NEW4": "SoFiUSD comparator",
+    "NEW5": "RLUSD comparator",
+    "JX": "Exhibit 2 jurisdictions",
+    "CP": "Coverage completion",
+    "RWA": "rwa.xyz snapshot",
+}
 CATEGORIES = [
     (1, "Rights Parity", True), (2, "System of Record", False), (3, "Records and Reconciliation", False),
     (4, "Custody and Customer Property", True), (5, "Insolvency Posture", True), (6, "Settlement Finality", True),
@@ -276,6 +294,7 @@ def build_json(products, verdicts, ratings):
         "disclosure_category": str(DISCLOSURE_CATEGORY),
         "disclosure_labels": DISCLOSURE_LABEL,
         "tags": TAGS,
+        "tag_labels": TAG_LABELS,
         "products": prods,
     }
     text = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
@@ -286,7 +305,7 @@ def build_table(products, verdicts, ratings):
     cls = {"PASS": "pass", "PARTIAL": "partial", "AMBIGUOUS": "ambiguous", "FAIL": "fail", "NOT_DISCLOSED": "nd", "UNASSESSED": "unassessed", "NA": "na"}
     out = ['<div class="mvep-sc__tablewrap" role="region" aria-label="Exhibit 1: verdicts by product" tabindex="0">',
            '  <table class="mvep-sc__table">',
-           '    <caption>Exhibit 1: the paper\'s verdict for each product and category, with the source tag that locates it in the paper</caption>',
+           '    <caption>Exhibit 1: the paper\'s verdict for each product and category, with the source that locates it in the paper</caption>',
            "    <thead><tr><th scope=\"col\">Category</th>" + "".join(f'<th scope="col">{esc(p)}<br><small>{esc(ISSUER.get(p, ""))}</small></th>' for p in products) + "</tr></thead>",
            "    <tbody>"]
     for key, name, _crit in CATEGORIES:
@@ -294,7 +313,7 @@ def build_table(products, verdicts, ratings):
         for p in products:
             cell = verdicts[p].get(key, {"v": "UNASSESSED", "tags": []})
             cells.append(f'<td><span class="mvep-v mvep-v--{cls[cell["v"]]}">{esc(VERDICT_LABEL[cell["v"]])}</span>'
-                         + (f'<br><small>{esc("/".join(cell["tags"]))}</small>' if cell["tags"] else "") + "</td>")
+                         + (f'<br><small>{esc(", ".join(TAG_LABELS.get(t, t) for t in cell["tags"]))}</small>' if cell["tags"] else "") + "</td>")
         label = f"{key}. {name}" if key != "CSA" else name
         out.append(f'      <tr><th scope="row">{esc(label)}</th>' + "".join(cells) + "</tr>")
     out += ["    </tbody>", "  </table>", "</div>",
@@ -318,6 +337,9 @@ def build(root):
     products, verdicts = parse_scorecard(os.path.join(root, SCORECARD_CSV))
     ratings = parse_rating(os.path.join(root, RATING_CSV))
     check_consistency(products, verdicts, ratings, problems)
+    unlabeled = sorted({t for p in products for c in verdicts[p].values() for t in c["tags"]} - set(TAG_LABELS))
+    if unlabeled:
+        problems.append(f"{SCORECARD_CSV}: source tag(s) {', '.join(unlabeled)} have no reader label in TAG_LABELS")
     page_path = os.path.join(root, PAGE_REL)
     outputs = {}
     if os.path.isfile(page_path):

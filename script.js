@@ -6464,15 +6464,16 @@
       CP: '/papers/mvep/#mvep-exhibit-1',
       RWA: '/papers/mvep/#mvep-comparators'
     };
+    function tagLabel(t){ return (D.tag_labels && D.tag_labels[t]) || t; }
     var openSrc = null;
     function tagsText(tags, cat){
       if(!tags || !tags.length) return '';
       var open = (openSrc === cat), id = 'mvep-sc-src-' + cat;
-      return ' <button type="button" class="mvep-sc__src" data-src="' + cat + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + id + '">Source: ' + tags.join(', ') + '</button>' +
+      return ' <button type="button" class="mvep-sc__src" data-src="' + cat + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + id + '">Source: ' + tags.map(function(t){ return esc(tagLabel(t)); }).join(', ') + '</button>' +
         '<span class="mvep-sc__srcnote" id="' + id + '"' + (open ? '' : ' hidden') + '>' +
         tags.map(function(t){
           var href = TAG_HREF[t] || '/papers/mvep/#mvep-exhibit-1';
-          return '<span class="mvep-sc__srcline"><a class="mvep-sc__src-link" href="' + href + '"><strong>' + esc(t) + '</strong></a>: ' + esc(D.tags[t] || 'see the paper') + '.</span>';
+          return '<span class="mvep-sc__srcline"><a class="mvep-sc__src-link" href="' + href + '"><strong>' + esc(tagLabel(t)) + '</strong></a> (' + esc(t) + '): ' + esc(D.tags[t] || 'see the paper') + '.</span>';
         }).join('') +
         '<a href="/papers/mvep/#mvep-exhibit-1">Open Exhibit 1 on the paper page</a></span>';
     }
@@ -6603,7 +6604,7 @@
       if(m === 'read'){
         var p = byKey[sel.value] || D.products[0];
         lines.push('MVEP scorecard, ' + p.key + ' (' + p.issuer + '): the paper\'s verdicts (Exhibit 1) and rating (Exhibit 3)');
-        KEYS.forEach(function(k){ var c = p.verdicts[k] || { v: 'UNASSESSED', tags: [] }; lines.push((k === 'CSA' ? '+' : k) + '. ' + SHORT[k] + ': ' + D.verdicts[c.v].label + (c.tags.length ? ' [' + c.tags.join('/') + ']' : '')); });
+        KEYS.forEach(function(k){ var c = p.verdicts[k] || { v: 'UNASSESSED', tags: [] }; lines.push((k === 'CSA' ? '+' : k) + '. ' + SHORT[k] + ': ' + D.verdicts[c.v].label + (c.tags.length ? ' [' + c.tags.map(tagLabel).join('; ') + ']' : '')); });
         var r = p.rating;
         lines.push('Legal ' + r.legal + ' (' + r.legal_strength.toFixed(1) + '); Operational ' + r.operational + ' (' + r.operational_strength.toFixed(1) + '); Economic ' + r.economic + ' (' + r.economic_strength.toFixed(1) + '); headline ' + r.headline + '; binds on ' + r.binding + '; overall strength ' + r.overall_strength.toFixed(1));
       } else {
