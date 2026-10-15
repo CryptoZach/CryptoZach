@@ -18,7 +18,7 @@
     root.setAttribute('data-theme','dark');
     if(toggle) toggle.setAttribute('aria-pressed','true');
   } else {
-    root.removeAttribute('data-theme');
+    root.setAttribute('data-theme','light');
     if(toggle) toggle.setAttribute('aria-pressed','false');
   }
 
@@ -26,7 +26,7 @@
     toggle.addEventListener('click', () => {
       const isDark = root.getAttribute('data-theme') === 'dark';
       if(isDark){
-        root.removeAttribute('data-theme');
+        root.setAttribute('data-theme','light');
         localStorage.setItem('theme','light');
         toggle.setAttribute('aria-pressed','false');
       } else {
@@ -6449,13 +6449,31 @@
     /* The source tag is a control, not a tooltip: a button that opens, in the row, what each tag stands for
        and where the paper shows it. Which row is open survives a re-render (openSrc), so choosing a verdict
        or a product does not close what the visitor just opened on another row unless that row has no tags. */
+    var TAG_HREF = {
+      T2: '/papers/mvep/#mvep-treasuries',
+      SUM: '/papers/mvep/#mvep-exhibit-1',
+      F5: '/papers/mvep/#mvep-exhibit-1',
+      F6: '/papers/mvep/#mvep-exhibit-1',
+      WE: '/papers/mvep/#mvep-sample',
+      NEW: '/papers/mvep/#mvep-treasuries',
+      NEW2: '/papers/mvep/#mvep-comparators',
+      NEW3: '/papers/mvep/#mvep-exhibit-1',
+      NEW4: '/papers/mvep/#mvep-comparators',
+      NEW5: '/papers/mvep/#mvep-comparators',
+      JX: '/papers/mvep/#mvep-exhibit-2',
+      CP: '/papers/mvep/#mvep-exhibit-1',
+      RWA: '/papers/mvep/#mvep-comparators'
+    };
     var openSrc = null;
     function tagsText(tags, cat){
       if(!tags || !tags.length) return '';
       var open = (openSrc === cat), id = 'mvep-sc-src-' + cat;
       return ' <button type="button" class="mvep-sc__src" data-src="' + cat + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + id + '">Source: ' + tags.join(', ') + '</button>' +
         '<span class="mvep-sc__srcnote" id="' + id + '"' + (open ? '' : ' hidden') + '>' +
-        tags.map(function(t){ return '<span class="mvep-sc__srcline"><strong>' + esc(t) + '</strong>: ' + esc(D.tags[t] || 'see the paper') + '.</span>'; }).join('') +
+        tags.map(function(t){
+          var href = TAG_HREF[t] || '/papers/mvep/#mvep-exhibit-1';
+          return '<span class="mvep-sc__srcline"><a class="mvep-sc__src-link" href="' + href + '"><strong>' + esc(t) + '</strong></a>: ' + esc(D.tags[t] || 'see the paper') + '.</span>';
+        }).join('') +
         '<a href="/papers/mvep/#mvep-exhibit-1">Open Exhibit 1 on the paper page</a></span>';
     }
 

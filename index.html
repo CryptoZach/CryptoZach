@@ -300,63 +300,8 @@ header{
   padding-left:max(14px,env(safe-area-inset-left));
   padding-right:max(12px,env(safe-area-inset-right));
 }
-.brand{display:flex;flex-direction:row;align-items:center;margin-right:auto}
-/* STACKED, and this is what pays for the nav pills below. Measured 2026-08-28 at
-   1440: the tagline rendering INLINE beside the wordmark made the brand block
-   501px wide, which left the nav box 638px for links wanting 832px, so the
-   homepage nav wrapped to two rows (three at 1100) and the header stood 108px
-   against the interior header's 73px. Same tagline-inline fault the interior
-   header already fixed, never applied here. Grid rather than a markup change:
-   the mark spans both rows, wordmark over tagline in column 2. */
-.brand a{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
-  align-items:center;column-gap:.7rem;cursor:pointer}
-.brand a > .vault-headdial{grid-row:1 / span 2;align-self:center}
-.brand b{grid-column:2;grid-row:1;white-space:nowrap}
-.brand a > span{grid-column:2;grid-row:2;margin-left:0}
-.brand a:active .vault-headdial{transform:scale(.92);transition:transform .1s}
-/* The header mark is the SAME instrument the interior headers mount, not a
-   lookalike: one vaultMountDial(compact) call, the geometry and hover copied
-   from vault.css .vault-headdial. It was an SVG orb here and a canvas dial on
-   the other 50 pages, which is why the two headers never matched. */
-.vault-headdial{
-  width:40px;height:40px;flex:none;display:block;border-radius:50%;
-  color:var(--accent);
-  transition:filter .32s ease, transform .1s;
-}
-.brand:hover .vault-headdial,
-.brand:focus-within .vault-headdial{
-  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent));
-}
-@media (max-width:640px){ .vault-headdial{width:32px;height:32px} }
-/* The click collapse survives the swap, but as one gesture on the canvas rather
-   than four animations on SVG innards it no longer has. It reuses the scale the
-   mark already takes on :active instead of inventing a second vocabulary. */
-.vault-headdial.collapse{animation:markCollapse .8s cubic-bezier(.55,0,.8,.2)}
-@keyframes markCollapse{
-  0%{transform:scale(1);opacity:1}
-  52%{transform:scale(.18) rotate(200deg);opacity:.35}
-  70%{transform:scale(1.22) rotate(300deg);opacity:1}
-  100%{transform:scale(1) rotate(360deg);opacity:1}
-}
-/* accent blue at 20px, as on the other 50 pages; was 18.35px in --ink */
-.brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--accent)}
-/* Brand tagline gold, taken from the live site: quietly gold at rest, warming with a
-   soft halo on hover. --brand-gold is #fbbf24 in dark, #a16207 in light. */
-.brand span{
-  /* 10px / .9px, the interior scale. At .917rem it was 332px wide and half
-     the reason the brand block crowded the nav. */
-  font-size:.625rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
-  font-family:"JetBrains Mono",monospace;white-space:nowrap;
-  /* a quarter inch of air from the wordmark; .7rem of it is the flex gap */
-  margin-left:calc(0.25in - .7rem);
-  color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink));
-  transition:color .15s, text-shadow .15s;
-}
-.brand a:hover span,.brand a:focus-visible span{
-  color:var(--brand-gold);
-  text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent),
-              0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);
-}
+/* Brand & header dial rules are stamped by scripts/render_brand.py in the
+   site-brand:css block below. */
 /* gap .5rem, the interior's 8px. Measured 2026-08-28: the links themselves are
    the same width on both headers (Agent Infrastructure 176px here, 178 there;
    all eight 792 vs 808). The entire 95px the homepage nav was over budget by
@@ -494,6 +439,7 @@ header{
    caps were what read as cropped inside a wide box. */
 @media (min-width:1000px){
   .hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,410px);column-gap:clamp(2rem,3.5vw,3.25rem);align-items:start}
+  #hero .hero-inner{grid-template-columns:minmax(0,1fr)}
   .hero-eyebrow{grid-column:1 / -1}
   .hero-lead{grid-column:1;max-width:none;min-width:0}
   .hero-aside{grid-column:2;display:flex;flex-direction:column;gap:1.15rem;min-width:0}
@@ -518,7 +464,7 @@ header{
   background:linear-gradient(90deg, color-mix(in srgb, var(--mint-text) 70%, transparent), transparent);
 }
 .hero-eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--mill-2),transparent)}
-.hero h1{max-width:22ch}
+.hero h1{max-width:28ch}
 .hero h1 .flare{color:var(--accent-text)}
 .hero-sub{margin-top:1.6rem;font-size:1.0625rem;color:var(--ink-soft);max-width:96ch}
 .hero-sub strong{color:var(--ink);font-weight:600}
@@ -1103,13 +1049,22 @@ a.plate:hover .stamp.pub{
 @media (min-width:1000px){ .foot-nav{flex-wrap:nowrap} }
 
 /* ── FOOTER: mark left, line centred, social right ── */
+footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);padding-block:2.5rem 3rem;position:relative;z-index:1}
 .foot{
   position:relative;
-  display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
 }
 .foot__mark{
   font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
   font-size:.8125rem;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);
+}
+.foot__mark #year::after{
+  content:"·";
+  margin-left:.4em;
+  color:color-mix(in srgb, var(--accent) 65%, transparent);
+  opacity:.7;
+  font-weight:400;
+  letter-spacing:0;
 }
 .foot__line{
   position:absolute;left:50%;transform:translateX(-50%);
@@ -1128,10 +1083,6 @@ a.plate:hover .stamp.pub{
   .foot{flex-direction:column;text-align:center;gap:1.1rem}
   .foot__line{position:static;transform:none;order:-1}
 }
-
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);padding-block:2.5rem 3rem;position:relative;z-index:1}
-.foot{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
 /* the footer line reads as a sentence, so it leaves the uppercase label spec */
 .foot .label{
   max-width:none;line-height:1.75;
@@ -1217,11 +1168,6 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 @media (max-width:1279px){
   .navlinks{display:none}
   .menu-tog{display:grid}
-  /* 11px, not 10. Below 1280 the nav is in the panel, so the brand block is no
-     longer competing for the row and the tagline does not have to be set at a
-     size chosen to get out of its way. 10px of tracked-out uppercase mono is
-     the reported "hard to read". */
-  .brand a > span{font-size:.6875rem;letter-spacing:.06em}
   /* the panel's Connect group carries these, and keeping them in the header
      wrapped it to two rows at 390 */
   .hdr .header-social{display:none}
@@ -1241,11 +1187,6 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
 }
 
-/* ── AUTHOR-FIX mobile header wrap 2026-08-27 ──
-   Measured at 390px: .brand a span carried white-space:nowrap at 332px, so the
-   header row could not wrap, .brand held 501px and pushed .tog to x=572, i.e.
-   214px past the viewport. The dial canvas bleed at x=-49 is clipped and was not
-   the cause. Let the row wrap and let the tagline drop out below 720px. */
 /* The page gutter was paying twice on a phone. .wrap caps at 88vw, which is a
    wide-screen rule, and then adds 1.5rem of padding inside that: measured at
    412px, 24.7px of auto margin plus 24px of padding on each side, so 76% of the
@@ -1257,30 +1198,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     padding-left:max(1rem,env(safe-area-inset-left));
     padding-right:max(1rem,env(safe-area-inset-right));
   }
-}
-@media (max-width:720px){
   .hdr{flex-wrap:wrap;row-gap:.5rem}
-  .brand{min-width:0;flex:1 1 auto}
-  .brand a{min-width:0;flex-wrap:wrap}
   .navlinks{flex-wrap:wrap;row-gap:.4rem;min-width:0}
   .tog{margin-left:auto;flex:0 0 auto}
-  /* THE TAGLINE IS KEPT, not dropped. It was display:none below 720 and 10px
-     above it, so on a phone the brand lost half its identity and on a tablet the
-     half it kept was 10px. The nav lives in the panel now, so the header has the
-     room: the tagline stays at a legible size and gives back the letter-spacing
-     it does not need at this width. */
-  .brand a > span{
-    display:block;
-    font-size:.6875rem;
-    letter-spacing:.05em;
-    white-space:normal;
-  }
 }
 @media (max-width:420px){
-  /* 17px, not 16: the wordmark is the brand and 162px of a 390px viewport is
-     not where the space is tight, now that eight nav links are not in this row. */
-  .brand a b{font-size:1.0625rem}
-  .brand a > span{font-size:.6875rem;letter-spacing:.03em}
   .navlinks{width:100%;justify-content:flex-start}
 }
 
@@ -1304,6 +1226,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   .vault-headdial{width:32px;height:32px}
 }
 .vault-headdial.collapse{animation:markCollapse .8s cubic-bezier(.55,0,.8,.2)}
+@keyframes markCollapse{0%{transform:scale(1);opacity:1}52%{transform:scale(.18) rotate(200deg);opacity:.35}70%{transform:scale(1.22) rotate(300deg);opacity:1}100%{transform:scale(1) rotate(360deg);opacity:1}}
 .brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--accent)}
 .brand span{font-size:.625rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase; font-family:"JetBrains Mono",monospace;white-space:nowrap; margin-left:calc(0.25in - .7rem); color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink)); transition:color .15s, text-shadow .15s;}
 .brand a:hover span,.brand a:focus-visible span{color:var(--brand-gold); text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent), 0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);}
@@ -1370,7 +1293,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         "Institutional diligence frameworks for tokenized products",
         "Control-layer regulation and gateway analysis",
         "Tokenized deposit and deposit-token design",
-        "Federal regulatory comment letter drafting (OCC, FDIC, Treasury, FinCEN)",
+        "Federal regulatory comment letter drafting (OCC, FDIC, Treasury, FinCEN, OFAC, NCUA, SEC, Federal Reserve, CFTC)",
         "DePIN and decentralized infrastructure tokenomics",
         "Token economy design and stress testing",
         "AI operator accountability and governance frameworks",
@@ -1463,21 +1386,26 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   <nav id="nav-mobile-home" class="nav-mobile-home" hidden inert aria-hidden="true" aria-label="Main navigation">
     <div class="nmh-directory">
       <div class="nmh-col">
-        <p class="nmh-label">Research &amp; product</p>
+        <p class="nmh-label">Evaluate</p>
         <div class="nmh-set">
-          <a href="/research/">Research</a>
-          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/overview/">Field guide</a>
           <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
           <a href="/letters/">Letters</a>
         </div>
       </div>
       <div class="nmh-col">
-        <p class="nmh-label">Navigate</p>
+        <p class="nmh-label">Work with us</p>
         <div class="nmh-set">
-          <a href="/overview/">Field guide</a>
-          <a href="/resume/">Roles</a>
           <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
           <a href="/contact/">Contact</a>
+          <a href="/resume/">Roles</a>
+        </div>
+      </div>
+      <div class="nmh-col">
+        <p class="nmh-label">Separate product</p>
+        <div class="nmh-set">
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
         </div>
       </div>
       <div class="nmh-col">
@@ -1746,28 +1674,32 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
     <section class="sec" id="letters">
       <h2>Regulatory engagement.</h2>
-      <p>Twenty-one comment letters across nine agencies, from the GENIUS Act implementation cycle and the SEC draft strategic plan through the CFTC's clearing-organization collection (April 10 to October 5, 2026), applying CLII, MVEP, and the control-layer framework.</p>
+      <p>Twenty-one comment letters across nine agencies, from the GENIUS Act implementation cycle and the SEC draft strategic plan through the CFTC's clearing-organization collection (April 10 to October 5, 2026), applying CLII (Control Layer Intensity Index), MVEP (Minimum Viable Equivalence Pack), MGCPT (MVEP-Gated Conditional Pass-Through), 3CRD (Three-Category Reserve Disclosure), and the control-layer framework.</p>
       <div class="letters" style="margin-top:1.8rem">
         <a class="plate letter" href="/letters/occ-mvep-v4/">
           <span class="stamp">OCC</span>
           <h3>PPSI: the MVEP anchor</h3>
-          <p>Introduces the ten-category equivalence pack; cited by five subsequent filings.</p>
+          <p>Introduces the ten-category Minimum Viable Equivalence Pack (MVEP) diligence standard; cited by later filings.</p>
           <span class="venue">MVEP &middot; Docket OCC-2025-0372<br>April 10, 2026</span>
         </a>
         <a class="plate letter" href="/letters/treasury-genius-state-similarity/">
           <span class="stamp">Treasury</span>
           <h3>GENIUS state-similarity standard</h3>
-          <p>Applies all three frameworks to the state-similarity determination under the GENIUS Act.</p>
-          <span class="venue">CLII &middot; MVEP &middot; control-layer<br>April 15, 2026</span>
+          <p>Applies 3CRD (Three-Category Reserve Disclosure), CLII (Control Layer Intensity Index), and MVEP to the state-similarity determination under the GENIUS Act.</p>
+          <span class="venue">3CRD &middot; CLII &middot; MVEP<br>April 15, 2026</span>
         </a>
         <a class="plate letter" href="/letters/fdic-ag19-ppsi-activities/">
           <span class="stamp">FDIC</span>
           <h3>PPSI activities</h3>
-          <p>Twelve recommendations on permitted payment stablecoin activities under RIN 3064-AG19, including an MVEP-gated conditional deposit insurance pass-through.</p>
-          <span class="venue">MVEP &middot; CLII &middot; RIN 3064-AG19<br>April 20, 2026</span>
+          <p>Twelve recommendations on permitted payment stablecoin activities under RIN 3064-AG19, including MGCPT (MVEP-Gated Conditional Pass-Through) deposit insurance.</p>
+          <span class="venue">MGCPT &middot; 3CRD &middot; RIN 3064-AG19<br>April 20, 2026</span>
         </a>
       </div>
-      <a class="more" href="/letters/">View all 21 letters &rarr;</a>
+      <div class="work-cta">
+        <a class="more" href="/letters/" style="margin-top:0">View all 21 letters &rarr;</a>
+        <a class="more" href="/letters/recommendations/" style="margin-top:0">114-recommendation explorer &rarr;</a>
+        <a class="more" href="/trackers/genius-act/" style="margin-top:0">GENIUS Act rulemaking tracker &rarr;</a>
+      </div>
     </section>
 
   </div>
@@ -1802,9 +1734,9 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     <div class="rail" aria-hidden="true"></div>
 
     <section class="sec" id="agent" style="padding-top:clamp(3rem,6vw,5rem)">
-      <div class="sec-head"><span class="label">Agent infrastructure</span></div>
+      <div class="sec-head"><span class="label">Agent infrastructure &middot; Control-layer extension</span></div>
       <h2>Telling an agent no is not the same as stopping it.</h2>
-      <p class="agent-lede">An operating layer for AI agent fleets: many coding agents on one codebase, with isolated work, shared results that carry their provenance, and controls graded by what happens after they fire.</p>
+      <p class="agent-lede">The same control-layer thesis that governs dollar gateways and tokenized securities governs autonomous AI fleets: a token label or a prompt warning is a statement of intent, not an enforcement mechanism. We built an operating layer for concurrent coding and research agents on one codebase, with isolated worktrees, commit-attributed provenance, and safeguards graded by whether behavior changes after they fire.</p>
 
       <div class="plate plate--bolted readout">
         <div class="num">11,470<i> / 11,528</i></div>
@@ -1816,7 +1748,11 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
         </div>
       </div>
 
-      <a class="more" href="/agent-infrastructure/">See the measurements &rarr;</a>
+      <div class="work-cta">
+        <a class="more" href="/agent-infrastructure/" style="margin-top:0">See the measurements &rarr;</a>
+        <a class="more" href="/frameworks/#ai-extension" style="margin-top:0">CLII-AI &amp; MVEP-AI frameworks &rarr;</a>
+        <a class="more" href="/papers/who-controls-agentic-payments/" style="margin-top:0">Who Controls Agentic Payments? &rarr;</a>
+      </div>
     </section>
 
     <div class="rail" aria-hidden="true"></div>
@@ -1890,7 +1826,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
     <form class="foot-sub" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
       <label class="visually-hidden" for="foot-email">Email address</label>
       <input class="signup__field foot-sub__field" id="foot-email" type="email" name="email"
-             placeholder="you@route.value" autocomplete="email" required>
+             placeholder="you@route.money" autocomplete="email" required>
       <button class="btn btn-primary" type="submit">Subscribe</button>
     </form>
   </div>

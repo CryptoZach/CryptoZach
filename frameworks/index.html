@@ -86,9 +86,29 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=257" />
+  <link rel="stylesheet" href="/styles.css?v=258" />
   <style>
-    #featured-mvep, #framework-stack, #framework-lives, #classification-frameworks, #seven-dollars-framework, #three-strategies-framework, #core-frameworks, #clii, #mvep, #mgcpt, #tcrd, #\33 crd, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #track-b-frameworks, #operational-risk-taxonomy, #burn-mechanism-classification, #governance-concentration-diagnostic, #adaptive-tokenomics, #frameworks-in-rulemaking, #ai-extension, #how-the-work-runs, #go-deeper { scroll-margin-top: 8rem; }
+    #featured-mvep, #mvep-scorecard, #clii-explorer, #framework-stack, #framework-lives, #classification-frameworks, #seven-dollars-framework, #three-strategies-framework, #core-frameworks, #clii, #mvep, #mgcpt, #tcrd, #\33 crd, #credit-migration-model, #regime-dashboard, #dollar-v3-regime-classifier, #track-b-frameworks, #operational-risk-taxonomy, #burn-mechanism-classification, #governance-concentration-diagnostic, #adaptive-tokenomics, #frameworks-in-rulemaking, #ai-extension, #clii-ai, #mvep-ai, #how-the-work-runs, #go-deeper { scroll-margin-top: 8rem; }
+    .clii-exp { margin-top: 2.25rem; padding: 1.5rem 1.5rem 1.75rem; background: var(--plate, rgba(15,23,42,.45)); }
+    .clii-exp__header { margin-bottom: 1.15rem; }
+    .clii-exp__eyebrow { margin: 0 0 .35rem; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text, var(--accent, #38bdf8)); }
+    .clii-exp__title { margin: 0 0 .45rem; font-size: clamp(1.2rem, 2vw, 1.45rem); line-height: 1.25; }
+    .clii-exp__lede { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--ink-soft, inherit); }
+    .clii-exp__controls { display: flex; flex-wrap: wrap; gap: .85rem 1.25rem; align-items: flex-end; margin: 1.15rem 0; padding: .95rem 1.1rem; background: var(--plate-2, rgba(148,163,184,.07)); border: 1px solid var(--mill-2, rgba(148,163,184,.18)); }
+    .clii-exp__control { display: flex; flex-direction: column; gap: .3rem; min-width: 170px; flex: 1 1 180px; }
+    .clii-exp__control label { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft, inherit); }
+    .clii-exp__control select { padding: .48rem .75rem; border: 1px solid var(--mill-2, rgba(148,163,184,.3)); background: var(--void, #0a0c10); color: var(--ink, inherit); font-family: inherit; font-size: .875rem; }
+    .clii-exp__summary { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; align-items: center; justify-content: space-between; margin: 0 0 .85rem; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .78rem; color: var(--ink-soft, inherit); }
+    #clii-exp-table th, #clii-exp-table td { padding: .55rem .5rem; }
+    #clii-exp-table thead th { letter-spacing: .04em; white-space: nowrap; }
+    #clii-exp-table thead th:last-child { white-space: normal; }
+    #clii-exp-table td:last-child { min-width: 220px; }
+    #clii-exp-table th.num, #clii-exp-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .8rem; white-space: nowrap; }
+    .clii-exp__score { font-weight: 700; color: var(--accent-text, inherit); }
+    .clii-tier-badge { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .72rem; font-weight: 700; letter-spacing: .04em; white-space: nowrap !important; }
+    .clii-tier-badge--1 { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent-text, #38bdf8); }
+    .clii-tier-badge--2 { background: color-mix(in srgb, var(--brand-gold) 14%, transparent); color: var(--brand-gold, #fbbf24); }
+    .clii-tier-badge--3 { background: color-mix(in srgb, var(--ink-mute) 14%, transparent); color: var(--ink-soft, #94a3b8); }
   </style>
   <script type="application/ld+json">
     {
@@ -343,7 +363,7 @@
 <style>
 /* Field-guide decision map and seven layers: the stack-step styles in styles.css are scoped to #framework-stack; mirrored here for .stack-steps--map (2026-09-22). */
 .stack-steps--map{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-lg)}
-.stack-steps--map .stack-step{display:grid;grid-template-columns:2rem 1fr;gap:var(--space-md);align-items:start}
+.stack-steps--map .stack-step{display:grid;grid-template-columns:2rem 1fr;gap:var(--space-md);align-items:start;margin:0}
 .stack-steps--map .stack-step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;background:color-mix(in srgb, var(--accent) 16%, transparent);color:var(--accent);font-size:var(--text-sm);font-weight:700;font-feature-settings:"tnum";flex-shrink:0;margin-top:1px}
 .stack-steps--map .stack-step-body{min-width:0}
 .stack-steps--map .stack-step-title{margin:0 0 4px;font-size:1rem;font-weight:600;letter-spacing:-0.01em;color:var(--text)}
@@ -546,6 +566,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <div class="page-toc-list">
           <a class="page-toc-link" href="#featured-mvep">Featured: MVEP</a>
           <a class="page-toc-link" href="#mvep-scorecard">MVEP scorecard</a>
+          <a class="page-toc-link" href="#clii-explorer">CLII explorer</a>
           <a class="page-toc-link" href="#framework-stack">Framework stack</a>
           <a class="page-toc-link" href="#classification-frameworks">Classification</a>
           <a class="page-toc-link" href="#core-frameworks">Track A</a>
@@ -598,8 +619,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <div class="stack-step-body">
             <h3 class="stack-step-title">Map</h3>
             <p class="stack-step-q"><a href="#clii">Who can actually say no?</a></p>
-            <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII locates control at each gateway.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#clii">CLII</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#regime-dashboard">Regime Dashboard</a></p>
+            <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII (Control Layer Intensity Index) locates and scores regulatory control at each gateway from 0 to 1 across five dimensions.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#clii">CLII (Control Layer Intensity Index)</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="#regime-dashboard">Regime Dashboard</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -607,8 +628,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <div class="stack-step-body">
             <h3 class="stack-step-title">Compare</h3>
             <p class="stack-step-q"><a href="#mvep">Does owning the token give you what you think you are buying?</a></p>
-            <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP is the entry gate.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#mvep">MVEP</a></p>
+            <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP (Minimum Viable Equivalence Pack) is the ten-category entry gate.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="#mvep">MVEP (Minimum Viable Equivalence Pack)</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -922,8 +943,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           </div>
           <!-- mvep:table END -->
         </details>
-        <div class="mvep-sc__foot">
-          <p><strong>Where the verdicts come from.</strong> Each cell's tag names the place in the paper that establishes it: T2 is Section 5.4, Table 4; SUM the summary table; F5 and F6 Findings 5 and 6; WE the worked examples in the Supplementary Materials; JX the Exhibit 2 jurisdiction matrix; CP the coverage-completion scoring; NEW to NEW5 the comparator scorings (USYC, USD1, the partial-evidence cells, SoFiUSD, RLUSD); RWA the rwa.xyz snapshot of June 14, 2026. The two data files are mirrored byte for byte from the paper's <a href="https://github.com/CryptoZach/mvep-replication" target="_blank" rel="noopener noreferrer">replication repository</a> and served on the <a href="/data/">data page</a>.</p>
+        <div class="mvep-sc__foot" id="mvep-sc-sources">
+          <p><strong>Where the verdicts come from.</strong> Each cell's source tag links directly to the section or exhibit in the <a href="/papers/mvep/">MVEP paper</a> that establishes it: <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-treasuries">T2</a> is Section 5.4, Table 4 (the ten-category tokenized-Treasury assessment); <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-exhibit-1">SUM</a> is the summary table (Categories 1 and 6 and the Cash Settlement Asset test for the nine-product sample); <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-exhibit-1">F5</a> and <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-exhibit-1">F6</a> are the paper's Findings 5 and 6 (the Tier 2 custody, reconciliation and insolvency cells, and DAI's operational cells), shown in the Exhibit 1 scorecard; <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-sample">WE</a> is the nine-product worked examples; <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-exhibit-2">JX</a> is the Exhibit 2 Category 5 jurisdiction matrix; <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-exhibit-1">CP</a> is the coverage-completion scoring; <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-treasuries">NEW</a> and <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-comparators">NEW2 to NEW5</a> are the comparator scorings (USYC, USD1, the partial-evidence cells, SoFiUSD, RLUSD); and <a class="mvep-sc__src-link" href="/papers/mvep/#mvep-comparators">RWA</a> is the rwa.xyz snapshot of June 14, 2026. The two data files are mirrored byte for byte from the paper's <a href="https://github.com/CryptoZach/mvep-replication" target="_blank" rel="noopener noreferrer">replication repository</a> and served on the <a href="/data/">data page</a>.</p>
           <p><strong>What the rating means.</strong> Legal equivalence floors Categories 1, 5 and 4; operational floors 2, 3, 7, 8, 4 and 10; economic floors 6, 10 and the companion test; the headline is the weakest of the three, and the binding line names the cell that sets it. Category 9 enters as a disclosure modifier. Your own product is rated by the same rule; the paper's fourteen use the Exhibit 3 values as published. The six categories marked pass-through-critical (1, 4, 5, 6, 8 and 9) are the ones the <a href="/letters/fdic-ag19-ppsi-activities/">FDIC AG19 letter</a> conditions pass-through deposit insurance on. A review of a specific product is an <a href="/speaker-and-advisory/#adv-diligence">advisory engagement</a>.</p>
         </div>
       </form>
@@ -1020,9 +1041,302 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
           <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations, not stress resilience. Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical scores but showed sharply different stress retention during SVB. Stress depends on reserve-bank exposure, counterparty concentration, and other conditions outside what CLII measures.</p>
           <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
-          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar/">Open Routing the Dollar <span aria-hidden="true">→</span></a></p>
+          <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar/">Open Routing the Dollar <span aria-hidden="true">→</span></a> <a class="action secondary" href="#clii-explorer">Explore 19 gateways <span aria-hidden="true">↓</span></a></p>
         </article>
         </div>
+
+      <div class="clii-exp" id="clii-explorer" role="region" aria-labelledby="clii-explorer-title">
+        <div class="clii-exp__header">
+          <p class="clii-exp__eyebrow">Interactive dataset &middot; Routing the Dollar (Table 2 &amp; Appendix B)</p>
+          <h3 class="clii-exp__title" id="clii-explorer-title">CLII Gateway Explorer: 19 stablecoin gateways across 5 control dimensions</h3>
+          <p class="clii-exp__lede">Filter by regulatory tier, sort by any dimension or SVB stress-window flow retention (March 9 to 15, 2023 relative to 28-day pre-crisis baseline), or switch weighting schemes to verify the paper&apos;s sensitivity results: under equal weights (20% each; Appendix D, Exhibit 22), 0 of 19 gateways change tier classification (Tier 1 &gt; 0.75, Tier 2 0.30 to 0.75, Tier 3 &lt; 0.30); dropping the freeze dimension entirely (recomputed here from Table B2) leaves 18 of 19 unchanged (Robinhood, at the 0.75 boundary with de minimis volume, moves to 0.77).</p>
+        </div>
+        <div class="clii-exp__controls" role="group" aria-label="CLII explorer controls">
+          <div class="clii-exp__control">
+            <label for="clii-exp-tier">Filter by tier</label>
+            <select id="clii-exp-tier">
+              <option value="all">All 19 gateways</option>
+              <option value="1">Tier 1: Regulated (&gt; 0.75) (6)</option>
+              <option value="2">Tier 2: Offshore / Partial (0.30-0.75) (6)</option>
+              <option value="3">Tier 3: Permissionless (&lt; 0.30) (7)</option>
+            </select>
+          </div>
+          <div class="clii-exp__control">
+            <label for="clii-exp-sort">Sort gateways by</label>
+            <select id="clii-exp-sort">
+              <option value="clii-desc">Composite CLII (high to low)</option>
+              <option value="clii-asc">Composite CLII (low to high)</option>
+              <option value="svb-desc">SVB stress retention (high to low)</option>
+              <option value="d1-desc">Regulatory license (25%)</option>
+              <option value="d2-desc">Reserve transparency (20%)</option>
+              <option value="d3-desc">Freeze capability (20%)</option>
+              <option value="d4-desc">Compliance infrastructure (20%)</option>
+              <option value="d5-desc">Geographic / sanctions (15%)</option>
+            </select>
+          </div>
+          <div class="clii-exp__control">
+            <label for="clii-exp-weights">Weighting specification</label>
+            <select id="clii-exp-weights">
+              <option value="baseline">Baseline weights (25 / 20 / 20 / 20 / 15)</option>
+              <option value="equal">Equal weights (20 / 20 / 20 / 20 / 20)</option>
+              <option value="nofreeze">Drop freeze dimension (31.25 / 25 / 0 / 25 / 18.75)</option>
+            </select>
+          </div>
+        </div>
+        <div class="clii-exp__summary" id="clii-exp-summary" aria-live="polite">
+          <span>Showing <strong>19</strong> of 19 monitored gateways</span>
+          <span>Tier 1 duopoly: Coinbase (56%) and Circle (44%), together 99.9% of Tier 1 Ethereum volume</span>
+        </div>
+        <div class="structure-table-wrap">
+          <table class="agenda-table clii-exp__table" id="clii-exp-table">
+            <caption class="sr-only">CLII dimension scores, tier classifications, and SVB flow retention across 19 stablecoin gateways</caption>
+            <thead>
+              <tr>
+                <th scope="col">Gateway</th>
+                <th scope="col">Tier</th>
+                <th scope="col" class="num">CLII</th>
+                <th scope="col" class="num" title="Regulatory License (25% baseline weight)">License</th>
+                <th scope="col" class="num" title="Reserve / Operational Transparency (20% baseline weight)">Transp.</th>
+                <th scope="col" class="num" title="Freeze / Blacklist Capability (20% baseline weight)">Freeze</th>
+                <th scope="col" class="num" title="Compliance Infrastructure (20% baseline weight)">Compl.</th>
+                <th scope="col" class="num" title="Geographic Restrictions &amp; Sanctions Screening (15% baseline weight)">Geo/OFAC</th>
+                <th scope="col" class="num" title="SVB stress-window daily volume divided by 28-day pre-crisis baseline">SVB Retention</th>
+                <th scope="col">Control-layer posture &amp; routing role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-tier="1" data-clii="0.92" data-d1="0.95" data-d2="0.90" data-d3="0.95" data-d4="0.90" data-d5="0.90" data-svb="1.39">
+                <td><strong>Circle (USDC)</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.92</td>
+                <td class="num">0.95</td>
+                <td class="num">0.90</td>
+                <td class="num">0.95</td>
+                <td class="num">0.90</td>
+                <td class="num">0.90</td>
+                <td class="num">1.39x ($3.42B/d)</td>
+                <td>NYDFS BitLicense, Deloitte attestations, OFAC blacklist; 44% of Tier 1 volume; direct SVB reserve exposure ($3.3B)</td>
+              </tr>
+              <tr data-tier="1" data-clii="0.88" data-d1="0.90" data-d2="0.85" data-d3="0.90" data-d4="0.92" data-d5="0.80" data-svb="-1">
+                <td><strong>Paxos (USDP / PYUSD)</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.88</td>
+                <td class="num">0.90</td>
+                <td class="num">0.85</td>
+                <td class="num">0.90</td>
+                <td class="num">0.92</td>
+                <td class="num">0.80</td>
+                <td class="num">PSM contagion</td>
+                <td>NYDFS trust charter and OCC conditional national trust; BUSD cease-mint order caused 88% Binance counterparty drop</td>
+              </tr>
+              <tr data-tier="1" data-clii="0.88" data-d1="0.95" data-d2="0.80" data-d3="0.80" data-d4="0.95" data-d5="0.85" data-svb="-1">
+                <td><strong>PayPal (PYUSD)</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.88</td>
+                <td class="num">0.95</td>
+                <td class="num">0.80</td>
+                <td class="num">0.80</td>
+                <td class="num">0.95</td>
+                <td class="num">0.85</td>
+                <td class="num">Post-SVB launch</td>
+                <td>NYDFS BitLicense and state MTLs; PYUSD issued by Paxos Trust with freeze and compliance hooks</td>
+              </tr>
+              <tr data-tier="1" data-clii="0.85" data-d1="0.90" data-d2="0.80" data-d3="0.79" data-d4="0.90" data-d5="0.85" data-svb="2.63">
+                <td><strong>Coinbase</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.85</td>
+                <td class="num">0.90</td>
+                <td class="num">0.80</td>
+                <td class="num">0.79</td>
+                <td class="num">0.90</td>
+                <td class="num">0.85</td>
+                <td class="num">2.63x ($4.03B/d)</td>
+                <td>NYDFS BitLicense, state MTLs, institutional custody; 56% of Tier 1 volume; no SVB reserve exposure</td>
+              </tr>
+              <tr data-tier="1" data-clii="0.82" data-d1="0.90" data-d2="0.75" data-d3="0.77" data-d4="0.85" data-d5="0.80" data-svb="-1">
+                <td><strong>Gemini (GUSD)</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.82</td>
+                <td class="num">0.90</td>
+                <td class="num">0.75</td>
+                <td class="num">0.77</td>
+                <td class="num">0.85</td>
+                <td class="num">0.80</td>
+                <td class="num">PSM contagion</td>
+                <td>NYDFS trust charter, SOC 2 audits; GUSD issuer (2 monitored addresses, under $1B of Ethereum gateway volume)</td>
+              </tr>
+              <tr data-tier="1" data-clii="0.80" data-d1="0.85" data-d2="0.75" data-d3="0.75" data-d4="0.85" data-d5="0.80" data-svb="6.80">
+                <td><strong>BitGo</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--1">Tier 1</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.80</td>
+                <td class="num">0.85</td>
+                <td class="num">0.75</td>
+                <td class="num">0.75</td>
+                <td class="num">0.85</td>
+                <td class="num">0.80</td>
+                <td class="num">6.80x ($0.09B/d)</td>
+                <td>Regulated institutional custodian and trust company; USD1 reserve custodian</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.75" data-d1="0.90" data-d2="0.55" data-d3="0.65" data-d4="0.85" data-d5="0.75" data-svb="-1">
+                <td><strong>Robinhood</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.75</td>
+                <td class="num">0.90</td>
+                <td class="num">0.55</td>
+                <td class="num">0.65</td>
+                <td class="num">0.85</td>
+                <td class="num">0.75</td>
+                <td class="num">Negligible vol.</td>
+                <td>Boundary gateway at 0.75 cutoff (Tier 1 &gt; 0.75); U.S. broker-dealer and state MTLs; negligible on-chain Ethereum stablecoin volume</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.58" data-d1="0.65" data-d2="0.55" data-d3="0.50" data-d4="0.59" data-d5="0.60" data-svb="2.14">
+                <td><strong>Kraken</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.58</td>
+                <td class="num">0.65</td>
+                <td class="num">0.55</td>
+                <td class="num">0.50</td>
+                <td class="num">0.59</td>
+                <td class="num">0.60</td>
+                <td class="num">2.14x ($0.82B/d)</td>
+                <td>State MTLs, proof-of-reserves attestations; 5 monitored addresses ($471B Ethereum volume, 6.1% of monitored gateway volume)</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.45" data-d1="0.10" data-d2="0.73" data-d3="0.90" data-d4="0.35" data-d5="0.20" data-svb="1.77">
+                <td><strong>Tether Treasury (USDT)</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.45</td>
+                <td class="num">0.10</td>
+                <td class="num">0.73</td>
+                <td class="num">0.90</td>
+                <td class="num">0.35</td>
+                <td class="num">0.20</td>
+                <td class="num">1.77x ($0.45B/d)</td>
+                <td>Offshore issuer, quarterly BDO attestations, active contract-level addBlackList() freeze; 10.8% of Ethereum USDT routes via Tier 1</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.40" data-d1="0.15" data-d2="0.25" data-d3="0.55" data-d4="0.65" data-d5="0.45" data-svb="3.44">
+                <td><strong>OKX</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.40</td>
+                <td class="num">0.15</td>
+                <td class="num">0.25</td>
+                <td class="num">0.55</td>
+                <td class="num">0.65</td>
+                <td class="num">0.45</td>
+                <td class="num">3.44x ($0.43B/d)</td>
+                <td>Offshore exchange; 15 monitored Ethereum addresses ($464B volume, 6.0% of monitored gateway volume; 10.8% internal rebalancing rate)</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.40" data-d1="0.15" data-d2="0.30" data-d3="0.60" data-d4="0.65" data-d5="0.35" data-svb="3.39">
+                <td><strong>Bybit</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.40</td>
+                <td class="num">0.15</td>
+                <td class="num">0.30</td>
+                <td class="num">0.60</td>
+                <td class="num">0.65</td>
+                <td class="num">0.35</td>
+                <td class="num">3.39x ($0.14B/d)</td>
+                <td>Offshore exchange with custodial account-level freeze and variable regional KYC enforcement</td>
+              </tr>
+              <tr data-tier="2" data-clii="0.38" data-d1="0.10" data-d2="0.25" data-d3="0.55" data-d4="0.60" data-d5="0.50" data-svb="2.20">
+                <td><strong>Binance</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--2">Tier 2</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.38</td>
+                <td class="num">0.10</td>
+                <td class="num">0.25</td>
+                <td class="num">0.55</td>
+                <td class="num">0.60</td>
+                <td class="num">0.50</td>
+                <td class="num">2.20x ($4.39B/d)</td>
+                <td>Largest single gateway ($2,895B volume; 37.4% gross, 33% net Ethereum share across 5 monitored addresses); 2023 DOJ BSA/AML settlement; 24/7 weekend routing hub</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.20" data-d1="0.10" data-d2="0.25" data-d3="0.15" data-d4="0.35" data-d5="0.15" data-svb="-1">
+                <td><strong>Aave V3</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.20</td>
+                <td class="num">0.10</td>
+                <td class="num">0.25</td>
+                <td class="num">0.15</td>
+                <td class="num">0.35</td>
+                <td class="num">0.15</td>
+                <td class="num">Pool-level</td>
+                <td>Permissionless lending protocol; governance-controlled pool pause and risk parameters; 466 liquidation events analyzed</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.18" data-d1="0.10" data-d2="0.20" data-d3="0.15" data-d4="0.30" data-d5="0.15" data-svb="12.35">
+                <td><strong>Curve 3pool</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.18</td>
+                <td class="num">0.10</td>
+                <td class="num">0.20</td>
+                <td class="num">0.15</td>
+                <td class="num">0.30</td>
+                <td class="num">0.15</td>
+                <td class="num">12.35x ($2.33B/d)</td>
+                <td>Permissionless stablecoin AMM; primary escape-valve router during SVB weekend gap when Tier 1 share fell to 13%</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.18" data-d1="0.10" data-d2="0.20" data-d3="0.15" data-d4="0.30" data-d5="0.15" data-svb="5.57">
+                <td><strong>1inch</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.18</td>
+                <td class="num">0.10</td>
+                <td class="num">0.20</td>
+                <td class="num">0.15</td>
+                <td class="num">0.30</td>
+                <td class="num">0.15</td>
+                <td class="num">5.57x ($0.72B/d)</td>
+                <td>Permissionless DEX aggregator; high stress-window flow retention routing displaced swaps across liquidity pools</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.18" data-d1="0.10" data-d2="0.20" data-d3="0.15" data-d4="0.30" data-d5="0.15" data-svb="-1">
+                <td><strong>Compound V3</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.18</td>
+                <td class="num">0.10</td>
+                <td class="num">0.20</td>
+                <td class="num">0.15</td>
+                <td class="num">0.30</td>
+                <td class="num">0.15</td>
+                <td class="num">Pool-level</td>
+                <td>Permissionless lending protocol; governance-only parameter controls, no KYC</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.15" data-d1="0.10" data-d2="0.15" data-d3="0.10" data-d4="0.30" data-d5="0.10" data-svb="-1">
+                <td><strong>Uniswap V3</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.15</td>
+                <td class="num">0.10</td>
+                <td class="num">0.15</td>
+                <td class="num">0.10</td>
+                <td class="num">0.30</td>
+                <td class="num">0.10</td>
+                <td class="num">Pool-level</td>
+                <td>Immutable AMM pool contracts; no protocol-level freeze capability; frontend geo-blocking only</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.15" data-d1="0.10" data-d2="0.15" data-d3="0.10" data-d4="0.30" data-d5="0.10" data-svb="-1">
+                <td><strong>Uniswap Universal Router</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.15</td>
+                <td class="num">0.10</td>
+                <td class="num">0.15</td>
+                <td class="num">0.10</td>
+                <td class="num">0.30</td>
+                <td class="num">0.10</td>
+                <td class="num">Pool-level</td>
+                <td>Permissionless swap execution router; identical regulatory surface to Uniswap V3 core contracts</td>
+              </tr>
+              <tr data-tier="3" data-clii="0.02" data-d1="0.00" data-d2="0.00" data-d3="0.00" data-d4="0.05" data-d5="0.05" data-svb="-1">
+                <td><strong>Tornado Cash</strong></td>
+                <td><span class="clii-tier-badge clii-tier-badge--3">Tier 3</span></td>
+                <td class="num clii-exp__score" data-col="clii">0.02</td>
+                <td class="num">0.00</td>
+                <td class="num">0.00</td>
+                <td class="num">0.00</td>
+                <td class="num">0.05</td>
+                <td class="num">0.05</td>
+                <td class="num">Sanctioned</td>
+                <td>Immutable mixer contract; OFAC-designated August 2022 (before the sample window), designation removed March 2025 after Van Loon</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="section-title" id="narrower-question">
         <h3 id="narrower-question-title">For a narrower question</h3>
         <p>Five tools that answer one step in more depth: pass-through conditions, reserve disclosure, deposit migration, operating regimes, and dollar-regime classification. Start with the decision map; open these when a step needs a finer instrument.</p>
@@ -1033,7 +1347,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p class="card-eyebrow">Derivative on MVEP &middot; Pass-through gating</p>
           <p><strong>What it does.</strong> Conditions FDIC pass-through deposit insurance eligibility on MVEP qualification across six pass-through-critical categories (Rights Parity, Custody and Customer Property, Insolvency Posture, Settlement Finality, Governance and Change Control, Disclosures). Statutory anchor: 12 U.S.C. &sect; 5903(e)(1) and (e)(2); IOLTA (Interest on Lawyer Trust Accounts), Section 529 plans, and custodial brokerage accounts as direct analogies.</p>
           <p><strong>Why it matters.</strong> The FDIC&apos;s proposed &sect; 330.11(a)(3) categorically forecloses pass-through coverage for deposits held by PPSIs (Permitted Payment Stablecoin Issuers under the GENIUS Act). AG19 letter Recommendation 7 proposes MGCPT as the substantive alternative: condition pass-through on MVEP qualification, retaining categorical foreclosure for non-qualified PPSIs. Preserves the FDIC&apos;s prudential interest while honoring the GENIUS Act&apos;s intent that qualified PPSIs be treated as bank-deposit-equivalent when their architecture supports it.</p>
-          <p><strong>What triggers re-evaluation.</strong> FDIC AG19 final-rule disposition (statutory deadline window ~2026-07-18), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
+          <p><strong>What triggers re-evaluation.</strong> FDIC AG19 final-rule disposition under the July 18, 2026 GENIUS Act statutory deadline (tracked live on the <a href="/trackers/genius-act/">GENIUS Act rulemaking tracker</a>), a change in any of the six pass-through-critical MVEP categories&apos; artifacts, or a new statutory regime affecting 12 U.S.C. &sect; 5903(e).</p>
           <p class="framework-card-action"><a class="action secondary" href="/letters/fdic-ag19-ppsi-activities/">Open AG19 Recommendation 7 <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-d" id="3crd">
@@ -1082,7 +1396,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="card card--polished card--accent-a" id="operational-risk-taxonomy">
           <h3>Operational Risk Taxonomy</h3>
           <p class="card-eyebrow">Diligence &middot; Operational resilience</p>
-          <p><strong>What it does.</strong> Maps 74 risk vectors to 64 testable controls and 36 control objectives across a 624-configuration simulation battery. Calibrated from Ethereum, Helium, GEODNET, and Filecoin production data using ValOS (Validator Operation Standard) and NORS (Node Operator Risk Standard) frameworks.</p>
+          <p><strong>What it does.</strong> Maps the ValOS taxonomy (74 risk vectors, 64 testable controls) and the NORS standard (36 control objectives) onto seven simulatable parameters, tested across a 624-configuration simulation battery. Calibrated from Ethereum, Helium, GEODNET, and Filecoin production data using ValOS (Validator Operation Standard) and NORS (Node Operator Risk Standard) frameworks.</p>
           <p><strong>Why it matters.</strong> Economic-only simulations miss the infrastructure failures that change token-economy behavior. Reputation systems gated by hard thresholds can become unworkable under routine operational risk; adaptive emission control can be more resilient than static designs under the same stress.</p>
           <p><strong>What triggers re-evaluation.</strong> A new failure pattern, a node-operator concentration shift, a reputation-system threshold crossing, or a previously unmodeled correlation between economic and operational stress.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/operational-risk/">Open Operational Risk in Token Economies <span aria-hidden="true">→</span></a></p>
@@ -1117,7 +1431,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <section class="reveal" id="frameworks-in-rulemaking" aria-labelledby="rulemaking-title">
       <div class="section-title">
         <h2 id="rulemaking-title">Frameworks in active rulemaking</h2>
-        <p>Twenty-one federal comment letters apply these frameworks to live OCC, FDIC, FinCEN, Treasury, NCUA, SEC, Board of Governors, CFTC, and joint banking-agency dockets. Each letter ties a framework primitive to a specific regulatory question.</p>
+        <p>Twenty-one federal comment letters apply these frameworks to live OCC, FDIC, FinCEN, Treasury, NCUA, SEC, Board of Governors, CFTC, and joint banking-agency dockets. Each letter ties a framework primitive to a specific regulatory question: <strong>MVEP</strong> (Minimum Viable Equivalence Pack, ten-category product diligence standard), <strong>CLII</strong> (Control Layer Intensity Index, 0-to-1 gateway regulatory intensity score), <strong>MGCPT</strong> (MVEP-Gated Conditional Pass-Through, conditioning FDIC deposit insurance pass-through on six MVEP categories), and <strong>3CRD</strong> (Three-Category Reserve Disclosure, point-of-use customer disclosure of legal claim, reserve composition, and custody location).</p>
       </div>
       <div class="structure-table-wrap" role="region" aria-label="Federal comment letter program">
         <table class="agenda-table">
@@ -1132,55 +1446,111 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             <tr>
               <td><a href="/letters/occ-mvep-v4/">OCC PPSI MVEP comment</a></td>
               <td>OCC-2025-0372</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">MVEP</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span></td>
             </tr>
             <tr>
               <td><a href="/letters/occ-supplemental/">OCC PPSI supplemental comment</a></td>
               <td><a class="term term-link" href="/letters/occ-supplemental/">OCC NPRM supplement</a></td>
-              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">3CRD</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Three-Category Reserve Disclosure: point-of-use customer disclosure (MVEP Categories 1, 4, 5)">3CRD</span></td>
             </tr>
             <tr>
               <td><a href="/letters/fdic-ag20-ppsi-application/">FDIC AG20 PPSI application-rule comment</a></td>
               <td>RIN 3064-AG20</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">control-layer</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-qualifier">control-layer</span></td>
             </tr>
             <tr>
               <td><a href="/letters/fdic-ag19-ppsi-activities/">FDIC AG19 PPSI activities comment</a></td>
               <td>RIN 3064-AG19</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">MGCPT</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">3CRD</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="MVEP-Gated Conditional Pass-Through: FDIC deposit insurance pass-through gated on 6 MVEP categories">MGCPT</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Three-Category Reserve Disclosure: point-of-use customer disclosure (MVEP Categories 1, 4, 5)">3CRD</span></td>
             </tr>
             <tr>
               <td><a href="/letters/fincen-aml-cft/">FinCEN AML/CFT comment</a></td>
               <td>FINCEN-2026-0034</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
             </tr>
             <tr>
               <td><a href="/letters/fincen-ofac-ppsi-sanctions/">FinCEN-OFAC PPSI sanctions comment</a></td>
               <td>FINCEN-2026-0100</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">freeze</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-qualifier">freeze</span></td>
             </tr>
             <tr>
               <td><a href="/letters/treasury-genius-state-similarity/">Treasury GENIUS state-similarity comment</a></td>
               <td>TREAS-DO-2026-0232</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">3CRD</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">licensing</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Three-Category Reserve Disclosure: point-of-use customer disclosure (MVEP Categories 1, 4, 5)">3CRD</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-qualifier">licensing</span></td>
             </tr>
             <tr>
               <td><a href="/letters/banking-agencies-joint-aml/">Banking agencies joint AML/CFT comment</a></td>
               <td>91 FR 18304</td>
-              <td class="framework-invoked"><span class="framework-invoked-name">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-qualifier">compliance</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/ncua-genius/">NCUA PPSI issuer &amp; credit-union comment</a></td>
+              <td>RIN 3133-AG10</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/sec-dsp3-draft-strategic-plan/">SEC Draft Strategic Plan FY 2026-2030 comment</a></td>
+              <td>File DSP-3</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fincen-ab74-ppsi-cip/">FinCEN &amp; banking agencies joint PPSI CIP comment</a></td>
+              <td>FINCEN-2026-0101</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">Control-layer</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name">on-chain measurement</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fdic-ag21-resolution-submissions/">FDIC IDI resolution submissions comment</a></td>
+              <td>RIN 3064-AG21</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fdic-ag27-assessments/">FDIC deposit-insurance assessments comment</a></td>
+              <td>RIN 3064-AG27</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span> <span class="framework-invoked-plus">+</span> <span class="framework-invoked-name" title="Control Layer Intensity Index: 0-to-1 gateway regulatory intensity score">CLII</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fed-r1835-aml-cft-programs/">Federal Reserve Board AML/CFT program comment</a></td>
+              <td>Docket No. R-1835</td>
+              <td class="framework-invoked"><span class="framework-invoked-name">Control-layer</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/cftc-3038-0076-dco-requirements/">CFTC clearing-organization collateral &amp; settlement comment</a></td>
+              <td>OMB 3038-0076</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Minimum Viable Equivalence Pack: 10-category institutional diligence standard">MVEP</span> <span class="framework-invoked-qualifier">Cat. 4, 5, 6 &amp; 10</span></td>
+            </tr>
+            <tr>
+              <td><a href="/letters/fdic-ag30-disclosure-of-information/">FDIC supervisory disclosure-of-information comment</a></td>
+              <td>RIN 3064-AG30</td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Statistical disclosure control: cell-suppression and dominance thresholds for supervisory data releases">Statistical disclosure control</span></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="track-bridge"><a class="action secondary" href="/letters/">View all letters <span aria-hidden="true">→</span></a></p>
+      <p class="track-bridge"><a class="action secondary" href="/letters/">View all 21 letters <span aria-hidden="true">→</span></a> <a class="action secondary" href="/letters/recommendations/">Browse 114 recommendations <span aria-hidden="true">→</span></a> <a class="action secondary" href="/trackers/genius-act/">GENIUS Act tracker <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="reveal" id="ai-extension" aria-labelledby="ai-extension-title">
       <div class="section-title">
         <h2 id="ai-extension-title">Extending the frameworks to AI operators</h2>
-        <p>CLII and MVEP carry from stablecoin gateways to AI deployments without losing their structure. The <strong>CLII-AI</strong> and <strong>MVEP-AI</strong> extension tracks transfer the control-layer vocabulary (routing defaults, hold authority, monitoring hooks, exception handling) to AI infrastructure and governance questions. First external deployment: the FSB <em>Sound Practices for Responsible Adoption of AI</em> consultation response (July 2026).</p>
+        <p>CLII (Control Layer Intensity Index) and MVEP (Minimum Viable Equivalence Pack) carry from stablecoin gateways to AI deployments without losing their structure. The <strong>CLII-AI</strong> and <strong>MVEP-AI</strong> extension tracks transfer the same control-layer vocabulary (routing defaults, hold authority, monitoring hooks, exception handling, and non-compensatory gates) to AI operators, deployment classes, and autonomous payment rails. First external deployment: the FSB <em>Sound Practices for Responsible Adoption of AI</em> consultation response (July 2026).</p>
       </div>
-      <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure/">View AI Governance profile <span aria-hidden="true">→</span></a></p>
+      <div class="grid grid--halves">
+        <article class="card card--polished card--accent-a" id="clii-ai">
+          <h3>CLII-AI (Control Layer Intensity Index for AI Operators)</h3>
+          <p class="card-eyebrow">AI operator monitoring &middot; 5 regulatory-posture dimensions</p>
+          <p><strong>What it does.</strong> Extends the continuous-monitoring index to AI operators across five regulatory-posture dimensions: Regulatory Licensing, Evaluation Transparency, Access Gating, Compliance Infrastructure, and Geographic Restrictions. Like the stablecoin CLII, it measures who is supervised and what controls attach at the operator layer, not whether a model is intrinsically safe.</p>
+          <p><strong>Why it matters.</strong> A configured warning or policy statement is not an enforced control. On the live <a href="/agent-infrastructure/#measurement">Agent Infrastructure</a> fleet, the highest-volume advisory warning repeated in 84% of workspaces after firing, whereas armed hard gates refused the prohibited action 199 times in 200 (11,470 of 11,528 attempts across both machines). In agentic payments (<a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a>), facilitator concentration across x402 on Base, Solana, and Polygon clears merger-guidelines thresholds on every chain.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/agent-infrastructure/#measurement">See fleet gate measurements <span aria-hidden="true">→</span></a> <a class="action secondary" href="/papers/who-controls-agentic-payments/">Open Who Controls Agentic Payments? <span aria-hidden="true">→</span></a></p>
+        </article>
+        <article class="card card--polished card--accent-b" id="mvep-ai">
+          <h3>MVEP-AI (Minimum Viable Equivalence Pack for AI Operators)</h3>
+          <p class="card-eyebrow">AI deployment gate &middot; 10-category diligence standard</p>
+          <p><strong>What it does.</strong> Applies the ten-category diligence-at-decision-point methodology to AI deployment classes: enterprise APIs, frontier chat interfaces, composed AI products, open-weights releases, and agentic systems. Tests whether an AI operator preserves contractual rights, system-of-record integrity, change control, and exception escalation under stress.</p>
+          <p><strong>Why it matters.</strong> Before an institution relies on an AI deployment or delegates execution to an agentic workflow, it must verify what happens when an operator silently changes a deployed model, deprecates an interface, or reclassifies outputs, and confirm that shared records, task leases, and verification checks fail closed rather than passing vacuously.</p>
+          <p class="framework-card-action"><a class="action secondary" href="/agent-infrastructure/#building">Explore the AI operating layer <span aria-hidden="true">→</span></a> <a class="action secondary" href="/letters/fsb-ai-sound-practices/">Read FSB AI Sound Practices letter <span aria-hidden="true">→</span></a></p>
+        </article>
+      </div>
+      <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure/">View AI Governance profile <span aria-hidden="true">→</span></a> <a class="action secondary" href="/papers/agentic-payments-control-layer/">Open Agentic Payments Control Layer <span aria-hidden="true">→</span></a> <a class="action secondary" href="/agent-infrastructure/">Open Agent Infrastructure <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="reveal" id="framework-lives" aria-labelledby="framework-lives-title">
@@ -1188,16 +1558,20 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <h2 id="framework-lives-title">Where each framework lives</h2>
         <dl class="framework-relations">
           <div class="framework-relations-row">
-            <dt>MVEP</dt>
-            <dd><span class="framework-relations-role">Entry gate</span><span class="framework-relations-q">Is equivalence proven now?</span></dd>
+            <dt><a href="#mvep">MVEP (Minimum Viable Equivalence Pack)</a></dt>
+            <dd><span class="framework-relations-role">Entry gate</span><span class="framework-relations-q">Is legal, operational, and economic equivalence proven across all 10 categories before launch?</span></dd>
           </div>
           <div class="framework-relations-row">
-            <dt>CLII</dt>
-            <dd><span class="framework-relations-role">Drift detector</span><span class="framework-relations-q">Is the control layer degrading over time?</span></dd>
+            <dt><a href="#clii">CLII (Control Layer Intensity Index)</a></dt>
+            <dd><span class="framework-relations-role">Drift detector</span><span class="framework-relations-q">How heavily regulated is each gateway (0 to 1 across 5 dimensions), and is the control layer degrading over time?</span></dd>
           </div>
           <div class="framework-relations-row">
-            <dt><a href="/papers/dollar-v3/">Tokenized Dollar Regime Classifier</a></dt>
-            <dd><span class="framework-relations-role">Market-structure equilibrium</span><span class="framework-relations-q">Sits above both; system-level view.</span></dd>
+            <dt><a href="/papers/dollar-v3/">TDRC (Tokenized Dollar Regime Classifier)</a></dt>
+            <dd><span class="framework-relations-role">Market-structure equilibrium</span><span class="framework-relations-q">Sits above both; scores whether the dollar operating layer is Control-dominant or Issuer-dominant (0 to 6 each).</span></dd>
+          </div>
+          <div class="framework-relations-row">
+            <dt><a href="#clii-ai">CLII-AI</a> &amp; <a href="#mvep-ai">MVEP-AI</a></dt>
+            <dd><span class="framework-relations-role">AI operator extension</span><span class="framework-relations-q">Applies five adapted regulatory-posture dimensions and ten accountability categories to AI operators, multi-agent systems, and the x402 facilitator chain.</span></dd>
           </div>
         </dl>
       </div>
@@ -1214,74 +1588,87 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             <tr class="agenda-table-group"><td colspan="3">Classification frameworks</td></tr>
             <tr>
               <td>Comparative Framework for Dollar Products</td>
-              <td>Regulation-vs-equivalence position (7 products)</td>
+              <td>Positions 7 dollar-denominated products on two independent axes: operator regulatory intensity vs. product equivalence</td>
               <td><a href="/papers/seven-dollars/"><em>Seven Dollars</em></a></td>
             </tr>
             <tr>
               <td>Tokenization Infrastructure Map</td>
-              <td>3-strategy taxonomy with cross-strategy entity overlap</td>
+              <td>Classifies U.S. institutional tokenization into 3 strategies and maps shared transfer-agent, custody, and clearing dependencies</td>
               <td><a href="/papers/three-strategies/"><em>Three Tokenization Strategies</em></a></td>
             </tr>
           </tbody>
           <tbody>
             <tr class="agenda-table-group"><td colspan="3">Track A &middot; Programmable money</td></tr>
             <tr>
-              <td>CLII</td>
-              <td>Gateway regulatory intensity, 0 to 1 across 5 dimensions</td>
+              <td><a href="#clii"><strong>CLII</strong> (Control Layer Intensity Index)</a></td>
+              <td>Scores how heavily regulated a stablecoin gateway (issuer, exchange, or router) is from 0 to 1 across 5 dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions</td>
               <td><a href="/papers/routing-the-dollar/"><em>Routing the Dollar</em></a></td>
             </tr>
             <tr>
-              <td>MVEP</td>
-              <td>10-category equivalence pass or fail (legal, operational, economic)</td>
+              <td><a href="#mvep"><strong>MVEP</strong> (Minimum Viable Equivalence Pack)</a></td>
+              <td>10-category buyer-side institutional diligence standard testing whether a tokenized product preserves legal, operational, and economic equivalence to the underlying asset, with non-compensatory pass/fail gates</td>
               <td><a href="/papers/mvep/"><em>Minimum Viable Equivalence Pack</em></a></td>
             </tr>
             <tr>
-              <td>MGCPT <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></td>
-              <td>FDIC pass-through gating on 6 MVEP categories</td>
+              <td><a href="#mgcpt"><strong>MGCPT</strong> (MVEP-Gated Conditional Pass-Through)</a> <span class="framework-status-badge" aria-label="Framework status: preliminary">Preliminary</span></td>
+              <td>Conditions FDIC pass-through deposit insurance eligibility for stablecoin reserves on passing the 6 pass-through-critical MVEP categories (Rights Parity, Custody, Insolvency Posture, Settlement Finality, Governance, Disclosures)</td>
               <td><a href="/letters/fdic-ag19-ppsi-activities/"><em>AG19 Recommendation 7</em></a></td>
             </tr>
             <tr>
-              <td>3CRD</td>
-              <td>Customer-facing reserve disclosure (MVEP Categories 1, 4, 5)</td>
+              <td><a href="#3crd"><strong>3CRD</strong> (Three-Category Reserve Disclosure)</a></td>
+              <td>Point-of-use customer disclosure template derived from MVEP Categories 1, 4, and 5 that surfaces three facts where holders transact: legal claim on reserves, reserve asset composition, and custodian location</td>
               <td><a href="/papers/mvep/"><em>Minimum Viable Equivalence Pack</em></a></td>
             </tr>
             <tr>
-              <td>Credit Migration Model <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></td>
-              <td>Deposit concentration and funding-quality shift</td>
+              <td><a href="#credit-migration-model">Credit Migration Model</a> <span class="framework-status-badge" aria-label="Framework status: in development">In development</span></td>
+              <td>Tracks how stablecoin reserve growth shifts bank deposit concentration, funding stability, and whether reserves reduce, recycle, or restructure commercial bank deposits</td>
               <td><a href="/papers/dollar-v3/"><em>Dollar v3</em></a></td>
             </tr>
             <tr>
-              <td>Regime Dashboard</td>
-              <td>Routing defaults, sweep ownership, hold authority</td>
+              <td><a href="#regime-dashboard">Regime Dashboard</a></td>
+              <td>Maps who controls the operating layer across front-end interfaces, default routing, sweep ownership, hold/freeze authority, fee capture, and audit logs</td>
               <td><a href="/papers/control-layer-war/"><em>The Control Layer War</em></a></td>
             </tr>
             <tr>
-              <td>Tokenized Dollar Regime Classifier (TDRC)</td>
-              <td>ControlScore vs IssuerScore (0 to 6 each)</td>
+              <td><a href="#dollar-v3-regime-classifier"><strong>TDRC</strong> (Tokenized Dollar Regime Classifier)</a></td>
+              <td>Scores whether U.S. dollar market structure is Control-dominant (distributors and interfaces capture economics) or Issuer-dominant (mint/burn issuers capture reserve carry), via ControlScore vs. IssuerScore (0 to 6 each)</td>
               <td><a href="/papers/dollar-v3/"><em>Dollar v3</em></a></td>
             </tr>
           </tbody>
           <tbody>
             <tr class="agenda-table-group"><td colspan="3">Track B &middot; Token economies</td></tr>
             <tr>
-              <td>Operational Risk Taxonomy</td>
-              <td>74 vectors, 64 controls, 624-configuration battery</td>
+              <td><a href="#operational-risk-taxonomy">Operational Risk Taxonomy (<strong>ValOS</strong> / <strong>NORS</strong>)</a></td>
+              <td>Maps the third-party Validator Operation Standard (ValOS: 74 risk vectors, 64 testable controls) and Node Operator Risk Standard (NORS) onto seven simulatable parameters across a 624-configuration battery</td>
               <td><a href="/papers/operational-risk/"><em>Operational Risk in Token Economies</em></a></td>
             </tr>
             <tr>
-              <td>Burn Mechanism Classification</td>
-              <td>S2R ratio and HHI on demand concentration</td>
+              <td><a href="#burn-mechanism-classification">Burn Mechanism Classification (<strong>S2R</strong>)</a></td>
+              <td>Measures protocol fiscal sustainability via the Subsidy-to-Revenue ratio (S2R, real demand burns divided by token emissions) and payer concentration via the Herfindahl-Hirschman Index (HHI)</td>
               <td><a href="/papers/who-burns-the-tokens/"><em>Who Burns the Tokens?</em></a></td>
             </tr>
             <tr>
-              <td>Governance-Concentration Diagnostic</td>
-              <td>Allocation-vs-realized concentration (52-protocol cross-section)</td>
+              <td><a href="#governance-concentration-diagnostic">Governance-Concentration Diagnostic</a></td>
+              <td>Measures realized post-distribution holder concentration (HHI) across a 52-protocol cross-section after excluding protocol-controlled addresses, and tests it against initial token allocation (50 protocols)</td>
               <td><a href="/papers/governance-concentration/"><em>Governance Concentration</em></a></td>
             </tr>
             <tr>
-              <td>Adaptive-Tokenomics Stress Audit</td>
-              <td>PID-controlled emissions across 5-year stress battery</td>
+              <td><a href="#adaptive-tokenomics">Adaptive-Tokenomics Stress Audit</a></td>
+              <td>Simulates proportional-integral-derivative (PID) feedback-controlled token emissions, staking, and slashing across a 5-year multi-scenario stress battery</td>
               <td><a href="/papers/adaptive-tokenomics/"><em>Adaptive Tokenomics</em></a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="agenda-table-group"><td colspan="3">AI operator extension &middot; Control layer &amp; agentic payments</td></tr>
+            <tr>
+              <td><a href="#clii-ai"><strong>CLII-AI</strong> (Control Layer Intensity Index for AI Operators)</a></td>
+              <td>Five-dimension continuous-monitoring index scoring AI operators across Regulatory Licensing, Evaluation Transparency, Access Gating, Compliance Infrastructure, and Geographic Restrictions</td>
+              <td><a href="/letters/fsb-ai-sound-practices/"><em>FSB AI Sound Practices</em></a> &middot; <a href="/agent-infrastructure/">Agent Infrastructure</a></td>
+            </tr>
+            <tr>
+              <td><a href="#mvep-ai"><strong>MVEP-AI</strong> (Minimum Viable Equivalence Pack for AI Operators)</a></td>
+              <td>Ten-category diligence framework extending MVEP to AI deployment classes (enterprise APIs, frontier chat interfaces, composed products, open weights, and agentic systems)</td>
+              <td><a href="/letters/fsb-ai-sound-practices/"><em>FSB AI Sound Practices</em></a> &middot; <a href="/agent-infrastructure/">Agent Infrastructure</a></td>
             </tr>
           </tbody>
         </table>
@@ -1388,7 +1775,74 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=236"></script>
+  <script defer src="/script.js?v=237"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    (function() {
+      var table = document.getElementById('clii-exp-table');
+      var tierSel = document.getElementById('clii-exp-tier');
+      var sortSel = document.getElementById('clii-exp-sort');
+      var weightSel = document.getElementById('clii-exp-weights');
+      var summary = document.getElementById('clii-exp-summary');
+      if (!table || !tierSel || !sortSel || !weightSel) return;
+      var tbody = table.querySelector('tbody');
+      var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      var schemes = {
+        baseline: [0.25, 0.20, 0.20, 0.20, 0.15],
+        equal: [0.20, 0.20, 0.20, 0.20, 0.20],
+        nofreeze: [0.3125, 0.25, 0.0, 0.25, 0.1875]
+      };
+      function scoreForRow(tr, mode) {
+        if (mode === 'baseline') return parseFloat(tr.getAttribute('data-clii'));
+        var w = schemes[mode] || schemes.baseline;
+        var s = 0;
+        for (var i = 0; i < 5; i++) {
+          s += parseFloat(tr.getAttribute('data-d' + (i + 1))) * w[i];
+        }
+        return Math.round(s * 100) / 100;
+      }
+      function updateExplorer() {
+        var tier = tierSel.value;
+        var sort = sortSel.value;
+        var mode = weightSel.value;
+        rows.forEach(function(tr) {
+          var sc = scoreForRow(tr, mode);
+          tr.setAttribute('data-active-clii', sc.toFixed(2));
+          var cell = tr.querySelector('[data-col="clii"]');
+          if (cell) cell.textContent = sc.toFixed(2);
+        });
+        var sorted = rows.slice().sort(function(a, b) {
+          if (sort === 'clii-asc') {
+            return parseFloat(a.getAttribute('data-active-clii')) - parseFloat(b.getAttribute('data-active-clii'));
+          }
+          if (sort === 'svb-desc') {
+            return parseFloat(b.getAttribute('data-svb')) - parseFloat(a.getAttribute('data-svb'));
+          }
+          if (sort.indexOf('d') === 0) {
+            var key = 'data-' + sort.split('-')[0];
+            var diff = parseFloat(b.getAttribute(key)) - parseFloat(a.getAttribute(key));
+            if (diff !== 0) return diff;
+          }
+          return parseFloat(b.getAttribute('data-active-clii')) - parseFloat(a.getAttribute('data-active-clii'));
+        });
+        var visibleCount = 0;
+        sorted.forEach(function(tr) {
+          var match = (tier === 'all' || tr.getAttribute('data-tier') === tier);
+          tr.hidden = !match;
+          if (match) visibleCount++;
+          tbody.appendChild(tr);
+        });
+        if (summary) {
+          var modeNote = mode === 'nofreeze'
+            ? 'Freeze dimension dropped (recomputed from Table B2): 18 of 19 retain tier (Robinhood 0.75 \u2192 0.77)'
+            : (mode === 'equal' ? 'Equal weights (20% each, Exhibit 22): 0 of 19 gateways change tier' : 'Tier 1 duopoly: Coinbase (56%) and Circle (44%), together 99.9% of Tier 1 Ethereum volume');
+          summary.innerHTML = '<span>Showing <strong>' + visibleCount + '</strong> of 19 monitored gateways</span><span>' + modeNote + '</span>';
+        }
+      }
+      tierSel.addEventListener('change', updateExplorer);
+      sortSel.addEventListener('change', updateExplorer);
+      weightSel.addEventListener('change', updateExplorer);
+    })();
+  </script>
 </body>
 </html>

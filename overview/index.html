@@ -207,7 +207,7 @@
 <style>
 /* Field-guide decision map and seven layers: the stack-step styles in styles.css are scoped to #framework-stack; mirrored here for .stack-steps--map (2026-09-22). */
 .stack-steps--map{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-lg)}
-.stack-steps--map .stack-step{display:grid;grid-template-columns:2rem 1fr;gap:var(--space-md);align-items:start}
+.stack-steps--map .stack-step{display:grid;grid-template-columns:2rem 1fr;gap:var(--space-md);align-items:start;margin:0}
 .stack-steps--map .stack-step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:999px;background:color-mix(in srgb, var(--accent) 16%, transparent);color:var(--accent);font-size:var(--text-sm);font-weight:700;font-feature-settings:"tnum";flex-shrink:0;margin-top:1px}
 .stack-steps--map .stack-step-body{min-width:0}
 .stack-steps--map .stack-step-title{margin:0 0 4px;font-size:1rem;font-weight:600;letter-spacing:-0.01em;color:var(--text)}
@@ -372,6 +372,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <h1 id="start-here-page-title">Field guide: how to evaluate a tokenized product.</h1>
         <p><strong>Classify the token. Audit the operator. Test the system.</strong> A token can tell you what something is supposed to represent. It cannot, by itself, tell you how the system actually works. Behind a token may sit an issuer, a reserve structure, a bank, a custodian, a transfer agent, an exchange, a payment rail, a smart contract, an administrator, a redemption process, a legal agreement, and a compliance function. Those layers determine what the holder can actually do and what happens when conditions change.</p>
         <p>The practical question is not only what the token is. <strong>What system has to work for the token's promise to remain true?</strong></p>
+        <p>This guide organizes that evaluation in three views: <a href="#seven-layers">seven architectural layers</a> that sit beneath the token, <a href="#five-questions">five questions</a> every tokenized product should answer, and a <a href="#decision-map">six-step decision map</a> (Classify, Trace, Map, Compare, Stress, Decide) that routes each step to its scoring framework.</p>
       </div>
       <div class="primer-hero-ctas">
         <div class="frameworks-2026-flagship-links frameworks-2026-flagship-links--hero" role="group" aria-label="Field guide entry points">
@@ -483,7 +484,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <article class="explainer-section">
             <h2>What is an operator?</h2>
             <p>An operator is the entity or entities that control a tokenized product's infrastructure: the issuer who mints the token, the exchange or custodian who holds it, the transfer agent who keeps the record of legal ownership, the validator who orders transactions, and the protocol maintainer who can upgrade the contract. The research program's central analytical move separates two questions: classify the token (what is it legally?) and regulate and audit the operator (who controls its behavior under stress?). The same token inherits different compliance obligations, stress performance, and accountability depending on who operates the stack around it.</p>
-            <p>A <strong>gateway</strong> is the specific operator that routes tokenized value at an entry or exit point: the issuer, exchange, or protocol processing a transfer. Gateway is the central unit of analysis in the stablecoin program (<a href="/papers/routing-the-dollar/">Routing the Dollar</a>); operator is the broader category that <a href="/frameworks/#clii">CLII</a> scores continuously and <a href="/frameworks/#mvep">MVEP</a> evaluates at the product gate.</p>
+            <p>A <strong>gateway</strong> is the specific operator that routes tokenized value at an entry or exit point: the issuer, exchange, or protocol processing a transfer. Gateway is the central unit of analysis in the stablecoin program (<a href="/papers/routing-the-dollar/">Routing the Dollar</a>); operator is the broader category that <a href="/frameworks/#clii">CLII (Control Layer Intensity Index)</a> scores continuously and <a href="/frameworks/#mvep">MVEP (Minimum Viable Equivalence Pack)</a> evaluates at the product gate.</p>
           </article>
         </div>
 
@@ -491,6 +492,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <article class="explainer-section">
             <h2>What is the control layer?</h2>
             <p>The control layer is the set of interfaces, routing defaults, sweep logic, holds/freezes, disclosures, and audit trails that turn policy into executable operations. This is often where liability, concentration, and value capture attach in practice.</p>
+            <p>The same control-layer boundary governs autonomous AI fleets and machine-to-machine payment rails: a prompt instruction or advisory warning is a statement of intent, whereas an armed gate, a time-bounded lease, or a payment facilitator hold is an executable control. See <a href="/frameworks/#ai-extension">CLII-AI and MVEP-AI</a>, <a href="/papers/who-controls-agentic-payments/">Who Controls Agentic Payments?</a>, and the live <a href="/agent-infrastructure/">Agent Infrastructure</a> operating layer.</p>
           </article>
         </div>
 
@@ -696,8 +698,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <div class="stack-step-body">
             <h3 class="stack-step-title">Map</h3>
             <p class="stack-step-q"><a href="/frameworks/#clii">Who can actually say no?</a></p>
-            <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII locates control at each gateway.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#clii">CLII</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks/#regime-dashboard">Regime Dashboard</a></p>
+            <p class="stack-step-desc">Identify operators, gateways, counterparties, and control points. CLII (Control Layer Intensity Index) locates and scores regulatory control at each gateway from 0 to 1 across five dimensions.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#clii">CLII (Control Layer Intensity Index)</a> <span class="stack-step-sep" aria-hidden="true">&middot;</span> <a href="/frameworks/#regime-dashboard">Regime Dashboard</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -705,8 +707,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <div class="stack-step-body">
             <h3 class="stack-step-title">Compare</h3>
             <p class="stack-step-q"><a href="/frameworks/#mvep">Does owning the token give you what you think you are buying?</a></p>
-            <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP is the entry gate.</p>
-            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#mvep">MVEP</a></p>
+            <p class="stack-step-desc">Test the tokenized product against the rights and behavior of the underlying asset or promised unit of value. MVEP (Minimum Viable Equivalence Pack) is the ten-category entry gate.</p>
+            <p class="stack-step-door"><span class="stack-step-door-label">Door</span> <a href="/frameworks/#mvep">MVEP (Minimum Viable Equivalence Pack)</a></p>
           </div>
         </li>
         <li class="stack-step">
@@ -761,6 +763,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong><a href="/papers/mvep/">Minimum Viable Equivalence Pack</a>.</strong> Ten-category diligence pack for entry-gate evaluation before launch or committee approval. See <a href="/frameworks/#mvep">Frameworks: MVEP</a> for the three equivalence claims (legal, operational, economic) and the MVEP-plus-CLII pairing logic.</p>
           <p><strong>Seven Dollars.</strong> A cross-product comparison of seven dollar-denominated digital products (and eight where the paper expands) across legal claim, ledger, insolvency, and liquidation; CLII and MVEP are treated as independent scores. <a href="/papers/seven-dollars/">SSRN 6483118</a>.</p>
           <p><strong>Three Tokenization Strategies.</strong> Institutional US securities tokenization in three live strategies, with a shared set of building-block entities. Securitize is the transfer agent across all three, which concentrates system-level risk at the control layer. <a href="/papers/three-strategies/">SSRN 6483198</a>.</p>
+          <p><strong><a href="/papers/who-controls-agentic-payments/">Who Controls Agentic Payments?</a></strong> First control-layer measurement of agentic payments across x402 on Base, Solana, and Polygon. Facilitator concentration clears merger-guidelines thresholds on every chain, and the count layer and value layer have different monopolists. <a href="/papers/who-controls-agentic-payments/">SSRN 7396241</a>.</p>
           <p><strong>Dollar v3.</strong> Three dollar objects (payment stablecoins, tokenized deposits, yield wrappers), Layer 0, and deposit mutation. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment. The site narrative now also tracks deposit tokens as a fourth object emerging since the essay.</p>
           <p><strong>The Control Layer War.</strong> How CLARITY-style provisions (House-passed form analyzed here) attach compliance at the control layer: interfaces, routing defaults, hold workflows, and audit logs.</p>
         </article>
@@ -780,7 +783,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <section class="reveal" id="what-tools" aria-labelledby="what-tools-title">
       <div class="section-title">
         <h2 id="what-tools-title">What the tools do</h2>
-        <p>The field guide defines the objects. <a href="/frameworks/">Frameworks</a> tests, classifies, and monitors them: <a href="/frameworks/#mvep">MVEP</a> for entry-gate diligence, <a href="/frameworks/#clii">CLII</a> for gateway monitoring, the <a href="/frameworks/#credit-migration-model">Credit Migration Model</a> for deposit and funding-structure analysis, and the <a href="/frameworks/#regime-dashboard">Regime Dashboard</a> for control-layer and operating-regime classification.</p>
+        <p>The field guide defines the objects. <a href="/frameworks/">Frameworks</a> tests, classifies, and monitors them: <a href="/frameworks/#mvep">MVEP (Minimum Viable Equivalence Pack)</a> for ten-category entry-gate diligence, <a href="/frameworks/#clii">CLII (Control Layer Intensity Index)</a> for 0-to-1 gateway regulatory monitoring, <a href="/frameworks/#mgcpt">MGCPT (MVEP-Gated Conditional Pass-Through)</a> and <a href="/frameworks/#3crd">3CRD (Three-Category Reserve Disclosure)</a> for deposit-insurance and point-of-use disclosure standards, the <a href="/frameworks/#credit-migration-model">Credit Migration Model</a> for deposit and funding-structure analysis, and the <a href="/frameworks/#regime-dashboard">Regime Dashboard</a> plus <a href="/frameworks/#dollar-v3-regime-classifier">TDRC (Tokenized Dollar Regime Classifier)</a> for control-layer and operating-regime classification.</p>
       </div>
       <p class="track-bridge"><a class="action secondary" href="/frameworks/">View Frameworks <span aria-hidden="true">→</span></a></p>
     </section>

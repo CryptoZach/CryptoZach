@@ -190,7 +190,6 @@ header{
   border-bottom:1px solid var(--mill);
 }
 .hdr{display:flex;align-items:center;gap:1.5rem;padding-block:.85rem}
-.brand-mark{width:26px;height:26px;flex:none;color:var(--accent)}
 /* Brand tagline gold, taken from the live site: quietly gold at rest, warming with a
    soft halo on hover. --brand-gold is #fbbf24 in dark, #a16207 in light. */
 
@@ -447,42 +446,6 @@ section{position:relative;z-index:1}
 }
 .dialfig figcaption b{color:var(--accent-text);font-weight:700;font-size:1.05em}
 @media (max-width:900px){ .dialwrap{grid-template-columns:1fr} .dialfig{order:-1} }
-
-/* Header mark: slow counter-rotation, the accretion read they liked */
-.brand-mark .ring-o{transform-origin:12px 12px;animation:spinO 34s linear infinite}
-.brand-mark .ring-i{transform-origin:12px 12px;animation:spinI 22s linear infinite reverse}
-.brand-mark .core{animation:corePulse 4.5s ease-in-out infinite}
-@keyframes spinO{to{transform:rotate(360deg)}}
-@keyframes spinI{to{transform:rotate(360deg)}}
-@keyframes corePulse{0%,100%{opacity:.85}50%{opacity:1}}
-
-/* ── BLACK HOLE: the mark spins up under the cursor, and collapses on click.
-   The rings wind inward and vanish, the core implodes then flares through an
-   accretion ring, and everything settles back. One shot, class removed on end. ── */
-.brand-mark .core,.brand-mark .accretion{transform-origin:12px 12px}
-@keyframes coreSwell{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.3);opacity:1}}
-@keyframes accretionIdle{0%,100%{transform:scale(.9);opacity:0}50%{transform:scale(1.18);opacity:.5}}
-
-.brand-mark.collapse .ring-o{animation:ringFall .95s cubic-bezier(.55,0,.8,.2) forwards}
-.brand-mark.collapse .ring-i{animation:ringFall .8s cubic-bezier(.55,0,.8,.2) forwards}
-.brand-mark.collapse .core{animation:coreFlash .95s ease-out forwards}
-.brand-mark.collapse .accretion{animation:accrete .95s ease-out forwards}
-@keyframes ringFall{
-  0%{transform:rotate(0deg) scale(1);opacity:1}
-  60%{opacity:1}
-  100%{transform:rotate(340deg) scale(.05);opacity:0}
-}
-@keyframes coreFlash{
-  0%{transform:scale(1);opacity:.9}
-  52%{transform:scale(.22);opacity:1}
-  66%{transform:scale(2.7);opacity:1}
-  100%{transform:scale(1);opacity:.9}
-}
-@keyframes accrete{
-  0%{transform:scale(.25) rotate(0deg);opacity:0}
-  52%{transform:scale(.7) rotate(120deg);opacity:.9}
-  100%{transform:scale(2.4) rotate(300deg);opacity:0}
-}
 
 
 /* Short standalone prose gets balanced lines. A two-line block whose second line is
@@ -773,7 +736,7 @@ body{ background: var(--void) !important; color: var(--ink) !important; }
    and made the newsletter band an opaque white slab. A full-bleed footer and a
    transparent band are not plates. */
 .resume-quick-nav, .resume-closing,
-blockquote, .callout, .note-card, .framework-card, .stat-card{
+blockquote, .callout, .note-card, .framework-card, .stat-card, .clii-exp{
   --c: 14px;
   border-radius: 0 !important;
   border: none !important;
@@ -787,7 +750,7 @@ blockquote, .callout, .note-card, .framework-card, .stat-card{
 .role-pill::before, .letter-card-sm::before, .patent-area::before,
 .brief-finding::before, .page-toc::before, .structure-nav::before,
 .resume-quick-nav::before, .resume-closing::before,
-blockquote::before, .framework-card::before{
+blockquote::before, .framework-card::before, .clii-exp::before{
   content:""; position:absolute; inset:1px; z-index:-1; pointer-events:none;
   clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
                      calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
@@ -1585,11 +1548,21 @@ ol[class*="principle"] > li > h3{
    fill and border. */
 .action, .footer-newsletter__input, .footer-newsletter__button,
 .hero-newsletter-band__input, .hero-newsletter-band__button,
-.copy-email-btn, .press-kit-copy-btn{
+.copy-email-btn, .press-kit-copy-btn, .clii-exp__control select{
   --c:10px;
   border-radius:0;
   clip-path:polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* Unify interior footer copyright lockup with the homepage .foot__mark spec. */
+footer.site-footer .footer-copy,
+footer.site-footer .footer-copy__year,
+footer.site-footer .footer-copy__brand{
+  font-family:"JetBrains Mono", ui-monospace, Menlo, monospace !important;
+  font-size:.8125rem !important;
+  font-weight:700 !important;
+  letter-spacing:.05em !important;
 }
 
 
@@ -1656,6 +1629,7 @@ ol[class*="principle"] > li > h3{
 .writing-arrow,
 .research-card-action,
 .speaker-page .advisory-card .card-eyebrow,
+.clii-tier-badge,
 .stamp{
   --badge-cut:6px;
   --badge-edge:color-mix(in srgb, currentColor 44%, transparent);
@@ -1685,6 +1659,7 @@ ol[class*="principle"] > li > h3{
 .jump-chip,
 .filter-count,
 .speaker-page .advisory-card .card-eyebrow,
+.clii-tier-badge,
 .stamp{
   display:inline-flex;
   align-items:center;
@@ -1720,6 +1695,7 @@ ol[class*="principle"] > li > h3{
 .writing-arrow::after,
 .research-card-action::after,
 .speaker-page .advisory-card .card-eyebrow::after,
+.clii-tier-badge::after,
 .stamp::after{
   content:"";
   position:absolute;
@@ -1733,6 +1709,7 @@ ol[class*="principle"] > li > h3{
       var(--badge-edge) calc(50% - .5px), var(--badge-edge) calc(50% + .5px),
       transparent calc(50% + .5px)) bottom right / var(--badge-cut) var(--badge-cut) no-repeat;
 }
+.clii-exp .clii-tier-badge{white-space:nowrap !important}
 .badge:focus-visible,
 .badge:focus-within,
 .badge-sm:focus-visible,

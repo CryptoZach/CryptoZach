@@ -414,7 +414,7 @@
           </div>
         </div>
 
-        <div class="brief-finding">
+        <div class="brief-finding" id="finding-5">
           <span class="brief-finding-num" aria-hidden="true">5</span>
           <div class="brief-finding-copy">
             <h3>&ldquo;Offshore&rdquo; was never a single insolvency category</h3>
@@ -423,7 +423,7 @@
           </div>
         </div>
 
-        <div class="brief-finding">
+        <div class="brief-finding" id="finding-6">
           <span class="brief-finding-num" aria-hidden="true">6</span>
           <div class="brief-finding-copy">
             <h3>Redemption pathway concentration may matter more than reserve composition under stress</h3>
@@ -432,7 +432,7 @@
           </div>
         </div>
 
-        <div class="brief-finding">
+        <div class="brief-finding" id="finding-7">
           <span class="brief-finding-num" aria-hidden="true">7</span>
           <div class="brief-finding-copy">
             <h3>Federal charters relocate the claim, not the defect</h3>
@@ -516,7 +516,7 @@
         <p>A third change is regulatory. The paper applies the framework to the OCC&rsquo;s proposed implementing rule for the GENIUS Act (<a href="/letters/occ-mvep-v4/">RIN 1557-AF41</a>). The framework identifies what the proposed rule gets right (reserve composition, extension of federal supervision, Permitted Payment Stablecoin Issuer (PPSI) category differentiation), where it could be strengthened (holder-rights disclosure, interagency coordination on collateral eligibility, standardized equivalence assessments), and what remains unaddressed (the collateral eligibility boundary where instruments from different regulatory regimes receive comparable treatment without differentiation or disclosure). An OCC comment letter applying the framework to specific provisions of the proposed rule has been filed under Docket OCC-2025-0372 (Tokenization Systems comment, March 2026).</p>
 
         <h2>Where the framework does its heaviest work</h2>
-        <h3>The nine-product sample</h3>
+        <h3 id="mvep-sample">The nine-product sample</h3>
         <p>The paper develops nine worked examples organized into three regulatory tiers with measurably different outcomes:</p>
         <p><strong>Tier 1 (purpose-built federal frameworks):</strong> The JPMorgan deposit token (JPMD), governed by federal banking law, and Franklin Templeton's BENJI (FOBXX), a registered mutual fund under the Investment Company Act of 1940. Both satisfy the core requirements of nearly every diagnostic category: the token-level Article 12 statutory defect reaches every product, and BENJI also fails collateral operability (no instant-redemption pool, business-hours-only redemption).</p>
         <p><strong>Tier 2 (regulated stablecoins):</strong> USDC (Circle), PYUSD (PayPal/Paxos), and USDG (Paxos/Global Dollar Network). Each passes some categories but fails Category 1 (Rights Parity) and Category 6 (Settlement Finality) on structural grounds independent of the regulatory regime.</p>
@@ -533,14 +533,14 @@
           <figcaption><strong>Exhibit 1: consolidated MVEP scorecard.</strong> What to notice: every product is capped by at least one independent failure mode, even where the strength profile sets the bank and fund products above the stablecoins.</figcaption>
         </figure>
 
-        <p>Three of the scorecard's fourteen columns are charter comparators added after first publication, each graded against the product's primary documents and its verified on-chain contract state:</p>
+        <p id="mvep-comparators">Three of the scorecard's fourteen columns are charter comparators added after first publication, each graded against the product's primary documents and its verified on-chain contract state:</p>
         <ul>
           <li><strong>USD1 (column twelve):</strong> the largest dollar stablecoin the platform taxonomy classifies under the GENIUS Act framework (approximately $4.36 billion, issued through BitGo Bank &amp; Trust, N.A., an OCC-chartered uninsured national trust bank). It earns zero passing cells across the ten categories and the companion test.</li>
           <li><strong>SoFiUSD (column thirteen):</strong> the first stablecoin issued by an FDIC-insured full-service U.S. national bank (SoFi Bank, N.A.). The insured charter relocates rather than resolves the holder's claim-class question, because SoFiUSD is expressly not a deposit, so deposit insurance and depositor preference do not reach the holder. It also earns zero passing cells.</li>
           <li><strong>RLUSD (column fourteen):</strong> the NYDFS-trust-chartered stablecoin issued by Standard Custody and Trust Company, a Ripple subsidiary. Its headline Non-Equivalent verdict binds on the same Category 1 rights-parity defect as the rest of the matrix, and it is the only column in the matrix that passes the Cash Settlement Asset companion test.</li>
         </ul>
 
-        <h3>Tokenized Treasury bills and money market fund shares</h3>
+        <h3 id="mvep-treasuries">Tokenized Treasury bills and money market fund shares</h3>
         <p>This is where institutional volume is concentrating: BlackRock's BUIDL, Franklin Templeton's BENJI, Circle's USYC, and Ondo's OUSG and USDY. The primary use case is collateral mobility: posting a tokenized fund share as margin without liquidating the underlying position.</p>
         <p><strong>Three liquidation paths.</strong> Each has different availability, speed, and capacity. Path 1: an instant-redemption pool (Circle's smart contract exchanging BUIDL for USDC at par, 24/7, with a finite and fluctuating balance). Path 2: secondary market sale to another approved party via the transfer agent's alternative trading system. Path 3: standard fund redemption processed by the fund administrator against daily NAV, unavailable on weekends and holidays.</p>
         <p><strong>Four constraints</strong> determine which path is available and when. Pool capacity (the instant-redemption pool closes when depleted). Whitelist requirements (the instant-redemption and secondary market paths require the receiving wallet to be on the transfer agent's approved list). Cross-chain bridge risk (an exploit could create phantom balances that corrupt collateral valuations). Transfer restriction model (whitelist products exclude DeFi liquidation venues; blocklist products enable permissionless liquidation paths).</p>

@@ -17,6 +17,7 @@
   .vault-headdial{width:32px;height:32px}
 }
 .vault-headdial.collapse{animation:markCollapse .8s cubic-bezier(.55,0,.8,.2)}
+@keyframes markCollapse{0%{transform:scale(1);opacity:1}52%{transform:scale(.18) rotate(200deg);opacity:.35}70%{transform:scale(1.22) rotate(300deg);opacity:1}100%{transform:scale(1) rotate(360deg);opacity:1}}
 .brand b{font-family:Archivo,sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-.015em;display:block;line-height:1.15;color:var(--accent)}
 .brand span{font-size:.625rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase; font-family:"JetBrains Mono",monospace;white-space:nowrap; margin-left:calc(0.25in - .7rem); color:color-mix(in srgb, var(--brand-gold) 72%, var(--ink)); transition:color .15s, text-shadow .15s;}
 .brand a:hover span,.brand a:focus-visible span{color:var(--brand-gold); text-shadow:0 0 8px color-mix(in srgb, var(--brand-gold) 42%, transparent), 0 0 18px color-mix(in srgb, var(--brand-gold) 20%, transparent);}

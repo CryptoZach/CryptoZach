@@ -4,9 +4,9 @@
   function get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
   function set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 
-  /* black-hole collapse on the brand mark, click-triggered, self-clearing */
+  /* dial collapse on the header brand mark, click-triggered, self-clearing */
   (function(){
-    var mark = document.querySelector('.brand-mark');
+    var mark = document.querySelector('.vault-headdial');
     var link = document.querySelector('.brand a');
     if (!mark || !link) return;
     link.addEventListener('click', function(){
@@ -15,7 +15,7 @@
       mark.classList.add('collapse');
     });
     mark.addEventListener('animationend', function(e){
-      if (e.animationName === 'coreFlash') mark.classList.remove('collapse');
+      if (e.animationName === 'markCollapse') mark.classList.remove('collapse');
     });
   })();
 
