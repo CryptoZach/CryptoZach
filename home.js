@@ -331,8 +331,8 @@
     {n:"jpmorgan",c:0,w:4,s:"/icons/matrix/jpmorgan.webp?v=242"},
     {n:"nflx",c:0,w:4,s:"/icons/matrix/nflx.webp?v=244"},
     {n:"stt",c:0,w:4,s:"/icons/matrix/stt.webp?v=245"},
-    {n:"wisdomtree",c:0,w:4,s:"/icons/matrix/wisdomtree.webp?v=246"},,
-    {n:"pwc",c:0,w:3,s:"data:image/webp;base64,UklGRgACAABXRUJQVlA4TPMBAAAv/8APEJ+goG0bxvxJtzsg5n/+CbJt8U+wJpbBRzggHOEIAEBBtq02kvQwEr+FkgLe/lerzxftoMdGRP8nAP9n8uLcvE+Rc5vbpzIpYZtPzi3YZtcmxX26ODdjQ48y91uc7DbEdc4N2Gbh3IxtDpzb/T6VSYJtPji3YJ9PmRs26l9qQyqkAGchyZKcIZwi4geniIh/hEp2GUW5y/NOYcXccVU+xX04bMfDn1flM2qBz/i4+UzKUWm91ks4/uq0RqBzPGiWolQA7otqEYWyXMXwsgN8JXxHwHU+ewC0vlynSNZaFskjJsQoYvJ9QgUq1YARlwtA1AoAuDqoeJpuThAIVYHFLx5c0/gqckL3rmvehNXDOYhv6owDJ3VYPuvnJwkn3EDWiuLvzna79UOd4jt5mhrZHFBsC/+qTPmQFZZM9oCdiiSD5SCZYKmb0TRvamSGwXfyAxP3IlBtsHzI7iyVrE65B8dWJO0ykUwwCMkANQ0+W9E096LAcJE8oPsBD4P3q5epCl4EC8kLYxn0pPnMuHZOqGb34oKtwOi6RhY5kuTOlavxvDrVD4Zad7bmLPB9YFw4Y4t4E2HqEXbf3mS3elUirEqBLeGtk26oyWHFB4KZ8ekHIT4xMyZ5Ro9F/y6b/E8/F7P2dYYtS7TvmGzff7EDAA=="}
+    {n:"wisdomtree",c:0,w:4,s:"/icons/matrix/wisdomtree.webp?v=246"},
+    {n:"pwc",c:0,w:3,s:"data:image/webp;base64,UklGRgACAABXRUJQVlA4TPMBAAAv/8APEJ+goG0bxvxJtzsg5n/+CbJt8U+wJpbBRzggHOEIAEBBtq02kvQwEr+FkgLe/lerzxftoMdGRP8nAP9n8uLcvE+Rc5vbpzIpYZtPzi3YZtcmxX26ODdjQ48y91uc7DbEdc4N2Gbh3IxtDpzb/T6VSYJtPji3YJ9PmRs26l9qQyqkAGchyZKcIZwi4geniIh/hEp2GUW5y/NOYcXccVU+xX04bMfDn1flM2qBz/i4+UzKUWm91ks4/uq0RqBzPGiWolQA7otqEYWyXMXwsgN8JXxHwHU+ewC0vlynSNZaFskjJsQoYvJ9QgUq1YARlwtA1AoAuDqoeJpuThAIVYHFLx5c0/gqckL3rmvehNXDOYhv6owDJ3VYPuvnJwkn3EDWiuLvzna79UOd4jt5mhrZHFBsC/+qTPmQFZZM9oCdiiSD5SCZYKmb0TRvamSGwXfyAxP3IlBtsHzI7iyVrE65B8dWJO0ykUwwCMkANQ0+W9E096LAcJE8oPsBD4P3q5epCl4EC8kLYxn0pPnMuHZOqGb34oKtwOi6RhY5kuTOlavxvDrVD4Zad7bmLPB9YFw4Y4t4E2HqEXbf3mS3elUirEqBLeGtk26oyWHFB4KZ8ekHIT4xMyZ5Ro9F/y6b/E8/F7P2dYYtS7TvmGzff7EDAA=="},
   ];
   /* Marks whose artwork is TEXT rather than a symbol. Measured 2026-08-28 against
      the live field: a wordmark's legibility floor is its x-height, not its box, so

@@ -48,12 +48,21 @@ def render(source):
             raise ValueError("Duplicate embedded logo: " + name)
         if matches:
             body = re.sub(pattern, lambda _: entry, body)
+        elif body.endswith(","):
+            # The table keeps a trailing comma after its last entry. Appending ",\n" after it
+            # wrote ",," (2026-10-16, the pwc row): an empty slot that ICONS.length counts and
+            # forEach never visits, so iconsSeen never reached ICONS.length, onIconsReady never
+            # ran, and the homepage dial never drew. Keep the trailing-comma form instead.
+            body += "\n    " + entry + ","
         else:
             body += ",\n    " + entry
         if row["wordmark"] and name not in wm:
             wm.append(name)
         elif not row["wordmark"] and name in wm:
             wm.remove(name)
+    if re.search(r"\}\s*,\s*,", body):
+        raise ValueError("var ICONS holds an empty slot (two commas between entries): ICONS.length "
+                         "would count a logo that never loads, and the homepage dial never draws")
     source = source[:match.start(1)] + body + source[match.end(1):]
     return re.sub(r"var WORDMARK = \{.*?\};", "var WORDMARK = { " + ", ".join(json.dumps(name) + ":1" for name in wm) + " };", source, count=1)
 
