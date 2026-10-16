@@ -1919,6 +1919,7 @@
       { src: '/icons/matrix/ubs.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/bnymellon.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/dtcc.webp', loaded: false, img: null, tinted: null },
+      { src: '/icons/matrix/pwc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/hsbc.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/morgan-stanley.webp', loaded: false, img: null, tinted: null },
       { src: '/icons/matrix/borderless.webp', loaded: false, img: null, tinted: null },
@@ -2875,7 +2876,7 @@
           ds = 16 + Math.random() * 24;
         }
         /* Wide wordmarks (4:1 aspect ratio): explicit width + height */
-        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.webp') >= 0 || item.def.src.indexOf('kinexys.webp') >= 0 || item.def.src.indexOf('mstr.webp') >= 0 || item.def.src.indexOf('fidelity.webp') >= 0 || item.def.src.indexOf('gs.webp') >= 0 || item.def.src.indexOf('wfc.webp') >= 0 || item.def.src.indexOf('blk.webp') >= 0 || item.def.src.indexOf('jpmorgan.webp') >= 0 || item.def.src.indexOf('okx.webp') >= 0 || item.def.src.indexOf('wisdomtree.webp') >= 0 || item.def.src.indexOf('ubs.webp') >= 0 || item.def.src.indexOf('dtcc.webp') >= 0 || item.def.src.indexOf('bybit.webp') >= 0);
+        var isWideWordmark = item.def && item.def.src && (item.def.src.indexOf('fednow.webp') >= 0 || item.def.src.indexOf('kinexys.webp') >= 0 || item.def.src.indexOf('mstr.webp') >= 0 || item.def.src.indexOf('fidelity.webp') >= 0 || item.def.src.indexOf('gs.webp') >= 0 || item.def.src.indexOf('wfc.webp') >= 0 || item.def.src.indexOf('blk.webp') >= 0 || item.def.src.indexOf('jpmorgan.webp') >= 0 || item.def.src.indexOf('okx.webp') >= 0 || item.def.src.indexOf('wisdomtree.webp') >= 0 || item.def.src.indexOf('ubs.webp') >= 0 || item.def.src.indexOf('dtcc.webp') >= 0 || item.def.src.indexOf('pwc.webp') >= 0 || item.def.src.indexOf('bybit.webp') >= 0);
         var drawHeight = null;
         if(isWideWordmark){
           /* All wide wordmarks need a minimum ds so they're readable */
