@@ -703,6 +703,79 @@ section{position:relative;z-index:1}
 .more{display:inline-block;margin-top:2rem;font-family:"JetBrains Mono",monospace;font-size:.8125rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:letter-spacing .2s}
 .more:hover{letter-spacing:.17em}
 
+/* DECISION MAP (#map): sits directly under the hero as the primary homepage
+   orientation deck, so it scales above standard body prose on desktop rather
+   than dropping from the 64px hero h1 to 16px body copy. */
+#map{
+  max-width:min(2100px, 88vw);
+  margin-inline:auto;
+  padding-inline:max(1.5rem,env(safe-area-inset-left)) max(1.5rem,env(safe-area-inset-right));
+}
+#map .sec-head{margin-bottom:2.1rem}
+#map .sec-head .label{
+  font-size:clamp(1rem, 1.3vw, 1.25rem);
+  letter-spacing:.11em;
+  color:var(--mint-text);
+}
+#map > h2{
+  font-size:clamp(2.35rem, 4.6vw, 3.85rem);
+  line-height:1.05;
+  letter-spacing:-.03em;
+  max-width:28ch;
+  margin-bottom:1.55rem;
+}
+#map > .agent-lede{
+  font-size:clamp(1.1875rem, 1.65vw, 1.5625rem);
+  line-height:1.58;
+  max-width:62ch;
+  color:var(--ink);
+}
+#map .faults{
+  max-width:100%;
+  margin-top:2.85rem;
+  font-size:clamp(1.125rem, 1.45vw, 1.375rem);
+}
+@media (min-width:1000px){
+  #map .faults{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    column-gap:clamp(2.75rem, 5vw, 4.75rem);
+    border-top:0;
+  }
+  #map .faults li:nth-child(-n+2){
+    border-top:1px solid var(--mill);
+  }
+}
+#map .faults li{
+  padding:1.65rem 0 1.65rem 4.75rem;
+  line-height:1.6;
+}
+#map .faults li::before{
+  top:1.78rem;
+  font-size:clamp(1.0625rem, 1.45vw, 1.375rem);
+  letter-spacing:.09em;
+}
+#map .faults b{
+  font-size:clamp(1.375rem, 1.9vw, 1.875rem);
+  line-height:1.22;
+  letter-spacing:-.018em;
+  margin-bottom:.42rem;
+}
+#map > .agent-close{
+  font-size:clamp(1.1875rem, 1.5vw, 1.4375rem);
+  line-height:1.6;
+  max-width:70ch;
+  margin-top:2.6rem;
+}
+#map > .more{
+  font-size:clamp(.9375rem, 1.15vw, 1.125rem);
+  margin-top:2.4rem;
+}
+@media (max-width:640px){
+  #map .faults li{padding-left:3.25rem}
+  #map .faults li::before{top:1.7rem}
+}
+
 
 /* ── PROGRAM DIAL: the vault door, no seal. Its geometry IS the two stats it sits
    beside: 52 outer ticks (protocols audited), 19 locking bolts (gateways mapped). ── */
