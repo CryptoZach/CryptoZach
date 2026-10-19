@@ -123,8 +123,16 @@ def main():
         problems.append(f"duplicate application number(s) in the enumeration: {sorted(dupes)}")
 
     # Scan every html and md page for count claims.
-    targets = [p for p in ROOT.rglob("*.html") if "_site" not in p.parts and ".claude" not in p.parts and ".codex" not in p.parts]
-    targets += [p for p in ROOT.rglob("*.md") if "_site" not in p.parts and ".claude" not in p.parts and ".codex" not in p.parts]
+    # Excluded directories are judged on the path RELATIVE TO ROOT (2026-10-19). Judged on the absolute
+    # path, a site clone checked out under .claude/worktrees/ (the worktree convention its own CLAUDE.md
+    # names) excluded EVERY page, because ".claude" is an ancestor of the root itself: the guard printed
+    # "OK. All 0 patent-count mention(s) agree" there while the same tree at the clone root checks dozens.
+    def _excluded(p):
+        parts = p.relative_to(ROOT).parts
+        return "_site" in parts or ".claude" in parts or ".codex" in parts
+
+    targets = [p for p in ROOT.rglob("*.html") if not _excluded(p)]
+    targets += [p for p in ROOT.rglob("*.md") if not _excluded(p)]
     checked = 0
     for p in sorted(targets):
         try:
