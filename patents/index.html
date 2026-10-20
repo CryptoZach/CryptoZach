@@ -54,26 +54,26 @@
   <meta name="keywords" content="patents, USPTO applications, AI agent infrastructure, provenance, concurrency control, Tokenization Systems" />
 
   <title>Patent-Pending Systems | Tokenization Systems</title>
-  <meta name="description" content="41 filed USPTO applications in 31 families, grouped by problem: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity." />
+  <meta name="description" content="41 filed USPTO applications in 31 families: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity, on-chain governance." />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Patent-Pending Systems | Tokenization Systems" />
-  <meta property="og:description" content="41 filed USPTO applications in 31 families, grouped by problem: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity." />
+  <meta property="og:description" content="41 filed USPTO applications in 31 families: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity, on-chain governance." />
   <meta property="og:url" content="https://tokenization.systems/patents/" />
   <meta property="og:site_name" content="Tokenization Systems" />
   <meta property="og:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
   <meta property="og:image:width" content="3200" />
   <meta property="og:image:height" content="1800" />
-  <meta property="og:image:alt" content="Tokenization Systems: research on tokenized dollar infrastructure, frameworks, and federal comment letters" />
+  <meta property="og:image:alt" content="Patent-pending systems: 41 filed USPTO applications across 31 families at Tokenization Systems" />
   <link rel="canonical" href="https://tokenization.systems/patents/" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CryptoZach" />
   <meta name="twitter:creator" content="@CryptoZach" />
   <meta name="twitter:title" content="Patent-Pending Systems | Tokenization Systems" />
-  <meta name="twitter:description" content="41 filed USPTO applications in 31 families, grouped by problem: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity." />
+  <meta name="twitter:description" content="41 filed USPTO applications in 31 families: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity, on-chain governance." />
   <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Routing_The_Dollar_CLII.png" />
-  <meta name="twitter:image:alt" content="Tokenization Systems: research on tokenized dollar infrastructure, frameworks, and federal comment letters" />
+  <meta name="twitter:image:alt" content="Patent-pending systems: 41 filed USPTO applications across 31 families at Tokenization Systems" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -86,12 +86,58 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Patent-pending systems",
+      "@type": "CollectionPage",
+      "@id": "https://tokenization.systems/patents/#webpage",
+      "name": "Patent-Pending Systems",
       "url": "https://tokenization.systems/patents/",
-      "description": "41 filed USPTO applications in 31 families, grouped by problem: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity.",
+      "description": "41 filed USPTO applications in 31 families: repository integrity, evidence grounding, provenance, fleet coordination, measurement validity, on-chain governance.",
+      "inLanguage": "en",
       "isPartOf": { "@id": "https://tokenization.systems/#website" },
-      "author": { "@id": "https://tokenization.systems/#person" }
+      "author": { "@id": "https://tokenization.systems/#person" },
+      "publisher": { "@id": "https://tokenization.systems/#organization" },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Tokenization Systems patent portfolio by problem area",
+        "numberOfItems": 6,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Concurrent repository integrity (7 filings)",
+            "description": "Two agents writing to the same repository at the same time can overwrite or lose each other's work, and the failure usually shows up only under one specific ordering of events, which makes it hard to reproduce and easy to miss."
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Evidence and retrieval quality (4 filings)",
+            "description": "A language model states things with the same confidence whether or not a source supports them, and will retrieve a plausible wrong document as readily as the right one."
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Provenance and artifact coherence (8 filings)",
+            "description": "Once a record is machine-written and machine-updated, nothing in the record itself shows who wrote it, when, or whether it still matches the data it was derived from."
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Coordination, fleet governance, and session continuity (8 filings)",
+            "description": "An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely."
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Measurement and detector validity (8 filings)",
+            "description": "A detector nobody has shown can fire on a real fault, and stay quiet on a clean one, is an assumption wearing an instrument's clothes. These separate a measurement that came back negative from one that never ran."
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "On-chain governance and control attribution (6 filings)",
+            "description": "In a pseudonymous system, a wallet count is not a holder count, and an absence of evidence that one party controls several addresses is not evidence that no party does."
+          }
+        ]
+      }
     }
   </script>
   <script type="application/ld+json">
@@ -107,7 +153,7 @@
   <link rel="stylesheet" href="/vault.css?v=9" />
   <script src="/vault.js?v=7" defer></script>
 </head>
-<body class="privacy-page">
+<body class="patents-body">
   <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
 
@@ -192,16 +238,19 @@
 
   <main id="main">
     <style>
-      .patents-page .patent-intro{color:var(--text-soft);line-height:1.65}
-      .patents-page .patent-lede{color:var(--text-soft);line-height:1.6;margin:var(--space-md) 0 var(--space-lg)}
-      .patents-page .patent-area{margin:0 0 var(--space-lg);padding-top:var(--space-md);border-top:1px solid color-mix(in srgb, currentColor 12%, transparent)}
-      .patents-page .patent-area > p{color:var(--text-soft);line-height:1.6}
-      .patents-page .patent-filings{list-style:none;padding:0;margin:var(--space-sm) 0 0}
-      .patents-page .patent-filings li{display:flex;justify-content:space-between;gap:1.25rem;align-items:baseline;padding:.5rem 0;border-top:1px dashed color-mix(in srgb, currentColor 14%, transparent);line-height:1.45}
-      .patents-page .filing-no{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--muted);white-space:nowrap}
-      .patents-page .patent-status{color:var(--muted);font-size:var(--font-size-min);margin-top:var(--space-lg)}
+      .patents-page .patent-intro{color:var(--text-soft);line-height:1.65;max-width:none;text-wrap:pretty}
+      .patents-page .patent-lede{color:var(--text-soft);line-height:1.6;margin:var(--space-md) 0 var(--space-lg);max-width:none;text-wrap:pretty}
+      .patents-page .patent-areas{gap:1.75rem}
+      @media (min-width:1180px){.patents-page .patent-areas{column-gap:2.25rem}}
+      .patents-page .patent-area{margin:0;padding:1.35rem 1.5rem 1.45rem}
+      .patents-page .patent-area > p{color:var(--text-soft);line-height:1.65;font-size:.875rem;margin:0 0 var(--space-sm);max-width:none}
+      .patents-page .patent-area > p strong{font-size:.875rem;margin-bottom:.45rem}
+      .patents-page .patent-filings{list-style:none;padding:0;margin:var(--space-sm) 0 0;gap:0}
+      .patents-page .patent-filings li{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;margin:0;padding:.55rem 0 .55rem 1rem;border-top:1px dashed color-mix(in srgb, currentColor 14%, transparent);line-height:1.45}
+      .patents-page .filing-no{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+      .patents-page .patent-status{color:var(--muted);font-size:var(--font-size-min);margin-top:var(--space-xl);max-width:none;text-wrap:pretty}
     </style>
-    <section class="reveal patents-page" style="max-width:860px;margin:var(--space-xl) auto;padding:0 var(--page-gutter);">
+    <section class="reveal patents-page">
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Patents</p>
       <h1 style="font-size:clamp(1.75rem, 3vw, 2.5rem);margin:0 0 var(--space-md);letter-spacing:-0.01em;">Patent-pending systems.</h1>
                 <p class="patent-intro">41 filed USPTO applications across 31 families. Most describe infrastructure for running many AI agents on one shared codebase at the same time: keeping their edits from overwriting each other, requiring every output to point at the evidence behind it, keeping a tamper-evident record of what changed and who changed it, and governing when an agent may start, stop, or hand unfinished work to another. The rest cover measurement itself, and the attribution of control in pseudonymous on-chain systems. One describes the combination: how those mechanisms compose into one architecture.</p>

@@ -58,7 +58,8 @@ import sys
 
 # Directories to scan for count mentions (served site surfaces). Relative to root.
 SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "resumes",
-             "speaker-and-advisory", "agent-infrastructure", "contact", "papers", "privacy"]
+             "speaker-and-advisory", "agent-infrastructure", "contact", "papers", "privacy",
+             "about", "trackers", "notes", "patents", "data"]
 
 # Non-.html served files that carry the count. check_letter_count.py sat blind to
 # _config.yml until 2026-09-10, when its site description was found four filings

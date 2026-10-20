@@ -34,7 +34,7 @@ AI governance research programs, technical AI policy roles, infrastructure accou
 
 1. Publishes the Control Layer Intensity Index (CLII) and Minimum Viable Equivalence Pack (MVEP) with SSRN versions and committee-ready language for how compliance and operating responsibility attach at gateways and product boundaries.
 2. Builds AI-augmented research infrastructure: 14 custom Python MCP servers spanning macroeconomic data (FRED), stablecoin and DeFi data (DefiLlama, CoinGecko, Artemis), Solana (Helius), EVM chains (Etherscan, Blockscout), validator data (rated.network, Beaconcha.in), DAO governance (Tally), Dune Analytics, Spacescope, Nansen wallet flows, and GitHub. AI-assisted diligence workflows reduce subscription-document review from 4 hours to 1 hour per deal; automated SEC-filing and press-release monitoring covers ~75 Digital Asset Treasury Stocks (DATs) analyzed in 2025.
-3. Eight-paper research program, including Track B governance work (Governance Concentration Beyond Token Allocation) published at Frontiers in Blockchain (Front. Blockchain 9:1853465, doi 10.3389/fbloc.2026.1853465, August 2026).
+3. Nine-paper research program, including Track B governance work (Governance Concentration Beyond Token Allocation) published at Frontiers in Blockchain (Front. Blockchain 9:1853465, doi 10.3389/fbloc.2026.1853465, August 2026).
 4. Participant in the Foresight Institute AI Ethics and Governance working group.
 5. Stablecoin and gateway research on the Federal Reserve Board / FRBNY international dollar conference review track, with three years of on-chain panel evidence across 19 gateways.
 6. Translates settlement, custody, and ledger infrastructure questions into control-layer metrics and drift tests that extend to AI stack reviews without hand-waving analogies.
@@ -67,7 +67,7 @@ The AI governance angle is explicit: participation in cross-sector governance co
 
 ## Supporting research (four cards)
 
-### A1 — Routing the Dollar
+### A1: Routing the Dollar
 
 - **Status badge:** Under review
 - **Link:** `/papers/routing-the-dollar` (SSRN 6267698)
@@ -75,7 +75,7 @@ The AI governance angle is explicit: participation in cross-sector governance co
 - **Why it matters:** Moves analysis from token labels to operators, reserve chains, and routing networks, with named metrics for concentration and stress behavior.
 - **Who it's for:** Policy, central bank, market-structure, and infrastructure readers building transferable analogies to AI routing and operator accountability.
 
-### A2 — Minimum Viable Equivalence Pack (MVEP)
+### A2: Minimum Viable Equivalence Pack (MVEP)
 
 - **Status badge:** Public
 - **Link:** `/papers/mvep` (SSRN 6363138)
@@ -83,7 +83,7 @@ The AI governance angle is explicit: participation in cross-sector governance co
 - **Why it matters:** Turns diligence from pitch-deck review into a repeatable committee standard with explicit evidence requirements.
 - **Who it's for:** Risk committees, tokenization platforms, custodians, legal and compliance teams, and policy designers who need the same rigor for AI product reviews.
 
-### B2 — Governance Concentration Beyond Token Allocation
+### B2: Governance Concentration Beyond Token Allocation
 
 - **Status badge:** Under review
 - **Link:** No standalone paper page yet; research index entry at `/research#institutional-design` (writing sample via `/contact`)
@@ -91,7 +91,7 @@ The AI governance angle is explicit: participation in cross-sector governance co
 - **Why it matters:** Gives the program a criteria layer for evaluating protocol governance alongside simulation results, connecting token and infrastructure design to standards of institutional legitimacy.
 - **Who it's for:** Governance designers, DAO researchers, protocol teams, and AI governance readers who need explicit fairness and accountability criteria.
 
-### A4 — Three Tokenization Strategies
+### A4: Three Tokenization Strategies
 
 - **Status badge:** Public
 - **Link:** `/papers/tokenized-equity`
