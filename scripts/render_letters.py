@@ -406,7 +406,9 @@ def gen_row(m, l):
             f'  <td data-label="Proceeding">{dock}</td>',
             f'  <td data-label="Recs">{esc(recs)}</td>',
             f'  <td data-label="Status"><span class="status-chip status-chip--{attr(m.status_class(l))}">{esc(m.status_label(l))}</span></td>',
-            f'  <td data-label="PDF"><a href="{attr(l["pdf"])}" target="_blank" rel="noopener noreferrer">PDF</a></td>',
+            (f'  <td data-label="PDF"><a href="{attr(l["pdf"])}" target="_blank" rel="noopener noreferrer">PDF</a></td>'
+             if l.get("pdf") else  # filed as comment-box text with no attachment: its text is on its page
+             f'  <td data-label="PDF"><a href="/letters/{attr(l["slug"])}/">Text</a></td>'),
             "</tr>"]
 
 
@@ -780,7 +782,8 @@ def gen_feed(m):
         out += ["  <entry>",
                 f"    <title>{xml(l['headline'])}</title>",
                 f'    <link href="{SITE}/letters/{l["slug"]}/" rel="alternate" type="text/html"/>',
-                f'    <link href="{SITE}{l["pdf"]}" rel="enclosure" type="application/pdf" title="Filed PDF"/>',
+                *([f'    <link href="{SITE}{l["pdf"]}" rel="enclosure" type="application/pdf" title="Filed PDF"/>']
+                  if l.get("pdf") else []),  # no enclosure for a letter filed as comment-box text
                 f"    <id>{SITE}/letters/{l['slug']}/</id>",
                 f"    <published>{l['filed']}T00:00:00Z</published>",
                 f"    <updated>{l['filed']}T00:00:00Z</updated>",
@@ -799,7 +802,7 @@ def public_letter(l):
     """A letter record without the renderer's private fields, plus its site URL."""
     out = {k: v for k, v in l.items() if not k.startswith("_")}
     out["url"] = f"{SITE}/letters/{l['slug']}/"
-    out["pdf_url"] = SITE + l["pdf"]
+    out["pdf_url"] = SITE + l["pdf"] if l.get("pdf") else None   # null: filed as comment-box text, no attachment
     return out
 
 

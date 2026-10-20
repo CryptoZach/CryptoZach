@@ -80,7 +80,7 @@ def build_cover(path, letters, pages, compiled, total_pages):
                      Paragraph(fmt_date(l["filed"]), cell),
                      Paragraph(esc(l["agency_display"]), cell),
                      Paragraph(esc(l["docket"]["label"]), cell),
-                     Paragraph(str(page), cell)])
+                     Paragraph(str(page) if page is not None else "text only", cell)])
     table = Table(rows, colWidths=[0.4 * inch, 2.55 * inch, 0.95 * inch, 1.05 * inch, 1.35 * inch, 0.5 * inch], repeatRows=1)
     table.setStyle(TableStyle([
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
@@ -92,6 +92,10 @@ def build_cover(path, letters, pages, compiled, total_pages):
     ]))
     story.append(table)
     story.append(Spacer(1, 10))
+    if any(p is None for p in pages):
+        story.append(Paragraph("A letter marked text only was filed as comment-box text with no attachment; its text is "
+                               "on its page at https://tokenization.systems/letters/.", sub))
+        story.append(Spacer(1, 6))
     story.append(Paragraph("Each letter follows in filing order; the PDF outline carries one bookmark per letter. "
                            "The international standard-setter response (FSB, July 1, 2026) is a distinct series and is not included.", sub))
     doc.build(story)
@@ -104,6 +108,9 @@ def main():
     letters = sorted((l for l in reg["letters"] if l["series"] == "federal"), key=lambda l: (l["filed"], l["number"] or 0))
     readers = []
     for l in letters:
+        if not l.get("pdf"):
+            readers.append(None)   # filed as comment-box text with no attachment: listed, no pages
+            continue
         pdf = os.path.join(root, l["pdf"].lstrip("/"))
         if not os.path.isfile(pdf):
             print(f"build_letters_pdf: missing {l['pdf']}", file=sys.stderr)
@@ -112,12 +119,12 @@ def main():
     # cover first, so the contents can carry page numbers: cover pages are counted once built
     compiled = fmt_date(dt.date.today().isoformat())
     cover_path = os.path.join(root, "letters", ".all-letters-cover.pdf")
-    counts = [len(r.pages) for r in readers]
+    counts = [len(r.pages) if r is not None else 0 for r in readers]
     cover_pages = 1
     for _ in range(3):  # the cover may spill to a second page; settle the page numbers
         pages, p = [], cover_pages + 1
-        for c in counts:
-            pages.append(p)
+        for c, r in zip(counts, readers):
+            pages.append(p if r is not None else None)
             p += c
         build_cover(cover_path, letters, pages, compiled, cover_pages + sum(counts))
         new_cover_pages = len(PdfReader(cover_path).pages)
@@ -129,6 +136,8 @@ def main():
         writer.add_page(page)
     writer.add_outline_item("Contents", 0)
     for l, r, page in zip(letters, readers, pages):
+        if r is None:
+            continue
         start = len(writer.pages)
         for pg in r.pages:
             writer.add_page(pg)
