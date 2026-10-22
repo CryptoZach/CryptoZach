@@ -4,7 +4,10 @@
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
 
-  const saved = localStorage.getItem('theme');
+  // Reading storage throws where site data is blocked or the page is sandboxed;
+  // unguarded, that throw ends this whole script and every .reveal section stays hidden.
+  let saved = null;
+  try { saved = window.localStorage.getItem('theme'); } catch(e){ /* storage unavailable */ }
   let isDark;
   if(saved === 'dark'){
     isDark = true;
@@ -27,11 +30,11 @@
       const isDark = root.getAttribute('data-theme') === 'dark';
       if(isDark){
         root.setAttribute('data-theme','light');
-        localStorage.setItem('theme','light');
+        try { window.localStorage.setItem('theme','light'); } catch(e){ /* storage unavailable */ }
         toggle.setAttribute('aria-pressed','false');
       } else {
         root.setAttribute('data-theme','dark');
-        localStorage.setItem('theme','dark');
+        try { window.localStorage.setItem('theme','dark'); } catch(e){ /* storage unavailable */ }
         toggle.setAttribute('aria-pressed','true');
       }
     });
