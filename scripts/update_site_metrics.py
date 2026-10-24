@@ -327,9 +327,14 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
     ai_path = ROOT / "agent-infrastructure" / "index.html"
     ai_orig = ai_path.read_text(encoding="utf-8")
     ai_new = re.sub(
+        r'(data-scale-hard-gate-deny=")\d+("\s+data-scale-hard-gate-bypass=")\d+(")',
+        rf"\g<1>{gate['stopped']}\g<2>{gate['overridden']}\g<3>",
+        ai_orig,
+    )
+    ai_new = re.sub(
         r'(<p class="ai-metric-value">)\d[\d,]*(</p>\s*<p class="ai-metric-label">Actions reached a hard gate</p>\s*<p class="ai-metric-was">)\d[\d,]*(\s+stopped;\s+)\d[\d,]*(\s+overridden</p>)',
         rf"\g<1>{attempts_s}\g<2>{stopped_s}\g<3>{overridden_s}\g<4>",
-        ai_orig,
+        ai_new,
     )
     ai_new = re.sub(
         r"(the hard-gate figures are from )\d{4}-\d{2}-\d{2}",
@@ -526,11 +531,12 @@ def run_write_pipeline(sync_ssh: bool = False, with_resumes: bool = False) -> in
     # Optionally refresh shipped DOCX/PDF resumes if --with-resumes is requested or if floors moved
     if with_resumes and WF_REPO.is_dir():
         venv_py = Path(os.path.expanduser("~/.local/state/cryptozach/venvs/docx/bin/python"))
+        py_bin = str(venv_py) if venv_py.is_file() else sys.executable
         producer = WF_REPO / "resumes" / "_render" / "refresh_shipped_measured_figures.py"
-        if venv_py.is_file() and producer.is_file():
+        if producer.is_file():
             print("2. Refreshing shipped resume DOCX/PDF files...")
             subprocess.run(
-                [str(venv_py), str(producer), "--ship-dir", str(ROOT / "resumes"), "--in-place"],
+                [py_bin, str(producer), "--ship-dir", str(ROOT / "resumes"), "--in-place"],
                 cwd=str(WF_REPO), check=True,
             )
 

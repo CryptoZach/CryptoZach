@@ -353,6 +353,98 @@
         <figcaption id="brief-three-strategies-caption">Figure 1. Institutional Tokenization Infrastructure Map (snapshot as of March 27, 2026). Ten entities (DTCC/DTC, Canton Network, Kinexys/JPMD, BNY, Ubyx, Securitize, Nasdaq, NYSE/ICE, Ondo Finance, Citi) mapped across three strategies (Collateral Circuit, Yield Stack, Equity Rails). Securitize is the SEC-registered transfer agent in all three; a 72-hour Securitize operational outage would degrade all three strategies simultaneously, a system-level concentration risk that entity-level scoring does not capture.</figcaption>
       </figure>
 
+      <figure class="b4-explorer" id="a4-strategy-explorer" aria-labelledby="a4-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Dependency &amp; Outage Matrix</p>
+            <h4 id="a4-exp-title">Simulate 72-hour entity outages across the 3 tokenization strategies and compare corporate-action architectures</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Three strategies explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-a4-tab="outage">1. Shared-entity outage simulator (10 entities)</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-a4-tab="corp">2. Corporate-actions reconciliation gap (3 architectures)</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="a4-panel-outage" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Select an infrastructure entity to inspect cross-strategy dependencies and 72-hour outage propagation:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Infrastructure entity selector">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a4-entity="securitize">Securitize (3/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="dtc">DTCC / DTC (2/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="ubyx">Ubyx (2/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="canton">Canton Network (2/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="bny">BNY (3/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="jpmd">Kinexys / JPMD (1/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="citi">Citi (2/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="ondo">Ondo / Oasis Pro (2/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="nasdaq">Nasdaq (1/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="nyse">NYSE / ICE (1/3)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Cross-strategy footprint</span>
+              <strong class="b4-exp__val" id="a4-m-span">3 of 3 strategies</strong>
+              <span class="b4-exp__sub" id="a4-m-span-sub">Transfer agent for BUIDL (S1 &amp; S2) and first digital TA on NYSE Digital Trading Platform (S3)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">72-hour outage / stress scenario</span>
+              <strong class="b4-exp__val" id="a4-m-scen">System-wide TA freeze</strong>
+              <span class="b4-exp__sub" id="a4-m-scen-sub">Scenario 3C + Section 5: halts minting, burning, and register updates across all three strategies simultaneously</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Primary MVEP failure chain</span>
+              <strong class="b4-exp__val" id="a4-m-mvep">Cat. 2 &rarr; Cat. 10</strong>
+              <span class="b4-exp__sub" id="a4-m-mvep-sub">System of record (Cat. 2) freezes; collateral operability (Cat. 10) degrades; no fallback digital TA documented</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="a4-outage-svg" viewBox="0 0 880 350" width="880" height="350" role="img" aria-label="3 strategies by 10 MVEP categories dependency and outage propagation matrix"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Sections 2, 4, 5, and 9 of <em>Three Tokenization Strategies</em> (SSRN 6483198). Cells highlight which of the 10 MVEP diligence categories each strategy relies on the selected entity to satisfy, and how a 72-hour disruption propagates.</p>
+        </div>
+
+        <div class="b4-exp__panel" id="a4-panel-corp" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Select a corporate-action reconciliation architecture for 24/7 tokenized equities (Section 6.2):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Corporate action architecture selector">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a4-arch="halt">Architecture A: Trading halt window</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-arch="chain">Architecture B: Blockchain-as-authoritative</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-arch="dual">Architecture C: Dual-record sync (DTC priority)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Authoritative holder register (Cat. 2)</span>
+              <strong class="b4-exp__val" id="a4-c-reg">DTC snapshot only</strong>
+              <span class="b4-exp__sub" id="a4-c-reg-sub">On-chain transfers pause before the record-date cutoff; DTC and blockchain registers match by construction</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Weekend 24/7 trading continuity</span>
+              <strong class="b4-exp__val" id="a4-c-trade">Suspended at window</strong>
+              <span class="b4-exp__sub" id="a4-c-trade-sub">Eliminates record-date divergence (Scenario 3A) by sacrificing continuous weekend liquidity during splits and dividends</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Regulatory &amp; MVEP trade-off</span>
+              <strong class="b4-exp__val" id="a4-c-rule">Fits existing SEC rules</strong>
+              <span class="b4-exp__sub" id="a4-c-rule-sub">Strong Cat. 2 &amp; Cat. 3 (no divergence); weakens Cat. 10 (24/7 collateral operability paused during corporate actions)</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="a4-corp-svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-label="Weekend corporate-action record-date timeline comparing DTC register and 24/7 blockchain ledger"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Section 6 (Scenario 3A, Figure 4) of <em>Three Tokenization Strategies</em> (SSRN 6483198). Illustrates a Friday 4:00 PM stock-split announcement with a Monday record date across 24/7 weekend trading.</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>The risk framework most institutions use for tokenization treats each participant as an independent node: the issuer, the transfer agent, the custodian, the clearinghouse, the venue. Each entity is assessed against its own operational and regulatory profile. The three strategies now under construction all route through a small number of the same entities. Securitize is the transfer agent in every strategy. DTC is the authoritative register in two of the three. Ubyx clears the cash leg in two of the three. These shared dependencies concentrate system-level risk in places where entity-level assessments produce a clean bill of health.</p>

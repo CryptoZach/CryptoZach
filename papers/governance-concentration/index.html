@@ -460,6 +460,102 @@
         <p class="artifact-note">133 PCA exclusions across 38 protocols (125 unique addresses; some recur, such as a Binance hot wallet across four tokens). Class 3 versus Class 5 is disambiguated by transaction-pattern signatures where entity labels are unavailable. Median HHI inflation 2.3x; maximum roughly 18x (the RENDER case).</p>
       </section>
 
+      <figure class="b4-explorer" id="b2-gov-explorer" aria-labelledby="b2-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Live-Governance Audit Explorer</p>
+            <h4 id="b2-exp-title">Inspect PCA exclusion sensitivity across 52 protocols and delegation amplification across 18 governance surfaces</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Governance concentration explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-b2-tab="sector">1. PCA exclusion &amp; sector audit (N = 52)</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-b2-tab="delegation">2. Delegation &amp; vote-escrow amplification (N = 18 + 3 ve)</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="b2-panel-sector" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Address-exclusion treatment:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="PCA exclusion treatment">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b2-treat="pca">Post-PCA of record (133 PCAs + 64 CEX)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-treat="uniform">Uniform staking exclusion</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-treat="nocex">Retain CEX custody (drop Class 5)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-treat="raw">Uncorrected raw holder list</button>
+              </div>
+            </div>
+            <div class="b4-exp__control">
+              <label>Filter cross-section by sector:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Protocol sector filter">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b2-sec="all">Representative cross-section (16)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-sec="DePIN">DePIN (N = 15)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-sec="DeFi">DeFi (N = 24)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-sec="Infra">L1/L2 Infra (N = 11)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">DePIN vs DeFi holding HHI</span>
+              <strong class="b4-exp__val" id="b2-m-sector">0.067 vs 0.026</strong>
+              <span class="b4-exp__sub" id="b2-m-sector-sub">2.6x higher in DePIN · L1/L2 Infra mean 0.022 · Kruskal-Wallis p = 0.005 (N = 44)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Sector test &amp; effect size</span>
+              <strong class="b4-exp__val" id="b2-m-test">d = 0.65 (p = 0.028)</strong>
+              <span class="b4-exp__sub" id="b2-m-test-sub">Voter-inclusive pass-through (15 vs 15) · Powered Model 4 (N = 50) log-HHI p = 0.0107</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Allocation null vs insider retention</span>
+              <strong class="b4-exp__val" id="b2-m-mech">r = 0.09 vs &rho; = 0.44</strong>
+              <span class="b4-exp__sub" id="b2-m-mech-sub">Launch insider share null (p = 0.55, TOST p = 0.02) · Top-holder insider retention &rho; = 0.44 (p = 0.005)</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b2-sector-svg" viewBox="0 0 880 390" width="880" height="390" role="img" aria-label="Holding HHI across protocols by sector and PCA exclusion treatment"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Table 3 and Section 4.6.2 of <em>Frontiers in Blockchain</em> 9:1853465 (March to May 2026 top-1,000 snapshots; replication tag <code>v1.0.4</code>). Dashed line at 0.25 marks the DOJ antitrust concentration benchmark for descriptive reference.</p>
+        </div>
+
+        <div class="b4-exp__panel" id="b2-panel-delegation" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Filter by governance mechanism behavior:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Delegation behavior filter">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b2-del="all">All 18 delegate + 3 vote-escrow</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-del="amplify">13 Delegate amplifiers (2.5x to 25.6x)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-del="disperse">5 Dispersers (0.12x to 0.87x)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b2-del="ve">3 Vote-escrow locks (11.4x to ~21x)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Delegate amplification rate</span>
+              <strong class="b4-exp__val" id="b2-d-rate">13 of 18 (72%)</strong>
+              <span class="b4-exp__sub" id="b2-d-rate-sub">Amplify voting HHI above post-PCA holding HHI · Median amplification 4.4x (Aave)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Amplification range</span>
+              <strong class="b4-exp__val" id="b2-d-range">2.5x to 25.6x</strong>
+              <span class="b4-exp__sub" id="b2-d-range-sub">Gnosis (2.5x), Arbitrum (3.1x), Optimism (3.6x) up to Compound (9.9x) and Polkadot (25.6x)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Dispersers &amp; vote-escrow locks</span>
+              <strong class="b4-exp__val" id="b2-d-ve">5 disperse · 3 ve-locks</strong>
+              <span class="b4-exp__sub" id="b2-d-ve-sub">ENS (0.48x), GMX (0.87x), HNT (0.33x), LPT (0.27x), JUP (0.12x) · ve: Frax 11.4x, Curve ~15x, Balancer ~21x</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b2-del-svg" viewBox="0 0 880 410" width="880" height="410" role="img" aria-label="Comparison of post-exclusion holding HHI and delegated or vote-escrowed voting HHI"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Table 5 and Section 4.5.2 of <em>Frontiers in Blockchain</em> 9:1853465 (Snapshot, Tally, Solana VSR/del-vote, Taostats, Subscan, and ve-lock registries). Ratios above 1.0x indicate delegation concentrates voting power relative to post-PCA token holdings.</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Most empirical work on token-protocol governance reasons from two objects: the launch allocation table and the raw holder list. Both are the wrong object for live governance power. Token allocation is a launch document; governance concentration is a live institutional state. The contrast tracks the distinction comparative political economy draws between de jure power (authority on paper) and de facto power (authority in practice): the formally specified allocation of authority differs from the power groups actually exercise once a system is live.</p>

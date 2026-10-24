@@ -7619,3 +7619,682 @@
   }
 })();
 
+/* ==========================================================================
+   Governance Concentration & Delegation Explorer (/papers/governance-concentration/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* Exact protocol holding HHI values from Table 3 & Section 4.6.2 (Frontiers in Blockchain 9:1853465) */
+  var B2_PROTOCOLS = [
+    { name: 'Livepeer (LPT)', sec: 'DePIN', pca: 0.1989, uniform: 0.0330, nocex: 0.1989, raw: 0.2450, top10: '73.7%', note: 'Pass-through staking 0.199 vs uniform 0.033' },
+    { name: 'WeatherXM (WXM)', sec: 'DePIN', pca: 0.1479, uniform: 0.1479, nocex: 0.1540, raw: 0.2180, top10: '77.9%', note: 'Top-1 holder 35.0% post-PCA' },
+    { name: 'Aethir (ATH)', sec: 'DePIN', pca: 0.1001, uniform: 0.1001, nocex: 0.1120, raw: 0.2640, top10: '60.1%', note: '8 PCA + 3 CEX exclusions' },
+    { name: 'Helium (HNT)', sec: 'DePIN', pca: 0.0988, uniform: 0.0988, nocex: 0.1080, raw: 0.1890, top10: '75.3%', note: 'Solana SPL via Helius DAS' },
+    { name: 'Pokt Network (POKT)', sec: 'DePIN', pca: 0.0899, uniform: 0.0899, nocex: 0.0940, raw: 0.1620, top10: '66.7%', note: 'DePIN RPC infrastructure' },
+    { name: 'IoTeX (IOTX)', sec: 'DePIN', pca: 0.0810, uniform: 0.0810, nocex: 0.0890, raw: 0.1750, top10: '80.9%', note: '8 PCA exclusions' },
+    { name: 'GEODNET (GEOD)', sec: 'DePIN', pca: 0.0605, uniform: 0.0605, nocex: 0.0640, raw: 0.1280, top10: '62.3%', note: '4 PCA exclusions; S2R companion' },
+    { name: 'Morpheus AI (MOR)', sec: 'DePIN', pca: 0.0464, uniform: 0.0464, nocex: 0.0490, raw: 0.1140, top10: '55.4%', note: '3 PCA exclusions' },
+    { name: 'io.net (IO)', sec: 'DePIN', pca: 0.0402, uniform: 0.0402, nocex: 0.0480, raw: 0.1190, top10: '54.1%', note: 'Solana GPU network' },
+    { name: 'Grass (GRASS)', sec: 'DePIN', pca: 0.0352, uniform: 0.0352, nocex: 0.0420, raw: 0.1320, top10: '38.2%', note: 'Raw 0.132 -> 0.035 post-PCA (3.8x)' },
+    { name: 'Render (RENDER)', sec: 'DePIN', pca: 0.0273, uniform: 0.0273, nocex: 0.0390, raw: 0.4910, top10: '43.3%', note: 'Max ~18x raw inflation (Wormhole bridge)' },
+    { name: 'DIMO (DIMO)', sec: 'DePIN', pca: 0.0249, uniform: 0.0249, nocex: 0.0290, raw: 0.3050, top10: '39.3%', note: 'Raw 0.305 -> 0.025 post-PCA (12.2x)' },
+    { name: 'Filecoin (FIL)', sec: 'DePIN', pca: 0.0221, uniform: 0.0221, nocex: 0.0280, raw: 0.0640, top10: '35.6%', note: 'Decentralized storage network' },
+    { name: 'Hivemapper (HONEY)', sec: 'DePIN', pca: 0.0200, uniform: 0.0200, nocex: 0.0240, raw: 0.0720, top10: '32.7%', note: 'Low-HHI DePIN counterexample' },
+    { name: 'Anyone Protocol', sec: 'DePIN', pca: 0.0130, uniform: 0.0130, nocex: 0.0160, raw: 0.0480, top10: '30.2%', note: 'Lowest DePIN HHI (0.013)' },
+    { name: 'GMX (GMX)', sec: 'DeFi', pca: 0.0647, uniform: 0.0520, nocex: 0.0690, raw: 0.1480, top10: '59.3%', note: 'Highest governance DeFi HHI' },
+    { name: 'Jupiter (JUP)', sec: 'DeFi', pca: 0.0450, uniform: 0.0450, nocex: 0.0540, raw: 0.1650, top10: '58.3%', note: 'Solana DeFi aggregator' },
+    { name: 'Gnosis (GNO)', sec: 'DeFi', pca: 0.0425, uniform: 0.0425, nocex: 0.0460, raw: 0.1120, top10: '51.7%', note: 'EVM DAO treasury & infra' },
+    { name: 'Rocket Pool (RPL)', sec: 'DeFi', pca: 0.0406, uniform: 0.0360, nocex: 0.0440, raw: 0.0920, top10: '52.6%', note: 'Liquid staking governance' },
+    { name: 'MakerDAO (MKR)', sec: 'DeFi', pca: 0.0404, uniform: 0.0404, nocex: 0.0470, raw: 0.0980, top10: '50.6%', note: '2017 launch; mature DeFi' },
+    { name: 'Frax Finance (FXS)', sec: 'DeFi', pca: 0.0324, uniform: 0.0310, nocex: 0.0380, raw: 0.1180, top10: '50.3%', note: 'veFXS lockup 11.4x amplification' },
+    { name: 'Balancer (BAL)', sec: 'DeFi', pca: 0.0290, uniform: 0.0290, nocex: 0.0340, raw: 0.0880, top10: '35.2%', note: 'veBAL lockup ~21x amplification' },
+    { name: 'Drift (DRIFT)', sec: 'DeFi', pca: 0.0265, uniform: 0.0265, nocex: 0.0330, raw: 0.4190, top10: '37.5%', note: 'Raw 0.419 -> 0.026 post-PCA (16.1x)' },
+    { name: 'Synthetix (SNX)', sec: 'DeFi', pca: 0.0171, uniform: 0.0171, nocex: 0.0230, raw: 0.0740, top10: '36.5%', note: 'EVM derivatives governance' },
+    { name: 'Curve (CRV)', sec: 'DeFi', pca: 0.0146, uniform: 0.0146, nocex: 0.0210, raw: 0.1420, top10: '31.5%', note: 'Post-Convex raw CRV; veCRV ~0.26' },
+    { name: 'Aave (AAVE)', sec: 'DeFi', pca: 0.0128, uniform: 0.0115, nocex: 0.0190, raw: 0.0840, top10: '27.5%', note: 'stkAAVE pass-through treated' },
+    { name: 'Uniswap (UNI)', sec: 'DeFi', pca: 0.0100, uniform: 0.0100, nocex: 0.0160, raw: 0.0620, top10: '22.9%', note: 'Post 0xdead burn exclusion (11.3%)' },
+    { name: 'Compound (COMP)', sec: 'DeFi', pca: 0.0086, uniform: 0.0086, nocex: 0.0140, raw: 0.0540, top10: '19.4%', note: '2018 launch; HHI 0.009' },
+    { name: 'Lido (LDO)', sec: 'DeFi', pca: 0.0077, uniform: 0.0077, nocex: 0.0130, raw: 0.0490, top10: '18.3%', note: '9 PCA exclusions' },
+    { name: 'Hyperliquid (HYPE)', sec: 'DeFi', pca: 0.0066, uniform: 0.0066, nocex: 0.0090, raw: 0.0950, top10: '18.2%', note: 'Post Assistance Fund exclusion' },
+    { name: 'Algorand (ALGO)', sec: 'Infra', pca: 0.0591, uniform: 0.0591, nocex: 0.0680, raw: 0.1340, top10: '54.6%', note: 'GP1 to GP15 governance series' },
+    { name: 'ENS (ENS)', sec: 'Infra', pca: 0.0463, uniform: 0.0463, nocex: 0.0510, raw: 0.1290, top10: '38.6%', note: 'Dispersing delegate design (0.48x)' },
+    { name: 'Polygon (POL)', sec: 'Infra', pca: 0.0358, uniform: 0.0320, nocex: 0.0430, raw: 0.1150, top10: '49.4%', note: 'L2 / ecosystem staking' },
+    { name: 'Axelar (AXL)', sec: 'Infra', pca: 0.0231, uniform: 0.0231, nocex: 0.0290, raw: 0.0820, top10: '38.6%', note: 'Cross-chain infrastructure' },
+    { name: 'The Graph (GRT)', sec: 'Infra', pca: 0.0214, uniform: 0.0195, nocex: 0.0270, raw: 0.0790, top10: '32.9%', note: 'Indexing protocol' },
+    { name: 'LayerZero (ZRO)', sec: 'Infra', pca: 0.0143, uniform: 0.0143, nocex: 0.0190, raw: 0.0680, top10: '29.9%', note: 'Omnichain messaging' },
+    { name: 'Arbitrum (ARB)', sec: 'Infra', pca: 0.0122, uniform: 0.0122, nocex: 0.0180, raw: 0.0760, top10: '22.4%', note: '7 PCA exclusions; 3.1x delegation' },
+    { name: 'Wormhole (W)', sec: 'Infra', pca: 0.0119, uniform: 0.0119, nocex: 0.0170, raw: 0.1260, top10: '18.5%', note: 'Raw 0.126 -> 0.012 post-PCA (10.5x)' },
+    { name: 'Optimism (OP)', sec: 'Infra', pca: 0.0094, uniform: 0.0094, nocex: 0.0150, raw: 0.0690, top10: '21.1%', note: '7 PCA exclusions; 3.6x delegation' },
+    { name: 'Bittensor (TAO)', sec: 'Infra', pca: 0.0075, uniform: 0.0075, nocex: 0.0110, raw: 0.0380, top10: '25.9%', note: '9.6x validator delegation ratio' },
+    { name: 'Polkadot (DOT)', sec: 'Infra', pca: 0.0052, uniform: 0.0052, nocex: 0.0095, raw: 0.0310, top10: '21.0%', note: 'Lowest holding HHI (0.0052); 25.6x vote' }
+  ];
+
+  var B2_TREAT_META = {
+    pca: {
+      sector: '0.067 vs 0.026',
+      sectorSub: '2.6x higher in DePIN (N = 15) than DeFi (N = 18) · L1/L2 Infra mean 0.022 · Kruskal-Wallis p = 0.005',
+      test: 'd = 0.65 (p = 0.028)',
+      testSub: 'Voter-inclusive pass-through of record (15 vs 15) · Powered Model 4 (N = 50) log-HHI p = 0.0107',
+      mech: 'r = 0.09 vs \u03c1 = 0.44',
+      mechSub: 'Launch insider share null (p = 0.55, TOST p = 0.02) · Top-holder insider retention \u03c1 = 0.44 (p = 0.005)'
+    },
+    uniform: {
+      sector: '0.056 vs 0.025',
+      sectorSub: 'Uniform staking-contract exclusion shifts Livepeer from 0.199 to 0.033 and removes outlier leverage',
+      test: 'd = 0.75 (p = 0.018)',
+      testSub: 'Stronger parametric & rank separation · 100,000-draw permutation p = 0.009 · LOO 30 of 30',
+      mech: 'r = 0.09 vs \u03c1 = 0.44',
+      mechSub: 'Sector ordering holds across both staking rules; DePIN remains significantly above DeFi'
+    },
+    nocex: {
+      sector: '0.072 vs 0.032',
+      sectorSub: 'Retaining 64 Nansen-labeled exchange wallets across 21 protocols adds sector-similar deposit noise',
+      test: 'd \u2248 0.62 (p \u2248 0.04)',
+      testSub: 'Attenuates effect size from 0.65 to ~0.62 (p \u2248 0.03 to 0.05) without reversing direction',
+      mech: '64 CEX wallets in 21 tokens',
+      mechSub: 'Centralized exchanges custody customer deposits and abstain from DAO governance'
+    },
+    raw: {
+      sector: 'Median 2.3x inflation',
+      sectorSub: 'Uncorrected top-1,000 holder lists conflate protocol architecture (bridges, treasuries, staking) with control',
+      test: 'Up to ~18x (RENDER)',
+      testSub: 'DRIFT 0.419 raw vs 0.026 post-PCA (16.1x) · DIMO 0.305 vs 0.025 (12.2x) · Wormhole 0.126 vs 0.012 (10.5x)',
+      mech: '133 PCAs across 38 tokens',
+      mechSub: 'Five-class PCA typology removes non-voting contracts before any governance metric is computed'
+    }
+  };
+
+  /* Exact 18-protocol delegation + 3 vote-escrow dataset from Table 5 & Section 4.5.2 */
+  var B2_DELEGATION = [
+    { name: 'Polkadot (DOT)', group: 'amplify', hold: 0.0052, vote: 0.1330, ratio: 25.6, src: 'Subscan (239)' },
+    { name: 'Balancer (veBAL)', group: 've', hold: 0.0290, vote: 0.6090, ratio: 21.0, src: 'veBAL lock (~21x)' },
+    { name: 'Curve (veCRV)', group: 've', hold: 0.0146, vote: 0.2600, ratio: 15.0, src: 'veCRV top-50 (Convex 48%)' },
+    { name: 'Frax (veFXS)', group: 've', hold: 0.0324, vote: 0.3690, ratio: 11.4, src: 'veFXS lock (11.4x)' },
+    { name: 'Compound (COMP)', group: 'amplify', hold: 0.0086, vote: 0.0890, ratio: 9.9, src: 'Snapshot (138)' },
+    { name: 'Bittensor (TAO)', group: 'amplify', hold: 0.0075, vote: 0.0720, ratio: 9.6, src: 'Taostats (75)' },
+    { name: 'DIMO (DIMO)', group: 'amplify', hold: 0.0249, vote: 0.2280, ratio: 9.1, src: 'Snapshot (10)' },
+    { name: 'Lido (LDO)', group: 'amplify', hold: 0.0077, vote: 0.0500, ratio: 6.3, src: 'Snapshot (333)' },
+    { name: 'Synthetix (SNX)', group: 'amplify', hold: 0.0171, vote: 0.0950, ratio: 5.6, src: 'Snapshot (30)' },
+    { name: 'Aave (AAVE)', group: 'amplify', hold: 0.0128, vote: 0.0580, ratio: 4.4, src: 'Tally (150,911)' },
+    { name: 'WeatherXM (WXM)', group: 'amplify', hold: 0.1479, vote: 0.5560, ratio: 3.8, src: 'Snapshot (73)' },
+    { name: 'Optimism (OP)', group: 'amplify', hold: 0.0094, vote: 0.0330, ratio: 3.6, src: 'Tally (1,000)' },
+    { name: 'Arbitrum (ARB)', group: 'amplify', hold: 0.0122, vote: 0.0380, ratio: 3.1, src: 'Snapshot (5,466)' },
+    { name: 'Drift (DRIFT)', group: 'amplify', hold: 0.0265, vote: 0.0830, ratio: 3.1, src: 'Solana VSR (641)' },
+    { name: 'Uniswap (UNI)', group: 'amplify', hold: 0.0100, vote: 0.0270, ratio: 2.7, src: 'Tally (1,000)' },
+    { name: 'Gnosis (GNO)', group: 'amplify', hold: 0.0425, vote: 0.1040, ratio: 2.5, src: 'Snapshot (481)' },
+    { name: 'GMX (GMX)', group: 'disperse', hold: 0.0647, vote: 0.0570, ratio: 0.87, src: 'Tally (1,000)' },
+    { name: 'ENS (ENS)', group: 'disperse', hold: 0.0463, vote: 0.0220, ratio: 0.48, src: 'Tally (1,000)' },
+    { name: 'Helium (HNT)', group: 'disperse', hold: 0.0988, vote: 0.0325, ratio: 0.33, src: 'Solana VSR (1,835)' },
+    { name: 'Livepeer (LPT)', group: 'disperse', hold: 0.1989, vote: 0.0540, ratio: 0.27, src: 'Orchestrators (100)' },
+    { name: 'Jupiter (JUP)', group: 'disperse', hold: 0.0450, vote: 0.0055, ratio: 0.12, src: 'Solana del-vote (128,476)' }
+  ];
+
+  function initB2Explorer(){
+    var root = document.getElementById('b2-gov-explorer');
+    if(!root) return;
+
+    var curTreat = 'pca';
+    var curSec = 'all';
+    var curDel = 'all';
+
+    var secSvg = document.getElementById('b2-sector-svg');
+    var delSvg = document.getElementById('b2-del-svg');
+
+    function renderSector(){
+      var meta = B2_TREAT_META[curTreat] || B2_TREAT_META.pca;
+      var mSec = document.getElementById('b2-m-sector');
+      var mSecSub = document.getElementById('b2-m-sector-sub');
+      var mTest = document.getElementById('b2-m-test');
+      var mTestSub = document.getElementById('b2-m-test-sub');
+      var mMech = document.getElementById('b2-m-mech');
+      var mMechSub = document.getElementById('b2-m-mech-sub');
+
+      if(mSec) mSec.textContent = meta.sector;
+      if(mSecSub) mSecSub.textContent = meta.sectorSub;
+      if(mTest) mTest.textContent = meta.test;
+      if(mTestSub) mTestSub.textContent = meta.testSub;
+      if(mMech) mMech.textContent = meta.mech;
+      if(mMechSub) mMechSub.textContent = meta.mechSub;
+
+      if(!secSvg) return;
+
+      var rows = B2_PROTOCOLS.filter(function(r){
+        if(curSec === 'all') return true;
+        return r.sec === curSec;
+      }).slice();
+
+      rows.sort(function(a, b){ return (b[curTreat] || 0) - (a[curTreat] || 0); });
+      if(curSec === 'all'){
+        /* Pick 15 representative protocols spanning top DePIN, DeFi, Infra, and counterexamples */
+        var pickNames = {
+          'Livepeer (LPT)': 1, 'WeatherXM (WXM)': 1, 'Aethir (ATH)': 1, 'Helium (HNT)': 1,
+          'GMX (GMX)': 1, 'Algorand (ALGO)': 1, 'ENS (ENS)': 1, 'Jupiter (JUP)': 1,
+          'Render (RENDER)': 1, 'Drift (DRIFT)': 1, 'DIMO (DIMO)': 1, 'Anyone Protocol': 1,
+          'Arbitrum (ARB)': 1, 'Uniswap (UNI)': 1, 'Polkadot (DOT)': 1
+        };
+        rows = rows.filter(function(r){ return pickNames[r.name]; });
+      } else {
+        rows = rows.slice(0, 15);
+      }
+
+      var maxHHI = curTreat === 'raw' ? 0.52 : 0.26;
+      var rowH = 22;
+      var padT = 30, padB = 24, padL = 168, padR = 195;
+      var W = 880, H = padT + rows.length * rowH + padB;
+      var plotW = W - padL - padR;
+      secSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      secSvg.setAttribute('height', String(H));
+
+      function xOf(v){ return padL + (Math.min(maxHHI, v) / maxHHI) * plotW; }
+      function colorForSec(s){
+        if(s === 'DePIN') return '#0ea5e9';
+        if(s === 'DeFi') return '#d97706';
+        return '#10b981';
+      }
+
+      var svg = '';
+      /* Grid ticks */
+      var ticks = curTreat === 'raw' ? [0, 0.10, 0.25, 0.40, 0.50] : [0, 0.05, 0.10, 0.15, 0.20, 0.25];
+      ticks.forEach(function(tv){
+        var x = xOf(tv).toFixed(1);
+        var isDoj = Math.abs(tv - 0.25) < 0.001;
+        svg += '<line x1="' + x + '" y1="' + (padT - 6) + '" x2="' + x + '" y2="' + (H - padB) + '" stroke="' + (isDoj ? '#dc2626' : 'currentColor') + '" stroke-opacity="' + (isDoj ? '0.55' : '0.12') + '" stroke-dasharray="' + (isDoj ? '4 3' : '2 3') + '"/>';
+        svg += '<text x="' + x + '" y="' + (padT - 11) + '" text-anchor="middle" font-size="10.5" fill="' + (isDoj ? '#dc2626' : 'currentColor') + '" opacity="' + (isDoj ? '0.9' : '0.65') + '">' + (isDoj ? '0.25 DOJ' : tv.toFixed(2)) + '</text>';
+      });
+
+      rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var val = r[curTreat] || 0;
+        var pcaVal = r.pca;
+        var bw = Math.max(3, xOf(val) - padL).toFixed(1);
+        var col = colorForSec(r.sec);
+
+        svg += '<text x="' + (padL - 10) + '" y="' + (y + 14) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + r.name + '</text>';
+        svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + plotW + '" height="14" rx="3" fill="currentColor" fill-opacity="0.05"/>';
+        svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + bw + '" height="14" rx="3" fill="' + col + '"/>';
+
+        /* If not pca treatment, show ghost marker of canonical post-PCA HHI */
+        if(curTreat !== 'pca'){
+          var gx = xOf(pcaVal).toFixed(1);
+          svg += '<line x1="' + gx + '" y1="' + (y + 1) + '" x2="' + gx + '" y2="' + (y + 19) + '" stroke="currentColor" stroke-width="2" stroke-opacity="0.75"/>';
+        }
+
+        var labelTxt = val.toFixed(3) + ' (' + r.sec + ' · Top-10: ' + r.top10 + ')';
+        if(curTreat === 'raw' && pcaVal > 0){
+          labelTxt = val.toFixed(3) + ' raw vs ' + pcaVal.toFixed(3) + ' PCA (' + (val / pcaVal).toFixed(1) + 'x)';
+        }
+        svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 14) + '" font-size="11" fill="currentColor" opacity="0.88">' + labelTxt + '</text>';
+      });
+
+      secSvg.innerHTML = svg;
+    }
+
+    function renderDelegation(){
+      if(!delSvg) return;
+      var rows = B2_DELEGATION.filter(function(r){
+        if(curDel === 'all') return true;
+        return r.group === curDel;
+      });
+
+      var rowH = 21;
+      var padT = 30, padB = 22, padL = 155, padR = 205;
+      var W = 880, H = padT + rows.length * rowH + padB;
+      var plotW = W - padL - padR;
+      var maxV = 0.65;
+      delSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      delSvg.setAttribute('height', String(H));
+
+      function xOf(v){ return padL + (Math.min(maxV, v) / maxV) * plotW; }
+
+      var svg = '';
+      [0, 0.10, 0.25, 0.40, 0.60].forEach(function(tv){
+        var x = xOf(tv).toFixed(1);
+        var isDoj = Math.abs(tv - 0.25) < 0.001;
+        svg += '<line x1="' + x + '" y1="' + (padT - 6) + '" x2="' + x + '" y2="' + (H - padB) + '" stroke="' + (isDoj ? '#dc2626' : 'currentColor') + '" stroke-opacity="' + (isDoj ? '0.5' : '0.12') + '" stroke-dasharray="3 3"/>';
+        svg += '<text x="' + x + '" y="' + (padT - 11) + '" text-anchor="middle" font-size="10.5" fill="' + (isDoj ? '#dc2626' : 'currentColor') + '" opacity="0.75">' + (isDoj ? '0.25 DOJ' : tv.toFixed(2)) + '</text>';
+      });
+
+      rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var xHold = xOf(r.hold);
+        var xVote = xOf(r.vote);
+        var xMin = Math.min(xHold, xVote).toFixed(1);
+        var spanW = Math.max(2, Math.abs(xVote - xHold)).toFixed(1);
+        var col = r.group === 've' ? '#dc2626' : (r.group === 'amplify' ? '#d97706' : '#10b981');
+
+        svg += '<text x="' + (padL - 10) + '" y="' + (y + 14) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + r.name + '</text>';
+        svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + plotW + '" height="12" rx="3" fill="currentColor" fill-opacity="0.04"/>';
+        /* Connector bar between holding HHI and voting HHI */
+        svg += '<rect x="' + xMin + '" y="' + (y + 7) + '" width="' + spanW + '" height="6" rx="2" fill="' + col + '" fill-opacity="0.45"/>';
+        /* Holding HHI circle (hollow) */
+        svg += '<circle cx="' + xHold.toFixed(1) + '" cy="' + (y + 10) + '" r="4.2" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>';
+        /* Voting HHI circle (solid) */
+        svg += '<circle cx="' + xVote.toFixed(1) + '" cy="' + (y + 10) + '" r="4.8" fill="' + col + '"/>';
+
+        var rightX = Math.max(xHold, xVote) + 9;
+        var ratioStr = r.ratio >= 1.0 ? (r.ratio.toFixed(1) + 'x amplify') : (r.ratio.toFixed(2) + 'x disperse');
+        svg += '<text x="' + rightX.toFixed(1) + '" y="' + (y + 14) + '" font-size="11" font-weight="600" fill="currentColor">' + ratioStr + ' (hold ' + r.hold.toFixed(3) + ' \u2192 vote ' + r.vote.toFixed(3) + ')</text>';
+      });
+
+      delSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-b2-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-b2-tab');
+        root.querySelectorAll('button[data-b2-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pSec = document.getElementById('b2-panel-sector');
+        var pDel = document.getElementById('b2-panel-delegation');
+        if(pSec) pSec.hidden = target !== 'sector';
+        if(pDel) pDel.hidden = target !== 'delegation';
+        if(target === 'delegation') renderDelegation(); else renderSector();
+        return;
+      }
+
+      var treatBtn = e.target.closest('button[data-b2-treat]');
+      if(treatBtn){
+        curTreat = treatBtn.getAttribute('data-b2-treat') || 'pca';
+        root.querySelectorAll('button[data-b2-treat]').forEach(function(b){
+          var on = b === treatBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderSector();
+        return;
+      }
+
+      var secBtn = e.target.closest('button[data-b2-sec]');
+      if(secBtn){
+        curSec = secBtn.getAttribute('data-b2-sec') || 'all';
+        root.querySelectorAll('button[data-b2-sec]').forEach(function(b){
+          var on = b === secBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderSector();
+        return;
+      }
+
+      var delBtn = e.target.closest('button[data-b2-del]');
+      if(delBtn){
+        curDel = delBtn.getAttribute('data-b2-del') || 'all';
+        root.querySelectorAll('button[data-b2-del]').forEach(function(b){
+          var on = b === delBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderDelegation();
+      }
+    });
+
+    renderSector();
+    renderDelegation();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initB2Explorer);
+  } else {
+    initB2Explorer();
+  }
+})();
+
+/* ==========================================================================
+   Three Tokenization Strategies Dependency & Outage Matrix (/papers/three-strategies/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  var MVEP_CATS = [
+    '1. Rights parity',
+    '2. System of record',
+    '3. Reconciliation',
+    '4. Custody',
+    '5. Insolvency',
+    '6. Settlement finality',
+    '7. Reorg / exception',
+    '8. Governance',
+    '9. Disclosures',
+    '10. Collateral operability'
+  ];
+
+  /* Base cell text from Section 9 Table (MVEP Application Across Strategies) */
+  var S1_BASE = ['DTC securities', 'DTC register', 'Canton atomic', 'DTC / BNY', 'SIPA + DTC', 'JPMD + Canton', 'Canton consensus', 'DTC + banks', 'DTC framework', '24/7 3-path'];
+  var S2_BASE = ['Fund share rights', 'Multi-TA / Oasis', '5 x 3 chains', 'Multi-custodian', 'By underlying', 'Chain-dependent', 'Bridge / multi', 'Router multisig', 'Composed NAV', 'Multi-pool router'];
+  var S3_BASE = ['SEC same-CUSIP', 'DTC + digital TA', 'Corp-action gap', 'DTC custody', 'SIPA NMS', 'T+1 or NYSE T+0', 'Nasdaq / NYSE', 'Exchange rules', 'SEC disclosures', 'Venue whitelist'];
+
+  /* Status codes per strategy x MVEP category (0 = unaffected, 1 = active dependency, 2 = primary outage failure) */
+  var A4_ENTITIES = {
+    securitize: {
+      span: '3 of 3 strategies',
+      spanSub: 'Transfer agent for BUIDL (S1 & S2) and first digital TA on NYSE Digital Trading Platform (S3; NYSE: SECZ)',
+      scen: 'System-wide TA freeze',
+      scenSub: 'Scenario 3C + Section 5: 72-hour outage halts minting, burning, and register updates across all three strategies simultaneously',
+      mvep: 'Cat. 2 \u2192 Cat. 10',
+      mvepSub: 'System of record (Cat. 2) freezes; collateral operability (Cat. 10) degrades; no fallback digital TA documented',
+      s1: [0, 2, 1, 0, 0, 1, 0, 0, 1, 2],
+      s2: [0, 2, 1, 0, 0, 0, 0, 0, 1, 1],
+      s3: [1, 2, 2, 0, 0, 1, 0, 0, 1, 2]
+    },
+    dtc: {
+      span: '2 of 3 strategies',
+      spanSub: 'Authoritative securities register and custody backbone (>$100T) via ComposerX in Strategy 1 and Strategy 3',
+      scen: 'Scenario 1A & 3A',
+      scenSub: 'Overnight Canton node consensus failure (1A) or weekend corporate-actions record-date divergence (3A)',
+      mvep: 'Cat. 2, 4, 6 \u2192 Cat. 10',
+      mvepSub: 'DTC custody (Cat. 4) and register (Cat. 2) anchor S1 and S3; overnight disruption forces fallback to T+1 Monday rails',
+      s1: [1, 2, 2, 1, 1, 2, 1, 1, 1, 2],
+      s2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s3: [1, 2, 2, 1, 1, 1, 0, 1, 1, 1]
+    },
+    ubyx: {
+      span: '2 of 3 strategies',
+      spanSub: 'Many-to-many par-value clearing layer between deposit tokens (JPMD, BNY, Citi) and stablecoins (USDC)',
+      scen: 'Cash-leg fragmentation',
+      scenSub: 'Scenario 1B mitigation: without Ubyx multi-issuer depth, cash settlement tips toward single-bank concentration',
+      mvep: 'Cat. 6 & Cat. 10',
+      mvepSub: 'Governs par-value singleness of money and IAS 7 cash-equivalent accounting across deposit-token issuers',
+      s1: [0, 0, 1, 0, 1, 2, 0, 0, 0, 2],
+      s2: [0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+      s3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    canton: {
+      span: '2 of 3 strategies',
+      spanSub: 'Permissioned-public-hybrid L1 providing atomic DvP settlement in Strategy 1 and institutional deployment in Strategy 2',
+      scen: 'Scenario 1A consensus halt',
+      scenSub: 'At 2:47 AM Saturday, a Canton validator disruption halts atomic DvP settlement during overnight margin calls',
+      mvep: 'Cat. 3, 6, 7 \u2192 Cat. 10',
+      mvepSub: 'Atomic settlement (Cat. 6) and consensus (Cat. 7) fail first; requires secondary-rail bridge attestation fallback',
+      s1: [0, 1, 2, 0, 0, 2, 2, 1, 0, 2],
+      s2: [0, 0, 1, 0, 0, 1, 1, 0, 0, 1],
+      s3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    bny: {
+      span: '3 of 3 strategies',
+      spanSub: 'Tokenized deposits (Jan 9, 2026), BUIDL Treasury custodian (S1 & S2), and ICE clearinghouse margin bank (S3)',
+      scen: 'Scenario 2C custodian stress',
+      scenSub: 'Correlated Treasury-custodian restriction degrades underlying MMF liquidity while halting ICE clearing margin leg',
+      mvep: 'Cat. 4, 5 & Cat. 6',
+      mvepSub: 'Keeps custody-to-settlement chain inside one regulated bank; S1 custody fee capture ~12 to 20 bps',
+      s1: [0, 0, 0, 1, 1, 1, 0, 1, 0, 1],
+      s2: [0, 0, 0, 2, 1, 0, 0, 0, 0, 2],
+      s3: [0, 0, 0, 0, 1, 1, 0, 0, 0, 1]
+    },
+    jpmd: {
+      span: '1 of 3 strategies (primary)',
+      spanSub: 'Kinexys USD deposit token (live on Base; native Canton issuance announced Jan 7, 2026) + BENJI custodian in S2',
+      scen: 'Scenario 1B single-bank outage',
+      scenSub: '100% single-bank deposit exposure on JPMD cash leg; Kinexys outage stops cash settlement unless Ubyx reroutes',
+      mvep: 'Cat. 5 & Cat. 6',
+      mvepSub: 'Binding Cat. 5 question: depositor status vs unsecured payment-instrument creditor in bank resolution',
+      s1: [0, 0, 0, 0, 2, 2, 0, 1, 0, 2],
+      s2: [0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+      s3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    citi: {
+      span: '2 of 3 strategies',
+      spanSub: 'Tokenized deposits for ICE clearinghouse margin (S3) and third deposit-token leg in Ubyx clearing (S1)',
+      scen: 'Clearinghouse margin leg',
+      scenSub: 'Provides multi-issuer redundancy alongside JPMD and BNY for Ubyx par clearing and NYSE/ICE 24/7 funding',
+      mvep: 'Cat. 5, 6 & Cat. 10',
+      mvepSub: 'Expands deposit-token competition so settlement-layer rent is competed away at par',
+      s1: [0, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+      s2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s3: [0, 0, 0, 0, 1, 1, 0, 0, 0, 1]
+    },
+    ondo: {
+      span: '2 of 3 strategies',
+      spanSub: 'OUSG InstantManager ($50M/24h cap) + Oasis Pro SEC-registered TA/ATS/BD (S2) and Ondo Global Markets (S3)',
+      scen: 'Scenario 2A & 2B',
+      scenSub: 'Smart redemption router pause (2A) or yield-normalization NAV delta >5 bps across 5 issuers (2B)',
+      mvep: 'Cat. 2, 3, 8 \u2192 Cat. 10',
+      mvepSub: 'Oasis Pro acquisition closes the wrapper Cat. 2 TA gap; router multisig (Cat. 8) is S2 sole critical dependency',
+      s1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s2: [1, 1, 2, 0, 0, 2, 1, 2, 1, 2],
+      s3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    },
+    nasdaq: {
+      span: '1 of 3 strategies',
+      spanSub: 'SEC-approved tokenized equities trading (Release 34-105047, March 18, 2026); same CUSIP and order book; Kraken gateway',
+      scen: 'Scenario 3B venue arbitrage',
+      scenSub: 'T+1 DTC settlement on Nasdaq vs T+0 instant settlement on NYSE creates cross-venue holder ambiguity',
+      mvep: 'Cat. 1, 3 & Cat. 6',
+      mvepSub: 'Preserves SIPA and SEC rights parity (Cat. 1) using Architecture C dual-record synchronization with DTC priority',
+      s1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s3: [1, 1, 2, 1, 1, 2, 1, 1, 1, 1]
+    },
+    nyse: {
+      span: '1 of 3 strategies',
+      spanSub: 'Digital Trading Platform (Securitize MoU March 24, 2026) targeting 24/7 T+0 trading with stablecoin and deposit-token funding',
+      scen: 'Scenario 3B & 3C',
+      scenSub: 'T+0 vs T+1 cross-venue finality divergence (3B) and single-TA reliance on Securitize with no secondary digital TA (3C)',
+      mvep: 'Cat. 2, 6 & Cat. 7',
+      mvepSub: 'Instant T+0 settlement requires continuous weekend corporate-action synchronization and multi-TA redundancy',
+      s1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      s3: [1, 2, 2, 0, 1, 2, 2, 1, 1, 2]
+    }
+  };
+
+  var A4_CORP_ARCH = {
+    halt: {
+      reg: 'DTC snapshot only',
+      regSub: 'On-chain transfers pause before the record-date cutoff; DTC and blockchain registers match by construction',
+      trade: 'Suspended at window',
+      tradeSub: 'Eliminates record-date divergence (Scenario 3A) by sacrificing continuous weekend liquidity during splits and dividends',
+      rule: 'Fits existing SEC rules',
+      ruleSub: 'Strong Cat. 2 & Cat. 3 (no divergence); weakens Cat. 10 (24/7 collateral operability paused during corporate actions)',
+      weekendState: 'Trading halted Fri 4:00 PM to Mon 9:30 AM (0 weekend transfers)',
+      weekendColor: '#d97706',
+      mondayState: 'DTC & on-chain holder records identical (Holder A = Holder A); zero reconciliation dispute'
+    },
+    chain: {
+      reg: 'Blockchain ledger primary',
+      regSub: 'On-chain holder at the exact record-date block height is authoritative; DTC reconciles downstream to the chain',
+      trade: 'Continuous 24/7 trading',
+      tradeSub: 'Tokenized shares trade uninterrupted across all 6 weekend transfers; atomic smart-contract split at target block',
+      rule: 'Requires new SEC rules',
+      ruleSub: 'Eliminates dual-record conflict (Cat. 3) and preserves 24/7 operability (Cat. 10), but reverses DTC statutory hierarchy',
+      weekendState: '24/7 trading active (6 weekend transfers settle natively on-chain)',
+      weekendColor: '#10b981',
+      mondayState: 'Blockchain block snapshot defines record holder (Holder G); DTC updates from chain'
+    },
+    dual: {
+      reg: 'DTC priority + sync',
+      regSub: 'Implicit model in Nasdaq SR-NASDAQ-2025-072: DTC remains authoritative; blockchain is the alternative record',
+      trade: '24/7 with divergence window',
+      tradeSub: '6 weekend on-chain transfers create a 65-hour window where on-chain holder (G) and Friday DTC holder (A) diverge',
+      rule: 'Requires dispute protocol',
+      ruleSub: 'Preserves current statutory hierarchy but requires continuous Cat. 3 reconciliation and ex-date claim adjudication',
+      weekendState: '24/7 trading active, but DTC snapshot stays frozen at Friday close (65h divergence)',
+      weekendColor: '#dc2626',
+      mondayState: 'Divergence at open: DTC shows Holder A while blockchain shows Holder G; requires T+1 adjudication'
+    }
+  };
+
+  function initA4Explorer(){
+    var root = document.getElementById('a4-strategy-explorer');
+    if(!root) return;
+
+    var curEnt = 'securitize';
+    var curArch = 'halt';
+    var outSvg = document.getElementById('a4-outage-svg');
+    var corpSvg = document.getElementById('a4-corp-svg');
+
+    function renderOutage(){
+      var d = A4_ENTITIES[curEnt] || A4_ENTITIES.securitize;
+      var mSpan = document.getElementById('a4-m-span');
+      var mSpanSub = document.getElementById('a4-m-span-sub');
+      var mScen = document.getElementById('a4-m-scen');
+      var mScenSub = document.getElementById('a4-m-scen-sub');
+      var mMvep = document.getElementById('a4-m-mvep');
+      var mMvepSub = document.getElementById('a4-m-mvep-sub');
+
+      if(mSpan) mSpan.textContent = d.span;
+      if(mSpanSub) mSpanSub.textContent = d.spanSub;
+      if(mScen) mScen.textContent = d.scen;
+      if(mScenSub) mScenSub.textContent = d.scenSub;
+      if(mMvep) mMvep.textContent = d.mvep;
+      if(mMvepSub) mMvepSub.textContent = d.mvepSub;
+
+      if(!outSvg) return;
+      var W = 880, H = 350, padL = 175, padT = 54, rowH = 27;
+      var colW = (W - padL - 20) / 3;
+
+      var svg = '';
+      /* Legend & Column headers */
+      var headers = [
+        'Strategy 1: Collateral Circuit',
+        'Strategy 2: Multi-Issuer Yield Stack',
+        'Strategy 3: Tokenized Equity Rails'
+      ];
+      headers.forEach(function(h, c){
+        var cx = padL + c * colW + colW / 2;
+        svg += '<text x="' + cx.toFixed(1) + '" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">' + h + '</text>';
+      });
+
+      svg += '<g transform="translate(' + padL + ', 32)" font-size="10.5" fill="currentColor">' +
+        '<rect x="0" y="0" width="11" height="11" rx="2" fill="#dc2626" fill-opacity="0.85"/><text x="15" y="9">Primary 72h outage failure point</text>' +
+        '<rect x="205" y="0" width="11" height="11" rx="2" fill="#0ea5e9" fill-opacity="0.75"/><text x="220" y="9">Active entity dependency</text>' +
+        '<rect x="385" y="0" width="11" height="11" rx="2" fill="currentColor" fill-opacity="0.08"/><text x="400" y="9">Independent / unaffected</text>' +
+        '</g>';
+
+      MVEP_CATS.forEach(function(cat, r){
+        var y = padT + r * rowH;
+        svg += '<text x="' + (padL - 10) + '" y="' + (y + 17) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + cat + '</text>';
+
+        var states = [d.s1[r], d.s2[r], d.s3[r]];
+        var texts = [S1_BASE[r], S2_BASE[r], S3_BASE[r]];
+        states.forEach(function(st, c){
+          var x = padL + c * colW + 4;
+          var w = colW - 8;
+          var fill = 'currentColor';
+          var fOp = '0.06';
+          var stroke = 'currentColor';
+          var sOp = '0.12';
+          var txtWeight = '500';
+          var tag = '';
+          if(st === 2){
+            fill = '#dc2626'; fOp = '0.20'; stroke = '#dc2626'; sOp = '0.85'; txtWeight = '700'; tag = ' [FAIL]';
+          } else if(st === 1){
+            fill = '#0ea5e9'; fOp = '0.16'; stroke = '#0ea5e9'; sOp = '0.75'; txtWeight = '600'; tag = ' [DEP]';
+          }
+          svg += '<rect x="' + x.toFixed(1) + '" y="' + (y + 2) + '" width="' + w.toFixed(1) + '" height="' + (rowH - 4) + '" rx="4" fill="' + fill + '" fill-opacity="' + fOp + '" stroke="' + stroke + '" stroke-opacity="' + sOp + '"/>';
+          svg += '<text x="' + (x + 10).toFixed(1) + '" y="' + (y + 17) + '" font-size="11" font-weight="' + txtWeight + '" fill="currentColor">' + texts[c] + tag + '</text>';
+        });
+      });
+
+      outSvg.innerHTML = svg;
+    }
+
+    function renderCorp(){
+      var a = A4_CORP_ARCH[curArch] || A4_CORP_ARCH.halt;
+      var cReg = document.getElementById('a4-c-reg');
+      var cRegSub = document.getElementById('a4-c-reg-sub');
+      var cTrade = document.getElementById('a4-c-trade');
+      var cTradeSub = document.getElementById('a4-c-trade-sub');
+      var cRule = document.getElementById('a4-c-rule');
+      var cRuleSub = document.getElementById('a4-c-rule-sub');
+
+      if(cReg) cReg.textContent = a.reg;
+      if(cRegSub) cRegSub.textContent = a.regSub;
+      if(cTrade) cTrade.textContent = a.trade;
+      if(cTradeSub) cTradeSub.textContent = a.tradeSub;
+      if(cRule) cRule.textContent = a.rule;
+      if(cRuleSub) cRuleSub.textContent = a.ruleSub;
+
+      if(!corpSvg) return;
+      var svg = '';
+      /* Timeline header */
+      svg += '<text x="140" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Fri 4:00 PM EST (Split Announced)</text>';
+      svg += '<text x="440" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Weekend 24/7 Window (65 Hours)</text>';
+      svg += '<text x="740" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Mon 9:30 AM EST (Record Date)</text>';
+
+      /* Track 1: DTC Legacy Register */
+      svg += '<text x="24" y="75" font-size="11.5" font-weight="700" fill="currentColor">DTC Register (T+1)</text>';
+      svg += '<rect x="24" y="84" width="230" height="36" rx="6" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.25"/>';
+      svg += '<text x="139" y="106" text-anchor="middle" font-size="11" fill="currentColor">EOD Snapshot: Holder A</text>';
+
+      svg += '<rect x="266" y="84" width="348" height="36" rx="6" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-opacity="0.18" stroke-dasharray="4 3"/>';
+      svg += '<text x="440" y="106" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.75">Business-day batch closed (Holder A frozen)</text>';
+
+      svg += '<rect x="626" y="84" width="230" height="36" rx="6" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.25"/>';
+      svg += '<text x="741" y="106" text-anchor="middle" font-size="11" fill="currentColor">' + (curArch === 'chain' ? 'Reconciles to Chain (Holder G)' : 'Opens at Holder A') + '</text>';
+
+      /* Track 2: Tokenized Equity Blockchain Ledger */
+      svg += '<text x="24" y="155" font-size="11.5" font-weight="700" fill="currentColor">Blockchain Ledger (24/7)</text>';
+      svg += '<rect x="24" y="164" width="230" height="36" rx="6" fill="#0ea5e9" fill-opacity="0.14" stroke="#0ea5e9" stroke-opacity="0.6"/>';
+      svg += '<text x="139" y="186" text-anchor="middle" font-size="11" fill="currentColor">Block Snapshot: Holder A</text>';
+
+      svg += '<rect x="266" y="164" width="348" height="36" rx="6" fill="' + a.weekendColor + '" fill-opacity="0.18" stroke="' + a.weekendColor + '" stroke-opacity="0.85"/>';
+      svg += '<text x="440" y="186" text-anchor="middle" font-size="11" font-weight="600" fill="currentColor">' + a.weekendState + '</text>';
+
+      svg += '<rect x="626" y="164" width="230" height="36" rx="6" fill="' + a.weekendColor + '" fill-opacity="0.14" stroke="' + a.weekendColor + '" stroke-opacity="0.7"/>';
+      svg += '<text x="741" y="186" text-anchor="middle" font-size="11" font-weight="600" fill="currentColor">' + (curArch === 'halt' ? 'Resumes: Holder A' : 'Record Block: Holder G') + '</text>';
+
+      /* Bottom Resolution Bar */
+      svg += '<rect x="24" y="222" width="832" height="40" rx="6" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.18"/>';
+      svg += '<text x="440" y="246" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">Record-Date Outcome: ' + a.mondayState + '</text>';
+
+      corpSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-a4-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-a4-tab');
+        root.querySelectorAll('button[data-a4-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pOut = document.getElementById('a4-panel-outage');
+        var pCorp = document.getElementById('a4-panel-corp');
+        if(pOut) pOut.hidden = target !== 'outage';
+        if(pCorp) pCorp.hidden = target !== 'corp';
+        if(target === 'corp') renderCorp(); else renderOutage();
+        return;
+      }
+
+      var entBtn = e.target.closest('button[data-a4-entity]');
+      if(entBtn){
+        curEnt = entBtn.getAttribute('data-a4-entity') || 'securitize';
+        root.querySelectorAll('button[data-a4-entity]').forEach(function(b){
+          var on = b === entBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderOutage();
+        return;
+      }
+
+      var archBtn = e.target.closest('button[data-a4-arch]');
+      if(archBtn){
+        curArch = archBtn.getAttribute('data-a4-arch') || 'halt';
+        root.querySelectorAll('button[data-a4-arch]').forEach(function(b){
+          var on = b === archBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderCorp();
+      }
+    });
+
+    renderOutage();
+    renderCorp();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initA4Explorer);
+  } else {
+    initA4Explorer();
+  }
+})();
+
+

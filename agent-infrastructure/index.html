@@ -215,10 +215,10 @@
       <div class="section-title">
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
-        <p class="ai-hero-support">The evidence is below: dated measurements from more than 66,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
+        <p class="ai-hero-support">The evidence is below: dated measurements from more than 67,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
         <p class="ai-measured-as">Updated <time datetime="2026-10-23">2026-10-23</time>. Every figure is regenerated from its producer at each revision, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
-      data-scale-commits-floored="66000"
+      data-scale-commits-floored="67000"
       data-scale-concurrency-p75="14"
       data-scale-concurrency-peak="61"
       data-scale-advisory-firings="61805"
@@ -229,24 +229,24 @@
       data-scale-unsuppressable-checks="2"
       data-scale-skill-library="78"
       data-scale-canonical-state-files="33"
-      data-scale-uspto-applications="41"
-      data-scale-uspto-families="31"
+      data-scale-uspto-applications="42"
+      data-scale-uspto-families="32"
       data-scale-federal-comment-letters="25"
       data-scale-ssrn-live="9"
       data-scale-unowned-open="2515"
       data-scale-unowned-filed="5329"
       data-scale-unowned-closed="2814"
-      data-scale-hard-gate-deny="2547"
-      data-scale-hard-gate-bypass="49"
+      data-scale-hard-gate-deny="13098"
+      data-scale-hard-gate-bypass="58"
       data-scale-as-of="2026-09-30"
-      data-scale-carried-from-2026-09-21="coherence-gate-checks hard-fail-checks unsuppressable-checks hard-gate-deny hard-gate-bypass unowned-filed unowned-closed unowned-open"></div>
+      data-scale-carried-from-2026-09-21="coherence-gate-checks hard-fail-checks unsuppressable-checks unowned-filed unowned-closed unowned-open"></div>
 
       </div>
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
-        <div class="ai-proof-item" role="listitem"><strong>66,000+</strong><span>commits observed since March</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>67,000+</strong><span>commits observed since March</span></div>
         <div class="ai-proof-item" role="listitem"><strong>14</strong><span>typical overlap; peak 61</span></div>
         <div class="ai-proof-item" role="listitem"><strong>61,805</strong><span>advisory outcomes graded</span></div>
-        <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>49 in 50</strong><span>armed gates held</span></div>
+        <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>199 in 200</strong><span>armed gates held</span></div>
       </div>
       <p class="ai-note ai-strip-gloss">All figures come from one operator's fleet. The measurement sections define the repeat and override rates behind these headline results.</p>
       <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
@@ -294,7 +294,7 @@
         <div class="ai-lanes" role="list">
           <div class="ai-lane" role="listitem">
             <h3>Keep concurrent work isolated and recoverable</h3>
-            <p>Each session works in its own tree and index. Ownership is stored as a time-limited lease. If a session exits, the lease expires and its work returns to the queue instead of remaining silently claimed.</p>
+            <p>Each session works in its own isolated working copy and staging area. Ownership is stored as a time-limited lease. If a session exits, the lease expires and its work returns to the queue instead of remaining silently claimed.</p>
             <div class="ai-lane-links">
               <a href="#coordination">See why process-based ownership failed</a>
             </div>
@@ -355,7 +355,7 @@
         <p class="ai-note">The figures below describe that workload as measured on 2026-09-30; the comment-letter count is from 2026-10-20, the commit count is from 2026-10-23, the warning figures are from 2026-10-23, the hard-gate figures are from 2026-10-23, the skill count is from 2026-10-01, the concurrency figures are from 2026-09-28, and the pre-commit and queue figures are from 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
-            <p class="ai-metric-value">66,000+</p>
+            <p class="ai-metric-value">67,000+</p>
             <p class="ai-metric-label">Commits observed</p>
             <p class="ai-metric-was">since 5 March 2026</p>
           </article>
@@ -481,7 +481,7 @@
             <span>Hover, drag, or use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> keys to inspect any window. Incomplete current bin is excluded so the trailing edge never reads artificially low.</span>
             <a class="ai-cc__dl" href="/agent-infrastructure/commits-per-3-days.json" download="fleet-commits-per-3-days.json">Download JSON</a>
           </figcaption>
-          <script type="application/json" id="ai-commit-chart-data">{"measured_at":"2026-10-24T01:56:33Z","ref":"origin/main","commits_on_ref":66688,"start_date":"2026-03-02","bin_days":3,"definition":"committer time, America/New_York calendar day, three-day bins from 2026-03-02","bins":78,"commits_in_series":65358,"series":[0,2,0,0,0,67,41,11,123,6,6,0,0,1,2,43,69,231,80,105,30,43,25,83,73,117,424,313,146,253,302,126,65,214,166,530,418,377,412,504,1087,899,620,1004,393,1061,559,1369,1605,903,1752,934,1656,1413,1112,1564,1276,1293,1583,1429,3329,3208,2255,2085,2916,1460,2315,2151,2366,1704,2340,2298,582,2133,1656,1216,1138,1286],"series_1d":[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,56,8,10,23,9,0,2,47,63,13,2,4,0,4,2,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,43,15,47,7,38,93,100,30,22,28,18,45,42,26,0,4,31,7,5,21,4,0,21,6,56,42,31,0,0,72,45,127,136,161,143,42,128,0,33,113,78,99,76,79,61,162,92,15,19,37,0,28,48,66,100,10,96,60,190,68,272,160,107,151,214,110,53,158,58,196,155,70,279,266,453,368,308,488,103,101,231,288,224,356,424,261,95,37,377,585,99,188,78,293,336,597,436,566,531,508,368,69,466,706,748,298,288,311,335,516,719,421,457,436,520,402,443,267,589,424,551,346,638,292,396,374,523,447,363,773,542,477,410,339,1107,1883,345,1371,1492,950,821,484,377,368,1340,1092,804,1020,618,666,176,832,881,602,761,1125,265,443,1056,867,811,529,364,587,905,848,1195,550,553,3,326,253,850,675,608,476,617,563,507,351,358,416,370,352,254,529,503],"captions":{"through":"21 October 2026","peak_value":3329,"peak_index":60,"peak_short":"AUG 29-31","svg_aria":"Commits per 3 days, March through 21 October 2026. Peak 3,329 from 29 August to 31 August.","svg_footer":"MARCH THROUGH 21 OCTOBER 2026","page_img_alt":"Commits per three days, March through 21 October 2026. Fleet workload. Peak 3,329 from 29 August to 31 August.","social_alt":"Fleet commits per three days, March through 21 October 2026. Peak 3,329 from 29 August to 31 August.","readme_line":"Commits per three days, March through 21 October 2026. The series is fleet workload. Peak 3,329 from 29 August to 31 August.","sitemap_title":"Fleet commits per three days, March through 21 October 2026"}}</script>
+          <script type="application/json" id="ai-commit-chart-data">{"measured_at":"2026-10-24T13:40:33Z","ref":"origin/main","commits_on_ref":67027,"start_date":"2026-03-02","bin_days":3,"definition":"committer time, America/New_York calendar day, three-day bins from 2026-03-02","bins":78,"commits_in_series":65358,"series":[0,2,0,0,0,67,41,11,123,6,6,0,0,1,2,43,69,231,80,105,30,43,25,83,73,117,424,313,146,253,302,126,65,214,166,530,418,377,412,504,1087,899,620,1004,393,1061,559,1369,1605,903,1752,934,1656,1413,1112,1564,1276,1293,1583,1429,3329,3208,2255,2085,2916,1460,2315,2151,2366,1704,2340,2298,582,2133,1656,1216,1138,1286],"series_1d":[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,56,8,10,23,9,0,2,47,63,13,2,4,0,4,2,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,43,15,47,7,38,93,100,30,22,28,18,45,42,26,0,4,31,7,5,21,4,0,21,6,56,42,31,0,0,72,45,127,136,161,143,42,128,0,33,113,78,99,76,79,61,162,92,15,19,37,0,28,48,66,100,10,96,60,190,68,272,160,107,151,214,110,53,158,58,196,155,70,279,266,453,368,308,488,103,101,231,288,224,356,424,261,95,37,377,585,99,188,78,293,336,597,436,566,531,508,368,69,466,706,748,298,288,311,335,516,719,421,457,436,520,402,443,267,589,424,551,346,638,292,396,374,523,447,363,773,542,477,410,339,1107,1883,345,1371,1492,950,821,484,377,368,1340,1092,804,1020,618,666,176,832,881,602,761,1125,265,443,1056,867,811,529,364,587,905,848,1195,550,553,3,326,253,850,675,608,476,617,563,507,351,358,416,370,352,254,529,503],"captions":{"through":"21 October 2026","peak_value":3329,"peak_index":60,"peak_short":"AUG 29-31","svg_aria":"Commits per 3 days, March through 21 October 2026. Peak 3,329 from 29 August to 31 August.","svg_footer":"MARCH THROUGH 21 OCTOBER 2026","page_img_alt":"Commits per three days, March through 21 October 2026. Fleet workload. Peak 3,329 from 29 August to 31 August.","social_alt":"Fleet commits per three days, March through 21 October 2026. Peak 3,329 from 29 August to 31 August.","readme_line":"Commits per three days, March through 21 October 2026. The series is fleet workload. Peak 3,329 from 29 August to 31 August.","sitemap_title":"Fleet commits per three days, March through 21 October 2026"}}</script>
         </figure>
 <!-- commit-chart:figure END -->
         <details class="ai-method">
@@ -493,7 +493,7 @@
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Commits</th><td class="ai-val">over 66,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
+                <tr><th scope="row">Commits</th><td class="ai-val">over 67,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose: an exact count is stale within the hour and a floor is not <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">14; peak 61</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-28 across both hosts: median 7, typical busy overlap 14 (75th percentile), 90th percentile 21, peak 61 on 2026-09-05. The claim of 12 to 55 concurrent agents, set 2026-09-26, is supported at both ends: the typical overlap of 14 is at least 12, and the peak of 61 exceeds 55. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">61,805</td><td class="ai-how">Across 37 classes over 105 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
@@ -674,14 +674,14 @@
     <section id="vacuous" class="reveal explainer-section" aria-labelledby="vacuous-title">
       <div class="explainer">
         <h2 id="vacuous-title">A passing check can still be wrong</h2>
-        <p>The queue scan above carried an honest label for an incomplete pass. A green result is a sharper failure: the assertion matched, but that does not show the check measured the intended subject, used fresh state, or could distinguish a true case from a false one.</p>
+        <p>The queue scan above carried an honest label for an incomplete pass. A false-green result is a sharper risk: an assertion can pass without proving that the check read fresh state, reached the intended target, or could distinguish a valid state from a broken one.</p>
         <aside class="ai-finding">
           <p class="ai-finding-label">Right answer, invalid check</p>
           <p>A verifier reported that an external record was live. The record was live, but the network request had timed out and the assertion matched bytes left behind by the previous request. The answer was correct by accident.</p>
         </aside>
         <p>The correction was to clear state before every request, treat a failed request as <em>could not determine</em>, and test a deliberately false identifier to prove that the verifier could reject it.</p>
         <blockquote class="paper-thesis-line ai-thesis">
-          <p>A check never observed to fail has not been shown to work.</p>
+          <p>A check is trustworthy only after it has been observed to reject a known fault.</p>
         </blockquote>
         <h3>Different causes can share one symptom</h3>
         <p>A burst rate limit and an exhausted usage budget can produce the same error while requiring opposite responses. A defect in code around a model can look like a model failure. The check must identify the mechanism, not merely recognize the shared symptom. When model output appears wrong, the verifier is tested before the model is blamed.</p>
@@ -800,7 +800,7 @@
             </tbody>
           </table>
         </div>
-        <p>When AI agents begin initiating and settling machine-to-machine payments over stablecoin and tokenized-deposit rails, these two tracks merge into a single operating surface: the agent harness decides what action is proposed, and the payment facilitator and gateway decide whether value moves. That convergence is formalized across <a href="/frameworks/#ai-extension">CLII-AI and MVEP-AI</a>, measured on-chain in <a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a> and <a href="/papers/agentic-payments-control-layer/"><em>The Agentic Payments Control Layer</em></a>, and translated into supervisory guidance in the <a href="/letters/fsb-ai-sound-practices/">Financial Stability Board AI Sound Practices comment</a>; the program has also filed <a href="/patents/">41 USPTO patent applications</a>.</p>
+        <p>When AI agents begin initiating and settling machine-to-machine payments over stablecoin and tokenized-deposit rails, these two tracks merge into a single operating surface: the agent harness decides what action is proposed, and the payment facilitator and gateway decide whether value moves. That convergence is formalized across <a href="/frameworks/#ai-extension">CLII-AI and MVEP-AI</a>, measured on-chain in <a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a> and <a href="/papers/agentic-payments-control-layer/"><em>The Agentic Payments Control Layer</em></a>, and translated into supervisory guidance in the <a href="/letters/fsb-ai-sound-practices/">Financial Stability Board AI Sound Practices comment</a>; the program has also filed <a href="/patents/">42 USPTO patent applications</a>.</p>
       </div>
     </section>
 
@@ -815,7 +815,7 @@
           <li><strong>Security scope.</strong> Isolated sessions protect cooperating agents from corrupting one another's work. They are not a sandbox for hostile code or a substitute for a security product.</li>
           <li><strong>Generalization.</strong> The results describe this system's controls, not AI-agent behavior in general. Observation periods and counting rules remain attached so readers can judge how far each result should travel.</li>
         </ul>
-        <p class="ai-closing-creds"><strong>What exists today.</strong> The layer has run on our fleet since March 2026 and is measured continuously. Its architecture is covered by 41 USPTO applications across 31 families. The surrounding research program includes nine papers on SSRN, one peer-reviewed publication in <em>Frontiers in Blockchain</em>, and 25 federal regulatory comment letters.</p>
+        <p class="ai-closing-creds"><strong>What exists today.</strong> The layer has run on our fleet since March 2026 and is measured continuously. Its architecture is covered by 42 USPTO applications across 32 families. The surrounding research program includes nine papers on SSRN, one peer-reviewed publication in <em>Frontiers in Blockchain</em>, and 25 federal regulatory comment letters.</p>
         <p class="ai-closing-creds"><strong>The product thesis.</strong> A configured safeguard is not yet an effective control. The difference becomes visible only when the system measures what agents do after the safeguard fires.</p>
       </div>
     </section>
@@ -842,7 +842,7 @@
           </div>
           <div class="ai-lane" role="listitem">
             <h3>Review the evidence and intellectual property</h3>
-            <p>The architecture is documented across 41 USPTO applications in 31 families. The surrounding program includes nine SSRN papers, one peer-reviewed publication, and 25 federal regulatory comment letters, available in full.</p>
+            <p>The architecture is documented across 42 USPTO applications in 32 families. The surrounding program includes nine SSRN papers, one peer-reviewed publication, and 25 federal regulatory comment letters, available in full.</p>
             <div class="ai-lane-links">
               <a href="/research/">Review the research program</a>
               <a href="/letters/">Read the comment letters</a>
