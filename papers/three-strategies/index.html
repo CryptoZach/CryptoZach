@@ -273,8 +273,8 @@
 
       <h1 id="paper-title">Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk in Institutional Digital Asset Capital Markets</h1>
 
-      <p class="paper-metadata-strip">~12 min read</p>
-      <p class="paper-description-note">Infrastructure-map snapshot as of March 27, 2026 (paper published March 28). Institutional tokenization is evolving rapidly; events after this date may alter sequencing and competitive dynamics.</p>
+      <p class="paper-metadata-strip">~12 min read · 20-page PDF · SSRN</p>
+      <p class="paper-description-note">Description current as of October 2026 (infrastructure-map snapshot as of March 27, 2026; paper published March 28).</p>
 
       <p class="paper-thesis">Institutional tokenization of US securities is proceeding through three distinct strategies: a regulated collateral circuit using tokenized US Treasuries and bank-issued deposit tokens, a multi-issuer yield stack composing tokenized Treasuries from five fund issuers with a smart redemption router, and tokenized equity rails on Nasdaq and NYSE. Each strategy synthesizes infrastructure from different combinations of regulated entities, but the same small set of entities recurs. Securitize, an SEC-registered transfer agent, sits in all three. The system-level risks live in the entities that connect the strategies, not in the strategies themselves.</p>
 
@@ -360,7 +360,7 @@
 
         <figure class="paper-figure-callout" aria-label="Figure 1 caption">
           <figcaption>
-            <strong>Figure 1.</strong> Strategy 1 (the Regulated Collateral Circuit). DTC-tokenized Treasuries serve as 24/7 margin collateral. The asset leg settles on Canton Network, a permissioned blockchain designed for institutional finance. The cash leg settles in bank-issued deposit tokens (JPMD is JPMorgan's USD deposit token, with BNY and Citi equivalents announced). Ubyx clears the legs together at par. The circuit satisfies all ten MVEP categories by construction; its binding constraint is Ubyx's depth across deposit-token issuers.
+            <strong>Figure 1.</strong> Strategy 1 (the Regulated Collateral Circuit). DTC-tokenized Treasuries serve as 24/7 margin collateral. The asset leg settles on Canton Network, a permissioned blockchain designed for institutional finance. The cash leg settles in bank-issued deposit tokens (JPMD is JPMorgan's USD deposit token, live on Base with native issuance on Canton announced January 7, 2026, alongside BNY and Citi equivalents). Ubyx clears the legs together at par. The circuit satisfies all ten MVEP categories by construction; its binding constraint is Ubyx's depth across deposit-token issuers.
           </figcaption>
         </figure>
 
@@ -369,7 +369,7 @@
         <p><strong>What this means.</strong> An institution cannot rank the strategies on a single axis; they satisfy different diligence categories with different strength. The MVEP category profile is a complementarity map, not a competitive ranking. A portfolio that needs a strong custody profile and a strong collateral operability profile needs both strategies operating together, not a choice between them.</p>
 
         <h2>Finding 2. Securitize concentration is a system-level risk that entity-level scoring does not capture</h2>
-        <p>Securitize is the transfer agent for BUIDL (BlackRock's tokenized US Treasury money-market fund and the largest on-chain institutional tokenized product), for the BUIDL layer of Strategy 2's yield stack, and for NYSE's digital-asset trading platform. It is also the first digital transfer agent approved to mint on NYSE's Digital Trading Platform and an expected broker-dealer participant there. The same entity therefore connects the collateral asset layer, the yield-stack underlying layer, and the equity-venue register.</p>
+        <p>Securitize (whose business combination with Cantor Equity Partners II closed on July 1, 2026 to trade on the NYSE as SECZ, with a subsequent Form S-1 registration statement filed July 30, 2026) is the transfer agent for BUIDL (BlackRock's tokenized US Treasury money-market fund and the largest on-chain institutional tokenized product), for the BUIDL layer of Strategy 2's yield stack, and for NYSE's digital-asset trading platform. It is also the first digital transfer agent approved to mint on NYSE's Digital Trading Platform and an expected broker-dealer participant there. The same entity therefore connects the collateral asset layer, the yield-stack underlying layer, and the equity-venue register.</p>
         <p>A 72-hour Securitize operational failure, from any cause, would freeze the authoritative register in all three strategies simultaneously. No fallback digital transfer agent is documented in the BUIDL operating documents or in the public NYSE Digital Trading Platform materials. Entity-level regulatory scoring rates Securitize high, consistent with its SEC registration and institutional client base. System-effective regulatory strength, measured as the degree of independent redundancy across the three strategies, is lower.</p>
         <p><strong>What this means.</strong> Regulatory frameworks calibrated for entity-level assessment (<a href="/frameworks/#clii">CLII</a>, transfer-agent licensing, cybersecurity rules) are necessary but not sufficient. A second diligence pass is required at the system level: which entities appear in more than one strategy, and what fallback infrastructure exists for each.</p>
 

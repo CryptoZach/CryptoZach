@@ -290,7 +290,7 @@
       <h1 id="paper-title">Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers Under Sustained Shocks, Expose Reputation Design Defects, and Reveal What a Bolted-On Risk Layer Can Test</h1>
 
       <p class="paper-metadata-strip">~40 min read · ~15,800 words · SSRN</p>
-      <p class="paper-description-note">Description current as of July 2026.</p>
+      <p class="paper-description-note">Description current as of October 2026 (v9).</p>
 
       <p class="paper-thesis">Infrastructure failures change token-economy behavior in ways economic-only simulations miss. This paper extends a DePIN token simulation with an operational-risk layer calibrated from Ethereum, Helium, GEODNET, and Filecoin, using the emerging ValOS (Validator Operation Standard) and NORS (the Alluvial-led Node Operator Risk Standard working group, distinct from the paper&rsquo;s general reputation-system framework) standards as the taxonomy for what can go wrong in production. The result is a split finding: the adaptive controller&rsquo;s dispersion advantage over fixed-rate emission holds in every stress scenario and measurably widens under a sustained regulatory withdrawal (it is a null under a one-off competitor shock), while a threshold-gated reputation system is structurally nonfunctional because its recovery threshold sits above what the uptime process can sustain. Both findings turn out to be one methodological lesson: a risk layer bolted onto an existing simulation acts only through the state the base model already instruments, so what such an extension can test is legible by inspection before any run.</p>
 
@@ -398,16 +398,96 @@
 
         <h2>Core findings</h2>
         <h3>1. Operational risk strengthens adaptive emission under a sustained shock</h3>
-        <p>The controller does not misread transient outages; recoverable downtime never moves the node count it observes. What operational risk does is remove operators permanently through catastrophic failure and stake-exhausting slashing (1,569 cumulative operational exits over the run), so the controller correctly raises rewards against a genuinely smaller network and pre-loads a buffer in the surviving operators. That buffer buys little against a one-off competitor poach the controller already absorbs, but a great deal against a sustained regulatory withdrawal that fixed-rate emission cannot answer, which is why the between-arm divergence is measurable only where the shock is sustained.</p>
+        <p>The controller does not misread transient outages; recoverable downtime never moves the node count it observes. What operational risk does is remove operators permanently through catastrophic failure and stake-exhausting slashing (1,569 cumulative operational exits in the seed-42 competitor-shock run, 1,529 in the seed-42 regulatory-shock run), so the controller correctly raises rewards against a genuinely smaller network and pre-loads a buffer in the surviving operators. That buffer buys little against a one-off competitor poach the controller already absorbs, but a great deal against a sustained regulatory withdrawal that fixed-rate emission cannot answer, which is why the between-arm divergence is measurable only where the shock is sustained.</p>
         <p>The effect is bounded and calibration-specific. The tested calibration (0.5% daily downtime probability, 10% correlated-failure exposure per event, 3-day mean recovery) produces the result; the paper reports the regulatory scenario after examining three, and all three are reported with their intervals.</p>
 
         <h3>2. Correlated failures never reach the controller's node-count signal</h3>
         <p>The biggest single-day node-count drop in the run is 25.0% (11,705 to 8,779), and it is the month-18 competitor shock rather than an infrastructure failure. The controller absorbs it within its operating range, regaining the 10,000-node target 48 days later. Correlated infrastructure failure does not register on node count at all: downtime suspends service and cuts yield but never deactivates the operator, so the largest single-day movement from any non-shock source across the five-year run is 0.45%. Operational risk reaches the controller through the reward and reputation channels, not as a discontinuity in the signal it observes, so the predicted flash crash does not form.</p>
 
         <h3>3. Reputation is the true fragility point</h3>
-        <p>The seasonal award requires an operator's uptime to read above 0.99 at the season boundary. Uptime is a persistent state that operational incidents push down and that nothing actively restores, so once it drifts below the threshold the award stops firing and the 15% seasonal decay compounds without offset. The seasonal update has a closed-form steady state of roughly 5.7 times the average per-season gain, which is what makes the threshold sweep diagnostic rather than merely remedial.</p>
-        <p>The paper treats this as structural collapse: the uptime threshold is set above what the operator base&rsquo;s uptime process can sustain. Average reputation decays to 0.28 on a 0-to-5 scale in the economic-only baseline and to 0.17 once operational risk is added, effectively disabling reputation-weighted governance; the layer only deepens a collapse that is already nearly total, so the defect belongs to the base design rather than to operational risk.</p>
+        <p>The seasonal award requires an operator's uptime to read above 0.99 at the season boundary. Uptime is a persistent state that evolves as a driftless bounded random walk (clipped at 1.0 above and 0.5 below): simulated on its own across 40,000 paths, the walk settles at a mean of 0.827, whereas the calibrated downtime process implies an as-coded operator up-fraction of 0.9875 (2.525 effective down epochs after the start-step timer decrement give a 0.0125 down-fraction, or 0.9827 up-fraction and 0.0173 down-fraction on the 3.525-day pre-decrement drawn duration). The variable the 0.99 gate reads therefore understates the up-fraction the failure process produces by roughly 16.0 percentage points (15.6 points pre-decrement). Once uptime drifts below the threshold, the award stops firing and the 15% seasonal decay compounds without offset. The seasonal update has a closed-form steady state of roughly 5.7 times the average per-season gain, which is what makes the threshold sweep diagnostic rather than merely remedial.</p>
+        <p>The paper treats this as structural collapse: the uptime threshold is set above what the operator base&rsquo;s uptime process can sustain. Average reputation decays to 0.28 on a 0-to-5 scale in the economic-only baseline and to 0.17 once operational risk is added, effectively disabling reputation-weighted governance; the layer only deepens a collapse that is already nearly total, so the defect belongs to the base design rather than to operational risk. Gating recovery on within-season downtime days instead of the boundary uptime state clears from 0.72 at the 0.99 threshold to 0.98 at 0.90 under the model&rsquo;s episodic process as coded (mean 1.1 seasonal down-days, or 1.5 days clearing 0.64 to 0.97 on the pre-decrement drawn duration, versus 0.45 under independent daily draws).</p>
         <p>The fix is specific: lower the recovery threshold. At 0.95, average reputation restores to approximately 1.0 by year 5. At 0.90, it restores to approximately 2.0. Changing the decay parameter alone does not restore stability at the 0.99 threshold. This is one of the most actionable findings in the paper.</p>
+
+        <figure class="b4-explorer" id="b4-oprisk-explorer" aria-labelledby="b4-exp-title">
+          <div class="b4-exp__head">
+            <div>
+              <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Simulation Explorer</p>
+              <h4 id="b4-exp-title">Stress-test the reputation threshold, downtime-count rule, and PID dispersion compression</h4>
+            </div>
+            <div class="b4-exp__tabs" role="tablist" aria-label="Operational-risk explorer views">
+              <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-b4-tab="reputation">1. Reputation threshold &amp; clearance</button>
+              <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-b4-tab="pid">2. PID vs static dispersion (30 seeds)</button>
+            </div>
+          </div>
+
+          <div class="b4-exp__panel" id="b4-panel-reputation" role="tabpanel">
+            <div class="b4-exp__controls">
+              <div class="b4-exp__control">
+                <label for="b4-tau">Recovery threshold (&tau;<sub>rep</sub>): <strong id="b4-tau-val">0.99 (default)</strong></label>
+                <input id="b4-tau" type="range" min="0" max="9" step="1" value="0" />
+                <div class="b4-exp__ticks"><span>0.99</span><span>0.97</span><span>0.95</span><span>0.93</span><span>0.90</span></div>
+              </div>
+              <div class="b4-exp__control">
+                <label for="b4-delta">Incident penalty (&delta;<sub>rep</sub>): <strong id="b4-delta-val">0.25 (baseline)</strong></label>
+                <input id="b4-delta" type="range" min="0" max="9" step="1" value="5" />
+                <div class="b4-exp__ticks"><span>0.01</span><span>0.10</span><span>0.25</span><span>0.50</span><span>1.00</span></div>
+              </div>
+            </div>
+            <div class="b4-exp__metrics" id="b4-rep-metrics">
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Year-5 avg reputation (0 to 5 scale)</span>
+                <strong class="b4-exp__val" id="b4-m-rep">0.18</strong>
+                <span class="b4-exp__sub" id="b4-m-rep-sub">Collapsed (governance disabled; baseline 0.28 without op-risk)</span>
+              </div>
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Quadratic voting multiplier (1 + R)<sup>2</sup></span>
+                <strong class="b4-exp__val" id="b4-m-vote">1.40x</strong>
+                <span class="b4-exp__sub" id="b4-m-vote-sub">vs 1.00x unaccredited floor (36.0x ceiling at R = 5.0)</span>
+              </div>
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Count-rule clearance (90d season)</span>
+                <strong class="b4-exp__val" id="b4-m-clear">72.4%</strong>
+                <span class="b4-exp__sub" id="b4-m-clear-sub">As-coded episodic (1.1d mean) · 63.8% drawn (1.5d) · 63.7% binomial (0.45d)</span>
+              </div>
+            </div>
+            <div class="b4-exp__chart-wrap">
+              <svg id="b4-rep-svg" viewBox="0 0 880 290" width="880" height="290" role="img" aria-label="Reputation score and counterfactual clearance across recovery thresholds 0.99 to 0.90"></svg>
+            </div>
+            <p class="b4-exp__note">Source: <code>gap2_reputation_sweep.csv</code> and <code>counterfactual_downtime_clearance.json</code> (400,000 Monte Carlo paths, seed 42). Because no decision rule in the base simulation reads the reputation score, each threshold replays the seasonal scoring rule over the same fixed trajectory.</p>
+          </div>
+
+          <div class="b4-exp__panel" id="b4-panel-pid" role="tabpanel" hidden>
+            <div class="b4-exp__controls">
+              <div class="b4-exp__scen-group" role="group" aria-label="Stress scenario">
+                <button type="button" class="b4-exp__scen is-active" data-b4-scen="regulatory" aria-pressed="true">Regulatory withdrawal (sustained)</button>
+                <button type="button" class="b4-exp__scen" data-b4-scen="competitor" aria-pressed="false">Competitor shock (one-off)</button>
+                <button type="button" class="b4-exp__scen" data-b4-scen="bear" aria-pressed="false">Bear market (prolonged)</button>
+              </div>
+            </div>
+            <div class="b4-exp__metrics" id="b4-pid-metrics">
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Compression ratio (Economic-only)</span>
+                <strong class="b4-exp__val" id="b4-p-base-ratio">3.19x</strong>
+                <span class="b4-exp__sub" id="b4-p-base-sub">Static CV 0.307 vs PID CV 0.096 · 95% CI [1.32x, 5.34x]</span>
+              </div>
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Compression ratio (With op-risk)</span>
+                <strong class="b4-exp__val" id="b4-p-op-ratio">6.41x</strong>
+                <span class="b4-exp__sub" id="b4-p-op-sub">Static CV 0.513 vs PID CV 0.080 · 95% CI [4.14x, 9.46x]</span>
+              </div>
+              <div class="b4-exp__card">
+                <span class="b4-exp__label">Op-risk shift (&Delta; ratio)</span>
+                <strong class="b4-exp__val" id="b4-p-delta">+3.22x</strong>
+                <span class="b4-exp__sub" id="b4-p-delta-sub">95% CI [+0.10x, +6.85x] · Widens under sustained withdrawal</span>
+              </div>
+            </div>
+            <div class="b4-exp__chart-wrap">
+              <svg id="b4-pid-svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="PID vs static outcome dispersion across 30 seeds"></svg>
+            </div>
+            <p class="b4-exp__note">Source: <code>headline_bootstrap.json</code> (30 seeds per arm, 20,000 bootstrap resamples, seed 42). Lower coefficient of variation (CV) means tighter node-count tracking around the 10,000-node target.</p>
+          </div>
+        </figure>
 
         <h3>4. The methodological bridge matters as much as the findings</h3>
         <p>ValOS and NORS are not background context; they are the institutional bridge between simulation and production controls. ValOS supplies the granular taxonomy of risk vectors and controls; NORS supplies the certification logic institutions can audit. The case-study signal is that this control language is already becoming economically consequential: Lido V3 stVaults launched on Ethereum mainnet on January 30, 2026 and use operator risk scores to set collateral requirements; Figment became the first entity in North America and Europe to achieve Full NORS Certification, on January 16, 2026 (announced February 4), evidence that these standards are moving from voluntary checklists toward enforceable operating rules.
@@ -436,10 +516,10 @@
           Bull: all 30 economic-only seeds finish at 11,934 nodes under both policies, so there is no dispersion to compare</span></p>
           <p><span class="key-num" aria-hidden="true">3</span><span class="key-num-copy"><strong>Shock absorption</strong><br>
           Largest single-day node-count drop: 25.0% (11,705 to 8,779), the month-18 competitor shock · 10,000-node target regained 48 days later · Correlated infrastructure failure moves node count by at most 0.45%</span></p>
-          <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Reputation collapse</strong><br>
-          At 0.99 uptime threshold: average reputation 0.28/5.0 economic-only, 0.17/5.0 with operational risk<br>
-          At 0.95 threshold: average reputation ~1.0 by year 5<br>
-          At 0.90 threshold: average reputation ~2.0 by year 5<br>
+          <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Reputation collapse and instrumentation gap</strong><br>
+          At 0.99 uptime threshold: average reputation 0.28/5.0 economic-only, 0.17/5.0 with operational risk (year-5 boundary walk mean 0.827 vs 0.9875 as-coded up-fraction on 2.525 effective down epochs, a 16.0-point instrumentation gap; 0.9827 and 15.6 points on the 3.525-day pre-decrement drawn duration)<br>
+          At 0.95 threshold: average reputation ~1.0 by year 5 · At 0.90 threshold: average reputation ~2.0 by year 5<br>
+          Counterfactual within-season downtime-count rule: clears from 0.72 at 0.99 to 0.98 at 0.90 as coded (mean 1.1 seasonal down-days; 0.64 to 0.97 on 1.5 drawn down-days)<br>
           Driver is the recovery threshold, not the decay rate: at threshold 0.99 even the smallest decay penalty leaves reputation near 0.33</span></p>
           <p><span class="key-num" aria-hidden="true">5</span><span class="key-num-copy"><strong>ValOS/NORS mapping</strong><br>
           74 active ValOS risk vectors · 64 testable controls · 36 NORS control objectives to 7 simulatable parameters</span></p>

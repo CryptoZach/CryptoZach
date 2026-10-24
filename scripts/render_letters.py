@@ -728,7 +728,7 @@ def gen_recommendations(m):
                     + (f'<br><span class="letters-outcome-id">{esc(r["status_note"])}</span>' if r.get("status_note") else "") + "</td>",
                     "      </tr>"]
     out += ["    </tbody>", "  </table>", "</div>",
-            f'<p class="letters-asof">{m.n_recs} recommendations across {word(len(letters))} letters. Status as of {esc(fmt_date(m.verified_on))}; topics are editorial tags for filtering, not the letters\' own headings.</p>']
+            f'<p class="letters-asof">{m.n_recs} recommendations across {len(letters)} letters. Status as of {esc(fmt_date(m.verified_on))}; topics are editorial tags for filtering, not the letters\' own headings.</p>']
     return out
 
 
@@ -750,7 +750,7 @@ def gen_recs_jsonld(m):
             f'  "isPartOf": {{ "@type": "WebPage", "@id": "{SITE}/letters/" }},',
             '  "mainEntity": {',
             '    "@type": "ItemList",',
-            f'    "name": {json.dumps(f"Recommendations by letter ({m.n_recs} in {word(len(letters))} letters)")},',
+            f'    "name": {json.dumps(f"Recommendations by letter ({m.n_recs} in {len(letters)} letters)")},',
             f'    "numberOfItems": {len(letters)},',
             '    "itemListElement": [',
             ",\n".join(items),

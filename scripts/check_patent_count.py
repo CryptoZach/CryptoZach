@@ -164,14 +164,16 @@ def patent_areas_block(text):
 
 
 def parse_patent_areas(block):
-    """Return list of dicts: [{'name': str, 'description': str, 'apps': [str]}]."""
+    """Return list of dicts: [{'name': str, 'description': str, 'apps': [str], 'filings': [{'title': str, 'application_number': str}]}]."""
     areas = []
     pos = 0
-    marker = '<div class="patent-area">'
+    marker_re = re.compile(r'<div class="patent-area(?:\s[^"]*)?"[^>]*>')
+    li_re = re.compile(r'<li\b[^>]*>(.*?)<span class="filing-no"[^>]*>\s*([^<]+?)\s*</span>\s*</li>', re.S)
     while True:
-        idx = block.find(marker, pos)
-        if idx < 0:
+        mm = marker_re.search(block, pos)
+        if not mm:
             break
+        idx = mm.start()
         depth = 0
         end_idx = None
         for m in re.finditer(r"<div\b|</div>", block[idx:]):
@@ -189,7 +191,13 @@ def parse_patent_areas(block):
         name = pm.group(1).strip() if pm else ""
         desc = re.sub(r"\s+", " ", pm.group(2).strip()) if pm else ""
         apps = APP_RE.findall(sub)
-        areas.append({"name": name, "description": desc, "apps": apps})
+        filings = []
+        for lm in li_re.finditer(sub):
+            raw_title = re.sub(r"<[^>]+>", "", lm.group(1))
+            title = re.sub(r"\s+", " ", raw_title).strip()
+            app_no = lm.group(2).strip()
+            filings.append({"title": title, "application_number": app_no})
+        areas.append({"name": name, "description": desc, "apps": apps, "filings": filings})
         pos = end_idx
     return areas
 
@@ -367,6 +375,61 @@ def check_and_sync_jsonld_areas(index_path, areas, write_mode):
                     f"the {len(expected_items)} <div class=\"patent-area\"> blocks"
                 )
     return problems, hits
+
+
+def check_and_sync_patents_json(truth_info, write_mode):
+    """Verify (and in --write mode sync) patents/patents.json."""
+    pj_path = ROOT / "patents" / "patents.json"
+    areas_out = []
+    flat_filings = []
+    for idx, a in enumerate(truth_info["areas"], start=1):
+        area_key = re.sub(r"[^a-z0-9]+", "-", a["name"].lower()).strip("-")
+        filings_list = a.get("filings") or [{"title": "", "application_number": app} for app in a["apps"]]
+        areas_out.append({
+            "order": idx,
+            "key": area_key,
+            "name": a["name"],
+            "description": a["description"],
+            "filing_count": len(filings_list),
+            "filings": filings_list,
+        })
+        for f in filings_list:
+            flat_filings.append({
+                "application_number": f["application_number"],
+                "title": f["title"],
+                "area": a["name"],
+                "area_key": area_key,
+                "status": "Pending before the USPTO",
+            })
+    expected_obj = {
+        "_generated": "check_patent_count.py from patents/index.html; do not edit by hand",
+        "site": "https://tokenization.systems/patents/",
+        "applications_count": truth_info["n_apps"],
+        "families_count": truth_info["n_families"],
+        "areas_count": len(areas_out),
+        "areas": areas_out,
+        "applications": flat_filings,
+    }
+    expected_str = json.dumps(expected_obj, indent=2, ensure_ascii=False) + "\n"
+    hits = [{
+        "file": "patents/patents.json",
+        "line": 1,
+        "kind": "patents_json",
+        "token": str(truth_info["n_apps"]),
+        "value": truth_info["n_apps"],
+        "expected": truth_info["n_apps"],
+        "text": f"patents/patents.json ({truth_info['n_apps']} applications across {truth_info['n_families']} families)",
+    }]
+    problems = []
+    written = 0
+    cur_str = pj_path.read_text(encoding="utf-8") if pj_path.is_file() else ""
+    if cur_str != expected_str:
+        if write_mode:
+            pj_path.write_text(expected_str, encoding="utf-8")
+            written = 1
+        else:
+            problems.append("patents/patents.json is missing or out of sync with patents/index.html")
+    return problems, hits, written
 
 
 def check_and_sync_resumes(n_apps, n_families, write_mode):
@@ -691,6 +754,10 @@ def main():
         j_probs, j_hits = check_and_sync_jsonld_areas(index, truth_info["areas"], args.write)
         problems.extend(j_probs)
         surface_hits.extend(j_hits)
+        pj_probs, pj_hits, pj_written = check_and_sync_patents_json(truth_info, args.write)
+        problems.extend(pj_probs)
+        surface_hits.extend(pj_hits)
+        total_written += pj_written
 
     # Resumes DOCX and PDF
     r_probs, r_hits, r_written = check_and_sync_resumes(truth, n_families, args.write)

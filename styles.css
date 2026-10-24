@@ -22534,6 +22534,279 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
 .speaker-page .talk-bridge a{color:var(--accent)}
 .speaker-page .featured-talk .talk-bridge{opacity:1;color:var(--muted)}
 
+/* Patent Portfolio Interactive Explorer (/patents/) */
+.patent-toolbar{
+  margin: var(--space-md) 0 var(--space-lg);
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 94%, var(--bg));
+  display: grid;
+  gap: .85rem;
+}
+.patent-toolbar__row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.patent-toolbar__search-wrap{
+  position: relative;
+  flex: 1 1 280px;
+  min-width: 0;
+}
+.patent-toolbar__search{
+  width: 100%;
+  min-height: 2.5rem;
+  padding: .45rem 2.2rem .45rem .85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: .92rem;
+}
+.patent-toolbar__search:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.patent-toolbar__clear{
+  position: absolute;
+  right: .45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: .2rem .4rem;
+}
+.patent-toolbar__views{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  align-items: center;
+}
+.patent-toolbar__btn{
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--text-soft);
+  padding: .4rem .75rem;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+.patent-toolbar__btn.is-active{
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  color: var(--text);
+}
+.patent-toolbar__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.patent-chip{
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  background: transparent;
+  color: var(--text-soft);
+  padding: .3rem .65rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.patent-chip.is-active{
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--text);
+}
+.patent-toolbar__meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .84rem;
+  color: var(--muted);
+}
+.patent-toolbar__status{margin: 0}
+.patent-toolbar__reset{
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filing-no{
+  cursor: pointer;
+  transition: color .15s ease, background-color .15s ease;
+}
+.filing-no.is-copied{
+  color: var(--status-positive);
+  font-weight: 700;
+}
+.patent-ledger{
+  margin-top: var(--space-md);
+}
+.patent-ledger-table th[data-patent-sort]{
+  user-select: none;
+}
+.patent-ledger__idx{
+  font-family: "JetBrains Mono", monospace;
+  font-size: .8rem;
+  color: var(--muted);
+  width: 2.5rem;
+}
+.patent-ledger__area-pill{
+  display: inline-block;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  color: var(--text-soft);
+}
+.patent-empty{
+  padding: 1.25rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Operational-Risk & Reputation Threshold Explorer (/papers/operational-risk/) */
+.b4-explorer{
+  margin: var(--space-xl) 0;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--panel) 95%, var(--bg));
+  display: grid;
+  gap: 1rem;
+}
+.b4-exp__head{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.b4-exp__head h4{
+  margin: .2rem 0 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+.b4-exp__tabs,
+.b4-exp__scen-group{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.b4-exp__tab,
+.b4-exp__scen{
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--text-soft);
+  padding: .42rem .78rem;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.b4-exp__tab.is-active,
+.b4-exp__scen.is-active{
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, var(--bg));
+  color: var(--text);
+}
+.b4-exp__controls{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  padding: .75rem .9rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, currentColor 4%, transparent);
+}
+.b4-exp__control{
+  display: grid;
+  gap: .3rem;
+}
+.b4-exp__control label{
+  font-size: .85rem;
+  color: var(--text-soft);
+}
+.b4-exp__control input[type="range"]{
+  width: 100%;
+  accent-color: var(--accent);
+}
+.b4-exp__ticks{
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: .72rem;
+  color: var(--muted);
+}
+.b4-exp__metrics{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: .75rem;
+  margin-top: .75rem;
+}
+.b4-exp__card{
+  padding: .75rem .9rem;
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 10px;
+  background: var(--bg);
+  display: grid;
+  gap: .2rem;
+}
+.b4-exp__label{
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+.b4-exp__val{
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.b4-exp__sub{
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.b4-exp__chart-wrap{
+  margin-top: .75rem;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: .5rem;
+}
+.b4-exp__chart-wrap svg{
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 560px;
+}
+.b4-exp__note{
+  margin: .5rem 0 0;
+  font-size: .8rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 /* site-brand:css START (generated from _partials/brand.css; edit that file, then: python3 scripts/render_brand.py --write) */
 /* The brandmark: dial, wordmark, tagline. ONE copy of these rules; scripts/render_brand.py stamps it into
    the home page's inline stylesheet and the end of styles.css. The first two rules make the block

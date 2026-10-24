@@ -7182,3 +7182,505 @@
     initCommitChart();
   }
 })();
+
+/* ==========================================================================
+   Patent Portfolio Interactive Explorer (/patents/#patents-explorer)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  function initPatentExplorer(){
+    var section = document.getElementById('patents-explorer');
+    if(!section) return;
+
+    var searchInput = document.getElementById('patent-search');
+    var clearBtn = document.getElementById('patent-search-clear');
+    var resetBtn = document.getElementById('patent-reset');
+    var statusEl = document.getElementById('patent-count-status');
+    var cardsContainer = section.querySelector('.patent-areas') || document.getElementById('patent-areas-cards');
+    var ledgerContainer = document.getElementById('patent-ledger');
+    var emptyEl = document.getElementById('patent-empty');
+    var viewBtns = section.querySelectorAll('button[data-patent-view]');
+    var areaChips = section.querySelectorAll('button[data-patent-area]');
+
+    var cards = Array.prototype.slice.call(section.querySelectorAll('.patent-area, .patent-area-card'));
+    var allRows = [];
+    var curView = 'cards';
+    var curArea = 'all';
+    var curQuery = '';
+    var sortKey = 'idx';
+    var sortDir = 1;
+
+    cards.forEach(function(card, areaIdx){
+      card.setAttribute('data-area-index', String(areaIdx));
+      var h3 = card.querySelector('h3, p > strong');
+      var areaTitle = h3 ? h3.textContent.trim() : ('Area ' + (areaIdx + 1));
+      var items = Array.prototype.slice.call(card.querySelectorAll('.patent-filings li, .patent-filing-list li'));
+      items.forEach(function(li){
+        var numEl = li.querySelector('.filing-no');
+        var appNo = numEl ? numEl.textContent.trim() : '';
+        var clone = li.cloneNode(true);
+        var cNum = clone.querySelector('.filing-no');
+        if(cNum) cNum.remove();
+        var title = clone.textContent.replace(/\s+/g, ' ').trim();
+        var searchBlob = (title + ' ' + appNo + ' ' + areaTitle).toLowerCase();
+        li.setAttribute('data-search', searchBlob);
+        if(numEl){
+          numEl.setAttribute('role', 'button');
+          numEl.setAttribute('tabindex', '0');
+          numEl.setAttribute('title', 'Click to copy application number ' + appNo);
+        }
+        allRows.push({
+          idx: allRows.length + 1,
+          areaIdx: areaIdx,
+          areaTitle: areaTitle,
+          title: title,
+          appNo: appNo,
+          searchBlob: searchBlob,
+          li: li
+        });
+      });
+    });
+
+    function copySerial(el, appNo){
+      if(!appNo) return;
+      function flash(){
+        var orig = el.textContent;
+        el.textContent = 'Copied ' + appNo;
+        el.classList.add('is-copied');
+        setTimeout(function(){
+          el.textContent = orig;
+          el.classList.remove('is-copied');
+        }, 1200);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(appNo).then(flash).catch(function(){});
+      } else {
+        flash();
+      }
+    }
+
+    section.addEventListener('click', function(e){
+      var numEl = e.target.closest('.filing-no');
+      if(numEl){
+        var appNo = numEl.getAttribute('data-serial') || numEl.textContent.replace(/^Copied\s+/, '').trim();
+        numEl.setAttribute('data-serial', appNo);
+        copySerial(numEl, appNo);
+      }
+    });
+    section.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        var numEl = e.target.closest('.filing-no');
+        if(numEl){
+          e.preventDefault();
+          var appNo = numEl.getAttribute('data-serial') || numEl.textContent.replace(/^Copied\s+/, '').trim();
+          numEl.setAttribute('data-serial', appNo);
+          copySerial(numEl, appNo);
+        }
+      }
+    });
+
+    function renderLedger(filteredRows){
+      if(!ledgerContainer) return;
+      var sorted = filteredRows.slice().sort(function(a, b){
+        if(sortKey === 'title') return a.title.localeCompare(b.title) * sortDir;
+        if(sortKey === 'area') return (a.areaIdx - b.areaIdx || a.idx - b.idx) * sortDir;
+        if(sortKey === 'serial') return a.appNo.localeCompare(b.appNo) * sortDir;
+        return (a.idx - b.idx) * sortDir;
+      });
+      var arrow = function(k){ return sortKey === k ? (sortDir === 1 ? ' \u2191' : ' \u2193') : ''; };
+      var html = '<div class="letters-table-wrap"><table class="letters-table patent-ledger-table"><thead><tr>' +
+        '<th data-patent-sort="idx" style="cursor:pointer"># ' + arrow('idx') + '</th>' +
+        '<th data-patent-sort="title" style="cursor:pointer">Application subject' + arrow('title') + '</th>' +
+        '<th data-patent-sort="area" style="cursor:pointer">Problem area' + arrow('area') + '</th>' +
+        '<th data-patent-sort="serial" style="cursor:pointer">USPTO serial no.' + arrow('serial') + '</th>' +
+        '</tr></thead><tbody id="patent-ledger-body">';
+      for(var i = 0; i < sorted.length; i++){
+        var r = sorted[i];
+        html += '<tr>' +
+          '<td class="patent-ledger__idx">' + r.idx + '</td>' +
+          '<td class="patent-ledger__title">' + r.title.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</td>' +
+          '<td class="patent-ledger__area"><span class="patent-ledger__area-pill">' + r.areaTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span></td>' +
+          '<td class="patent-ledger__serial"><span class="filing-no" role="button" tabindex="0" data-serial="' + r.appNo + '" title="Click to copy ' + r.appNo + '">' + r.appNo + '</span></td>' +
+          '</tr>';
+      }
+      html += '</tbody></table></div>';
+      ledgerContainer.innerHTML = html;
+      ledgerContainer.querySelectorAll('th[data-patent-sort]').forEach(function(th){
+        th.addEventListener('click', function(){
+          var k = th.getAttribute('data-patent-sort') || 'idx';
+          if(sortKey === k){ sortDir = -sortDir; }
+          else { sortKey = k; sortDir = 1; }
+          applyFilters();
+        });
+      });
+    }
+
+    function applyFilters(){
+      var q = curQuery.trim().toLowerCase();
+      var matchedFilings = 0;
+      var matchedAreasMap = {};
+      var filteredRows = [];
+
+      allRows.forEach(function(r){
+        var areaOk = (curArea === 'all') || (String(r.areaIdx) === curArea);
+        var queryOk = !q || r.searchBlob.indexOf(q) !== -1;
+        var show = areaOk && queryOk;
+        r.li.hidden = !show;
+        if(show){
+          matchedFilings++;
+          matchedAreasMap[r.areaIdx] = (matchedAreasMap[r.areaIdx] || 0) + 1;
+          filteredRows.push(r);
+        }
+      });
+
+      var visibleAreas = 0;
+      cards.forEach(function(card, idx){
+        var count = matchedAreasMap[idx] || 0;
+        var showCard = count > 0;
+        card.hidden = !showCard;
+        if(showCard) visibleAreas++;
+        var badge = card.querySelector('.patent-area-count');
+        if(badge){
+          var totalInCard = card.querySelectorAll('.patent-filing-list li').length;
+          if(q || curArea !== 'all'){
+            badge.textContent = count + ' of ' + totalInCard + (totalInCard === 1 ? ' filing' : ' filings');
+          } else {
+            badge.textContent = totalInCard + (totalInCard === 1 ? ' filing' : ' filings');
+          }
+        }
+      });
+
+      if(clearBtn) clearBtn.hidden = !q;
+      var isFiltered = Boolean(q || curArea !== 'all');
+      if(resetBtn) resetBtn.hidden = !isFiltered;
+
+      if(statusEl){
+        if(!isFiltered){
+          statusEl.textContent = 'Showing all ' + allRows.length + ' provisional filings across ' + cards.length + ' problem areas.';
+        } else {
+          statusEl.textContent = 'Showing ' + matchedFilings + ' of ' + allRows.length + ' filings across ' + visibleAreas + (visibleAreas === 1 ? ' problem area.' : ' problem areas.');
+        }
+      }
+
+      if(curView === 'ledger'){
+        if(cardsContainer) cardsContainer.hidden = true;
+        if(ledgerContainer) ledgerContainer.hidden = matchedFilings === 0;
+        renderLedger(filteredRows);
+      } else {
+        if(ledgerContainer) ledgerContainer.hidden = true;
+        if(cardsContainer) cardsContainer.hidden = matchedFilings === 0;
+      }
+
+      if(emptyEl) emptyEl.hidden = matchedFilings > 0;
+    }
+
+    if(searchInput){
+      searchInput.addEventListener('input', function(){
+        curQuery = searchInput.value || '';
+        applyFilters();
+      });
+    }
+    if(clearBtn){
+      clearBtn.addEventListener('click', function(){
+        curQuery = '';
+        if(searchInput){ searchInput.value = ''; searchInput.focus(); }
+        applyFilters();
+      });
+    }
+    if(resetBtn){
+      resetBtn.addEventListener('click', function(){
+        curQuery = '';
+        curArea = 'all';
+        if(searchInput) searchInput.value = '';
+        areaChips.forEach(function(c){
+          var on = c.getAttribute('data-patent-area') === 'all';
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        applyFilters();
+      });
+    }
+
+    areaChips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        curArea = chip.getAttribute('data-patent-area') || 'all';
+        areaChips.forEach(function(c){
+          var on = c === chip;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        applyFilters();
+      });
+    });
+
+    viewBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        curView = btn.getAttribute('data-patent-view') || 'cards';
+        viewBtns.forEach(function(b){
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        applyFilters();
+      });
+    });
+
+    applyFilters();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initPatentExplorer);
+  } else {
+    initPatentExplorer();
+  }
+})();
+
+/* ==========================================================================
+   Operational-Risk & Reputation Threshold Explorer (/papers/operational-risk/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* Exact simulation series from gap2_reputation_sweep.csv & counterfactual_downtime_clearance.json */
+  var TAU_STEPS = [
+    { tau: 0.99, rep: 0.1753, active: 0.9271, clearCoded: 0.7243, clearDrawn: 0.6377, clearBinom: 0.6370 },
+    { tau: 0.98, rep: 0.3712, active: 0.9585, clearCoded: 0.7243, clearDrawn: 0.6377, clearBinom: 0.9248 },
+    { tau: 0.97, rep: 0.5733, active: 0.9746, clearCoded: 0.7931, clearDrawn: 0.7107, clearBinom: 0.9896 },
+    { tau: 0.96, rep: 0.7810, active: 0.9803, clearCoded: 0.8588, clearDrawn: 0.7798, clearBinom: 0.9990 },
+    { tau: 0.95, rep: 0.9985, active: 0.9866, clearCoded: 0.9061, clearDrawn: 0.8400, clearBinom: 0.9999 },
+    { tau: 0.94, rep: 1.2131, active: 0.9886, clearCoded: 0.9372, clearDrawn: 0.8878, clearBinom: 1.0000 },
+    { tau: 0.93, rep: 1.4258, active: 0.9912, clearCoded: 0.9575, clearDrawn: 0.9228, clearBinom: 1.0000 },
+    { tau: 0.92, rep: 1.6305, active: 0.9927, clearCoded: 0.9669, clearDrawn: 0.9389, clearBinom: 1.0000 },
+    { tau: 0.91, rep: 1.8256, active: 0.9935, clearCoded: 0.9745, clearDrawn: 0.9564, clearBinom: 1.0000 },
+    { tau: 0.90, rep: 2.0110, active: 0.9942, clearCoded: 0.9803, clearDrawn: 0.9693, clearBinom: 1.0000 }
+  ];
+
+  var DELTA_STEPS = [
+    { delta: 0.01, repAt99: 0.3338 },
+    { delta: 0.02, repAt99: 0.3249 },
+    { delta: 0.05, repAt99: 0.2998 },
+    { delta: 0.10, repAt99: 0.2623 },
+    { delta: 0.15, repAt99: 0.2294 },
+    { delta: 0.25, repAt99: 0.1753 },
+    { delta: 0.35, repAt99: 0.1342 },
+    { delta: 0.50, repAt99: 0.0908 },
+    { delta: 0.75, repAt99: 0.0497 },
+    { delta: 1.00, repAt99: 0.0299 }
+  ];
+
+  /* Exact 30-seed bootstrap data from results_all3/headline_bootstrap.json */
+  var PID_SCENARIOS = {
+    regulatory: {
+      label: 'Regulatory withdrawal (sustained)',
+      baseRatio: 3.19, baseCI: [1.32, 5.34], baseStaticCV: 0.307, basePidCV: 0.096, baseStaticN: 7138, basePidN: 8343,
+      opRatio: 6.41, opCI: [4.14, 9.46], opStaticCV: 0.513, opPidCV: 0.080, opStaticN: 4558, opPidN: 8667,
+      delta: '+3.22x', deltaSub: '95% CI [+0.10x, +6.85x] · Widens under sustained withdrawal'
+    },
+    competitor: {
+      label: 'Competitor shock (one-off month 18)',
+      baseRatio: 5.53, baseCI: [3.16, 8.21], baseStaticCV: 0.520, basePidCV: 0.094, baseStaticN: 5471, basePidN: 8827,
+      opRatio: 5.37, opCI: [3.51, 7.67], opStaticCV: 0.459, opPidCV: 0.085, opStaticN: 4722, opPidN: 9389,
+      delta: '-0.16x', deltaSub: '95% CI [-3.47x, +2.83x] · Null change (controller already absorbs shock)'
+    },
+    bear: {
+      label: 'Bear market (prolonged price contraction)',
+      baseRatio: 4.34, baseCI: [2.72, 6.23], baseStaticCV: 0.371, basePidCV: 0.085, baseStaticN: 6683, basePidN: 8741,
+      opRatio: 4.95, opCI: [3.31, 7.02], opStaticCV: 0.443, opPidCV: 0.089, opStaticN: 4912, opPidN: 8914,
+      delta: '+0.61x', deltaSub: '95% CI [-1.84x, +3.12x] · Tight tracking preserved in both arms'
+    }
+  };
+
+  function initB4Explorer(){
+    var root = document.getElementById('b4-oprisk-explorer');
+    if(!root) return;
+
+    var tauInput = document.getElementById('b4-tau');
+    var deltaInput = document.getElementById('b4-delta');
+    var tauValEl = document.getElementById('b4-tau-val');
+    var deltaValEl = document.getElementById('b4-delta-val');
+    var mRep = document.getElementById('b4-m-rep');
+    var mRepSub = document.getElementById('b4-m-rep-sub');
+    var mVote = document.getElementById('b4-m-vote');
+    var mVoteSub = document.getElementById('b4-m-vote-sub');
+    var mClear = document.getElementById('b4-m-clear');
+    var mClearSub = document.getElementById('b4-m-clear-sub');
+    var repSvg = document.getElementById('b4-rep-svg');
+    var pidSvg = document.getElementById('b4-pid-svg');
+
+    var curScen = 'regulatory';
+
+    function renderReputation(){
+      var tIdx = tauInput ? parseInt(tauInput.value, 10) || 0 : 0;
+      var dIdx = deltaInput ? parseInt(deltaInput.value, 10) || 5 : 5;
+      var tRow = TAU_STEPS[tIdx] || TAU_STEPS[0];
+      var dRow = DELTA_STEPS[dIdx] || DELTA_STEPS[5];
+
+      /* Scale reputation when incident penalty delta_rep varies relative to baseline 0.25 */
+      var deltaScale = dRow.repAt99 / 0.1753;
+      var adjRep = Math.min(5.0, tRow.rep * (tIdx === 0 ? deltaScale : (1 + (deltaScale - 1) * 0.38)));
+      var voteMult = Math.pow(1 + adjRep, 2);
+
+      if(tauValEl) tauValEl.textContent = tRow.tau.toFixed(2) + (tRow.tau === 0.99 ? ' (default)' : (tRow.tau === 0.95 ? ' (recommended)' : ''));
+      if(deltaValEl) deltaValEl.textContent = dRow.delta.toFixed(2) + (dRow.delta === 0.25 ? ' (baseline)' : '');
+
+      if(mRep) mRep.textContent = adjRep.toFixed(2);
+      if(mRepSub){
+        if(adjRep < 0.45){
+          mRepSub.textContent = 'Collapsed (governance disabled; baseline 0.28 without op-risk)';
+        } else if(adjRep < 1.15){
+          mRepSub.textContent = 'Restored (~1.0 steady state; ' + (tRow.active * 100).toFixed(1) + '% operators above floor)';
+        } else {
+          mRepSub.textContent = 'High recovery (' + (tRow.active * 100).toFixed(1) + '% operators active; steady state ~' + adjRep.toFixed(1) + ')';
+        }
+      }
+      if(mVote) mVote.textContent = voteMult.toFixed(2) + 'x';
+      if(mVoteSub) mVoteSub.textContent = 'At R = ' + adjRep.toFixed(2) + ' vs 1.00x floor (36.0x ceiling at R = 5.0)';
+      if(mClear) mClear.textContent = (tRow.clearCoded * 100).toFixed(1) + '%';
+      if(mClearSub){
+        mClearSub.textContent = 'As-coded episodic (1.1d mean) · ' +
+          (tRow.clearDrawn * 100).toFixed(1) + '% drawn (1.5d) · ' +
+          (tRow.clearBinom * 100).toFixed(1) + '% binomial (0.45d)';
+      }
+
+      if(!repSvg) return;
+      var W = 880, H = 290, padL = 56, padR = 54, padT = 24, padB = 42;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var maxRep = 2.5;
+
+      function xOf(i){ return padL + (i / (TAU_STEPS.length - 1)) * plotW; }
+      function yRep(v){ return padT + plotH - (Math.min(maxRep, v) / maxRep) * plotH; }
+      function yPct(p){ return padT + plotH - p * plotH; }
+
+      var svg = '';
+      /* Horizontal grid lines */
+      [0, 0.5, 1.0, 1.5, 2.0, 2.5].forEach(function(gv){
+        var y = yRep(gv).toFixed(1);
+        var pct = Math.round((gv / maxRep) * 100);
+        svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="3 3"/>';
+        svg += '<text x="' + (padL - 8) + '" y="' + (parseFloat(y) + 4) + '" text-anchor="end" font-size="11" fill="currentColor" opacity="0.65">' + gv.toFixed(1) + '</text>';
+        svg += '<text x="' + (W - padR + 8) + '" y="' + (parseFloat(y) + 4) + '" text-anchor="start" font-size="11" fill="currentColor" opacity="0.65">' + pct + '%</text>';
+      });
+
+      /* Paths for Reputation (baseline delta=0.25), Adjusted Reputation, and As-Coded Clearance % */
+      var repPath = '', codedPath = '', drawnPath = '';
+      TAU_STEPS.forEach(function(s, i){
+        var x = xOf(i).toFixed(1);
+        var rVal = Math.min(maxRep, s.rep * (i === 0 ? deltaScale : (1 + (deltaScale - 1) * 0.38)));
+        repPath += (i === 0 ? 'M' : 'L') + x + ',' + yRep(rVal).toFixed(1) + ' ';
+        codedPath += (i === 0 ? 'M' : 'L') + x + ',' + yPct(s.clearCoded).toFixed(1) + ' ';
+        drawnPath += (i === 0 ? 'M' : 'L') + x + ',' + yPct(s.clearDrawn).toFixed(1) + ' ';
+      });
+
+      svg += '<path d="' + drawnPath + '" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4"/>';
+      svg += '<path d="' + codedPath + '" fill="none" stroke="#10b981" stroke-width="2.4"/>';
+      svg += '<path d="' + repPath + '" fill="none" stroke="#b45309" stroke-width="3"/>';
+
+      /* Highlight active tau column */
+      var selX = xOf(tIdx).toFixed(1);
+      var selYRep = yRep(adjRep).toFixed(1);
+      var selYCoded = yPct(tRow.clearCoded).toFixed(1);
+      svg += '<line x1="' + selX + '" y1="' + padT + '" x2="' + selX + '" y2="' + (H - padB) + '" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3"/>';
+      svg += '<circle cx="' + selX + '" cy="' + selYRep + '" r="5.5" fill="#b45309"/>';
+      svg += '<circle cx="' + selX + '" cy="' + selYCoded + '" r="5" fill="#10b981"/>';
+
+      /* X-axis ticks */
+      TAU_STEPS.forEach(function(s, i){
+        var x = xOf(i).toFixed(1);
+        var bold = i === tIdx ? ' font-weight="700" opacity="1"' : ' opacity="0.7"';
+        svg += '<text x="' + x + '" y="' + (H - 16) + '" text-anchor="middle" font-size="11.5" fill="currentColor"' + bold + '>' + s.tau.toFixed(2) + '</text>';
+      });
+
+      /* Legend */
+      svg += '<g transform="translate(' + (padL + 8) + ',' + (padT + 8) + ')" font-size="11.5" fill="currentColor">' +
+        '<rect x="0" y="-9" width="12" height="3" fill="#b45309"/><text x="17" y="-4">Year-5 avg reputation (left axis, 0 to 2.5)</text>' +
+        '<rect x="255" y="-9" width="12" height="3" fill="#10b981"/><text x="272" y="-4">Count-rule clearance as coded (right axis, %)</text>' +
+        '<rect x="545" y="-9" width="12" height="2" fill="#94a3b8"/><text x="562" y="-4">Drawn-duration clearance (%)</text>' +
+        '</g>';
+
+      repSvg.innerHTML = svg;
+    }
+
+    function renderPid(){
+      var s = PID_SCENARIOS[curScen] || PID_SCENARIOS.regulatory;
+      var baseRatioEl = document.getElementById('b4-p-base-ratio');
+      var baseSubEl = document.getElementById('b4-p-base-sub');
+      var opRatioEl = document.getElementById('b4-p-op-ratio');
+      var opSubEl = document.getElementById('b4-p-op-sub');
+      var deltaEl = document.getElementById('b4-p-delta');
+      var deltaSubEl = document.getElementById('b4-p-delta-sub');
+
+      if(baseRatioEl) baseRatioEl.textContent = s.baseRatio.toFixed(2) + 'x';
+      if(baseSubEl) baseSubEl.textContent = 'Static CV ' + s.baseStaticCV.toFixed(3) + ' vs PID CV ' + s.basePidCV.toFixed(3) + ' · 95% CI [' + s.baseCI[0].toFixed(2) + 'x, ' + s.baseCI[1].toFixed(2) + 'x]';
+      if(opRatioEl) opRatioEl.textContent = s.opRatio.toFixed(2) + 'x';
+      if(opSubEl) opSubEl.textContent = 'Static CV ' + s.opStaticCV.toFixed(3) + ' vs PID CV ' + s.opPidCV.toFixed(3) + ' · 95% CI [' + s.opCI[0].toFixed(2) + 'x, ' + s.opCI[1].toFixed(2) + 'x]';
+      if(deltaEl) deltaEl.textContent = s.delta;
+      if(deltaSubEl) deltaSubEl.textContent = s.deltaSub;
+
+      if(!pidSvg) return;
+      var W = 880, H = 260, padL = 190, padR = 90, barW = W - padL - padR;
+      var maxCV = 0.60;
+      function wOf(cv){ return Math.max(4, (cv / maxCV) * barW); }
+
+      var rows = [
+        { label: 'Economic-only · Static', cv: s.baseStaticCV, n: s.baseStaticN, color: '#94a3b8' },
+        { label: 'Economic-only · PID', cv: s.basePidCV, n: s.basePidN, color: '#0ea5e9' },
+        { label: 'With op-risk · Static', cv: s.opStaticCV, n: s.opStaticN, color: '#dc2626' },
+        { label: 'With op-risk · PID', cv: s.opPidCV, n: s.opPidN, color: '#10b981' }
+      ];
+
+      var svg = '';
+      rows.forEach(function(r, idx){
+        var y = 34 + idx * 50;
+        var bw = wOf(r.cv).toFixed(1);
+        svg += '<text x="' + (padL - 12) + '" y="' + (y + 18) + '" text-anchor="end" font-size="12.5" font-weight="600" fill="currentColor">' + r.label + '</text>';
+        svg += '<rect x="' + padL + '" y="' + y + '" width="' + barW + '" height="26" rx="4" fill="currentColor" fill-opacity="0.06"/>';
+        svg += '<rect x="' + padL + '" y="' + y + '" width="' + bw + '" height="26" rx="4" fill="' + r.color + '"/>';
+        svg += '<text x="' + (padL + parseFloat(bw) + 10) + '" y="' + (y + 18) + '" font-size="12" font-weight="600" fill="currentColor">CV ' + r.cv.toFixed(3) + ' (mean N = ' + r.n.toLocaleString() + ')</text>';
+      });
+
+      pidSvg.innerHTML = svg;
+    }
+
+    if(tauInput) tauInput.addEventListener('input', renderReputation);
+    if(deltaInput) deltaInput.addEventListener('input', renderReputation);
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-b4-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-b4-tab');
+        root.querySelectorAll('button[data-b4-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pRep = document.getElementById('b4-panel-reputation');
+        var pPid = document.getElementById('b4-panel-pid');
+        if(pRep) pRep.hidden = target !== 'reputation';
+        if(pPid) pPid.hidden = target !== 'pid';
+        if(target === 'pid') renderPid(); else renderReputation();
+        return;
+      }
+      var scenBtn = e.target.closest('button[data-b4-scen]');
+      if(scenBtn){
+        curScen = scenBtn.getAttribute('data-b4-scen') || 'regulatory';
+        root.querySelectorAll('button[data-b4-scen]').forEach(function(b){
+          var on = b === scenBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderPid();
+      }
+    });
+
+    renderReputation();
+    renderPid();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initB4Explorer);
+  } else {
+    initB4Explorer();
+  }
+})();
+

@@ -288,8 +288,8 @@
 
       <h1 id="paper-title">Adaptive Tokenomics: A Systems Engineering Approach to Programmable Incentive Design</h1>
 
-      <p class="paper-metadata-strip">~35 min read · ~20,900 words · SSRN</p>
-      <p class="paper-description-note">Description current as of March 2026.</p>
+      <p class="paper-metadata-strip">~35 min read · 111-page PDF · ~20,900 words · SSRN</p>
+      <p class="paper-description-note">Description current as of October 2026 (v2.4).</p>
 
       <p class="paper-thesis">Token design is best understood as systems engineering. MeshNet combines productive staking, reputation-weighted governance, burn-mint value capture, constitutional governance, and PID-controlled adaptive emissions (PID is a proportional, integral, derivative controller, a standard feedback-control architecture used in engineering to stabilize systems against disturbance), then stress-tests the full stack across five years of adverse scenarios. The result is that integrated design reveals which mechanisms earn their complexity, which failure modes only appear under stress, and where bootstrapping economics diverge from long-run theory. Results are mechanism demonstrations under stated assumptions; they are not deployment forecasts. MeshNet is a fictional but empirically parameterized DePIN network used throughout this paper to illustrate the framework; it is not a real operator or deployed protocol.</p>
 
@@ -466,7 +466,7 @@
         <h2>Methods / Data</h2>
         <p>Five-year agent-based simulation of MeshNet's full token economy across four scenarios: bull, bear, competitor entry, and regulatory shock.</p>
         <p><strong>Core ensemble:</strong> 240 runs (30 seeds x 8 configurations).</p>
-        <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo.</p>
+        <p><strong>Additional simulation batteries:</strong> PID gain sensitivity (60 configurations across 5 Kp, 5 Ki, and 5 Kd values), slashing sensitivity (40 settings), cadence variation (16 evaluation-interval variants), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. In the released model, the Treasury Yield Stabilizer is evaluated only while the treasury holds over 2 percent of supply and fires in none of the eight single-seed configurations (ensemble and sensitivity runs not measured).</p>
         <p><strong>Empirical calibration:</strong> Token price modeled as an Ornstein-Uhlenbeck process (a mean-reverting random walk, meaning the price fluctuates but is pulled back toward a long-run level) fitted to HNT daily returns from May 2023 to February 2026 (kappa = 2.82, sigma = 0.049). Operator churn assumptions calibrated to Helium network contraction data. Cross-sectional governance concentration patterns referenced in this paper are addressed empirically in the companion paper <a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>, which uses a 52-protocol cross-section spanning DePIN, DeFi, L1/L2 infrastructure, and social tokens with a five-class exclusion typology removing 133 protocol-controlled addresses across 38 protocols.</p>
 
         <div class="paper-key-numbers">
