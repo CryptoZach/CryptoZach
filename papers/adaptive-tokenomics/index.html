@@ -314,7 +314,7 @@
         <span class="brief-finding-num" aria-hidden="true">2</span>
         <div class="brief-finding-copy">
           <h3>Under sustained demand contraction, PID can underperform on average</h3>
-          <p>because the controller applies a supply-side lever to a demand-side problem: integral wind-up raises emissions, emissions dilute price, and lower token-denominated yield accelerates operator exit. The paper identifies anti-windup clamping with regime-change detection as the engineering fix. No tested parameterization produces a death spiral in the simulated scenarios.</p>
+          <p>The controller applies a supply-side lever to a demand-side problem: integral wind-up raises emissions, emissions dilute price, and lower token-denominated yield accelerates operator exit. The paper identifies anti-windup clamping with regime-change detection as the engineering fix. No tested parameterization produces a death spiral in the simulated scenarios.</p>
           <p class="brief-what-this-means"><strong>What this means:</strong> A controller that cannot tell a supply shortfall from a demand collapse needs guardrails, so teams should ship anti-windup and regime detection before relying on adaptive emissions in a downturn.</p>
         </div>
       </div>
@@ -322,7 +322,7 @@
         <span class="brief-finding-num" aria-hidden="true">3</span>
         <div class="brief-finding-copy">
           <h3>During bootstrapping, slashing dominates supply dynamics</h3>
-          <p>burns remain negligible (burn-mint equilibrium peaks at 0.0061 over the five-year horizon). Burn-mint equilibrium is the right long-run framework, but the model does not reach that horizon within five years. The 240-run ensemble (30 seeds across 8 configurations) reveals path dependence that single-seed results mask.</p>
+          <p>Burns remain negligible (burn-mint equilibrium peaks at 0.0061 over the five-year horizon) while 269M to 354M tokens move to the treasury through slashing penalties. Burn-mint equilibrium is the right long-run framework, and the 240-run ensemble (30 seeds across 8 configurations) reveals path dependence that single-seed results mask.</p>
           <p class="brief-what-this-means"><strong>What this means:</strong> Early-stage protocols should treat burn-mint equilibrium as a maturity target rather than a health gauge, and read economic behavior from the full seed ensemble instead of any single run.</p>
         </div>
       </div>
@@ -427,6 +427,91 @@
         <p class="artifact-note">Core ensemble: 240 runs (30 seeds x 8 configurations). Additional batteries: PID gain sensitivity (60 configurations), slashing sensitivity (40 settings), cadence variation (16 intervals), Ki non-monotonicity analysis, Ki x Kd interaction tests, and a 200-run wash-trading Monte Carlo. Replication: <a href="https://github.com/CryptoZach/Tokenomics-as-Systems-Engineering-Protocols-Labor-and-the-Design-of-Autonomous-Systems">GitHub</a>. Calibration sources: manufacturer pricing, Messari, ByteTree, Dune Analytics.</p>
       </section>
 
+      <figure class="b4-explorer" id="b1-meshnet-explorer" aria-labelledby="b1-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive 240-Run MeshNet Ensemble Explorer</p>
+            <h4 id="b1-exp-title">Compare 30-seed PID vs static emission outcomes across 4 scenarios and inspect the evaluation-cadence sweep</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Adaptive Tokenomics explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-b1-tab="ensemble">1. 240-run ensemble (PID vs static)</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-b1-tab="cadence">2. Evaluation cadence &amp; supply dynamics</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="b1-panel-ensemble" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Select macro &amp; competitive scenario (30 seeds per arm):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="MeshNet simulation scenario">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b1-scen="competitor">Competitor poach (month 18)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b1-scen="regulatory">Regulatory cost shock (+30%)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b1-scen="bear">Bear market (demand contraction)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b1-scen="bull">Bull market (baseline growth)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Node-count dispersion (CV)</span>
+              <strong class="b4-exp__val" id="b1-m-cv">0.087 PID vs 0.544 Static</strong>
+              <span class="b4-exp__sub" id="b1-m-cv-sub">6.25x variance compression across 30 seeds; PID price CV 0.532 vs Static 0.921</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">5th-percentile tail floor</span>
+              <strong class="b4-exp__val" id="b1-m-p5">8,880 vs 1,049 nodes</strong>
+              <span class="b4-exp__sub" id="b1-m-p5-sub">PID preserves a viable network on worst-case paths while static collapses (5th-pct price $1.09 vs $0.04)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">5-year supply &amp; slashing</span>
+              <strong class="b4-exp__val" id="b1-m-sup">354M vs 308M slashed</strong>
+              <span class="b4-exp__sub" id="b1-m-sup-sub">Higher operator retention under PID generates 15% more slashing (-73.6% vs -66.1% circulating supply)</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b1-ens-svg" viewBox="0 0 880 265" width="880" height="265" role="img" aria-label="30-seed PID versus static node-count distribution across scenarios"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Section 8 and Appendix A.4 to A.6 of <em>Adaptive Tokenomics</em> (SSRN 6364158; 240-run ensemble, 30 seeds &times; 8 configurations, target N* = 10,000 nodes).</p>
+        </div>
+
+        <div class="b4-exp__panel" id="b1-panel-cadence" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Inspect sensitivity battery (Appendix A.7 to A.11):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Sensitivity battery selector">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b1-bat="cadence">Evaluation interval sweep (7d, 14d, 21d, 30d)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b1-bat="mechanisms">Bootstrapping supply, PoC defense &amp; reputation</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Optimal review cadence</span>
+              <strong class="b4-exp__val">21-day (15.5% dev)</strong>
+              <span class="b4-exp__sub">Outperforms 14-day default (22.0% dev) and 30-day (21.0% dev) with fewest floor-pinning steps (146 vs 728 at 7d)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Bootstrapping supply driver</span>
+              <strong class="b4-exp__val">234M to 354M slashed</strong>
+              <span class="b4-exp__sub">Slashing dominates across all 40 penalty settings while burns remain &lt;0.05% of supply (peak BME 0.0061)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">PoC &amp; reputation defense</span>
+              <strong class="b4-exp__val">0.09% fraud &middot; Gini 0.72</strong>
+              <span class="b4-exp__sub">Proof-of-Coverage cuts wash-trading capture from 3.0% to 0.09%; quadratic reputation compresses Gini 0.89 &rarr; 0.72</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b1-cad-svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="PID evaluation cadence sweep and mechanism battery comparison"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Appendix A.7, A.8, and A.11 of <em>Adaptive Tokenomics</em> (SSRN 6364158; 16 cadence runs, 40 slashing runs, and 200 Monte Carlo wash-trading runs).</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>What problem it solves</h2>
         <p>Most token models are built by precedent and pattern-matching. This paper treats token design as an integrated engineering problem: how to coordinate autonomous agents under uncertainty, distribute ownership to contributors without centralized enforcement, and test whether the combined mechanism stack still works once it is exposed to adversarial conditions and macro shocks. MeshNet is the design laboratory: a fictional DePIN network whose parameters are drawn from operational networks (Helium, Filecoin, GEODNET) and whose results identify reusable failure modes and design patterns with no single mandated configuration across runs.</p>
@@ -474,16 +559,11 @@
           <p><span class="key-num" aria-hidden="true">1</span><span class="key-num-copy"><strong>Ensemble</strong><br>
           240 runs (30 seeds x 8 configurations), plus additional sensitivity and adversarial batteries</span></p>
           <p><span class="key-num" aria-hidden="true">2</span><span class="key-num-copy"><strong>Competitor shock (the insurance result)</strong><br>
-          Variance compression: coefficient of variation 0.544 to 0.087<br>
-          5th-percentile outcome: 1,049 to 8,880 nodes</span></p>
+          Variance compression: coefficient of variation 0.544 to 0.087 &middot; 5th-percentile outcome: 1,049 to 8,880 nodes</span></p>
           <p><span class="key-num" aria-hidden="true">3</span><span class="key-num-copy"><strong>Bear scenario (the tradeoff)</strong><br>
-          PID: 5,536 nodes, 277.3M tokens emitted<br>
-          Static: 7,401 nodes, 176.4M tokens emitted<br>
-          PID underperforms on average because emissions dilute price under demand contraction</span></p>
+          PID: 5,536 nodes, 277.3M tokens emitted &middot; Static: 7,401 nodes, 176.4M tokens emitted &middot; PID underperforms on average because emissions dilute price under demand contraction</span></p>
           <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Bootstrapping supply dynamics</strong><br>
-          Slashing: 269 to 354M tokens moved to treasury across scenarios<br>
-          Burns: less than 0.05% of supply dynamics<br>
-          Burn-mint equilibrium peak: 0.0061 (long-run framework; model does not reach maturity horizon)</span></p>
+          Slashing: 269 to 354M tokens moved to treasury across scenarios &middot; Burns: less than 0.05% of supply dynamics &middot; Burn-mint equilibrium peak: 0.0061 (long-run framework; model does not reach maturity horizon)</span></p>
           <p><span class="key-num" aria-hidden="true">5</span><span class="key-num-copy"><strong>Cadence</strong><br>
           21-day review interval achieves 15.5% mean deviation from target versus 22.0% for the default 14-day cadence</span></p>
           <p><span class="key-num" aria-hidden="true">6</span><span class="key-num-copy"><strong>Adversarial defense</strong><br>

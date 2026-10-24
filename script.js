@@ -9131,5 +9131,221 @@
   }
 })();
 
+/* ==========================================================================
+   Adaptive Tokenomics 240-Run MeshNet Ensemble Explorer (/papers/adaptive-tokenomics/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* Exact 240-run ensemble metrics from Section 8 & Appendix A.4 to A.6 */
+  var B1_SCENARIOS = {
+    competitor: {
+      cv: '0.087 PID vs 0.544 Static',
+      cvSub: '6.25x variance compression across 30 seeds; PID price CV 0.532 vs Static 0.921',
+      p5: '8,880 vs 1,049 nodes',
+      p5Sub: 'PID preserves a viable network on worst-case paths while static collapses (5th-pct price $1.09 vs $0.04)',
+      sup: '354M vs 308M slashed',
+      supSub: 'Higher operator retention under PID generates 15% more slashing (-73.6% vs -66.1% circulating supply)',
+      pidMean: 10240, pidP5: 8880, pidP95: 11559,
+      statMean: 8610, statP5: 1049, statP95: 11934
+    },
+    regulatory: {
+      cv: '0.093 PID vs 0.229 Static',
+      cvSub: '2.46x variance compression under a 30% operating-cost shock at month 18',
+      p5: '7,920 vs 5,180 nodes',
+      p5Sub: 'Single-seed PID finishes at 9,152 nodes (8.5% deviation from N* = 10,000 target)',
+      sup: '297M vs 281M slashed',
+      supSub: 'Both arms net deflationary (-51.6% PID vs -52.4% Static circulating supply)',
+      pidMean: 9152, pidP5: 7920, pidP95: 10480,
+      statMean: 8890, statP5: 5180, statP95: 11934
+    },
+    bear: {
+      cv: '0.219 PID vs 0.958 Static',
+      cvSub: '4.37x variance compression; PID pays a dilution premium to bound worst-case collapse',
+      p5: '4,429 vs 709 nodes',
+      p5Sub: 'PID 5th-95th band [4,429, 8,194] (single-seed 5,536) vs Static [709, 11,028] (single-seed 7,401)',
+      sup: '277.3M vs 176.4M emitted',
+      supSub: 'Integral wind-up emits +57% more tokens (+3.9% inflation vs -54.7% static); anti-windup clamp recommended',
+      pidMean: 5536, pidP5: 4429, pidP95: 8194,
+      statMean: 7401, statP5: 709, statP95: 11028
+    },
+    bull: {
+      cv: 'Identical convergence (~0.01)',
+      cvSub: 'Strong demand economics drive operator entry regardless of emission schedule',
+      p5: '11,934 vs 11,934 nodes',
+      p5Sub: 'Both arms converge ~19.3% above the 10,000-node target across all 30 seeds',
+      sup: '0.25x PID floor from mo. 35',
+      supSub: 'PID steers across 66-74% of range in months 0-35, then pins at 0.25x floor (27,397/day) to prevent dilution',
+      pidMean: 11934, pidP5: 11850, pidP95: 11934,
+      statMean: 11934, statP5: 11850, statP95: 11934
+    }
+  };
+
+  function initB1Explorer(){
+    var root = document.getElementById('b1-meshnet-explorer');
+    if(!root) return;
+
+    var curScen = 'competitor';
+    var curBat = 'cadence';
+    var ensSvg = document.getElementById('b1-ens-svg');
+    var cadSvg = document.getElementById('b1-cad-svg');
+
+    function renderEnsemble(){
+      var s = B1_SCENARIOS[curScen] || B1_SCENARIOS.competitor;
+      var mCv = document.getElementById('b1-m-cv');
+      var mCvSub = document.getElementById('b1-m-cv-sub');
+      var mP5 = document.getElementById('b1-m-p5');
+      var mP5Sub = document.getElementById('b1-m-p5-sub');
+      var mSup = document.getElementById('b1-m-sup');
+      var mSupSub = document.getElementById('b1-m-sup-sub');
+
+      if(mCv) mCv.textContent = s.cv;
+      if(mCvSub) mCvSub.textContent = s.cvSub;
+      if(mP5) mP5.textContent = s.p5;
+      if(mP5Sub) mP5Sub.textContent = s.p5Sub;
+      if(mSup) mSup.textContent = s.sup;
+      if(mSupSub) mSupSub.textContent = s.supSub;
+
+      if(!ensSvg) return;
+      var W = 880, H = 265, padL = 175, padR = 205, padT = 38;
+      var plotW = W - padL - padR;
+      var maxN = 12500;
+      function xOf(n){ return padL + (Math.min(maxN, Math.max(0, n)) / maxN) * plotW; }
+
+      var svg = '';
+      svg += '<g transform="translate(' + padL + ', 16)" font-size="11" fill="currentColor">' +
+        '<rect x="0" y="-8" width="16" height="8" rx="2" fill="#10b981" fill-opacity="0.35" stroke="#10b981"/><text x="22" y="0">5th to 95th percentile node-count band (30 seeds)</text>' +
+        '<circle cx="315" cy="-4" r="4.5" fill="#10b981"/><text x="325" y="0">5th-percentile worst-case floor</text>' +
+        '<circle cx="515" cy="-4" r="4.5" fill="var(--bg)" stroke="currentColor" stroke-width="2"/><text x="525" y="0">Mean / baseline outcome</text>' +
+        '</g>';
+
+      [0, 2500, 5000, 7500, 10000, 12500].forEach(function(tv){
+        var x = xOf(tv).toFixed(1);
+        var isTarget = tv === 10000;
+        svg += '<line x1="' + x + '" y1="' + (padT - 4) + '" x2="' + x + '" y2="' + (H - 24) + '" stroke="' + (isTarget ? '#0ea5e9' : 'currentColor') + '" stroke-opacity="' + (isTarget ? '0.65' : '0.12') + '" stroke-dasharray="' + (isTarget ? '5 3' : '3 3') + '"/>';
+        svg += '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10.5" font-weight="' + (isTarget ? '700' : '400') + '" fill="' + (isTarget ? '#0ea5e9' : 'currentColor') + '" opacity="' + (isTarget ? '0.95' : '0.65') + '">' + (isTarget ? '10,000 (Target N*)' : tv.toLocaleString()) + '</text>';
+      });
+
+      var arms = [
+        { label: 'PID Adaptive Controller', p5: s.pidP5, mean: s.pidMean, p95: s.pidP95, col: '#10b981' },
+        { label: 'Static Emission (5%/yr taper)', p5: s.statP5, mean: s.statMean, p95: s.statP95, col: '#d97706' }
+      ];
+
+      arms.forEach(function(a, idx){
+        var y = padT + 22 + idx * 78;
+        var x5 = xOf(a.p5);
+        var xM = xOf(a.mean);
+        var x95 = xOf(a.p95);
+        var spanW = Math.max(6, x95 - x5).toFixed(1);
+
+        svg += '<text x="' + (padL - 12) + '" y="' + (y + 18) + '" text-anchor="end" font-size="12" font-weight="700" fill="currentColor">' + a.label + '</text>';
+        svg += '<rect x="' + padL + '" y="' + (y + 2) + '" width="' + plotW + '" height="24" rx="5" fill="currentColor" fill-opacity="0.05"/>';
+        svg += '<rect x="' + x5.toFixed(1) + '" y="' + (y + 4) + '" width="' + spanW + '" height="20" rx="4" fill="' + a.col + '" fill-opacity="0.28" stroke="' + a.col + '" stroke-width="1.5"/>';
+        svg += '<circle cx="' + x5.toFixed(1) + '" cy="' + (y + 14) + '" r="5.5" fill="' + a.col + '"/>';
+        svg += '<circle cx="' + xM.toFixed(1) + '" cy="' + (y + 14) + '" r="5.5" fill="var(--bg)" stroke="currentColor" stroke-width="2.2"/>';
+
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 12) + '" font-size="11" font-weight="700" fill="' + a.col + '">5th pct: ' + a.p5.toLocaleString() + ' nodes</text>';
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 26) + '" font-size="10.5" fill="currentColor" opacity="0.8">Mean: ' + a.mean.toLocaleString() + ' \u00b7 95th: ' + a.p95.toLocaleString() + '</text>';
+      });
+
+      ensSvg.innerHTML = svg;
+    }
+
+    function renderCadence(){
+      if(!cadSvg) return;
+      var W = 880, H = 260, padL = 220, padR = 230, padT = 28;
+      var plotW = W - padL - padR;
+      var svg = '';
+
+      if(curBat === 'cadence'){
+        var cads = [
+          { label: '7-day cadence (rapid)', dev: 16.0, col: '#d97706', note: '16.0% dev \u00b7 76.4K/d vol \u00b7 728 floor steps (overreacts)' },
+          { label: '14-day cadence (spec default)', dev: 22.0, col: '#94a3b8', note: '22.0% dev \u00b7 aligns with 14d governance window' },
+          { label: '21-day cadence (optimal)', dev: 15.5, col: '#10b981', note: '15.5% dev (best) \u00b7 62.7K/d vol \u00b7 146 floor steps' },
+          { label: '30-day cadence (slow)', dev: 21.0, col: '#94a3b8', note: '21.0% dev \u00b7 lags 18-month shock recovery' }
+        ];
+        var maxD = 26.0;
+        cads.forEach(function(c, idx){
+          var y = padT + idx * 50;
+          var bw = Math.max(6, (c.dev / maxD) * plotW).toFixed(1);
+          svg += '<text x="' + (padL - 10) + '" y="' + (y + 20) + '" text-anchor="end" font-size="12" font-weight="600" fill="currentColor">' + c.label + '</text>';
+          svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + plotW + '" height="22" rx="4" fill="currentColor" fill-opacity="0.05"/>';
+          svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + bw + '" height="22" rx="4" fill="' + c.col + '"/>';
+          svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 19) + '" font-size="11" font-weight="600" fill="currentColor">' + c.note + '</text>';
+        });
+      } else {
+        var mechs = [
+          { label: 'Slashing treasury inflow (5y)', pct: 95, col: '#0ea5e9', note: '269M to 354M MESH moved to treasury (dominates supply)' },
+          { label: 'Burn-mint equilibrium (5y peak)', pct: 4, col: '#94a3b8', note: 'Peak BME 0.0061 (<0.05% of 5-year supply dynamics)' },
+          { label: 'Wash-trading capture (no PoC)', pct: 60, col: '#dc2626', note: '3.00% fraudulent reward capture without verification' },
+          { label: 'Wash-trading capture (with PoC)', pct: 4, col: '#10b981', note: '0.09% median capture across 200 Monte Carlo runs (-97%)' },
+          { label: 'Voting Gini (quadratic rep)', pct: 72, col: '#10b981', note: 'Compresses raw token Gini 0.89 \u2192 0.72 (20% whale \u2192 ~8% vote)' }
+        ];
+        mechs.forEach(function(m, idx){
+          var y = padT + idx * 42;
+          var bw = Math.max(6, (m.pct / 100) * plotW).toFixed(1);
+          svg += '<text x="' + (padL - 10) + '" y="' + (y + 18) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + m.label + '</text>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + plotW + '" height="18" rx="4" fill="currentColor" fill-opacity="0.05"/>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + bw + '" height="18" rx="4" fill="' + m.col + '"/>';
+          svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 16) + '" font-size="11" font-weight="600" fill="currentColor">' + m.note + '</text>';
+        });
+      }
+
+      cadSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-b1-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-b1-tab');
+        root.querySelectorAll('button[data-b1-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pEns = document.getElementById('b1-panel-ensemble');
+        var pCad = document.getElementById('b1-panel-cadence');
+        if(pEns) pEns.hidden = target !== 'ensemble';
+        if(pCad) pCad.hidden = target !== 'cadence';
+        if(target === 'cadence') renderCadence(); else renderEnsemble();
+        return;
+      }
+
+      var scenBtn = e.target.closest('button[data-b1-scen]');
+      if(scenBtn){
+        curScen = scenBtn.getAttribute('data-b1-scen') || 'competitor';
+        root.querySelectorAll('button[data-b1-scen]').forEach(function(b){
+          var on = b === scenBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderEnsemble();
+        return;
+      }
+
+      var batBtn = e.target.closest('button[data-b1-bat]');
+      if(batBtn){
+        curBat = batBtn.getAttribute('data-b1-bat') || 'cadence';
+        root.querySelectorAll('button[data-b1-bat]').forEach(function(b){
+          var on = b === batBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderCadence();
+      }
+    });
+
+    renderEnsemble();
+    renderCadence();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initB1Explorer);
+  } else {
+    initB1Explorer();
+  }
+})();
+
+
 
 
