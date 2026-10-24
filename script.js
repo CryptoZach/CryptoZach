@@ -7138,7 +7138,30 @@
 
     drawChart();
 
-    /* Fetch the latest JSON series so any data refresh updates the live chart automatically. */
+    /* Fetch the latest JSON series so any data refresh updates the live chart and page commit floor automatically. */
+    function syncLiveCommitFloor(commitsOnRef){
+      if(typeof commitsOnRef !== 'number' || commitsOnRef < 1000) return;
+      var floored = Math.floor(commitsOnRef / 1000) * 1000;
+      var fmt = floored.toLocaleString();
+      var stamp = document.getElementById('ai-scale-stamp');
+      if(stamp) stamp.setAttribute('data-scale-commits-floored', String(floored));
+      var sup = document.querySelector('.ai-hero-support');
+      if(sup) sup.innerHTML = sup.innerHTML.replace(/more than [\d,]+ commits/i, 'more than ' + fmt + ' commits');
+      document.querySelectorAll('.ai-proof-item strong').forEach(function(el){
+        var next = el.nextElementSibling;
+        if(next && /commits observed/i.test(next.textContent)) el.textContent = fmt + '+';
+      });
+      document.querySelectorAll('.ai-metric').forEach(function(card){
+        var lbl = card.querySelector('.ai-metric-label');
+        var val = card.querySelector('.ai-metric-value');
+        if(lbl && val && /commits observed/i.test(lbl.textContent)) val.textContent = fmt + '+';
+      });
+      document.querySelectorAll('.ai-table--scale tbody tr').forEach(function(tr){
+        var th = tr.querySelector('th');
+        var td = tr.querySelector('td.ai-val');
+        if(th && td && /^commits$/i.test(th.textContent.trim())) td.textContent = 'over ' + fmt;
+      });
+    }
     if(typeof fetch === 'function'){
       fetch('/agent-infrastructure/commits-per-3-days.json', { cache: 'no-store' })
         .then(function(r){ return r.ok ? r.json() : null; })
@@ -7146,6 +7169,7 @@
           if(fresh && Array.isArray(fresh.series) && fresh.series.length){
             doc = fresh;
             drawChart();
+            syncLiveCommitFloor(fresh.commits_on_ref);
           }
         })
         .catch(function(){ /* offline or local file; inline JSON already loaded */ });

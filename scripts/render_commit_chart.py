@@ -418,6 +418,14 @@ def main(argv=None) -> int:
                 render_png(expected_svg, PNG_PATH, FONT_PATH)
             except Exception as exc:
                 print(f"render_commit_chart: WARN PNG render skipped ({exc})", file=sys.stderr)
+        if args.refresh and Path(args.workflow_repo).is_dir():
+            wf = Path(args.workflow_repo)
+            draft_script = wf / "scripts" / "draft_site_figures_revision.py"
+            if draft_script.is_file():
+                subprocess.run(
+                    [sys.executable, str(draft_script), "--site", str(ROOT), "--apply", "--draft-agreeing"],
+                    cwd=str(wf), check=False,
+                )
         print(
             f"render_commit_chart: WROTE {doc['bins']} bins through {cap['through']} "
             f"({doc['commits_in_series']:,} commits in series, {doc['commits_on_ref']:,} on ref)."
