@@ -30,7 +30,7 @@ jobs:
     # GitHub Pages is not enabled. Without this guard, the deploy job 404s on
     # any repo without Pages, producing failed-workflow noise on every push.
     if: github.repository == 'CryptoZach/CryptoZach'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -306,7 +306,7 @@ jobs:
   deploy:
     if: github.repository == 'CryptoZach/CryptoZach'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       # Whichever attempt actually deploys sets page_url; the || chain selects it.
