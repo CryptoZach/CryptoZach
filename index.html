@@ -673,7 +673,7 @@ section{position:relative;z-index:1}
    above it, and only the MEASURE is centred, never the body copy. The three-fault
    list is the exception and stays left-aligned at every width: its numerals hang in
    a left gutter, and centred text under a hanging numeral has no edge to hang from. */
-#agent > .agent-lede,#map > .agent-lede{max-width:76ch;margin-inline:auto;text-align:center}
+#agent > .agent-lede,#map > .agent-lede{max-width:96ch;margin-inline:auto;text-align:center}
 #agent > .agent-close,#map > .agent-close{max-width:92ch;margin:1.6rem auto 0;text-align:center}
 #agent > .more,#map > .more{display:table;margin:2rem auto 0}
 
@@ -1810,16 +1810,16 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
 
     <section class="sec" id="agent" style="padding-top:clamp(3rem,6vw,5rem)">
       <div class="sec-head"><span class="label">Agent infrastructure &middot; Control-layer extension</span></div>
-      <h2>Telling an agent no is not the same as stopping it.</h2>
-      <p class="agent-lede">The same control-layer thesis that governs dollar gateways and tokenized securities governs autonomous AI fleets: a token label or a prompt warning is a statement of intent, not an enforcement mechanism. We built an operating layer for concurrent coding and research agents on one codebase, with isolated worktrees, commit-attributed provenance, and safeguards graded by whether behavior changes after they fire.</p>
+      <h2>A warning advises an agent. A hard gate stops it.</h2>
+      <p class="agent-lede">The same control-layer principle that governs digital dollars and tokenized securities applies to AI agent fleets: a token label or a prompt rule states what should happen, while the operating layer decides what can actually execute. We built a coordination layer that lets dozens of AI research and coding agents work on one shared codebase at the same time: each agent runs in its own isolated workspace, every shared result records which session produced it and what evidence it used, and every safeguard is graded by whether agent behavior changes after it fires.</p>
 
       <div class="plate plate--bolted readout">
         <div class="num">13,098<i> / 13,156</i></div>
         <div class="meta">
-          <span class="label">Wrong actions stopped</span>
+          <span class="label">Unsafe actions stopped at the gate</span>
           <div class="bar"><i style="width:99.6%"></i></div>
           
-          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.5rem;max-width:none"><b>Blocked, the action did not happen.</b> Where the wrong action can be named in advance, the layer refuses it instead of describing it. Across 13,156 measured attempts that reached one of these gates on both of the fleet's machines, through 23 October 2026, the system refused the action in 13,098 cases. In the other 58, the agent used the documented override and continued. About 199 times in 200.</p>
+          <p style="font-size:.8125rem;color:var(--ink-mute);margin-top:.5rem;max-width:none"><b>Enforced before execution.</b> When a destructive or invalid command can be identified in advance, a hard gate blocks it outright rather than only printing a warning. Across 13,156 measured attempts that reached one of these gates on both of the fleet's machines, through 23 October 2026, the system stopped the action in 13,098 cases. In the other 58, the agent used the documented override and continued (holding in about 199 of every 200 attempts).</p>
         </div>
       </div>
 

@@ -224,7 +224,7 @@ def read_site_hard_gates() -> dict:
         ai_raw, re.I,
     )
     m_home = re.search(
-        r"Across\s+(\d[\d,]*)\s+measured\s+attempts[^.]*?through\s+(\d+\s+[A-Za-z]+\s+\d{4}),\s+the\s+system\s+refused\s+the\s+action\s+in\s+(\d[\d,]*)\s+cases\.\s*In\s+the\s+other\s+(\d[\d,]*)",
+        r"Across\s+(\d[\d,]*)\s+measured\s+attempts[^.]*?through\s+(\d+\s+[A-Za-z]+\s+\d{4}),\s+the\s+system\s+(?:stopped|refused)\s+the\s+action\s+in\s+(\d[\d,]*)\s+cases\.\s*In\s+the\s+other\s+(\d[\d,]*)",
         home_raw, re.I | re.S,
     )
     m_fw = re.search(
@@ -310,12 +310,12 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
     home_path = ROOT / "index.html"
     home_orig = home_path.read_text(encoding="utf-8")
     home_new = re.sub(
-        r'(<div class="plate plate--bolted readout">\s*<div class="num">)\d[\d,]*<i>\s*/\s*\d[\d,]*</i>(</div>\s*<div class="meta">\s*<span class="label">Wrong actions stopped</span>\s*<div class="bar"><i style="width:)[0-9.]+%("></i></div>)',
+        r'(<div class="plate plate--bolted readout">\s*<div class="num">)\d[\d,]*<i>\s*/\s*\d[\d,]*</i>(</div>\s*<div class="meta">\s*<span class="label">[^<]+</span>\s*<div class="bar"><i style="width:)[0-9.]+%("></i></div>)',
         rf"\g<1>{stopped_s}<i> / {attempts_s}</i>\g<2>{bar_s}\g<3>",
         home_orig,
     )
     home_new = re.sub(
-        r"(Across\s+)\d[\d,]*(\s+measured\s+attempts\s+that\s+reached\s+one\s+of\s+these\s+gates\s+on\s+both\s+of\s+the\s+fleet's\s+machines,\s+through\s+)\d+\s+[A-Za-z]+\s+\d{4}(,\s+the\s+system\s+refused\s+the\s+action\s+in\s+)\d[\d,]*(\s+cases\.\s*In\s+the\s+other\s+)\d[\d,]*(,\s+the\s+agent\s+used\s+the\s+documented\s+override)",
+        r"(Across\s+)\d[\d,]*(\s+measured\s+attempts\s+that\s+reached\s+one\s+of\s+these\s+gates\s+on\s+both\s+of\s+the\s+fleet's\s+machines,\s+through\s+)\d+\s+[A-Za-z]+\s+\d{4}(,\s+the\s+system\s+(?:stopped|refused)\s+the\s+action\s+in\s+)\d[\d,]*(\s+cases\.\s*In\s+the\s+other\s+)\d[\d,]*(,\s+the\s+agent\s+used\s+the\s+documented\s+override)",
         rf"\g<1>{attempts_s}\g<2>{date_human}\g<3>{stopped_s}\g<4>{overridden_s}\g<5>",
         home_new,
     )
