@@ -7198,18 +7198,13 @@
     var resetBtn = document.getElementById('patent-reset');
     var statusEl = document.getElementById('patent-count-status');
     var cardsContainer = section.querySelector('.patent-areas') || document.getElementById('patent-areas-cards');
-    var ledgerContainer = document.getElementById('patent-ledger');
     var emptyEl = document.getElementById('patent-empty');
-    var viewBtns = section.querySelectorAll('button[data-patent-view]');
     var areaChips = section.querySelectorAll('button[data-patent-area]');
 
     var cards = Array.prototype.slice.call(section.querySelectorAll('.patent-area, .patent-area-card'));
     var allRows = [];
-    var curView = 'cards';
     var curArea = 'all';
     var curQuery = '';
-    var sortKey = 'idx';
-    var sortDir = 1;
 
     cards.forEach(function(card, areaIdx){
       card.setAttribute('data-area-index', String(areaIdx));
@@ -7280,47 +7275,10 @@
       }
     });
 
-    function renderLedger(filteredRows){
-      if(!ledgerContainer) return;
-      var sorted = filteredRows.slice().sort(function(a, b){
-        if(sortKey === 'title') return a.title.localeCompare(b.title) * sortDir;
-        if(sortKey === 'area') return (a.areaIdx - b.areaIdx || a.idx - b.idx) * sortDir;
-        if(sortKey === 'serial') return a.appNo.localeCompare(b.appNo) * sortDir;
-        return (a.idx - b.idx) * sortDir;
-      });
-      var arrow = function(k){ return sortKey === k ? (sortDir === 1 ? ' \u2191' : ' \u2193') : ''; };
-      var html = '<div class="letters-table-wrap"><table class="letters-table patent-ledger-table"><thead><tr>' +
-        '<th data-patent-sort="idx" style="cursor:pointer"># ' + arrow('idx') + '</th>' +
-        '<th data-patent-sort="title" style="cursor:pointer">Application subject' + arrow('title') + '</th>' +
-        '<th data-patent-sort="area" style="cursor:pointer">Problem area' + arrow('area') + '</th>' +
-        '<th data-patent-sort="serial" style="cursor:pointer">USPTO serial no.' + arrow('serial') + '</th>' +
-        '</tr></thead><tbody id="patent-ledger-body">';
-      for(var i = 0; i < sorted.length; i++){
-        var r = sorted[i];
-        html += '<tr>' +
-          '<td class="patent-ledger__idx">' + r.idx + '</td>' +
-          '<td class="patent-ledger__title">' + r.title.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</td>' +
-          '<td class="patent-ledger__area"><span class="patent-ledger__area-pill">' + r.areaTitle.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span></td>' +
-          '<td class="patent-ledger__serial"><span class="filing-no" role="button" tabindex="0" data-serial="' + r.appNo + '" title="Click to copy ' + r.appNo + '">' + r.appNo + '</span></td>' +
-          '</tr>';
-      }
-      html += '</tbody></table></div>';
-      ledgerContainer.innerHTML = html;
-      ledgerContainer.querySelectorAll('th[data-patent-sort]').forEach(function(th){
-        th.addEventListener('click', function(){
-          var k = th.getAttribute('data-patent-sort') || 'idx';
-          if(sortKey === k){ sortDir = -sortDir; }
-          else { sortKey = k; sortDir = 1; }
-          applyFilters();
-        });
-      });
-    }
-
     function applyFilters(){
       var q = curQuery.trim().toLowerCase();
       var matchedFilings = 0;
       var matchedAreasMap = {};
-      var filteredRows = [];
 
       allRows.forEach(function(r){
         var areaOk = (curArea === 'all') || (String(r.areaIdx) === curArea);
@@ -7330,7 +7288,6 @@
         if(show){
           matchedFilings++;
           matchedAreasMap[r.areaIdx] = (matchedAreasMap[r.areaIdx] || 0) + 1;
-          filteredRows.push(r);
         }
       });
 
@@ -7340,15 +7297,6 @@
         var showCard = count > 0;
         card.hidden = !showCard;
         if(showCard) visibleAreas++;
-        var badge = card.querySelector('.patent-area-count');
-        if(badge){
-          var totalInCard = card.querySelectorAll('.patent-filing-list li').length;
-          if(q || curArea !== 'all'){
-            badge.textContent = count + ' of ' + totalInCard + (totalInCard === 1 ? ' filing' : ' filings');
-          } else {
-            badge.textContent = totalInCard + (totalInCard === 1 ? ' filing' : ' filings');
-          }
-        }
       });
 
       if(clearBtn) clearBtn.hidden = !q;
@@ -7357,21 +7305,13 @@
 
       if(statusEl){
         if(!isFiltered){
-          statusEl.textContent = 'Showing all ' + allRows.length + ' provisional filings across ' + cards.length + ' problem areas.';
+          statusEl.textContent = 'Showing all ' + allRows.length + ' applications across ' + cards.length + ' problem areas (click any serial number to copy)';
         } else {
-          statusEl.textContent = 'Showing ' + matchedFilings + ' of ' + allRows.length + ' filings across ' + visibleAreas + (visibleAreas === 1 ? ' problem area.' : ' problem areas.');
+          statusEl.textContent = 'Showing ' + matchedFilings + ' of ' + allRows.length + ' applications across ' + visibleAreas + (visibleAreas === 1 ? ' problem area' : ' problem areas');
         }
       }
 
-      if(curView === 'ledger'){
-        if(cardsContainer) cardsContainer.hidden = true;
-        if(ledgerContainer) ledgerContainer.hidden = matchedFilings === 0;
-        renderLedger(filteredRows);
-      } else {
-        if(ledgerContainer) ledgerContainer.hidden = true;
-        if(cardsContainer) cardsContainer.hidden = matchedFilings === 0;
-      }
-
+      if(cardsContainer) cardsContainer.hidden = matchedFilings === 0;
       if(emptyEl) emptyEl.hidden = matchedFilings > 0;
     }
 
@@ -7409,18 +7349,6 @@
           var on = c === chip;
           c.classList.toggle('is-active', on);
           c.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        applyFilters();
-      });
-    });
-
-    viewBtns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        curView = btn.getAttribute('data-patent-view') || 'cards';
-        viewBtns.forEach(function(b){
-          var on = b === btn;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
         applyFilters();
       });

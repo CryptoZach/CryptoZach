@@ -246,10 +246,8 @@
       .patents-page .patent-search{font:inherit;font-size:.9rem;line-height:1.3;min-height:2.3rem;padding:.45rem .75rem;border:1px solid color-mix(in srgb, currentColor 22%, transparent);background:color-mix(in srgb, var(--bg) 60%, transparent);color:inherit;flex:1 1 14rem;min-width:0;box-sizing:border-box}
       .patents-page .patent-search:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       .patents-page .patent-toolbar__actions{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
-      .patents-page .patent-view-group{display:inline-flex;border:1px solid color-mix(in srgb, currentColor 18%, transparent);padding:2px;gap:2px;background:color-mix(in srgb, var(--bg) 55%, transparent)}
       .patents-page .patent-btn{appearance:none;border:1px solid transparent;background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.73rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:.34rem .68rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;line-height:1.25}
       .patents-page .patent-btn:hover{color:var(--text)}
-      .patents-page .patent-btn.is-active{background:color-mix(in srgb, var(--accent) 18%, transparent);border-color:color-mix(in srgb, var(--accent) 55%, transparent);color:var(--text)}
       .patents-page .patent-btn--dl{border-color:color-mix(in srgb, currentColor 18%, transparent);color:var(--accent)}
       .patents-page .patent-chips{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
       .patents-page .patent-chip{appearance:none;border:1px solid color-mix(in srgb, currentColor 16%, transparent);background:transparent;color:var(--text-soft);font-size:.78rem;line-height:1.3;padding:.3rem .65rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
@@ -265,14 +263,9 @@
       .patents-page .patent-area > p strong{font-size:.875rem;margin-bottom:.45rem}
       .patents-page .patent-filings{list-style:none;padding:0;margin:var(--space-sm) 0 0;gap:0}
       .patents-page .patent-filings li{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;margin:0;padding:.55rem 0 .55rem 1rem;border-top:1px dashed color-mix(in srgb, currentColor 14%, transparent);line-height:1.45}
-      .patents-page .filing-no{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--muted);white-space:nowrap;flex-shrink:0;cursor:pointer}
+      .patents-page .filing-no{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--muted);white-space:nowrap;flex-shrink:0;cursor:pointer;transition:color .15s ease}
       .patents-page .filing-no:hover{color:var(--accent)}
-      .patents-page .patent-ledger{margin-top:.5rem;overflow-x:auto;border:1px solid color-mix(in srgb, currentColor 14%, transparent);background:color-mix(in srgb, var(--panel) 80%, transparent)}
-      .patents-page .patent-ledger table{width:100%;border-collapse:collapse;font-size:.85rem}
-      .patents-page .patent-ledger th,.patents-page .patent-ledger td{padding:.65rem .9rem;text-align:left;border-bottom:1px solid color-mix(in srgb, currentColor 10%, transparent);vertical-align:top}
-      .patents-page .patent-ledger th{font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:color-mix(in srgb, var(--accent) 10%, transparent)}
-      .patents-page .patent-ledger td:first-child{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);white-space:nowrap;cursor:pointer}
-      .patents-page .patent-ledger td:nth-child(3){font-size:.8rem;color:var(--muted);white-space:nowrap}
+      .patents-page .filing-no.is-copied{color:var(--status-positive);font-weight:700}
       .patents-page .patent-empty{padding:1.5rem;text-align:center;color:var(--muted);font-size:.9rem;border:1px dashed color-mix(in srgb, currentColor 18%, transparent)}
       .patents-page .patent-status{color:var(--muted);font-size:var(--font-size-min);margin-top:var(--space-xl);max-width:none;text-wrap:pretty}
     </style>
@@ -288,10 +281,6 @@
             <input id="patent-search" class="patent-search" type="search" placeholder="Filter by keyword or USPTO serial (e.g., staging, provenance, 64/071,767)..." autocomplete="off" />
           </div>
           <div class="patent-toolbar__actions">
-            <div class="patent-view-group" role="group" aria-label="Portfolio view">
-              <button type="button" class="patent-btn is-active" data-patent-view="cards" aria-pressed="true">Problem areas</button>
-              <button type="button" class="patent-btn" data-patent-view="ledger" aria-pressed="false">All 41 ledger</button>
-            </div>
             <a class="patent-btn patent-btn--dl" href="/patents/patents.json" download="tokenization-systems-patents.json">JSON</a>
           </div>
         </div>
@@ -382,7 +371,6 @@
             </ul>
           </div>
           </div>
-      <div class="patent-ledger" id="patent-ledger" hidden></div>
       <p class="patent-empty" id="patent-empty" hidden>No patent applications match the current filter.</p>
       <p class="patent-status">All applications are pending before the USPTO; the numbers listed are application numbers. Page current as of October 2026. The research program these filings grew out of is described on the <a href="/agent-infrastructure/">agent infrastructure</a> page.</p>
     </section>
