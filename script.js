@@ -6917,9 +6917,16 @@
       });
     }
 
+    function fmtRangeNoYear(a, b){
+      var da = a.getUTCDate(), ma = a.getUTCMonth();
+      var db = b.getUTCDate(), mb = b.getUTCMonth();
+      if(da === db && ma === mb) return db + ' ' + MONTHS_SHORT[mb];
+      if(ma === mb) return da + '-' + db + ' ' + MONTHS_SHORT[mb];
+      return da + ' ' + MONTHS_SHORT[ma] + '-' + db + ' ' + MONTHS_SHORT[mb];
+    }
+
     function defaultSummaryHtml(){
       if(!points.length) return '';
-      var first = points[0];
       var last = points[points.length - 1];
       var peak = points[0];
       var sumWindow = 0;
@@ -6929,13 +6936,13 @@
       });
       if(curMode === 'cum'){
         return '<strong>' + last.cum.toLocaleString() + '</strong> cumulative commits through ' +
-          fmtRange(last.end, last.end) + ' · Latest 3-day bin <strong>' + last.rawCommits.toLocaleString() +
-          '</strong> (' + fmtRange(last.start, last.end) + ')';
+          fmtRangeNoYear(last.end, last.end) + ' · Latest 3-day bin <strong>' + last.rawCommits.toLocaleString() +
+          '</strong> (' + fmtRangeNoYear(last.start, last.end) + ')';
       }
       var unitLabel = curMode === '1d' ? (points.length + ' days') : (points.length + ' three-day bins');
       return '<strong>' + sumWindow.toLocaleString() + '</strong> commits across ' + unitLabel +
-        ' · Peak <strong>' + peak.value.toLocaleString() + '</strong> (' + fmtRange(peak.start, peak.end) + ')' +
-        ' · Latest <strong>' + last.value.toLocaleString() + '</strong> (' + fmtRange(last.start, last.end) + ')';
+        ' · Peak <strong>' + peak.value.toLocaleString() + '</strong> (' + fmtRangeNoYear(peak.start, peak.end) + ')' +
+        ' · Latest <strong>' + last.value.toLocaleString() + '</strong> (' + fmtRangeNoYear(last.start, last.end) + ')';
     }
 
     function drawChart(){
