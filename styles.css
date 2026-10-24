@@ -21614,18 +21614,112 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 }
 .agent-infra-page .ai-commit-chart{
   margin:0 0 var(--space-md);
+  border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--panel) 85%, transparent);
+  padding:0.85rem 1rem 0.75rem;
 }
-.agent-infra-page .ai-commit-chart img{
+.agent-infra-page .ai-commit-chart img,
+.agent-infra-page .ai-commit-chart svg{
   display:block;
   width:100%;
   height:auto;
   border-radius:var(--radius-sm);
+  user-select:none;
+  -webkit-user-select:none;
 }
-.agent-infra-page .ai-commit-chart figcaption{
+.agent-infra-page .ai-cc__bar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:0.65rem 1rem;
+  margin-bottom:0.65rem;
+}
+.agent-infra-page .ai-cc__readout{
+  font-family:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size:0.78rem;
+  line-height:1.45;
+  color:var(--text-soft);
+  font-variant-numeric:tabular-nums;
+  min-height:1.35em;
+}
+.agent-infra-page .ai-cc__readout strong{
+  color:var(--text);
+  font-weight:700;
+}
+.agent-infra-page .ai-cc__controls{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:0.5rem;
+}
+.agent-infra-page .ai-cc__group{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid var(--line-strong);
+  background:color-mix(in srgb, var(--bg) 65%, transparent);
+  padding:2px;
+  gap:2px;
+}
+.agent-infra-page .ai-cc__btn{
+  appearance:none;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  font-family:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  padding:0.28rem 0.6rem;
+  cursor:pointer;
+  transition:color .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.agent-infra-page .ai-cc__btn:hover{
+  color:var(--text);
+}
+.agent-infra-page .ai-cc__btn.is-active{
+  background:color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color:color-mix(in srgb, var(--accent) 55%, transparent);
+  color:var(--text);
+}
+.agent-infra-page .ai-cc__btn:focus-visible,
+.agent-infra-page .ai-cc__stage:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.agent-infra-page .ai-cc__stage{
+  position:relative;
+  touch-action:pan-y;
+}
+.agent-infra-page .ai-commit-chart figcaption,
+.agent-infra-page .ai-cc__foot{
   margin:0.55rem 0 0;
   font-size:var(--text-xs);
   line-height:1.45;
   color:var(--muted);
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:0.4rem 1rem;
+}
+.agent-infra-page .ai-cc__foot kbd{
+  font-family:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size:0.72rem;
+  padding:0.05rem 0.32rem;
+  border:1px solid var(--line-strong);
+  background:color-mix(in srgb, var(--bg) 60%, transparent);
+}
+.agent-infra-page .ai-cc__dl{
+  font-family:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size:0.72rem;
+  color:var(--accent);
+  text-decoration:none;
+}
+.agent-infra-page .ai-cc__dl:hover{
+  text-decoration:underline;
 }
 .agent-infra-page .ai-method{
   margin:0 0 var(--space-md);

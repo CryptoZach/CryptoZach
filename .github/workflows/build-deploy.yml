@@ -98,6 +98,9 @@ jobs:
           # render_mvep_scorecard.py --check verifies the frameworks page carries the MVEP
           # paper's Exhibit 1 and 3 data as mirrored in data/mvep/, and that the two CSVs agree.
           run_check scripts/render_mvep_scorecard.py --check
+          # render_commit_chart.py --check verifies the interactive commit chart on
+          # /agent-infrastructure/ and commits-per-3-days.svg match commits-per-3-days.json.
+          run_check scripts/render_commit_chart.py --check
           # The battery checking ITSELF: fails if a guard in the pre-push battery
           # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
           # purpose, so it cannot become a third list only one side runs.

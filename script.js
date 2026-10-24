@@ -6770,3 +6770,391 @@
     init();
   }
 })();
+
+/* Interactive fleet commit chart on /agent-infrastructure/ */
+(function(){
+  function initCommitChart(){
+    var fig = document.getElementById('ai-commit-chart');
+    var svg = document.getElementById('ai-cc-svg');
+    var dataEl = document.getElementById('ai-commit-chart-data');
+    if(!fig || !svg || !dataEl) return;
+
+    var doc;
+    try { doc = JSON.parse(dataEl.textContent); } catch(e){ return; }
+    if(!doc || !Array.isArray(doc.series) || !doc.series.length) return;
+
+    var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var X0 = 78.0, X1 = 928.0, Y0 = 352.0;
+    var PX_PER_1000 = 66.5;
+    var FONT = 'JetBrains Mono, ui-monospace, Menlo, monospace';
+    var NS = 'http://www.w3.org/2000/svg';
+
+    var readout = document.getElementById('ai-cc-readout');
+    var stage = document.getElementById('ai-cc-stage');
+    var gridEl = document.getElementById('ai-cc-grid');
+    var monthsEl = document.getElementById('ai-cc-months');
+    var areaEl = document.getElementById('ai-cc-area');
+    var glowEl = document.getElementById('ai-cc-glow-line');
+    var lineEl = document.getElementById('ai-cc-line');
+    var peakEl = document.getElementById('ai-cc-peak');
+    var titleRight = document.getElementById('ai-cc-title-right');
+    var footerEl = document.getElementById('ai-cc-footer');
+    var hoverG = document.getElementById('ai-cc-hover');
+    var curLine = document.getElementById('ai-cc-cursor-line');
+    var curHalo = document.getElementById('ai-cc-cursor-halo');
+    var curDot = document.getElementById('ai-cc-cursor-dot');
+    var tipG = document.getElementById('ai-cc-tooltip');
+    var tipBg = document.getElementById('ai-cc-tip-bg');
+    var tipDate = document.getElementById('ai-cc-tip-date');
+    var tipVal = document.getElementById('ai-cc-tip-val');
+    var tipSub = document.getElementById('ai-cc-tip-sub');
+    var hitRect = document.getElementById('ai-cc-hit');
+
+    var curMode = '3d';
+    var curRange = 'all';
+    var activeIdx = null;
+    var points = [];
+
+    function parseStart(iso){
+      var p = (iso || '2026-03-02').split('-');
+      return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+    }
+    function addDays(d, n){
+      return new Date(d.getTime() + n * 86400000);
+    }
+    function fmtRange(a, b){
+      var da = a.getUTCDate(), ma = a.getUTCMonth(), ya = a.getUTCFullYear();
+      var db = b.getUTCDate(), mb = b.getUTCMonth(), yb = b.getUTCFullYear();
+      if(da === db && ma === mb && ya === yb){
+        return db + ' ' + MONTHS_SHORT[mb] + ' ' + yb;
+      }
+      if(ma === mb){
+        return da + '-' + db + ' ' + MONTHS_SHORT[mb] + ' ' + yb;
+      }
+      return da + ' ' + MONTHS_SHORT[ma] + '-' + db + ' ' + MONTHS_SHORT[mb] + ' ' + yb;
+    }
+    function fmtShortSpan(a, b){
+      var da = a.getUTCDate(), ma = a.getUTCMonth();
+      var db = b.getUTCDate(), mb = b.getUTCMonth();
+      if(da === db && ma === mb) return (MONTHS_SHORT[ma] + ' ' + da).toUpperCase();
+      if(ma === mb) return (MONTHS_SHORT[ma] + ' ' + da + '-' + db).toUpperCase();
+      return (MONTHS_SHORT[ma] + ' ' + da + '-' + MONTHS_SHORT[mb] + ' ' + db).toUpperCase();
+    }
+
+    function buildPoints(){
+      var start = parseStart(doc.start_date);
+      var s3 = doc.series || [];
+      var s1 = Array.isArray(doc.series_1d) && doc.series_1d.length ? doc.series_1d : null;
+      var raw = [];
+      var cum = 0;
+
+      if(curMode === '1d' && s1){
+        for(var d = 0; d < s1.length; d++){
+          var dt = addDays(start, d);
+          cum += s1[d];
+          raw.push({
+            start: dt,
+            end: dt,
+            value: s1[d],
+            rawCommits: s1[d],
+            spanDays: 1,
+            cum: cum
+          });
+        }
+      } else {
+        for(var i = 0; i < s3.length; i++){
+          var a = addDays(start, i * 3);
+          var b = addDays(start, i * 3 + 2);
+          cum += s3[i];
+          raw.push({
+            start: a,
+            end: b,
+            value: curMode === 'cum' ? cum : s3[i],
+            rawCommits: s3[i],
+            spanDays: 3,
+            cum: cum
+          });
+        }
+      }
+
+      if(curRange === '90' || curRange === '30'){
+        var daysBack = curRange === '90' ? 90 : 30;
+        var keep = curMode === '1d' && s1 ? daysBack : Math.ceil(daysBack / 3);
+        if(raw.length > keep) raw = raw.slice(raw.length - keep);
+      }
+
+      var n = raw.length;
+      var maxVal = 0;
+      for(var j = 0; j < n; j++){
+        if(raw[j].value > maxVal) maxVal = raw[j].value;
+      }
+      var stepUnit = curMode === 'cum' ? 15000 : (curMode === '1d' ? 500 : 1000);
+      if(maxVal <= 2000 && curMode === '3d') stepUnit = 500;
+      var top = Math.max(stepUnit * 4, Math.ceil(maxVal / stepUnit) * stepUnit);
+      var plotH = PX_PER_1000 * 4;
+      var perUnit = plotH / top;
+      var xStep = n > 1 ? (X1 - X0) / n : 0;
+
+      points = raw.map(function(item, idx){
+        var x = X0 + idx * xStep;
+        var y = Y0 - item.value * perUnit;
+        return {
+          idx: idx,
+          x: x,
+          y: y,
+          start: item.start,
+          end: item.end,
+          value: item.value,
+          rawCommits: item.rawCommits,
+          spanDays: item.spanDays,
+          cum: item.cum,
+          top: top,
+          stepUnit: stepUnit,
+          perUnit: perUnit,
+          xStep: xStep
+        };
+      });
+    }
+
+    function defaultSummaryHtml(){
+      if(!points.length) return '';
+      var first = points[0];
+      var last = points[points.length - 1];
+      var peak = points[0];
+      var sumWindow = 0;
+      points.forEach(function(p){
+        sumWindow += p.rawCommits;
+        if(p.value >= peak.value) peak = p;
+      });
+      if(curMode === 'cum'){
+        return '<strong>' + last.cum.toLocaleString() + '</strong> cumulative commits through ' +
+          fmtRange(last.end, last.end) + ' · Latest 3-day bin <strong>' + last.rawCommits.toLocaleString() +
+          '</strong> (' + fmtRange(last.start, last.end) + ')';
+      }
+      var unitLabel = curMode === '1d' ? (points.length + ' days') : (points.length + ' three-day bins');
+      return '<strong>' + sumWindow.toLocaleString() + '</strong> commits across ' + unitLabel +
+        ' · Peak <strong>' + peak.value.toLocaleString() + '</strong> (' + fmtRange(peak.start, peak.end) + ')' +
+        ' · Latest <strong>' + last.value.toLocaleString() + '</strong> (' + fmtRange(last.start, last.end) + ')';
+    }
+
+    function drawChart(){
+      buildPoints();
+      if(!points.length) return;
+      var n = points.length;
+      var top = points[0].top;
+      var stepUnit = points[0].stepUnit;
+      var perUnit = points[0].perUnit;
+
+      if(titleRight){
+        titleRight.textContent = curMode === '1d' ? 'PER DAY' : (curMode === 'cum' ? 'CUMULATIVE' : 'PER 3 DAYS');
+      }
+
+      if(gridEl){
+        var gHtml = '';
+        for(var v = 0; v <= top; v += stepUnit){
+          var gy = Y0 - v * perUnit;
+          gHtml += '<line x1="78" y1="' + gy.toFixed(1) + '" x2="928" y2="' + gy.toFixed(1) + '" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/>';
+          gHtml += '<text x="66" y="' + (gy + 4.0).toFixed(1) + '" text-anchor="end" fill="#9ca3af" font-size="11" font-family="' + FONT + '">' + v.toLocaleString() + '</text>';
+        }
+        gridEl.innerHTML = gHtml;
+      }
+
+      if(monthsEl){
+        var mHtml = '';
+        var seenMonths = {};
+        for(var i = 0; i < n; i++){
+          var p = points[i];
+          var mKey = p.start.getUTCFullYear() + '-' + p.start.getUTCMonth();
+          if(i === 0 || (!seenMonths[mKey] && p.start.getUTCDate() <= p.spanDays)){
+            seenMonths[mKey] = true;
+            mHtml += '<text x="' + p.x.toFixed(1) + '" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="' + FONT + '">' + MONTHS_SHORT[p.start.getUTCMonth()] + '</text>';
+          }
+        }
+        monthsEl.innerHTML = mHtml;
+      }
+
+      var ptsStr = points.map(function(p){ return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+      var polyStr = X0.toFixed(1) + ',' + Y0.toFixed(1) + ' ' + ptsStr + ' ' + points[n - 1].x.toFixed(1) + ',' + Y0.toFixed(1);
+      if(areaEl) areaEl.setAttribute('points', polyStr);
+      if(glowEl) glowEl.setAttribute('points', ptsStr);
+      if(lineEl) lineEl.setAttribute('points', ptsStr);
+
+      if(peakEl){
+        var pk = points[0];
+        points.forEach(function(p){ if(p.value >= pk.value) pk = p; });
+        var anchor = pk.x > 820 ? 'end' : (pk.x < 140 ? 'start' : 'end');
+        var tx = anchor === 'start' ? (pk.x + 8) : (pk.x - 8);
+        var ty1 = Math.max(76, pk.y - 14);
+        var ty2 = ty1 + 13;
+        peakEl.innerHTML =
+          '<circle cx="' + pk.x.toFixed(1) + '" cy="' + pk.y.toFixed(1) + '" r="4.2" fill="#0a0c10" stroke="#ccfbe5" stroke-width="1.6"/>' +
+          '<text x="' + tx.toFixed(1) + '" y="' + ty1.toFixed(1) + '" text-anchor="' + anchor + '" fill="#ccfbe5" font-size="12" font-family="' + FONT + '">' + pk.value.toLocaleString() + '</text>' +
+          '<text x="' + tx.toFixed(1) + '" y="' + ty2.toFixed(1) + '" text-anchor="' + anchor + '" fill="#8fe6c4" font-size="10" font-family="' + FONT + '">' + fmtShortSpan(pk.start, pk.end) + '</text>';
+      }
+
+      if(footerEl){
+        var fStart = points[0].start;
+        var fEnd = points[n - 1].end;
+        footerEl.textContent = (
+          fStart.getUTCDate() + ' ' + MONTHS_FULL[fStart.getUTCMonth()] + ' THROUGH ' +
+          fEnd.getUTCDate() + ' ' + MONTHS_FULL[fEnd.getUTCMonth()] + ' ' + fEnd.getUTCFullYear()
+        ).toUpperCase();
+      }
+
+      if(activeIdx !== null && activeIdx < points.length){
+        showPoint(activeIdx);
+      } else {
+        hideHover();
+      }
+    }
+
+    function showPoint(idx){
+      if(!points.length) return;
+      idx = Math.max(0, Math.min(points.length - 1, idx));
+      activeIdx = idx;
+      var p = points[idx];
+
+      if(hoverG) hoverG.setAttribute('opacity', '1');
+      if(curLine){
+        curLine.setAttribute('x1', p.x.toFixed(1));
+        curLine.setAttribute('x2', p.x.toFixed(1));
+      }
+      if(curHalo){
+        curHalo.setAttribute('cx', p.x.toFixed(1));
+        curHalo.setAttribute('cy', p.y.toFixed(1));
+      }
+      if(curDot){
+        curDot.setAttribute('cx', p.x.toFixed(1));
+        curDot.setAttribute('cy', p.y.toFixed(1));
+      }
+
+      var dateLabel = fmtRange(p.start, p.end);
+      var valLabel = curMode === 'cum'
+        ? (p.cum.toLocaleString() + ' cumulative commits')
+        : (p.value.toLocaleString() + (curMode === '1d' ? ' commits on day' : ' commits in 3d bin'));
+      var avgDay = Math.round(p.rawCommits / p.spanDays);
+      var subLabel = curMode === 'cum'
+        ? ('+' + p.rawCommits.toLocaleString() + ' in bin (' + avgDay.toLocaleString() + '/day)')
+        : (avgDay.toLocaleString() + '/day avg · ' + p.cum.toLocaleString() + ' cumulative');
+
+      if(tipDate) tipDate.textContent = dateLabel.toUpperCase();
+      if(tipVal) tipVal.textContent = valLabel;
+      if(tipSub) tipSub.textContent = subLabel;
+
+      if(tipG && tipBg){
+        var boxW = 226;
+        var tx = p.x + 14;
+        if(tx + boxW > 930) tx = p.x - boxW - 14;
+        var ty = Math.max(62, Math.min(280, p.y - 34));
+        tipBg.setAttribute('width', String(boxW));
+        tipG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ',' + ty.toFixed(1) + ')');
+      }
+
+      if(readout){
+        readout.innerHTML =
+          '<strong>' + dateLabel + '</strong>: <strong>' + valLabel + '</strong> · ' + subLabel;
+      }
+    }
+
+    function hideHover(){
+      activeIdx = null;
+      if(hoverG) hoverG.setAttribute('opacity', '0');
+      if(readout) readout.innerHTML = '<span class="ai-cc__summary">' + defaultSummaryHtml() + '</span>';
+    }
+
+    function clientXToIdx(clientX){
+      if(!points.length) return 0;
+      var r = svg.getBoundingClientRect();
+      if(!r.width) return 0;
+      var svgX = ((clientX - r.left) / r.width) * 960;
+      var best = 0, bestDist = Infinity;
+      for(var i = 0; i < points.length; i++){
+        var d = Math.abs(points[i].x - svgX);
+        if(d < bestDist){ bestDist = d; best = i; }
+      }
+      return best;
+    }
+
+    if(hitRect){
+      hitRect.addEventListener('pointermove', function(e){
+        showPoint(clientXToIdx(e.clientX));
+      }, { passive: true });
+      hitRect.addEventListener('pointerdown', function(e){
+        showPoint(clientXToIdx(e.clientX));
+      }, { passive: true });
+      hitRect.addEventListener('pointerleave', function(){
+        hideHover();
+      }, { passive: true });
+    }
+
+    if(stage){
+      stage.addEventListener('keydown', function(e){
+        if(!points.length) return;
+        if(e.key === 'ArrowLeft'){
+          e.preventDefault();
+          showPoint(activeIdx === null ? points.length - 1 : activeIdx - 1);
+        } else if(e.key === 'ArrowRight'){
+          e.preventDefault();
+          showPoint(activeIdx === null ? 0 : activeIdx + 1);
+        } else if(e.key === 'Home'){
+          e.preventDefault();
+          showPoint(0);
+        } else if(e.key === 'End'){
+          e.preventDefault();
+          showPoint(points.length - 1);
+        } else if(e.key === 'Escape'){
+          hideHover();
+        }
+      });
+      stage.addEventListener('blur', function(){ hideHover(); });
+    }
+
+    fig.addEventListener('click', function(e){
+      var modeBtn = e.target.closest('button[data-cc-mode]');
+      if(modeBtn){
+        curMode = modeBtn.getAttribute('data-cc-mode') || '3d';
+        fig.querySelectorAll('button[data-cc-mode]').forEach(function(b){
+          var on = b === modeBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        activeIdx = null;
+        drawChart();
+        return;
+      }
+      var rangeBtn = e.target.closest('button[data-cc-range]');
+      if(rangeBtn){
+        curRange = rangeBtn.getAttribute('data-cc-range') || 'all';
+        fig.querySelectorAll('button[data-cc-range]').forEach(function(b){
+          var on = b === rangeBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        activeIdx = null;
+        drawChart();
+      }
+    });
+
+    drawChart();
+
+    /* Fetch the latest JSON series so any data refresh updates the live chart automatically. */
+    if(typeof fetch === 'function'){
+      fetch('/agent-infrastructure/commits-per-3-days.json', { cache: 'no-store' })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(fresh){
+          if(fresh && Array.isArray(fresh.series) && fresh.series.length){
+            doc = fresh;
+            drawChart();
+          }
+        })
+        .catch(function(){ /* offline or local file; inline JSON already loaded */ });
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initCommitChart);
+  } else {
+    initCommitChart();
+  }
+})();
