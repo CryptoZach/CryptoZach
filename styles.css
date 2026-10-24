@@ -1850,7 +1850,12 @@ body.contact-page section.contact-page-detail{
   margin:var(--space-xs) 0;
 }
 .page-focus .framework-card-action{
-  margin:var(--space-sm) 0 0;
+  margin:auto 0 0;
+  padding-top:var(--space-sm);
+}
+.page-focus .grid > .card{
+  display:flex;
+  flex-direction:column;
 }
 .page-focus .framework-card-action .action{
   margin:0;
@@ -5614,8 +5619,10 @@ main.resume-profile .section-title{
 }
 /* Fill the profile column: global --measure caps stack/preview paragraphs */
 main.resume-profile .section-title h1,
+main.resume-profile .section-title p,
 main.resume-profile .hero-subhead,
 main.resume-profile .proof-strip-inline,
+main.resume-profile .ai-section-lede,
 main.resume-profile .stack-item p,
 main.resume-profile .resume-preview-card > p,
 main.resume-profile .resume-proof-list,
@@ -20149,7 +20156,7 @@ body #contact .about-card .about-card-header h2{
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text);
-  max-width: 70ch;
+  max-width: none;
 }
 .structure-page .featured-framework-categories{
   display: flex;
@@ -20457,7 +20464,8 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   color:var(--text-soft);
   font-size:var(--font-size-min);
   line-height:1.5;
-  max-width:560px;
+  max-width:64rem;
+  text-wrap:balance;
 }
 .hero-newsletter-band__form{
   display:flex;
@@ -21334,6 +21342,22 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   background:color-mix(in srgb, var(--accent) 5%, var(--panel2));
 }
 .agent-infra-page .ai-not-list > li:last-child{ border-bottom:none; }
+.agent-infra-page .ai-not-cta{
+  display:block;
+  margin-top:0.35rem;
+}
+.agent-infra-page .ai-not-cta a{
+  color:var(--accent);
+  font-weight:500;
+  text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding-bottom:1px;
+  transition:border-color .2s var(--ease-standard), color .2s var(--ease-standard);
+}
+.agent-infra-page .ai-not-cta a:hover{
+  color:var(--accent-hover, var(--accent));
+  border-color:var(--accent);
+}
 .agent-infra-page .ai-closing-creds{
   margin:var(--space-md) 0 var(--space-lg);
   max-width:none;
@@ -22409,7 +22433,7 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc__step{flex:0 0 auto;display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;font-size:.9rem}
 :root[data-theme="dark"] .mvep-sc__step{color:#0a0c10}
 .mvep-sc{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-md)}
-.mvep-sc__controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem .9rem;align-items:end;max-width:60rem}
+.mvep-sc__controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem .9rem;align-items:end;max-width:none}
 .mvep-sc__control{display:grid;gap:.25rem}
 .mvep-sc__control label{font-size:.85rem;font-weight:600;color:var(--muted)}
 .mvep-sc__control select,.mvep-sc__control input,.mvep-sc__note input{font:inherit;font-size:.95rem;padding:.45rem .6rem;border:1px solid color-mix(in srgb, currentColor 50%, transparent);border-radius:8px;background:transparent;color:inherit;width:100%;min-width:0}
@@ -22419,7 +22443,7 @@ body.letters-landing .rec-index td:nth-child(3){min-width:0}
 .mvep-sc select,.mvep-sc input,.mvep-sc button,.mvep-sc summary,.mvep-sc .action,.mvep-sc__tablewrap{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem);scroll-margin-bottom:var(--space-md)}
 .mvep-scorecard{scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
 html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem)}
-.mvep-sc__summary{margin:0;padding:.7rem .9rem;border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);border-radius:10px;background:color-mix(in srgb, var(--accent) 5%, transparent);font-size:.95rem;line-height:1.55;max-width:60rem}
+.mvep-sc__summary{margin:0;padding:.7rem .9rem;border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);border-radius:10px;background:color-mix(in srgb, var(--accent) 5%, transparent);font-size:.95rem;line-height:1.55;max-width:none}
 .mvep-sc__summary:empty{display:none}
 .mvep-sc__sumline{display:block;font-size:.88rem;color:var(--text-soft)}
 .mvep-sc__summary.is-fresh{animation:mvepFresh .9s ease-out}

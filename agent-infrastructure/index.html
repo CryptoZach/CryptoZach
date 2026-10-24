@@ -294,15 +294,24 @@
         <div class="ai-lanes" role="list">
           <div class="ai-lane" role="listitem">
             <h3>Keep concurrent work isolated and recoverable</h3>
-            <p>Each session works in its own tree and index. Ownership is stored as a time-limited lease. If a session exits, the lease expires and its work returns to the queue instead of remaining silently claimed. <a href="#coordination">See why process-based ownership failed</a>.</p>
+            <p>Each session works in its own tree and index. Ownership is stored as a time-limited lease. If a session exits, the lease expires and its work returns to the queue instead of remaining silently claimed.</p>
+            <div class="ai-lane-links">
+              <a href="#coordination">See why process-based ownership failed</a>
+            </div>
           </div>
           <div class="ai-lane" role="listitem">
             <h3>Preserve identity, provenance, and valid references</h3>
-            <p>Shared work records which agent and session produced it, what evidence and prior state it used, and the exact commit that wrote it into the durable record, so any result can be traced to the change that saved it. Findings, decisions, and open questions must resolve to existing records; missing references are surfaced instead of invented. <a href="#invented-facts">See how an invented reference spread</a>.</p>
+            <p>Shared work records which agent and session produced it, what evidence and prior state it used, and the exact commit that wrote it into the durable record, so any result can be traced to the change that saved it. Findings, decisions, and open questions must resolve to existing records; missing references are surfaced instead of invented.</p>
+            <div class="ai-lane-links">
+              <a href="#invented-facts">See how an invented reference spread</a>
+            </div>
           </div>
           <div class="ai-lane ai-lane--primary" role="listitem">
             <h3>Measure safeguards by outcomes</h3>
-            <p>Warnings are graded by whether they return after first appearing. Hard gates are graded by how often they stop an action or are bypassed. That separates controls that teach, controls that enforce, and controls that only appear active. <a href="#measurement">See the measurement method</a>.</p>
+            <p>Warnings are graded by whether they return after first appearing. Hard gates are graded by how often they stop an action or are bypassed. That separates controls that teach, controls that enforce, and controls that only appear active.</p>
+            <div class="ai-lane-links">
+              <a href="#measurement">See the measurement method</a>
+            </div>
           </div>
         </div>
         <p class="ai-note">Current validation boundary: every number on this page comes from one operator's fleet. The system is operational, but its transfer to a second fleet has not yet been measured. <a href="#not-claimed">See the full scope and limits</a>.</p>
@@ -800,7 +809,7 @@
         <h2 id="not-claimed-title">What this evidence does and does not establish</h2>
         <p>The operating layer is real, measured, and used daily. It is not yet evidence of reliability across different organizations or workloads. The boundaries below keep those claims separate.</p>
         <ul class="ai-not-list">
-          <li><strong>Current access.</strong> The layer runs every day for one research program, and a product is being built from it. There is no public trial, pricing, or release date yet. <a href="#work-with-us">The available ways to engage are below</a>.</li>
+          <li><strong>Current access.</strong> The layer runs every day for one research program, and a product is being built from it. There is no public trial, pricing, or release date yet.<span class="ai-not-cta"><a href="#work-with-us">The available ways to engage are below &rarr;</a></span></li>
           <li><strong>External validation.</strong> Every measurement comes from one operator's fleet. No outside team depends on its uptime, and transfer to a second operating environment has not yet been measured.</li>
           <li><strong>Technical scope.</strong> The layer coordinates agents, preserves attribution and shared-state integrity, and evaluates controls. It does not build or train an AI model.</li>
           <li><strong>Security scope.</strong> Isolated sessions protect cooperating agents from corrupting one another's work. They are not a sandbox for hostile code or a substitute for a security product.</li>
