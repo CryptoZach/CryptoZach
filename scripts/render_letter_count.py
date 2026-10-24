@@ -43,8 +43,14 @@ def word_form(n, like_token):
     return w
 
 
-def format_like(target_val, tok):
-    return str(target_val) if tok.isdigit() else word_form(target_val, tok)
+def format_like(target_val, tok, rel=""):
+    if tok.isdigit():
+        return str(target_val)
+    w = word_form(target_val, tok)
+    rel_norm = rel.replace(os.sep, "/")
+    if "-" in w and not rel_norm.startswith("letters/"):
+        return str(target_val)
+    return w
 
 
 def plan_line(line, stats, rel):
@@ -76,7 +82,7 @@ def plan_line(line, stats, rel):
                 continue
             if (rel.replace(os.sep, "/"), tok.strip().lower()) in clc.ALLOWLIST:
                 continue
-            repl = format_like(n, tok)
+            repl = format_like(n, tok, rel)
             spans.append((m.start("n"), m.end("n"), repl, tok, "N"))
 
     # 2. Dockets, agencies, recommendations, and principal/supplement split
@@ -89,7 +95,7 @@ def plan_line(line, stats, rel):
                 val = clc.token_to_int(tok)
                 if val is None or val == dockets:
                     continue
-                repl = format_like(dockets, tok)
+                repl = format_like(dockets, tok, rel)
                 spans.append((m.start("n"), m.end("n"), repl, tok, "D"))
 
     if not indiv_letter and agencies is not None:
@@ -101,7 +107,7 @@ def plan_line(line, stats, rel):
                 val = clc.token_to_int(tok)
                 if val is None or val == agencies:
                     continue
-                repl = format_like(agencies, tok)
+                repl = format_like(agencies, tok, rel)
                 spans.append((m.start("n"), m.end("n"), repl, tok, "A"))
 
     if not indiv_letter and recs is not None:
@@ -111,7 +117,7 @@ def plan_line(line, stats, rel):
                 val = clc.token_to_int(tok)
                 if val is None or val == recs:
                     continue
-                repl = format_like(recs, tok)
+                repl = format_like(recs, tok, rel)
                 spans.append((m.start("n"), m.end("n"), repl, tok, "R"))
 
     if rel.replace(os.sep, "/") == "letters/index.html" and principals is not None and supplements is not None:

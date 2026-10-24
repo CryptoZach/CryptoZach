@@ -380,12 +380,12 @@ def check_and_sync_resumes(n_apps, n_families, write_mode):
         re.I,
     )
     fam_pat = re.compile(
-        r"(applications?\s+(?:across|in)\s+)" + NUM_TOKEN + r"(\s+(?:patent\s+)?families\b)",
+        r"((?:USPTO|US|patent)\s+(?:patent\s+)?applications?\s+(?:across|in)\s+)" + NUM_TOKEN + r"(\s+(?:patent\s+)?families\b)",
         re.I,
     )
     decomp_pat = re.compile(
-        r"applications?\s+(?:across|in)\s+(?P<f1>" + _DECOMP_TOKEN_ALT + r")\s+(?:patent\s+)?families\b"
-        r".{0,600}?\bthe\s+other\s+(?P<f2>" + _DECOMP_TOKEN_ALT + r")\s+(?:patent\s+)?families\b",
+        r"\btwelve\s+applications?\s+(?:across|in)\s+(?P<f1>" + _DECOMP_TOKEN_ALT + r")\s+(?:patent\s+)?families\b"
+        r".{0,3000}?\bthe\s+other\s+(?P<f2>" + _DECOMP_TOKEN_ALT + r")\s+(?:patent\s+)?families\b",
         re.I | re.S,
     )
 

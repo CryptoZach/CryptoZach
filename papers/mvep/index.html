@@ -89,7 +89,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=257" />
+  <link rel="stylesheet" href="/styles.css?v=263" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -266,7 +266,7 @@
     }
   </script>
   <link rel="stylesheet" href="/vault.css?v=9" />
-  <script src="/vault.js?v=7" defer></script>
+  <script src="/vault.js?v=8" defer></script>
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"></div>
@@ -379,7 +379,7 @@
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />When three tokenized Treasury products under three different regulatory regimes receive the same collateral treatment on the same exchange, can an institution treat them as equivalent?</p>
         <p><strong>Answer</strong><br />No: under the framework's assessment the three products are not equivalent across legal, operational, and economic dimensions, and tested against a nine-product sample the framework finds that bank and 1940-Act-fund products satisfy the core requirements of nearly every category (BENJI fails only collateral operability, and the token-level Article 12 statutory defect reaches every product) while no stablecoin product does. The SVB weekend broke all three equivalence dimensions at once, with USDC trading at $0.87 and contagion cascading through at least five tokenized products. These are descriptive diligence findings: the framework is an entry gate that surfaces equivalence gaps before launch or committee approval, not a causal estimate.</p>
-        <p><strong>Evidence base</strong><br />The findings rest on ten diligence categories applied to a nine-product sample across three regulatory tiers, extended by five comparators that test the framework's reach (a consolidated fourteen-product scorecard), with the SVB episode reverse-engineered into the categories, the Binance Portfolio Margin collateral case (July 2025 to February 2026), a jurisdiction-differentiated Category 5 insolvency matrix (twenty regimes, twelve product-sample rows plus eight international comparators, scored across seven dimensions with each cell carrying a primary-source evidence basis), and independent corroboration from scholarly sources, the Federal Reserve's December 2025 FEDS Note, and Moody's first formal stablecoin rating methodology (March 2026).</p>
+        <p><strong>Evidence base</strong><br />The findings rest on ten diligence categories applied to a nine-product sample across three regulatory tiers, extended by five comparators that test the framework's reach (a consolidated fourteen-product scorecard), with the SVB episode reverse-engineered into the categories, the Binance Portfolio Margin collateral case (July 2025 to February 2026), a jurisdiction-differentiated Category 5 insolvency matrix (twenty regimes, twelve product-sample columns plus eight international comparators, scored across seven dimensions with each cell carrying a primary-source evidence basis), and independent corroboration from scholarly sources, the Federal Reserve's December 2025 FEDS Note, and Moody's first formal stablecoin rating methodology (March 2026).</p>
       </aside>
 
       <section class="brief-findings brief-findings--cards" aria-labelledby="brief-findings-heading">
@@ -425,7 +425,7 @@
           <span class="brief-finding-num" aria-hidden="true">5</span>
           <div class="brief-finding-copy">
             <h3>&ldquo;Offshore&rdquo; was never a single insolvency category</h3>
-            <p>The v2 paper replaces domicile-level insolvency characterization with a jurisdiction-differentiated Category 5 scoring matrix: twenty regimes, a twelve-row product sample (from the 1940 Act and the Federal Deposit Insurance Act through the BVI, Cayman, Bermuda, El Salvador, Singapore, and no-entity protocols, plus FDIC-insured-bank and OCC-trust-bank sub-rows) and eight international comparators (EU MiCA, the UK, Hong Kong, the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones, Switzerland, and Japan), scored across seven insolvency-posture dimensions (statutory segregation, claim priority, cross-border recognition, product-specific protections, rehypothecation constraints, forced-conversion risk, and recovery track record), each cell carrying a primary-source evidence basis. BENJI&rsquo;s 1940 Act regime is the only one that passes all seven dimensions. USDT fails six of the seven: its issuer entities are domiciled in El Salvador, whose digital-asset regime contains no segregation, holder-priority, or rehypothecation provisions, while its terms are governed by BVI law and its reserves are custodied substantially in the United States, so a holder&rsquo;s recovery path crosses three jurisdictions. And the largest tokenized Treasury product in the world, Circle&rsquo;s USYC (approximately $3.0 billion held by only 47 holders), grades among the weakest on the recursive settlement and collateral-liquidation dimensions.</p>
+            <p>The v2 paper replaces domicile-level insolvency characterization with a jurisdiction-differentiated Category 5 scoring matrix: twenty regimes, a twelve-column product sample (from the 1940 Act and the Federal Deposit Insurance Act through the BVI, Cayman, Bermuda, El Salvador, Singapore, and no-entity protocols, plus FDIC-insured-bank and OCC-trust-bank sub-columns) and eight international comparators (EU MiCA, the UK, Hong Kong, the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones, Switzerland, and Japan), scored across seven insolvency-posture dimensions (statutory segregation, claim priority, cross-border recognition, product-specific protections, rehypothecation constraints, forced-conversion risk, and recovery track record), each cell carrying a primary-source evidence basis. BENJI&rsquo;s 1940 Act regime is the only one that passes all seven dimensions. USDT fails six of the seven: its issuer entities are domiciled in El Salvador, whose digital-asset regime contains no segregation, holder-priority, or rehypothecation provisions, while its terms are governed by BVI law and its reserves are custodied substantially in the United States, so a holder&rsquo;s recovery path crosses three jurisdictions. And the largest tokenized Treasury product in the world, Circle&rsquo;s USYC (approximately $3.0 billion held by only 47 holders), grades among the weakest on the recursive settlement and collateral-liquidation dimensions.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> &ldquo;Offshore&rdquo; is not one risk bucket: two products with the same label can sit under regimes with materially different statutory protections, so insolvency diligence has to name the regime and score the dimensions, not the domicile.</p>
           </div>
         </div>
@@ -489,8 +489,8 @@
           </a>
           <a class="paper-exhibit-card paper-exhibit-card--wide" href="#mvep-exhibit-2">
             <picture>
-              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp?v=20260701a" />
-              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20260701a" width="4739" height="1722" alt="Twenty-regime Category 5 jurisdiction matrix scored across seven insolvency dimensions" loading="lazy" />
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp?v=20261023a" />
+              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20261023a" width="4730" height="1724" alt="Twenty-regime Category 5 jurisdiction matrix scored across seven insolvency dimensions" loading="lazy" />
             </picture>
             <span class="paper-exhibit-card__label">Exhibit 2</span>
             <strong>Which insolvency regimes actually protect holders?</strong>
@@ -498,8 +498,8 @@
           </a>
           <a class="paper-exhibit-card" href="#mvep-exhibit-3">
             <picture>
-              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp?v=20260701a" />
-              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20260701a" width="3291" height="2305" alt="MVEP composite rating table showing legal, operational, economic, and overall profiles" loading="lazy" />
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp?v=20261023a" />
+              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20261023a" width="3280" height="2344" alt="MVEP composite rating table showing legal, operational, economic, and overall profiles" loading="lazy" />
             </picture>
             <span class="paper-exhibit-card__label">Exhibit 3</span>
             <strong>Why does strength not buy equivalence?</strong>
@@ -567,22 +567,22 @@
         <p>Each layer of a composed product requires its own MVEP assessment; the composed product's equivalence is the minimum across all layers. "We use BUIDL" falls short. "We use BUIDL, we have reviewed BlackRock's MVEP artifacts, and our product's equivalence posture degrades if any of the following conditions change" is the standard committees will expect.</p>
 
         <h3>The Category 5 jurisdiction matrix (new in v2)</h3>
-        <p>The v2 revision replaces domicile-level insolvency characterization ("offshore") with a jurisdiction-differentiated scoring matrix: twenty regimes, the twelve product-sample regimes (the 1940 Act; the Federal Deposit Insurance Act; the U.S. trust-company and money-transmitter stack with the dormant GENIUS Act layer; Delaware LP / UCC Article 9; BVI; Cayman; Bermuda; El Salvador; Singapore; and no-entity protocols, plus the FDIC-insured-bank J2S and OCC-trust-bank J3F sub-rows) and eight international comparators (EU MiCA; the UK; Hong Kong; the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones; Switzerland; and Japan) scored across seven insolvency-posture dimensions, each cell carrying a verdict and a primary-source evidence basis verified against fetched primary texts. Product-level Category 5 verdicts derive from regime rows under a fixed aggregation rule, and fail-by-structural-inapplicability (a bank deposit presents no customer asset to segregate; a no-entity protocol presents no debtor, claim, or forum) is distinguished from fail-by-weak-regime so an inapplicability row reads as no regime rather than a weak one.</p>
-        <p>The full matrix ships as Exhibit 2. Two of its rows exist because the framework met products its regimes could not score as written, which is the clearest evidence in the paper that the categories extend under stress rather than failing quietly.</p>
+        <p>The v2 revision replaces domicile-level insolvency characterization ("offshore") with a jurisdiction-differentiated scoring matrix: twenty regimes, the twelve product-sample regimes (the 1940 Act; the Federal Deposit Insurance Act; the U.S. trust-company and money-transmitter stack with the dormant GENIUS Act layer; Delaware LP / UCC Article 9; BVI; Cayman; Bermuda; El Salvador; Singapore; and no-entity protocols, plus the FDIC-insured-bank J2S and OCC-trust-bank J3F sub-columns) and eight international comparators (EU MiCA; the UK; Hong Kong; the UAE federal regime with its Abu Dhabi ADGM and Dubai VARA free zones; Switzerland; and Japan) scored across seven insolvency-posture dimensions, each cell carrying a verdict and a primary-source evidence basis verified against fetched primary texts. Product-level Category 5 verdicts derive from regime columns under a fixed aggregation rule, and fail-by-structural-inapplicability (a bank deposit presents no customer asset to segregate; a no-entity protocol presents no debtor, claim, or forum) is distinguished from fail-by-weak-regime so an inapplicability column reads as no regime rather than a weak one.</p>
+        <p>The full matrix ships as Exhibit 2. Two of its columns exist because the framework met products its regimes could not score as written, which is the clearest evidence in the paper that the categories extend under stress rather than failing quietly.</p>
         <ul>
-          <li><strong>J3F, the OCC uninsured national trust bank row,</strong> was added to score USD1, whose issuer of record is BitGo Bank &amp; Trust, N.A. The existing U.S. trust and money-transmitter row assumed a state-supervised layer that a federal trust charter scopes away, so J3F scores the federal layer alone.</li>
-          <li><strong>J2S, the insured national bank non-deposit row,</strong> was added to score SoFiUSD. The bank-deposit row's cells rest on deposit-claim premises that dissolve for a non-deposit liability resolving in the same forum: the two cells that read as structurally inapplicable for a deposit become plain failures, and the deposit-specific passes for insurance and depositor preference are disclaimed.</li>
+          <li><strong>J3F, the OCC uninsured national trust bank column,</strong> was added to score USD1, whose issuer of record is BitGo Bank &amp; Trust, N.A. The existing U.S. trust and money-transmitter column assumed a state-supervised layer that a federal trust charter scopes away, so J3F scores the federal layer alone.</li>
+          <li><strong>J2S, the insured national bank non-deposit column,</strong> was added to score SoFiUSD. The bank-deposit column's cells rest on deposit-claim premises that dissolve for a non-deposit liability resolving in the same forum: the two cells that read as structurally inapplicable for a deposit become plain failures, and the deposit-specific passes for insurance and depositor preference are disclaimed.</li>
         </ul>
-        <p>A third product then migrated between rows. PYUSD re-derives from the state-supervised row onto J3F now that the Paxos conversion to a national trust bank is consummated, so the New York custody and rehypothecation anchors no longer reach it and its insolvency verdict moves off the state-supervised basis, without adding a single new cell to the matrix. The row it left now anchors USDC alone.</p>
+        <p>A third product then migrated between columns. PYUSD re-derives from the state-supervised column onto J3F now that the Paxos conversion to a national trust bank is consummated, so the New York custody and rehypothecation anchors no longer reach it and its insolvency verdict moves off the state-supervised basis, without adding a single new cell to the matrix. The column it left now anchors USDC alone.</p>
 
         <figure class="paper-exhibit-figure paper-exhibit-figure--wide" id="mvep-exhibit-2">
-          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20260701a" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 2 jurisdiction matrix image in a new tab">
+          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20261023a" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 2 jurisdiction matrix image in a new tab">
             <picture>
-              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp?v=20260701a" />
-              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20260701a" width="4739" height="1722" alt="Category 5 jurisdiction matrix with twenty legal regimes scored across seven insolvency-posture dimensions" loading="lazy" />
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.webp?v=20261023a" />
+              <img src="/Publication-Images/a2-mvep-exhibit-02-jurisdiction-matrix.png?v=20261023a" width="4730" height="1724" alt="Category 5 jurisdiction matrix with twenty legal regimes scored across seven insolvency-posture dimensions" loading="lazy" />
             </picture>
           </a>
-          <figcaption><strong>Exhibit 2: Category 5 jurisdiction matrix.</strong> What to notice: BENJI's 1940 Act row clears all seven dimensions, while the broad &lsquo;offshore&rsquo; label splits into materially different protection profiles.</figcaption>
+          <figcaption><strong>Exhibit 2: Category 5 jurisdiction matrix.</strong> What to notice: BENJI's 1940 Act column clears all seven dimensions, while the broad &lsquo;offshore&rsquo; label splits into materially different protection profiles.</figcaption>
         </figure>
 
         <h3>The composite rating (Exhibit 3)</h3>
@@ -590,10 +590,10 @@
         <p>Every product rates Non-Equivalent at the headline, and that is the finding, not a flaw in the rating: the market-wide UCC Article 12 rights-parity defect fails Category 1 for every product except JPMD, so no tokenized dollar product clears legal equivalence. The discrimination lives in the strength score and in the operational and economic profiles. Read that way the rating reproduces the three regulatory tiers the paper identifies: the tokenized funds are strongest, the regulated stablecoins sit in the middle, and USDT is weakest. Two products show instructive splits. DAI is operationally strong but legally floored: its protocol state is an authoritative record, yet it has no legal entity to hold a claim against. JPMD is the only product whose legal and economic dimensions escape Non-Equivalent, both landing at Indeterminate, which makes the bank deposit token the closest to passing; it is held back at the headline only by an on-chain governance failure.</p>
 
         <figure class="paper-exhibit-figure" id="mvep-exhibit-3">
-          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20260701a" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 3 composite rating image in a new tab">
+          <a class="paper-exhibit-figure__image" href="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20261023a" target="_blank" rel="noopener noreferrer" aria-label="Open Exhibit 3 composite rating image in a new tab">
             <picture>
-              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp?v=20260701a" />
-              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20260701a" width="3291" height="2305" alt="MVEP composite rating showing each product's legal, operational, economic, and overall equivalence profile" loading="lazy" />
+              <source type="image/webp" srcset="/Publication-Images/a2-mvep-exhibit-03-composite-rating.webp?v=20261023a" />
+              <img src="/Publication-Images/a2-mvep-exhibit-03-composite-rating.png?v=20261023a" width="3280" height="2344" alt="MVEP composite rating showing each product's legal, operational, economic, and overall equivalence profile" loading="lazy" />
             </picture>
           </a>
           <figcaption><strong>Exhibit 3: non-compensatory composite rating.</strong> What to notice: the strength score ranks products within the market-wide Non-Equivalent result, but never lets one strong dimension offset a binding failure elsewhere.</figcaption>

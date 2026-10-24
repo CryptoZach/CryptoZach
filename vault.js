@@ -760,7 +760,7 @@
     var x = e.clientX - r.left, y = e.clientY - r.top;
     var now = performance.now();
     if (pmx >= 0){
-      var dt = Math.max(16, now - lastMove);
+      var dt = Math.max(4, now - lastMove);
       vel = Math.hypot(x - pmx, y - pmy) / dt * 10;
     }
     pmx = x; pmy = y; mx = x; my = y; lastMove = now;

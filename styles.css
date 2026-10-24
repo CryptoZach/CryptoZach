@@ -6626,6 +6626,9 @@ body.speaker-page .speaker-hero{
   .resume-page .resume-evidence a{
     font-size:0.6875rem;
     padding:0.1875rem 0.5rem;
+    white-space:normal;
+    max-width:100%;
+    overflow-wrap:anywhere;
   }
 }
 
@@ -9266,7 +9269,22 @@ footer.site-footer .footer-tagline{
 }
 /* Stylized index chips for the key-numbers stat card items (author-directed
    2026-07-16); the row is flex so wrapped stat lines hang clear of the chip. */
-.paper-key-numbers .key-num-copy{ display: block; min-width: 0; }
+.paper-key-numbers .key-num-copy{ display: block; min-width: 0; overflow-wrap: anywhere; }
+.brief-finding,
+.brief-findings{
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.paper-page .brief-finding code,
+.paper-page .brief-findings code,
+.paper-page .paper-key-numbers .key-num-copy code,
+.brief-finding code,
+.brief-findings code,
+.paper-key-numbers .key-num-copy code{
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
 .paper-key-numbers .key-num{
   flex-shrink: 0;
   display: inline-flex;
@@ -18983,11 +19001,26 @@ body.contact-page .contact-page-foreground > .contact-page .about-item p:last-ch
     gap: 1.5rem;
     margin-bottom: 1.5rem;
   }
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-block,
+  body.contact-page .contact-page-foreground > .contact-page .contact-guidance{
+    min-width: 0;
+  }
   body.contact-page .contact-page-foreground > .contact-page .contact-email-address{
     font-size: 1.15rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
   body.contact-page .contact-page-foreground > .contact-page .about-item{
     padding: 1rem 1.125rem;
+  }
+}
+@media (max-width: 380px){
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-row{
+    padding: 0.9rem 1rem;
+    gap: 1.25rem;
+  }
+  body.contact-page .contact-page-foreground > .contact-page .contact-email-address{
+    font-size: clamp(0.95rem, 4.8vw, 1.15rem);
   }
 }
 
