@@ -75,6 +75,9 @@ PATTERNS = [
     (AI, "method table row",
      re.compile(r"(\d[\d,]*)\s+refused,\s+(\d[\d,]*)\s+overridden\s+with\s+the\s+documented\s+escape", re.I),
      lambda g: {"s": g[0], "o": g[1]}),
+    ("frameworks/index.html", "frameworks CLII-AI paragraph",
+     re.compile(r"armed\s+hard\s+gates\s+refused\s+the\s+prohibited\s+action\s+\d+\s+times\s+in\s+\d+\s*\(\s*(\d[\d,]*)\s+of\s+(\d[\d,]*)\s+attempts", re.I),
+     lambda g: {"s": g[0], "n": g[1]}),
 ]
 
 
@@ -100,7 +103,7 @@ def main():
 
     root = repo_root()
     texts = {}
-    for path in (HOME, AI):
+    for path in (HOME, AI, "frameworks/index.html"):
         full = os.path.join(root, path)
         if not os.path.isfile(full):
             print(f"check_agent_infra_stats: WARN cannot read {path}; guard did not run.")
