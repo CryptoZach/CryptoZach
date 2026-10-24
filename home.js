@@ -1507,15 +1507,14 @@
   } else {
     for (var s2 = 0; s2 < 26; s2++) spawnCluster(rnd(W*0.05, W*0.95), rnd(H*0.1, H*0.9), 0.2, performance.now() - rnd(0, 2000));
     fade = 0.46;
-    /* FIRST PAINT IS ONE STILL FRAME; THE LOOP WAITS FOR THE VISITOR (2026-10-12).
-       Measured on the built page under a 4x CPU slowdown: a 46 ms median frame, 132 ms
-       at the 90th percentile, 33 long tasks totalling 10.4 s in the first twelve seconds,
-       and a Lighthouse total blocking time of 5.8 s, all from a decorative field drawn
-       before anyone had touched the page. One frame is drawn now so the hero is never
-       blank; the 60 Hz loop starts on the first pointer, touch, key, wheel or scroll
-       anywhere on the page, or after eight seconds in view for a visitor who never
-       interacts. Reduced motion keeps its still composition above. */
-    frame(performance.now());
+    /* Start the hero animation immediately when the first-paint frame renders
+       within the 12 ms per-frame compute budget and the visitor does not have
+       Save-Data enabled. On throttled or low-compute devices, paint one still
+       frame now and wake the 60 Hz loop on the first interaction (or after 8s). */
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+    var t0 = performance.now();
+    frame(t0);
+    var firstPaintMs = performance.now() - t0;
     var wakeEvents = ['pointermove', 'pointerdown', 'touchstart', 'keydown', 'wheel', 'scroll'];
     function wakeHero(){
       if (heroWoken) return;
@@ -1523,8 +1522,12 @@
       wakeEvents.forEach(function(ev){ document.removeEventListener(ev, wakeHero, true); });
       heroStart();
     }
-    wakeEvents.forEach(function(ev){ document.addEventListener(ev, wakeHero, { capture: true, passive: true }); });
-    setTimeout(wakeHero, 8000);
+    if (!saveData && firstPaintMs <= 12){
+      wakeHero();
+    } else {
+      wakeEvents.forEach(function(ev){ document.addEventListener(ev, wakeHero, { capture: true, passive: true }); });
+      setTimeout(wakeHero, 8000);
+    }
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ buildColumns(); });
 })();
