@@ -303,13 +303,13 @@
           <div class="brief-finding-copy">
             <h3>Operator regulation and product equivalence are separate dimensions</h3>
             <p>Circle scored highest on the Control Layer Intensity Index (CLII), a regulatory-intensity measure calibrated in a companion paper, and experienced a <strong>10 to 13%</strong> depeg (volume-weighted DEX pricing to centralized-exchange intraday) during the Silicon Valley Bank (SVB) weekend. Tether scored lower and maintained its peg. Regulation did not predict stress performance because it was not designed to. The CLII is the right instrument for supervising the gateway; the Minimum Viable Equivalence Pack (MVEP) is the right instrument for assessing the product.</p>
-            <p class="brief-what-this-means"><strong>What this means:</strong> A heavily regulated operator is not a proxy for a safe product, so diligence must measure the token itself rather than inferring stability from the issuer's compliance posture.</p>
+            <p class="brief-what-this-means"><strong>What this means:</strong> Operator compliance posture (CLII) and product resilience (MVEP) are independent axes, so diligence must evaluate the product's reserve custody and redemption paths directly.</p>
           </div>
         </div>
         <div class="brief-finding">
           <span class="brief-finding-num" aria-hidden="true">3</span>
           <div class="brief-finding-copy">
-            <h3>Contagion flows from simple to complex, not the other way around</h3>
+            <h3>Contagion flows upstream-to-downstream from payment stablecoins to wrappers</h3>
             <p>During SVB (March 2023) and again during the Circle pool incident (March 27, 2025), stress propagated from payment stablecoins to the wrappers and composed products that hold them. A payment stablecoin with a reserve problem is the upstream node; the wrappers, baskets, and composed products that hold it are the downstream nodes. Forward risk assessment must name the current concentration, not the last one.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Holders of wrappers and composed products inherit the reserve risk of whichever payment stablecoin sits beneath them, so they must track the upstream exposure that is concentrated today.</p>
           </div>
@@ -444,10 +444,10 @@
         </figure>
 
         <h2>What this paper changes</h2>
-        <p>The institutional diligence question for a "dollar token" is not what the token is called. The question is four-dimensional: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
+        <p>Institutional diligence for a dollar token turns on four structural dimensions beyond its label: what legal claim does the holder own, which ledger is authoritative, what insolvency regime governs recovery, and how many independent paths exist from token to cash under stress. Seven products that all trade at one dollar answer these four questions in seven different ways.</p>
         <p>The paper separates two measurement problems that industry and regulatory practice have been collapsing. The CLII scores the operator; the <a href="/frameworks/#mvep">Minimum Viable Equivalence Pack (MVEP)</a>, a ten-category diligence checklist developed from the SVB case, scores the product. When the operator is strongly regulated but the product depends on a single bank, the operator score is high and the product score is low. SVB was the first event where that distinction produced a public depeg. The Circle pool incident of March 27, 2025 was the second.</p>
 
-        <h2>Finding 1. Regulation captures the operator, not the resilience</h2>
+        <h2>Finding 1. Regulation measures operator obligations while MVEP measures product resilience</h2>
         <p>The CLII measures regulatory obligations on the gateway (the entity that issues or routes a token). It was calibrated for that purpose in Routing the Dollar, the companion paper, and it performed as designed: Circle scored 0.92, and Circle was in fact more heavily regulated than Tether (0.52). The SVB depeg did not occur because Circle was under-regulated. It occurred because approximately eight percent of USDC reserves sat in a single non-global-systemically-important bank that failed. That concentration is a Category 4 (custody) condition under the MVEP framework (the category that evaluates where reserves are held and how concentrated that exposure is), not a regulatory deficiency. A framework that scored the product would have caught it; a framework that scored the operator would not.</p>
         <p><strong>What this means.</strong> If the objective is to supervise the gateway, the CLII is the correct instrument. If the objective is to assess whether a specific product will hold its peg under a specific stress, the MVEP is the correct instrument. Supervisory practice that uses one framework to answer both questions produces false comfort.</p>
 

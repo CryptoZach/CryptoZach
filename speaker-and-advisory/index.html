@@ -496,7 +496,7 @@
             <p>For central banks, regulators, and policy teams.</p>
             <p><strong>Where does risk actually concentrate in the digital-dollar stack, and what should supervisors monitor?</strong></p>
             <p>Grounded in three years of on-chain data, 19 gateway entities, and two stress episodes (SVB and the BUSD wind-down).</p>
-            <p><strong>You leave with:</strong> a control-layer map, the CLII (classifies compliance posture at the gateway layer; distinct from resilience), and the monitoring signals aggregate supply data does not capture.</p>
+            <p><strong>You leave with:</strong> a control-layer map, the CLII (classifies compliance posture at the gateway layer; distinct from resilience), and the gateway-level monitoring signals that aggregate supply data misses.</p>
             <details class="talk-format-topics">
               <summary>Sample topics</summary>
               <ul>
@@ -513,7 +513,7 @@
             <p class="card-eyebrow">Audience &middot; Investment committees &amp; risk leads</p>
             <h3>Institutional diligence session &middot; 45-60 minutes</h3>
             <p>For investment committees, tokenization teams, and risk leads.</p>
-            <p><strong>How do you tell whether a tokenized product is institution-ready before the first stress episode reveals it is not?</strong></p>
+            <p><strong>How do you verify that a tokenized product is institution-ready before the first stress episode tests it?</strong></p>
             <p>Walks through the ten-category MVEP framework (three equivalence claims: legal, operational, economic), the failures that SVB weekend exposed, and the evidence gates that separate credible equivalence claims from marketing language.</p>
             <p><strong>You leave with:</strong> a usable diligence checklist, the core equivalence tests, and the three categories (system of record, reconciliation, custody) that are hardest to retrofit after launch.</p>
             <details class="talk-format-topics">
@@ -643,9 +643,9 @@
         <h2 id="research-boundaries-title">Boundaries by design</h2>
       </div>
       <div class="speaker-prose">
-        <p>The unit of observation is the gateway, not the end user. Gateway data measure institutional routing, chain selection, and the regulatory surface each entity presents. End-user geography, currency substitution motive, and transaction-level intent are unobserved. Corridor-level claims require data this program does not yet have.</p>
-        <p>Simulations locate fragility; they do not forecast outcomes. Monte Carlo ensembles stress-test mechanism designs under parameterized adversarial conditions, mapping the distribution of outcomes and the boundary between stabilization and failure. The value is in identifying where a design breaks, not in predicting what a specific protocol will do.</p>
-        <p><strong>Stress performance is a separate question.</strong> The CLII captures the observable regulatory surface a supervisor can act on: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Circle and Coinbase carried similar regulatory burdens and showed different SVB outcomes because their banking exposures differed. Enforcement quality and operational competence are excluded by design; the index isolates what a regulator can observe and act on, not what determines stress outcomes.</p>
+        <p><strong>The gateway is the unit of observation.</strong> Gateway data measure institutional routing, chain selection, and the regulatory surface each entity presents. End-user geography, currency substitution motive, and transaction-level intent sit outside on-chain gateway data and require separate corridor-level datasets.</p>
+        <p><strong>Simulations locate fragility boundaries.</strong> Monte Carlo ensembles stress-test mechanism designs under parameterized adversarial conditions, mapping the distribution of outcomes and the boundary between stabilization and failure so teams can harden a design before launch.</p>
+        <p><strong>Stress performance is a separate question.</strong> The CLII captures the observable regulatory surface a supervisor can act on: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Circle and Coinbase carried similar regulatory burdens and showed different SVB outcomes because their banking exposures differed. Enforcement quality and operational competence are excluded by design; the index isolates what a regulator can observe and act on, while MVEP evaluates product-level stress resilience.</p>
       </div>
     </section>
 

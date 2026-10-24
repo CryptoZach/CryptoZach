@@ -651,7 +651,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           </div>
         </li>
       </ol>
-      <p class="structure-page-lede">The frameworks are not substitutes for legal, regulatory, investment, or technical diligence. They are ways to ask better questions about the system being evaluated.</p>
+      <p class="structure-page-lede">These frameworks complement legal, regulatory, investment, and technical diligence by structuring the system-level questions an evaluation must answer.</p>
     </section>
 
     <section class="reveal featured-framework" id="featured-mvep" aria-labelledby="featured-mvep-title">
@@ -988,7 +988,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <span class="stack-step-num" aria-hidden="true">4</span>
               <div class="stack-step-body">
                 <h4 class="stack-step-title">Diagnose realized governance concentration</h4>
-                <p class="stack-step-desc"><a href="/papers/governance-concentration/"><strong>Governance-Concentration Diagnostic</strong></a>. Sector, insider retention, and delegation patterns predict concentration; initial allocation alone does not.</p>
+                <p class="stack-step-desc"><a href="/papers/governance-concentration/"><strong>Governance-Concentration Diagnostic</strong></a>. Sector, insider retention, and delegation patterns explain post-launch concentration where initial allocation is uninformative.</p>
               </div>
             </li>
           </ol>
@@ -1031,7 +1031,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
           <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
           <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorganization and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
-          <p><strong>Why it matters.</strong> A product that cannot demonstrate equivalence across all three claims is not ready for institutional adoption. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
+          <p><strong>Why it matters.</strong> Institutional adoption requires demonstrating equivalence across all three claims before launch. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
           <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep/">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
@@ -1403,15 +1403,15 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="card card--polished card--accent-b" id="burn-mechanism-classification">
           <h3>Burn Mechanism Classification</h3>
           <p class="card-eyebrow">Classification &middot; Fiscal sustainability</p>
-          <p><strong>What it does.</strong> Classifies token networks by payment architecture and payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates direct-payment architectures, where the customer base is observable on-chain, from buy-and-burn, single-relayer, and credit-intermediated models, where it is not.</p>
-          <p><strong>Why it matters.</strong> Payment architecture determines whether a network's demand concentration can be observed on-chain at all. Helium's direct-burn model: burn-signer HHI 0.27, Top-5 demand sources roughly 90% of burn volume. Livepeer's direct-fee model: fee-payer HHI 0.31. GEODNET's Foundation buy-and-burn relocates demand off-chain, where it is not measurable. Helium's burn-mint parity crossing was driven by the August 2025 emission halving and the full carrier-revenue burn policy, not separable on-chain without a formal event study.</p>
+          <p><strong>What it does.</strong> Classifies token networks by payment architecture and payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates direct-payment architectures, where the customer base is observable on-chain, from buy-and-burn, single-relayer, and credit-intermediated models, which relocate customer demand off-chain.</p>
+          <p><strong>Why it matters.</strong> Payment architecture determines whether a network's demand concentration can be observed on-chain at all. Helium's direct-burn model: burn-signer HHI 0.27, Top-5 demand sources roughly 90% of burn volume. Livepeer's direct-fee model: fee-payer HHI 0.31. GEODNET's Foundation buy-and-burn relocates demand off-chain behind a single treasury signer. Helium's burn-mint parity crossing was driven jointly by the August 2025 emission halving and the full carrier-revenue burn policy.</p>
           <p><strong>What triggers re-evaluation.</strong> A change in S2R trajectory (as distinct from level), an emission halving or other supply-compression event, a shift in demand concentration or payment architecture, or a fiscal-parity crossing.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens/">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-c" id="governance-concentration-diagnostic">
           <h3>Governance-Concentration Diagnostic</h3>
           <p class="card-eyebrow">Diagnostic &middot; Governance design</p>
-          <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 52-protocol PCA (principal component analysis)-corrected cross-section across DePIN, DeFi (decentralized finance), L1/L2 (Layer 1 and Layer 2) infrastructure, and social tokens. Lead correlation is null: insider allocation does not predict post-distribution concentration (Pearson r = 0.09, p = 0.55, N = 50).</p>
+          <p><strong>What it does.</strong> Tests whether initial token allocation predicts realized governance concentration using a 52-protocol protocol-controlled-address (PCA)-corrected cross-section across DePIN, DeFi (decentralized finance), L1/L2 (Layer 1 and Layer 2) infrastructure, and social tokens. Lead correlation is a bounded null (insider allocation Pearson r = 0.09, p = 0.55, N = 50).</p>
           <p><strong>Why it matters.</strong> Sector membership predicts concentration (DePIN more concentrated than DeFi after correction, Mann-Whitney p = 0.028, Cohen's d = 0.65); insider-wallet retention is the operating mechanism (Spearman rho = 0.44, p = 0.005); delegation amplifies voting concentration above holdings in 13 of 18 protocols. The methodological core is a generalizable five-class protocol-controlled-address exclusion typology that removes 133 addresses across 38 protocols and corrects a median 2.3x (maximum roughly 18x) inflation in prior holder-list studies.</p>
           <p><strong>What triggers re-evaluation.</strong> A sector-membership shift, a change in insider retention, a delegation-pattern change, or a new dataset that revises the institutional-design controls.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/governance-concentration/">Open Governance Concentration <span aria-hidden="true">→</span></a></p>
@@ -1538,7 +1538,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>CLII-AI (Control Layer Intensity Index for AI Operators)</h3>
           <p class="card-eyebrow">AI operator monitoring &middot; 5 regulatory-posture dimensions</p>
           <p><strong>What it does.</strong> Extends the continuous-monitoring index to AI operators across five regulatory-posture dimensions: Regulatory Licensing, Evaluation Transparency, Access Gating, Compliance Infrastructure, and Geographic Restrictions. Like the stablecoin CLII, it measures who is supervised and what controls attach at the operator layer, not whether a model is intrinsically safe.</p>
-          <p><strong>Why it matters.</strong> A configured warning or policy statement is not an enforced control. On the live <a href="/agent-infrastructure/#measurement">Agent Infrastructure</a> fleet, the highest-volume advisory warning repeated in 84% of workspaces after firing, whereas armed hard gates refused the prohibited action 199 times in 200 (13,098 of 13,156 attempts across both machines). In agentic payments (<a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a>), facilitator concentration across x402 on Base, Solana, and Polygon clears merger-guidelines thresholds on every chain.</p>
+          <p><strong>Why it matters.</strong> An advisory warning states intent, whereas an armed gate enforces execution. On the live <a href="/agent-infrastructure/#measurement">Agent Infrastructure</a> fleet, the highest-volume advisory warning repeated in 84% of workspaces after firing, whereas armed hard gates refused the prohibited action 199 times in 200 (13,098 of 13,156 attempts across both machines). In agentic payments (<a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a>), facilitator concentration across x402 on Base, Solana, and Polygon clears merger-guidelines thresholds on every chain.</p>
           <p class="framework-card-action"><a class="action secondary" href="/agent-infrastructure/#measurement">See fleet gate measurements <span aria-hidden="true">→</span></a> <a class="action secondary" href="/papers/who-controls-agentic-payments/">Open Who Controls Agentic Payments? <span aria-hidden="true">→</span></a></p>
         </article>
         <article class="card card--polished card--accent-b" id="mvep-ai">
