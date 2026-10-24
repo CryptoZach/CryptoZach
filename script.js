@@ -6221,6 +6221,7 @@
       set: function(k, v){ try { window.localStorage.setItem(k, v); } catch(e){ /* private mode */ } }
     };
     Array.prototype.forEach.call(bars, function(bar){
+      if(bar.id === 'genius-tracker-toolbar') return;
       var scope = bar.parentNode;
       var index = scope.querySelector('.letters-index');
       var table = scope.querySelector('table.rec-index');
@@ -6232,6 +6233,23 @@
       var countEl = bar.querySelector('.filter-count');
       var countWrap = bar.querySelector('.filter-count-wrap');
       var state = {};
+      var query = '';
+
+      /* Inject a live keyword search input at the top of .letters-toolbar if not already present */
+      var searchInput = bar.querySelector('.letters-search-input');
+      if(!searchInput){
+        var searchRow = document.createElement('div');
+        searchRow.className = 'letters-search-row';
+        var searchId = index ? 'letters-hub-search' : 'recs-index-search';
+        var placeholder = index
+          ? 'Filter letters by keyword, docket, RIN, agency, or framework...'
+          : 'Filter all ' + total + ' recommendations by keyword, letter, agency, or topic (e.g., MVEP, pass-through, custody)...';
+        searchRow.innerHTML =
+          '<label class="visually-hidden" for="' + searchId + '">Search</label>' +
+          '<input id="' + searchId + '" class="letters-search-input" type="search" placeholder="' + placeholder + '" autocomplete="off" />';
+        bar.insertBefore(searchRow, bar.firstChild);
+        searchInput = searchRow.querySelector('input');
+      }
 
       function matches(el){
         for(var axis in state){
@@ -6244,6 +6262,10 @@
             return false;
           }
         }
+        if(query){
+          var hay = (el.textContent || '').toLowerCase();
+          if(hay.indexOf(query) < 0) return false;
+        }
         return true;
       }
       function apply(){
@@ -6253,7 +6275,7 @@
           el.classList.toggle('is-filtered-out', !on);
           if(on && (!index || el.tagName === 'A')) shown++;
         });
-        var active = Object.keys(state).some(function(a){ return state[a] && state[a] !== 'all'; });
+        var active = Boolean(query) || Object.keys(state).some(function(a){ return state[a] && state[a] !== 'all'; });
         if(countEl && countWrap){
           countEl.textContent = active ? (shown + ' of ' + total + (index ? ' letters' : ' recommendations')) : '';
           countWrap.hidden = !active;
@@ -6262,6 +6284,12 @@
           var on = (state[b.getAttribute('data-axis')] || 'all') === b.getAttribute('data-value');
           b.classList.toggle('active', on);
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+      if(searchInput){
+        searchInput.addEventListener('input', function(){
+          query = (searchInput.value || '').trim().toLowerCase();
+          apply();
         });
       }
       function key(el){
@@ -6314,6 +6342,8 @@
           store.set('letters-view', t.getAttribute('data-view'));
         } else if(t.classList.contains('filter-reset')){
           state = {};
+          query = '';
+          if(searchInput) searchInput.value = '';
           apply();
         }
       });
@@ -8296,5 +8326,810 @@
     initA4Explorer();
   }
 })();
+
+/* ==========================================================================
+   GENIUS Act Rulemaking Tracker Filter & Search (/trackers/genius-act/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  function initGeniusTracker(){
+    var bar = document.getElementById('genius-tracker-toolbar');
+    var table = document.querySelector('table.tracker-table');
+    if(!bar || !table) return;
+
+    var searchInput = document.getElementById('genius-tracker-search');
+    var countWrap = document.getElementById('genius-tracker-count-wrap');
+    var countEl = document.getElementById('genius-tracker-count');
+    var resetBtn = document.getElementById('genius-tracker-reset');
+
+    var allTrs = Array.prototype.slice.call(table.querySelectorAll('tbody > tr'));
+    var items = [];
+    for(var i = 0; i < allTrs.length; i++){
+      var tr = allTrs[i];
+      if(tr.classList.contains('letters-outcome-note')) continue;
+      var noteTr = (i + 1 < allTrs.length && allTrs[i + 1].classList.contains('letters-outcome-note')) ? allTrs[i + 1] : null;
+      var commented = tr.classList.contains('tracker-row--commented');
+      var statusState = 'pending';
+      if(tr.querySelector('.status-chip--open')) statusState = 'open';
+      else if(tr.querySelector('.status-chip--final')) statusState = 'final';
+      var agencyEl = tr.querySelector('.tracker-agency');
+      var agencyTxt = agencyEl ? agencyEl.textContent : '';
+      var fullTxt = (tr.textContent + ' ' + (noteTr ? noteTr.textContent : '')).toLowerCase();
+      items.push({
+        tr: tr,
+        noteTr: noteTr,
+        commented: commented,
+        status: statusState,
+        agencyTxt: agencyTxt,
+        fullTxt: fullTxt
+      });
+    }
+
+    var state = { status: 'all', coverage: 'all', agency: 'all' };
+    var query = '';
+
+    function apply(){
+      var shown = 0;
+      items.forEach(function(item){
+        var ok = true;
+        if(state.status !== 'all' && item.status !== state.status) ok = false;
+        if(ok && state.coverage !== 'all'){
+          if(state.coverage === 'commented' && !item.commented) ok = false;
+          if(state.coverage === 'uncommented' && item.commented) ok = false;
+        }
+        if(ok && state.agency !== 'all'){
+          if(state.agency === 'Federal Reserve'){
+            if(item.agencyTxt.indexOf('Federal Reserve') < 0 && item.agencyTxt.indexOf('Board') < 0) ok = false;
+          } else if(item.agencyTxt.indexOf(state.agency) < 0){
+            ok = false;
+          }
+        }
+        if(ok && query && item.fullTxt.indexOf(query) < 0) ok = false;
+
+        item.tr.classList.toggle('is-filtered-out', !ok);
+        if(item.noteTr) item.noteTr.classList.toggle('is-filtered-out', !ok);
+        if(ok) shown++;
+      });
+
+      var active = Boolean(query) || state.status !== 'all' || state.coverage !== 'all' || state.agency !== 'all';
+      if(countWrap && countEl){
+        countEl.textContent = active ? ('Showing ' + shown + ' of ' + items.length + ' rulemakings') : '';
+        countWrap.hidden = !active;
+      }
+
+      Array.prototype.forEach.call(bar.querySelectorAll('.filter-btn[data-tracker-axis]'), function(b){
+        var ax = b.getAttribute('data-tracker-axis');
+        var val = b.getAttribute('data-tracker-val');
+        var on = (state[ax] || 'all') === val;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    if(searchInput){
+      searchInput.addEventListener('input', function(){
+        query = (searchInput.value || '').trim().toLowerCase();
+        apply();
+      });
+    }
+
+    bar.addEventListener('click', function(e){
+      var btn = e.target.closest('button[data-tracker-axis]');
+      if(btn){
+        var ax = btn.getAttribute('data-tracker-axis');
+        var val = btn.getAttribute('data-tracker-val') || 'all';
+        state[ax] = val;
+        apply();
+        return;
+      }
+      if(resetBtn && (e.target === resetBtn || e.target.closest('#genius-tracker-reset'))){
+        state = { status: 'all', coverage: 'all', agency: 'all' };
+        query = '';
+        if(searchInput) searchInput.value = '';
+        apply();
+      }
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initGeniusTracker);
+  } else {
+    initGeniusTracker();
+  }
+})();
+
+/* ==========================================================================
+   Seven Dollars Collateral Eligibility & Design-Axis Explorer (/papers/seven-dollars/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* Exact 8-product collateral eligibility & operator CLII scores from Sections 3, 7.2, and 7.3 */
+  var A3_PRODUCTS = [
+    { name: 'USDC (Circle)', clii: 0.92, published: 0.777, rolling3y: 0.777, mechanical: 0.923, tier: 'A', tier3y: 'A', tierMech: 'A', limiter: 'Single redemption path; 10.4% SVB DEX depeg' },
+    { name: 'PYUSD (Paxos)', clii: 0.83, published: 0.753, rolling3y: 0.753, mechanical: 0.859, tier: 'A', tier3y: 'A', tierMech: 'A', limiter: 'Absolute secondary depth; Oct 2025 overmint test' },
+    { name: 'USDS (Sky / Maker)', clii: 0.15, published: 0.657, rolling3y: 0.657, mechanical: 0.637, tier: 'B', tier3y: 'B', tierMech: 'B', limiter: 'USDC contagion via PSM; on-chain data only' },
+    { name: 'USDT (Tether)', clii: 0.52, published: 0.657, rolling3y: 0.800, mechanical: 0.674, tier: 'B', tier3y: 'A', tierMech: 'B', limiter: '42.7% historical 2018 depeg (0.80 Tier A on 3y window)' },
+    { name: 'USDe (Ethena)', clii: 0.35, published: 0.604, rolling3y: 0.604, mechanical: 0.577, tier: 'B', tier3y: 'B', tierMech: 'C', limiter: 'No instant fiat redemption; CEX basis counterparty' },
+    { name: 'DAI (MakerDAO)', clii: 0.15, published: 0.589, rolling3y: 0.589, mechanical: 0.575, tier: 'C', tier3y: 'C', tierMech: 'C', limiter: 'Hit $0.89 during SVB via $4.1B USDC PSM exposure' },
+    { name: 'USDG (Paxos MAS)', clii: 0.83, published: 0.495, rolling3y: 0.495, mechanical: 0.552, tier: 'C', tier3y: 'C', tierMech: 'C', limiter: 'Near-zero DEX depth; single banking partner (DBS)' },
+    { name: 'OUSG (Ondo)', clii: 0.61, published: 0.295, rolling3y: 0.295, mechanical: 0.288, tier: 'D', tier3y: 'D', tierMech: 'D', limiter: 'T+1/T+3 KYC-gated; Circle BUIDL pool dependency' }
+  ];
+
+  var A3_SPEC_META = {
+    published: {
+      top: 'USDC (0.777) \u00b7 PYUSD (0.753)',
+      topSub: 'Standard eligibility tier (Tier A); USDC leads despite 10.4% DEX depeg during SVB (CLII 0.92)',
+      div: 'USDT 0.657 vs USDG 0.495',
+      divSub: 'USDT (CLII 0.52, Tier B) outranks higher-CLII USDG (CLII 0.83, Tier C) and OUSG (0.61, Tier D) on secondary depth',
+      contagion: 'USDC \u2192 DAI & OUSG',
+      contagionSub: 'SVB (Mar 2023): USDC depeg hit DAI via $4.1B PSM; Circle BUIDL pool (Mar 2025): 23h limit hit OUSG'
+    },
+    rolling3y: {
+      top: 'USDT (~0.800) \u00b7 USDC (0.777)',
+      topSub: 'Excluding the 2018 banking depeg lifts USDT from 0.657 (Tier B) to ~0.800 (Tier A) alongside USDC and PYUSD',
+      div: 'USDT ~0.800 at CLII 0.52',
+      divSub: 'Widens the divergence between operator regulatory score (CLII) and secondary-market collateral eligibility',
+      contagion: 'Held peg in SVB Mar 2023',
+      contagionSub: 'Tether had zero SVB reserve exposure and traded at a slight premium while USDC depegged 10.4% to 13%'
+    },
+    mechanical: {
+      top: 'USDC (0.923) \u00b7 PYUSD (0.859)',
+      topSub: 'Section 7.3 mechanical 8-metric rule reproduces the exact rank ordering (mean absolute residual 0.049)',
+      div: 'USDT 0.674 vs USDG 0.552',
+      divSub: 'Weights: Depth 0.20, Redemption 0.15, Max depeg 0.15, Paths 0.10, Hours 0.10, Restrictions 0.10, Transparency 0.10, Independence 0.10',
+      contagion: 'OUSG 0.288 (3 paths, Tier D)',
+      contagionSub: 'Inverts path-count intuition: 3 paths sharing 1 Circle BUIDL redemption pool score lowest on independence'
+    }
+  };
+
+  /* Exact 11-product US-holder design scorecard from Section 3.2 */
+  var A3_DESIGN = [
+    { prod: 'USDC', grp: 'us', ppsi: true, m1: 'Full KYC', m2: 'Hybrid', m3: 'US (MTL/OCC)', m4: 'Allow-US', m5: 'PPSI-eligible', cls: 'For US holders' },
+    { prod: 'PYUSD', grp: 'us', ppsi: true, m1: 'Full KYC', m2: 'Hybrid', m3: 'US (OCC/NYDFS)', m4: 'Allow-US', m5: 'PPSI-eligible', cls: 'For US holders' },
+    { prod: 'RLUSD', grp: 'us', ppsi: true, m1: 'Full KYC', m2: 'Hybrid (Issuer)', m3: 'US (NYDFS trust)', m4: 'Allow-US', m5: 'PPSI-eligible', cls: 'For US holders' },
+    { prod: 'USDS', grp: 'us', ppsi: false, m1: 'None', m2: 'DeFi-only', m3: 'Decentralized', m4: 'Allow-US', m5: 'Non-PPSI', cls: 'For US holders' },
+    { prod: 'FRAX', grp: 'us', ppsi: false, m1: 'None', m2: 'DeFi-only', m3: 'Decentralized', m4: 'Allow-US', m5: 'Non-PPSI', cls: 'For US holders' },
+    { prod: 'USDT', grp: 'offshore', ppsi: false, m1: 'None to Light', m2: 'Hybrid', m3: 'El Salvador', m4: 'Ambiguous', m5: 'Offshore variant', cls: 'Offshore-targeted' },
+    { prod: 'USDe', grp: 'offshore', ppsi: false, m1: 'None to Light', m2: 'Hybrid', m3: 'Offshore', m4: 'Block-US', m5: 'Synthetic yield', cls: 'Offshore-targeted' },
+    { prod: 'USDY', grp: 'offshore', ppsi: false, m1: 'Full KYC', m2: 'Issuer (non-US)', m3: 'US / Reg S', m4: 'Block-US', m5: 'Offshore note', cls: 'Offshore-targeted' },
+    { prod: 'USDM', grp: 'offshore', ppsi: false, m1: 'Full KYC', m2: 'Hybrid (non-US)', m3: 'Bermuda', m4: 'Block-US', m5: 'Yield-bearing', cls: 'Offshore-targeted' },
+    { prod: 'FDUSD', grp: 'boundary', ppsi: false, m1: 'Light to Full', m2: 'Hybrid', m3: 'Offshore (HK)', m4: 'Ambiguous', m5: 'Ambiguous', cls: 'Boundary case' },
+    { prod: 'USD1', grp: 'boundary', ppsi: false, m1: 'None to Light', m2: 'Undocumented', m3: 'US-affiliated', m4: 'Ambiguous', m5: 'PPSI-ineligible', cls: 'Boundary case' }
+  ];
+
+  function initA3Explorer(){
+    var root = document.getElementById('a3-dollars-explorer');
+    if(!root) return;
+
+    var curSpec = 'published';
+    var curClass = 'all';
+    var eligSvg = document.getElementById('a3-elig-svg');
+    var desSvg = document.getElementById('a3-design-svg');
+
+    function renderEligibility(){
+      var meta = A3_SPEC_META[curSpec] || A3_SPEC_META.published;
+      var mTop = document.getElementById('a3-m-top');
+      var mTopSub = document.getElementById('a3-m-top-sub');
+      var mDiv = document.getElementById('a3-m-div');
+      var mDivSub = document.getElementById('a3-m-div-sub');
+      var mCon = document.getElementById('a3-m-contagion');
+      var mConSub = document.getElementById('a3-m-contagion-sub');
+
+      if(mTop) mTop.textContent = meta.top;
+      if(mTopSub) mTopSub.textContent = meta.topSub;
+      if(mDiv) mDiv.textContent = meta.div;
+      if(mDivSub) mDivSub.textContent = meta.divSub;
+      if(mCon) mCon.textContent = meta.contagion;
+      if(mConSub) mConSub.textContent = meta.contagionSub;
+
+      if(!eligSvg) return;
+      var rows = A3_PRODUCTS.slice().sort(function(a, b){ return (b[curSpec] || 0) - (a[curSpec] || 0); });
+      var W = 880, H = 310, padL = 148, padR = 265, padT = 38, rowH = 31;
+      var plotW = W - padL - padR;
+
+      function xOf(v){ return padL + Math.min(1.0, Math.max(0, v)) * plotW; }
+      function tierCol(t){
+        if(t === 'A') return '#10b981';
+        if(t === 'B') return '#0ea5e9';
+        if(t === 'C') return '#d97706';
+        return '#dc2626';
+      }
+
+      var svg = '';
+      svg += '<g transform="translate(' + padL + ', 16)" font-size="11" fill="currentColor">' +
+        '<rect x="0" y="-8" width="14" height="9" rx="2" fill="#0ea5e9"/><text x="19" y="0">Collateral eligibility score (0 to 1, colored by Tier A to D)</text>' +
+        '<circle cx="348" cy="-3.5" r="4.5" fill="var(--bg)" stroke="currentColor" stroke-width="2.2"/><text x="358" y="0">Operator CLII regulatory score (0 to 1)</text>' +
+        '</g>';
+
+      [0, 0.25, 0.50, 0.75, 1.00].forEach(function(tv){
+        var x = xOf(tv).toFixed(1);
+        svg += '<line x1="' + x + '" y1="' + (padT - 6) + '" x2="' + x + '" y2="' + (H - 18) + '" stroke="currentColor" stroke-opacity="0.12" stroke-dasharray="3 3"/>';
+        svg += '<text x="' + x + '" y="' + (H - 4) + '" text-anchor="middle" font-size="10.5" fill="currentColor" opacity="0.65">' + tv.toFixed(2) + '</text>';
+      });
+
+      rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var val = r[curSpec] || 0;
+        var tier = curSpec === 'rolling3y' ? r.tier3y : (curSpec === 'mechanical' ? r.tierMech : r.tier);
+        var bw = Math.max(4, xOf(val) - padL).toFixed(1);
+        var cx = xOf(r.clii).toFixed(1);
+        var col = tierCol(tier);
+
+        svg += '<text x="' + (padL - 10) + '" y="' + (y + 16) + '" text-anchor="end" font-size="12" font-weight="600" fill="currentColor">' + r.name + '</text>';
+        svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + plotW + '" height="16" rx="4" fill="currentColor" fill-opacity="0.05"/>';
+        svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + bw + '" height="16" rx="4" fill="' + col + '" fill-opacity="0.82"/>';
+        svg += '<circle cx="' + cx + '" cy="' + (y + 12) + '" r="5" fill="var(--bg)" stroke="currentColor" stroke-width="2.2"/>';
+
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 16) + '" font-size="11" fill="currentColor"><tspan font-weight="700">' + val.toFixed(3) + ' (Tier ' + tier + ')</tspan> \u00b7 CLII ' + r.clii.toFixed(2) + '</text>';
+      });
+
+      eligSvg.innerHTML = svg;
+    }
+
+    function renderDesign(){
+      if(!desSvg) return;
+      var rows = A3_DESIGN.filter(function(r){
+        if(curClass === 'all') return true;
+        if(curClass === 'ppsi') return r.ppsi;
+        return r.grp === curClass;
+      });
+
+      var rowH = 26, padT = 34, padB = 14, padL = 78;
+      var W = 880, H = padT + rows.length * rowH + padB;
+      desSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      desSvg.setAttribute('height', String(H));
+
+      var cols = [
+        { label: 'M1: KYC depth', w: 122 },
+        { label: 'M2: Redemption', w: 132 },
+        { label: 'M3: Jurisdiction', w: 136 },
+        { label: 'M4: Geofencing', w: 118 },
+        { label: 'M5: Legal character', w: 140 },
+        { label: 'Design class', w: 142 }
+      ];
+
+      var svg = '';
+      var xCur = padL;
+      cols.forEach(function(c){
+        svg += '<text x="' + (xCur + c.w / 2).toFixed(1) + '" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">' + c.label + '</text>';
+        xCur += c.w;
+      });
+
+      rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var col = r.ppsi ? '#10b981' : (r.grp === 'us' ? '#0ea5e9' : (r.grp === 'offshore' ? '#d97706' : '#94a3b8'));
+        svg += '<text x="' + (padL - 8) + '" y="' + (y + 17) + '" text-anchor="end" font-size="11.5" font-weight="700" fill="currentColor">' + r.prod + '</text>';
+
+        var vals = [r.m1, r.m2, r.m3, r.m4, r.m5, r.cls];
+        var xc = padL;
+        vals.forEach(function(v, ci){
+          var cw = cols[ci].w;
+          var isLast = ci === 5;
+          svg += '<rect x="' + (xc + 2) + '" y="' + (y + 2) + '" width="' + (cw - 4) + '" height="' + (rowH - 4) + '" rx="4" fill="' + (isLast ? col : 'currentColor') + '" fill-opacity="' + (isLast ? '0.18' : '0.05') + '" stroke="' + (isLast ? col : 'currentColor') + '" stroke-opacity="' + (isLast ? '0.65' : '0.10') + '"/>';
+          svg += '<text x="' + (xc + cw / 2).toFixed(1) + '" y="' + (y + 16) + '" text-anchor="middle" font-size="10.5" font-weight="' + (isLast ? '700' : '500') + '" fill="currentColor">' + v + '</text>';
+          xc += cw;
+        });
+      });
+
+      desSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-a3-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-a3-tab');
+        root.querySelectorAll('button[data-a3-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pElig = document.getElementById('a3-panel-eligibility');
+        var pDes = document.getElementById('a3-panel-design');
+        if(pElig) pElig.hidden = target !== 'eligibility';
+        if(pDes) pDes.hidden = target !== 'design';
+        if(target === 'design') renderDesign(); else renderEligibility();
+        return;
+      }
+
+      var specBtn = e.target.closest('button[data-a3-spec]');
+      if(specBtn){
+        curSpec = specBtn.getAttribute('data-a3-spec') || 'published';
+        root.querySelectorAll('button[data-a3-spec]').forEach(function(b){
+          var on = b === specBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderEligibility();
+        return;
+      }
+
+      var clsBtn = e.target.closest('button[data-a3-class]');
+      if(clsBtn){
+        curClass = clsBtn.getAttribute('data-a3-class') || 'all';
+        root.querySelectorAll('button[data-a3-class]').forEach(function(b){
+          var on = b === clsBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderDesign();
+      }
+    });
+
+    renderEligibility();
+    renderDesign();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initA3Explorer);
+  } else {
+    initA3Explorer();
+  }
+})();
+
+/* ==========================================================================
+   Who Controls Agentic Payments (x402) Explorer (/papers/who-controls-agentic-payments/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  var C4_CHAINS = {
+    base_jul: {
+      count: 'HHI 6,512 \u00b7 CDP 78.5%',
+      countSub: '3.6x the 1,800 DOJ/FTC merger-guidelines threshold; Coinbase CDP dominates July payment counts on Base',
+      val: 'HHI 4,700 \u00b7 Meridian 62.6%',
+      valSub: 'After 2-hop proxy-settlement correction; value monopolist swaps completely from count leader',
+      scale: '$583,430 / 10.06M tx',
+      scaleSub: 'Cross-chain July 2026 corrected total; registry covers 92.3% of Base EIP-3009 authorizations',
+      rows: [
+        { name: 'Coinbase CDP', countPct: 78.5, valPct: 24.1 },
+        { name: 'Meridian (mrdn proxy)', countPct: 0.4, valPct: 62.6 },
+        { name: 'Fluora / Fluxa', countPct: 14.2, valPct: 7.4 },
+        { name: 'payAI & Relai', countPct: 5.1, valPct: 4.3 },
+        { name: 'All other facilitators', countPct: 1.8, valPct: 1.6 }
+      ]
+    },
+    solana_jul: {
+      count: 'HHI 4,071 \u00b7 Dexter 52.2%',
+      countSub: 'Clears both 1,800 and 2,500 antitrust thresholds; Dexter leads Solana transaction counts in July',
+      val: 'HHI 3,831 \u00b7 payAI 56.2%',
+      valSub: 'Count-versus-value flip replicates independently on Solana with a different pair of operators',
+      scale: '24 Solana fee payers',
+      scaleSub: 'Exact-SVM SPL TransferChecked with memo nonce; organic May cardinality 10.1 events/buyer',
+      rows: [
+        { name: 'Dexter', countPct: 52.2, valPct: 16.5 },
+        { name: 'payAI', countPct: 14.8, valPct: 56.2 },
+        { name: 'Coinbase CDP', countPct: 28.4, valPct: 19.8 },
+        { name: 'Relai & Corbits', countPct: 4.6, valPct: 7.5 }
+      ]
+    },
+    polygon_jul: {
+      count: 'Single-operator (~99.5%)',
+      countSub: 'Official Polygon Facilitator (24-address rotating fleet) generated 5.61M July payments (55.8% of all x402 counts)',
+      val: '52 buyer wallets',
+      valSub: 'Under a public $1M gas-rebate program (687,453 POL funded); 52 wallets recirculate seeded USDC at ~$0.025/tx',
+      scale: '15.88% of Polygon USDC tx',
+      scaleSub: 'Subsidized fleet alone accounts for ~1 in 6 Polygon USDC transfer events, distorting chain-level stats',
+      rows: [
+        { name: 'Polygon Facilitator (24-addr fleet)', countPct: 99.5, valPct: 99.2 },
+        { name: 'All other Polygon facilitators', countPct: 0.5, valPct: 0.8 }
+      ]
+    },
+    base_may: {
+      count: 'HHI 6,009 \u00b7 CDP 75.6%',
+      countSub: 'May 2026 validated baseline: 3,041,318 payments from 110,766 distinct buyers (26.7 events/buyer)',
+      val: 'HHI 4,040 \u00b7 Meridian 57.2%',
+      valSub: 'Corrected from $1,030,242 raw (HHI 5,621) to $652,882 after removing Meridian 2-hop double-count',
+      scale: '$0.07 vs $33.86 avg tx',
+      scaleSub: 'Coinbase CDP averages $0.07/payment across 110,350 buyers; Meridian averages $33.86 across 17 buyers',
+      rows: [
+        { name: 'coinbase (CDP)', countPct: 75.6, valPct: 25.8 },
+        { name: 'mrdn (Meridian)', countPct: 0.4, valPct: 57.2 },
+        { name: 'fluxa', countPct: 16.1, valPct: 8.7 },
+        { name: 'payAI', countPct: 5.9, valPct: 1.7 },
+        { name: 'relai & others', countPct: 2.0, valPct: 6.6 }
+      ]
+    },
+    solana_may: {
+      count: 'HHI 4,203 \u00b7 Dexter 51.8%',
+      countSub: 'May 2026 Solana baseline: 799,769 payments across 78,922 buyers ($0.17 avg payment)',
+      val: 'HHI 4,915 \u00b7 Coinbase 66.5%',
+      valSub: 'Dexter leads counts (414,665 tx) while Coinbase leads value ($89,294) and Relai averages $1.41 across 19 buyers',
+      scale: '$134,202 / 799,769 tx',
+      scaleSub: 'Post-leaderboard-grind organic profile (down from 11,900 events/buyer in Dec 2025 to 10.1 in May 2026)',
+      rows: [
+        { name: 'dexter', countPct: 51.8, valPct: 15.0 },
+        { name: 'coinbase', countPct: 38.5, valPct: 66.5 },
+        { name: 'relai', countPct: 2.0, valPct: 16.4 },
+        { name: 'payAI & corbits', countPct: 7.7, valPct: 2.1 }
+      ]
+    }
+  };
+
+  function initC4Explorer(){
+    var root = document.getElementById('c4-x402-explorer');
+    if(!root) return;
+
+    var curChain = 'base_jul';
+    var curDiag = 'cardinality';
+    var chainsSvg = document.getElementById('c4-chains-svg');
+    var diagSvg = document.getElementById('c4-diag-svg');
+
+    function renderChains(){
+      var d = C4_CHAINS[curChain] || C4_CHAINS.base_jul;
+      var mCount = document.getElementById('c4-m-count');
+      var mCountSub = document.getElementById('c4-m-count-sub');
+      var mVal = document.getElementById('c4-m-val');
+      var mValSub = document.getElementById('c4-m-val-sub');
+      var mScale = document.getElementById('c4-m-scale');
+      var mScaleSub = document.getElementById('c4-m-scale-sub');
+
+      if(mCount) mCount.textContent = d.count;
+      if(mCountSub) mCountSub.textContent = d.countSub;
+      if(mVal) mVal.textContent = d.val;
+      if(mValSub) mValSub.textContent = d.valSub;
+      if(mScale) mScale.textContent = d.scale;
+      if(mScaleSub) mScaleSub.textContent = d.scaleSub;
+
+      if(!chainsSvg) return;
+      var W = 880, H = 280, padL = 210, padR = 165, padT = 40;
+      var plotW = W - padL - padR;
+      var rowH = 44;
+
+      var svg = '';
+      svg += '<g transform="translate(' + padL + ', 18)" font-size="11" fill="currentColor">' +
+        '<rect x="0" y="-8" width="14" height="8" rx="2" fill="#0ea5e9"/><text x="19" y="0">Payment-count share (%)</text>' +
+        '<rect x="190" y="-8" width="14" height="8" rx="2" fill="#d97706"/><text x="209" y="0">Corrected dollar-volume share (%)</text>' +
+        '</g>';
+
+      [0, 25, 50, 75, 100].forEach(function(pct){
+        var x = (padL + (pct / 100) * plotW).toFixed(1);
+        svg += '<line x1="' + x + '" y1="' + (padT - 6) + '" x2="' + x + '" y2="' + (H - 22) + '" stroke="currentColor" stroke-opacity="0.12" stroke-dasharray="3 3"/>';
+        svg += '<text x="' + x + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10.5" fill="currentColor" opacity="0.65">' + pct + '%</text>';
+      });
+
+      d.rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var wCount = Math.max(3, (r.countPct / 100) * plotW).toFixed(1);
+        var wVal = Math.max(3, (r.valPct / 100) * plotW).toFixed(1);
+
+        svg += '<text x="' + (padL - 10) + '" y="' + (y + 18) + '" text-anchor="end" font-size="12" font-weight="600" fill="currentColor">' + r.name + '</text>';
+        svg += '<rect x="' + padL + '" y="' + (y + 2) + '" width="' + wCount + '" height="13" rx="3" fill="#0ea5e9"/>';
+        svg += '<rect x="' + padL + '" y="' + (y + 17) + '" width="' + wVal + '" height="13" rx="3" fill="#d97706"/>';
+
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 13) + '" font-size="11" fill="#0ea5e9" font-weight="600">' + r.countPct.toFixed(1) + '% counts</text>';
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 28) + '" font-size="11" fill="#d97706" font-weight="600">' + r.valPct.toFixed(1) + '% dollars</text>';
+      });
+
+      chainsSvg.innerHTML = svg;
+    }
+
+    function renderDiag(){
+      if(!diagSvg) return;
+      var W = 880, H = 270, padL = 235, padR = 195, padT = 32;
+      var plotW = W - padL - padR;
+      var svg = '';
+
+      if(curDiag === 'cardinality'){
+        /* Log10 scale from 1 to 200,000 events per buyer per month */
+        var items = [
+          { label: 'Solana May 2026 (organic rebuild)', val: 10.1, col: '#10b981', note: '10.1 tx/buyer (78,922 buyers)' },
+          { label: 'Base May 2026 (validated baseline)', val: 26.7, col: '#10b981', note: '26.7 tx/buyer (110,766 buyers)' },
+          { label: 'Base Nov 2025 (memecoin peak)', val: 541.1, col: '#d97706', note: '541 tx/buyer (64.3M tx / 118.8K buyers)' },
+          { label: 'Solana Dec 2025 (leaderboard grind)', val: 11900, col: '#dc2626', note: '11,900 tx/buyer (26.9M tx / 2,261 buyers)' },
+          { label: 'Polygon Jul 2026 ($1M gas rebate)', val: 107885, col: '#dc2626', note: '107,885 tx/buyer (5.61M tx / 52 wallets)' },
+          { label: 'Polygon May 2026 (rebate fleet)', val: 144000, col: '#dc2626', note: '~144,000 tx/buyer (5.04M tx / 35 wallets)' }
+        ];
+        var maxLog = Math.log10(200000);
+        items.forEach(function(it, idx){
+          var y = padT + idx * 36;
+          var bw = Math.max(6, (Math.log10(Math.max(1.2, it.val)) / maxLog) * plotW).toFixed(1);
+          svg += '<text x="' + (padL - 10) + '" y="' + (y + 17) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + it.label + '</text>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + plotW + '" height="18" rx="4" fill="currentColor" fill-opacity="0.05"/>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + bw + '" height="18" rx="4" fill="' + it.col + '"/>';
+          svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 16) + '" font-size="11" font-weight="600" fill="currentColor">' + it.note + '</text>';
+        });
+      } else {
+        var recs = [
+          { label: 'Community Dune dashboard (May)', val: 179793, col: '#94a3b8', note: '$179,793 (49-addr map; misses Meridian)' },
+          { label: 'Base raw transfer-sum (uncorrected)', val: 1030242, col: '#dc2626', note: '$1,030,242 (double-counts Meridian 2-hop proxy)' },
+          { label: 'Base payment-validated (corrected)', val: 652882, col: '#10b981', note: '$652,882 (-36.6% proxy correction; HHI 4,040)' },
+          { label: 'Cross-chain May 2026 (corrected)', val: 940323, col: '#0ea5e9', note: '$940,323 across 8.87M payments (3 chains)' },
+          { label: 'Cross-chain July 2026 (corrected)', val: 583430, col: '#0ea5e9', note: '$583,430 across 10.06M payments (3 chains)' }
+        ];
+        var maxV = 1100000;
+        recs.forEach(function(it, idx){
+          var y = padT + idx * 42;
+          var bw = Math.max(6, (it.val / maxV) * plotW).toFixed(1);
+          svg += '<text x="' + (padL - 10) + '" y="' + (y + 18) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + it.label + '</text>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + plotW + '" height="20" rx="4" fill="currentColor" fill-opacity="0.05"/>';
+          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + bw + '" height="20" rx="4" fill="' + it.col + '"/>';
+          svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 17) + '" font-size="11" font-weight="600" fill="currentColor">' + it.note + '</text>';
+        });
+      }
+
+      diagSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-c4-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-c4-tab');
+        root.querySelectorAll('button[data-c4-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pCh = document.getElementById('c4-panel-chains');
+        var pDi = document.getElementById('c4-panel-cardinality');
+        if(pCh) pCh.hidden = target !== 'chains';
+        if(pDi) pDi.hidden = target !== 'cardinality';
+        if(target === 'cardinality') renderDiag(); else renderChains();
+        return;
+      }
+
+      var chBtn = e.target.closest('button[data-c4-chain]');
+      if(chBtn){
+        curChain = chBtn.getAttribute('data-c4-chain') || 'base_jul';
+        root.querySelectorAll('button[data-c4-chain]').forEach(function(b){
+          var on = b === chBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderChains();
+        return;
+      }
+
+      var diBtn = e.target.closest('button[data-c4-diag]');
+      if(diBtn){
+        curDiag = diBtn.getAttribute('data-c4-diag') || 'cardinality';
+        root.querySelectorAll('button[data-c4-diag]').forEach(function(b){
+          var on = b === diBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderDiag();
+      }
+    });
+
+    renderChains();
+    renderDiag();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initC4Explorer);
+  } else {
+    initC4Explorer();
+  }
+})();
+
+/* ==========================================================================
+   Who Burns the Tokens S2R & Observability Explorer (/papers/who-burns-the-tokens/)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* Exact Helium S2R series from Section 5.1.1 Tables */
+  var B3_HNT_POINTS = [
+    { label: 'May 23', monthly: 0.013, t3m: 0.013, t6m: 0.013, ttm: 0.013, burned: '37.2K', issued: '2.88M' },
+    { label: 'Sep 23', monthly: 0.119, t3m: 0.068, t6m: 0.045, ttm: 0.038, burned: '138.7K', issued: '1.17M' },
+    { label: 'Jan 24', monthly: 0.052, t3m: 0.055, t6m: 0.062, ttm: 0.049, burned: '75.6K', issued: '1.46M' },
+    { label: 'Jun 24', monthly: 0.024, t3m: 0.031, t6m: 0.040, ttm: 0.048, burned: '28.2K', issued: '1.16M' },
+    { label: 'Nov 24', monthly: 0.137, t3m: 0.078, t6m: 0.058, ttm: 0.056, burned: '159.5K', issued: '1.16M' },
+    { label: 'Mar 25', monthly: 0.107, t3m: 0.095, t6m: 0.088, ttm: 0.069, burned: '200.4K', issued: '1.88M' },
+    { label: 'Jun 25', monthly: 0.376, t3m: 0.245, t6m: 0.172, ttm: 0.115, burned: '708.9K', issued: '1.88M' },
+    { label: 'Aug 25', monthly: 0.869, t3m: 0.520, t6m: 0.310, ttm: 0.155, burned: '532.9K', issued: '613.5K' },
+    { label: 'Sep 25', monthly: 0.587, t3m: 0.611, t6m: 0.355, ttm: 0.168, burned: '456.2K', issued: '776.7K' },
+    { label: 'Oct 25', monthly: 1.570, t3m: 0.980, t6m: 0.410, ttm: 0.190, burned: '975.3K', issued: '621.4K' },
+    { label: 'Nov 25', monthly: 0.880, t3m: 0.980, t6m: 0.560, ttm: 0.220, burned: '546.8K', issued: '621.4K' },
+    { label: 'Dec 25', monthly: 1.552, t3m: 1.350, t6m: 0.780, ttm: 0.340, burned: '1.21M', issued: '776.7K' },
+    { label: 'Jan 26', monthly: 1.100, t3m: 1.210, t6m: 1.090, ttm: 0.410, burned: '683.5K', issued: '621.4K' },
+    { label: 'Feb 26', monthly: 1.841, t3m: 1.500, t6m: 1.240, ttm: 0.510, burned: '1.14M', issued: '621.4K' }
+  ];
+
+  var B3_WIN_META = {
+    monthly: {
+      feb: '1.84x (net deflationary)',
+      febSub: '1,144,240 HNT burned vs 621,370 HNT issued; crossed S2R = 1.0 parity in October 2025 (1.57x)',
+      col: '#10b981'
+    },
+    t3m: {
+      feb: '1.50x (trailing 3-month)',
+      febSub: 'Crossed S2R = 1.0 parity in December 2025 (1.35x) and held above parity through February 2026 (1.50x)',
+      col: '#0ea5e9'
+    },
+    t6m: {
+      feb: '1.24x (trailing 6-month)',
+      febSub: 'Crossed S2R = 1.0 parity in January 2026 (1.09x) as post-halving carrier burns compounded',
+      col: '#d97706'
+    },
+    ttm: {
+      feb: '0.51x (trailing 12-month)',
+      febSub: 'Remains below 1.0 parity over a full 12-month window because pre-August 2025 issuance is included',
+      col: '#94a3b8'
+    }
+  };
+
+  /* Exact 13-protocol cohort from Sections 4.2, 5.3, and 6.3 */
+  var B3_COHORT = [
+    { name: 'Helium (HNT)', arch: 'direct', cat: 'GeoDePIN', sink: 'Direct DC burn', s2r: 1.841, s2rTxt: '1.84 peak (0.51 TTM)', demHHI: '0.27 (Top-5 ~90%)', govHHI: '0.099 post-PCA' },
+    { name: 'Livepeer (LPT)', arch: 'direct', cat: 'DeVIN', sink: 'Direct ETH fee', s2r: 0.010, s2rTxt: '~0 (ETH fee routing)', demHHI: '0.31 (Top-2 75%)', govHHI: '0.199 (0.033 unif.)' },
+    { name: 'GEODNET (GEOD)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Foundation buy-burn', s2r: 0.219, s2rTxt: '0.219 (52.5% Oct peak)', demHHI: 'Off-chain (treasury signer)', govHHI: '0.14 Polygon (0.061 PCA)' },
+    { name: 'Hivemapper (HONEY)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Single relayer burn', s2r: 0.183, s2rTxt: '0.183 (Feb 2026)', demHHI: 'Off-axis (96% 1 relayer)', govHHI: '0.020 post-PCA' },
+    { name: 'DIMO (DIMO)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Prepaid DCX credit', s2r: 0.350, s2rTxt: '4.24 1-mo license spike', demHHI: 'Off-axis (~100 credit wallets)', govHHI: '0.025 post-PCA (0.305 raw)' },
+    { name: 'Filecoin (FIL)', arch: 'low', cat: 'DeVIN', sink: 'Base fee + collateral', s2r: 0.045, s2rTxt: '~0.045 (0.14-0.41 w/ lock)', demHHI: 'Unmeasured', govHHI: '0.022 post-PCA' },
+    { name: 'Render (RENDER)', arch: 'low', cat: 'DeVIN', sink: 'BME fee burn', s2r: 0.020, s2rTxt: 'Low (DeVIN benchmark)', demHHI: 'Unmeasured', govHHI: '0.027 post-PCA' },
+    { name: 'WeatherXM (WXM)', arch: 'low', cat: 'GeoDePIN', sink: 'Subscription burn', s2r: 0.010, s2rTxt: 'Active (volume small)', demHHI: 'Unmeasured', govHHI: '0.148 post-PCA' },
+    { name: 'Anyone Protocol', arch: 'low', cat: 'GeoDePIN', sink: 'Stake / lock', s2r: 0.005, s2rTxt: '~0 (staking lock)', demHHI: 'Unmeasured', govHHI: '0.034 (0.013 post-PCA)' },
+    { name: 'Grass (GRASS)', arch: 'low', cat: 'GeoDePIN*', sink: 'None yet (staking)', s2r: 0.005, s2rTxt: '~0 (no burn)', demHHI: 'None', govHHI: '0.119 (0.035 post-PCA)' },
+    { name: 'UpRock', arch: 'low', cat: 'GeoDePIN*', sink: 'None yet', s2r: 0.005, s2rTxt: '~0 (pre-revenue)', demHHI: 'None', govHHI: 'Data-insufficient' },
+    { name: 'Wayru / WiFiDabba', arch: 'low', cat: 'GeoDePIN', sink: 'Micro-payments', s2r: 0.005, s2rTxt: 'Data-insufficient', demHHI: 'Unmeasured', govHHI: 'Data-insufficient' },
+    { name: 'CUDIS', arch: 'low', cat: 'GeoDePIN', sink: 'Data marketplace', s2r: 0.005, s2rTxt: 'Data-insufficient', demHHI: 'Unmeasured', govHHI: 'Data-insufficient' }
+  ];
+
+  function initB3Explorer(){
+    var root = document.getElementById('b3-burns-explorer');
+    if(!root) return;
+
+    var curWin = 'monthly';
+    var curArch = 'all';
+    var hntSvg = document.getElementById('b3-helium-svg');
+    var cohSvg = document.getElementById('b3-cohort-svg');
+
+    function renderHelium(){
+      var meta = B3_WIN_META[curWin] || B3_WIN_META.monthly;
+      var mFeb = document.getElementById('b3-m-feb');
+      var mFebSub = document.getElementById('b3-m-feb-sub');
+      if(mFeb) mFeb.textContent = meta.feb;
+      if(mFebSub) mFebSub.textContent = meta.febSub;
+
+      if(!hntSvg) return;
+      var W = 880, H = 290, padL = 56, padR = 36, padT = 28, padB = 42;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var maxY = 2.0;
+
+      function xOf(i){ return padL + (i / (B3_HNT_POINTS.length - 1)) * plotW; }
+      function yOf(v){ return padT + plotH - (Math.min(maxY, v) / maxY) * plotH; }
+
+      var svg = '';
+      [0, 0.5, 1.0, 1.5, 2.0].forEach(function(gv){
+        var y = yOf(gv).toFixed(1);
+        var isParity = Math.abs(gv - 1.0) < 0.01;
+        svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="' + (isParity ? '#dc2626' : 'currentColor') + '" stroke-opacity="' + (isParity ? '0.65' : '0.12') + '" stroke-dasharray="' + (isParity ? '5 4' : '3 3') + '"/>';
+        svg += '<text x="' + (padL - 8) + '" y="' + (parseFloat(y) + 4) + '" text-anchor="end" font-size="11" font-weight="' + (isParity ? '700' : '400') + '" fill="' + (isParity ? '#dc2626' : 'currentColor') + '" opacity="' + (isParity ? '0.95' : '0.65') + '">' + gv.toFixed(1) + '</text>';
+      });
+
+      svg += '<text x="' + (W - padR - 6) + '" y="' + (yOf(1.0) - 6).toFixed(1) + '" text-anchor="end" font-size="11" font-weight="700" fill="#dc2626">S2R = 1.0 Fiscal Parity (burns = emissions)</text>';
+
+      /* Draw ghost monthly line when another window is active */
+      if(curWin !== 'monthly'){
+        var mPath = '';
+        B3_HNT_POINTS.forEach(function(p, i){
+          mPath += (i === 0 ? 'M' : 'L') + xOf(i).toFixed(1) + ',' + yOf(p.monthly).toFixed(1) + ' ';
+        });
+        svg += '<path d="' + mPath + '" fill="none" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.8" stroke-dasharray="3 3"/>';
+      }
+
+      var activePath = '';
+      B3_HNT_POINTS.forEach(function(p, i){
+        var x = xOf(i).toFixed(1);
+        var y = yOf(p[curWin]).toFixed(1);
+        activePath += (i === 0 ? 'M' : 'L') + x + ',' + y + ' ';
+      });
+      svg += '<path d="' + activePath + '" fill="none" stroke="' + meta.col + '" stroke-width="3"/>';
+
+      B3_HNT_POINTS.forEach(function(p, i){
+        var x = xOf(i).toFixed(1);
+        var y = yOf(p[curWin]).toFixed(1);
+        var v = p[curWin];
+        svg += '<circle cx="' + x + '" cy="' + y + '" r="4.5" fill="' + (v >= 1.0 ? '#10b981' : meta.col) + '"/>';
+        if(i === 6 || i === 7 || i === 9 || i === 13){
+          svg += '<text x="' + x + '" y="' + (parseFloat(y) - 9).toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="currentColor">' + v.toFixed(2) + '</text>';
+        }
+        svg += '<text x="' + x + '" y="' + (H - 16) + '" text-anchor="middle" font-size="10.5" fill="currentColor" opacity="0.75">' + p.label + '</text>';
+      });
+
+      hntSvg.innerHTML = svg;
+    }
+
+    function renderCohort(){
+      if(!cohSvg) return;
+      var rows = B3_COHORT.filter(function(r){
+        if(curArch === 'all') return true;
+        return r.arch === curArch;
+      });
+
+      var rowH = 25, padT = 34, padB = 14, padL = 148;
+      var W = 880, H = padT + rows.length * rowH + padB;
+      cohSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      cohSvg.setAttribute('height', String(H));
+
+      var cols = [
+        { label: 'Category', w: 92 },
+        { label: 'Payment / sink architecture', w: 175 },
+        { label: 'Operating S2R', w: 165 },
+        { label: 'Demand-HHI observability', w: 155 },
+        { label: 'Governance HHI', w: 135 }
+      ];
+
+      var svg = '';
+      var xCur = padL;
+      cols.forEach(function(c){
+        svg += '<text x="' + (xCur + c.w / 2).toFixed(1) + '" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">' + c.label + '</text>';
+        xCur += c.w;
+      });
+
+      rows.forEach(function(r, idx){
+        var y = padT + idx * rowH;
+        var col = r.arch === 'direct' ? '#10b981' : (r.arch === 'intermediated' ? '#0ea5e9' : '#94a3b8');
+        svg += '<text x="' + (padL - 8) + '" y="' + (y + 16) + '" text-anchor="end" font-size="11.5" font-weight="700" fill="currentColor">' + r.name + '</text>';
+
+        var vals = [r.cat, r.sink, r.s2rTxt, r.demHHI, r.govHHI];
+        var xc = padL;
+        vals.forEach(function(v, ci){
+          var cw = cols[ci].w;
+          var hi = (ci === 2 && r.s2r >= 0.15) || (ci === 3 && r.arch === 'direct');
+          svg += '<rect x="' + (xc + 2) + '" y="' + (y + 2) + '" width="' + (cw - 4) + '" height="' + (rowH - 4) + '" rx="4" fill="' + (hi ? col : 'currentColor') + '" fill-opacity="' + (hi ? '0.18' : '0.05') + '" stroke="' + (hi ? col : 'currentColor') + '" stroke-opacity="' + (hi ? '0.65' : '0.10') + '"/>';
+          svg += '<text x="' + (xc + cw / 2).toFixed(1) + '" y="' + (y + 16) + '" text-anchor="middle" font-size="10.5" font-weight="' + (hi ? '700' : '500') + '" fill="currentColor">' + v + '</text>';
+          xc += cw;
+        });
+      });
+
+      cohSvg.innerHTML = svg;
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-b3-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-b3-tab');
+        root.querySelectorAll('button[data-b3-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pHnt = document.getElementById('b3-panel-helium');
+        var pCoh = document.getElementById('b3-panel-cohort');
+        if(pHnt) pHnt.hidden = target !== 'helium';
+        if(pCoh) pCoh.hidden = target !== 'cohort';
+        if(target === 'cohort') renderCohort(); else renderHelium();
+        return;
+      }
+
+      var winBtn = e.target.closest('button[data-b3-win]');
+      if(winBtn){
+        curWin = winBtn.getAttribute('data-b3-win') || 'monthly';
+        root.querySelectorAll('button[data-b3-win]').forEach(function(b){
+          var on = b === winBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderHelium();
+        return;
+      }
+
+      var archBtn = e.target.closest('button[data-b3-arch]');
+      if(archBtn){
+        curArch = archBtn.getAttribute('data-b3-arch') || 'all';
+        root.querySelectorAll('button[data-b3-arch]').forEach(function(b){
+          var on = b === archBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderCohort();
+      }
+    });
+
+    renderHelium();
+    renderCohort();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initB3Explorer);
+  } else {
+    initB3Explorer();
+  }
+})();
+
 
 

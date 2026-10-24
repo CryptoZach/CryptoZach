@@ -345,6 +345,93 @@
         <figcaption id="brief-seven-dollars-caption">Figure 1. Regulation does not predict equivalence. Seven dollar-denominated digital products plotted by regulatory intensity (x-axis; CLII scaled to 0-1) versus collateral eligibility (y-axis; composite eight-metric framework). Direct contagion dependencies (solid brown arrows) trace simple-to-complex flows under stress, with one dashed brown arrow marking the indirect shared-infrastructure link between DAI and OUSG; the no-divergence expectation (dashed grey diagonal) would imply regulation predicts equivalence. The empirical scatter shows it does not: USDC's high CLII coincided with the largest SVB-period depeg, while USDT held peg despite a lower CLII score.</figcaption>
       </figure>
 
+      <figure class="b4-explorer" id="a3-dollars-explorer" aria-labelledby="a3-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Collateral &amp; Design-Axis Explorer</p>
+            <h4 id="a3-exp-title">Compare 8-metric collateral eligibility against operator CLII and inspect the 11-product US-holder design scorecard</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Seven Dollars explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-a3-tab="eligibility">1. Collateral eligibility vs CLII (8 products)</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-a3-tab="design">2. US-holder design axis (11 products)</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="a3-panel-eligibility" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Scoring specification &amp; depeg window (Sections 7.2 &amp; 7.3):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Eligibility scoring specification">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a3-spec="published">Published composite (full-history depeg)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-spec="rolling3y">3-year rolling window (USDT sensitivity)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-spec="mechanical">Mechanical 8-metric rule (Section 7.3)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Top collateral tier (Tier A)</span>
+              <strong class="b4-exp__val" id="a3-m-top">USDC (0.777) &middot; PYUSD (0.753)</strong>
+              <span class="b4-exp__sub" id="a3-m-top-sub">Standard eligibility tier; USDC leads despite 10.4% DEX depeg during SVB (CLII 0.92)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">CLII vs eligibility divergence</span>
+              <strong class="b4-exp__val" id="a3-m-div">USDT 0.657 vs USDG 0.495</strong>
+              <span class="b4-exp__sub" id="a3-m-div-sub">USDT (CLII 0.52, Tier B) outranks higher-CLII USDG (CLII 0.83, Tier C) and OUSG (0.61, Tier D) on secondary depth</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Simple-to-complex contagion</span>
+              <strong class="b4-exp__val" id="a3-m-contagion">USDC &rarr; DAI &amp; OUSG</strong>
+              <span class="b4-exp__sub" id="a3-m-contagion-sub">SVB (Mar 2023): USDC depeg hit DAI via $4.1B PSM; Circle BUIDL pool (Mar 2025): 23h limit hit OUSG</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="a3-elig-svg" viewBox="0 0 880 310" width="880" height="310" role="img" aria-label="Collateral eligibility composite score versus operator CLII across 8 dollar products"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Tables in Sections 3, 7.2, and 7.3 of <em>Seven Dollars</em> (SSRN 6483118; replication tag <code>v1.0</code>). Solid bars show collateral eligibility composite (0 to 1); hollow markers show operator CLII score (0 to 1).</p>
+        </div>
+
+        <div class="b4-exp__panel" id="a3-panel-design" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Filter 11-product sample by US-holder design class (Section 3.2):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="US-holder design class filter">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a3-class="all">All 11 products</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="us">For US holders (5)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="ppsi">PPSI-eligible anchor (3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="offshore">Offshore-targeted (4)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="boundary">Boundary cases (2)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Clean-classification rate</span>
+              <strong class="b4-exp__val">9 of 11 (81.8%)</strong>
+              <span class="b4-exp__sub">5 For-US-holders + 4 Offshore-targeted; 2 boundary cases (FDUSD, USD1)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">US PPSI-eligible anchor</span>
+              <strong class="b4-exp__val">USDC &middot; PYUSD &middot; RLUSD</strong>
+              <span class="b4-exp__sub">All 3 built under NYDFS trust or OCC national-trust pathways + full KYC &amp; Allow-US posture</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Five design markers</span>
+              <strong class="b4-exp__val">M1 to M5 scorecard</strong>
+              <span class="b4-exp__sub">M1 KYC depth &middot; M2 Redemption &middot; M3 Jurisdiction &middot; M4 Geofencing &middot; M5 Legal character</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="a3-design-svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="Five-marker US-holder design scorecard across 11 dollar products"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Section 3.2 Table of <em>Seven Dollars</em> (SSRN 6483118). Distinguishes structural product taxonomy (what the token is) from target-holder design (who the token is built for under GENIUS Act / AG19 rules).</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>Evidence base</h2>
         <p>Seven products scored across five regulatory regimes (US state money transmitter, US trust charter (a New York charter until Paxos's OCC national trust conversion, conditionally approved December 12, 2025), British Virgin Islands, Monetary Authority of Singapore, EU MiCA), extended CLII scoring across five operators, an eight-metric collateral eligibility framework, two production stress episodes (SVB March 2023, Circle pool March 2025), and a within-operator natural experiment (Paxos: BUSD wound down while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same state regulator).</p>

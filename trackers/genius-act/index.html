@@ -483,6 +483,36 @@
       <h1 style="font-size:clamp(1.75rem, 3vw, 2.5rem);margin:0 0 var(--space-md);letter-spacing:-0.01em;">GENIUS Act rulemaking tracker.</h1>
       <p class="about-lede"><strong>Where every implementing rulemaking under the GENIUS Act stands: publication date, comment deadline, status and next date, in one table.</strong> The rows the program commented on link to the letter; the rest are listed so the picture is complete. Each row carries its sources, and the whole table is published as JSON.</p>
 
+      <div class="letters-toolbar tracker-toolbar" id="genius-tracker-toolbar" role="region" aria-label="Filter GENIUS Act rulemakings">
+        <div class="letters-search-row">
+          <label class="visually-hidden" for="genius-tracker-search">Search rulemakings by agency, RIN, docket, or keyword</label>
+          <input id="genius-tracker-search" class="letters-search-input" type="search" placeholder="Search by agency, RIN, docket, or keyword (e.g., AG19, OCC, section 3, reserve)..." autocomplete="off" />
+        </div>
+        <div class="letters-filters" role="group" aria-label="Filter rulemakings">
+          <div class="filter-group" data-tracker-axis="status"><span class="filter-label">Status:</span>
+            <button type="button" class="filter-btn active" data-tracker-axis="status" data-tracker-val="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-tracker-axis="status" data-tracker-val="open" aria-pressed="false">Comment open</button>
+            <button type="button" class="filter-btn" data-tracker-axis="status" data-tracker-val="pending" aria-pressed="false">Final rule pending</button>
+            <button type="button" class="filter-btn" data-tracker-axis="status" data-tracker-val="final" aria-pressed="false">In effect</button>
+          </div>
+          <div class="filter-group" data-tracker-axis="coverage"><span class="filter-label">Program letter:</span>
+            <button type="button" class="filter-btn active" data-tracker-axis="coverage" data-tracker-val="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-tracker-axis="coverage" data-tracker-val="commented" aria-pressed="false">Commented</button>
+            <button type="button" class="filter-btn" data-tracker-axis="coverage" data-tracker-val="uncommented" aria-pressed="false">No letter filed</button>
+          </div>
+          <div class="filter-group" data-tracker-axis="agency"><span class="filter-label">Agency:</span>
+            <button type="button" class="filter-btn active" data-tracker-axis="agency" data-tracker-val="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="FDIC" aria-pressed="false">FDIC</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="OCC" aria-pressed="false">OCC</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="Treasury" aria-pressed="false">Treasury</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="Federal Reserve" aria-pressed="false">Federal Reserve</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="FinCEN" aria-pressed="false">FinCEN / OFAC</button>
+            <button type="button" class="filter-btn" data-tracker-axis="agency" data-tracker-val="NCUA" aria-pressed="false">NCUA</button>
+          </div>
+        </div>
+        <p class="filter-count-wrap" id="genius-tracker-count-wrap" hidden><span class="filter-count" id="genius-tracker-count" aria-live="polite"></span> <button type="button" class="filter-reset" id="genius-tracker-reset">Clear filters</button></p>
+      </div>
+
       <!-- letters:tracker START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <p class="letters-meta-strip">14 rulemakings &middot; 10 with a program letter &middot; 2 open for comment &middot; 11 awaiting final action &middot; 1 in effect</p>
       <p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. Rows with a letter link to the program's comment; the others are listed so the implementation picture is complete. Status as of October 23, 2026.</p>

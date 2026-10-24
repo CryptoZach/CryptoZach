@@ -399,6 +399,93 @@
         <figcaption id="brief-who-burns-caption">Figure 4. Burn and fee-architecture observability and S2R. Direct-payer HHI is a valid demand-concentration measure only for protocols whose customers pay the protocol directly on-chain: Helium (burn-signer HHI 0.27, S2R 1.84 at the February 2026 monthly peak) and Livepeer (fee-payer HHI 0.31, S2R near zero), both highly concentrated. GEODNET (Foundation buy-and-burn), Hivemapper (single relayer, roughly 96% of burns through one signer), and DIMO (prepaid-credit purchases one step removed from end customers) sit in the shaded off-axis lane: their demand bases are off-chain or not reliably mapped by burn wallets. The S2R = 1.0 horizontal line marks fiscal parity (burns equal emissions).</figcaption>
       </figure>
 
+      <figure class="b4-explorer" id="b3-burns-explorer" aria-labelledby="b3-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive S2R &amp; Burn-Observability Explorer</p>
+            <h4 id="b3-exp-title">Trace Helium's 34-month S2R parity crossover across trailing windows and audit 13 DePIN payment architectures</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Who Burns the Tokens explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-b3-tab="helium">1. Helium 34-month S2R trajectory</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-b3-tab="cohort">2. 13-protocol observability &amp; S2R tiers</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="b3-panel-helium" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Select S2R smoothing window (Section 5.1.1):</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Helium S2R window selector">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b3-win="monthly">Monthly S2R (peak 1.84)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-win="t3m">Trailing 3-month (1.50)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-win="t6m">Trailing 6-month (1.24)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-win="ttm">Trailing 12-month TTM (0.51)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">February 2026 reading</span>
+              <strong class="b4-exp__val" id="b3-m-feb">1.84x (net deflationary)</strong>
+              <span class="b4-exp__sub" id="b3-m-feb-sub">1,144,240 HNT burned vs 621,370 HNT issued; crossed S2R = 1.0 parity in October 2025 (1.57x)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Parity crossover drivers</span>
+              <strong class="b4-exp__val" id="b3-m-drivers">Halving (-58%) + Carrier burn</strong>
+              <span class="b4-exp__sub" id="b3-m-drivers-sub">Pre-halving carrier burn lifted S2R to 0.38 (Jun 2025); Aug 2025 halving + ~$20.9M DC run-rate crossed 1.0</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Direct-burn payer HHI</span>
+              <strong class="b4-exp__val" id="b3-m-hhi">HHI 0.27 (Top-5 ~90%)</strong>
+              <span class="b4-exp__sub" id="b3-m-hhi-sub">Top 2 Data Credit burn signers account for 70.1% of HNT burns; S2R excludes vesting dilution</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b3-helium-svg" viewBox="0 0 880 290" width="880" height="290" role="img" aria-label="Helium S2R trajectory from May 2023 to February 2026 across monthly and trailing windows"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Section 5.1.1 Tables of <em>Who Burns the Tokens?</em> (SSRN 6483619; Solana Dune burn events vs HIP-20 and post-halving issuance). Dashed horizontal line at S2R = 1.00 marks burn-and-mint equilibrium.</p>
+        </div>
+
+        <div class="b4-exp__panel" id="b3-panel-cohort" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Filter 13-protocol sample by payment architecture &amp; demand observability:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Payment architecture filter">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-b3-arch="all">All 13 protocols</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-arch="direct">Direct on-chain payer (2 measurable)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-arch="intermediated">Buy-and-burn / relayer / credit (3 off-axis)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-b3-arch="low">Near-zero / unindexed S2R (8)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Demand-HHI measurability</span>
+              <strong class="b4-exp__val">2 of 13 protocols</strong>
+              <span class="b4-exp__sub">Only Helium (burn HHI 0.27) and Livepeer (ETH fee HHI 0.31) expose end-customer payment concentration on-chain</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Three-tier S2R hierarchy</span>
+              <strong class="b4-exp__val">Parity (1) &middot; Growth (2) &middot; ~0 (10)</strong>
+              <span class="b4-exp__sub">Helium (1.84 peak); GEODNET (0.219) &amp; Hivemapper (0.183) growth tier; DIMO 4.24 one-month license spike</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Governance vs demand split</span>
+              <strong class="b4-exp__val">GEOD HHI 0.14 &middot; DIMO 0.025</strong>
+              <span class="b4-exp__sub">GEODNET demand is off-chain (buy-and-burn) while Polygon token holdings (HHI 0.14, team 25.3%) are on-chain</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="b3-cohort-svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="13-protocol S2R and demand-observability comparison"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Sections 4.2, 5.3, and 6.3 of <em>Who Burns the Tokens?</em> (SSRN 6483619). Payment architecture determines whether a network's customer base is visible on-chain at all.</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Most discussion of DePIN tokenomics evaluates whether a network is fiscally sustainable by asking whether token revenue covers token emissions today. This paper reframes the question: it is not the level that matters but the trajectory, and trajectory is determined more by burn-mechanism design than by the absolute size of current revenue. The paper is a study of 13 DePIN protocols (10 GeoDePIN plus 3 DeVIN comparison cases) anchored by a 34-month Helium longitudinal case, and its distinctive empirical contribution is a measurability boundary: payment architecture determines whether a network's demand concentration can be observed on-chain at all.</p>

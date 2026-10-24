@@ -372,6 +372,92 @@
         </div>
       </section>
 
+      <figure class="b4-explorer" id="c4-x402-explorer" aria-labelledby="c4-exp-title">
+        <div class="b4-exp__head">
+          <div>
+            <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive x402 Settlement Census Explorer</p>
+            <h4 id="c4-exp-title">Inspect count-layer vs value-layer facilitator concentration across chains and test the buyer-cardinality classifier</h4>
+          </div>
+          <div class="b4-exp__tabs" role="tablist" aria-label="Agentic payments explorer views">
+            <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-c4-tab="chains">1. Count vs value monopolists by chain</button>
+            <button type="button" class="b4-exp__tab" role="tab" aria-selected="false" data-c4-tab="cardinality">2. Buyer-cardinality &amp; proxy correction</button>
+          </div>
+        </div>
+
+        <div class="b4-exp__panel" id="c4-panel-chains" role="tabpanel">
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Select chain &amp; census window:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="x402 chain and snapshot selector">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-c4-chain="base_jul">Base (July 2026 headline)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-c4-chain="solana_jul">Solana (July 2026 headline)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-c4-chain="polygon_jul">Polygon (July 2026 rebate fleet)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-c4-chain="base_may">Base (May 2026 facilitator table)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-c4-chain="solana_may">Solana (May 2026 facilitator table)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Count-layer HHI &amp; leader</span>
+              <strong class="b4-exp__val" id="c4-m-count">HHI 6,512 &middot; CDP 78.5%</strong>
+              <span class="b4-exp__sub" id="c4-m-count-sub">3.6x the 1,800 DOJ/FTC merger-guidelines threshold; Coinbase CDP dominates payment counts</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Value-layer HHI &amp; leader</span>
+              <strong class="b4-exp__val" id="c4-m-val">HHI 4,700 &middot; Meridian 62.6%</strong>
+              <span class="b4-exp__sub" id="c4-m-val-sub">After 2-hop proxy-settlement correction; value monopolist swaps completely from count leader</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Cross-chain July scale</span>
+              <strong class="b4-exp__val" id="c4-m-scale">$583,430 / 10.06M tx</strong>
+              <span class="b4-exp__sub" id="c4-m-scale-sub">Message-significant (2.83% of USDC transfer events in May baseline) but value-pre-material</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="c4-chains-svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-label="Comparison of facilitator payment-count share and corrected dollar-volume share"></svg>
+          </div>
+          <p class="b4-exp__note">Source: <em>Who Controls Agentic Payments?</em> (SSRN 7396241) and companion measurement memo (138 registry addresses across 29 facilitators and 3 networks). Dashed reference lines on HHI bars mark DOJ/FTC highly concentrated thresholds (1,800 and 2,500).</p>
+        </div>
+
+        <div class="b4-exp__panel" id="c4-panel-cardinality" role="tabpanel" hidden>
+          <div class="b4-exp__controls">
+            <div class="b4-exp__control">
+              <label>Inspect measurement diagnostic:</label>
+              <div class="b4-exp__scen-group" role="group" aria-label="Cardinality and reconciliation view">
+                <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-c4-diag="cardinality">Buyer-cardinality classifier (tx / buyer / month)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-c4-diag="reconcile">May 2026 Base volume &amp; HHI reconciliation</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="b4-exp__metrics">
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Organic vs subsidized spread</span>
+              <strong class="b4-exp__val" id="c4-d-spread">10.1 to 26.7 vs 107,885+</strong>
+              <span class="b4-exp__sub" id="c4-d-spread-sub">Events per buyer per month separates organic Base/Solana usage from Polygon's 52-wallet rebate fleet</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Proxy double-count correction</span>
+              <strong class="b4-exp__val" id="c4-d-proxy">-36.6% ($1.03M &rarr; $653K)</strong>
+              <span class="b4-exp__sub" id="c4-d-proxy-sub">Meridian 2-hop proxy settles buyer-to-facilitator and facilitator-to-seller in one tx (0.99% fee spread)</span>
+            </div>
+            <div class="b4-exp__card">
+              <span class="b4-exp__label">Community dashboard gap</span>
+              <strong class="b4-exp__val" id="c4-d-dash">$179,793 vs $652,882</strong>
+              <span class="b4-exp__sub" id="c4-d-dash-sub">49-address community EVM map misses Meridian submitters ($373.6K corrected) and drops a chain join</span>
+            </div>
+          </div>
+
+          <div class="b4-exp__chart-wrap">
+            <svg id="c4-diag-svg" viewBox="0 0 880 270" width="880" height="270" role="img" aria-label="Buyer-cardinality log-scale comparison and May 2026 volume reconciliation"></svg>
+          </div>
+          <p class="b4-exp__note">Source: Sections 3 to 6 of the x402 control-layer census (SSRN 7396241). Buyer cardinality requires no wash-trading heuristic or funding-graph traversal.</p>
+        </div>
+      </figure>
+
       <div class="paper-abstract">
         <h2>What this paper changes</h2>
         <p>Existing x402 measurement counts transactions, estimates volume, and filters wash activity. That work answers "how much," and its answers disagree by an order of magnitude depending on filters. This paper asks "through whom," which is the question that determines financial-stability and consumer-protection exposure, for the same reason it mattered for stablecoins in the program's earlier gateway work.</p>
