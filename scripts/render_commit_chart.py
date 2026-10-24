@@ -393,8 +393,8 @@ def main(argv=None) -> int:
         readme_orig,
     )
     expected_readme = re.sub(
-        r"!\[Fleet commits per three days, [^\]]+\]\(agent-infrastructure/commits-per-3-days\.png(?:\?v=[^)]+)?\)",
-        f"![{cap['social_alt']}](agent-infrastructure/commits-per-3-days.png?v={through_iso})",
+        r"(?:\[!\[Fleet commits per three days, [^\]]+\]\(agent-infrastructure/commits-per-3-days\.png(?:\?v=[^)]+)?\)\]\(https://tokenization\.systems/agent-infrastructure/#ai-commit-chart\)|!\[Fleet commits per three days, [^\]]+\]\(agent-infrastructure/commits-per-3-days\.png(?:\?v=[^)]+)?\))",
+        f"[![{cap['social_alt']}](agent-infrastructure/commits-per-3-days.png?v={through_iso})](https://tokenization.systems/agent-infrastructure/#ai-commit-chart)",
         expected_readme,
     )
 
@@ -439,6 +439,10 @@ def main(argv=None) -> int:
         problems.append("agent-infrastructure/commits-per-3-days.svg is out of sync with commits-per-3-days.json")
     if expected_page != page_orig:
         problems.append("agent-infrastructure/index.html commit-chart region is out of sync with commits-per-3-days.json")
+    if README_PATH.is_file() and expected_readme != readme_orig:
+        problems.append("README.md fleet commit chart caption/link is out of sync with commits-per-3-days.json")
+    if SITEMAP_PATH.is_file() and expected_sitemap != sitemap_orig:
+        problems.append("sitemap.xml fleet commit chart title is out of sync with commits-per-3-days.json")
     if problems:
         for p in problems:
             print(f"render_commit_chart: DRIFT: {p}")
