@@ -753,6 +753,42 @@
         </div>
       </div>
 
+      <figure class="b4-explorer" id="letters-program-explorer" aria-labelledby="let-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive regulatory program explorer · 25 federal comment letters · 19 dockets · 9 agencies · 136 recommendations</p>
+            <h3 id="let-exp-title" class="b4-explorer__title">Explore the comment-letter program by agency and framework or by rulemaking cycle</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Letters program interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="let-panel-agencies" id="let-tab-agencies" data-let-tab="agencies">1. Agency &amp; framework footprint</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="let-panel-cycles" id="let-tab-cycles" data-let-tab="cycles">2. Rulemaking cycles &amp; recommendation density</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="let-panel-agencies" role="tabpanel" aria-labelledby="let-tab-agencies">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select agency or framework lens">
+              <span class="b4-explorer__control-label">Lens</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-let-lens="agency" aria-pressed="true">By recipient agency (9 federal + FSB)</button>
+                <button type="button" class="b4-pill" data-let-lens="framework" aria-pressed="false">By core framework invoked (CLII, MVEP, Control-layer, 3CRD, MGCPT)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="let-ag-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="let-ag-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="let-panel-cycles" role="tabpanel" aria-labelledby="let-tab-cycles" hidden>
+          <div class="b4-explorer__summary" id="let-cyc-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="let-cyc-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Data: Generated from <a href="/letters/letters.json">letters.json</a> and <a href="/letters/recommendations.csv">recommendations.csv</a> · Full compiled packet: <a href="/letters/all-letters.pdf">all-letters.pdf</a> · Searchable ask table: <a href="/letters/recommendations/">136-recommendation index</a>.
+        </figcaption>
+      </figure>
+
       <h2 id="program-outcomes">Outcomes so far</h2>
       <!-- letters:outcomes START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <p class="letters-outcomes-lede">One row per rulemaking or consultation, in filing order; a joint rulemaking filed at several agency dockets is one row. Status as of October 23, 2026. The GENIUS Act rulemakings, including those the program did not comment on, are followed on the <a href="/trackers/genius-act/">GENIUS Act rulemaking tracker</a>.</p>

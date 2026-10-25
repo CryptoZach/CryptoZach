@@ -379,6 +379,34 @@
           </div>
           </div>
       <p class="patent-empty" id="patent-empty" hidden>No patent applications match the current filter.</p>
+
+      <figure class="b4-explorer" id="patents-crosswalk-explorer" aria-labelledby="pat-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive IP &amp; architecture crosswalk · 42 USPTO applications · 32 families · 6 problem areas</p>
+            <h3 id="pat-exp-title" class="b4-explorer__title">Explore the six technical problem areas and how they map to the empirical papers and fleet metrics</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Patent portfolio interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="pat-panel-areas" id="pat-tab-areas" data-pat-tab="areas">1. Six problem areas &amp; fleet controls</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="pat-panel-papers" id="pat-tab-papers" data-pat-tab="papers">2. Research-to-patent crosswalk</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="pat-panel-areas" role="tabpanel" aria-labelledby="pat-tab-areas">
+          <div class="b4-explorer__summary" id="pat-ar-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="pat-ar-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="pat-panel-papers" role="tabpanel" aria-labelledby="pat-tab-papers" hidden>
+          <div class="b4-explorer__summary" id="pat-pp-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="pat-pp-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Machine-readable registry: <a href="/patents/patents.json" download="tokenization-systems-patents.json">patents.json</a> · Production operating layer: <a href="/agent-infrastructure/">Agent Infrastructure</a>.
+        </figcaption>
+      </figure>
+
       <p class="patent-status">All applications are pending before the USPTO; the numbers listed are application numbers. Page current as of October 2026. The research program these filings grew out of is described on the <a href="/agent-infrastructure/">agent infrastructure</a> page.</p>
     </section>
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->

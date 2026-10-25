@@ -665,6 +665,33 @@
         </ul>
       </div>
 
+      <figure class="b4-explorer" id="genius-timeline-explorer" aria-labelledby="gen-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive statutory &amp; rulemaking explorer · S. 1582 (Pub. L. 119-27) · 14 implementing actions</p>
+            <h3 id="gen-exp-title" class="b4-explorer__title">Inspect GENIUS Act implementation progress by agency and the Section 20 effective-date timeline</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="GENIUS Act tracker interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="gen-panel-agencies" id="gen-tab-agencies" data-gen-tab="agencies">1. Implementing progress by agency (14 actions)</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="gen-panel-statute" id="gen-tab-statute" data-gen-tab="statute">2. Statutory clock &amp; effective-date formula</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="gen-panel-agencies" role="tabpanel" aria-labelledby="gen-tab-agencies">
+          <div class="b4-explorer__summary" id="gen-ag-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="gen-ag-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="gen-panel-statute" role="tabpanel" aria-labelledby="gen-tab-statute" hidden>
+          <div class="b4-explorer__summary" id="gen-st-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="gen-st-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Machine-readable feed: <a href="/trackers/genius-act/genius-act.json">genius-act.json</a> · Program analysis: <a href="/notes/genius-act-rules-october-2026/">October 2026 status note</a> and <a href="/letters/">Letters</a>.
+        </figcaption>
+      </figure>
+
       <h2 id="related">Related</h2>
       <div class="tracker-related">
         <a href="/letters/"><strong>The letters</strong><span>25 federal comment letters, with outcomes by proceeding.</span></a>

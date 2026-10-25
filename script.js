@@ -11517,6 +11517,302 @@
   }
 })();
 
+/* ==========================================================================
+   Wave 4 Hub Explorers: Letters, GENIUS Act Tracker, Patents & Data Catalog
+   ========================================================================== */
+(function(){
+  function initWave4Explorers(){
+    /* 1. Letters Program Explorer (#letters-program-explorer) */
+    var letRoot = document.getElementById('letters-program-explorer');
+    if(letRoot){
+      var curLens = 'agency';
+      function renderLetAg(){
+        var sumEl = document.getElementById('let-ag-summary');
+        var barsEl = document.getElementById('let-ag-bars');
+        if(!sumEl || !barsEl) return;
+        if(curLens === 'agency'){
+          sumEl.innerHTML =
+            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">25 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to October 19, 2026 across 19 dockets</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">9 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">136 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 5 agencies</span></div>';
+          var aRows = [
+            { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 33 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
+            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 33 recommendations', note: 'Operationalizes GENIUS Section 1033.240 freeze/block/reject capability and SVB Chow structural break (F = 7.41, p = 0.0012)' },
+            { name: 'OCC (3 letters: AF41 PPSI MVEP, AF41 control-layer supplemental, AF55 BSA & sanctions)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (OCC-2025-0372-0057); attaches MVEP v9 manuscript to the administrative record' },
+            { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + Section 3 issuance & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
+            { name: 'SEC (3 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock)', pct: 50, val: '3 letters · 19 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
+            { name: 'NCUA (2 letters: RIN 3133-AG10 credit-union PPSI standards + routing supplemental)', pct: 33, val: '2 letters · 11 recommendations', note: 'Completes coverage of every GENIUS-implementing agency and flags cross-agency charter-arbitrage gaps' },
+            { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 15 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
+            { name: 'Financial Stability Board (International consultation: Sound Practices for Responsible Adoption of AI)', pct: 25, val: '1 international response (All 7 Qs)', note: 'Introduces CLII-AI, MVEP-AI, and the live x402 agentic-payments settlement census to global supervisors' }
+          ];
+          barsEl.innerHTML = aRows.map(function(b){
+            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+          }).join('');
+        } else {
+          sumEl.innerHTML =
+            '<div class="b4-stat"><span class="b4-stat__label">CLII invocations</span><span class="b4-stat__val">19 letters</span><span class="b4-stat__sub">5-dimension operator regulatory intensity &amp; drift index</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">MVEP invocations</span><span class="b4-stat__val">15 letters</span><span class="b4-stat__sub">10-category non-compensatory product equivalence standard</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Control-layer &amp; 3CRD / MGCPT</span><span class="b4-stat__val">11 letters</span><span class="b4-stat__sub">Point-of-use reserve disclosure &amp; pass-through gating</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB + SEC 4-927</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
+          var fRows = [
+            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '19 of 25 federal letters (+FSB)', note: 'Separates where regulatory obligations attach (licensing, transparency, freeze, compliance, geo) from product stress resilience' },
+            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '15 of 25 federal letters (+FSB)', note: 'Tests Legal, Operational, and Economic equivalence; adopted in OCC, FDIC, NCUA, SEC, and CFTC collateral filings' },
+            { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 44, val: '11 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
+            { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 32, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
+          ];
+          barsEl.innerHTML = fRows.map(function(b){
+            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+          }).join('');
+        }
+      }
+
+      function renderLetCyc(){
+        var sumEl = document.getElementById('let-cyc-summary');
+        var barsEl = document.getElementById('let-cyc-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">GENIUS implementation cycle</span><span class="b4-stat__val">14 letters (78 recs)</span><span class="b4-stat__sub">Spans OCC, FDIC, FinCEN/OFAC, Treasury, and NCUA</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (21 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and Federal Reserve R-1835</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">FDIC resolution &amp; risk pricing</span><span class="b4-stat__val">3 letters (14 recs)</span><span class="b4-stat__sub">AG21 resolution plans, AG27 assessments, AG30 disclosure</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, CFTC DCOs</span></div>';
+        var cRows = [
+          { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 78 recommendations', note: 'Covers PPSI chartering, reserve custody, state-similarity principles, foreign issuer Section 3 rules, and CIP/sanctions' },
+          { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Fed R-1835)', pct: 35, val: '4 letters · 21 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
+          { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (DSP-3, S7-2026-27, File 4-927)', pct: 30, val: '3 letters · 19 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
+          { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure (AG21, AG27, AG30)', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
+          { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' }
+        ];
+        barsEl.innerHTML = cRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      letRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-let-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-let-tab');
+          letRoot.querySelectorAll('button[data-let-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pA = document.getElementById('let-panel-agencies');
+          var pC = document.getElementById('let-panel-cycles');
+          if(pA) pA.hidden = target !== 'agencies';
+          if(pC) pC.hidden = target !== 'cycles';
+          if(target === 'cycles') renderLetCyc(); else renderLetAg();
+          return;
+        }
+        var lBtn = e.target.closest('button[data-let-lens]');
+        if(lBtn){
+          curLens = lBtn.getAttribute('data-let-lens') || 'agency';
+          letRoot.querySelectorAll('button[data-let-lens]').forEach(function(b){
+            var on = b === lBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderLetAg();
+        }
+      });
+      renderLetAg();
+      renderLetCyc();
+    }
+
+    /* 2. GENIUS Act Tracker Explorer (#genius-timeline-explorer) */
+    var genRoot = document.getElementById('genius-timeline-explorer');
+    if(genRoot){
+      function renderGenAg(){
+        var sumEl = document.getElementById('gen-ag-summary');
+        var barsEl = document.getElementById('gen-ag-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Tracked GENIUS actions</span><span class="b4-stat__val">14 rulemakings</span><span class="b4-stat__sub">Published Dec 19, 2025 through Sep 30, 2026</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Rulemaking status split</span><span class="b4-stat__val">1 in effect · 2 open · 11 pending</span><span class="b4-stat__sub">Treasury s.4(c) IFR in effect; 2 Fed proposals open to Nov 30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Program letter coverage</span><span class="b4-stat__val">10 of 14 rulemakings</span><span class="b4-stat__sub">14 GENIUS-cycle comment letters filed (Nos. 1-4, 6, 8, 10-13, 15-16, 22, 24)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Next major target</span><span class="b4-stat__val">November 2026</span><span class="b4-stat__sub">OCC final-rule target &amp; Nov 30 Fed / Treasury IFR comment close</span></div>';
+        var gRows = [
+          { name: 'FDIC (3 NPRMs: RIN 3064-AG20 application, AG19 PPSI standards, AG29 BSA/sanctions)', pct: 100, val: '3 of 3 commented (Nos. 4, 8, 13) · All pending final rule', note: 'Covers IDI subsidiary issuance approvals, reserve/redemption standards, and BSA compliance' },
+          { name: 'U.S. Department of the Treasury (3 actions: AC90 state-similarity, AC95 Section 3 issuance, s.4(c) IFR)', pct: 100, val: '1 IFR in effect · 2 NPRMs commented (Nos. 3, 22, 24)', note: 'September 30, 2026 interim final rule on state certification forms is the first GENIUS action in effect' },
+          { name: 'OCC (2 NPRMs: RIN 1557-AF41 PPSI framework, RIN 1557-AF55 BSA & sanctions)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · Target Nov 2026', note: 'Comptroller stated August 20, 2026 that OCC intends to issue its final rule by November 2026' },
+          { name: 'FinCEN & Interagency (2 NPRMs: RIN 1506-AB73 sanctions/AML, RIN 1506-AB74 5-agency CIP)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Establishes block/freeze/reject technical mandates and customer identification rules across all 5 regulators' },
+          { name: 'NCUA (2 NPRMs: RIN 3133-AF69 PPSI licensing, RIN 3133-AG10 credit-union stablecoin standards)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts PPSI supervision and reserve rules to federally insured credit unions' },
+          { name: 'Board of Governors of the Federal Reserve System (2 NPRMs: Docket R-1899 reserve/capital & subsidiary application)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
+        ];
+        barsEl.innerHTML = gRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      function renderGenSt(){
+        var sumEl = document.getElementById('gen-st-summary');
+        var barsEl = document.getElementById('gen-st-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Enactment date</span><span class="b4-stat__val">July 18, 2025</span><span class="b4-stat__sub">S. 1582 signed into law as Public Law 119-27</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Section 13 rule deadline</span><span class="b4-stat__val">July 18, 2026 (Passed)</span><span class="b4-stat__sub">1-year statutory deadline elapsed with 0 final rules issued</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Section 20 effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">Earlier of 18 months post-enactment or 120d after final rules</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Section 3 DASP restriction</span><span class="b4-stat__val">July 18, 2028</span><span class="b4-stat__sub">3 years post-enactment: US platforms limited to PPSI coins</span></div>';
+        var sRows = [
+          { name: 'Milestone 1: July 18, 2025 (GENIUS Act Enactment, Pub. L. 119-27)', pct: 100, val: 'Completed (Month 0)', note: 'Sets federal PPSI perimeter, 1:1 liquid reserve mandate, Bankruptcy Code holder priority, and Section 4(a)(11) yield ban' },
+          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (proposals still pending)', note: 'Because final rules were not issued within 8 months of enactment, the 120-day prong could not precede January 18, 2027' },
+          { name: 'Milestone 3: November 30, 2026 (Federal Reserve R-1899 & Treasury s.4(c) IFR Comment Close)', pct: 82, val: 'Active window (Month 16)', note: 'Concludes initial notice-and-comment across all primary federal payment stablecoin regulators' },
+          { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: '18-month prong of the Section 20 formula governs automatically because final rules did not land before September 20, 2026' },
+          { name: 'Milestone 5: July 18, 2028 (Section 3 Digital Asset Service Provider Perimeter Lock)', pct: 40, val: 'Month 36 enforcement gate', note: 'Three years after enactment, DASPs may offer or sell to U.S. persons only payment stablecoins issued by qualified PPSIs or compliant foreign issuers' }
+        ];
+        barsEl.innerHTML = sRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      genRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-gen-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-gen-tab');
+          genRoot.querySelectorAll('button[data-gen-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pA = document.getElementById('gen-panel-agencies');
+          var pS = document.getElementById('gen-panel-statute');
+          if(pA) pA.hidden = target !== 'agencies';
+          if(pS) pS.hidden = target !== 'statute';
+          if(target === 'statute') renderGenSt(); else renderGenAg();
+        }
+      });
+      renderGenAg();
+      renderGenSt();
+    }
+
+    /* 3. Patents Crosswalk Explorer (#patents-crosswalk-explorer) */
+    var patRoot = document.getElementById('patents-crosswalk-explorer');
+    if(patRoot){
+      function renderPatAr(){
+        var sumEl = document.getElementById('pat-ar-summary');
+        var barsEl = document.getElementById('pat-ar-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">USPTO applications</span><span class="b4-stat__val">42 provisional filings</span><span class="b4-stat__sub">Filed in 2026 across 32 distinct patent families</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Largest problem area</span><span class="b4-stat__val">Coordination &amp; fleet (9)</span><span class="b4-stat__sub">Includes 64/180,865 (claim, lease, and park resolution)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">68,000+ fleet commits</span><span class="b4-stat__sub">14 typical / 61 peak concurrent sessions; 99.56% gate hold</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">On-chain &amp; DePIN families</span><span class="b4-stat__val">6 attribution filings</span><span class="b4-stat__sub">Reputation recovery threshold &amp; control-attribution interlock</span></div>';
+        var arRows = [
+          { name: 'Area 4: Coordination, fleet governance, and session continuity (64/231,533 to 64/180,865)', pct: 100, val: '9 filings (21.4%)', note: 'Time-bounded task leases, off-branch compare-and-swap claim admission, resource-triggered handoff, and outward-act governance' },
+          { name: 'Area 3: Provenance and artifact coherence (64/107,069 to 64/143,852)', pct: 89, val: '8 filings (19.0%)', note: 'Tamper-evident coordination-proof logging, count-in-artifact staleness detection, and seal-to-log provenance chains' },
+          { name: 'Area 5: Measurement and detector validity (64/135,000 to 64/174,920)', pct: 89, val: '8 filings (19.0%)', note: 'Instrument-absence controls, calibration-gated detector promotion, typed-judgment offload (Jev), and observer-first arming' },
+          { name: 'Area 1: Concurrent repository integrity (64/071,767 to 64/137,910)', pct: 78, val: '7 filings (16.7%)', note: 'Per-session staging isolation, push-time landing concurrency control, edit-intent collision gating, and false-vs-true contention' },
+          { name: 'Area 6: On-chain governance and control attribution (64/128,867 to 64/120,240)', pct: 67, val: '6 filings (14.3%)', note: 'Self-calibrating reputation-recovery threshold and deterministic multi-surface control-attribution interlock (PCA exclusion)' },
+          { name: 'Area 2: Evidence and retrieval quality (64/097,316 to 64/143,857)', pct: 44, val: '4 filings (9.5%)', note: 'Authority-aware context routing, evidence-grounding for cited values, and conjunctive detection of omitted/unsupported claims' }
+        ];
+        barsEl.innerHTML = arRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      function renderPatPp(){
+        var sumEl = document.getElementById('pat-pp-summary');
+        var barsEl = document.getElementById('pat-pp-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Agent Infrastructure page</span><span class="b4-stat__val">36 filings (Areas 1 to 5)</span><span class="b4-stat__sub">Staging isolation, leases, provenance, and outcome-graded gates</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Governance Concentration (B2)</span><span class="b4-stat__val">64/130,737 &amp; 64/136,352</span><span class="b4-stat__sub">Multi-surface control-attribution interlock &amp; typed absence</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Operational Risk (B4)</span><span class="b4-stat__val">64/128,867 &amp; 64/135,014</span><span class="b4-stat__sub">Self-calibrating reputation-recovery threshold (95% vs 99%)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">MVEP &amp; Comment Letters</span><span class="b4-stat__val">64/095,597 &amp; 64/128,862</span><span class="b4-stat__sub">Evidence-grounded assessments &amp; derived-artifact admission control</span></div>';
+        var ppRows = [
+          { name: 'Agent Infrastructure (/agent-infrastructure/) -> Areas 1, 3, 4 & 5', pct: 96, val: '64/071,767 · 64/180,865 · 64/174,920', note: 'Directly implements worktree staging isolation, time-bounded task leases, known-false verifier checks, and observer-first hard gates' },
+          { name: 'Auditing Governance Concentration (/papers/governance-concentration/) -> Area 6', pct: 90, val: '64/130,737 · 64/136,352 · 64/138,859', note: 'Formalizes the 5-class PCA exclusion typology and frontier-relative typed absence outcome when pseudonymous control is undetermined' },
+          { name: 'Operational Risk in Token Economies (/papers/operational-risk/) -> Area 6', pct: 88, val: '64/128,867 · 64/135,014', note: 'Formalizes the self-calibrating reputation-recovery threshold that prevents threshold-induced governance collapse under validator downtime' },
+          { name: 'MVEP & 25-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
+        ];
+        barsEl.innerHTML = ppRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      patRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-pat-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-pat-tab');
+          patRoot.querySelectorAll('button[data-pat-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pA = document.getElementById('pat-panel-areas');
+          var pP = document.getElementById('pat-panel-papers');
+          if(pA) pA.hidden = target !== 'areas';
+          if(pP) pP.hidden = target !== 'papers';
+          if(target === 'papers') renderPatPp(); else renderPatAr();
+        }
+      });
+      renderPatAr();
+      renderPatPp();
+    }
+
+    /* 4. Data & Code Catalog Explorer (#data-catalog-explorer) */
+    var datRoot = document.getElementById('data-catalog-explorer');
+    if(datRoot){
+      var curDat = 'all';
+      var datItems = [
+        { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 25 federal + 1 FSB · 19 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 136 recommendations, and proceeding outcomes' },
+        { cat: 'feeds', pct: 96, name: 'Recommendation index (/letters/recommendations.csv)', badge: 'CSV · 136 rows', note: 'Flat one-row-per-ask export with letter number, agency, filing date, ask summary, full text, topics, and status' },
+        { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under Pub. L. 119-27 with RIN, Federal Register citation, comment window, and status' },
+        { cat: 'feeds', pct: 95, name: 'MVEP scorecard & composite rating (/data/mvep/*.csv)', badge: '2 CSVs · 154 cells + 14 ratings', note: 'Exhibit 1 (11 rows x 14 products) and Exhibit 3 non-compensatory composite ratings mirrored from mvep-replication' },
+        { cat: 'feeds', pct: 90, name: 'Patent portfolio registry (/patents/patents.json)', badge: 'JSON · 42 filings · 32 families', note: 'All 42 USPTO provisional serial numbers and descriptions grouped across the 6 technical problem areas' },
+        { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 79 3d bins + 237 1d bins', note: '67,675 commits in series (68,264 on ref) from March 2 through October 24, 2026 in America/New_York time' },
+        { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 25 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
+        { cat: 'feeds', pct: 82, name: 'Syndication feeds (/letters/feed.xml & /notes/feed.xml)', badge: 'Atom XML · 2 feeds', note: 'Subscribe to new regulatory filings and dated status/event notes' },
+        { cat: 'tracka', pct: 100, name: 'Routing the Dollar replication (GitHub v43-post-conference + #a1-routing-explorer)', badge: 'SSRN 6267698 · $60.6T panel', note: '157-week 9-chain panel, 51-address Ethereum gateway registry, Johansen conditional randomization null, and SVB/BUSD scripts' },
+        { cat: 'tracka', pct: 98, name: 'Minimum Viable Equivalence Pack replication (GitHub mvep-replication + #a2-mvep-explorer)', badge: 'SSRN 6363138 · 14 products · 20 regimes', note: 'Exhibit 1 scorecard, Exhibit 2 20-regime Category 5 insolvency matrix (140 primary-source cells), and Exhibit 3 rating generator' },
+        { cat: 'tracka', pct: 92, name: 'Seven Dollars replication (GitHub v1.0 + #a3-dollars-explorer)', badge: 'SSRN 6483118 · 8-metric eligibility + 11-product US-holder', note: 'Collateral eligibility scoring across published, 3-year rolling, and mechanical specs plus 5-marker US-holder classification' },
+        { cat: 'tracka', pct: 86, name: 'Three Tokenization Strategies explorer (#a4-strategy-explorer)', badge: 'SSRN 6483198 · 10-entity dependency matrix', note: 'Interactive shared-operator outage simulator (Securitize, BNY, Cantina, Chainlink) and corporate-actions cutoff matrix' },
+        { cat: 'tracka', pct: 90, name: 'Who Controls Agentic Payments? explorer (#c4-x402-explorer & #x402-memo-explorer)', badge: 'SSRN 7396241 · 138 facilitator addresses', note: 'Base, Solana, and Polygon facilitator HHI (count vs value monopolists), buyer-cardinality classifier, and Meridian 2-hop reconciliation' },
+        { cat: 'trackb', pct: 100, name: 'Governance Concentration replication (GitHub v1.0.4 + #b2-gov-explorer)', badge: 'Frontiers 9:1853465 · 52 protocols', note: '133 PCA exclusions across 38 protocols, 50-protocol allocation null (r = 0.09), and 18-protocol Snapshot/Tally delegation dataset' },
+        { cat: 'trackb', pct: 94, name: 'Who Burns the Tokens? replication (GitHub + #b3-burns-explorer)', badge: 'SSRN 6483619 · 34m Helium S2R + 13 protocols', note: 'Helium 34-month burn-to-emission series, Top-5 payer HHI (0.27), and 13-protocol payment-architecture observability matrix' },
+        { cat: 'trackb', pct: 96, name: 'Adaptive Tokenomics simulation (GitHub + #b1-meshnet-explorer)', badge: 'SSRN 6364158 · 240-run 30-seed ensemble', note: '5-year MeshNet Monte Carlo comparing PID vs static emissions across Competitor, Regulatory, Bear, and Bull shocks' },
+        { cat: 'trackb', pct: 96, name: 'Operational Risk simulation (GitHub meshnet-depin-simulation + #b4-oprisk-explorer)', badge: 'SSRN 6352118 · 624 configs · 1,126 runs', note: '74 ValOS risk vectors and 36 NORS objectives mapped to 7 simulatable parameters; reputation-threshold phase transition (95% vs 99%)' }
+      ];
+
+      function renderDat(){
+        var sumEl = document.getElementById('dat-cat-summary');
+        var barsEl = document.getElementById('dat-cat-bars');
+        if(!sumEl || !barsEl) return;
+        var list = datItems.filter(function(r){ return curDat === 'all' || r.cat === curDat; });
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Items displayed</span><span class="b4-stat__val">' + list.length + ' of 17</span><span class="b4-stat__sub">8 live site feeds + 9 SSRN paper replication packages</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">23 live across site</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Content &amp; data licence</span><span class="b4-stat__val">CC BY 4.0</span><span class="b4-stat__sub">Free to reuse with attribution and link; code per repo licence</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">42 pages (APA + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers &amp; 26 letters</span></div>';
+        barsEl.innerHTML = list.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.badge + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      datRoot.addEventListener('click', function(e){
+        var cBtn = e.target.closest('button[data-dat-cat]');
+        if(cBtn){
+          curDat = cBtn.getAttribute('data-dat-cat') || 'all';
+          datRoot.querySelectorAll('button[data-dat-cat]').forEach(function(b){
+            var on = b === cBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderDat();
+        }
+      });
+      renderDat();
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initWave4Explorers);
+  } else {
+    initWave4Explorers();
+  }
+})();
+
+
 
 
 
