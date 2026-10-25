@@ -305,6 +305,42 @@
       </div>
     </section>
 
+      <figure class="b4-explorer" id="oracle-ratings-explorer" aria-labelledby="ora-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive conflict &amp; coverage explorer · Post-2008 empirical record · MVEP Section 5.1</p>
+            <h3 id="ora-exp-title" class="b4-explorer__title">Empirical signature of the issuer-pays conflict and the 6-pattern MVEP vs credit-rating comparison</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Oracle problem in stablecoin ratings interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="ora-panel-evidence" id="ora-tab-evidence" data-ora-tab="evidence">1. Empirical conflict record &amp; automation coupling</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="ora-panel-patterns" id="ora-tab-patterns" data-ora-tab="patterns">2. 6-pattern MVEP vs rating-agency comparison</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="ora-panel-evidence" role="tabpanel" aria-labelledby="ora-tab-evidence">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select conflict or automation mechanism">
+              <span class="b4-explorer__control-label">Structural mechanism</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-ora-mech="literature" aria-pressed="true">Post-2008 empirical benchmarks (Jiang et al. 2012; Griffin &amp; Tang 2012)</button>
+                <button type="button" class="b4-pill" data-ora-mech="coupling" aria-pressed="false">On-chain smart-contract coupling &amp; OUSD consortium topology</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="ora-ev-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="ora-ev-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="ora-panel-patterns" role="tabpanel" aria-labelledby="ora-tab-patterns" hidden>
+          <div class="b4-explorer__summary" id="ora-pat-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="ora-pat-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Sources: White (2010); Jiang, Stanford, and Xie (2012); Griffin and Tang (2012, 916 CDOs); Klotz and Hu (Moody's, March 2026); <a href="/papers/mvep/">Minimum Viable Equivalence Pack</a> Section 5.1 (SSRN 6363138).
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Risk and diligence committees</span>
         <span class="paper-audience-tag">Stablecoin issuers</span>
@@ -319,6 +355,10 @@
         </div>
         <div class="access-secondary">
           <a class="access-link" href="mailto:Zach@Tokenization.Systems?subject=Oracle%20Problem%20in%20Stablecoin%20Ratings%20-%20Discussion">Discuss this briefing</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 

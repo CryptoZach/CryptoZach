@@ -325,6 +325,52 @@
       </div>
     </section>
 
+      <figure class="b4-explorer" id="x402-memo-explorer" aria-labelledby="xm-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive x402 empirical explorer · 138 addresses across 29 facilitators · May 2025 to June 2026</p>
+            <h3 id="xm-exp-title" class="b4-explorer__title">Base 9-month boom-bust-rebuild series and 4-provider volume reconciliation</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="x402 memo interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="xm-panel-series" id="xm-tab-series" data-xm-tab="series">1. Base monthly series (Oct 2025 to Jun 2026)</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="xm-panel-recon" id="xm-tab-recon" data-xm-tab="recon">2. External dashboard reconciliation &amp; May facilitators</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="xm-panel-series" role="tabpanel" aria-labelledby="xm-tab-series">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select monthly series metric">
+              <span class="b4-explorer__control-label">Metric</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-xm-metric="payments" aria-pressed="true">Monthly payment count (134.3M cumulative)</button>
+                <button type="button" class="b4-pill" data-xm-metric="buyers" aria-pressed="false">Distinct buyer wallets &amp; events/buyer</button>
+                <button type="button" class="b4-pill" data-xm-metric="usd" aria-pressed="false">Monthly raw USD volume ($43.97M raw / $42.55M corrected)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="xm-ser-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="xm-ser-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="xm-panel-recon" role="tabpanel" aria-labelledby="xm-tab-recon" hidden>
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select reconciliation or facilitator view">
+              <span class="b4-explorer__control-label">View</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-xm-rec="providers" aria-pressed="true">30-day volume estimates across 4 providers ($24M to $0.94M)</button>
+                <button type="button" class="b4-pill" data-xm-rec="base" aria-pressed="false">May 2026 Base facilitators (Count share vs Value share)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="xm-rec-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="xm-rec-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Data: Registry-merged attribution (138 addresses across 29 facilitators on Base, Polygon, and Solana). Companion SSRN working paper: <a href="/papers/who-controls-agentic-payments/">Who Controls Agentic Payments?</a> (SSRN 7396241).
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Financial-stability authorities</span>
         <span class="paper-audience-tag">Payments regulators</span>
@@ -343,6 +389,10 @@
         </div>
         <div class="access-secondary">
           <a class="access-link" href="mailto:Zach@Tokenization.Systems?subject=Agentic%20payments%20control%20layer%20memo">Discuss this memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 

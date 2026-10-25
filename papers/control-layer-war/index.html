@@ -305,6 +305,43 @@
         </div>
       </section>
 
+      <figure class="b4-explorer" id="clarity-control-explorer" aria-labelledby="clw-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive CLARITY control-layer explorer · 3 enforcement equilibria · 9 operating metrics</p>
+            <h3 id="clw-exp-title" class="b4-explorer__title">Compare the three competing enforcement equilibria and inspect the nine proposed operating metrics</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Control Layer War interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="clw-panel-equil" id="clw-tab-equil" data-clw-tab="equil">1. Three competing enforcement equilibria</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="clw-panel-metrics" id="clw-tab-metrics" data-clw-tab="metrics">2. Nine proposed control-layer operating metrics</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="clw-panel-equil" role="tabpanel" aria-labelledby="clw-tab-equil">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select CLARITY implementation equilibrium">
+              <span class="b4-explorer__control-label">Implementation equilibrium</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-clw-eq="router" aria-pressed="true">Router-centric (Interfaces, defaults &amp; holds)</button>
+                <button type="button" class="b4-pill" data-clw-eq="issuer" aria-pressed="false">Issuer-centric (PPSIs &amp; reserve custodians)</button>
+                <button type="button" class="b4-pill" data-clw-eq="infra" aria-pressed="false">Infrastructure-gated (CSDs, venues &amp; transfer agents)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="clw-eq-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="clw-eq-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="clw-panel-metrics" role="tabpanel" aria-labelledby="clw-tab-metrics" hidden>
+          <div class="b4-explorer__summary" id="clw-met-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="clw-met-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Anchored on the House-passed CLARITY Act (H.R. 5403, 119th Congress), the GENIUS Act (Pub. L. 119-27), <a href="/papers/dollar-v3/">Dollar v3</a>, and <a href="/papers/mvep/">MVEP</a>.
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Policy designers</span>
         <span class="paper-audience-tag">Compliance teams</span>
@@ -323,6 +360,10 @@
           <a id="request-memo" class="access-link" href="/contact/">Request the full 30-page memo</a>
           <span aria-hidden="true"> · </span>
           <a class="access-link" href="/papers/dollar-v3/">Read companion: Dollar v3</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 

@@ -305,6 +305,42 @@
         </div>
       </section>
 
+      <figure class="b4-explorer" id="dollar-v3-explorer" aria-labelledby="dv3-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive Dollar v3 architecture explorer · 5 policy levers · Fed deposit channels · Rights scoreboard</p>
+            <h3 id="dv3-exp-title" class="b4-explorer__title">Explore the five interacting policy levers, deposit-mutation channels, and the Dollar v3 scoreboard</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Dollar v3 interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="dv3-panel-levers" id="dv3-tab-levers" data-dv3-tab="levers">1. Five policy levers &amp; deposit-mutation channels</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="dv3-panel-rights" id="dv3-tab-rights" data-dv3-tab="rights">2. Citizen-friendly rights &amp; 7-criterion scoreboard</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="dv3-panel-levers" role="tabpanel" aria-labelledby="dv3-tab-levers">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select policy lever or deposit view">
+              <span class="b4-explorer__control-label">Analytical lens</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-dv3-view="levers" aria-pressed="true">Five interacting policy levers</button>
+                <button type="button" class="b4-pill" data-dv3-view="deposits" aria-pressed="false">Fed Dec 2025 FEDS Note deposit-mutation channels</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="dv3-lev-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="dv3-lev-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="dv3-panel-rights" role="tabpanel" aria-labelledby="dv3-tab-rights" hidden>
+          <div class="b4-explorer__summary" id="dv3-rig-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="dv3-rig-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Anchored on Du, Sonawane, and Watsky (Federal Reserve FEDS Notes, Dec 17, 2025, DOI 10.17016/2380-7172.3958), the GENIUS Act (Pub. L. 119-27), OCC Interpretive Letter 1188, and the CLARITY Act (H.R. 5403).
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Policy designers</span>
         <span class="paper-audience-tag">Stablecoin issuers</span>
@@ -323,6 +359,10 @@
           <a class="access-link" href="/contact/">Request dollar-architecture memo</a>
           <span aria-hidden="true"> · </span>
           <a class="access-link" href="/papers/control-layer-war/">Read companion: The Control Layer War</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 

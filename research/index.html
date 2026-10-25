@@ -260,13 +260,11 @@
           <button type="button" class="filter-btn" data-filter="status" data-value="accepted">Published at Frontiers</button>
           <button type="button" class="filter-btn" data-filter="status" data-value="requestable">Available on request</button>
         </div>
-        <div class="filter-group" role="group" aria-label="View">
+        <div class="filter-group filter-group--view-search" role="group" aria-label="View and search">
           <span class="filter-label">View:</span>
           <button type="button" class="filter-btn active" data-view="cards" aria-pressed="true">Cards</button>
           <button type="button" class="filter-btn" data-view="list" aria-pressed="false">List</button>
-        </div>
-        <div class="filter-group filter-group--search" style="flex: 1 1 260px;">
-          <label class="filter-label" for="research-search">Search:</label>
+          <label class="filter-label filter-label--inline" for="research-search">Search:</label>
           <input type="search" id="research-search" class="recs-search-input" placeholder="Filter by keyword, framework, or ticker (MVEP, CLII, x402, DTCC, PID, Helium)..." autocomplete="off" spellcheck="false" />
         </div>
         <p class="filter-count-wrap"><span class="filter-count" aria-live="polite"></span> <button type="button" class="filter-clear" id="research-filter-clear" hidden>Reset filters</button></p>
