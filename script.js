@@ -9950,7 +9950,7 @@
 
       if(curAdv === 'classes'){
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 61,805 across 37 classes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 63,230 across 37 classes</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Highest-volume repeat rate</span><span class="b4-stat__val">84% saturation</span><span class="b4-stat__sub">Pipe-exit misread (13,975 firings across 2,260 workspaces)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Classes requiring hard gate</span><span class="b4-stat__val">3 of 6 (&gt;60% repeat)</span><span class="b4-stat__sub">Pipe-exit (84%), edit-running-script (69%), recursive-delete (64%)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Classes consistent with teaching</span><span class="b4-stat__val">2 of 6 (~30% repeat)</span><span class="b4-stat__sub">Ancestry-as-landedness (32%), destructive-probe check (29%)</span></div>';
@@ -11456,11 +11456,11 @@
           url: '/resume/ai-governance-infrastructure/',
           pdf: '/resumes/Zukowski_Resume_AI_Governance_Infrastructure.pdf?v=20261009',
           mandate: 'AI safety/governance teams, multi-agent runtime builders & enterprise AI risk leads',
-          proof: '42 USPTO patent applications (32 families) · 67,000+ fleet commits · 99.56% gate hold',
+          proof: '42 USPTO patent applications (32 families) · 68,000+ fleet commits · 99.56% gate hold',
           frameworks: 'CLII-AI, MVEP-AI, Lease Coordination & Outcome-Graded Safeguards',
           bars: [
-            { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '14 typical / 61 peak concurrent agents', note: 'Built production operating layer across 67,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
-            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '61,805 advisories · 13,098/13,156 gate stops', note: 'Proved 84% workspace repeat rate on top advisory warning vs 99.56% hold rate on armed hard gates' },
+            { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '14 typical / 61 peak concurrent agents', note: 'Built production operating layer across 68,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
+            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '63,230 advisories · 13,098/13,156 gate stops', note: 'Proved 84% workspace repeat rate on top advisory warning vs 99.56% hold rate on armed hard gates' },
             { name: 'Intellectual property & international AI supervisory policy', pct: 94, val: '42 USPTO filings · FSB AI consultation', note: '32 patent families covering provenance, verifiers, and fleet governance; Frontiers in Blockchain publication' }
           ]
         },

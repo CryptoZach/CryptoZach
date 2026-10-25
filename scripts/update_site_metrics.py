@@ -388,7 +388,8 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
 def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dict:
     """Gather all live and site metrics into a single dictionary."""
     # 1. Commit chart & commits
-    chart_doc, _ = rcc.load_or_refresh_data(WF_REPO, "origin/main", refresh_commits)
+    chart_on_disk = json.loads((ROOT / "agent-infrastructure" / "commits-per-3-days.json").read_text(encoding="utf-8"))
+    chart_doc, _ = rcc.load_or_refresh_data(WF_REPO, "origin/main", refresh_commits or WF_REPO.is_dir())
     commits_on_ref = int(chart_doc["commits_on_ref"])
     commits_floored = (commits_on_ref // 1000) * 1000
 
@@ -426,8 +427,12 @@ def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dic
             "key": "commit_chart_bins",
             "label": "Commit chart 3-day bins",
             "live": f"{chart_doc['bins']} bins through {chart_doc['captions']['through']} ({chart_doc['commits_in_series']:,} in series, peak {chart_doc['captions']['peak_value']:,})",
-            "site": f"{chart_doc['bins']} bins",
-            "ok": rcc.main(["--check", "--quiet"]) == 0,
+            "site": f"{chart_on_disk['bins']} bins through {chart_on_disk['captions']['through']} ({chart_on_disk['commits_in_series']:,} in series)",
+            "ok": (
+                chart_doc["bins"] == chart_on_disk.get("bins")
+                and chart_doc["commits_in_series"] == chart_on_disk.get("commits_in_series")
+                and rcc.main(["--check", "--quiet"]) == 0
+            ),
         },
         {
             "key": "advisory_firings",
