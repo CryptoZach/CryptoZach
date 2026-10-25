@@ -330,6 +330,10 @@
           <a href="https://github.com/Research-Publications-and-Data/Routing-the-dollar/tree/v43-post-conference" class="access-link" target="_blank" rel="noopener noreferrer">GitHub (data + replication)</a>
           <span class="access-sep" aria-hidden="true">·</span>
           <a href="https://tokenization.systems/contact/" class="access-link access-request">Request gateway-stress memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 
@@ -386,6 +390,52 @@
           </div>
         </div>
       </section>
+
+      <figure class="b4-explorer" id="a1-routing-explorer" aria-labelledby="a1-explorer-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive empirical explorer · 157-week panel ($60.6T across 9 chains) · 19 gateways</p>
+            <h3 id="a1-explorer-title" class="b4-explorer__title">Monetary-policy transmission regime and SVB / BUSD gateway stress explorer</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Routing the Dollar interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="a1-panel-macro" id="a1-tab-macro" data-a1-tab="macro">1. Monetary-policy regime &amp; cointegration</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="a1-panel-stress" id="a1-tab-stress" data-a1-tab="stress">2. SVB stress retention &amp; chain control surface</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="a1-panel-macro" role="tabpanel" aria-labelledby="a1-tab-macro">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Monetary transmission specification">
+              <span class="b4-explorer__control-label">Specification &amp; channel</span>
+              <div class="b4-explorer__pills" id="a1-macro-Buttons">
+                <button type="button" class="b4-pill is-active" data-a1-macro="null" aria-pressed="true">Conditional randomization null (Fed securities + ON RRP)</button>
+                <button type="button" class="b4-pill" data-a1-macro="mbs" aria-pressed="false">MBS regime split (QT vs easing vs full sample)</button>
+                <button type="button" class="b4-pill" data-a1-macro="spread" aria-pressed="false">Yield-spread Granger, variance share &amp; deposit recycling</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="a1-macro-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="a1-macro-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="a1-panel-stress" role="tabpanel" aria-labelledby="a1-tab-stress" hidden>
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Gateway stress or chain surface view">
+              <span class="b4-explorer__control-label">View</span>
+              <div class="b4-explorer__pills" id="a1-stress-Buttons">
+                <button type="button" class="b4-pill is-active" data-a1-stress="svb" aria-pressed="true">SVB March 2023 stress retention (10 gateways vs 28d baseline)</button>
+                <button type="button" class="b4-pill" data-a1-stress="chains" aria-pressed="false">Cross-chain Tier 1 presence &amp; 35-month network consolidation</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="a1-stress-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="a1-stress-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Data: 157-week panel (Feb 2023 to Jan 2026) across 9 blockchains ($60.6T Artemis-filtered volume), 51-address Ethereum gateway registry (19 entities, 27.7% of USDC + USDT volume), and 35 monthly counterparty networks (15 gateways, 3,804 unique pairs). Full replication code at <a href="https://github.com/Research-Publications-and-Data/Routing-the-dollar/tree/v43-post-conference" target="_blank" rel="noopener noreferrer">GitHub</a> and paper on <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer">SSRN</a>.
+        </figcaption>
+      </figure>
 
       <section class="brief-so-what" aria-labelledby="brief-who-heading">
         <h2 id="brief-who-heading">Who should care</h2>

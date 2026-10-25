@@ -22703,6 +22703,80 @@ html:has(#mvep-sc:focus-within){scroll-padding-top:calc(var(--header-h) + env(sa
   line-height: 1.45;
 }
 
+.paper-access-block button.access-cite-btn{
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: var(--font-size-min, 0.85rem);
+  color: var(--accent);
+  opacity: 0.85;
+  cursor: pointer;
+  text-decoration: none;
+}
+.paper-access-block button.access-cite-btn:hover,
+.paper-access-block button.access-cite-btn:focus-visible{
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.tdrc-comp-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+.tdrc-axis-col{
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 8px;
+  padding: 0.85rem 0.95rem;
+  background: color-mix(in srgb, var(--surface, transparent) 55%, transparent);
+}
+.tdrc-axis-col h5{
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.tdrc-comp-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
+  font-size: 0.84rem;
+}
+.tdrc-comp-row:first-of-type{
+  border-top: 0;
+}
+.tdrc-comp-steps{
+  display: inline-flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+.tdrc-step-btn{
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.tdrc-step-btn.is-active{
+  background: var(--accent);
+  color: var(--bg, #0a0c10);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
 /* site-brand:css START (generated from _partials/brand.css; edit that file, then: python3 scripts/render_brand.py --write) */
 /* The brandmark: dial, wordmark, tagline. ONE copy of these rules; scripts/render_brand.py stamps it into
    the home page's inline stylesheet and the end of styles.css. The first two rules make the block

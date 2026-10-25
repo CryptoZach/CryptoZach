@@ -1381,6 +1381,31 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p><strong>What it does.</strong> Classifies the U.S. dollar operating-layer equilibrium along two axes, each scored 0 to 6 via three components. ControlScore = obligated-interface share of flows + default sweep and wrapper penetration + holds-or-freeze usage as operating norm. IssuerScore = settlement-object concentration + reserve carry retention + direct mint and burn authority. Classification rule (3-month rolling average, weekly in stress): Control-dominant (ControlScore &ge; 4 and beats IssuerScore by &ge; 2), Issuer-dominant (mirror test), or Split / Contested otherwise.</p>
           <p><strong>Why it matters.</strong> Names which layer captures the economics, who bears the regulatory burden, and whether policy is shifting the equilibrium. Tracks structural power allocation, not safety or solvency.</p>
           <p><strong>What triggers re-evaluation.</strong> Three or more of six leading policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes; SEC-CFTC 2026 Joint Final Rule on Crypto Taxonomy), or two or more component scores flipping in a quarter.</p>
+
+          <div class="b4-explorer" id="tdrc-simulator" role="region" aria-labelledby="tdrc-sim-title" style="margin-top: 1.15rem; margin-bottom: 0.75rem;">
+            <div class="b4-explorer__head">
+              <div>
+                <p class="b4-explorer__kicker">Interactive regime classifier · ControlScore (0 to 6) vs IssuerScore (0 to 6)</p>
+                <h4 id="tdrc-sim-title" class="b4-explorer__title">Simulate U.S. dollar operating-layer equilibrium: float vs home screen</h4>
+              </div>
+            </div>
+            <div class="b4-explorer__panel">
+              <div class="b4-explorer__controls">
+                <div class="b4-explorer__control-group" role="group" aria-label="Preset market-structure scenarios">
+                  <span class="b4-explorer__control-label">Scenario presets (or click any component score below)</span>
+                  <div class="b4-explorer__pills" id="tdrc-preset-buttons">
+                    <button type="button" class="b4-pill is-active" data-tdrc-preset="baseline" aria-pressed="true">2026 Baseline (Split / Contested)</button>
+                    <button type="button" class="b4-pill" data-tdrc-preset="control" aria-pressed="false">Router-Centric CLARITY Equilibrium (Control-Dominant)</button>
+                    <button type="button" class="b4-pill" data-tdrc-preset="issuer" aria-pressed="false">Reserve-Carry Duopoly (Issuer-Dominant)</button>
+                    <button type="button" class="b4-pill" data-tdrc-preset="bank" aria-pressed="false">Bank Deposit-Token Walled Garden (High-Control Split)</button>
+                  </div>
+                </div>
+              </div>
+              <div class="b4-explorer__summary" id="tdrc-sim-summary" aria-live="polite"></div>
+              <div class="b4-explorer__bars" id="tdrc-sim-bars"></div>
+            </div>
+          </div>
+
           <p class="framework-card-action"><a class="action secondary" href="/papers/dollar-v3/">Open Dollar v3 <span aria-hidden="true">→</span></a></p>
         </article>
       </div>

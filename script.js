@@ -9346,6 +9346,571 @@
   }
 })();
 
+/* ==========================================================================
+   Routing the Dollar (#a1-routing-explorer): Monetary-Policy Regime & SVB/Chain Explorer
+   ========================================================================== */
+(function(){
+  function initA1RoutingExplorer(){
+    var root = document.getElementById('a1-routing-explorer');
+    if(!root) return;
+
+    var curMacro = 'null';
+    var curStress = 'svb';
+
+    function renderMacro(){
+      var sumEl = document.getElementById('a1-macro-summary');
+      var barsEl = document.getElementById('a1-macro-bars');
+      if(!sumEl || !barsEl) return;
+
+      if(curMacro === 'null'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Stablecoin supply (Fed securities + ON RRP)</span><span class="b4-stat__val">Trace 46.01 (p = 0.025)</span><span class="b4-stat__sub">Exceeds 43.3 critical value at lag 8; block bootstrap p = 0.032</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Bitcoin cointegration test</span><span class="b4-stat__val">p = 0.83 (Null)</span><span class="b4-stat__sub">No long-run equilibrium with Fed balance-sheet variables</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Ethereum cointegration test</span><span class="b4-stat__val">p = 0.57 (Null)</span><span class="b4-stat__sub">Confirms transmission channel is dollar-specific</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Securities held outright kurtosis</span><span class="b4-stat__val">0.02 vs 41.6</span><span class="b4-stat__sub">Avoids March 2023 emergency-facility spike ($354B) in total assets</span></div>';
+
+        var rows = [
+          { label: 'Dollar stablecoin supply (3-variable system, lag 8)', val: 46.01, max: 55, badge: 'Trace 46.01 vs 43.3 CV (p = 0.025)', note: 'Cointegrated under conditional randomization null (size 0.05) and block bootstrap (p = 0.032)' },
+          { label: '95% conditional randomization critical value (lag 8)', val: 43.30, max: 55, badge: 'CV = 43.30', note: 'Size-controlled threshold accounting for non-stationary finite-sample persistence' },
+          { label: 'Ethereum (ETH) placebo system', val: 24.80, max: 55, badge: 'p = 0.57 (Null)', note: 'No statistically significant cointegrating vector with Fed securities + ON RRP' },
+          { label: 'Bitcoin (BTC) placebo system', val: 19.40, max: 55, badge: 'p = 0.83 (Null)', note: 'No statistically significant cointegrating vector; rules out generic crypto beta' }
+        ];
+        barsEl.innerHTML = rows.map(function(r){
+          var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.label + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      } else if(curMacro === 'mbs'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Quantitative tightening (QT) trace</span><span class="b4-stat__val">48.18 (CV = 29.80)</span><span class="b4-stat__sub">Strongest cointegration regime as reserve spread widens</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Full-sample MBS trace (157 weeks)</span><span class="b4-stat__val">30.68 (CV = 29.80)</span><span class="b4-stat__sub">Clears 95% threshold across Feb 2023 to Jan 2026</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Easing regime trace &amp; level r</span><span class="b4-stat__val">17.71 (r = -0.98)</span><span class="b4-stat__sub">Supply nearly doubled ($162B to $305B) after Sep 2024 rate cut</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Pre-cut 180d rolling correlation</span><span class="b4-stat__val">+0.06</span><span class="b4-stat__sub">Near-zero bivariate correlation during late tightening</span></div>';
+
+        var mbsRows = [
+          { label: 'Quantitative tightening regime (MBS specification)', val: 48.18, max: 55, badge: 'Trace 48.18 (95% CV = 29.80)', note: 'High Treasury bill rates widen issuer reserve carry; strongest equilibrium tie' },
+          { label: 'Full 157-week sample (Feb 2023 to Jan 2026)', val: 30.68, max: 55, badge: 'Trace 30.68 (95% CV = 29.80)', note: 'Spans both tightening and post-September 2024 easing phases' },
+          { label: '95% Johansen trace critical value (MBS system)', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'Standard 5% significance threshold for rank-0 test' },
+          { label: 'Easing regime (post-September 2024 rate cuts)', val: 17.71, max: 55, badge: 'Trace 17.71 | Level r = -0.98', note: 'Lower T-bill yields compress gap against DeFi lending rates; aggregate supply expanded from $162B to $305B' }
+        ];
+        barsEl.innerHTML = mbsRows.map(function(r){
+          var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.label + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      } else {
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Yield-spread Granger causality</span><span class="b4-stat__val">F = 11.30 (p = 0.001)</span><span class="b4-stat__sub">3m T-bill minus on-chain lending rate (Compound / Aave) forecasts supply growth</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">26-week variance share (FEVD)</span><span class="b4-stat__val">13.9% MBS / 2.2% Outright</span><span class="b4-stat__sub">5-week smoothed equilibrium adjustment half-life</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">25 FOMC meetings event study</span><span class="b4-stat__val">Null (p = 0.092 adj.)</span><span class="b4-stat__sub">No announcement effect survives Bonferroni correction</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Issuer bank-deposit recycling</span><span class="b4-stat__val">4% to 100%</span><span class="b4-stat__sub">Tether ~4%, Circle ~14%, Gemini ~100% held in bank deposits</span></div>';
+
+        var spRows = [
+          { label: 'Gemini (GUSD) bank-deposit reserve recycling share', val: 100, max: 100, badge: '~100% bank deposits', note: 'Reserves remain inside commercial banking perimeter' },
+          { label: 'Circle (USDC) bank-deposit reserve recycling share', val: 14, max: 100, badge: '~14% bank deposits', note: '86% in short-duration Treasuries and repo via Circle Reserve Fund (BNY)' },
+          { label: 'Fed + ON RRP 26-week forecast-error variance share (MBS system)', val: 13.9, max: 100, badge: '13.9% variance share', note: '2.2% in securities-held-outright system; 5-week error-correction half-life' },
+          { label: 'Tether (USDT) bank-deposit reserve recycling share', val: 4, max: 100, badge: '~4% bank deposits', note: 'Predominantly Treasury bills and repo; minimal commercial-bank deposit recycling' }
+        ];
+        barsEl.innerHTML = spRows.map(function(r){
+          var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.label + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    function renderStress(){
+      var sumEl = document.getElementById('a1-stress-summary');
+      var barsEl = document.getElementById('a1-stress-bars');
+      if(!sumEl || !barsEl) return;
+
+      if(curStress === 'svb'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Tier 1 gateway volume swing</span><span class="b4-stat__val">63% -> 13% -> 57%</span><span class="b4-stat__sub">51.8 pp drop (2.7 SD below normal) during SVB weekend</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Escape-valve peak retention</span><span class="b4-stat__val">Curve 3pool 12.35x</span><span class="b4-stat__sub">$2.33B/d vs 28-day baseline as swaps exited USDC</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Within-Tier 1 divergence</span><span class="b4-stat__val">Coinbase 2.63x vs Circle 1.39x</span><span class="b4-stat__sub">Near-identical CLII (0.85 vs 0.92), opposite stress retention</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">PSM reserve-chain contagion</span><span class="b4-stat__val">DAI, USDP ($0.91), GUSD ($0.96)</span><span class="b4-stat__sub">Depegged with zero direct SVB bank exposure via DAI PSM</span></div>';
+
+        var svbRows = [
+          { name: 'Curve 3pool (Tier 3, CLII 0.18)', mult: 12.35, vol: '$2.33B/d', note: 'Primary permissionless escape-valve router during weekend banking closure' },
+          { name: 'BitGo (Tier 1, CLII 0.80)', mult: 6.80, vol: '$0.09B/d', note: 'Institutional custody reallocation flow' },
+          { name: '1inch (Tier 3, CLII 0.18)', mult: 5.57, vol: '$0.72B/d', note: 'DEX aggregator routing displaced stablecoin swaps across pools' },
+          { name: 'OKX (Tier 2, CLII 0.40)', mult: 3.44, vol: '$0.43B/d', note: 'Offshore exchange 24/7 secondary-market routing' },
+          { name: 'Bybit (Tier 2, CLII 0.40)', mult: 3.39, vol: '$0.14B/d', note: 'Offshore exchange settlement flow' },
+          { name: 'Coinbase (Tier 1, CLII 0.85)', mult: 2.63, vol: '$4.03B/d', note: '56% of Tier 1 volume; no direct SVB reserve lockup' },
+          { name: 'Binance (Tier 2, CLII 0.38)', mult: 2.20, vol: '$4.39B/d', note: 'Largest gross volume hub; absorbed $16.1B post-BUSD migration toward USDT' },
+          { name: 'Kraken (Tier 2, CLII 0.58)', mult: 2.14, vol: '$0.82B/d', note: 'Secondary fiat and stablecoin conversion venue' },
+          { name: 'Tether Treasury (Tier 2, CLII 0.45)', mult: 1.77, vol: '$0.45B/d', note: 'Gained ~$1.7B net supply over 5 days while USDC lost $5.1B' },
+          { name: 'Circle Treasury (Tier 1, CLII 0.92)', mult: 1.39, vol: '$3.42B/d', note: '$3.3B SVB reserve exposure disclosed; primary redemptions bottlenecked over weekend' }
+        ];
+        barsEl.innerHTML = svbRows.map(function(r){
+          var pct = Math.min(100, (r.mult / 12.35) * 100).toFixed(1);
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.mult.toFixed(2) + 'x (' + r.vol + ')</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      } else {
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Ethereum Tier 1 share (gross / net)</span><span class="b4-stat__val">41% gross / 47% net</span><span class="b4-stat__sub">Coinbase (56%) + Circle (44%) form Tier 1 duopoly</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Cross-chain Tier 1 presence</span><span class="b4-stat__val">11% Solana / 0% Tron</span><span class="b4-stat__sub">Tron is 58% Tier 3 protocols and 42% Tier 2 offshore</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Entity HHI (gross / net)</span><span class="b4-stat__val">2,742 / 2,583</span><span class="b4-stat__sub">Exceeds DOJ/FTC 1,800 threshold for highly concentrated markets</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Wintermute counterparty share</span><span class="b4-stat__val">1.4% -> 19.9%</span><span class="b4-stat__sub">Unique counterparties fell 25%; cross-gateway pairs 5.8% -> 2.6%</span></div>';
+
+        var chainRows = [
+          { name: 'Ethereum mainnet: Tier 1 regulated gateway share (net of internal rebalancing)', val: 47.0, badge: '47.0% net (41.0% gross)', note: 'Tier 2 is 50% net (55% gross); Tier 3 is 4% (Nansen rank correlation = 0.94)' },
+          { name: 'Wintermute share of identified counterparty volume (end of 35-month window)', val: 19.9, badge: '1.4% -> 19.9%', note: 'Expanded across post-BUSD secondary routing while Cumberland fell from 3.3% to 0.1%' },
+          { name: 'Solana: Tier 1 regulated gateway share', val: 11.0, badge: '~11.0% Tier 1', note: 'Predominantly Tier 2 exchange and Tier 3 DEX aggregator routing' },
+          { name: 'USDT on Ethereum: share routed through Tier 1 regulated gateways', val: 10.8, badge: '10.8% via Tier 1', note: 'Offshore-issued token still touches U.S.-regulated gateways on 10.8% of Ethereum flow' },
+          { name: 'Tron & BNB Chain: Tier 1 regulated gateway share', val: 0.5, badge: '0.0% Tier 1 (58% Tier 3 on Tron)', note: 'Zero monitored Tier 1 gateway presence on Tron or BNB Chain' }
+        ];
+        barsEl.innerHTML = chainRows.map(function(r){
+          var pct = Math.min(100, (r.val / 50) * 100).toFixed(1);
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-a1-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-a1-tab');
+        root.querySelectorAll('button[data-a1-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pMacro = document.getElementById('a1-panel-macro');
+        var pStress = document.getElementById('a1-panel-stress');
+        if(pMacro) pMacro.hidden = target !== 'macro';
+        if(pStress) pStress.hidden = target !== 'stress';
+        if(target === 'stress') renderStress(); else renderMacro();
+        return;
+      }
+
+      var macroBtn = e.target.closest('button[data-a1-macro]');
+      if(macroBtn){
+        curMacro = macroBtn.getAttribute('data-a1-macro') || 'null';
+        root.querySelectorAll('button[data-a1-macro]').forEach(function(b){
+          var on = b === macroBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderMacro();
+        return;
+      }
+
+      var stressBtn = e.target.closest('button[data-a1-stress]');
+      if(stressBtn){
+        curStress = stressBtn.getAttribute('data-a1-stress') || 'svb';
+        root.querySelectorAll('button[data-a1-stress]').forEach(function(b){
+          var on = b === stressBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderStress();
+      }
+    });
+
+    renderMacro();
+    renderStress();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initA1RoutingExplorer);
+  } else {
+    initA1RoutingExplorer();
+  }
+})();
+
+/* ==========================================================================
+   MVEP (#a2-mvep-explorer): 14-Product Composite Rating & 20-Regime Insolvency Matrix
+   ========================================================================== */
+(function(){
+  function initA2MvepExplorer(){
+    var root = document.getElementById('a2-mvep-explorer');
+    if(!root) return;
+
+    var curDim = 'overall';
+    var curCohort = 'sample';
+
+    var products = [
+      { name: 'BENJI (Franklin Templeton 1940 Act MMF)', overall: 3.5, legal: 3.7, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Adequate', bind: 'Economic / Collateral Operability FAIL (no 24/7 pool) & Cat 1/8' },
+      { name: 'RLUSD (Ripple / NYDFS Trust)', overall: 3.5, legal: 3.0, legalGate: 'Non-Equivalent', op: 3.5, opGate: 'Non-Equivalent', econ: 4.3, econGate: 'Substantially Eq.', disc: 'Partial', bind: 'Legal / Rights Parity FAIL (sole product passing CSA companion test)' },
+      { name: 'JPMD (JPMorgan Deposit Token)', overall: 3.3, legal: 3.7, legalGate: 'Indeterminate', op: 3.0, opGate: 'Non-Equivalent', econ: 3.7, econGate: 'Indeterminate', disc: 'None published', bind: 'Operational / Governance & Change Control FAIL (sole non-fail on C1)' },
+      { name: 'BUIDL (BlackRock / BVI Reg D Fund)', overall: 3.2, legal: 3.0, legalGate: 'Non-Equivalent', op: 3.7, opGate: 'Non-Equivalent', econ: 3.3, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL & recursive USDC CSA dependency' },
+      { name: 'USDY (Ondo Tokenized Secured Note)', overall: 3.2, legal: 3.3, legalGate: 'Non-Equivalent', op: 3.5, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Cash Settlement Asset FAIL & Legal / Rights Parity FAIL' },
+      { name: 'USDG (Paxos / MAS & Global Dollar)', overall: 3.0, legal: 3.3, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Settlement Finality FAIL & Legal / Rights Parity FAIL' },
+      { name: 'DAI (MakerDAO No-Entity Protocol)', overall: 2.9, legal: 1.0, legalGate: 'Non-Equivalent', op: 3.3, opGate: 'Non-Equivalent', econ: 2.7, econGate: 'Non-Equivalent', disc: 'Adequate', bind: 'Legal / Rights Parity & Cat 5 FAIL* (no legal entity or debtor claim)' },
+      { name: 'PYUSD (PayPal / Paxos OCC Trust J3F)', overall: 2.8, legal: 2.7, legalGate: 'Non-Equivalent', op: 3.0, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL & J3F OCC trust insolvency ambiguity' },
+      { name: 'USDC (Circle / State MTL + GENIUS J3)', overall: 2.7, legal: 3.3, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 2.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Settlement Finality FAIL (13% SVB par divergence)' },
+      { name: 'OUSG (Ondo Delaware LP Wrapper)', overall: 2.6, legal: 2.3, legalGate: 'Non-Equivalent', op: 2.7, opGate: 'Non-Equivalent', econ: 2.7, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL & composed BUIDL -> USDC settlement chain' },
+      { name: 'USYC (Circle / Cayman-Bermuda J6xJ7)', overall: 2.5, legal: 2.7, legalGate: 'Non-Equivalent', op: 2.3, opGate: 'Non-Equivalent', econ: 2.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Collateral Operability FAIL & Marex prime-broker custody' },
+      { name: 'SoFiUSD (SoFi Bank Non-Deposit J2S)', overall: 2.5, legal: 2.3, legalGate: 'Non-Equivalent', op: 2.3, opGate: 'Non-Equivalent', econ: 2.7, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL ($99.76M/$100.01M uninsured demand deposits)' },
+      { name: 'USD1 (WLF / BitGo OCC Trust J3F)', overall: 2.4, legal: 2.3, legalGate: 'Non-Equivalent', op: 2.7, opGate: 'Non-Equivalent', econ: 1.7, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Settlement Finality FAIL (0 passing cells across 11 tests)' },
+      { name: 'USDT (Tether / El Salvador CNAD J8)', overall: 2.1, legal: 1.0, legalGate: 'Non-Equivalent', op: 2.5, opGate: 'Non-Equivalent', econ: 2.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity & Cat 5 Insolvency FAIL (0/6 statutory protections)' }
+    ];
+
+    var regimesSample = [
+      { id: 'J1', name: 'US registered fund (1940 Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'ICA s.17(f) custody, s.18(f)(1) priority, Ch.15, Rule 2a-7/22e-3, Reserve Primary 99.1c recovery' },
+      { id: 'J7', name: 'Bermuda (DABA / BMA) [USYC issuer]', pass: 3, part: 4, fail: 0, verdict: 'PARTIAL (3 Pass, 4 Partial)', note: 'DABA s.18(4) statutory trust + 2025 Custody Rules; dual-layer split with Cayman fund (J6)' },
+      { id: 'J2', name: 'US bank deposit (FDI Act) [JPMD]', pass: 4, part: 1, fail: 2, verdict: 'PARTIAL (Claim-side substitute)', note: 'D2/D4/D6/D7 PASS (12 USC 1821(d)(11) depositor preference); D1/D5 FAIL* structurally inapplicable' },
+      { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (Re-score trigger July 2026)', note: 'D3 Ch.15 & D5 23 NYCRR 200.9 PASS; GENIUS s.10(c)/s.11 enacted but dormant until effective date' },
+      { id: 'J9', name: 'Singapore (PSA / MAS / IRDA) [USDG]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (PSR reg 18B in force)', note: 'D3 IRDA s.252 & D5 reg 18C PASS; MAS SCS final framework unlegislated' },
+      { id: 'J4', name: 'Delaware LP / UCC Art. 9 [OUSG, USDY]', pass: 2, part: 4, fail: 1, verdict: 'PARTIAL (Note) / AMBIGUOUS (LP)', note: 'D2/D3 PASS; D4 FAIL (no product statute); D5 Partial(+) on UCC 9-322 note backstop, LP fails' },
+      { id: 'J6', name: 'Cayman fund (CIMA / Companies Act) [USYC fund]', pass: 0, part: 7, fail: 0, verdict: 'AMBIGUOUS (0 Pass, 7 Partial)', note: 'CIMA Segregation Rule 5.2/5.5; s.37(7) redeemed-vs-unredeemed rank split (Primeo / Herald)' },
+      { id: 'J5', name: 'BVI fund (Insolvency Act 2003) [BUIDL]', pass: 0, part: 6, fail: 1, verdict: 'AMBIGUOUS (D5 rehypothecation FAIL)', note: 'MFR reg 7 segregation PARTIAL, but no statutory rehypothecation limit in BVI fund law (D5 FAIL)' },
+      { id: 'J2S', name: 'US insured bank, non-deposit stablecoin [SoFiUSD]', pass: 0, part: 5, fail: 2, verdict: 'AMBIGUOUS (D1 & D5 FAIL)', note: 'Not a deposit: FDIC insurance & depositor preference disclaimed; $99.76M/$100.01M uninsured cash' },
+      { id: 'J3F', name: 'OCC uninsured national trust bank [USD1, PYUSD]', pass: 0, part: 4, fail: 3, verdict: 'AMBIGUOUS (D3, D5, D7 FAIL)', note: '12 CFR Part 51 receivership; NYDFS layer scoped away; no statutory rehypothecation constraint' },
+      { id: 'J8', name: 'El Salvador (CNAD / quiebra) [USDT]', pass: 0, part: 1, fail: 6, verdict: 'FAIL (6/7 Fail)', note: 'Zero statutory segregation, priority, or rehypothecation limits; 3-jurisdiction split (SV/BVI/HK)' },
+      { id: 'J10', name: 'No-entity protocol [DAI]', pass: 0, part: 0, fail: 7, verdict: 'FAIL* (7/7 Structural Inapplicability)', note: 'No legal entity, debtor, claim, or insolvency forum exists; Black Thursday resolved outside law' }
+    ];
+
+    var regimesIntl = [
+      { id: 'J14A', name: 'UAE Abu Dhabi free zone (ADGM FSRA)', pass: 6, part: 0, fail: 1, verdict: '6/7 PASS (D7 untested)', note: 'COBS 14.12 deemed trust + S263(2) insolvency primacy + Ch 19A super-priority + Model Law (S271)' },
+      { id: 'J11', name: 'EU MiCA (Reg 2023/1114) [EURC]', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'MiCA Art 54 + EMD2 Art 7(1) statutory segregation & priority; D6 national-law override gap' },
+      { id: 'J13', name: 'Hong Kong (Stablecoins Ord. Cap. 656 / HKMA)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Cap. 656 Sch 2 statutory trust & priority; common-law comity (no UNCITRAL Model Law)' },
+      { id: 'J14Z', name: 'UAE Dubai free zone (VARA Rulebooks)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Custody III.B + FRVA III.B.4 estate exclusion; onshore UAE federal insolvency forum' },
+      { id: 'J16', name: 'Japan PSA EPI framework (FSA 2025)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'PSA Art 2(9) trust + Art 59(1) holder priority + 50% deposit floor; no in-class precedent' },
+      { id: 'J14', name: 'UAE federal (CBUAE PTSR Circular 2/2024)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D2, D4, D5)', note: 'PTSR Art 22.5 priority & escrow; D1 bank-vs-nonbank split under Decree-Law 51' },
+      { id: 'J15', name: 'Switzerland (DLT Act 2021 / DEBA Art 242a)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D1, D4, D5)', note: 'DEBA Art 242a bankruptcy surrender & Banking Act Art 37d; no special crypto-holder priority class' },
+      { id: 'J12', name: 'UK (FCA CP25/14 + EMR 2011 / Ipagoo)', pass: 1, part: 5, fail: 1, verdict: '1/7 PASS (D3 CBIR Model Law)', note: 'Ipagoo [2022] EWCA Civ 302 confirmed statutory trust + asset-pool top-up, but FCA regime still draft' }
+    ];
+
+    function renderComposite(){
+      var sumEl = document.getElementById('a2-comp-summary');
+      var barsEl = document.getElementById('a2-comp-bars');
+      if(!sumEl || !barsEl) return;
+
+      var sorted = products.slice().sort(function(a, b){
+        var va = curDim === 'legal' ? a.legal : (curDim === 'operational' ? a.op : (curDim === 'economic' ? a.econ : a.overall));
+        var vb = curDim === 'legal' ? b.legal : (curDim === 'operational' ? b.op : (curDim === 'economic' ? b.econ : b.overall));
+        return (vb - va) || (b.overall - a.overall);
+      });
+
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Headline equivalence rate</span><span class="b4-stat__val">0 of 14 Equivalent</span><span class="b4-stat__sub">Non-compensatory floor caps every product on its weakest dimension</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Highest overall strength</span><span class="b4-stat__val">BENJI &amp; RLUSD (3.5)</span><span class="b4-stat__sub">Followed by JPMD (3.3), BUIDL (3.2), and USDY (3.2)</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Sole dimension above Indeterminate</span><span class="b4-stat__val">RLUSD Economic (4.3)</span><span class="b4-stat__sub">Substantially Equivalent on Economic; sole CSA companion Pass</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Universal legal ceiling</span><span class="b4-stat__val">UCC Art. 12 Subtest 1.1</span><span class="b4-stat__sub">13 of 14 fail Cat 1 Rights Parity; JPMD alone is Indeterminate (3.7)</span></div>';
+
+      barsEl.innerHTML = sorted.map(function(p){
+        var score = curDim === 'legal' ? p.legal : (curDim === 'operational' ? p.op : (curDim === 'economic' ? p.econ : p.overall));
+        var gate = curDim === 'legal' ? p.legalGate : (curDim === 'operational' ? p.opGate : (curDim === 'economic' ? p.econGate : 'Non-Equivalent'));
+        var pct = Math.min(100, (score / 5.0) * 100).toFixed(1);
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + p.name + '</span><span class="b4-bar-row__val">' + gate + ' · ' + score.toFixed(1) + ' / 5.0</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">Legal ' + p.legal.toFixed(1) + ' (' + p.legalGate + ') · Operational ' + p.op.toFixed(1) + ' · Economic ' + p.econ.toFixed(1) + ' (' + p.econGate + ') · Disclosure: ' + p.disc + ' · Binding: ' + p.bind + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function renderCat5(){
+      var sumEl = document.getElementById('a2-cat5-summary');
+      var barsEl = document.getElementById('a2-cat5-bars');
+      if(!sumEl || !barsEl) return;
+
+      var list = curCohort === 'intl' ? regimesIntl : regimesSample;
+      if(curCohort === 'sample'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Only 7/7 Pass regime</span><span class="b4-stat__val">J1: 1940 Act (BENJI)</span><span class="b4-stat__sub">Statutory custody, flat capital structure, and 99.1c recovery precedent</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Charter-relocation traps</span><span class="b4-stat__val">J2S (SoFiUSD) &amp; J3F (USD1/PYUSD)</span><span class="b4-stat__sub">Federal charters relocate claims without curing non-deposit or D5 gaps</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Offshore dispersion</span><span class="b4-stat__val">Bermuda J7 vs El Salvador J8</span><span class="b4-stat__sub">Bermuda passes D1/D4/D5; El Salvador fails 6 of 7 dimensions</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Structural inapplicability (Fail*)</span><span class="b4-stat__val">J2 (D1/D5) &amp; J10 (7/7)</span><span class="b4-stat__sub">Separates no-custodied-asset / no-entity from weak statutory regimes</span></div>';
+      } else {
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Highest international score</span><span class="b4-stat__val">J14A: ADGM (6/7 Pass)</span><span class="b4-stat__sub">Deemed trust + S263(2) insolvency primacy + UNCITRAL Model Law</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">4/7 Pass statutory regimes</span><span class="b4-stat__val">MiCA, HK Cap. 656, VARA, Japan</span><span class="b4-stat__sub">All pass D1 segregation, D2 priority, D4 statute, and D5 rehypothecation</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Universal international gap</span><span class="b4-stat__val">D7 Recovery Record (0/8 Pass)</span><span class="b4-stat__sub">No bespoke payment-stablecoin regime has completed an in-class insolvency</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Forced-conversion gap (D6)</span><span class="b4-stat__val">7 of 8 Partial</span><span class="b4-stat__sub">National insolvency moratoria and reorganization powers remain open</span></div>';
+      }
+
+      barsEl.innerHTML = list.map(function(r){
+        var scorePts = r.pass * 1.0 + r.part * 0.5;
+        var pct = Math.min(100, (scorePts / 7.0) * 100).toFixed(1);
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.id + ': ' + r.name + '</span><span class="b4-bar-row__val">' + r.verdict + '</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">Dimensions: ' + r.pass + ' Pass · ' + r.part + ' Partial · ' + r.fail + ' Fail/Fail* · ' + r.note + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    root.addEventListener('click', function(e){
+      var tabBtn = e.target.closest('button[data-a2-tab]');
+      if(tabBtn){
+        var target = tabBtn.getAttribute('data-a2-tab');
+        root.querySelectorAll('button[data-a2-tab]').forEach(function(b){
+          var on = b === tabBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pComp = document.getElementById('a2-panel-composite');
+        var pCat5 = document.getElementById('a2-panel-cat5');
+        if(pComp) pComp.hidden = target !== 'composite';
+        if(pCat5) pCat5.hidden = target !== 'cat5';
+        if(target === 'cat5') renderCat5(); else renderComposite();
+        return;
+      }
+
+      var dimBtn = e.target.closest('button[data-a2-dim]');
+      if(dimBtn){
+        curDim = dimBtn.getAttribute('data-a2-dim') || 'overall';
+        root.querySelectorAll('button[data-a2-dim]').forEach(function(b){
+          var on = b === dimBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderComposite();
+        return;
+      }
+
+      var cohortBtn = e.target.closest('button[data-a2-cohort]');
+      if(cohortBtn){
+        curCohort = cohortBtn.getAttribute('data-a2-cohort') || 'sample';
+        root.querySelectorAll('button[data-a2-cohort]').forEach(function(b){
+          var on = b === cohortBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderCat5();
+      }
+    });
+
+    renderComposite();
+    renderCat5();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initA2MvepExplorer);
+  } else {
+    initA2MvepExplorer();
+  }
+})();
+
+/* ==========================================================================
+   Frameworks (#tdrc-simulator): Tokenized Dollar Regime Classifier Simulator
+   ========================================================================== */
+(function(){
+  function initTdrcSimulator(){
+    var root = document.getElementById('tdrc-simulator');
+    if(!root) return;
+
+    var state = { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0 };
+    var presets = {
+      baseline: { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0, desc: '2026 Baseline: Issuers retain Treasury reserve carry and high concentration (USDC/USDT), while exchanges and routers control last-mile distribution and holds.' },
+      control:  { c1: 2.0, c2: 1.5, c3: 1.5, i1: 0.5, i2: 1.0, i3: 1.0, desc: 'Router-Centric CLARITY Equilibrium: Commoditized multi-issuer PPSI minting; wallets, exchanges, and automated sweep wrappers capture float and routing economics.' },
+      issuer:   { c1: 0.5, c2: 0.5, c3: 1.0, i1: 2.0, i2: 1.5, i3: 1.5, desc: 'Reserve-Carry Duopoly: Settlement concentrates in one or two dominant issuers that keep reserve spread and gate direct mint/burn access.' },
+      bank:     { c1: 1.5, c2: 1.5, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.5, desc: 'Bank Deposit-Token Walled Garden: Vertically integrated banks own both the obligated interface and the settlement liability; high scores on both axes contest the margin.' }
+    };
+
+    var activePreset = 'baseline';
+
+    function render(){
+      var sumEl = document.getElementById('tdrc-sim-summary');
+      var barsEl = document.getElementById('tdrc-sim-bars');
+      if(!sumEl || !barsEl) return;
+
+      var cScore = state.c1 + state.c2 + state.c3;
+      var iScore = state.i1 + state.i2 + state.i3;
+      var diff = cScore - iScore;
+
+      var regime = 'Split / Contested';
+      var econOwner = 'Contested between reserve float (issuers) and routing/sweep fees (interfaces)';
+      if(cScore >= 4.0 && diff >= 2.0){
+        regime = 'Control-Dominant';
+        econOwner = 'Distribution & interfaces capture economics (sweep defaults, wrapper yield, order flow)';
+      } else if(iScore >= 4.0 && (-diff) >= 2.0){
+        regime = 'Issuer-Dominant';
+        econOwner = 'Issuers capture economics (Treasury reserve carry, direct mint/burn gatekeeping)';
+      }
+
+      var signStr = diff > 0 ? ('+' + diff.toFixed(1) + ' Control') : (diff < 0 ? ('+' + (-diff).toFixed(1) + ' Issuer') : '0.0 Parity');
+
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Active TDRC Regime</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">Rule: score >= 4.0 and margin >= 2.0 over rival axis</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">ControlScore (0 to 6)</span><span class="b4-stat__val">' + cScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">C1 (' + state.c1.toFixed(1) + ') + C2 (' + state.c2.toFixed(1) + ') + C3 (' + state.c3.toFixed(1) + ')</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">IssuerScore (0 to 6)</span><span class="b4-stat__val">' + iScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">I1 (' + state.i1.toFixed(1) + ') + I2 (' + state.i2.toFixed(1) + ') + I3 (' + state.i3.toFixed(1) + ')</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Axis differential &amp; value capture</span><span class="b4-stat__val">' + signStr + '</span><span class="b4-stat__sub">' + econOwner + '</span></div>';
+
+      var cPct = Math.min(100, (cScore / 6.0) * 100).toFixed(1);
+      var iPct = Math.min(100, (iScore / 6.0) * 100).toFixed(1);
+
+      function stepBtns(key, val){
+        return [0, 0.5, 1.0, 1.5, 2.0].map(function(v){
+          var on = Math.abs(val - v) < 0.01;
+          return '<button type="button" class="tdrc-step-btn' + (on ? ' is-active' : '') + '" data-tdrc-comp="' + key + '" data-tdrc-val="' + v + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + v.toFixed(1) + '</button>';
+        }).join('');
+      }
+
+      var noteText = (presets[activePreset] && presets[activePreset].desc) || 'Custom component configuration: adjust any of the six 0-to-2 components below to test threshold crossings.';
+
+      barsEl.innerHTML =
+        '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">ControlScore (Interfaces, Wallets, Routers, Default Sweeps)</span><span class="b4-bar-row__val">' + cScore.toFixed(1) + ' / 6.0</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + cPct + '%"></div></div>' +
+        '</div>' +
+        '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">IssuerScore (Mint/Burn Issuers, Reserve Carry, Settlement Concentration)</span><span class="b4-bar-row__val">' + iScore.toFixed(1) + ' / 6.0</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + iPct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">' + noteText + '</div>' +
+        '</div>' +
+        '<div class="tdrc-comp-grid">' +
+          '<div class="tdrc-axis-col">' +
+            '<h5>ControlScore components (0 to 2 each)</h5>' +
+            '<div class="tdrc-comp-row"><span><strong>C1.</strong> Obligated-interface share of flows</span><span class="tdrc-comp-steps">' + stepBtns('c1', state.c1) + '</span></div>' +
+            '<div class="tdrc-comp-row"><span><strong>C2.</strong> Default sweep &amp; wrapper penetration</span><span class="tdrc-comp-steps">' + stepBtns('c2', state.c2) + '</span></div>' +
+            '<div class="tdrc-comp-row"><span><strong>C3.</strong> Holds / freeze usage as operating norm</span><span class="tdrc-comp-steps">' + stepBtns('c3', state.c3) + '</span></div>' +
+          '</div>' +
+          '<div class="tdrc-axis-col">' +
+            '<h5>IssuerScore components (0 to 2 each)</h5>' +
+            '<div class="tdrc-comp-row"><span><strong>I1.</strong> Settlement-object concentration</span><span class="tdrc-comp-steps">' + stepBtns('i1', state.i1) + '</span></div>' +
+            '<div class="tdrc-comp-row"><span><strong>I2.</strong> Reserve carry retention by issuer</span><span class="tdrc-comp-steps">' + stepBtns('i2', state.i2) + '</span></div>' +
+            '<div class="tdrc-comp-row"><span><strong>I3.</strong> Direct mint &amp; burn gatekeeping</span><span class="tdrc-comp-steps">' + stepBtns('i3', state.i3) + '</span></div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    root.addEventListener('click', function(e){
+      var pBtn = e.target.closest('button[data-tdrc-preset]');
+      if(pBtn){
+        var pKey = pBtn.getAttribute('data-tdrc-preset') || 'baseline';
+        var p = presets[pKey];
+        if(p){
+          activePreset = pKey;
+          state.c1 = p.c1; state.c2 = p.c2; state.c3 = p.c3;
+          state.i1 = p.i1; state.i2 = p.i2; state.i3 = p.i3;
+          root.querySelectorAll('button[data-tdrc-preset]').forEach(function(b){
+            var on = b === pBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          render();
+        }
+        return;
+      }
+
+      var cBtn = e.target.closest('button[data-tdrc-comp]');
+      if(cBtn){
+        var comp = cBtn.getAttribute('data-tdrc-comp');
+        var val = parseFloat(cBtn.getAttribute('data-tdrc-val'));
+        if(comp && !isNaN(val) && state.hasOwnProperty(comp)){
+          state[comp] = val;
+          activePreset = 'custom';
+          root.querySelectorAll('button[data-tdrc-preset]').forEach(function(b){
+            b.classList.remove('is-active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          render();
+        }
+      }
+    });
+
+    render();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initTdrcSimulator);
+  } else {
+    initTdrcSimulator();
+  }
+})();
+
+/* ==========================================================================
+   Paper Pages (.access-cite-btn): One-Click APA/Chicago Citation & BibTeX Copy
+   ========================================================================== */
+(function(){
+  function getMeta(name){
+    var el = document.querySelector('meta[name="' + name + '"]');
+    return el ? (el.getAttribute('content') || '').trim() : '';
+  }
+
+  function buildCitationData(){
+    var title = getMeta('citation_title');
+    if(!title) return null;
+    var author = getMeta('citation_author') || 'Zach Zukowski';
+    var dateStr = getMeta('citation_publication_date') || '2026';
+    var year = (dateStr.match(/\d{4}/) || ['2026'])[0];
+    var doi = getMeta('citation_doi') || '';
+    var url = getMeta('citation_fulltext_html_url') || window.location.href;
+    var journal = getMeta('citation_journal_title') || 'SSRN Working Paper';
+    var vol = getMeta('citation_volume') || '';
+    var page = getMeta('citation_firstpage') || '';
+
+    var parts = author.split(/\s+/);
+    var last = parts.length > 1 ? parts[parts.length - 1] : author;
+    var first = parts.length > 1 ? parts.slice(0, -1).join(' ') : '';
+    var authorFormatted = first ? (last + ', ' + first) : author;
+
+    var venueText = journal;
+    if(vol && page){
+      venueText = journal + ' ' + vol + ':' + page;
+    }
+
+    var textCite = authorFormatted + ' (' + year + '). "' + title + '." ' + venueText + (doi ? ('. https://doi.org/' + doi) : ('. ' + url));
+
+    var slugWord = (title.toLowerCase().match(/[a-z0-9]{4,}/) || ['paper'])[0];
+    var bibKey = last.toLowerCase().replace(/[^a-z0-9]/g, '') + year + slugWord;
+    var bibLines = [
+      '@article{' + bibKey + ',',
+      '  author = {' + authorFormatted + '},',
+      '  title = {' + title + '},',
+      '  journal = {' + journal + '},',
+      '  year = {' + year + '},'
+    ];
+    if(vol) bibLines.push('  volume = {' + vol + '},');
+    if(page) bibLines.push('  pages = {' + page + '},');
+    if(doi) bibLines.push('  doi = {' + doi + '},');
+    bibLines.push('  url = {' + url + '}');
+    bibLines.push('}');
+
+    return { text: textCite, bibtex: bibLines.join('\n') };
+  }
+
+  function initPaperCitationCopy(){
+    var btns = document.querySelectorAll('.access-cite-btn[data-cite-format]');
+    if(!btns.length) return;
+    var data = buildCitationData();
+    if(!data) return;
+
+    Array.prototype.forEach.call(btns, function(btn){
+      var origLabel = btn.textContent;
+      btn.addEventListener('click', function(){
+        var fmt = btn.getAttribute('data-cite-format');
+        var payload = fmt === 'bibtex' ? data.bibtex : data.text;
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(payload).then(function(){
+            btn.textContent = fmt === 'bibtex' ? 'Copied BibTeX' : 'Copied citation';
+            setTimeout(function(){ btn.textContent = origLabel; }, 1600);
+          }).catch(function(){});
+        }
+      });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initPaperCitationCopy);
+  } else {
+    initPaperCitationCopy();
+  }
+})();
+
+
 
 
 

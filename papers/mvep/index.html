@@ -468,6 +468,10 @@
         </div>
         <div class="access-secondary">
           <a href="mailto:Zach@Tokenization.Systems?subject=Minimum%20Viable%20Equivalence%20Pack%20-%20Deeper%20Memo%20Request" class="access-link access-request">Request diligence-implementation memo</a>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">·</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
         </div>
       </div>
 
@@ -630,6 +634,53 @@
           </tbody>
         </table>
         <p class="mvep-ref-note">Tiers run Equivalent, Substantially Equivalent, Indeterminate, Opaque (a documented category with nothing published), Non-Equivalent; the parenthetical is the dimension strength score (1.0 to 5.0). Products are ordered by overall strength. The rating is a deterministic function of the scorecard. Every product now carries full assessed coverage (all eleven cells; BENJI's Category 8 is now graded Fail rather than treated as not applicable). The operational and settlement cells the paper left ungraded were closed in a June 2026 coverage-completion pass, at a lighter rigor than the adversarially audited comparator columns. SoFiUSD's Category 5 letter carries an open author question (Ambiguous versus Fail) that, if resolved to Fail, lowers its legal strength.</p>
+
+        <figure class="b4-explorer" id="a2-mvep-explorer" aria-labelledby="a2-explorer-title">
+          <div class="b4-explorer__head">
+            <div>
+              <p class="b4-explorer__kicker">Interactive diligence explorer · 14 products · 20 insolvency regimes · 7 dimensions</p>
+              <h3 id="a2-explorer-title" class="b4-explorer__title">Non-compensatory composite rating (Exhibit 3) and 20-regime Category 5 insolvency matrix (Exhibit 2)</h3>
+            </div>
+            <div class="b4-explorer__tabs" role="tablist" aria-label="MVEP interactive views">
+              <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="a2-panel-composite" id="a2-tab-composite" data-a2-tab="composite">1. 14-product composite rating (Exhibit 3)</button>
+              <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="a2-panel-cat5" id="a2-tab-cat5" data-a2-tab="cat5">2. 20-regime insolvency matrix (Exhibit 2)</button>
+            </div>
+          </div>
+
+          <div class="b4-explorer__panel" id="a2-panel-composite" role="tabpanel" aria-labelledby="a2-tab-composite">
+            <div class="b4-explorer__controls">
+              <div class="b4-explorer__control-group" role="group" aria-label="Equivalence dimension ranking">
+                <span class="b4-explorer__control-label">Sort &amp; inspect dimension</span>
+                <div class="b4-explorer__pills" id="a2-comp-Buttons">
+                  <button type="button" class="b4-pill is-active" data-a2-dim="overall" aria-pressed="true">Overall strength (1.0 to 5.0)</button>
+                  <button type="button" class="b4-pill" data-a2-dim="legal" aria-pressed="false">Legal equivalence (C1, C4-leg, C5)</button>
+                  <button type="button" class="b4-pill" data-a2-dim="operational" aria-pressed="false">Operational equivalence (C2, C3, C4-leg, C7, C8, C10-leg)</button>
+                  <button type="button" class="b4-pill" data-a2-dim="economic" aria-pressed="false">Economic equivalence (C6, C10-leg, CSA)</button>
+                </div>
+              </div>
+            </div>
+            <div class="b4-explorer__summary" id="a2-comp-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="a2-comp-bars"></div>
+          </div>
+
+          <div class="b4-explorer__panel" id="a2-panel-cat5" role="tabpanel" aria-labelledby="a2-tab-cat5" hidden>
+            <div class="b4-explorer__controls">
+              <div class="b4-explorer__control-group" role="group" aria-label="Insolvency regime cohort">
+                <span class="b4-explorer__control-label">Regime cohort</span>
+                <div class="b4-explorer__pills" id="a2-cat5-Buttons">
+                  <button type="button" class="b4-pill is-active" data-a2-cohort="sample" aria-pressed="true">12 product-sample regimes (J1 to J10, J2S, J3F)</button>
+                  <button type="button" class="b4-pill" data-a2-cohort="intl" aria-pressed="false">8 international comparators (J11 to J16, ADGM, VARA)</button>
+                </div>
+              </div>
+            </div>
+            <div class="b4-explorer__summary" id="a2-cat5-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="a2-cat5-bars"></div>
+          </div>
+
+          <figcaption class="b4-explorer__foot">
+            Data: Exhibit 1 (14-product scorecard across 10 categories + recursive Cash Settlement Asset companion test), Exhibit 2 (20 legal regimes scored across D1 statutory segregation, D2 claim priority, D3 cross-border recognition, D4 product statute, D5 rehypothecation constraints, D6 forced-conversion protection, and D7 recovery record), and Exhibit 3 (deterministic non-compensatory floor rating). Replication data at <a href="https://github.com/CryptoZach/mvep-replication" target="_blank" rel="noopener noreferrer">GitHub</a> and full paper on <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer">SSRN</a>.
+          </figcaption>
+        </figure>
 
         <h2>Governance and monitoring</h2>
         <h3>Governance and change control</h3>

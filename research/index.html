@@ -265,7 +265,11 @@
           <button type="button" class="filter-btn active" data-view="cards" aria-pressed="true">Cards</button>
           <button type="button" class="filter-btn" data-view="list" aria-pressed="false">List</button>
         </div>
-        <p class="filter-count-wrap"><span class="filter-count" aria-live="polite"></span></p>
+        <div class="filter-group filter-group--search" style="flex: 1 1 260px;">
+          <label class="filter-label" for="research-search">Search:</label>
+          <input type="search" id="research-search" class="recs-search-input" placeholder="Filter by keyword, framework, or ticker (MVEP, CLII, x402, DTCC, PID, Helium)..." autocomplete="off" spellcheck="false" />
+        </div>
+        <p class="filter-count-wrap"><span class="filter-count" aria-live="polite"></span> <button type="button" class="filter-clear" id="research-filter-clear" hidden>Reset filters</button></p>
       </div>
 
       <section id="best-first-read" class="featured-research reveal" aria-labelledby="best-first-read-title">
@@ -1085,9 +1089,15 @@
     var filterEl = document.querySelector('.research-filters-js');
     if (!filterEl) return;
     filterEl.hidden = false;
-    var filters = { audience: 'all', track: 'all', status: 'all' };
+    var filters = { audience: 'all', track: 'all', status: 'all', q: '' };
     var cards = Array.prototype.slice.call(document.querySelectorAll('.research-card'));
     var buttons = document.querySelectorAll('.research-filters-js .filter-btn[data-filter]');
+    var searchInput = document.getElementById('research-search');
+    var clearBtn = document.getElementById('research-filter-clear');
+    var cardSearchText = cards.map(function(c) {
+      var d = c.dataset.audience !== undefined || c.dataset.track !== undefined ? c : c.parentElement;
+      return ((c.textContent || '') + ' ' + ((d && d.dataset && d.dataset.key) || '')).replace(/\s+/g, ' ').toLowerCase();
+    });
     var store = {
       get: function(k){ try { return window.localStorage.getItem(k); } catch(e){ return null; } },
       set: function(k, v){ try { window.localStorage.setItem(k, v); } catch(e){ /* private mode */ } }
@@ -1178,6 +1188,7 @@
     }
     function applyFilters() {
       var visible = 0;
+      var q = (filters.q || '').trim().toLowerCase();
       cards.forEach(function(card, i) {
         var data = getCardData(card);
         var audience = (data.dataset.audience || '').trim();
@@ -1187,7 +1198,8 @@
         var matchTrack = filters.track === 'all' || track === filters.track;
         var statusTokens = (status || '').trim().split(/\s+/).filter(function (t) { return t.length; });
         var matchStatus = filters.status === 'all' || statusTokens.indexOf(filters.status) !== -1;
-        var show = matchAudience && matchTrack && matchStatus;
+        var matchQuery = !q || (cardSearchText[i] && cardSearchText[i].indexOf(q) !== -1);
+        var show = matchAudience && matchTrack && matchStatus && matchQuery;
         card.style.display = show ? '' : 'none';
         if (card.parentElement && card.parentElement.tagName === 'LI') {
           card.parentElement.style.display = show ? '' : 'none';
@@ -1195,9 +1207,15 @@
         if (rowOf[i]) rowOf[i].hidden = !show;
         if (show) visible++;
       });
+      var isFiltered = filters.audience !== 'all' || filters.track !== 'all' || filters.status !== 'all' || !!q;
       var counter = document.querySelector('.filter-count');
       if (counter) {
-        counter.textContent = 'Showing ' + visible + (visible === 1 ? ' item' : ' items');
+        counter.textContent = isFiltered
+          ? ('Showing ' + visible + ' of ' + cards.length + ' items')
+          : ('Showing ' + visible + (visible === 1 ? ' item' : ' items'));
+      }
+      if (clearBtn) {
+        clearBtn.hidden = !isFiltered;
       }
     }
     function setFilter(filterType, value) {
@@ -1210,6 +1228,25 @@
     buttons.forEach(function(btn) {
       btn.addEventListener('click', function() { setFilter(btn.dataset.filter, btn.dataset.value); });
     });
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        filters.q = searchInput.value || '';
+        applyFilters();
+      });
+    }
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function() {
+        filters.audience = 'all';
+        filters.track = 'all';
+        filters.status = 'all';
+        filters.q = '';
+        if (searchInput) searchInput.value = '';
+        Array.prototype.forEach.call(buttons, function(b) {
+          b.classList.toggle('active', b.dataset.value === 'all');
+        });
+        applyFilters();
+      });
+    }
     Array.prototype.forEach.call(filterEl.querySelectorAll('.filter-btn[data-view]'), function(btn) {
       btn.addEventListener('click', function() {
         setView(btn.getAttribute('data-view'));
