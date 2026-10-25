@@ -1239,6 +1239,33 @@
         </div>
         <p class="letters-asof">136 recommendations across 21 letters. Status as of October 23, 2026; topics are editorial tags for filtering, not the letters' own headings.</p>
         <!-- letters:recommendations END -->
+
+        <figure class="b4-explorer" id="recs-breakdown-explorer" aria-labelledby="recs-exp-title">
+          <div class="b4-explorer__head">
+            <div>
+              <p class="b4-explorer__kicker">Interactive recommendation analytics · 136 numbered asks across 13 topics &amp; 9 agencies</p>
+              <h3 id="recs-exp-title" class="b4-explorer__title">Inspect the 136 recommendations by subject-matter topic or recipient agency</h3>
+            </div>
+            <div class="b4-explorer__tabs" role="tablist" aria-label="Recommendation breakdown views">
+              <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="recs-panel-topics" id="recs-tab-topics" data-recs-tab="topics">1. By subject-matter topic (13 topics)</button>
+              <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="recs-panel-agencies" id="recs-tab-agencies" data-recs-tab="agencies">2. By recipient agency (9 agencies)</button>
+            </div>
+          </div>
+
+          <div class="b4-explorer__panel" id="recs-panel-topics" role="tabpanel" aria-labelledby="recs-tab-topics">
+            <div class="b4-explorer__summary" id="recs-top-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="recs-top-bars"></div>
+          </div>
+
+          <div class="b4-explorer__panel" id="recs-panel-agencies" role="tabpanel" aria-labelledby="recs-tab-agencies" hidden>
+            <div class="b4-explorer__summary" id="recs-ag-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="recs-ag-bars"></div>
+          </div>
+
+          <figcaption class="b4-explorer__foot">
+            Tip: Click any topic or agency chip in the filter toolbar above to narrow the 136-row table, or download the full flat file as <a href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv">recommendations.csv</a>.
+          </figcaption>
+        </figure>
       </div>
 
       <p class="paper-contact-strip">Questions about a recommendation? <a href="mailto:Zach@Tokenization.Systems?subject=Federal%20Comment%20Letter%20Program">Zach@Tokenization.Systems</a></p>

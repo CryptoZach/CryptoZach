@@ -9866,6 +9866,8 @@
         var strip = document.querySelector('.paper-metadata-strip');
         var docketPart = strip ? (strip.textContent || '').split(/[·\u00b7]/)[0].trim() : '';
         journal = docketPart ? ('Federal Comment Letter (' + docketPart + '), Tokenization Systems') : 'Federal Comment Letter, Tokenization Systems';
+      } else if(window.location.pathname.indexOf('/notes/') === 0){
+        journal = 'Tokenization Systems Research Note';
       } else if(getMeta('citation_title')){
         journal = 'SSRN Working Paper';
       } else {
@@ -11394,10 +11396,9 @@
       renderAdvTlk();
     }
 
-    /* 6. Resume Role Comparator (#resume-role-explorer) */
-    var resRoot = document.getElementById('resume-role-explorer');
-    if(resRoot){
-      var curRole = 'policy';
+    /* 6. Resume Role Comparator (#resume-role-explorer & [data-resume-profile-explorer]) */
+    var resRoots = document.querySelectorAll('#resume-role-explorer, [data-resume-profile-explorer]');
+    if(resRoots.length){
       var roles = {
         policy: {
           title: 'Policy & market infrastructure',
@@ -11479,34 +11480,38 @@
         }
       };
 
-      function renderResRole(){
-        var sumEl = document.getElementById('res-role-summary');
-        var barsEl = document.getElementById('res-role-bars');
-        if(!sumEl || !barsEl) return;
-        var r = roles[curRole] || roles.policy;
-        sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Selected role profile</span><span class="b4-stat__val"><a href="' + r.url + '" style="color:inherit;text-decoration:underline;">' + r.title + '</a></span><span class="b4-stat__sub"><a href="' + r.pdf + '" target="_blank" rel="noopener noreferrer">Download tailored PDF</a></span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Target hiring context</span><span class="b4-stat__val">' + r.mandate + '</span><span class="b4-stat__sub">Decision-maker alignment</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Headline quantitative proof</span><span class="b4-stat__val">' + r.proof + '</span><span class="b4-stat__sub">Verified production &amp; research metrics</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Core frameworks applied</span><span class="b4-stat__val">' + r.frameworks + '</span><span class="b4-stat__sub">Reusable diagnostic instruments</span></div>';
-        barsEl.innerHTML = r.bars.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
-      }
+      Array.prototype.forEach.call(resRoots, function(resRoot){
+        var curRole = resRoot.getAttribute('data-resume-profile-explorer') || 'policy';
+        var sumEl = resRoot.querySelector('#res-role-summary, [data-res-summary]');
+        var barsEl = resRoot.querySelector('#res-role-bars, [data-res-bars]');
 
-      resRoot.addEventListener('click', function(e){
-        var rBtn = e.target.closest('button[data-res-role]');
-        if(rBtn){
-          curRole = rBtn.getAttribute('data-res-role') || 'policy';
-          resRoot.querySelectorAll('button[data-res-role]').forEach(function(b){
-            var on = b === rBtn;
-            b.classList.toggle('is-active', on);
-            b.setAttribute('aria-pressed', on ? 'true' : 'false');
-          });
-          renderResRole();
+        function renderResRole(){
+          if(!sumEl || !barsEl) return;
+          var r = roles[curRole] || roles.policy;
+          sumEl.innerHTML =
+            '<div class="b4-stat"><span class="b4-stat__label">Selected role profile</span><span class="b4-stat__val"><a href="' + r.url + '" style="color:inherit;text-decoration:underline;">' + r.title + '</a></span><span class="b4-stat__sub"><a href="' + r.pdf + '" target="_blank" rel="noopener noreferrer">Download tailored PDF</a></span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Target hiring context</span><span class="b4-stat__val">' + r.mandate + '</span><span class="b4-stat__sub">Decision-maker alignment</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Headline quantitative proof</span><span class="b4-stat__val">' + r.proof + '</span><span class="b4-stat__sub">Verified production &amp; research metrics</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Core frameworks applied</span><span class="b4-stat__val">' + r.frameworks + '</span><span class="b4-stat__sub">Reusable diagnostic instruments</span></div>';
+          barsEl.innerHTML = r.bars.map(function(b){
+            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+          }).join('');
         }
+
+        resRoot.addEventListener('click', function(e){
+          var rBtn = e.target.closest('button[data-res-role]');
+          if(rBtn){
+            curRole = rBtn.getAttribute('data-res-role') || 'policy';
+            resRoot.querySelectorAll('button[data-res-role]').forEach(function(b){
+              var on = b === rBtn;
+              b.classList.toggle('is-active', on);
+              b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            renderResRole();
+          }
+        });
+        renderResRole();
       });
-      renderResRole();
     }
   }
 
@@ -11811,6 +11816,382 @@
     initWave4Explorers();
   }
 })();
+
+/* ==========================================================================
+   Wave 5: 136-Recommendation Breakdown & Export, Notes Snapshot Explorer,
+   and Universal Cmd+K / Ctrl+K Quick-Jump Command Palette
+   ========================================================================== */
+(function(){
+  function initWave5Upgrades(){
+    /* 1. 136-Recommendation Index Breakdown Explorer (#recs-breakdown-explorer) + Export Actions */
+    var recsRoot = document.getElementById('recs-breakdown-explorer');
+    if(recsRoot){
+      function renderRecsTopics(){
+        var sumEl = document.getElementById('recs-top-summary');
+        var barsEl = document.getElementById('recs-top-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Total numbered asks</span><span class="b4-stat__val">136 recommendations</span><span class="b4-stat__sub">Across 21 principal letters (plus 4 supplements &amp; 1 FSB response)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Top 3 subject tags</span><span class="b4-stat__val">Measurement (33) · Reserves (30)</span><span class="b4-stat__sub">Followed by Disclosure &amp; reporting (29) and Supervision (22)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Prudential &amp; risk tags</span><span class="b4-stat__val">Custody (16) · Redemption (11)</span><span class="b4-stat__sub">Insolvency (8), Deposit insurance (7), and Capital (2)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Machine-readable export</span><span class="b4-stat__val"><a href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="color:inherit;text-decoration:underline;">recommendations.csv</a></span><span class="b4-stat__sub">One row per ask with letter, agency, date, and anchor link</span></div>';
+        var tRows = [
+          { name: '1. Measurement and data (On-chain verification, PCA exclusion, concentration metrics)', pct: 100, val: '33 recommendations (24.3%)', note: 'Replaces self-certified attestations with reproducible ledger queries, HHI thresholds, and cell-suppression standards' },
+          { name: '2. Reserves (Composition, bank concentration caps, daily valuation & segregation)', pct: 91, val: '30 recommendations (22.1%)', note: 'Addresses single-bank reserve lockups ($3.3B SVB lesson), custodian concentration, and eligible liquid assets' },
+          { name: '3. Disclosure and reporting (3CRD point-of-use template, holder-rights memos)', pct: 88, val: '29 recommendations (21.3%)', note: 'Surfaces legal claim, reserve composition, and custody location where holders transact' },
+          { name: '4. Supervision (Examiner cadences, shared control-posture records, drift triggers)', pct: 67, val: '22 recommendations (16.2%)', note: 'Aligns OCC, FDIC, FinCEN, Treasury, Federal Reserve, and NCUA examination playbooks' },
+          { name: '5. AML/CFT & 6. Interagency coordination (18 recommendations each)', pct: 55, val: '18 AML/CFT · 18 Coordination', note: 'Closes the Federal Reserve Section 208.63 consultation omission and harmonizes 5-agency CIP rules' },
+          { name: '7. Custody and collateral (16) & 8. Sanctions compliance (14)', pct: 48, val: '16 Custody · 14 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and GENIUS Section 1033.240 freeze/block/reject capability' },
+          { name: '9. Redemption (11), 10. Other (10), 11. Insolvency (8), 12. Deposit insurance (7), 13. Capital (2)', pct: 33, val: '38 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
+        ];
+        barsEl.innerHTML = tRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      function renderRecsAgencies(){
+        var sumEl = document.getElementById('recs-ag-summary');
+        var barsEl = document.getElementById('recs-ag-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Largest agency docket set</span><span class="b4-stat__val">FDIC (36 asks)</span><span class="b4-stat__sub">Across AG19, AG20, AG21, AG27, AG29, and AG30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Illicit-finance &amp; CIP</span><span class="b4-stat__val">FinCEN / OFAC (25 asks)</span><span class="b4-stat__sub">Across AML/CFT, PPSI sanctions, and 5-agency CIP</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Market structure &amp; clearing</span><span class="b4-stat__val">SEC (19) &amp; CFTC (4)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, DCOs</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Charter &amp; state-similarity</span><span class="b4-stat__val">Treasury (13) · OCC (12) · NCUA (11)</span><span class="b4-stat__sub">Plus Federal Reserve (9) and Joint Banking Agencies (7)</span></div>';
+        var agRows = [
+          { name: 'FDIC (6 letters: AG19, AG20, AG21, AG27, AG29, AG30)', pct: 100, val: '36 recommendations (26.5%)', note: 'Covers PPSI activities, MGCPT pass-through insurance, resolution plans, run-risk assessments, and statistical disclosure' },
+          { name: 'FinCEN & OFAC (5 letters: FINCEN-2026-0034, FINCEN-2026-0100, FINCEN-2026-0101)', pct: 69, val: '25 recommendations (18.4%)', note: 'Operationalizes PPSI freeze/block/reject capability, reserve-custody Chow break tests, and formal-relationship CIP scoping' },
+          { name: 'SEC (3 letters: File DSP-3, File S7-2026-27, File 4-927)', pct: 53, val: '19 recommendations (14.0%)', note: 'Applies PCA-corrected governance concentration, Rule 400(a) observable control gates, and TSV corporate-actions hierarchy' },
+          { name: 'U.S. Department of the Treasury (3 letters: TREAS-DO-2026-0232 & TREAS-DO-2026-0496)', pct: 36, val: '13 recommendations (9.6%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under Section 3' },
+          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.8%)', note: 'Establishes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
+          { name: 'NCUA (2 letters: RIN 3133-AG10 + routing supplement) & Federal Reserve Board (Docket R-1835)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
+          { name: 'Joint Banking Agencies (91 FR 18304) & CFTC (OMB 3038-0076 DCO requirements)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized DCO margin' }
+        ];
+        barsEl.innerHTML = agRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      recsRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-recs-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-recs-tab');
+          recsRoot.querySelectorAll('button[data-recs-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pT = document.getElementById('recs-panel-topics');
+          var pA = document.getElementById('recs-panel-agencies');
+          if(pT) pT.hidden = target !== 'topics';
+          if(pA) pA.hidden = target !== 'agencies';
+          if(target === 'agencies') renderRecsAgencies(); else renderRecsTopics();
+        }
+      });
+      renderRecsTopics();
+      renderRecsAgencies();
+
+      /* Inject "Copy visible asks" and "Download CSV" into .letters-controls on /letters/recommendations/ */
+      var recTable = document.getElementById('rec-index');
+      var controlsRow = document.querySelector('.letters-toolbar .letters-controls');
+      if(recTable && controlsRow && !document.getElementById('recs-copy-visible')){
+        var expGroup = document.createElement('div');
+        expGroup.className = 'filter-group';
+        expGroup.innerHTML =
+          '<span class="filter-label">Export:</span>' +
+          '<button type="button" class="filter-btn" id="recs-copy-visible">Copy visible asks</button>' +
+          '<a class="filter-btn" href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="text-decoration:none;">Download CSV (136)</a>';
+        controlsRow.appendChild(expGroup);
+        var copyBtn = document.getElementById('recs-copy-visible');
+        if(copyBtn){
+          copyBtn.addEventListener('click', function(){
+            var rows = Array.prototype.slice.call(recTable.querySelectorAll('tbody > tr:not(.is-filtered-out)'));
+            var lines = rows.map(function(tr){
+              var no = (tr.querySelector('td[data-label="No."]') || {}).textContent || '';
+              var letTxt = (tr.querySelector('td[data-label="Letter"] a') || {}).textContent || '';
+              var askTxt = (tr.querySelector('td[data-label="Recommendation"]') || {}).textContent || '';
+              return no.trim() + ' [' + letTxt.trim() + ']: ' + askTxt.replace(/\s+/g, ' ').trim();
+            });
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(lines.join('\n')).then(function(){
+                var prev = copyBtn.textContent;
+                copyBtn.textContent = 'Copied ' + rows.length + ' asks';
+                setTimeout(function(){ copyBtn.textContent = prev; }, 1600);
+              }).catch(function(){});
+            }
+          });
+        }
+      }
+    }
+
+    /* 2. Notes Hub Snapshot Explorer (#notes-snapshot-explorer) */
+    var notRoot = document.getElementById('notes-snapshot-explorer');
+    if(notRoot){
+      function renderNotO19(){
+        var sumEl = document.getElementById('not-o19-summary');
+        var barsEl = document.getElementById('not-o19-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Filing window</span><span class="b4-stat__val">Oct 13 to Oct 19, 2026</span><span class="b4-stat__sub">4 submissions across 3 federal dockets (Letters No. 22 to 25)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">New recommendations</span><span class="b4-stat__val">22 concrete asks</span><span class="b4-stat__sub">Brings program total to 25 letters and 136 recommendations</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Treasury Section 3</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; CLII 0.90 record fix</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">SEC Crypto &amp; NMS Stock</span><span class="b4-stat__val">Letters No. 23 &amp; No. 25</span><span class="b4-stat__sub">Rule 400(a) observable control test &amp; TSV corporate-actions hierarchy</span></div>';
+        var o19Rows = [
+          { name: 'Letter No. 23: SEC Regulation Crypto Assets (File No. S7-2026-27, 91 Fed. Reg. 54510)', pct: 100, val: '8 recommendations · Filed Oct 19, 2026', note: 'Adds an observable control condition to Rule 400(a) and requires Form TR to use PCA-excluded, delegation-aware governance metrics' },
+          { name: 'Letter No. 22 & No. 24: Treasury GENIUS Section 3 Issuance, Offer & Sale (TREAS-DO-2026-0496)', pct: 88, val: '7 recommendations + supplemental · Oct 13 & 19', note: 'Grounds proposed s.1523.3(c) foreign-issuer technical capability in deployed contract code and keys s.8 checks to published determinations' },
+          { name: 'Letter No. 25: SEC Tokenized NMS Stock Conditional Exemptions (File No. 4-927, Rel. 34-106402)', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Requires Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
+        ];
+        barsEl.innerHTML = o19Rows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      function renderNotO12(){
+        var sumEl = document.getElementById('not-o12-summary');
+        var barsEl = document.getElementById('not-o12-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">July 18, 2026 deadline</span><span class="b4-stat__val">0 final rules issued</span><span class="b4-stat__sub">1-year Section 13 statutory rulemaking deadline elapsed</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Current 14-action state</span><span class="b4-stat__val">1 in effect · 2 open · 11 pending</span><span class="b4-stat__sub">Treasury s.4(c) state-certification IFR in effect Sep 30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Binding effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">18-month statutory prong governs automatically post-Sep 20</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Open comment windows</span><span class="b4-stat__val">Through Nov 30, 2026</span><span class="b4-stat__sub">Federal Reserve R-1899 + companion &amp; Treasury s.4(c) IFR</span></div>';
+        var o12Rows = [
+          { name: 'Awaiting final action (11 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 79, val: '11 of 14 rulemakings (78.6%)', note: 'Spans OCC AF41/AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
+          { name: 'Open for public comment (Federal Reserve Board Docket R-1899 & subsidiary application proposal)', pct: 14, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
+          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' }
+        ];
+        barsEl.innerHTML = o12Rows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      notRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-not-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-not-tab');
+          notRoot.querySelectorAll('button[data-not-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var p19 = document.getElementById('not-panel-oct19');
+          var p12 = document.getElementById('not-panel-oct12');
+          if(p19) p19.hidden = target !== 'oct19';
+          if(p12) p12.hidden = target !== 'oct12';
+          if(target === 'oct12') renderNotO12(); else renderNotO19();
+        }
+      });
+      renderNotO19();
+      renderNotO12();
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initWave5Upgrades);
+  } else {
+    initWave5Upgrades();
+  }
+})();
+
+/* ==========================================================================
+   Universal Cmd+K / Ctrl+K Quick-Jump Command Palette
+   ========================================================================== */
+(function(){
+  if(window.__czCmdKInitialized) return;
+  window.__czCmdKInitialized = true;
+
+  var ITEMS = [
+    { cat: 'Hub', title: 'Field Guide: How to Evaluate a Tokenized Product', url: '/overview/', kw: 'start here overview 4 dollar objects 6 step decision map classify trace map compare stress decide' },
+    { cat: 'Hub', title: 'Frameworks Directory (MVEP, CLII, TDRC, 3CRD, MGCPT, CLII-AI, MVEP-AI)', url: '/frameworks/', kw: 'frameworks scorecard clii mvep tdrc 3crd mgcpt valos nors s2r' },
+    { cat: 'Hub', title: 'Research Library (9 SSRN Papers, 1 Memo, 6 Briefings)', url: '/research/', kw: 'papers ssrn frontiers track a track b tokenomics depin' },
+    { cat: 'Hub', title: 'Federal Comment Letter Program (25 Letters, 19 Dockets, 136 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
+    { cat: 'Hub', title: '136-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
+    { cat: 'Tracker', title: 'GENIUS Act Rulemaking Tracker (14 Implementing Actions)', url: '/trackers/genius-act/', kw: 'genius act s 1582 pub l 119-27 january 18 2027 effective date tracker' },
+    { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 68000 commits 13098 hard gates 63230 advisories worktrees leases' },
+    { cat: 'Hub', title: 'Patent-Pending Systems (42 USPTO Applications across 32 Families)', url: '/patents/', kw: 'patents uspto 42 applications 32 families 64/180,865 leases provenance' },
+    { cat: 'Hub', title: 'Data & Code Catalog (JSON/CSV Feeds & Replication Repositories)', url: '/data/', kw: 'data code github replication json csv atom feeds' },
+    { cat: 'Hub', title: 'Notes (Dated Rulemaking & Market-Structure Dispatches)', url: '/notes/', kw: 'notes october 2026 sec treasury genius act status' },
+    { cat: 'Hub', title: 'Advisory, Consulting & Speaking Formats', url: '/speaker-and-advisory/', kw: 'advisory consulting speaking workshops diligence structuring' },
+    { cat: 'Hub', title: 'Role Profiles & Resumes (6 Tailored Lenses + PDF/DOCX)', url: '/resume/', kw: 'resume cv roles policy asset management payments product ai governance risk' },
+    { cat: 'Hub', title: 'Contact & Name the Job', url: '/contact/', kw: 'contact email zach@tokenization.systems intro call' },
+
+    { cat: 'Paper', title: 'Routing the Dollar: Gateway Infrastructure & Monetary Policy Transmission', url: '/papers/routing-the-dollar/', kw: 'ssrn 6267698 frbny clii 19 gateways $60.6t svb busd cointegration trace 46.01' },
+    { cat: 'Paper', title: 'Minimum Viable Equivalence Pack (MVEP): 10-Category Diligence Framework', url: '/papers/mvep/', kw: 'ssrn 6363138 14 products 20 insolvency regimes benji buidl usdc jpmd rlusd' },
+    { cat: 'Paper', title: 'Seven Dollars: Comparative Framework for Dollar-Denominated Products', url: '/papers/seven-dollars/', kw: 'ssrn 6483118 collateral eligibility us holder design markers ppsi' },
+    { cat: 'Paper', title: 'Three Tokenization Strategies: Nasdaq-DTC, ICE-NYSE & Securitize', url: '/papers/three-strategies/', kw: 'ssrn 6483198 securitize dtcc broadridge corporate actions deposit tokens' },
+    { cat: 'Paper', title: 'Who Controls Agentic Payments? Facilitator Concentration in x402', url: '/papers/who-controls-agentic-payments/', kw: 'ssrn 7396241 x402 base solana polygon coinbase cdp meridian dexter hhi' },
+    { cat: 'Paper', title: 'Adaptive Tokenomics: PID Controllers & 240-Run MeshNet Ensemble', url: '/papers/adaptive-tokenomics/', kw: 'ssrn 6364158 pid controller meshnet 240 runs depin emissions' },
+    { cat: 'Paper', title: 'Auditing Governance Concentration Beyond Token Allocation (52 Protocols)', url: '/papers/governance-concentration/', kw: 'frontiers 1853465 ssrn 6599278 52 protocols pca exclusion delegation hhi' },
+    { cat: 'Paper', title: 'Who Burns the Tokens? Fiscal Sustainability & S2R in GeoDePIN', url: '/papers/who-burns-the-tokens/', kw: 'ssrn 6483619 helium geodnet hivemapper livepeer s2r burn hhi' },
+    { cat: 'Paper', title: 'Operational Risk in Token Economies: 624-Config ValOS/NORS Battery', url: '/papers/operational-risk/', kw: 'ssrn 6352118 valos nors 624 configurations reputation threshold 95% 99%' },
+
+    { cat: 'Briefing', title: 'The Control Layer of Agentic Payments (x402 Empirical Memo)', url: '/papers/agentic-payments-control-layer/', kw: 'x402 memo 138 facilitator addresses meridian 2-hop proxy buyer cardinality' },
+    { cat: 'Briefing', title: 'The Oracle Problem in Stablecoin Ratings (Issuer-Pays vs On-Chain Feeds)', url: '/papers/oracle-problem-stablecoin-ratings/', kw: 'credit ratings moodys sp white jiang griffin tang ousd consortium' },
+    { cat: 'Briefing', title: 'Tokenized Cash Management Principles (12 TCMAG Principles vs 10 MVEP)', url: '/papers/mvep-tcmag-comparison/', kw: 'tcmag corporate treasurers multi-bank interoperability confidentiality lei' },
+    { cat: 'Briefing', title: 'Open USD (OUSD) & the GENIUS Section 4(a)(11) Yield Boundary', url: '/papers/ousd-yield-boundary/', kw: 'ousd open standard 140 partners 2 hop yield prohibition coinbase circle $907.9m' },
+    { cat: 'Briefing', title: 'Dollar v3: Four Dollar Objects, Layer 0 & Deposit Funding Mutation', url: '/papers/dollar-v3/', kw: 'dollar v3 feds note reduce recycle restructure occ il 1188' },
+    { cat: 'Briefing', title: 'The Control Layer War: CLARITY Act Defaults, Holds & Routing', url: '/papers/control-layer-war/', kw: 'clarity act hr 5403 router-centric issuer-centric time-to-release' },
+    { cat: 'Briefing', title: 'Tokenized Equity Vehicles: Robinhood Stock Tokens vs Backed xStocks', url: '/papers/tokenized-equity/', kw: 'robinhood arbitrum backed xstocks jersey spv solana spl' },
+
+    { cat: 'Explorer', title: 'Interactive MVEP 14-Product Scorecard & Self-Assessment Tool', url: '/frameworks/#mvep-scorecard', kw: 'mvep interactive scorecard calculator 14 products' },
+    { cat: 'Explorer', title: 'Interactive 19-Gateway CLII Sensitivity & Weighting Explorer', url: '/frameworks/#clii-explorer', kw: 'clii 19 gateways circle coinbase tether binance curve 3pool' },
+    { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC) Simulator', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore float vs home screen' },
+    { cat: 'Explorer', title: 'Interactive Fleet Commits Chart (79 3-Day Bins, 68,000+ Commits)', url: '/agent-infrastructure/#ai-commit-chart', kw: 'commit chart 79 bins 3329 peak' },
+
+    { cat: 'Resume', title: 'Resume Profile: Policy & Market Infrastructure', url: '/resume/policy/', kw: 'policy resume central bank fed occ fdic sec cftc' },
+    { cat: 'Resume', title: 'Resume Profile: Asset Management & Tokenization', url: '/resume/asset-management/', kw: 'asset management resume borderless $500m 250 investments layerzero' },
+    { cat: 'Resume', title: 'Resume Profile: Stablecoin & Payments Strategy', url: '/resume/stablecoin-payments/', kw: 'stablecoin payments operator resume reserves redemption' },
+    { cat: 'Resume', title: 'Resume Profile: Digital Asset Product', url: '/resume/product/', kw: 'product manager resume tokenization lifecycle' },
+    { cat: 'Resume', title: 'Resume Profile: AI Governance & Infrastructure', url: '/resume/ai-governance-infrastructure/', kw: 'ai governance resume clii-ai mvep-ai 42 patents' },
+    { cat: 'Resume', title: 'Resume Profile: Risk, Controls & Diligence', url: '/resume/risk-controls/', kw: 'risk controls resume thorchain $200m valos nors' }
+  ];
+
+  var backdrop = null;
+  var inputEl = null;
+  var listEl = null;
+  var activeIdx = 0;
+  var filtered = ITEMS.slice();
+
+  function ensureStyles(){
+    if(document.getElementById('cz-cmdk-styles')) return;
+    var st = document.createElement('style');
+    st.id = 'cz-cmdk-styles';
+    st.textContent =
+      '.cz-cmdk-backdrop{position:fixed;inset:0;z-index:9999;background:rgba(6,8,12,.72);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:10vh 1rem 2rem;box-sizing:border-box}' +
+      '.cz-cmdk-backdrop[hidden]{display:none !important}' +
+      '.cz-cmdk-dialog{width:100%;max-width:40rem;background:var(--panel,#111318);color:var(--text,#e8eaef);border:1px solid var(--line-strong,rgba(255,255,255,.18));border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column;max-height:76vh}' +
+      '.cz-cmdk-top{display:flex;align-items:center;gap:.6rem;padding:.75rem 1rem;border-bottom:1px solid var(--line,rgba(255,255,255,.1))}' +
+      '.cz-cmdk-input{flex:1;background:transparent;border:0;color:inherit;font:inherit;font-size:.98rem;outline:none;min-width:0}' +
+      '.cz-cmdk-esc{appearance:none;border:1px solid var(--line-strong,rgba(255,255,255,.2));background:transparent;color:var(--muted,#9ca3af);font-family:"JetBrains Mono",monospace;font-size:.72rem;padding:.2rem .45rem;border-radius:4px;cursor:pointer}' +
+      '.cz-cmdk-list{list-style:none;margin:0;padding:.4rem;overflow-y:auto;flex:1}' +
+      '.cz-cmdk-item{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.55rem .75rem;border-radius:8px;text-decoration:none;color:inherit;cursor:pointer;font-size:.9rem;line-height:1.35}' +
+      '.cz-cmdk-item.is-active,.cz-cmdk-item:hover{background:color-mix(in srgb,var(--accent,#5b9cf5) 16%,transparent)}' +
+      '.cz-cmdk-cat{font-family:"JetBrains Mono",monospace;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,#5b9cf5);flex-shrink:0;padding:.12rem .45rem;border:1px solid color-mix(in srgb,var(--accent,#5b9cf5) 40%,transparent);border-radius:999px}' +
+      '.cz-cmdk-foot{padding:.45rem 1rem;border-top:1px solid var(--line,rgba(255,255,255,.1));font-size:.74rem;color:var(--muted,#9ca3af);display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace}' +
+      '.cz-cmdk-trigger{appearance:none;background:transparent;border:1px solid color-mix(in srgb,currentColor 22%,transparent);color:inherit;font:inherit;font-family:"JetBrains Mono",monospace;font-size:.72rem;padding:.15rem .5rem;border-radius:4px;cursor:pointer;opacity:.85}' +
+      '.cz-cmdk-trigger:hover{opacity:1;border-color:var(--accent,#5b9cf5);color:var(--accent,#5b9cf5)}';
+    document.head.appendChild(st);
+  }
+
+  function renderList(){
+    if(!listEl) return;
+    if(!filtered.length){
+      listEl.innerHTML = '<li style="padding:1rem;text-align:center;color:var(--muted,#9ca3af);font-size:.9rem;">No matching pages, frameworks, or explorers.</li>';
+      return;
+    }
+    listEl.innerHTML = filtered.map(function(it, idx){
+      return '<li><a class="cz-cmdk-item' + (idx === activeIdx ? ' is-active' : '') + '" href="' + it.url + '" data-cmdk-idx="' + idx + '">' +
+        '<span>' + it.title + '</span>' +
+        '<span class="cz-cmdk-cat">' + it.cat + '</span>' +
+      '</a></li>';
+    }).join('');
+  }
+
+  function buildModal(){
+    if(backdrop) return;
+    ensureStyles();
+    backdrop = document.createElement('div');
+    backdrop.className = 'cz-cmdk-backdrop';
+    backdrop.id = 'cz-cmdk-backdrop';
+    backdrop.hidden = true;
+    backdrop.setAttribute('role', 'dialog');
+    backdrop.setAttribute('aria-modal', 'true');
+    backdrop.setAttribute('aria-label', 'Quick jump across Tokenization Systems');
+    backdrop.innerHTML =
+      '<div class="cz-cmdk-dialog">' +
+        '<div class="cz-cmdk-top">' +
+          '<input type="search" class="cz-cmdk-input" id="cz-cmdk-input" placeholder="Jump to any paper, framework, letter, explorer, dataset, or resume (e.g., MVEP, x402, AG19, TDRC)..." autocomplete="off" spellcheck="false" />' +
+          '<button type="button" class="cz-cmdk-esc" id="cz-cmdk-close">ESC</button>' +
+        '</div>' +
+        '<ul class="cz-cmdk-list" id="cz-cmdk-list"></ul>' +
+        '<div class="cz-cmdk-foot"><span>\u2191\u2193 to navigate \u00b7 Enter to open</span><span>42 citable pages \u00b7 25 interactive explorers</span></div>' +
+      '</div>';
+    document.body.appendChild(backdrop);
+    inputEl = document.getElementById('cz-cmdk-input');
+    listEl = document.getElementById('cz-cmdk-list');
+
+    inputEl.addEventListener('input', function(){
+      var q = (inputEl.value || '').trim().toLowerCase();
+      var terms = q ? q.split(/\s+/) : [];
+      filtered = ITEMS.filter(function(it){
+        if(!terms.length) return true;
+        var hay = (it.title + ' ' + it.cat + ' ' + it.kw + ' ' + it.url).toLowerCase();
+        return terms.every(function(t){ return hay.indexOf(t) !== -1; });
+      });
+      activeIdx = 0;
+      renderList();
+    });
+
+    inputEl.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowDown'){
+        e.preventDefault();
+        if(filtered.length){ activeIdx = (activeIdx + 1) % filtered.length; renderList(); }
+      } else if(e.key === 'ArrowUp'){
+        e.preventDefault();
+        if(filtered.length){ activeIdx = (activeIdx - 1 + filtered.length) % filtered.length; renderList(); }
+      } else if(e.key === 'Enter'){
+        if(filtered[activeIdx]){
+          e.preventDefault();
+          var dest = filtered[activeIdx].url;
+          closeModal();
+          window.location.href = dest;
+        }
+      }
+    });
+
+    backdrop.addEventListener('click', function(e){
+      if(e.target === backdrop || e.target.id === 'cz-cmdk-close'){
+        closeModal();
+      }
+    });
+  }
+
+  function openModal(){
+    buildModal();
+    filtered = ITEMS.slice();
+    activeIdx = 0;
+    inputEl.value = '';
+    renderList();
+    backdrop.hidden = false;
+    setTimeout(function(){ inputEl.focus(); }, 10);
+  }
+
+  function closeModal(){
+    if(backdrop) backdrop.hidden = true;
+  }
+
+  document.addEventListener('keydown', function(e){
+    if((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
+      e.preventDefault();
+      if(backdrop && !backdrop.hidden) closeModal(); else openModal();
+    } else if(e.key === 'Escape' && backdrop && !backdrop.hidden){
+      e.preventDefault();
+      closeModal();
+    }
+  });
+
+  function mountFooterTrigger(){
+    ensureStyles();
+    var footNav = document.querySelector('.footer-nav, .foot-nav');
+    if(footNav && !document.getElementById('cz-cmdk-trigger-btn')){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.id = 'cz-cmdk-trigger-btn';
+      btn.className = 'cz-cmdk-trigger';
+      btn.setAttribute('aria-label', 'Open quick-jump search (Command+K)');
+      btn.textContent = 'Search \u2318K';
+      btn.addEventListener('click', openModal);
+      footNav.appendChild(btn);
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', mountFooterTrigger);
+  } else {
+    mountFooterTrigger();
+  }
+})();
+
 
 
 

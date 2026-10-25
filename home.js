@@ -2221,3 +2221,21 @@ function vaultMountDial(cv, opts){
 }
 vaultMountDial(document.getElementById('dial'));
 vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true });
+
+/* Load quick-jump command palette on the homepage via script.js if not already loaded */
+(function(){
+  if(window.__czCmdKInitialized) return;
+  document.addEventListener('keydown', function onHomeKey(e){
+    if((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
+      e.preventDefault();
+      document.removeEventListener('keydown', onHomeKey);
+      var s = document.createElement('script');
+      s.src = '/script.js';
+      s.onload = function(){
+        var ev = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true });
+        document.dispatchEvent(ev);
+      };
+      document.body.appendChild(s);
+    }
+  });
+})();
