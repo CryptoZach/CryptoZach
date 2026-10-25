@@ -1574,6 +1574,57 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <p class="framework-card-action"><a class="action secondary" href="/agent-infrastructure/#building">Explore the AI operating layer <span aria-hidden="true">→</span></a> <a class="action secondary" href="/letters/fsb-ai-sound-practices/">Read FSB AI Sound Practices letter <span aria-hidden="true">→</span></a></p>
         </article>
       </div>
+
+      <figure class="b4-explorer" id="ai-framework-explorer" aria-labelledby="ai-fw-exp-title" style="margin-top: 1.5rem;">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive AI operator diagnostic · 5 deployment classes · 10 MVEP-AI categories · 5 CLII-AI dimensions</p>
+            <h3 id="ai-fw-exp-title" class="b4-explorer__title">Compare AI deployment classes under MVEP-AI and CLII-AI or inspect the 10-category translation</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="CLII-AI and MVEP-AI interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="aifw-panel-classes" id="aifw-tab-classes" data-aifw-tab="classes">1. 5 AI deployment classes (CLII-AI &amp; MVEP-AI)</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="aifw-panel-crosswalk" id="aifw-tab-crosswalk" data-aifw-tab="crosswalk">2. 10-category MVEP to MVEP-AI translation</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="aifw-panel-classes" role="tabpanel" aria-labelledby="aifw-tab-classes">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select AI deployment class">
+              <span class="b4-explorer__control-label">Deployment class</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-aifw-cls="agentic" aria-pressed="true">Agentic systems &amp; x402 payment rails</button>
+                <button type="button" class="b4-pill" data-aifw-cls="composed" aria-pressed="false">Composed AI products (RAG / multi-provider)</button>
+                <button type="button" class="b4-pill" data-aifw-cls="api" aria-pressed="false">Enterprise foundation-model APIs</button>
+                <button type="button" class="b4-pill" data-aifw-cls="chat" aria-pressed="false">Frontier consumer / enterprise chat</button>
+                <button type="button" class="b4-pill" data-aifw-cls="open" aria-pressed="false">Open-weight self-hosted deployments</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="aifw-cls-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="aifw-cls-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="aifw-panel-crosswalk" role="tabpanel" aria-labelledby="aifw-tab-crosswalk" hidden>
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Filter MVEP-AI categories by equivalence dimension">
+              <span class="b4-explorer__control-label">Equivalence claim</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-aifw-dim="all" aria-pressed="true">All 10 categories + companion test</button>
+                <button type="button" class="b4-pill" data-aifw-dim="legal" aria-pressed="false">Legal &amp; contractual (C1, C4, C5)</button>
+                <button type="button" class="b4-pill" data-aifw-dim="operational" aria-pressed="false">Operational &amp; state integrity (C2, C3, C7, C8)</button>
+                <button type="button" class="b4-pill" data-aifw-dim="economic" aria-pressed="false">Economic &amp; execution finality (C6, C9, C10, CSA)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="aifw-cw-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="aifw-cw-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          First external filing: <a href="/letters/fsb-ai-sound-practices/">FSB Sound Practices for Responsible Adoption of AI consultation response</a> · Empirical fleet and x402 evidence: <a href="/agent-infrastructure/">Agent Infrastructure</a> and <a href="/papers/who-controls-agentic-payments/">Who Controls Agentic Payments?</a>
+        </figcaption>
+      </figure>
+
       <p class="track-bridge"><a class="action secondary" href="/resume/ai-governance-infrastructure/">View AI Governance profile <span aria-hidden="true">→</span></a> <a class="action secondary" href="/papers/agentic-payments-control-layer/">Open Agentic Payments Control Layer <span aria-hidden="true">→</span></a> <a class="action secondary" href="/agent-infrastructure/">Open Agent Infrastructure <span aria-hidden="true">→</span></a></p>
     </section>
 

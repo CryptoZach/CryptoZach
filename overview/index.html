@@ -734,6 +734,56 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       <h3 class="map-ideas-title">Three ideas worth remembering</h3>
       <p><strong>The gateway defines the system.</strong> Different access paths and operators change how the same token behaves under stress. <strong>Equivalence has to be proven.</strong> Digital representation preserves only the rights and liquidity paths the legal and operational stack supports. <strong>Control migrates to the perimeter.</strong> When the protocol layer is decentralized, intervention authority concentrates at the issuers, custodians, and gateways around it.</p>
       <p>These frameworks complement legal, regulatory, investment, and technical diligence by structuring the system-level questions an evaluation must answer.</p>
+
+      <figure class="b4-explorer" id="field-guide-explorer" aria-labelledby="fg-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive field-guide diagnostic · 4 dollar objects · 6-step decision map</p>
+            <h3 id="fg-exp-title" class="b4-explorer__title">Compare the four dollar objects under stress or route any product through the six-step decision map</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Field guide interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="fg-panel-objects" id="fg-tab-objects" data-fg-tab="objects">1. Four dollar objects under stress</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="fg-panel-router" id="fg-tab-router" data-fg-tab="router">2. Six-step diligence router by asset class</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="fg-panel-objects" role="tabpanel" aria-labelledby="fg-tab-objects">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select dollar object">
+              <span class="b4-explorer__control-label">Dollar object</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-fg-obj="stablecoin" aria-pressed="true">Payment stablecoins (USDC, PYUSD, RLUSD)</button>
+                <button type="button" class="b4-pill" data-fg-obj="tokdep" aria-pressed="false">Tokenized deposits (Single-bank mirror)</button>
+                <button type="button" class="b4-pill" data-fg-obj="deptok" aria-pressed="false">Deposit tokens (JPMD interbank rail)</button>
+                <button type="button" class="b4-pill" data-fg-obj="mmf" aria-pressed="false">Tokenized MMFs &amp; wrappers (BENJI, BUIDL, OUSG)</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="fg-obj-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="fg-obj-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="fg-panel-router" role="tabpanel" aria-labelledby="fg-tab-router" hidden>
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select product class to evaluate">
+              <span class="b4-explorer__control-label">What are you evaluating?</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-fg-route="stablecoin" aria-pressed="true">Stablecoin or payment gateway</button>
+                <button type="button" class="b4-pill" data-fg-route="treasury" aria-pressed="false">Tokenized Treasury or MMF collateral</button>
+                <button type="button" class="b4-pill" data-fg-route="equity" aria-pressed="false">Tokenized equity or clearing rail</button>
+                <button type="button" class="b4-pill" data-fg-route="depin" aria-pressed="false">DePIN or protocol token economy</button>
+                <button type="button" class="b4-pill" data-fg-route="agentic" aria-pressed="false">Agentic payment rail or AI fleet</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="fg-route-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="fg-route-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+           Companion PDF: <a href="/field-guide/Tokenization_Systems_Field_Guide_2026-09-22.pdf">Download the Field Guide</a> · Full scoring tools on <a href="/frameworks/">Frameworks</a>.
+        </figcaption>
+      </figure>
     </section>
 
     <section class="reveal explainer-intro" id="why-institutions-care" aria-labelledby="why-institutions-care-title">

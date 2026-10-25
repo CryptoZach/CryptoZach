@@ -9910,6 +9910,937 @@
   }
 })();
 
+/* ==========================================================================
+   Agent Infrastructure (#ai-control-explorer): Advisory Saturation vs Hard Gates
+   ========================================================================== */
+(function(){
+  function initAiControlExplorer(){
+    var root = document.getElementById('ai-control-explorer');
+    if(!root) return;
+    var curAdv = 'classes';
+    var curGate = 'refusals';
+
+    function renderAdv(){
+      var sumEl = document.getElementById('ai-adv-summary');
+      var barsEl = document.getElementById('ai-adv-bars');
+      if(!sumEl || !barsEl) return;
+
+      if(curAdv === 'classes'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 61,805 across 37 classes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Highest-volume repeat rate</span><span class="b4-stat__val">84% saturation</span><span class="b4-stat__sub">Pipe-exit misread (13,975 firings across 2,260 workspaces)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Classes requiring hard gate</span><span class="b4-stat__val">3 of 6 (&gt;60% repeat)</span><span class="b4-stat__sub">Pipe-exit (84%), edit-running-script (69%), recursive-delete (64%)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Classes consistent with teaching</span><span class="b4-stat__val">2 of 6 (~30% repeat)</span><span class="b4-stat__sub">Ancestry-as-landedness (32%), destructive-probe check (29%)</span></div>';
+
+        var rows = [
+          { name: 'Pipe-exit misread (failed command treated as success)', rate: 84, badge: '84% repeat · 13,975 firings (2,260 workspaces)', note: 'Verdict: Requires an enforcing gate; unambiguous subset armed (2,080 blocked, <1% override)' },
+          { name: 'Edit running script (live script modified in place)', rate: 69, badge: '69% repeat · 1,674 firings (518 workspaces)', note: 'Verdict: Requires an enforcing gate; advisory warning alone does not stop recurrence' },
+          { name: 'Recursive delete (broad rm -rf or directory wipe path)', rate: 64, badge: '64% repeat · 2,143 firings (780 workspaces)', note: 'Verdict: Requires an enforcing gate; destructive signature intercepted at point of action' },
+          { name: 'Unscoped negative claim (absence claimed without scoped search)', rate: 50, badge: '50% repeat · 2,271 firings (1,128 workspaces)', note: 'Verdict: Borderline (returns in half of workspaces; dropped from 64% to 48% in equal-span test)' },
+          { name: 'Ancestry as landedness (history position used as deployment proof)', rate: 32, badge: '32% repeat · 994 firings (679 workspaces)', note: 'Verdict: Consistent with teaching; repeats in fewer than one-third of workspaces' },
+          { name: 'Destructive-probe check (delete-protection gate tested unsafely)', rate: 29, badge: '29% repeat · 641 firings (454 workspaces)', note: 'Verdict: Consistent with teaching; lowest saturation among the top six classes' }
+        ];
+        barsEl.innerHTML = rows.map(function(r){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.rate + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      } else {
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Equal-span window length</span><span class="b4-stat__val">595.6 hours (24.8d)</span><span class="b4-stat__sub">Symmetric windows before and after 2026-08-04 control-maturity boundary</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Pipe-exit misread trajectory</span><span class="b4-stat__val">81% -> 87% (+6 pp)</span><span class="b4-stat__sub">2,683 firings pre-Aug 4 vs 7,767 post-Aug 4; confirmed need for deny gate</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Unscoped-absence trajectory</span><span class="b4-stat__val">64% -> 48% (-16 pp)</span><span class="b4-stat__sub">606 firings pre-Aug 4 vs 1,078 post-Aug 4; consistent with teaching</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">CPU-load launch-gate confound</span><span class="b4-stat__val">22.0% -> 1.8% failure</span><span class="b4-stat__sub">29% override rate during CPU contention fell to 0 overrides (10/543 reads)</span></div>';
+
+        var eqRows = [
+          { name: 'Pipe-exit misread: Post-Aug 4 equal-span window (595.6h)', val: 87, badge: '87% repeat (7,767 firings)', note: 'Up from 81% (2,683 firings) in pre-Aug 4 window; high saturation persists across equal spans' },
+          { name: 'Pipe-exit misread: Pre-Aug 4 equal-span window (595.6h)', val: 81, badge: '81% repeat (2,683 firings)', note: 'Baseline window prior to deny-mode escalation on unambiguous pipe patterns' },
+          { name: 'Unscoped negative claim: Pre-Aug 4 equal-span window (595.6h)', val: 64, badge: '64% repeat (606 firings)', note: 'Initial high recurrence before companion retrieval-gating and prompt refinements' },
+          { name: 'Unscoped negative claim: Post-Aug 4 equal-span window (595.6h)', val: 48, badge: '48% repeat (1,078 firings)', note: '16 percentage point drop across identical observation span' },
+          { name: 'Ownership-read launch gate: High CPU contention week (Aug 2026)', val: 29, badge: '22% read timeout · 29% override rate', note: 'Slow state reads under machine load trained agents to bypass or retry' },
+          { name: 'Ownership-read launch gate: Normal machine load (543 attempts)', val: 1.8, badge: '1.8% read failure (10/543) · 0% overrides', note: '5 blocked launches and zero overrides with no code change to the gate itself' }
+        ];
+        barsEl.innerHTML = eqRows.map(function(r){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.val + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    function renderGates(){
+      var sumEl = document.getElementById('ai-gate-summary');
+      var barsEl = document.getElementById('ai-gate-bars');
+      if(!sumEl || !barsEl) return;
+
+      if(curGate === 'refusals'){
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Fleet-wide hard-gate hold rate</span><span class="b4-stat__val">99.56% (199 of 200)</span><span class="b4-stat__sub">13,098 stopped of 13,156 attempts; 58 documented overrides</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">73-day single-host table</span><span class="b4-stat__val">2,547 blocked / 49 overrides</span><span class="b4-stat__sub">98.1% hold rate across the 7 initial armed gate classes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Largest armed gate class</span><span class="b4-stat__val">2,080 blocked (&lt;1% override)</span><span class="b4-stat__sub">Deny mode of pipe-exit misread (9 overrides; 99.6% hold rate)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Zero-override gate class</span><span class="b4-stat__val">48 blocked / 0 overrides</span><span class="b4-stat__sub">Malformed shared config write gate (100% hold rate since 2026-07-26)</span></div>';
+
+        var gRows = [
+          { name: 'Writing a malformed shared config (first seen 2026-07-26)', hold: 100.0, badge: '100.0% hold · 48 blocked, 0 overrides (0% override)', note: 'Prevents a single broken configuration line from halting every concurrent session' },
+          { name: 'Misreading a piped command exit status (first seen 2026-08-08)', hold: 99.6, badge: '99.6% hold · 2,080 blocked, 9 overrides (<1% override)', note: 'Intercepts unambiguous pipe-exit misreads at point of execution' },
+          { name: 'Rewriting critical shared config (first seen 2026-08-05)', hold: 97.0, badge: '97.0% hold · 32 blocked, 1 override (3% override)', note: 'Protects shared operating instructions across concurrent agents' },
+          { name: 'Destroying a git stash (first seen 2026-07-11)', hold: 94.1, badge: '94.1% hold · 144 blocked, 9 overrides (6% override)', note: 'Prevents dropping stashed work another session may still need' },
+          { name: 'Shell modifier that silently truncates (first seen 2026-08-18)', hold: 92.1, badge: '92.1% hold · 186 blocked, 16 overrides (8% override)', note: 'Stops right-looking output generated from a truncated command path' },
+          { name: 'Force-deleting a branch (first seen 2026-07-10)', hold: 84.2, badge: '84.2% hold · 32 blocked, 6 overrides (16% override)', note: 'Blocks unmerged branch deletion where no second copy exists' },
+          { name: 'Garbage-collecting the object store (first seen 2026-07-31)', hold: 75.8, badge: '75.8% hold · 25 blocked, 8 overrides (24% override)', note: 'Prevents pruning unreferenced objects during concurrent worktree activity' }
+        ];
+        barsEl.innerHTML = gRows.map(function(r){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.hold.toFixed(1) + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      } else {
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Diagnostic pattern</span><span class="b4-stat__val">11 silent failures</span><span class="b4-stat__sub">Every signal looked healthy until a second measurement checked outcomes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Provenance &amp; delivery</span><span class="b4-stat__val">3 failures</span><span class="b4-stat__sub">Confabulated finding IDs, truncated startup files, stale hook bytes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Control &amp; gate semantics</span><span class="b4-stat__val">4 failures</span><span class="b4-stat__sub">84% warning repeat, partial deny coverage (15%), CPU-driven blocks, stale HTTP buffer</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Queue &amp; corpus accounting</span><span class="b4-stat__val">4 failures</span><span class="b4-stat__sub">Exited process lock, impossible 95/d absolute sweep, bounded scan cap, 446/455 unread additions</span></div>';
+
+        var sRows = [
+          { name: '1. Shared finding reference & 2. Startup procedure truncation', pct: 100, badge: 'Apparent: Valid citation & full load -> Measured: Missing record & size-limit cut', note: 'Fix: Require existing record resolution at save time; verify UTF-16/line caps on load' },
+          { name: '3. Highest-volume warning & 4. Failed-command deny coverage', pct: 84, badge: 'Apparent: Warning taught safety -> Measured: 84% workspace repeat; 11,886 of 13,975 stayed advisory', note: 'Fix: Grade warnings by workspace saturation; separate unambiguous deny subset (2,080) from advisory remainder' },
+          { name: '5. New-work launch gate & 6. Claimed task ownership', pct: 78, badge: 'Apparent: Conflict block & active owner -> Measured: 22% CPU timeout & exited holder', note: 'Fix: Measure machine-load confounds; replace PID ownership with time-bounded committed leases' },
+          { name: '7. Queue-sweeping duty & 8. Open-backlog bounded scan', pct: 70, badge: 'Apparent: Role failure & full backlog -> Measured: 95/d arrival impossibility & 22 resolved items un-scanned', note: 'Fix: Replace absolute sweep with arrival/closure rate target (95/50); report unmeasured remainder explicitly' },
+          { name: '9. External-record verifier & 10. Committed hook rule', pct: 62, badge: 'Apparent: Fresh live pass & active rule -> Measured: Timed-out stale buffer & old checkout hook bytes', note: 'Fix: Clear buffer + test known-false ID + emit could-not-determine; compare committed bytes vs live hook bytes' },
+          { name: '11. Catalogued reading corpus growth (732 to 1,186 entries)', pct: 55, badge: 'Apparent: Unread gap shrinking -> Measured: 446 of 455 weekly additions marked unread', note: 'Fix: Separate catalog ingestion count from verified-read completion count' }
+        ];
+        barsEl.innerHTML = sRows.map(function(r){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    root.addEventListener('click', function(e){
+      var tBtn = e.target.closest('button[data-ai-tab]');
+      if(tBtn){
+        var target = tBtn.getAttribute('data-ai-tab');
+        root.querySelectorAll('button[data-ai-tab]').forEach(function(b){
+          var on = b === tBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pAdv = document.getElementById('ai-panel-advisory');
+        var pGates = document.getElementById('ai-panel-gates');
+        if(pAdv) pAdv.hidden = target !== 'advisory';
+        if(pGates) pGates.hidden = target !== 'gates';
+        if(target === 'gates') renderGates(); else renderAdv();
+        return;
+      }
+      var aBtn = e.target.closest('button[data-ai-adv]');
+      if(aBtn){
+        curAdv = aBtn.getAttribute('data-ai-adv') || 'classes';
+        root.querySelectorAll('button[data-ai-adv]').forEach(function(b){
+          var on = b === aBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderAdv();
+        return;
+      }
+      var gBtn = e.target.closest('button[data-ai-gate]');
+      if(gBtn){
+        curGate = gBtn.getAttribute('data-ai-gate') || 'refusals';
+        root.querySelectorAll('button[data-ai-gate]').forEach(function(b){
+          var on = b === gBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderGates();
+      }
+    });
+
+    renderAdv();
+    renderGates();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAiControlExplorer);
+  } else {
+    initAiControlExplorer();
+  }
+})();
+
+/* ==========================================================================
+   Field Guide (#field-guide-explorer): 4 Dollar Objects & 6-Step Diligence Router
+   ========================================================================== */
+(function(){
+  function initFieldGuideExplorer(){
+    var root = document.getElementById('field-guide-explorer');
+    if(!root) return;
+    var curObj = 'stablecoin';
+    var curRoute = 'stablecoin';
+
+    var objects = {
+      stablecoin: {
+        rulebook: 'GENIUS Act (PPSI) / State MTL / Trust',
+        claim: 'Contractual or statutory reserve claim (not a deposit)',
+        insolvency: 'GENIUS s.11 priority (when active); state/offshore split today',
+        stress2am: 'On-chain swaps stay live; direct fiat mint/burn bottlenecked by banking hours',
+        bars: [
+          { label: '24/7 secondary-market & DeFi transferability', pct: 95, val: 'High (permissionless / blocklist)', note: 'Settles 24/7 on public chains, but par value can diverge during banking-hour reserve lockups (SVB 13% gap)' },
+          { label: 'Direct par redemption & banking-hour independence', pct: 55, val: 'Gateway-contingent', note: 'Direct mint/burn gated by whitelisted institutional accounts and commercial-bank wire rails' },
+          { label: 'Insolvency & customer-property protection (MVEP Cat 5)', pct: 50, val: 'Regime-dependent (J3 / J3F / J8)', note: 'Spans NYDFS trust/MTL (Partial), OCC uninsured trust (Ambiguous), to El Salvador (Fail)' },
+          { label: 'Yield pass-through to end holder', pct: 15, val: 'Prohibited (GENIUS s.4(a)(11))', note: 'Issuers retain Treasury reserve carry; yield migrates to wrappers, sweeps, or distributor revenue-share' }
+        ]
+      },
+      tokdep: {
+        rulebook: 'Federal Banking Law (FDI Act / OCC IL 1188)',
+        claim: 'Direct deposit liability of the issuing commercial bank',
+        insolvency: 'FDIC insurance (to $250k) + 12 USC 1821(d)(11) depositor preference',
+        stress2am: 'Internal 24/7 book transfer; single-bank perimeter',
+        bars: [
+          { label: 'Insolvency & depositor-preference protection', pct: 90, val: 'Strong (FDI Act resolution)', note: 'Same legal liability, supervision, and resolution waterfall as a traditional bank deposit' },
+          { label: 'Same-bank 24/7 settlement & collateral mobility', pct: 85, val: 'High within issuing bank', note: 'Eliminates weekend cutoff inside the bank ledger mirror for internal treasury and margin moves' },
+          { label: 'Cross-bank fungibility & open-network composability', pct: 20, val: 'Low (non-fungible single-bank)', note: 'An HSBC tokenized deposit is redeemable only at HSBC; does not settle across external institutions' },
+          { label: 'Public disclosure & on-chain change-control transparency', pct: 40, val: 'Permissioned / bilateral', note: 'Operates on bank-controlled permissioned instances without public timelocks' }
+        ]
+      },
+      deptok: {
+        rulebook: 'Federal Banking Law + Interbank Clearing Rules',
+        claim: 'Fungible bank deposit liability on a dedicated multi-bank ledger',
+        insolvency: 'FDIA depositor preference (J2); MVEP Legal & Economic Indeterminate (3.7)',
+        stress2am: '24/7 interbank settlement across accepting institutions',
+        bars: [
+          { label: 'Legal & economic equivalence profile (MVEP Exhibit 3)', pct: 74, val: '3.7 / 5.0 (Indeterminate)', note: 'JPMD is the sole product in the 14-product MVEP sample not failing Category 1 Rights Parity' },
+          { label: 'Cross-institution settlement & wholesale fungibility', pct: 80, val: 'Multi-bank rail (JPMD / DBS / BNY)', note: 'Designed to settle across accepting banks rather than remaining locked to one core ledger' },
+          { label: 'Market-structure concentration risk (Three Strategies)', pct: 85, val: 'High (24-month tipping dynamics)', note: 'Without neutral clearing (Ubyx-style), network effects tip settlement toward a single bank issuer' },
+          { label: 'On-chain governance & public disclosure (MVEP Cat 8 & 9)', pct: 35, val: 'Binding constraint (3.0 Op.)', note: 'Held back from full equivalence by unilateral bank operator override and non-public rulebooks' }
+        ]
+      },
+      mmf: {
+        rulebook: 'Investment Company Act of 1940 (Rule 2a-7) / Reg D / Reg S',
+        claim: 'Beneficial fund share, LP interest, or secured note',
+        insolvency: '7/7 Pass for 1940 Act (BENJI J1); Ambiguous for BVI/LP (BUIDL J5, OUSG J4)',
+        stress2am: '2am Saturday margin-call gap: finite USDC pool vs Monday NAV',
+        bars: [
+          { label: 'Statutory asset segregation & insolvency posture (1940 Act J1)', pct: 100, val: '7/7 Pass (BENJI 3.5 overall)', note: 'ICA s.17(f) qualified custody and s.18(f)(1) capital structure; offshore BVI/Cayman wrappers score lower' },
+          { label: 'Holder yield & Treasury carry pass-through', pct: 95, val: 'Direct NAV / dividend accrual', note: 'Primary destination for yield when payment stablecoins are barred from paying interest' },
+          { label: '2am Saturday collateral liquidation (MVEP Cat 10)', pct: 45, val: 'Constrained by pool & whitelist', note: 'Instant-redemption pools (BUIDL -> USDC) are finite and inherit recursive USDC settlement risk' },
+          { label: 'Counterparty transparency in off-exchange margin pools', pct: 30, val: 'Opaque commingling risk', note: 'USYC, BUIDL, and BENJI accepted in off-exchange margin pools without counterparty election' }
+        ]
+      }
+    };
+
+    var routes = {
+      stablecoin: {
+        target: 'Stablecoin or payment gateway',
+        anchor: 'Routing the Dollar + Seven Dollars + MVEP',
+        primaryGate: 'CLII (0 to 1) + MVEP Cat 1, 5, 6 & CSA',
+        focus: 'Gateway bank exposure, reserve segregation, and 24/7 conversion',
+        steps: [
+          { step: '1. Classify', pct: 100, tool: 'Comparative Framework for Dollar Products (Seven Dollars)', action: 'Partition For-US-holders (PPSI anchor: USDC, PYUSD, RLUSD) vs Offshore-targeted (USDT) across 5 design markers.' },
+          { step: '2. Trace', pct: 90, tool: 'Routing the Dollar + Credit Migration Model', action: 'Map reserve custody, bank-deposit recycling share (Tether ~4%, Circle ~14%, Gemini ~100%), and PSM contagion links.' },
+          { step: '3. Map', pct: 85, tool: 'Control Layer Intensity Index (CLII) + TDRC', action: 'Score all routing gateways across licensing, transparency, freeze authority, compliance, and geo-restrictions.' },
+          { step: '4. Compare', pct: 80, tool: 'MVEP (10 categories + CSA companion test) + 3CRD', action: 'Verify Category 1 Rights Parity, Category 5 Jurisdiction Matrix (J1 to J16), and 3CRD point-of-use disclosures.' },
+          { step: '5. Stress', pct: 75, tool: 'SVB & BUSD Gateway Rotation Benchmark', action: 'Test weekend bank closure (Tier 1 swing 63% -> 13%) and cease-mint regulatory wind-down routing.' },
+          { step: '6. Decide', pct: 70, tool: 'Committee Gate & Continuous Drift Trigger', action: 'Set counterparty caps, require 24-hour CLII drift notification, and define fallback settlement rails.' }
+        ]
+      },
+      treasury: {
+        target: 'Tokenized Treasury or MMF collateral',
+        anchor: 'Minimum Viable Equivalence Pack (MVEP) + Seven Dollars',
+        primaryGate: 'MVEP Cat 4, 5, 10 & Recursive CSA',
+        focus: '2am Saturday margin liquidation, whitelist locks, and recursive USDC redemption',
+        steps: [
+          { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP Section 5)', action: 'Distinguish 1940 Act MMF (BENJI J1), BVI Reg D fund (BUIDL J5), Delaware LP (OUSG J4), and secured note (USDY).' },
+          { step: '2. Trace', pct: 92, tool: 'Composed-Product Layer Audit + Recursive CSA', action: 'Trace every wrapper layer to its cash settlement asset (e.g., OUSG -> BUIDL -> Circle USDC instant pool).' },
+          { step: '3. Map', pct: 84, tool: 'Transfer-Agent & Custodian Control Map', action: 'Identify the transfer agent (Securitize / Franklin), custodian (BNY / Ceffu / Marex), and admin key signers.' },
+          { step: '4. Compare', pct: 78, tool: 'MVEP Exhibit 2 (Cat 5 Matrix) & Exhibit 3 (Composite)', action: 'Compare non-compensatory Legal, Operational, and Economic grades; check D5 statutory rehypothecation limits.' },
+          { step: '5. Stress', pct: 88, tool: 'Seven Collateral Stress Scenarios (2am Saturday Test)', action: 'Simulate simultaneous instant-pool depletion, whitelist secondary-market illiquidity, and weekend NAV closure.' },
+          { step: '6. Decide', pct: 72, tool: 'Collateral Haircut & Eligibility Schedule', action: 'Assign regime-differentiated haircuts and prohibit undisclosed commingling in off-exchange margin pools.' }
+        ]
+      },
+      equity: {
+        target: 'Tokenized equity or clearing rail',
+        anchor: 'Three Tokenization Strategies + Tokenized Equity Vehicles',
+        primaryGate: 'Tokenization Infrastructure Map + MVEP Cat 2, 3 & 8',
+        focus: 'Transfer-agent single point of failure, corporate actions, and DTC vs on-chain books',
+        steps: [
+          { step: '1. Classify', pct: 100, tool: 'Tokenization Infrastructure Map (Three Strategies)', action: 'Classify as Strategy 1 (Nasdaq-DTC CSD-native), Strategy 2 (ICE-NYSE venue), or Strategy 3 (Securitize-Broadridge).' },
+          { step: '2. Trace', pct: 90, tool: ' Investor Claim & Custody Chain Audit', action: 'Separate direct § 224 registered ownership from Jersey SPV tracker certificates (xStocks) or OTC derivatives (Robinhood).' },
+          { step: '3. Map', pct: 88, tool: '10-Entity Shared-Dependency Matrix', action: 'Audit cross-strategy chokepoints: Securitize (all 3 strategies), BNY, Cantina, and Chainlink CCIP/oracles.' },
+          { step: '4. Compare', pct: 82, tool: 'MVEP Cat 2 (System of Record) & Cat 3 (Reconciliation)', action: 'Verify authoritative book hierarchy when 24/7 token transfers cross ex-dividend, split, or proxy-record cutoffs.' },
+          { step: '5. Stress', pct: 80, tool: 'Shared-Operator Outage & Off-Hours Drift Simulator', action: 'Test a single-operator transfer-agent halt or weekend price divergence against closed cash equity markets.' },
+          { step: '6. Decide', pct: 74, tool: 'Settlement & Corporate-Actions Sign-Off', action: 'Require explicit loss-allocation rules for record breaks and multi-issuer deposit-token clearing (Ubyx-style).' }
+        ]
+      },
+      depin: {
+        target: 'DePIN or protocol token economy',
+        anchor: 'Adaptive Tokenomics + Operational Risk + Governance + Who Burns',
+        primaryGate: 'PID Stress Audit + S2R / Burn HHI + PCA-Corrected HHI',
+        focus: 'Fiscal sustainability (S2R > 1), payer concentration, and threshold-induced reputation collapse',
+        steps: [
+          { step: '1. Classify', pct: 100, tool: 'Burn Mechanism Classification (Who Burns the Tokens?)', action: 'Classify payment architecture: Direct burn (Helium), Direct fee (Livepeer), Buy-and-burn (GEODNET), or Relayer.' },
+          { step: '2. Trace', pct: 90, tool: 'Five-Class PCA Exclusion Typology (Governance Concentration)', action: 'Strip burn, locker, bridge, foundation, and treasury addresses before computing holder concentration (2.3x median bias).' },
+          { step: '3. Map', pct: 85, tool: 'Delegation Amplification & Insider Retention Diagnostic', action: 'Check whether delegation amplifies voting HHI above holdings (13 of 18 protocols) and track insider wallet retention.' },
+          { step: '4. Compare', pct: 82, tool: 'Subsidy-to-Revenue (S2R) & Demand-Payer HHI Matrix', action: 'Pair trailing S2R trajectory with on-chain burn-signer HHI (Helium 0.27; Top-5 payers = 90% of burn).' },
+          { step: '5. Stress', pct: 92, tool: '624-Config ValOS/NORS Operational Risk & 240-Run PID Battery', action: 'Test 14-day PID emission cadence and verify reputation recovery threshold sits below realistic operator uptime (95% vs 99%).' },
+          { step: '6. Decide', pct: 75, tool: 'Constitutional Parameter & Treasury Covenant Gate', action: 'Bound emission responsiveness, set multi-source demand disclosures, and enforce timelocked parameter governance.' }
+        ]
+      },
+      agentic: {
+        target: 'Agentic payment rail or AI fleet',
+        anchor: 'Who Controls Agentic Payments? + Agent Infrastructure + FSB AI Letter',
+        primaryGate: 'CLII-AI + MVEP-AI + Buyer-Cardinality Classifier',
+        focus: 'Facilitator monopoly HHI, subsidy pipeline distortion, and advisory vs hard-gate hold rate',
+        steps: [
+          { step: '1. Classify', pct: 100, tool: 'MVEP-AI 5-Deployment-Class Taxonomy', action: 'Classify as Agentic system / x402 rail, Composed RAG product, Enterprise API, Frontier chat, or Open-weight deployment.' },
+          { step: '2. Trace', pct: 92, tool: 'x402 Settlement Fingerprint & Proxy-Leg Reconciliation', action: 'Trace EIP-3009 / SPL settlement through the facilitator set and strip 2-hop proxy double-counting (-36.6% on Base).' },
+          { step: '3. Map', pct: 90, tool: 'Count vs Value Facilitator HHI & Buyer Cardinality', action: 'Measure facilitator HHI on both count and dollar layers and compute payments per distinct buyer (26.7 Base vs 144k Polygon).' },
+          { step: '4. Compare', pct: 85, tool: 'CLII-AI (5 dimensions) & MVEP-AI (10 categories)', action: 'Audit session-attributed provenance, time-bounded task leases, and irreversible push-payment loss allocation.' },
+          { step: '5. Stress', pct: 88, tool: 'Advisory Saturation vs Armed Hard-Gate Outcome Test', action: 'Measure workspace repeat rate after warnings (84% pipe-exit) vs armed gate hold rate (99.56%, 13,098 of 13,156 stopped).' },
+          { step: '6. Decide', pct: 78, tool: 'Operator Perimeter & Actuator Arming Sign-Off', action: 'Replace high-repeat advisories with narrow hard gates, require known-false verifier checks, and gate outbound acts.' }
+        ]
+      }
+    };
+
+    function renderObjects(){
+      var sumEl = document.getElementById('fg-obj-summary');
+      var barsEl = document.getElementById('fg-obj-bars');
+      if(!sumEl || !barsEl) return;
+      var d = objects[curObj] || objects.stablecoin;
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Governing rulebook</span><span class="b4-stat__val">' + d.rulebook + '</span><span class="b4-stat__sub">Determines supervisory perimeter and statutory hooks</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Holder legal claim</span><span class="b4-stat__val">' + d.claim + '</span><span class="b4-stat__sub">What the token holder actually owns in law</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Insolvency posture</span><span class="b4-stat__val">' + d.insolvency + '</span><span class="b4-stat__sub">MVEP Category 5 treatment if issuer or bank fails</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">2am Saturday stress behavior</span><span class="b4-stat__val">' + d.stress2am + '</span><span class="b4-stat__sub">Off-hours liquidity and conversion bottleneck</span></div>';
+
+      barsEl.innerHTML = d.bars.map(function(b){
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function renderRouter(){
+      var sumEl = document.getElementById('fg-route-summary');
+      var barsEl = document.getElementById('fg-route-bars');
+      if(!sumEl || !barsEl) return;
+      var r = routes[curRoute] || routes.stablecoin;
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Evaluation target</span><span class="b4-stat__val">' + r.target + '</span><span class="b4-stat__sub">Selected six-step decision path</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Primary research anchors</span><span class="b4-stat__val">' + r.anchor + '</span><span class="b4-stat__sub">Empirical and framework papers for this class</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Core scoring instruments</span><span class="b4-stat__val">' + r.primaryGate + '</span><span class="b4-stat__sub">Entry-gate and continuous-monitoring tools</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Primary failure seam</span><span class="b4-stat__val">' + r.focus + '</span><span class="b4-stat__sub">Where committee diligence concentrates first</span></div>';
+
+      barsEl.innerHTML = r.steps.map(function(s){
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + s.step + '</span><span class="b4-bar-row__val">' + s.tool + '</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + s.pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">' + s.action + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    root.addEventListener('click', function(e){
+      var tBtn = e.target.closest('button[data-fg-tab]');
+      if(tBtn){
+        var target = tBtn.getAttribute('data-fg-tab');
+        root.querySelectorAll('button[data-fg-tab]').forEach(function(b){
+          var on = b === tBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pObj = document.getElementById('fg-panel-objects');
+        var pRou = document.getElementById('fg-panel-router');
+        if(pObj) pObj.hidden = target !== 'objects';
+        if(pRou) pRou.hidden = target !== 'router';
+        if(target === 'router') renderRouter(); else renderObjects();
+        return;
+      }
+      var oBtn = e.target.closest('button[data-fg-obj]');
+      if(oBtn){
+        curObj = oBtn.getAttribute('data-fg-obj') || 'stablecoin';
+        root.querySelectorAll('button[data-fg-obj]').forEach(function(b){
+          var on = b === oBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderObjects();
+        return;
+      }
+      var rBtn = e.target.closest('button[data-fg-route]');
+      if(rBtn){
+        curRoute = rBtn.getAttribute('data-fg-route') || 'stablecoin';
+        root.querySelectorAll('button[data-fg-route]').forEach(function(b){
+          var on = b === rBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderRouter();
+      }
+    });
+
+    renderObjects();
+    renderRouter();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initFieldGuideExplorer);
+  } else {
+    initFieldGuideExplorer();
+  }
+})();
+
+/* ==========================================================================
+   Frameworks (#ai-framework-explorer): CLII-AI & MVEP-AI Deployment Comparator
+   ========================================================================== */
+(function(){
+  function initAiFrameworkExplorer(){
+    var root = document.getElementById('ai-framework-explorer');
+    if(!root) return;
+    var curCls = 'agentic';
+    var curDim = 'all';
+
+    var classes = {
+      agentic: {
+        name: 'Agentic systems & x402 payment rails',
+        clii: '0.28 to 0.62 (Split by facilitator / harness)',
+        gate: 'Non-Equivalent (Cat 1, 6, 8 & 10 bind)',
+        seam: 'Irreversible push-payment + unlicensed facilitator HHI (4,040 to 6,009)',
+        bars: [
+          { label: 'CLII-AI D1: Regulatory licensing & supervisory perimeter', pct: 25, val: '0.25 (Unlicensed facilitator layer)', note: 'x402 facilitators broadcast EIP-3009 / SPL authorizations without money-transmitter or payment-institution licensing' },
+          { label: 'CLII-AI D3: Access gating, holds & actuator enforcement', pct: 68, val: '0.68 (Armed harness gates vs protocol irreversibility)', note: 'Fleet hard gates hold 99.56% (13,098/13,156), but once x402 settles on-chain no protocol chargeback exists' },
+          { label: 'MVEP-AI Cat 2 & 3: System of record & lease reconciliation', pct: 85, val: 'Pass on committed leases; Fail on unattributed sellers', note: 'Time-bounded git leases prevent orphan tasks; top 25 Base x402 sellers remain pseudonymous' },
+          { label: 'MVEP-AI Cat 6 & CSA: Execution finality & subsidy distortion', pct: 35, val: 'Fail (36.6% proxy overcount; 144k/buyer Polygon fleet)', note: 'Requires buyer-cardinality filtering and payment-level proxy-leg deduplication before trusting volume' }
+        ]
+      },
+      composed: {
+        name: 'Composed AI products (RAG / multi-provider workflows)',
+        clii: '0.52 (Inherits weakest downstream layer)',
+        gate: 'Weakest-link floor across model, retriever & tool chain',
+        seam: 'Confabulated citations & silent upstream model drift',
+        bars: [
+          { label: 'MVEP-AI Cat 1 & 2: Reference validity & provenance binding', pct: 45, val: 'Primary failure mode (confabulated IDs)', note: 'Without save-time record resolution, one invented identifier becomes load-bearing across downstream sessions' },
+          { label: 'MVEP-AI Cat 3 & 7: Retrieval gating & vacuous-check controls', pct: 60, val: 'Requires known-false verifier testing', note: 'Stale buffers or truncated startup files (25,000 UTF-16 unit cap) silently degrade retrieval unless checked' },
+          { label: 'MVEP-AI Cat 8: Upstream provider change control', pct: 40, val: 'Opaque weight/prompt updates', note: 'Composed product equivalence breaks when an underlying API silently swaps checkpoint behavior' },
+          { label: 'MVEP-AI Companion: Recursive dependency audit', pct: 50, val: 'Minimum across all composed layers', note: 'Analogous to OUSG -> BUIDL -> USDC: every tool, vector store, and model provider requires its own pack' }
+        ]
+      },
+      api: {
+        name: 'Enterprise foundation-model APIs',
+        clii: '0.74 (High contractual & compliance posture)',
+        gate: 'Partial (Strong SLA/SOC2; weak weight-level change control)',
+        seam: 'Silent checkpoint deprecation & burst vs budget rate-limit ambiguity',
+        bars: [
+          { label: 'CLII-AI D4 & D5: Compliance infrastructure & geo/sanctions screening', pct: 85, val: '0.85 (Enterprise IAM, zero-retention, OFAC)', note: 'Strong identity, audit logging, and contractual data-isolation commitments' },
+          { label: 'CLII-AI D2: Evaluation transparency & system-card disclosure', pct: 70, val: '0.70 (Pre-release evals published)', note: 'Point-in-time benchmark disclosures exist, but post-launch quantization/routing drift is rarely attested' },
+          { label: 'MVEP-AI Cat 6 & 7: Exception handling & symptom disambiguation', pct: 55, val: 'Partial (Shared HTTP 429 symptom)', note: 'Burst rate limits and exhausted usage budgets emit identical errors requiring opposite fleet actions' },
+          { label: 'MVEP-AI Cat 8: Pinned-version & timelock guarantees', pct: 45, val: 'Fail / Partial (Short deprecation windows)', note: 'Endpoint aliases update without on-chain-style timelocks or deterministic reproducibility' }
+        ]
+      },
+      chat: {
+        name: 'Frontier consumer / enterprise chat interfaces',
+        clii: '0.68 (High interface gating; mutable system prompts)',
+        gate: 'Non-Equivalent for autonomous production workflows',
+        seam: 'Unannounced system-prompt edits & context-window truncation',
+        bars: [
+          { label: 'CLII-AI D3: Interface-level safety filters & refusal guardrails', pct: 80, val: '0.80 (Strong front-end moderation)', note: 'High refusal intensity at the chat surface, analogous to interface-level compliance in CLARITY' },
+          { label: 'MVEP-AI Cat 2: Authoritative state & transcript exportability', pct: 50, val: 'Partial (Ephemeral UI state)', note: 'Session memory is platform-bound unless exported into a digest-verified transcript archive' },
+          { label: 'MVEP-AI Cat 8: System-prompt & router change notification', pct: 30, val: 'Fail (Zero timelock on UI routing)', note: 'Model routers and hidden system instructions change continuously without customer sign-off' },
+          { label: 'MVEP-AI Cat 10: Programmatic operability under stress', pct: 35, val: 'Fail (Human-in-the-loop UI only)', note: 'Cannot serve as an auditable machine-to-machine execution leg' }
+        ]
+      },
+      open: {
+        name: 'Open-weight self-hosted deployments',
+        clii: '0.18 at release -> Operator-determined in production',
+        gate: 'Inverts DAI pattern: deterministic weights, zero issuer recourse',
+        seam: 'Full operational & liability burden shifts to deploying institution',
+        bars: [
+          { label: 'MVEP-AI Cat 2 & 8: Weight immutability & version pinning', pct: 95, val: 'Pass (Cryptographic weight hash)', note: 'Like DAI on Cat 2/3, self-hosted open weights eliminate silent vendor checkpoint drift' },
+          { label: 'CLII-AI D1 & D3: Upstream release-point gating', pct: 18, val: '0.18 (Permissionless weight distribution)', note: 'Once weights are public, upstream freeze or revocation is structurally impossible' },
+          { label: 'MVEP-AI Cat 5: Upstream operator insolvency or warranty recourse', pct: 10, val: 'Fail* (Structural inapplicability)', note: 'No ongoing service debtor stands behind open weights; deploying enterprise owns 100% of liability' },
+          { label: 'MVEP-AI Cat 4 & 10: Local harness & actuator enforcement', pct: 80, val: 'Determined by local operating layer', note: 'Requires buyer-operated hard gates, worktree isolation, and verifier instrumentation to clear committee' }
+        ]
+      }
+    };
+
+    var crosswalk = [
+      { dim: 'legal', cat: 'Category 1: Rights Parity', tok: 'Token-to-underlying legal claim memo (UCC Art. 8/12)', ai: 'Contractual output ownership, IP indemnity, and authority-to-bind scope for agent actions', pct: 90 },
+      { dim: 'operational', cat: 'Category 2: System of Record', tok: 'Canonical ownership ledger (transfer agent vs chain)', ai: 'Session-attributed commit provenance and authoritative state store across concurrent agents', pct: 95 },
+      { dim: 'operational', cat: 'Category 3: Records & Reconciliation', tok: 'Daily NAV / wallet balance reconciliation & break logs', ai: 'Save-time reference validation (preventing confabulated IDs) and startup truncation checks', pct: 92 },
+      { dim: 'legal', cat: 'Category 4: Custody & Customer Property', tok: 'Statutory/trust segregation & qualified custodian control', ai: 'Per-session git worktree isolation, data zero-retention, and credential/key perimeter scoping', pct: 88 },
+      { dim: 'legal', cat: 'Category 5: Insolvency Posture', tok: '20-regime bankruptcy priority & rehypothecation matrix', ai: 'Vendor-exit continuity, escrowed weights/prompts, and off-branch task-lease recovery on crash', pct: 85 },
+      { dim: 'economic', cat: 'Category 6: Settlement Finality', tok: 'Value integrity, par convertibility & halt triggers', ai: 'Action & payment irreversibility bounds (x402 push-payment holds, pre-commit hard gates)', pct: 94 },
+      { dim: 'operational', cat: 'Category 7: Reorg & Exception Handling', tok: 'Chain rollback detection, halt criteria & loss allocation', ai: 'Known-false verifier testing, three-valued state checks (present/absent/undetermined) & rollback', pct: 90 },
+      { dim: 'operational', cat: 'Category 8: Governance & Change Control', tok: 'Multisig thresholds, named signers & 48h/7d timelocks', ai: 'Model checkpoint pinning, live hook-byte verification, and logged override auditing (99.56% hold)', pct: 96 },
+      { dim: 'economic', cat: 'Category 9: Disclosures', tok: '3CRD point-of-use reserve, claim & custody disclosure', ai: 'Explicit saturation/override telemetry and bounded-scan unmeasured-remainder disclosure', pct: 86 },
+      { dim: 'economic', cat: 'Category 10: Collateral / Stress Operability', tok: '2am Saturday liquidation across 3 paths under stress', ai: 'Throughput under peak concurrency (61 sessions), CPU-load gate independence & handoff continuity', pct: 92 },
+      { dim: 'economic', cat: 'Companion: Recursive Settlement / Dependency Test', tok: 'Trace every redemption asset (BUIDL -> USDC)', ai: 'Trace every composed tool, facilitator (Meridian/CDP), and upstream model in the agent chain', pct: 95 }
+    ];
+
+    function renderClasses(){
+      var sumEl = document.getElementById('aifw-cls-summary');
+      var barsEl = document.getElementById('aifw-cls-bars');
+      if(!sumEl || !barsEl) return;
+      var c = classes[curCls] || classes.agentic;
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Deployment class</span><span class="b4-stat__val">' + c.name + '</span><span class="b4-stat__sub">Evaluated under CLII-AI &amp; MVEP-AI</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Indicative CLII-AI range</span><span class="b4-stat__val">' + c.clii + '</span><span class="b4-stat__sub">Operator regulatory &amp; gating intensity (0 to 1)</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">MVEP-AI gate posture</span><span class="b4-stat__val">' + c.gate + '</span><span class="b4-stat__sub">Non-compensatory floor across 10 categories</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Primary failure seam</span><span class="b4-stat__val">' + c.seam + '</span><span class="b4-stat__sub">Where advisory rules fail without hard gates</span></div>';
+
+      barsEl.innerHTML = c.bars.map(function(b){
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function renderCrosswalk(){
+      var sumEl = document.getElementById('aifw-cw-summary');
+      var barsEl = document.getElementById('aifw-cw-bars');
+      if(!sumEl || !barsEl) return;
+      var filtered = crosswalk.filter(function(r){ return curDim === 'all' || r.dim === curDim; });
+      sumEl.innerHTML =
+        '<div class="b4-stat"><span class="b4-stat__label">Categories shown</span><span class="b4-stat__val">' + filtered.length + ' of 11</span><span class="b4-stat__sub">10 MVEP-AI categories + recursive dependency companion</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Core analytical invariance</span><span class="b4-stat__val">1-to-1 structural map</span><span class="b4-stat__sub">Token label : Gateway gate :: Prompt rule : Armed harness gate</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Patent-pending coverage</span><span class="b4-stat__val">42 USPTO filings</span><span class="b4-stat__sub">32 patent families across staging, provenance, leases &amp; verifiers</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Regulatory application</span><span class="b4-stat__val">FSB AI Sound Practices</span><span class="b4-stat__sub">Submitted July 2026; paired with x402 SSRN working paper</span></div>';
+
+      barsEl.innerHTML = filtered.map(function(r){
+        return '<div class="b4-bar-row">' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.cat + '</span><span class="b4-bar-row__val">' + r.dim.toUpperCase() + '</span></div>' +
+          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
+          '<div class="b4-bar-row__meta"><strong>Tokenized asset (MVEP):</strong> ' + r.tok + ' · <strong>AI operator (MVEP-AI):</strong> ' + r.ai + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    root.addEventListener('click', function(e){
+      var tBtn = e.target.closest('button[data-aifw-tab]');
+      if(tBtn){
+        var target = tBtn.getAttribute('data-aifw-tab');
+        root.querySelectorAll('button[data-aifw-tab]').forEach(function(b){
+          var on = b === tBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var pCls = document.getElementById('aifw-panel-classes');
+        var pCw = document.getElementById('aifw-panel-crosswalk');
+        if(pCls) pCls.hidden = target !== 'classes';
+        if(pCw) pCw.hidden = target !== 'crosswalk';
+        if(target === 'crosswalk') renderCrosswalk(); else renderClasses();
+        return;
+      }
+      var cBtn = e.target.closest('button[data-aifw-cls]');
+      if(cBtn){
+        curCls = cBtn.getAttribute('data-aifw-cls') || 'agentic';
+        root.querySelectorAll('button[data-aifw-cls]').forEach(function(b){
+          var on = b === cBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderClasses();
+        return;
+      }
+      var dBtn = e.target.closest('button[data-aifw-dim]');
+      if(dBtn){
+        curDim = dBtn.getAttribute('data-aifw-dim') || 'all';
+        root.querySelectorAll('button[data-aifw-dim]').forEach(function(b){
+          var on = b === dBtn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        renderCrosswalk();
+      }
+    });
+
+    renderClasses();
+    renderCrosswalk();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAiFrameworkExplorer);
+  } else {
+    initAiFrameworkExplorer();
+  }
+})();
+
+/* ==========================================================================
+   Briefing Explorers: OUSD Yield Boundary, TCMAG-MVEP Crosswalk & Tokenized Equity
+   ========================================================================== */
+(function(){
+  function initBriefingExplorers(){
+    /* 1. OUSD Yield Boundary (#ousd-yield-explorer) */
+    var ousdRoot = document.getElementById('ousd-yield-explorer');
+    if(ousdRoot){
+      var curStruct = 'ousd';
+      var curMove = 'm1';
+
+      var structs = {
+        ousd: {
+          hops: '1 Hop (Issuer -> Partner Businesses)',
+          holderPay: 'None announced (0 bps to end holders)',
+          exposure: 'Outside all 4 texts facially; pivots on calibration & custody holder status',
+          bars: [
+            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 15, badge: 'Outside facially', note: 'Statute bars issuer-to-holder yield; OUSD pays distribution partners, unless partner omnibus wallet is deemed the holder' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199, 2-prong presumption)', pct: 10, badge: 'Prong 2 unmet (Safe side)', note: 'Presumption requires both issuer-to-partner AND partner-to-holder payment; preamble protects white-label profit sharing' },
+            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 40, badge: 'Contested only if balance-calibrated', note: 'Broader third-party phrasing still requires characterizing B2B partner revenue share as yield on stablecoins' },
+            { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 10, badge: 'Outside (Targets Hop 2 only)', note: 'Bars digital-asset service providers from paying customer yield; does not bar receiving issuer revenue share' }
+          ]
+        },
+        usdc: {
+          hops: '2 Hops ($907.9M Circle -> Coinbase -> Customer Rewards)',
+          holderPay: 'Yes (Advertised platform rewards on held USDC)',
+          exposure: 'Directly targeted by OCC 2-prong presumption & CLARITY s.404',
+          bars: [
+            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 65, badge: 'Contested (Reiners custody theory)', note: 'If exchange omnibus wallet is the statutory holder, balance-proportional revenue share faces direct statutory tension' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199, 2-prong presumption)', pct: 95, badge: 'Facially triggers both prongs', note: 'Issuer pays related party (Prong 1) and party pays holder rewards (Prong 2); shifts rebuttal burden to issuer' },
+            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 90, badge: 'Directly in scope', note: 'Two-hop customer reward structure is the core third-party arrangement the proposal targets' },
+            { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 95, badge: 'Prohibits Hop 2 customer rewards', note: 'Expressly bars service providers from paying yield to US customers solely for holding stablecoin balances' }
+          ]
+        },
+        direct: {
+          hops: '1 Direct Hop (PPSI -> Token Holder)',
+          holderPay: 'Yes (Direct cash, token, or rebase interest)',
+          exposure: 'Categorically prohibited across all enacted and proposed texts',
+          bars: [
+            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 100, badge: 'Categorically prohibited', note: 'Bars any form of interest or yield paid by a PPSI or foreign issuer solely in connection with holding, use, or retention' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
+            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on FDIC-supervised subsidiary stablecoin issuers' },
+            { text: 'Market-structure consequence (Dollar v3 / Seven Dollars)', pct: 100, badge: 'Pushes yield into wrappers', note: 'Direct holder yield must use registered 1940 Act MMFs (BENJI) or offshore/Reg D wrappers (BUIDL, OUSG, USDY)' }
+          ]
+        },
+        merchant: {
+          hops: 'Independent Commercial / Activity Reward',
+          holderPay: 'Checkout discount or non-balance transaction reward',
+          exposure: 'Expressly carved out across OCC preamble & CLARITY s.404',
+          bars: [
+            { text: 'GENIUS Act Section 4(a)(11) ("solely" qualifier)', pct: 10, badge: 'Permitted (Not solely for holding)', note: 'Conditioned on commercial purchase or bona fide transaction rather than balance retention' },
+            { text: 'OCC Proposed Rule Preamble', pct: 5, badge: 'Expressly permitted', note: 'Preamble confirms rule does not bar merchants from independently offering discounts for stablecoin payment' },
+            { text: 'CLARITY Act Section 404 Carve-Out', pct: 15, badge: 'Permitted activity carve-out', note: 'Permits rewards based on bona fide activities not economically equivalent to deposit interest' },
+            { text: 'CEA April 2026 Bank-Lending Estimate', pct: 20, badge: '$2.1B (~0.02% of total loans)', note: 'CEA white paper finds the entire yield prohibition shifts bank lending by only ~0.02% at baseline' }
+          ]
+        }
+      };
+
+      var moves = {
+        m1: {
+          title: 'Move 1: Finalize OCC 2-prong presumption as proposed',
+          ousdStatus: 'SURVIVES INTACT',
+          usdcStatus: 'Presumptively barred (rebuttal burden)',
+          shift: 'Economics migrate from 2-hop holder rewards to 1-hop consortium revenue share',
+          bars: [
+            { label: 'Announced OUSD 1-hop business revenue share viability', pct: 92, val: 'Survives (Prong 2 absent)', note: 'Without a holder-facing second hop, the OCC presumption never attaches; matches Senate rejection of Warren/Hickenlooper amendments' },
+            { label: 'Incumbent 2-hop exchange customer rewards (USDC model) viability', pct: 20, val: 'Triggers both prongs', note: 'Requires formal rebuttal or restructuring away from balance-based retail rewards' },
+            { label: 'Administrative-law & statutory-authority defensibility', pct: 90, val: 'High (Statute-faithful)', note: 'Respects the legislative record where Congress declined to bar third-party revenue sharing directly' }
+          ]
+        },
+        m2: {
+          title: 'Move 2: Broaden trigger to balance-calibrated distributor share',
+          ousdStatus: 'SURVIVES IF VOLUME/TIER CALIBRATED',
+          usdcStatus: 'Barred on platform-held balances',
+          shift: 'Forces OUSD consortium agreements to calibrate on transaction flow or flat tiers',
+          bars: [
+            { label: 'OUSD viability under volume- or tier-calibrated partner share', pct: 85, val: 'Survives', note: 'Originating transaction volume or governance tier is not a balance-held interest payment' },
+            { label: 'OUSD viability under partner-custodied balance calibration', pct: 25, val: 'Reached by broadened rule', note: 'FDIC third-party formulation would treat balance-proportional payments to custodying partners as indirect yield' },
+            { label: 'Administrative-law & statutory-authority defensibility', pct: 35, val: 'Vulnerable to APA challenge', note: 'Extends by agency rule what the Senate floor record explicitly considered and declined to enact' }
+          ]
+        },
+        m3: {
+          title: 'Move 3: Codify holder definition (control vs economic interest)',
+          ousdStatus: 'DECIDED BY DEFINITION DIRECTION',
+          usdcStatus: 'Decided by definition direction',
+          shift: 'Resolves the Reiners omnibus-custody question in one stroke',
+          bars: [
+            { label: 'OUSD viability if "holder" = ultimate economic customer', pct: 95, val: 'Fully open (Defuses custody theory)', note: 'Partner exchanges are intermediaries, not holders, leaving Hop 1 completely outside s.4(a)(11)' },
+            { label: 'OUSD viability if "holder" = omnibus custodial key controller', pct: 30, val: 'Arms partner-as-holder theory', note: 'Omnibus-custodying partners become statutory holders; balance-based share faces "solely" litigation' },
+            { label: 'Likelihood in July 18, 2026 final rules', pct: 25, val: 'Low (Neither NPRM proposed a definition)', note: 'Definitional silence in both March/April proposals makes a sudden final-rule codification less likely' }
+          ]
+        },
+        m4: {
+          title: 'Move 4: Track statute & refer third-party gap to Congress',
+          ousdStatus: 'SURVIVES COMPLETELY',
+          usdcStatus: 'Governed by CLARITY s.404 if enacted',
+          shift: 'Preserves 3-of-4-move survival asymmetry for consortium distribution',
+          bars: [
+            { label: 'Announced OUSD 1-hop revenue share viability', pct: 96, val: 'Undisturbed federally', note: 'Even if Congress later enacts CLARITY Section 404, Section 404 closes Hop 2 (customer rewards), not Hop 1' },
+            { label: 'Distribution-layer capture of Treasury reserve float', pct: 90, val: 'High (TDRC ControlScore shift)', note: 'Confirms briefings core theorem: holders are excluded while reserve carry flows to distribution partners' },
+            { label: 'Survival rate across all 4 plausible rulemaking moves', pct: 75, val: 'Survives 3 of 4 moves', note: 'Only a broad Move 2 or control-based Move 3 reaches OUSD, and only if its undisclosed calibration is balance-based' }
+          ]
+        }
+      };
+
+      function renderOusdHops(){
+        var sumEl = document.getElementById('ousd-hops-summary');
+        var barsEl = document.getElementById('ousd-hops-bars');
+        if(!sumEl || !barsEl) return;
+        var s = structs[curStruct] || structs.ousd;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Payment topology</span><span class="b4-stat__val">' + s.hops + '</span><span class="b4-stat__sub">Decomposition across issuer, distributor, and holder</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Holder-facing yield</span><span class="b4-stat__val">' + s.holderPay + '</span><span class="b4-stat__sub">Direct or indirect return to end stablecoin holder</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Statutory &amp; rule posture</span><span class="b4-stat__val">' + s.exposure + '</span><span class="b4-stat__sub">Read across GENIUS, OCC, FDIC, and CLARITY texts</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">CEA bank-lending benchmark</span><span class="b4-stat__val">+$2.1B (~0.02% loans)</span><span class="b4-stat__sub">Yield ban shifts who captures reserve carry, not aggregate bank credit</span></div>';
+        barsEl.innerHTML = s.bars.map(function(b){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.text + '</span><span class="b4-bar-row__val">' + b.badge + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function renderOusdMoves(){
+        var sumEl = document.getElementById('ousd-moves-summary');
+        var barsEl = document.getElementById('ousd-moves-bars');
+        if(!sumEl || !barsEl) return;
+        var m = moves[curMove] || moves.m1;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Selected rulemaking move</span><span class="b4-stat__val">' + m.title + '</span><span class="b4-stat__sub">Ex-ante scoring rubric for final rules</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">OUSD 1-hop outcome</span><span class="b4-stat__val">' + m.ousdStatus + '</span><span class="b4-stat__sub">140+ partner consortium revenue-share model</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">2-hop rewards outcome</span><span class="b4-stat__val">' + m.usdcStatus + '</span><span class="b4-stat__sub">Bilateral issuer-to-exchange customer reward model</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Market-structure consequence</span><span class="b4-stat__val">' + m.shift + '</span><span class="b4-stat__sub">Competitive impact on distribution economics</span></div>';
+        barsEl.innerHTML = m.bars.map(function(b){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      ousdRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-ousd-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-ousd-tab');
+          ousdRoot.querySelectorAll('button[data-ousd-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pH = document.getElementById('ousd-panel-hops');
+          var pM = document.getElementById('ousd-panel-moves');
+          if(pH) pH.hidden = target !== 'hops';
+          if(pM) pM.hidden = target !== 'moves';
+          if(target === 'moves') renderOusdMoves(); else renderOusdHops();
+          return;
+        }
+        var sBtn = e.target.closest('button[data-ousd-struct]');
+        if(sBtn){
+          curStruct = sBtn.getAttribute('data-ousd-struct') || 'ousd';
+          ousdRoot.querySelectorAll('button[data-ousd-struct]').forEach(function(b){
+            var on = b === sBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderOusdHops();
+          return;
+        }
+        var mBtn = e.target.closest('button[data-ousd-move]');
+        if(mBtn){
+          curMove = mBtn.getAttribute('data-ousd-move') || 'm1';
+          ousdRoot.querySelectorAll('button[data-ousd-move]').forEach(function(b){
+            var on = b === mBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderOusdMoves();
+        }
+      });
+
+      renderOusdHops();
+      renderOusdMoves();
+    }
+
+    /* 2. TCMAG-MVEP Crosswalk (#tcmag-crosswalk-explorer) */
+    var tcmagRoot = document.getElementById('tcmag-crosswalk-explorer');
+    if(tcmagRoot){
+      var curTcmag = 'all';
+      var tcmagRows = [
+        { type: 'direct', pct: 95, name: '1. Compliance (cross-jurisdictional)', mvep: 'MVEP Cat 1 (Rights Parity) + Cat 8 (Governance)', note: 'Direct overlap; MVEP adds explicit 3-tier statutory and ISO 17442 LEI entity-identification rigor.' },
+        { type: 'gap', pct: 35, name: '2. Multi-Bank / Multi-Issuer Architecture', mvep: 'MVEP v2 Gap Candidate (Anchored in Three Strategies)', note: 'Without Ubyx-style clearing, deposit-token settlement tips to 1 or 2 issuers within 24 months.' },
+        { type: 'partial', pct: 70, name: '3. Accounting Standards (Cash-equivalent treatment)', mvep: 'MVEP Cat 2 (System of Record) + Cat 9 (Disclosures)', note: 'Partial overlap; TCMAG emphasizes corporate balance-sheet valuation classification.' },
+        { type: 'buyer', pct: 25, name: '4. Integrated (Corporate TMS / ERP connectivity)', mvep: 'Buyer-side treasury scope (Outside operator diagnostic)', note: 'Enterprise workflow integration requirement rather than an issuer/operator equivalence property.' },
+        { type: 'direct', pct: 95, name: '5. Secure (Key management & custody resilience)', mvep: 'MVEP Cat 4 (Custody) + Cat 7 (Reorg / Exception Handling)', note: 'Direct overlap on qualified custody control of movements and key compromise containment.' },
+        { type: 'gap', pct: 35, name: '6. Interoperability (Cross-chain & cross-rail)', mvep: 'MVEP v2 Gap Candidate', note: 'Candidate for MVEP v2 expansion covering cross-network settlement and bridge-free fungibility.' },
+        { type: 'gap', pct: 35, name: '7. Confidentiality (Commercial transaction privacy)', mvep: 'MVEP v2 Gap Candidate', note: 'Candidate for MVEP v2 expansion balancing corporate payment confidentiality with supervisory auditability.' },
+        { type: 'partial', pct: 72, name: '8. Functional Equivalence (Pooling, sweeping, netting)', mvep: 'MVEP Cat 10 (Collateral Operability)', note: 'Partial overlap; MVEP tests 2am Saturday collateral mobility while TCMAG covers intraday treasury sweeps.' },
+        { type: 'partial', pct: 75, name: '9. 24/7 Operations (Always-on settlement & liquidity)', mvep: 'MVEP Cat 6 (Settlement Finality) + Cat 10', note: 'Partial overlap; MVEP tests weekend banking-hour redemption gaps and finite instant-pool capacity.' },
+        { type: 'direct', pct: 96, name: '10. Controls (Maker-checker, SOD, audit trails)', mvep: 'MVEP Cat 8 (Governance) + Cat 3 (Reconciliation)', note: 'Direct overlap; MVEP specifies 3-of-5 / 4-of-7 multisig and 48h/7d timelock benchmarks.' },
+        { type: 'direct', pct: 100, name: '11. Settlement Finality (Legal & technical irrevocability)', mvep: 'MVEP Cat 6 (Settlement Finality)', note: 'Direct name and substance match: combines technical confirmation, par value integrity, and halt rules.' },
+        { type: 'partial', pct: 78, name: '12. Operational Resilience (Incident recovery & continuity)', mvep: 'MVEP Cat 7 (Reorg / Exception Handling)', note: 'Partial overlap; MVEP focuses on chain reorgs/rollbacks while TCMAG spans broader business continuity.' }
+      ];
+
+      function renderTcmag(){
+        var sumEl = document.getElementById('tcmag-exp-summary');
+        var barsEl = document.getElementById('tcmag-exp-bars');
+        if(!sumEl || !barsEl) return;
+        var list = tcmagRows.filter(function(r){ return curTcmag === 'all' || r.type === curTcmag; });
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Principles displayed</span><span class="b4-stat__val">' + list.length + ' of 12</span><span class="b4-stat__sub">TCMAG April 21, 2026 corporate-treasury principles</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Direct or partial MVEP coverage</span><span class="b4-stat__val">8 of 12 principles</span><span class="b4-stat__sub">4 direct overlaps + 4 partial overlaps with MVEP v9</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">MVEP v2 expansion shortlist</span><span class="b4-stat__val">3 operator gap candidates</span><span class="b4-stat__sub">Multi-Bank/Multi-Issuer, Interoperability, and Confidentiality</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Deposit-token tipping horizon</span><span class="b4-stat__val">24 months</span><span class="b4-stat__sub">Window before settlement consolidates without neutral clearing</span></div>';
+        barsEl.innerHTML = list.map(function(r){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.mvep + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      tcmagRoot.addEventListener('click', function(e){
+        var fBtn = e.target.closest('button[data-tcmag-filter]');
+        if(fBtn){
+          curTcmag = fBtn.getAttribute('data-tcmag-filter') || 'all';
+          tcmagRoot.querySelectorAll('button[data-tcmag-filter]').forEach(function(b){
+            var on = b === fBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderTcmag();
+        }
+      });
+
+      renderTcmag();
+    }
+
+    /* 3. Tokenized Equity Vehicles (#equity-arch-explorer) */
+    var eqRoot = document.getElementById('equity-arch-explorer');
+    if(eqRoot){
+      var curEqDim = 'claim';
+      var eqDims = {
+        claim: {
+          rh: 'OTC derivative contract against Robinhood Europe UAB',
+          bx: 'Jersey SPV tracker certificate backed 1:1 by segregated shares',
+          vote: 'Neither grants ordinary shareholder voting rights',
+          protection: 'Robinhood: EUR 22,000 Lithuania scheme · xStocks: Security Agent lien',
+          bars: [
+            { name: 'Backed xStocks: Collateral segregation & issuer-insolvency remoteness', pct: 82, val: '1:1 SPV shares + Security Agent', note: 'Liechtenstein-approved prospectus + ISIN; holders are secured creditors of the Jersey SPV collateral pool' },
+            { name: 'Robinhood Stock Tokens: Simplicity of single-counterparty wrapper', pct: 75, val: 'Closed-loop MiFID broker contract', note: 'No external custody chain for the user to manage, but 100% counterparty credit exposure to Robinhood Europe UAB' },
+            { name: 'Direct registered shareholder parity (DGCL § 224 / Strategy 1 benchmark)', pct: 15, val: '0 of 2 (Economic exposure only)', note: 'Both June 30, 2025 European launches are intermediary wrappers rather than direct transfer-agent book-entry shares' }
+          ]
+        },
+        liquidity: {
+          rh: '24/5 internalized principal dealer (±0.5% price collar)',
+          bx: '24/7 multi-venue CEX + Solana/EVM DeFi (Kraken, Bybit, Raydium, Jupiter)',
+          vote: 'Off-hours trade-off: Robinhood halts/queues vs xStocks weekend price drift',
+          protection: 'Arbitrage-linked spread compression vs single-dealer price certainty',
+          bars: [
+            { name: 'Backed xStocks: Multi-venue composability & 24/7 market access', pct: 92, val: '24/7 across CEX + Solana DeFi', note: 'Freely transferable SPL/ERC-20 tokens allow market makers and DeFi routers to arbitrage spreads across venues' },
+            { name: 'Robinhood Stock Tokens: Reference-price collar stability during 24/5 hours', pct: 85, val: '±0.5% collar (24/5)', note: 'Internalized principal execution prevents weekend gap drift by halting or queuing when reference markets close' },
+            { name: 'Backed xStocks: Weekend off-hours NAV tracking tightness', pct: 45, val: 'Weekend drift risk', note: 'When US cash equity markets are closed Saturday/Sunday, on-chain prices can diverge until underlying creation/redemption reopens Monday' }
+          ]
+        },
+        tech: {
+          rh: 'Closed Arbitrum instance (no external wallet withdrawals at launch)',
+          bx: 'Open ERC-20 & Solana SPL + Chainlink CCIP, Data Streams & PoR',
+          vote: 'Dividends: In-app cash credit (Robinhood) vs collateral/token accrual (xStocks)',
+          protection: 'Attack surface: Single-broker platform risk vs multi-chain bridge/oracle stack',
+          bars: [
+            { name: 'Backed xStocks: Self-custody portability & DeFi collateral utility', pct: 95, val: 'Full ERC-20 / SPL transferability', note: 'Can be withdrawn to self-custody wallets and composed into permissionless lending and liquidity pools' },
+            { name: 'Robinhood Stock Tokens: Bridge & smart-contract exploit insulation', pct: 88, val: 'Closed app perimeter', note: 'Walled garden eliminates public bridge (CCIP) and DEX oracle manipulation vectors at the cost of zero portability' },
+            { name: 'Backed xStocks: Cross-chain dependency surface (CCIP + Data Streams + PoR)', pct: 65, val: 'Multi-oracle / bridge reliance', note: 'Requires continuous synchronization across custodian share counts, Chainlink Proof of Reserve, and cross-chain messaging' }
+          ]
+        }
+      };
+
+      function renderEqArch(){
+        var sumEl = document.getElementById('eq-arch-summary');
+        var barsEl = document.getElementById('eq-arch-bars');
+        if(!sumEl || !barsEl) return;
+        var d = eqDims[curEqDim] || eqDims.claim;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Robinhood Stock Tokens</span><span class="b4-stat__val">' + d.rh + '</span><span class="b4-stat__sub">Closed-loop Arbitrum OTC derivative model</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Backed xStocks</span><span class="b4-stat__val">' + d.bx + '</span><span class="b4-stat__sub">Open ERC-20 / Solana SPL tracker certificate model</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Governance &amp; corporate actions</span><span class="b4-stat__val">' + d.vote + '</span><span class="b4-stat__sub">Rights parity vs underlying US NMS common stock</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Primary protection / trade-off</span><span class="b4-stat__val">' + d.protection + '</span><span class="b4-stat__sub">Continuity inside one broker vs open network effects</span></div>';
+        barsEl.innerHTML = d.bars.map(function(b){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function renderEqScen(){
+        var sumEl = document.getElementById('eq-scen-summary');
+        var barsEl = document.getElementById('eq-scen-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Favorable case (2025 to 2027)</span><span class="b4-stat__val">~$50B TVL (~0.03% spreads)</span><span class="b4-stat__sub">US no-action/pilot relief, ESMA DLT cap lift, sustained chain uptime</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Base planning case</span><span class="b4-stat__val">~$10B TVL</span><span class="b4-stat__sub">Gradual EU/Asia growth, cautious US stance, no major custody/oracle failures</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Adverse case</span><span class="b4-stat__val">~$1B to $2B TVL</span><span class="b4-stat__sub">Regulatory reclassification, SPV/bridge failure, or prolonged market contraction</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">US institutional evolution</span><span class="b4-stat__val">Three Strategies (2026)</span><span class="b4-stat__sub">Nasdaq-DTC CSD-native, ICE-NYSE venue, and Securitize-Broadridge</span></div>';
+        var sRows = [
+          { name: 'Favorable adoption scenario (2025 to 2027 illustrative planning case)', pct: 100, val: '~$50B TVL · ~3 bps spreads', note: 'Requires US regulatory relief (subsequently advanced in 2026 SEC tokenized NMS stock conditional exemptions) and deep DeFi arbitrage' },
+          { name: 'Base adoption scenario (2025 to 2027 illustrative planning case)', pct: 20, val: '~$10B TVL', note: 'Driven by European MiFID/MiCA and Asian offshore demand with steady market-maker liquidity' },
+          { name: 'Adverse adoption scenario (2025 to 2027 illustrative planning case)', pct: 4, val: '~$1B to $2B TVL', note: 'Capped by wrapper reclassification or an oracle/bridge/custody incident that fragments liquidity' }
+        ];
+        barsEl.innerHTML = sRows.map(function(b){
+          return '<div class="b4-bar-row">' +
+            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
+            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
+            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      eqRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-eq-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-eq-tab');
+          eqRoot.querySelectorAll('button[data-eq-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pA = document.getElementById('eq-panel-arch');
+          var pS = document.getElementById('eq-panel-scen');
+          if(pA) pA.hidden = target !== 'arch';
+          if(pS) pS.hidden = target !== 'scen';
+          if(target === 'scen') renderEqScen(); else renderEqArch();
+          return;
+        }
+        var dBtn = e.target.closest('button[data-eq-dim]');
+        if(dBtn){
+          curEqDim = dBtn.getAttribute('data-eq-dim') || 'claim';
+          eqRoot.querySelectorAll('button[data-eq-dim]').forEach(function(b){
+            var on = b === dBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderEqArch();
+        }
+      });
+
+      renderEqArch();
+      renderEqScen();
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initBriefingExplorers);
+  } else {
+    initBriefingExplorers();
+  }
+})();
+
+
+
+
 
 
 

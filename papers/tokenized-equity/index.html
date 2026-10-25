@@ -297,6 +297,43 @@
         </div>
       </section>
 
+      <figure class="b4-explorer" id="equity-arch-explorer" aria-labelledby="eq-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive architecture comparator · Robinhood Stock Tokens vs Backed xStocks</p>
+            <h3 id="eq-exp-title" class="b4-explorer__title">Compare closed-loop OTC derivative contracts against open share-backed tracker certificates</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="Tokenized equity interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="eq-panel-arch" id="eq-tab-arch" data-eq-tab="arch">1. Legal claim, liquidity &amp; risk architecture</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="eq-panel-scen" id="eq-tab-scen" data-eq-tab="scen">2. 2025 to 2027 adoption scenarios</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="eq-panel-arch" role="tabpanel" aria-labelledby="eq-tab-arch">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select comparison dimension">
+              <span class="b4-explorer__control-label">Comparison dimension</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-eq-dim="claim" aria-pressed="true">Legal form &amp; insolvency claim</button>
+                <button type="button" class="b4-pill" data-eq-dim="liquidity" aria-pressed="false">Liquidity, hours &amp; off-market drift</button>
+                <button type="button" class="b4-pill" data-eq-dim="tech" aria-pressed="false">Technical stack, transferability &amp; corporate actions</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="eq-arch-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="eq-arch-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="eq-panel-scen" role="tabpanel" aria-labelledby="eq-tab-scen" hidden>
+          <div class="b4-explorer__summary" id="eq-scen-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="eq-scen-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Comparative launch anatomy of the June 30, 2025 European tokenized-equity launches (Robinhood Europe UAB on Arbitrum vs Backed Finance xStocks on Ethereum ERC-20 and Solana SPL).
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Asset managers</span>
         <span class="paper-audience-tag">Policy &amp; compliance</span>

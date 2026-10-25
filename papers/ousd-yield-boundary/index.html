@@ -305,6 +305,55 @@
       </div>
     </section>
 
+      <figure class="b4-explorer" id="ousd-yield-explorer" aria-labelledby="ousd-exp-title">
+        <div class="b4-explorer__head">
+          <div>
+            <p class="b4-explorer__kicker">Interactive statutory boundary explorer · GENIUS Section 4(a)(11) · OCC / FDIC / CLARITY</p>
+            <h3 id="ousd-exp-title" class="b4-explorer__title">Two-hop yield-routing boundary and final-rule four-move survival matrix</h3>
+          </div>
+          <div class="b4-explorer__tabs" role="tablist" aria-label="OUSD yield boundary interactive views">
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="ousd-panel-hops" id="ousd-tab-hops" data-ousd-tab="hops">1. Two-hop yield boundary across 4 legal texts</button>
+            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="ousd-panel-moves" id="ousd-tab-moves" data-ousd-tab="moves">2. Final-rule 4-move survival scorer</button>
+          </div>
+        </div>
+
+        <div class="b4-explorer__panel" id="ousd-panel-hops" role="tabpanel" aria-labelledby="ousd-tab-hops">
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select payment or revenue-share structure">
+              <span class="b4-explorer__control-label">Distribution structure</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-ousd-struct="ousd" aria-pressed="true">Announced OUSD (1-hop issuer-to-distributor share)</button>
+                <button type="button" class="b4-pill" data-ousd-struct="usdc" aria-pressed="false">Circle-Coinbase USDC ($907.9M 2-hop + customer rewards)</button>
+                <button type="button" class="b4-pill" data-ousd-struct="direct" aria-pressed="false">Direct PPSI-to-holder interest or yield</button>
+                <button type="button" class="b4-pill" data-ousd-struct="merchant" aria-pressed="false">Independent merchant discount / bona fide activity</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="ousd-hops-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="ousd-hops-bars"></div>
+        </div>
+
+        <div class="b4-explorer__panel" id="ousd-panel-moves" role="tabpanel" aria-labelledby="ousd-tab-moves" hidden>
+          <div class="b4-explorer__controls">
+            <div class="b4-explorer__control-group" role="group" aria-label="Select final-rule move">
+              <span class="b4-explorer__control-label">Plausible final-rule move</span>
+              <div class="b4-explorer__pills">
+                <button type="button" class="b4-pill is-active" data-ousd-move="m1" aria-pressed="true">Move 1: Finalize OCC 2-prong presumption as proposed</button>
+                <button type="button" class="b4-pill" data-ousd-move="m2" aria-pressed="false">Move 2: Broaden trigger to balance-calibrated distributor share</button>
+                <button type="button" class="b4-pill" data-ousd-move="m3" aria-pressed="false">Move 3: Codify holder definition (control vs economic interest)</button>
+                <button type="button" class="b4-pill" data-ousd-move="m4" aria-pressed="false">Move 4: Track statute &amp; refer third-party gap to Congress</button>
+              </div>
+            </div>
+          </div>
+          <div class="b4-explorer__summary" id="ousd-moves-summary" aria-live="polite"></div>
+          <div class="b4-explorer__bars" id="ousd-moves-bars"></div>
+        </div>
+
+        <figcaption class="b4-explorer__foot">
+          Sources: GENIUS Act Section 4(a)(11) (Pub. L. 119-27); OCC NPRM (91 Fed. Reg. 10199); FDIC NPRM (91 Fed. Reg. 18534); Senate-stage CLARITY Act Section 404; Circle S-1 disclosures; CEA April 2026 white paper.
+        </figcaption>
+      </figure>
+
       <div class="paper-audience-tags" aria-label="Audience">
         <span class="paper-audience-tag">Policy designers and rule-writers</span>
         <span class="paper-audience-tag">Stablecoin issuers and distributors</span>

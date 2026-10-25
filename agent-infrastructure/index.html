@@ -606,6 +606,51 @@
         <blockquote class="paper-thesis-line ai-thesis">
           <p>Measure what drives a gate's trigger rate, then count how often it fires.</p>
         </blockquote>
+
+        <figure class="b4-explorer" id="ai-control-explorer" aria-labelledby="ai-exp-title">
+          <div class="b4-explorer__head">
+            <div>
+              <p class="b4-explorer__kicker">Interactive control-evidence explorer · Teaching advisories vs armed hard gates</p>
+              <h3 id="ai-exp-title" class="b4-explorer__title">Workspace repeat rates, equal-span window tests, and hard-gate hold vs override rates</h3>
+            </div>
+            <div class="b4-explorer__tabs" role="tablist" aria-label="Agent infrastructure control views">
+              <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="ai-panel-advisory" id="ai-tab-advisory" data-ai-tab="advisory">1. Advisory saturation &amp; equal-span test</button>
+              <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="ai-panel-gates" id="ai-tab-gates" data-ai-tab="gates">2. Armed hard gates &amp; 11 silent failures</button>
+            </div>
+          </div>
+
+          <div class="b4-explorer__panel" id="ai-panel-advisory" role="tabpanel" aria-labelledby="ai-tab-advisory">
+            <div class="b4-explorer__controls">
+              <div class="b4-explorer__control-group" role="group" aria-label="Advisory measurement view">
+                <span class="b4-explorer__control-label">Measurement slice</span>
+                <div class="b4-explorer__pills">
+                  <button type="button" class="b4-pill is-active" data-ai-adv="classes" aria-pressed="true">6 major warning classes (21,698 of 24,166 events)</button>
+                  <button type="button" class="b4-pill" data-ai-adv="equalspan" aria-pressed="false">Equal-span 595.6h window test &amp; CPU-load confound</button>
+                </div>
+              </div>
+            </div>
+            <div class="b4-explorer__summary" id="ai-adv-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="ai-adv-bars"></div>
+          </div>
+
+          <div class="b4-explorer__panel" id="ai-panel-gates" role="tabpanel" aria-labelledby="ai-tab-gates" hidden>
+            <div class="b4-explorer__controls">
+              <div class="b4-explorer__control-group" role="group" aria-label="Hard gate and silent failure view">
+                <span class="b4-explorer__control-label">View</span>
+                <div class="b4-explorer__pills">
+                  <button type="button" class="b4-pill is-active" data-ai-gate="refusals" aria-pressed="true">7 armed gate classes (hold vs override rate)</button>
+                  <button type="button" class="b4-pill" data-ai-gate="silent" aria-pressed="false">11 silent failures where the signal looked healthy</button>
+                </div>
+              </div>
+            </div>
+            <div class="b4-explorer__summary" id="ai-gate-summary" aria-live="polite"></div>
+            <div class="b4-explorer__bars" id="ai-gate-bars"></div>
+          </div>
+
+          <figcaption class="b4-explorer__foot">
+            Data: Fleet control telemetry across both production hosts. Repeat rate (saturation) measures the share of isolated workspaces where a warning class recurred after its first firing; hard-gate hold rate measures blocked attempts divided by total attempts reaching an armed gate.
+          </figcaption>
+        </figure>
       </div>
     </section>
 
