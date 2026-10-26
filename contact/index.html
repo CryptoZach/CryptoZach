@@ -279,6 +279,46 @@
     </div>
     <p class="contact-context-note">Each opens an email with the job in the subject line and the prompts already in the body.</p>
     <p class="contact-context-note" id="contactContextNote" hidden></p>
+
+    <figure class="b4-explorer" id="contact-scope-builder" aria-labelledby="csb-title" style="margin-top: 1.5rem;">
+      <div class="b4-explorer__head">
+        <div>
+          <p class="b4-explorer__kicker">Interactive brief &amp; scope builder · 6 engagement tracks · 6 decision-map steps</p>
+          <h3 id="csb-title" class="b4-explorer__title">Select your job and decision step to preview deliverables, pre-reads, and a ready-to-send brief</h3>
+        </div>
+      </div>
+      <div class="b4-explorer__panel">
+        <div class="b4-explorer__controls">
+          <div class="b4-explorer__control-group" role="group" aria-label="Select engagement or role track">
+            <span class="b4-explorer__control-label">1. Job track</span>
+            <div class="b4-explorer__pills">
+              <button type="button" class="b4-pill is-active" data-csb-job="evaluate-product" aria-pressed="true">Evaluate a tokenized product (MVEP)</button>
+              <button type="button" class="b4-pill" data-csb-job="committee-brief" aria-pressed="false">Brief an investment or risk committee</button>
+              <button type="button" class="b4-pill" data-csb-job="control-risk" aria-pressed="false">Map gateway &amp; custody risk (CLII)</button>
+              <button type="button" class="b4-pill" data-csb-job="token-stress" aria-pressed="false">Stress-test tokenomics or DePIN</button>
+              <button type="button" class="b4-pill" data-csb-job="policy-brief" aria-pressed="false">GENIUS / CLARITY policy briefing</button>
+              <button type="button" class="b4-pill" data-csb-job="ai-fleet" aria-pressed="false">AI agent fleet governance</button>
+            </div>
+          </div>
+          <div class="b4-explorer__control-group" role="group" aria-label="Select decision-map step">
+            <span class="b4-explorer__control-label">2. Decision step</span>
+            <div class="b4-explorer__pills">
+              <button type="button" class="b4-pill is-active" data-csb-step="Classify" aria-pressed="true">1. Classify</button>
+              <button type="button" class="b4-pill" data-csb-step="Trace" aria-pressed="false">2. Trace</button>
+              <button type="button" class="b4-pill" data-csb-step="Map" aria-pressed="false">3. Map</button>
+              <button type="button" class="b4-pill" data-csb-step="Compare" aria-pressed="false">4. Compare</button>
+              <button type="button" class="b4-pill" data-csb-step="Stress" aria-pressed="false">5. Stress</button>
+              <button type="button" class="b4-pill" data-csb-step="Decide" aria-pressed="false">6. Decide</button>
+            </div>
+          </div>
+        </div>
+        <div class="b4-explorer__summary" id="csb-summary" aria-live="polite"></div>
+        <div class="b4-explorer__bars" id="csb-bars"></div>
+      </div>
+      <figcaption class="b4-explorer__foot">
+        Direct email: <a href="mailto:Zach@Tokenization.Systems">Zach@Tokenization.Systems</a> · Typical response within 24 hours.
+      </figcaption>
+    </figure>
   </section>
   <script>
   (function(){

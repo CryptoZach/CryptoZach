@@ -12192,6 +12192,379 @@
   }
 })();
 
+/* ==========================================================================
+   Wave 6: Contact Scope Builder (#contact-scope-builder), About Practice &
+   Citation Explorer (#about-practice-explorer), and Inline #rec-N Copy Tools
+   ========================================================================== */
+(function(){
+  function initWave6Upgrades(){
+    /* 1. Contact Brief & Scope Builder (#contact-scope-builder) */
+    var csbRoot = document.getElementById('contact-scope-builder');
+    if(csbRoot){
+      var curJob = 'evaluate-product';
+      var curStep = 'Classify';
+
+      var jobs = {
+        'evaluate-product': {
+          subject: 'Evaluate a tokenized product (MVEP diligence)',
+          timeline: '2 to 4 weeks (defined-scope review)',
+          framework: 'MVEP (10 categories + recursive CSA) & Exhibit 2 Insolvency Matrix',
+          preread: '/papers/mvep/#a2-mvep-explorer',
+          prereadLabel: 'MVEP 14-Product & 20-Regime Explorer',
+          deliverables: [
+            { name: '1. Non-compensatory Legal, Operational & Economic Equivalence Scorecard', pct: 100, val: '10 categories + CSA', note: 'Tests UCC Art. 8/12 rights parity, transfer-agent system of record, custody segregation, and 20-regime bankruptcy priority' },
+            { name: '2. 2am Saturday Collateral & Redemption Stress Audit', pct: 92, val: '3 paths · 7 scenarios', note: 'Evaluates instant-redemption pool capacity, whitelist ATS liquidity, and weekend banking-hour conversion gaps' },
+            { name: '3. Remediation Roadmap & 24-Hour CLII Drift Triggers', pct: 88, val: 'Committee sign-off pack', note: 'Names the binding constraint and sets post-approval gateway monitoring thresholds' }
+          ]
+        },
+        'committee-brief': {
+          subject: 'Brief an investment or risk committee',
+          timeline: '45 to 60 minute working session + custom memo',
+          framework: 'MVEP Exhibits 1 to 3 + Seven Dollars + Three Strategies',
+          preread: '/speaker-and-advisory/#adv-exp-title',
+          prereadLabel: 'Advisory & Workshop Matcher',
+          deliverables: [
+            { name: '1. Pre-Committee Artifact & Red-Flag Diagnostic', pct: 98, val: '5 committee questions', note: 'Checks authoritative ledger hierarchy, admin-key timelocks, settlement finality, insolvency forum, and recursive dependencies' },
+            { name: '2. Comparative Peer Benchmarking (14-product MVEP & 8-product Eligibility)', pct: 92, val: 'Tier A to D placement', note: 'Positions the candidate product against BENJI, BUIDL, JPMD, USDC, PYUSD, RLUSD, OUSG, and USYC' },
+            { name: '3. Live Working Session & Decision-Owner Escalation Matrix', pct: 88, val: '45 to 60m session', note: 'Walks voting committee members through the failure sequence and loss-allocation boundaries' }
+          ]
+        },
+        'control-risk': {
+          subject: 'Map gateway, custody, and control-layer risk',
+          timeline: '2 to 4 weeks (gateway & dependency audit)',
+          framework: 'CLII (19 gateways) + Three Strategies 10-Entity Dependency Map',
+          preread: '/frameworks/#clii-explorer',
+          prereadLabel: '19-Gateway CLII Sensitivity Explorer',
+          deliverables: [
+            { name: '1. Five-Dimension CLII Gateway & Counterparty Scoring', pct: 96, val: '0.00 to 1.00 score', note: 'Scores licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions' },
+            { name: '2. Shared-Operator Chokepoint & Outage Simulation', pct: 92, val: 'Transfer agent, custody, oracle', note: 'Maps cross-product concentration in Securitize, BNY, Ceffu, Marex, Cantina, and Chainlink CCIP' },
+            { name: '3. SVB & BUSD Stress-Rotation Contingency Plan', pct: 86, val: 'Weekend escape-valve routing', note: 'Models secondary liquidity retention if primary bank wires or issuer redemptions halt over a weekend' }
+          ]
+        },
+        'token-stress': {
+          subject: 'Stress-test tokenomics or DePIN mechanism design',
+          timeline: '4 to 8 weeks (Monte Carlo simulation review)',
+          framework: 'Adaptive Tokenomics (240-run PID) + Operational Risk (624-config) + S2R',
+          preread: '/papers/adaptive-tokenomics/#b1-meshnet-explorer',
+          prereadLabel: '240-Run MeshNet PID Explorer',
+          deliverables: [
+            { name: '1. 240-Run PID vs Static Emission & Slashing Sensitivity Battery', pct: 98, val: '30 seeds x 8 configs', note: 'Tests 14-day evaluation cadence and supply-cap stability across Competitor, Regulatory, Bear, and Bull shocks' },
+            { name: '2. 624-Configuration ValOS/NORS Operational Risk & Reputation Audit', pct: 94, val: '74 risk vectors', note: 'Locates the reputation-recovery phase transition (95% vs 99%) before validator downtime collapses governance' },
+            { name: '3. Burn Architecture (S2R), Payer HHI & 5-Class PCA Governance Audit', pct: 90, val: '52-protocol benchmark', note: 'Verifies whether demand concentration is observable on-chain and strips PCA distortion from holder lists' }
+          ]
+        },
+        'policy-brief': {
+          subject: 'GENIUS Act, CLARITY Act, or supervisory rulemaking briefing',
+          timeline: '30 to 45 minute briefing or docket sprint',
+          framework: 'TDRC (0 to 6) + Two-Hop Yield Boundary + 3CRD + MGCPT',
+          preread: '/trackers/genius-act/#genius-timeline-explorer',
+          prereadLabel: 'GENIUS Act 14-Rulemaking Explorer',
+          deliverables: [
+            { name: '1. Statutory & NPRM Provision-to-Product Translation', pct: 96, val: '14 GENIUS rulemakings', note: 'Maps OCC, FDIC, Treasury, FinCEN, Federal Reserve, SEC, and CFTC proposals onto product and compliance gates' },
+            { name: '2. Two-Hop Yield Boundary & TDRC Equilibrium Assessment', pct: 92, val: 'Section 4(a)(11) & CLARITY s.404', note: 'Evaluates issuer reserve carry vs 1-hop partner revenue share (OUSD) vs 2-hop customer rewards (USDC)' },
+            { name: '3. Comment-Letter Strategy & Administrative-Record Evidence Pack', pct: 88, val: '25-letter benchmark', note: 'Grounds policy positions in reproducible on-chain data and statutory text' }
+          ]
+        },
+        'ai-fleet': {
+          subject: 'AI agent fleet governance & x402 payment control partnership',
+          timeline: 'Design partnership or architecture review',
+          framework: 'CLII-AI + MVEP-AI + Outcome-Graded Hard Gates (42 USPTO filings)',
+          preread: '/agent-infrastructure/#ai-control-explorer',
+          prereadLabel: 'Fleet Advisory vs Hard-Gate Explorer',
+          deliverables: [
+            { name: '1. Advisory Saturation vs Armed Hard-Gate Outcome Audit', pct: 98, val: '99.56% hold benchmark', note: 'Measures workspace repeat rates after warnings (84% pipe-exit) and replaces high-repeat advisories with narrow hard gates' },
+            { name: '2. Per-Session Worktree Isolation & Time-Bounded Lease Architecture', pct: 94, val: '14 typical / 61 peak agents', note: 'Prevents concurrent write collisions and recovers orphaned tasks automatically when agent sessions exit' },
+            { name: '3. x402 Facilitator Concentration & Known-False Verifier Audit', pct: 90, val: 'MVEP-AI 10 categories', note: 'Eliminates confabulated finding references, vacuous passing checks, and unattributed agentic payment legs' }
+          ]
+        }
+      };
+
+      var stepNotes = {
+        Classify: 'Step 1 (Classify): Identify the legal object (stablecoin, tokenized deposit, deposit token, MMF wrapper, equity certificate, or agentic rail) and its governing rulebook.',
+        Trace: 'Step 2 (Trace): Follow the token through every wrapper layer to the underlying reserve custody, bank-deposit recycling share, and settlement asset.',
+        Map: 'Step 3 (Map): Score every gateway, transfer agent, custodian, and facilitator on CLII (0 to 1) and locate single-operator chokepoints.',
+        Compare: 'Step 4 (Compare): Run the 10-category MVEP non-compensatory equivalence gate across Legal, Operational, and Economic dimensions.',
+        Stress: 'Step 5 (Stress): Test 2am Saturday margin calls, weekend banking closures, shared-operator outages, or 624-config validator failures.',
+        Decide: 'Step 6 (Decide): Finalize committee sign-off conditions, collateral haircuts, 24-hour CLII drift triggers, and named escalation owners.'
+      };
+
+      function renderCsb(){
+        var sumEl = document.getElementById('csb-summary');
+        var barsEl = document.getElementById('csb-bars');
+        if(!sumEl || !barsEl) return;
+        var j = jobs[curJob] || jobs['evaluate-product'];
+        var sNote = stepNotes[curStep] || stepNotes.Classify;
+        var bodyTxt =
+          'Job / track: ' + j.subject + '\n' +
+          'Current decision-map step: ' + curStep + ' (' + sNote + ')\n' +
+          'Product, proposal, or docket: [Name here]\n' +
+          'Decision, committee, or deadline date: [Date here]\n';
+        var mailHref = 'mailto:Zach@Tokenization.Systems?subject=' + encodeURIComponent(j.subject + ' [' + curStep + ']') + '&body=' + encodeURIComponent(bodyTxt);
+
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Selected track &amp; cadence</span><span class="b4-stat__val">' + j.timeline + '</span><span class="b4-stat__sub">' + j.subject + '</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Active decision step</span><span class="b4-stat__val">Step: ' + curStep + '</span><span class="b4-stat__sub">' + sNote + '</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Recommended pre-read</span><span class="b4-stat__val"><a href="' + j.preread + '" style="color:inherit;text-decoration:underline;">' + j.prereadLabel + '</a></span><span class="b4-stat__sub">' + j.framework + '</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Send or copy brief</span><span class="b4-stat__val"><a id="csb-mailto-link" href="' + mailHref + '" style="color:inherit;text-decoration:underline;">Open in email &rarr;</a></span><span class="b4-stat__sub"><button type="button" class="access-link access-cite-btn" id="csb-copy-btn">Copy brief template</button></span></div>';
+
+        barsEl.innerHTML = j.deliverables.map(function(d){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + d.name + '</span><span class="b4-bar-row__val">' + d.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + d.pct + '%"></div></div><div class="b4-bar-row__meta">' + d.note + '</div></div>';
+        }).join('');
+
+        var copyBtn = document.getElementById('csb-copy-btn');
+        if(copyBtn){
+          copyBtn.addEventListener('click', function(){
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText('To: Zach@Tokenization.Systems\nSubject: ' + j.subject + ' [' + curStep + ']\n\n' + bodyTxt).then(function(){
+                copyBtn.textContent = 'Copied brief template';
+                setTimeout(function(){ copyBtn.textContent = 'Copy brief template'; }, 1600);
+              }).catch(function(){});
+            }
+          });
+        }
+      }
+
+      csbRoot.addEventListener('click', function(e){
+        var jBtn = e.target.closest('button[data-csb-job]');
+        if(jBtn){
+          curJob = jBtn.getAttribute('data-csb-job') || 'evaluate-product';
+          csbRoot.querySelectorAll('button[data-csb-job]').forEach(function(b){
+            var on = b === jBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderCsb();
+          return;
+        }
+        var sBtn = e.target.closest('button[data-csb-step]');
+        if(sBtn){
+          curStep = sBtn.getAttribute('data-csb-step') || 'Classify';
+          csbRoot.querySelectorAll('button[data-csb-step]').forEach(function(b){
+            var on = b === sBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderCsb();
+        }
+      });
+
+      var urlCtx = new URLSearchParams(window.location.search).get('context');
+      if(urlCtx && jobs[urlCtx]){
+        curJob = urlCtx;
+        csbRoot.querySelectorAll('button[data-csb-job]').forEach(function(b){
+          var on = b.getAttribute('data-csb-job') === curJob;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+      renderCsb();
+    }
+
+    /* 2. About Practice & Citation Explorer (#about-practice-explorer) */
+    var abtRoot = document.getElementById('about-practice-explorer');
+    if(abtRoot){
+      var curWork = 'rtd';
+      var works = {
+        rtd: {
+          title: 'Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar\'s International Functions',
+          year: '2026', venue: 'SSRN Working Paper 6267698 (Prepared for FRBNY Fifth Conference on International Roles of the U.S. Dollar)',
+          doi: '10.2139/ssrn.6267698', url: 'https://tokenization.systems/papers/routing-the-dollar/', key: 'zukowski2026routing'
+        },
+        mvep: {
+          title: 'Minimum Viable Equivalence Pack: An Institutional Diligence Framework for Tokenized Products',
+          year: '2026', venue: 'SSRN Working Paper 6363138',
+          doi: '10.2139/ssrn.6363138', url: 'https://tokenization.systems/papers/mvep/', key: 'zukowski2026mvep'
+        },
+        seven: {
+          title: 'Seven Dollars: A Comparative Framework for Major Dollar-Denominated Digital Products',
+          year: '2026', venue: 'SSRN Working Paper 6483118',
+          doi: '10.2139/ssrn.6483118', url: 'https://tokenization.systems/papers/seven-dollars/', key: 'zukowski2026seven'
+        },
+        three: {
+          title: 'Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk in Institutional Digital Asset Capital Markets',
+          year: '2026', venue: 'SSRN Working Paper 6483198',
+          doi: '10.2139/ssrn.6483198', url: 'https://tokenization.systems/papers/three-strategies/', key: 'zukowski2026three'
+        },
+        x402: {
+          title: 'Who Controls Agentic Payments? Facilitator Concentration, Subsidy Pipelines, and Settlement Accountability in x402',
+          year: '2026', venue: 'SSRN Working Paper 7396241',
+          doi: '10.2139/ssrn.7396241', url: 'https://tokenization.systems/papers/who-controls-agentic-payments/', key: 'zukowski2026agentic'
+        },
+        gov: {
+          title: 'Auditing Governance Concentration Beyond Token Allocation: A Live-Governance Study of 52 Token Protocols',
+          year: '2026', venue: 'Frontiers in Blockchain 9:1853465',
+          doi: '10.3389/fbloc.2026.1853465', url: 'https://tokenization.systems/papers/governance-concentration/', key: 'zukowski2026governance'
+        },
+        burns: {
+          title: 'Who Burns the Tokens? Fiscal Sustainability and Demand Concentration in GeoDePIN Networks',
+          year: '2026', venue: 'SSRN Working Paper 6483619',
+          doi: '10.2139/ssrn.6483619', url: 'https://tokenization.systems/papers/who-burns-the-tokens/', key: 'zukowski2026burns'
+        },
+        pid: {
+          title: 'Adaptive Tokenomics: A Systems Engineering Approach to Programmable Incentive Design',
+          year: '2026', venue: 'SSRN Working Paper 6364158',
+          doi: '10.2139/ssrn.6364158', url: 'https://tokenization.systems/papers/adaptive-tokenomics/', key: 'zukowski2026adaptive'
+        },
+        oprisk: {
+          title: 'Operational Risk in Token Economies: How Infrastructure Failures Strengthen Adaptive Controllers Under Sustained Shocks, Expose Reputation Design Defects, and Reveal What a Bolted-On Risk Layer Can Test',
+          year: '2026', venue: 'SSRN Working Paper 6352118',
+          doi: '10.2139/ssrn.6352118', url: 'https://tokenization.systems/papers/operational-risk/', key: 'zukowski2026oprisk'
+        },
+        letters: {
+          title: 'Tokenization Systems Federal Comment Letter Registry and 136-Recommendation Index [Data set]',
+          year: '2026', venue: 'Tokenization Systems',
+          doi: '', url: 'https://tokenization.systems/letters/letters.json', key: 'zukowski2026letters'
+        }
+      };
+
+      function renderAbtPillars(){
+        var sumEl = document.getElementById('abt-pil-summary');
+        var barsEl = document.getElementById('abt-pil-bars');
+        if(!sumEl || !barsEl) return;
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">Plus 1 peer-reviewed journal article, 1 memo &amp; 6 briefings</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">12 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, ValOS/NORS, S2R, CLII-AI, MVEP-AI</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">25 federal letters (+FSB)</span><span class="b4-stat__sub">136 recommendations across 19 dockets and 9 federal agencies</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">42 USPTO applications</span><span class="b4-stat__sub">Across 32 patent families · 68,000+ commits · 99.56% gate hold</span></div>';
+        var pRows = [
+          { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 7 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
+          { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '12 scoring & gating tools', note: 'Separates operator regulatory obligations (CLII) from non-compensatory product equivalence under stress (MVEP)' },
+          { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '25 federal comment letters · 136 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
+          { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '42 USPTO filings across 32 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 13,098 hard-gate stops' }
+        ];
+        barsEl.innerHTML = pRows.map(function(b){
+          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
+        }).join('');
+      }
+
+      function renderAbtCite(){
+        var sumEl = document.getElementById('abt-cit-summary');
+        var barsEl = document.getElementById('abt-cit-bars');
+        if(!sumEl || !barsEl) return;
+        var w = works[curWork] || works.rtd;
+        var apa = 'Zukowski, Zach (' + w.year + '). "' + w.title + '." ' + w.venue + (w.doi ? ('. https://doi.org/' + w.doi) : ('. ' + w.url));
+        var bib = '@article{' + w.key + ',\n  author = {Zukowski, Zach},\n  title = {' + w.title + '},\n  journal = {' + w.venue + '},\n  year = {' + w.year + '},' + (w.doi ? ('\n  doi = {' + w.doi + '},') : '') + '\n  url = {' + w.url + '}\n}';
+
+        sumEl.innerHTML =
+          '<div class="b4-stat"><span class="b4-stat__label">Selected work</span><span class="b4-stat__val"><a href="' + w.url + '" style="color:inherit;text-decoration:underline;">Open page &rarr;</a></span><span class="b4-stat__sub">' + w.venue + '</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Author &amp; ORCID</span><span class="b4-stat__val">Zach Zukowski</span><span class="b4-stat__sub">0009-0006-3642-2450</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Copy APA / Chicago</span><span class="b4-stat__val"><button type="button" class="access-link access-cite-btn" id="abt-copy-apa">Copy formatted citation</button></span><span class="b4-stat__sub">Ready for footnotes &amp; references</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Copy BibTeX</span><span class="b4-stat__val"><button type="button" class="access-link access-cite-btn" id="abt-copy-bib">Copy BibTeX entry</button></span><span class="b4-stat__sub">Key: ' + w.key + '</span></div>';
+
+        barsEl.innerHTML =
+          '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">Formatted Citation (CC BY 4.0)</span><span class="b4-bar-row__val">' + (w.doi || 'Canonical URL') + '</span></div><div class="b4-bar-row__meta" style="font-family:\'JetBrains Mono\',monospace;font-size:.8rem;color:var(--text);">' + apa + '</div></div>' +
+          '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">BibTeX Record</span><span class="b4-bar-row__val">@article{' + w.key + '}</span></div><pre style="margin:0;white-space:pre-wrap;font-family:\'JetBrains Mono\',monospace;font-size:.76rem;color:var(--muted);">' + bib + '</pre></div>';
+
+        var bApa = document.getElementById('abt-copy-apa');
+        var bBib = document.getElementById('abt-copy-bib');
+        if(bApa){
+          bApa.addEventListener('click', function(){
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(apa).then(function(){
+                bApa.textContent = 'Copied citation';
+                setTimeout(function(){ bApa.textContent = 'Copy formatted citation'; }, 1600);
+              }).catch(function(){});
+            }
+          });
+        }
+        if(bBib){
+          bBib.addEventListener('click', function(){
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(bib).then(function(){
+                bBib.textContent = 'Copied BibTeX';
+                setTimeout(function(){ bBib.textContent = 'Copy BibTeX entry'; }, 1600);
+              }).catch(function(){});
+            }
+          });
+        }
+      }
+
+      abtRoot.addEventListener('click', function(e){
+        var tBtn = e.target.closest('button[data-abt-tab]');
+        if(tBtn){
+          var target = tBtn.getAttribute('data-abt-tab');
+          abtRoot.querySelectorAll('button[data-abt-tab]').forEach(function(b){
+            var on = b === tBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          var pP = document.getElementById('abt-panel-pillars');
+          var pC = document.getElementById('abt-panel-cite');
+          if(pP) pP.hidden = target !== 'pillars';
+          if(pC) pC.hidden = target !== 'cite';
+          if(target === 'cite') renderAbtCite(); else renderAbtPillars();
+          return;
+        }
+        var wBtn = e.target.closest('button[data-abt-work]');
+        if(wBtn){
+          curWork = wBtn.getAttribute('data-abt-work') || 'rtd';
+          abtRoot.querySelectorAll('button[data-abt-work]').forEach(function(b){
+            var on = b === wBtn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          renderAbtCite();
+        }
+      });
+      renderAbtPillars();
+      renderAbtCite();
+    }
+
+    /* 3. Inline #rec-N Deep-Link & Ask Citation Copy on All 26 Comment Letter Pages */
+    if(window.location.pathname.indexOf('/letters/') === 0){
+      var recItems = document.querySelectorAll('.paper-abstract li[id^="rec-"]');
+      if(recItems.length){
+        var lTitleEl = document.getElementById('letter-title') || document.querySelector('h1');
+        var lTitle = lTitleEl ? (lTitleEl.textContent || '').replace(/\s+/g, ' ').trim() : 'Federal Comment Letter';
+        var canonEl = document.querySelector('link[rel="canonical"]');
+        var baseUrl = (canonEl ? canonEl.getAttribute('href') : window.location.href).split('#')[0];
+
+        Array.prototype.forEach.call(recItems, function(li){
+          if(li.querySelector('.rec-inline-tools')) return;
+          var recId = li.id;
+          var recNum = recId.replace('rec-', '');
+          var rawText = (li.textContent || '').replace(/\s+/g, ' ').trim();
+          var tools = document.createElement('span');
+          tools.className = 'rec-inline-tools';
+          tools.style.cssText = 'display:inline-flex;gap:.45rem;margin-left:.55rem;vertical-align:baseline;font-family:"JetBrains Mono",monospace;font-size:.72rem;';
+          tools.innerHTML =
+            '<button type="button" class="access-link access-cite-btn" data-rec-act="link" title="Copy deep link to #' + recId + '">#' + recId + '</button>' +
+            '<span aria-hidden="true" style="opacity:.35">·</span>' +
+            '<button type="button" class="access-link access-cite-btn" data-rec-act="cite" title="Copy recommendation text and citation">Copy ask</button>';
+          li.appendChild(tools);
+
+          tools.addEventListener('click', function(e){
+            var btn = e.target.closest('button[data-rec-act]');
+            if(!btn) return;
+            var act = btn.getAttribute('data-rec-act');
+            var deepUrl = baseUrl + '#' + recId;
+            var payload = act === 'link'
+              ? deepUrl
+              : ('Recommendation ' + recNum + ' (' + lTitle + ', Zach Zukowski, Tokenization Systems, 2026): "' + rawText + '" ' + deepUrl);
+            if(act === 'link' && window.history && window.history.replaceState){
+              window.history.replaceState(null, '', '#' + recId);
+            }
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              var orig = btn.textContent;
+              navigator.clipboard.writeText(payload).then(function(){
+                btn.textContent = act === 'link' ? 'Copied link' : 'Copied ask';
+                setTimeout(function(){ btn.textContent = orig; }, 1500);
+              }).catch(function(){});
+            }
+          });
+        });
+      }
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initWave6Upgrades);
+  } else {
+    initWave6Upgrades();
+  }
+})();
+
+
 
 
 
