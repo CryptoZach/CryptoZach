@@ -93,6 +93,8 @@ def resume_reference(resumes: Path) -> tuple[dict, list[str]]:
         "families": r"across " + NUMTOK + r" families",
         "ssrn": r"(\d+) SSRN papers",
         "letters": r"(\d+) federal comment letters",
+        "mcp_servers": r"(\d+) MCP servers",
+        "api_services": r"(\d+) API services",
     }
     for f in files:
         t = docx_text(f)
@@ -164,6 +166,9 @@ RESUME_STATEMENTS = [
     (r"concurrent sessions and a peak of (\d+)", "peak", "peak", None),
     (r"(\d+) SSRN papers", "ssrn", "SSRN papers", None),
     (r"(\d+) federal comment letters", "letters", "federal comment letters", None),
+    (r"(\d+) (?:custom Python )?MCP servers", "mcp_servers", "MCP servers", None),
+    (r"(\d+) API services", "api_services", "API services", None),
+    (r"(\d+) MCP (?:and|\+) API (?:data )?connections", "mcp_servers", "legacy combined MCP + API connections", None),
 ]
 
 
