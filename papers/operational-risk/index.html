@@ -89,7 +89,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=782" />
+  <link rel="stylesheet" href="/styles.css?v=785" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -449,7 +449,8 @@
                 <span class="b4-exp__sub" id="b4-m-clear-sub">As-coded episodic (1.1d mean) · 63.8% drawn (1.5d) · 63.7% binomial (0.45d)</span>
               </div>
             </div>
-            <div class="b4-exp__chart-wrap">
+                        <p class="fg-route-key"><strong>How to read this.</strong> The brown line reads the left axis: year-5 average reputation, 0 to 2.5. The green line reads the right axis: clearance, 0 to 100 percent. The two series share the plot, so the same height is a reputation on one line and a percent on the other. The horizontal axis is the recovery threshold, from 0.99 to 0.90.</p>
+<div class="b4-exp__chart-wrap">
               <svg id="b4-rep-svg" viewBox="0 0 880 290" width="880" height="290" role="img" aria-label="Reputation score and counterfactual clearance across recovery thresholds 0.99 to 0.90"></svg>
             </div>
             <p class="b4-exp__note">Source: <code>gap2_reputation_sweep.csv</code> and <code>counterfactual_downtime_clearance.json</code> (400,000 Monte Carlo paths, seed 42). Because no decision rule in the base simulation reads the reputation score, each threshold replays the seasonal scoring rule over the same fixed trajectory.</p>
@@ -480,7 +481,8 @@
                 <span class="b4-exp__sub" id="b4-p-delta-sub">95% CI [+0.10x, +6.85x] · Widens under sustained withdrawal</span>
               </div>
             </div>
-            <div class="b4-exp__chart-wrap">
+                        <p class="fg-route-key"><strong>How to read this.</strong> Bar length is the coefficient of variation against a 0.60 display ceiling. A shorter bar is tighter node-count tracking around the 10,000-node target. The CV and the mean node count are written beside the bar.</p>
+<div class="b4-exp__chart-wrap">
               <svg id="b4-pid-svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="PID vs static outcome dispersion across 30 seeds"></svg>
             </div>
             <p class="b4-exp__note">Source: <code>headline_bootstrap.json</code> (30 seeds per arm, 20,000 bootstrap resamples, seed 42). Lower coefficient of variation (CV) means tighter node-count tracking around the 10,000-node target.</p>
@@ -610,7 +612,7 @@
     <!-- site-chrome:footer END -->
   </main>
 
-  <script defer src="/script.js?v=236"></script>
+  <script defer src="/script.js?v=247"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

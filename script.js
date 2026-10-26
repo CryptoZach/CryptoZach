@@ -9182,6 +9182,11 @@
   };
 
   function initB1Explorer(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     var root = document.getElementById('b1-meshnet-explorer');
     if(!root) return;
 
@@ -9264,6 +9269,9 @@
           { label: '21-day cadence (optimal)', dev: 15.5, col: '#10b981', note: '15.5% dev (best) \u00b7 62.7K/d vol \u00b7 146 floor steps' },
           { label: '30-day cadence (slow)', dev: 21.0, col: '#94a3b8', note: '21.0% dev \u00b7 lags 18-month shock recovery' }
         ];
+        var mechHost = document.getElementById('b1-cad-list');
+        if(mechHost) mechHost.hidden = true;
+        if(cadSvg) cadSvg.style.display = '';
         var maxD = 26.0;
         cads.forEach(function(c, idx){
           var y = padT + idx * 50;
@@ -9274,21 +9282,23 @@
           svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 19) + '" font-size="11" font-weight="600" fill="currentColor">' + c.note + '</text>';
         });
       } else {
-        var mechs = [
-          { label: 'Slashing treasury inflow (5y)', pct: 95, col: '#0ea5e9', note: '269M to 354M MESH moved to treasury (dominates supply)' },
-          { label: 'Burn-mint equilibrium (5y peak)', pct: 4, col: '#94a3b8', note: 'Peak BME 0.0061 (<0.05% of 5-year supply dynamics)' },
-          { label: 'Wash-trading capture (no PoC)', pct: 60, col: '#dc2626', note: '3.00% fraudulent reward capture without verification' },
-          { label: 'Wash-trading capture (with PoC)', pct: 4, col: '#10b981', note: '0.09% median capture across 200 Monte Carlo runs (-97%)' },
-          { label: 'Voting Gini (quadratic rep)', pct: 72, col: '#10b981', note: 'Compresses raw token Gini 0.89 \u2192 0.72 (20% whale \u2192 ~8% vote)' }
-        ];
-        mechs.forEach(function(m, idx){
-          var y = padT + idx * 42;
-          var bw = Math.max(6, (m.pct / 100) * plotW).toFixed(1);
-          svg += '<text x="' + (padL - 10) + '" y="' + (y + 18) + '" text-anchor="end" font-size="11.5" font-weight="600" fill="currentColor">' + m.label + '</text>';
-          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + plotW + '" height="18" rx="4" fill="currentColor" fill-opacity="0.05"/>';
-          svg += '<rect x="' + padL + '" y="' + (y + 3) + '" width="' + bw + '" height="18" rx="4" fill="' + m.col + '"/>';
-          svg += '<text x="' + (padL + parseFloat(bw) + 8) + '" y="' + (y + 16) + '" font-size="11" font-weight="600" fill="currentColor">' + m.note + '</text>';
-        });
+        if(cadSvg) cadSvg.style.display = 'none';
+        var mechHost = document.getElementById('b1-cad-list');
+        if(!mechHost && cadSvg && cadSvg.parentNode){
+          mechHost = document.createElement('div');
+          mechHost.id = 'b1-cad-list';
+          cadSvg.parentNode.appendChild(mechHost);
+        }
+        if(mechHost){
+          mechHost.hidden = false;
+          mechHost.innerHTML = readingList([
+            { name: 'Slashing treasury inflow, five years', val: '269 million to 354 million MESH', note: 'This flow moves tokens into the treasury and dominates the five-year supply.' },
+            { name: 'Burn-mint equilibrium, five-year peak', val: 'Peak 0.0061', note: 'The peak is under 0.05 percent of five-year supply dynamics.' },
+            { name: 'Wash-trading capture, proof of coverage off', val: '3.00 percent of rewards', note: 'Reward capture when verification is absent.' },
+            { name: 'Wash-trading capture, proof of coverage on', val: '0.09 percent median', note: 'Across 200 Monte Carlo runs, capture falls by 97 percent once verification is on.' },
+            { name: 'Voting Gini under quadratic reputation', val: '0.89 holdings to 0.72 votes', note: 'A 20 percent whale share of tokens becomes about 8 percent of the vote.' }
+          ]);
+        }
       }
 
       cadSvg.innerHTML = svg;
@@ -9351,6 +9361,11 @@
    ========================================================================== */
 (function(){
   function initA1RoutingExplorer(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     var root = document.getElementById('a1-routing-explorer');
     if(!root) return;
 
@@ -9417,14 +9432,7 @@
           { label: 'Fed + ON RRP 26-week forecast-error variance share (MBS system)', val: 13.9, max: 100, badge: '13.9% variance share', note: '2.2% in securities-held-outright system; 5-week error-correction half-life' },
           { label: 'Tether (USDT) bank-deposit reserve recycling share', val: 4, max: 100, badge: '~4% bank deposits', note: 'Predominantly Treasury bills and repo; minimal commercial-bank deposit recycling' }
         ];
-        barsEl.innerHTML = spRows.map(function(r){
-          var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.label + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(spRows.map(function(r){ return { name: r.label, val: r.badge, note: r.note }; }));
       }
     }
 
@@ -9474,14 +9482,7 @@
           { name: 'USDT on Ethereum: share routed through Tier 1 regulated gateways', val: 10.8, badge: '10.8% via Tier 1', note: 'Offshore-issued token still touches U.S.-regulated gateways on 10.8% of Ethereum flow' },
           { name: 'Tron & BNB Chain: Tier 1 regulated gateway share', val: 0.5, badge: '0.0% Tier 1 (58% Tier 3 on Tron)', note: 'Zero monitored Tier 1 gateway presence on Tron or BNB Chain' }
         ];
-        barsEl.innerHTML = chainRows.map(function(r){
-          var pct = Math.min(100, (r.val / 50) * 100).toFixed(1);
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(chainRows.map(function(r){ return { name: r.name, val: r.badge, note: r.note }; }));
       }
     }
 
@@ -9631,7 +9632,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Only 7/7 Pass regime</span><span class="b4-stat__val">J1: 1940 Act (BENJI)</span><span class="b4-stat__sub">Statutory custody, flat capital structure, and 99.1c recovery precedent</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Charter-relocation traps</span><span class="b4-stat__val">J2S (SoFiUSD) &amp; J3F (USD1/PYUSD)</span><span class="b4-stat__sub">Federal charters relocate claims without curing non-deposit or D5 gaps</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Offshore dispersion</span><span class="b4-stat__val">Bermuda J7 vs El Salvador J8</span><span class="b4-stat__sub">Bermuda passes D1/D4/D5; El Salvador fails 6 of 7 dimensions</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Structural inapplicability (Fail*)</span><span class="b4-stat__val">J2 (D1/D5) &amp; J10 (7/7)</span><span class="b4-stat__sub">Separates no-custodied-asset / no-entity from weak statutory regimes</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Structural inapplicability (Fail*)</span><span class="b4-stat__val">J2 (D1/D5) &amp; J10 (7/7)</span><span class="b4-stat__sub">J2 marks D1 and D5 inapplicable (a deposit has no separate customer asset). J10 marks all 7 dimensions inapplicable (no legal entity).</span></div>';
       } else {
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Highest international score</span><span class="b4-stat__val">J14A: ADGM (6/7 Pass)</span><span class="b4-stat__sub">Deemed trust + S263(2) insolvency primacy + UNCITRAL Model Law</span></div>' +
@@ -9716,7 +9717,7 @@
       baseline: { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0, desc: '2026 baseline: issuers still keep the interest on Treasury reserves, and USDC and USDT remain the concentrated settlement dollars. Exchanges and routers control the app the user opens, and they can hold a transfer.' },
       control:  { c1: 2.0, c2: 1.5, c3: 1.5, i1: 0.5, i2: 1.0, i3: 1.0, desc: 'Many companies can issue. Wallets, exchanges, and automatic sweeps keep the routing income and the yield on idle balances.' },
       issuer:   { c1: 0.5, c2: 0.5, c3: 1.0, i1: 2.0, i2: 1.5, i3: 1.5, desc: 'One or two issuers dominate settlement, keep the interest on reserves, and decide who can mint and redeem directly.' },
-      bank:     { c1: 1.5, c2: 1.5, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.5, desc: 'The same bank owns the app the customer opens and the deposit behind the token. Both scores are high, so neither side leads.' }
+      bank:     { c1: 1.5, c2: 1.5, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.5, desc: 'The same bank owns the app the customer opens and the deposit behind the token. Both scores are high, and the reading stays split.' }
     };
 
     var activePreset = 'baseline';
@@ -9730,8 +9731,8 @@
       var iScore = state.i1 + state.i2 + state.i3;
       var diff = cScore - iScore;
 
-      var regime = 'Neither side leads';
-      var econOwner = 'The issuer keeps the interest on reserves, and the app keeps routing and sweep fees. Neither score leads.';
+      var regime = 'Split';
+      var econOwner = 'The issuer keeps the interest on reserves, and the app keeps routing and sweep fees. The two scores stay within 2, or both sit below 4.';
       if(cScore >= 4.0 && diff >= 2.0){
         regime = 'Control-dominant';
         econOwner = 'Apps, wallets, and routers keep the income: the default sweep, the yield wrapper, and the routing of the user\'s orders.';
@@ -9743,7 +9744,7 @@
       var signStr = diff > 0 ? ('ControlScore leads by ' + diff.toFixed(1)) : (diff < 0 ? ('IssuerScore leads by ' + (-diff).toFixed(1)) : 'The scores are even');
 
       sumEl.innerHTML =
-        '<div class="b4-stat"><span class="b4-stat__label">Reading</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">Needs 4 or more, and a lead of 2 or more. Otherwise neither side leads.</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Reading</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">A side leads at 4 or more, with a lead of 2. Otherwise the reading is split.</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">ControlScore, the app layer (0 to 6)</span><span class="b4-stat__val">' + cScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Regulated-app share ' + state.c1.toFixed(1) + ' + sweeps and wrappers ' + state.c2.toFixed(1) + ' + holds and freezes ' + state.c3.toFixed(1) + '</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">IssuerScore, the issuing company (0 to 6)</span><span class="b4-stat__val">' + iScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Concentrated dollar ' + state.i1.toFixed(1) + ' + issuer keeps reserve interest ' + state.i2.toFixed(1) + ' + issuer gates minting ' + state.i3.toFixed(1) + '</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Who is ahead</span><span class="b4-stat__val">' + signStr + '</span><span class="b4-stat__sub">' + econOwner + '</span></div>';
@@ -9944,6 +9945,11 @@
    ========================================================================== */
 (function(){
   function initAiControlExplorer(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     var root = document.getElementById('ai-control-explorer');
     if(!root) return;
     var curAdv = 'classes';
@@ -10044,13 +10050,7 @@
           { name: '9. External-record verifier & 10. Committed hook rule', pct: 62, badge: 'Apparent: Fresh live pass & active rule -> Measured: Timed-out stale buffer & old checkout hook bytes', note: 'Fix: Clear buffer + test known-false ID + emit could-not-determine; compare committed bytes vs live hook bytes' },
           { name: '11. Catalogued reading corpus growth (732 to 1,186 entries)', pct: 55, badge: 'Apparent: Unread gap shrinking -> Measured: 446 of 455 weekly additions marked unread', note: 'Fix: Separate catalog ingestion count from verified-read completion count' }
         ];
-        barsEl.innerHTML = sRows.map(function(r){
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.badge + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(sRows.map(function(r){ return { name: r.name, val: r.badge, note: r.note }; }));
       }
     }
 
@@ -10117,14 +10117,15 @@
     var objects = {
       stablecoin: {
         rulebook: 'GENIUS Act (PPSI) / State MTL / Trust',
-        claim: 'Contractual or statutory reserve claim (not a deposit)',
+        claim: 'A claim on reserves, by contract or statute',
         insolvency: 'GENIUS s.11 priority (when active); state/offshore split today',
         stress2am: 'On-chain swaps stay live; direct fiat mint/burn bottlenecked by banking hours',
-        bars: [
-          { label: '24/7 secondary-market & DeFi transferability', pct: 95, val: 'High (permissionless / blocklist)', note: 'Settles 24/7 on public chains, but par value can diverge during banking-hour reserve lockups (SVB 13% gap)' },
-          { label: 'Direct par redemption & banking-hour independence', pct: 55, val: 'Gateway-contingent', note: 'Direct mint/burn gated by whitelisted institutional accounts and commercial-bank wire rails' },
-          { label: 'Insolvency & customer-property protection (MVEP Cat 5)', pct: 50, val: 'Regime-dependent (J3 / J3F / J8)', note: 'Spans NYDFS trust/MTL (Partial), OCC uninsured trust (Ambiguous), to El Salvador (Fail)' },
-          { label: 'Yield pass-through to end holder', pct: 15, val: 'Prohibited (GENIUS s.4(a)(11))', note: 'Issuers retain Treasury reserve carry; yield migrates to wrappers, sweeps, or distributor revenue-share' }
+        rows: [
+          { q: 'What the holder owns', a: 'A claim on reserves, by contract or statute.', note: 'The holder\'s claim runs through the issuer. The reserve bank holds the assets.' },
+          { q: 'If the issuer fails', a: 'Holder priority under the GENIUS Act, once that provision is in effect. Until then it depends on the charter.', note: 'A New York trust, an uninsured national trust, and an offshore regime each put the holder in a different place in line.' },
+          { q: 'When banks are closed', a: 'Transfers on the public chain stay open. Turning the token into dollars waits on bank hours.', note: 'In the SVB weekend the exchange price moved off par, by about 13 percent.' },
+          { q: 'Can another institution settle it', a: 'On the secondary market, yes, subject to a blocklist. Direct mint and redeem runs through approved accounts and bank wires.', note: 'A secondary-market transfer moves the token. Redemption for dollars is a separate step.' },
+          { q: 'Does the holder receive the yield', a: 'The issuer keeps the interest on the reserves.', note: 'Yield shows up in wrappers and in fees to distributors.' }
         ]
       },
       tokdep: {
@@ -10132,11 +10133,12 @@
         claim: 'Direct deposit liability of the issuing commercial bank',
         insolvency: 'FDIC insurance (to $250k) + 12 USC 1821(d)(11) depositor preference',
         stress2am: 'Internal 24/7 book transfer; single-bank perimeter',
-        bars: [
-          { label: 'Insolvency & depositor-preference protection', pct: 90, val: 'Strong (FDI Act resolution)', note: 'Same legal liability, supervision, and resolution waterfall as a traditional bank deposit' },
-          { label: 'Same-bank 24/7 settlement & collateral mobility', pct: 85, val: 'High within issuing bank', note: 'Eliminates weekend cutoff inside the bank ledger mirror for internal treasury and margin moves' },
-          { label: 'Cross-bank fungibility & open-network composability', pct: 20, val: 'Low (non-fungible single-bank)', note: 'An HSBC tokenized deposit is redeemable only at HSBC; does not settle across external institutions' },
-          { label: 'Public disclosure & on-chain change-control transparency', pct: 40, val: 'Permissioned / bilateral', note: 'Operates on bank-controlled permissioned instances without public timelocks' }
+        rows: [
+          { q: 'What the holder owns', a: 'A deposit at that one bank.', note: 'The token is a new record of a liability the bank already had. An HSBC token is an HSBC deposit.' },
+          { q: 'If the issuer fails', a: 'The same protection as that bank\'s other deposits: FDIC insurance up to $250,000, then depositor preference.', note: 'The answer is a bank-failure rule, stated in statute.' },
+          { q: 'When banks are closed', a: 'Moves inside that bank can run around the clock.', note: 'The use is internal: intraday cash, collateral, and transfers on that bank\'s own books.' },
+          { q: 'Can another institution settle it', a: 'Redeemable only at the bank that issued it.', note: 'Settlement stays on that bank\'s books.' },
+          { q: 'Does the holder receive the yield', a: 'Any interest is that bank\'s deposit rate.', note: 'A money-market fund passes portfolio yield to the holder. This token carries the bank\'s own deposit terms.' }
         ]
       },
       deptok: {
@@ -10144,11 +10146,12 @@
         claim: 'Fungible bank deposit liability on a dedicated multi-bank ledger',
         insolvency: 'FDIA depositor preference (J2); MVEP Legal & Economic Indeterminate (3.7)',
         stress2am: '24/7 interbank settlement across accepting institutions',
-        bars: [
-          { label: 'Legal & economic equivalence profile (MVEP Exhibit 3)', pct: 74, val: '3.7 / 5.0 (Indeterminate)', note: 'JPMD is the sole product in the 14-product MVEP sample not failing Category 1 Rights Parity' },
-          { label: 'Cross-institution settlement & wholesale fungibility', pct: 80, val: 'Multi-bank rail (JPMD / DBS / BNY)', note: 'Designed to settle across accepting banks rather than remaining locked to one core ledger' },
-          { label: 'Market-structure concentration risk (Three Strategies)', pct: 85, val: 'High (24-month tipping dynamics)', note: 'Without neutral clearing (Ubyx-style), network effects tip settlement toward a single bank issuer' },
-          { label: 'On-chain governance & public disclosure (MVEP Cat 8 & 9)', pct: 35, val: 'Binding constraint (3.0 Op.)', note: 'Held back from full equivalence by unilateral bank operator override and non-public rulebooks' }
+        rows: [
+          { q: 'What the holder owns', a: 'A bank deposit recorded on a ledger other banks can accept.', note: 'It is built to be fungible across institutions. JPMD is the example.' },
+          { q: 'If the issuer fails', a: 'Depositor preference if the issuing bank fails. On the MVEP scorecard, JPMD is Indeterminate: 3.7 out of 5.', note: 'That 3.7 is a diligence grade on a 0-to-5 scale. JPMD is the only product in the 14-product sample that clears the rights-parity test.' },
+          { q: 'When banks are closed', a: 'Can settle around the clock among banks that accept the rail.', note: 'The weekend question is which banks have agreed to take it.' },
+          { q: 'Can another institution settle it', a: 'Yes, at banks that have agreed to take it. The path being built includes JPMorgan, DBS, and BNY.', note: 'If one token becomes the default, settlement can concentrate in one bank. Several accepted tokens would be a network instead.' },
+          { q: 'Does the holder receive the yield', a: 'The design answers who else will settle the deposit.', note: 'Interest on reserves stays its own question, beside which banks will accept the token.' }
         ]
       },
       mmf: {
@@ -10156,11 +10159,12 @@
         claim: 'Beneficial fund share, LP interest, or secured note',
         insolvency: '7/7 Pass for 1940 Act (BENJI J1); Ambiguous for BVI/LP (BUIDL J5, OUSG J4)',
         stress2am: '2am Saturday margin-call gap: finite USDC pool vs Monday NAV',
-        bars: [
-          { label: 'Statutory asset segregation & insolvency posture (1940 Act J1)', pct: 100, val: '7/7 Pass (BENJI 3.5 overall)', note: 'ICA s.17(f) qualified custody and s.18(f)(1) capital structure; offshore BVI/Cayman wrappers score lower' },
-          { label: 'Holder yield & Treasury carry pass-through', pct: 95, val: 'Direct NAV / dividend accrual', note: 'Primary destination for yield when payment stablecoins are barred from paying interest' },
-          { label: '2am Saturday collateral liquidation (MVEP Cat 10)', pct: 45, val: 'Constrained by pool & whitelist', note: 'Instant-redemption pools (BUIDL -> USDC) are finite and inherit recursive USDC settlement risk' },
-          { label: 'Counterparty transparency in off-exchange margin pools', pct: 30, val: 'Opaque commingling risk', note: 'USYC, BUIDL, and BENJI accepted in off-exchange margin pools without counterparty election' }
+        rows: [
+          { q: 'What the holder owns', a: 'A fund share, a partnership interest, or a secured note, depending on the wrapper.', note: 'BENJI, BUIDL, and OUSG each use their own legal claim.' },
+          { q: 'If the issuer fails', a: 'A 1940 Act fund such as BENJI passes the insolvency tests used in MVEP. BUIDL and OUSG, as offshore or private wrappers, come out ambiguous on that matrix.', note: 'BENJI is a 7-of-7 pass. BUIDL and OUSG stay in the ambiguous column.' },
+          { q: 'When banks are closed', a: 'A Saturday margin call meets a limited pool of stablecoins and a net asset value that waits until markets open.', note: 'Instant redemption, where it exists, is only as large as that pool.' },
+          { q: 'Can another institution settle it', a: 'Only up to the pool and the whitelist. The cash it turns into is often a stablecoin.', note: 'The stablecoin weekend limit comes with the wrapper. USYC, BUIDL, and BENJI can also sit in margin pools without the holder choosing the counterparty.' },
+          { q: 'Does the holder receive the yield', a: 'Yes. The holder receives the fund value or its dividend.', note: 'This is where yield goes when a payment stablecoin keeps the reserve interest.' }
         ]
       }
     };
@@ -10249,13 +10253,15 @@
         '<div class="b4-stat"><span class="b4-stat__label">Insolvency posture</span><span class="b4-stat__val">' + d.insolvency + '</span><span class="b4-stat__sub">MVEP Category 5 treatment if issuer or bank fails</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">2am Saturday stress behavior</span><span class="b4-stat__val">' + d.stress2am + '</span><span class="b4-stat__sub">Off-hours liquidity and conversion bottleneck</span></div>';
 
-      barsEl.innerHTML = d.bars.map(function(b){
-        return '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
-          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
-          '<div class="b4-bar-row__meta">' + b.note + '</div>' +
-        '</div>';
-      }).join('');
+      barsEl.innerHTML = '<ol class="fg-route">' + (d.rows || []).map(function(row, i){
+        return '<li class="fg-route__step">' +
+          '<span class="fg-route__num">' + (i + 1) + '</span>' +
+          '<div class="fg-route__body">' +
+            '<p class="fg-route__name">' + row.q + '</p>' +
+            '<p class="fg-route__q">' + row.a + '</p>' +
+            '<p class="fg-route__ask">' + row.note + '</p>' +
+          '</div></li>';
+      }).join('') + '</ol>';
     }
 
     function renderRouter(){
@@ -10348,6 +10354,17 @@
    ========================================================================== */
 (function(){
   function initAiFrameworkExplorer(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
+    function pairList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(r){
+        var dim = r.dim.charAt(0).toUpperCase() + r.dim.slice(1);
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + r.cat + '</p><p class="fg-route__q">' + dim + '</p><p class="fg-route__tool">Tokenized asset (MVEP): ' + r.tok + '</p><p class="fg-route__ask">AI operator (MVEP-AI): ' + r.ai + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     var root = document.getElementById('ai-framework-explorer');
     if(!root) return;
     var curCls = 'agentic';
@@ -10441,13 +10458,7 @@
         '<div class="b4-stat"><span class="b4-stat__label">MVEP-AI gate posture</span><span class="b4-stat__val">' + c.gate + '</span><span class="b4-stat__sub">Non-compensatory floor across 10 categories</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Primary failure seam</span><span class="b4-stat__val">' + c.seam + '</span><span class="b4-stat__sub">Where advisory rules fail without hard gates</span></div>';
 
-      barsEl.innerHTML = c.bars.map(function(b){
-        return '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
-          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
-          '<div class="b4-bar-row__meta">' + b.note + '</div>' +
-        '</div>';
-      }).join('');
+      barsEl.innerHTML = readingList(c.bars.map(function(b){ return { name: b.label, val: b.val, note: b.note }; }));
     }
 
     function renderCrosswalk(){
@@ -10461,13 +10472,7 @@
         '<div class="b4-stat"><span class="b4-stat__label">Patent-pending coverage</span><span class="b4-stat__val">42 USPTO filings</span><span class="b4-stat__sub">32 patent families across staging, provenance, leases &amp; verifiers</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Regulatory application</span><span class="b4-stat__val">FSB AI Sound Practices</span><span class="b4-stat__sub">Submitted July 2026; paired with x402 SSRN working paper</span></div>';
 
-      barsEl.innerHTML = filtered.map(function(r){
-        return '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.cat + '</span><span class="b4-bar-row__val">' + r.dim.toUpperCase() + '</span></div>' +
-          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
-          '<div class="b4-bar-row__meta"><strong>Tokenized asset (MVEP):</strong> ' + r.tok + ' · <strong>AI operator (MVEP-AI):</strong> ' + r.ai + '</div>' +
-        '</div>';
-      }).join('');
+      barsEl.innerHTML = pairList(filtered);
     }
 
     root.addEventListener('click', function(e){
@@ -10525,6 +10530,11 @@
    ========================================================================== */
 (function(){
   function initBriefingExplorers(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     /* 1. OUSD Yield Boundary (#ousd-yield-explorer) */
     var ousdRoot = document.getElementById('ousd-yield-explorer');
     if(ousdRoot){
@@ -10635,13 +10645,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Holder-facing yield</span><span class="b4-stat__val">' + s.holderPay + '</span><span class="b4-stat__sub">Direct or indirect return to end stablecoin holder</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Statutory &amp; rule posture</span><span class="b4-stat__val">' + s.exposure + '</span><span class="b4-stat__sub">Read across GENIUS, OCC, FDIC, and CLARITY texts</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">CEA bank-lending benchmark</span><span class="b4-stat__val">+$2.1B (~0.02% loans)</span><span class="b4-stat__sub">Yield ban shifts who captures reserve carry, not aggregate bank credit</span></div>';
-        barsEl.innerHTML = s.bars.map(function(b){
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.text + '</span><span class="b4-bar-row__val">' + b.badge + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(s.bars.map(function(b){ return { name: b.text, val: b.badge, note: b.note }; }));
       }
 
       function renderOusdMoves(){
@@ -10654,13 +10658,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">OUSD 1-hop outcome</span><span class="b4-stat__val">' + m.ousdStatus + '</span><span class="b4-stat__sub">140+ partner consortium revenue-share model</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">2-hop rewards outcome</span><span class="b4-stat__val">' + m.usdcStatus + '</span><span class="b4-stat__sub">Bilateral issuer-to-exchange customer reward model</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Market-structure consequence</span><span class="b4-stat__val">' + m.shift + '</span><span class="b4-stat__sub">Competitive impact on distribution economics</span></div>';
-        barsEl.innerHTML = m.bars.map(function(b){
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.label + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(m.bars.map(function(b){ return { name: b.label, val: b.val, note: b.note }; }));
       }
 
       ousdRoot.addEventListener('click', function(e){
@@ -10735,13 +10733,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Direct or partial MVEP coverage</span><span class="b4-stat__val">8 of 12 principles</span><span class="b4-stat__sub">4 direct overlaps + 4 partial overlaps with MVEP v9</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">MVEP v2 expansion shortlist</span><span class="b4-stat__val">3 operator gap candidates</span><span class="b4-stat__sub">Multi-Bank/Multi-Issuer, Interoperability, and Confidentiality</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Deposit-token tipping horizon</span><span class="b4-stat__val">24 months</span><span class="b4-stat__sub">Window before settlement consolidates without neutral clearing</span></div>';
-        barsEl.innerHTML = list.map(function(r){
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.mvep + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + r.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(list.map(function(r){ return { name: r.name, val: r.mvep, note: r.note }; }));
       }
 
       tcmagRoot.addEventListener('click', function(e){
@@ -10810,13 +10802,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Backed xStocks</span><span class="b4-stat__val">' + d.bx + '</span><span class="b4-stat__sub">Open ERC-20 / Solana SPL tracker certificate model</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Governance &amp; corporate actions</span><span class="b4-stat__val">' + d.vote + '</span><span class="b4-stat__sub">Rights parity vs underlying US NMS common stock</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Primary protection / trade-off</span><span class="b4-stat__val">' + d.protection + '</span><span class="b4-stat__sub">Continuity inside one broker vs open network effects</span></div>';
-        barsEl.innerHTML = d.bars.map(function(b){
-          return '<div class="b4-bar-row">' +
-            '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div>' +
-            '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div>' +
-            '<div class="b4-bar-row__meta">' + b.note + '</div>' +
-          '</div>';
-        }).join('');
+        barsEl.innerHTML = readingList(d.bars);
       }
 
       function renderEqScen(){
@@ -10888,6 +10874,11 @@
    ========================================================================== */
 (function(){
   function initWave3Explorers(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     /* 1. Oracle Problem in Stablecoin Ratings (#oracle-ratings-explorer) */
     var oraRoot = document.getElementById('oracle-ratings-explorer');
     if(oraRoot){
@@ -10907,9 +10898,7 @@
             { name: 'Griffin & Tang (2012): 916 CDOs out-of-model AAA tranche adjustment', pct: 88, val: '+12.1% AAA size | -20.1% valuation gap', note: 'Had the rater followed its own model without positive adjustments, AAA tranches would have averaged BBB' },
             { name: 'Voluntary stablecoin rating selection (Offshore / non-chartered pull)', pct: 75, val: 'Seller-commissioned marketing signal', note: 'Issuers choose whether to seek and pay for a score; strongest pull for issuers outside domestic bank charters' }
           ];
-          barsEl.innerHTML = rows.map(function(r){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div><div class="b4-bar-row__meta">' + r.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(rows);
         } else {
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">New automation surface</span><span class="b4-stat__val">Zero human circuit-breaker</span><span class="b4-stat__sub">Smart contracts read on-chain feeds directly into LTV &amp; haircuts</span></div>' +
@@ -10921,9 +10910,7 @@
             { name: '2. Monitoring cadence lag vs stablecoin stress speed', pct: 85, val: 'Monthly/periodic vs 48-hour SVB gap', note: 'Periodic rating reviews and monthly reserve attestations lag intraday banking or peg shocks' },
             { name: '3. OUSD distributor-funded consortium loop (140+ partners)', pct: 80, val: 'Funder = Amplifier = Automated Consumer', note: 'Consortium partners receiving reserve revenue share overlap with the DeFi lending protocols consuming the on-chain score' }
           ];
-          barsEl.innerHTML = cRows.map(function(r){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div><div class="b4-bar-row__meta">' + r.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(cRows);
         }
       }
 
@@ -10944,9 +10931,7 @@
           { name: 'Pattern 5: Same facts, different reporting (USDC, PYUSD, USDG)', pct: 70, val: 'MVEP: Partial + re-score trigger · Rating: Binary gate · Disagreement: Yes (Epistemic)', note: 'GENIUS Act segregation is enacted but dormant until effective date; Circle S-1 concedes holder priority is untested' },
           { name: 'Pattern 6: Off-exchange collateral wrappers (USYC, BUIDL, OUSG, USDY)', pct: 65, val: 'MVEP: Graded 7 dims + recursive CSA · Rating: Out of scope · Disagreement: Yes (Detail)', note: 'MVEP tests composed redemption chains (BUIDL/OUSG -> USDC) and 2am Saturday collateral operability' }
         ];
-        barsEl.innerHTML = pRows.map(function(r){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + r.name + '</span><span class="b4-bar-row__val">' + r.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + r.pct + '%"></div></div><div class="b4-bar-row__meta">' + r.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(pRows);
       }
 
       oraRoot.addEventListener('click', function(e){
@@ -10987,9 +10972,9 @@
       var eqData = {
         router: {
           chokepoint: 'Front-end interfaces, wallet routers, and sweep engines',
-          rent: 'Distribution layer captures float, routing spreads, and wrapper fees',
+          rent: 'Apps, wallets, and routers keep the routing fees, the default sweep, and the wrapper yield',
           liability: 'High false-positive / freeze-appeal burden at the app and router layer',
-          tdrc: 'Control-Dominant (ControlScore >= 4, beats IssuerScore by >= 2)',
+          tdrc: 'Control-dominant: ControlScore at least 4, and ahead of IssuerScore by at least 2',
           bars: [
             { name: 'Obligated-interface share & default routing control', pct: 92, val: 'Primary enforcement surface', note: 'Compliance attaches where users initiate swaps, sweeps, and transfers; regulated routers emerge as gatekeepers' },
             { name: 'Yield migration into automated cash wrappers & sweeps', pct: 88, val: 'High wrapper capture', note: 'With token-level yield barred by GENIUS, wallets and brokers capture economics via default sweep allocation' },
@@ -10998,9 +10983,9 @@
         },
         issuer: {
           chokepoint: 'Permitted Payment Stablecoin Issuers (PPSIs) & reserve custodians',
-          rent: 'Issuers retain Treasury bill reserve spread and direct mint/burn fees',
+          rent: 'Issuers keep the interest on Treasury reserves, and the fees to mint and redeem',
           liability: 'Contract-level blacklist (addBlackList) & primary redemption KYC',
-          tdrc: 'Issuer-Dominant (IssuerScore >= 4, beats ControlScore by >= 2)',
+          tdrc: 'Issuer-dominant: IssuerScore at least 4, and ahead of ControlScore by at least 2',
           bars: [
             { name: 'Reserve carry retention & settlement-object concentration', pct: 90, val: 'High issuer spread capture', note: 'Two dominant issuers capture Treasury bill float while interfaces remain thin pass-throughs' },
             { name: 'Token-contract freeze & lawful-order compliance (GENIUS s.4)', pct: 85, val: 'Issuer-level admin key', note: 'Supervisory obligations concentrate at mint/burn onboarding and contract-level sanctions blacklists' },
@@ -11027,12 +11012,12 @@
         var d = eqData[curEq] || eqData.router;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Compelled chokepoint</span><span class="b4-stat__val">' + d.chokepoint + '</span><span class="b4-stat__sub">Where CLARITY obligations bind in practice</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Value &amp; float capture</span><span class="b4-stat__val">' + d.rent + '</span><span class="b4-stat__sub">Commercial winner under this equilibrium</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Who keeps the income</span><span class="b4-stat__val">' + d.rent + '</span><span class="b4-stat__sub">Same question as the regime classifier on the frameworks page</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Operational liability</span><span class="b4-stat__val">' + d.liability + '</span><span class="b4-stat__sub">Primary compliance and tail-risk burden</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Corresponding TDRC regime</span><span class="b4-stat__val">' + d.tdrc + '</span><span class="b4-stat__sub">Link to Tokenized Dollar Regime Classifier</span></div>';
-        barsEl.innerHTML = d.bars.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = '<ol class="fg-route">' + d.bars.map(function(b, i){
+          return '<li class="fg-route__step"><span class="fg-route__num">' + (i + 1) + '</span><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+        }).join('') + '</ol>';
       }
 
       function renderClwMet(){
@@ -11051,9 +11036,9 @@
           { name: '6. Share of flows via compliant defaults & 7. Case-documentation quality', pct: 82, val: 'Routing coverage', note: 'Tracks default sweep/router penetration and evidentiary completeness per freeze event' },
           { name: '8. Audit-log completeness (Tamper evidence) & 9. Override governance', pct: 90, val: 'Accountability trail', note: 'Requires named signer attribution and post-incident audit for every emergency override' }
         ];
-        barsEl.innerHTML = mRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = '<ol class="fg-route">' + mRows.map(function(b, i){
+          return '<li class="fg-route__step"><span class="fg-route__num">' + (i + 1) + '</span><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+        }).join('') + '</ol>';
       }
 
       clwRoot.addEventListener('click', function(e){
@@ -11108,9 +11093,7 @@
             { name: 'Lever 4: Offshore dollar perimeter (Treasury GENIUS s.3 / s.8 foreign issuer rules)', pct: 82, val: 'USDT vs US-regulated gateways', note: 'Determines whether offshore coins can route through US interfaces or remain segmented offshore' },
             { name: 'Lever 5: Open public spine vs private walled-garden bank ledgers', pct: 85, val: 'Interoperability determinant', note: 'Decides whether deposit tokens achieve cross-bank fungibility or fragment into single-bank islands' }
           ];
-          barsEl.innerHTML = lRows.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(lRows);
         } else {
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">Anchor Fed study</span><span class="b4-stat__val">Dec 17, 2025 FEDS Note</span><span class="b4-stat__sub">Du, Sonawane, and Watsky (DOI 10.17016/2380-7172.3958)</span></div>' +
@@ -11122,9 +11105,7 @@
             { name: '2. Deposit recycling (Reserves redeposited as commercial-bank demand deposits)', pct: 50, val: 'Circle ~14% / Gemini ~100%', note: 'Keeps funding inside the banking system, but concentrates it at a small number of crypto-serving banks' },
             { name: '3. Deposit restructuring (Retail insured deposits -> Uninsured wholesale issuer balances)', pct: 95, val: 'High runoff sensitivity (SVB $3.3B lesson)', note: 'Even when aggregate deposits stay flat, funding mutates into concentrated, runnable wholesale balances' }
           ];
-          barsEl.innerHTML = dRows.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(dRows);
         }
       }
 
@@ -11136,16 +11117,14 @@
           '<div class="b4-stat"><span class="b4-stat__label">Rights minimum viable spec</span><span class="b4-stat__val">5 citizen protections</span><span class="b4-stat__sub">Due-process freezes, data minimization, privacy zone, portability, transparency</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Practical evaluation rubric</span><span class="b4-stat__val">7 scoreboard criteria</span><span class="b4-stat__sub">Pairs normative user rights with institutional MVEP/CLII diligence</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Point-of-use disclosure</span><span class="b4-stat__val">3CRD template</span><span class="b4-stat__sub">Legal claim, reserve composition, and custody location at the wallet surface</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Commercial equilibrium test</span><span class="b4-stat__val">Float vs Home Screen</span><span class="b4-stat__sub">Tracked quantitatively via the TDRC 0-to-6 classifier</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Who keeps the income</span><span class="b4-stat__val">TDRC, 0 to 6</span><span class="b4-stat__sub">Same classifier as the frameworks page: the app, or the issuer</span></div>';
         var rRows = [
           { name: '1. Par redemption & 2. Clear insolvency claim priority (MVEP Cat 1, 5 & 6)', pct: 95, val: 'Core legal/economic floor', note: '1:1 convertibility under stress and statutory holder priority without administrative-insolvency traps' },
           { name: '3. Reserve transparency & 4. Stress-tested weekend liquidity (3CRD + MVEP Cat 4 & 10)', pct: 90, val: 'Custody & 2am Saturday readiness', note: 'Named reserve banks, custodian concentration caps, and 24/7 conversion paths' },
           { name: '5. Due-process freezes & 6. Small-value privacy / data minimization', pct: 85, val: 'Constitutional & user-rights floor', note: 'Notice, appeal SLAs, and time limits on holds; protection against warrantless bulk surveillance' },
           { name: '7. Real portability, cross-rail interoperability & macro-stability monitoring', pct: 88, val: 'Open-network anti-lock-in', note: 'Ability to move balances across wallets and banks without punitive exit fees or walled-garden lock-in' }
         ];
-        barsEl.innerHTML = rRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(rRows);
       }
 
       dv3Root.addEventListener('click', function(e){
@@ -11251,9 +11230,7 @@
             { name: 'payAI: 178,083 payments | $11,064 USD', pct: 5.9, val: '5.9% count share · 1.7% value share', note: 'Third-largest count facilitator on Base in May 2026' },
             { name: 'relai & all others: 61,948 payments | $43,107 USD', pct: 6.6, val: '2.0% count share · 6.6% value share', note: 'Long tail across remaining registered Base facilitators' }
           ];
-          barsEl.innerHTML = fRows.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(fRows);
         }
       }
 
@@ -11360,9 +11337,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Typical duration</span><span class="b4-stat__val">' + t.timeline + '</span><span class="b4-stat__sub">Starts with 30-min intro call &amp; 1-page scope</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Core deliverable</span><span class="b4-stat__val">' + t.deliverable + '</span><span class="b4-stat__sub">Artifact-forward output</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Anchor track record</span><span class="b4-stat__val">' + t.proof + '</span><span class="b4-stat__sub">Publicly verifiable evidence base</span></div>';
-        barsEl.innerHTML = t.bars.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(t.bars);
       }
 
       function renderAdvTlk(){
@@ -11379,9 +11354,7 @@
           { name: 'TS-WORKSHOP-DILIGENCE: Institutional Diligence Session: Applying MVEP (45 to 60m)', pct: 80, val: 'MVEP 10 Categories + Exhibits 1 to 3', note: 'Walks committees through non-compensatory equivalence scoring, 20 insolvency regimes, and the 2am Saturday test' },
           { name: 'TS-WORKSHOP-BUILDER: Builder Workshop: Tokenomics, Governance & Diligence (60 to 90m)', pct: 100, val: 'Adaptive Tokenomics + Operational Risk + S2R', note: 'Stress-tests reserve design, redemption paths, PID emissions, and PCA-corrected governance concentration' }
         ];
-        barsEl.innerHTML = tRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(tRows);
       }
 
       advRoot.addEventListener('click', function(e){
@@ -11512,9 +11485,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">Target hiring context</span><span class="b4-stat__val">' + r.mandate + '</span><span class="b4-stat__sub">Decision-maker alignment</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Headline quantitative proof</span><span class="b4-stat__val">' + r.proof + '</span><span class="b4-stat__sub">Verified production &amp; research metrics</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Core frameworks applied</span><span class="b4-stat__val">' + r.frameworks + '</span><span class="b4-stat__sub">Reusable diagnostic instruments</span></div>';
-          barsEl.innerHTML = r.bars.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(r.bars);
         }
 
         resRoot.addEventListener('click', function(e){
@@ -11545,7 +11516,12 @@
    Wave 4 Hub Explorers: Letters, GENIUS Act Tracker, Patents & Data Catalog
    ========================================================================== */
 (function(){
-  function initWave4Explorers(){
+    function initWave4Explorers(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     /* 1. Letters Program Explorer (#letters-program-explorer) */
     var letRoot = document.getElementById('letters-program-explorer');
     if(letRoot){
@@ -11570,9 +11546,7 @@
             { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 15 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
             { name: 'Financial Stability Board (International consultation: Sound Practices for Responsible Adoption of AI)', pct: 25, val: '1 international response (All 7 Qs)', note: 'Introduces CLII-AI, MVEP-AI, and the live x402 agentic-payments settlement census to global supervisors' }
           ];
-          barsEl.innerHTML = aRows.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(aRows);
         } else {
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">CLII invocations</span><span class="b4-stat__val">19 letters</span><span class="b4-stat__sub">5-dimension operator regulatory intensity &amp; drift index</span></div>' +
@@ -11580,14 +11554,12 @@
             '<div class="b4-stat"><span class="b4-stat__label">Control-layer &amp; 3CRD / MGCPT</span><span class="b4-stat__val">11 letters</span><span class="b4-stat__sub">Point-of-use reserve disclosure &amp; pass-through gating</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB + SEC 4-927</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
           var fRows = [
-            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '19 of 25 federal letters (+FSB)', note: 'Separates where regulatory obligations attach (licensing, transparency, freeze, compliance, geo) from product stress resilience' },
+            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '19 of 25 federal letters (+FSB)', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
             { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '15 of 25 federal letters (+FSB)', note: 'Tests Legal, Operational, and Economic equivalence; adopted in OCC, FDIC, NCUA, SEC, and CFTC collateral filings' },
             { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 44, val: '11 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
             { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 32, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
-          barsEl.innerHTML = fRows.map(function(b){
-            return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-          }).join('');
+          barsEl.innerHTML = readingList(fRows);
         }
       }
 
@@ -11607,9 +11579,7 @@
           { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure (AG21, AG27, AG30)', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
           { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' }
         ];
-        barsEl.innerHTML = cRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(cRows);
       }
 
       letRoot.addEventListener('click', function(e){
@@ -11663,9 +11633,7 @@
           { name: 'NCUA (2 NPRMs: RIN 3133-AF69 PPSI licensing, RIN 3133-AG10 credit-union stablecoin standards)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts PPSI supervision and reserve rules to federally insured credit unions' },
           { name: 'Board of Governors of the Federal Reserve System (2 NPRMs: Docket R-1899 reserve/capital & subsidiary application)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
         ];
-        barsEl.innerHTML = gRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(gRows);
       }
 
       function renderGenSt(){
@@ -11679,14 +11647,12 @@
           '<div class="b4-stat"><span class="b4-stat__label">Section 3 DASP restriction</span><span class="b4-stat__val">July 18, 2028</span><span class="b4-stat__sub">3 years post-enactment: US platforms limited to PPSI coins</span></div>';
         var sRows = [
           { name: 'Milestone 1: July 18, 2025 (GENIUS Act Enactment, Pub. L. 119-27)', pct: 100, val: 'Completed (Month 0)', note: 'Sets federal PPSI perimeter, 1:1 liquid reserve mandate, Bankruptcy Code holder priority, and Section 4(a)(11) yield ban' },
-          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (proposals still pending)', note: 'Because final rules were not issued within 8 months of enactment, the 120-day prong could not precede January 18, 2027' },
+          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (proposals still pending)', note: 'Final rules missed the eight-month mark, so the 120-day prong falls on January 18, 2027 or later.' },
           { name: 'Milestone 3: November 30, 2026 (Federal Reserve R-1899 & Treasury s.4(c) IFR Comment Close)', pct: 82, val: 'Active window (Month 16)', note: 'Concludes initial notice-and-comment across all primary federal payment stablecoin regulators' },
-          { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: '18-month prong of the Section 20 formula governs automatically because final rules did not land before September 20, 2026' },
+          { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: 'The 18-month prong of Section 20 sets the effective date at January 18, 2027. Final rules were still open on September 20, 2026.' },
           { name: 'Milestone 5: July 18, 2028 (Section 3 Digital Asset Service Provider Perimeter Lock)', pct: 40, val: 'Month 36 enforcement gate', note: 'Three years after enactment, DASPs may offer or sell to U.S. persons only payment stablecoins issued by qualified PPSIs or compliant foreign issuers' }
         ];
-        barsEl.innerHTML = sRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(sRows);
       }
 
       genRoot.addEventListener('click', function(e){
@@ -11749,9 +11715,7 @@
           { name: 'Operational Risk in Token Economies (/papers/operational-risk/) -> Area 6', pct: 88, val: '64/128,867 · 64/135,014', note: 'Formalizes the self-calibrating reputation-recovery threshold that prevents threshold-induced governance collapse under validator downtime' },
           { name: 'MVEP & 25-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
         ];
-        barsEl.innerHTML = ppRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(ppRows);
       }
 
       patRoot.addEventListener('click', function(e){
@@ -11808,9 +11772,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">23 live across site</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Content &amp; data licence</span><span class="b4-stat__val">CC BY 4.0</span><span class="b4-stat__sub">Free to reuse with attribution and link; code per repo licence</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">42 pages (APA + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers &amp; 26 letters</span></div>';
-        barsEl.innerHTML = list.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.badge + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(list.map(function(b){ return { name: b.name, val: b.badge, note: b.note }; }));
       }
 
       datRoot.addEventListener('click', function(e){
@@ -11842,6 +11804,11 @@
    ========================================================================== */
 (function(){
   function initWave5Upgrades(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     /* 1. 136-Recommendation Index Breakdown Explorer (#recs-breakdown-explorer) + Export Actions */
     var recsRoot = document.getElementById('recs-breakdown-explorer');
     if(recsRoot){
@@ -11863,9 +11830,7 @@
           { name: '7. Custody and collateral (16) & 8. Sanctions compliance (14)', pct: 48, val: '16 Custody · 14 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and GENIUS Section 1033.240 freeze/block/reject capability' },
           { name: '9. Redemption (11), 10. Other (10), 11. Insolvency (8), 12. Deposit insurance (7), 13. Capital (2)', pct: 33, val: '38 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
         ];
-        barsEl.innerHTML = tRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(tRows);
       }
 
       function renderRecsAgencies(){
@@ -11886,9 +11851,7 @@
           { name: 'NCUA (2 letters: RIN 3133-AG10 + routing supplement) & Federal Reserve Board (Docket R-1835)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
           { name: 'Joint Banking Agencies (91 FR 18304) & CFTC (OMB 3038-0076 DCO requirements)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized DCO margin' }
         ];
-        barsEl.innerHTML = agRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(agRows);
       }
 
       recsRoot.addEventListener('click', function(e){
@@ -11960,9 +11923,7 @@
           { name: 'Letter No. 22 & No. 24: Treasury GENIUS Section 3 Issuance, Offer & Sale (TREAS-DO-2026-0496)', pct: 88, val: '7 recommendations + supplemental · Oct 13 & 19', note: 'Grounds proposed s.1523.3(c) foreign-issuer technical capability in deployed contract code and keys s.8 checks to published determinations' },
           { name: 'Letter No. 25: SEC Tokenized NMS Stock Conditional Exemptions (File No. 4-927, Rel. 34-106402)', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Requires Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
         ];
-        barsEl.innerHTML = o19Rows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(o19Rows);
       }
 
       function renderNotO12(){
@@ -11975,9 +11936,9 @@
           '<div class="b4-stat"><span class="b4-stat__label">Binding effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">18-month statutory prong governs automatically post-Sep 20</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Open comment windows</span><span class="b4-stat__val">Through Nov 30, 2026</span><span class="b4-stat__sub">Federal Reserve R-1899 + companion &amp; Treasury s.4(c) IFR</span></div>';
         var o12Rows = [
-          { name: 'Awaiting final action (11 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 79, val: '11 of 14 rulemakings (78.6%)', note: 'Spans OCC AF41/AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
-          { name: 'Open for public comment (Federal Reserve Board Docket R-1899 & subsidiary application proposal)', pct: 14, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
-          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' }
+          { name: 'Awaiting final action (11 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 78.6, val: '11 of 14 rulemakings (78.6%)', note: 'Spans OCC AF41/AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
+          { name: 'Open for public comment (Federal Reserve Board Docket R-1899 & subsidiary application proposal)', pct: 14.3, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
+          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' }
         ];
         barsEl.innerHTML = o12Rows.map(function(b){
           return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
@@ -12217,6 +12178,11 @@
    ========================================================================== */
 (function(){
   function initWave6Upgrades(){
+    function readingList(rows){
+      return '<ul class="fg-route fg-route--plain">' + rows.map(function(b){
+        return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
+      }).join('') + '</ul>';
+    }
     /* 1. Contact Brief & Scope Builder (#contact-scope-builder) */
     var csbRoot = document.getElementById('contact-scope-builder');
     if(csbRoot){
@@ -12456,13 +12422,11 @@
           '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">42 USPTO applications</span><span class="b4-stat__sub">Across 32 patent families · 68,000+ commits · 99.56% gate hold</span></div>';
         var pRows = [
           { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 7 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
-          { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '12 scoring & gating tools', note: 'Separates operator regulatory obligations (CLII) from non-compensatory product equivalence under stress (MVEP)' },
+          { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '12 scoring & gating tools', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
           { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '25 federal comment letters · 136 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
           { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '42 USPTO filings across 32 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 13,098 hard-gate stops' }
         ];
-        barsEl.innerHTML = pRows.map(function(b){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = readingList(pRows);
       }
 
       function renderAbtCite(){

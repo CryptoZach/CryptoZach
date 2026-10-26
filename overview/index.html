@@ -530,8 +530,8 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
 
     <section class="reveal" id="dollar-objects" aria-labelledby="three-objects-title">
       <div class="section-title">
-        <h2 id="three-objects-title">Four dollar objects, four rulebooks</h2>
-        <p>The same wallet can hold four products that look similar in calm conditions but behave very differently under stress.</p>
+        <h2 id="three-objects-title">Four dollar objects, three rulebooks</h2>
+        <p>The same wallet can hold four products that look similar in calm conditions but behave very differently under stress. Payment stablecoins, bank liabilities, and investment products are the three rulebooks. Banking law covers two of the four objects.</p>
       </div>
 
       <div class="grid grid--halves dollar-objects-grid">
@@ -568,17 +568,17 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </article>
         <article class="card card--dollar-object card--accent-d">
           <p class="card-eyebrow">Investment product &middot; Cash management</p>
-          <h3>Tokenized money-market funds, wrappers, and sweeps</h3>
-          <p>Investment and cash-management products: tokenized money-market funds (MMFs) such as BUIDL, BENJI, and OUSG, alongside Treasury wrappers and bank sweep programs. Disclosure, liquidity governance, custody segregation, and marketing rules matter most. MMFs sit under the Investment Company Act framework, distinct from the GENIUS Act payment-stablecoin perimeter. When the payment object stays clean, yield migrates here.</p>
+          <h3>Tokenized money-market funds and wrappers</h3>
+          <p>Investment and cash-management products that can look like cash in a wallet. BENJI is a money-market fund under the Investment Company Act. BUIDL and OUSG are offshore or private-fund wrappers, each under its own statute. Disclosure, custody, and who receives the yield separate this group from a payment stablecoin. When the payment stablecoin keeps the reserve interest, yield migrates here.</p>
           <ul class="card-tag-strip" aria-label="Key properties">
             <li>Yield-bearing</li>
-            <li>'40 Act-governed</li>
+            <li>Mixed legal form</li>
             <li>Custody-sensitive</li>
-            <li>Disclosure-governed</li>
           </ul>
         </article>
       </div>
 
+      <p>A tokenized deposit is one bank's existing deposit, recorded on a token ledger, and redeemable only there. A deposit token is a bank liability built so other banks can settle it. <a href="/papers/dollar-v3/">Dollar v3</a> wrote bank liabilities as one object. This guide separates them: the tokenized deposit stays at the issuing bank, and the deposit token can move to other banks. The three rulebooks stay payment, banking, and investment.</p>
       <p class="track-bridge track-bridge--pullquote"><strong>Same wallet surface, different rights, backstops, and failure sequences.</strong></p>
     </section>
 
@@ -614,7 +614,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <p>A protocol or blockchain may be technically decentralized while practical control remains concentrated elsewhere. Look beyond consensus and smart contracts. Map the institutions and operators that can determine whether value moves: issuance, custody, banking, reserve management, bridges, exchanges, wallet interfaces, compliance, identity, administration, redemption, settlement, and access.</p>
       </div>
       <p><strong>Field questions.</strong> Who can stop a transaction? Who can deny redemption? Who controls the reserves or underlying assets? Which providers are difficult to replace? Where are several supposedly independent functions dependent on the same institution? Which legal or regulatory authority can compel an operator to act?</p>
-      <p><a href="/frameworks/#clii"><strong>Who can actually say no? CLII</strong></a> scores each gateway on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. A high score means more obligations, not stress resilience.</p>
+      <p><a href="/frameworks/#clii"><strong>Who can actually say no? CLII</strong></a> scores each gateway on licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. A high score means more regulatory obligations. How the gateway behaves in a stress is a separate reading.</p>
     </section>
 
     <section class="reveal" id="stress" aria-labelledby="stress-title">
@@ -642,7 +642,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <div id="q2" class="question-block">
           <article class="explainer-section qa-item">
             <h3>How does redemption or unwind work outside market hours?</h3>
-            <p>Weekend gaps, queue priority, banking-hour dependencies, and gateway capacity all matter once markets get stressed. The stress test: a redemption request arrives at 2am Saturday. The token settles in seconds. The underlying reserve will not mobilize until Monday.</p>
+            <p>Weekend gaps, queue priority, banking-hour dependencies, and gateway capacity all matter once markets get stressed. The stress test: a redemption request arrives at 2am Saturday. The token settles in seconds. The underlying reserve mobilizes when banks open on Monday.</p>
           </article>
         </div>
 
@@ -748,7 +748,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </div>
 
         <div class="b4-explorer__panel" id="fg-panel-objects" role="tabpanel" aria-labelledby="fg-tab-objects">
-          <p class="fg-route-key"><strong>How to read the bars.</strong> Longer means more of that property for this kind of dollar. The words on the right are the finding. The length is a relative reading, not a measured share of a market.</p>
+          <p class="fg-route-key"><strong>How to read this.</strong> The same five questions are asked of each dollar. Switching the product changes the answers. The questions stay fixed. A bank-failure rule stays in statutory terms. An MVEP grade stays as a score out of 5.</p>
           <div class="b4-explorer__controls">
             <div class="b4-explorer__control-group" role="group" aria-label="Select dollar object">
               <span class="b4-explorer__control-label">Dollar object</span>
@@ -765,7 +765,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         </div>
 
         <div class="b4-explorer__panel" id="fg-panel-router" role="tabpanel" aria-labelledby="fg-tab-router" hidden>
-          <p class="fg-route-key"><strong>How to read this.</strong> Pick what you are evaluating. The six steps are the same questions as the map above, in that order. They are not a score, and the list is not ranked. Each step names the tool to open and the check to run for that product.</p>
+          <p class="fg-route-key"><strong>How to read this.</strong> Pick what you are evaluating. The six steps follow the map above, in that order. Each step names the tool to open and the check to run for that product.</p>
           <div class="b4-explorer__controls">
             <div class="b4-explorer__control-group" role="group" aria-label="Select product class to evaluate">
               <span class="b4-explorer__control-label">What are you evaluating?</span>
@@ -824,7 +824,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>Track B: Tokenomics and physical network systems (DePIN)</h3>
           <p><strong>Adaptive Tokenomics.</strong> Systems-engineering design laboratory stress-tested with a 240-run Monte Carlo simulation. Adaptive emissions as downside insurance; slashing dominates token burns during the early growth phase.</p>
           <p><strong>Operational Risk in Token Economies.</strong> 624-configuration simulation (1,126 runs): the adaptive controller's dispersion advantage over static emission holds in every stress scenario and widens under a sustained regulatory withdrawal. Reputation-weighted governance collapses when the designer sets the recovery threshold above what operators can reliably achieve (99%); lowering it to 95% stabilizes the system.</p>
-          <p><strong><a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>.</strong> Cross-sectional analysis of 52 protocols spanning DePIN, DeFi, infrastructure, and social tokens. Allocation design does not predict governance concentration (insider allocation Pearson r = 0.09, p = 0.55, N = 50); the audit instead distinguishes sectors descriptively, with DePIN more concentrated than DeFi after correction (Cohen's d = 0.65, Mann-Whitney p = 0.028). Five-lens institutional-design framework. <a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1853465/full" target="_blank" rel="noopener noreferrer">Published at <em>Frontiers in Blockchain</em></a> (Blockchain Economics specialty), August 5, 2026; <em>Frontiers in Blockchain</em> 9:1853465, doi 10.3389/fbloc.2026.1853465. Also on SSRN 6599278.</p>
+          <p><strong><a href="/papers/governance-concentration/">Auditing Governance Concentration Beyond Token Allocation</a>.</strong> Cross-sectional analysis of 52 protocols spanning DePIN, DeFi, infrastructure, and social tokens. Allocation design leaves governance concentration unexplained (insider allocation Pearson r = 0.09, p = 0.55, N = 50). Sector membership carries the difference: DePIN is more concentrated than DeFi after correction (Cohen's d = 0.65, Mann-Whitney p = 0.028). Five-lens institutional-design framework. <a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1853465/full" target="_blank" rel="noopener noreferrer">Published at <em>Frontiers in Blockchain</em></a> (Blockchain Economics specialty), August 5, 2026; <em>Frontiers in Blockchain</em> 9:1853465, doi 10.3389/fbloc.2026.1853465. Also on SSRN 6599278.</p>
           <p><strong><a href="/papers/who-burns-the-tokens/">Who Burns the Tokens? (GeoDePIN)</a>.</strong> Fiscal sustainability and demand concentration in Helium and GEODNET, with Subsidy-to-Revenue, burn-mint equilibrium, and burn-mechanism design as the operative split. Pairs with <a href="/papers/governance-concentration/">Governance Concentration</a> on protocol politics.</p>
         </article>
         <h3 id="federal-comment-letters" class="explainer-subhed">Federal Comment Letter Program</h3>
@@ -895,7 +895,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script defer src="/script.js?v=238"></script>
+  <script defer src="/script.js?v=241"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

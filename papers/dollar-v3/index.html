@@ -83,7 +83,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=782" />
+  <link rel="stylesheet" href="/styles.css?v=785" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -271,7 +271,7 @@
       <aside class="brief-at-a-glance" aria-labelledby="at-a-glance-heading">
         <h2 id="at-a-glance-heading">At a glance</h2>
         <p><strong>Question</strong><br />When digital dollars look identical in a wallet, what actually determines how they behave under stress and how they should be regulated?</p>
-        <p><strong>Answer</strong><br />Payment stablecoins, tokenized deposits, and yield wrappers diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior, so the three objects require three rulebooks rather than one category. Policy attaches to the control layer (the operator and routing functions governing issuance, custody, compliance, and redemption), not to the token label, because reserves sit in different places, mobilize on different timetables, and carry different backstop expectations. This is a policy essay expressing the author's analytical framework and strategic judgment, not an empirical study with testable hypotheses.</p>
+        <p><strong>Answer</strong><br />Payment stablecoins, tokenized deposits, and yield wrappers diverge in reserve structure, redemption mechanics, legal treatment, and crisis behavior, so those three groups require three rulebooks rather than one category. The <a href="/overview/#dollar-objects">field guide</a> splits the bank-liability group in two: a single-bank tokenized deposit, redeemable only at that bank, and a deposit token that other banks can settle. Both stay under the banking rulebook. Policy attaches to the control layer (the operator and routing functions governing issuance, custody, compliance, and redemption), not to the token label, because reserves sit in different places, mobilize on different timetables, and carry different backstop expectations. This is a policy essay expressing the author's analytical framework and strategic judgment, not an empirical study with testable hypotheses.</p>
         <p><strong>Evidence base</strong><br />The essay is anchored on the Federal Reserve's December 2025 FEDS Note (Du, Sonawane, and Watsky, DOI 10.17016/2380-7172.3958), the enacted GENIUS Act's payment-stablecoin perimeter, and OCC Interpretive Letter 1188 on bank crypto-asset activity, with scenario numbers (the 2030 to 2035 hybrid stack and deposit-shift estimates) flagged as the author's strategic judgment, not measured outcomes.</p>
       </aside>
 
@@ -281,7 +281,7 @@
           <span class="brief-finding-num" aria-hidden="true">1</span>
           <div class="brief-finding-copy">
             <h3>Three dollar objects require three rulebooks</h3>
-            <p>Payment stablecoins are par-redeemable settlement instruments with narrow reserves. Tokenized deposits are bank liabilities in token form, inside the banking perimeter. Yield wrappers are investment products (tokenized money-market funds, T-bill strategies) that only look cash-like on the surface. Regulating them as one category invites mis-selling, arbitrage, and crisis surprises.</p>
+            <p>Payment stablecoins are par-redeemable settlement instruments with narrow reserves. Tokenized deposits are bank liabilities in token form, inside the banking perimeter. Yield wrappers are investment products (tokenized money-market funds, T-bill strategies) that only look cash-like on the surface. Regulating them as one category invites mis-selling, arbitrage, and crisis surprises. The field guide separates two bank-liability forms the essay treated together: a token redeemable only at the issuing bank, and a deposit token other banks can settle. Both remain inside the banking rulebook.</p>
             <p class="brief-what-this-means"><strong>What this means:</strong> Lumping these three instruments under a single label sets up consumers and supervisors to misjudge what they are actually holding, so the rulebook should track the instrument, not the surface.</p>
           </div>
         </div>
@@ -326,11 +326,13 @@
             </div>
           </div>
           <div class="b4-explorer__summary" id="dv3-lev-summary" aria-live="polite"></div>
+          <p class="fg-route-key"><strong>How to read this.</strong> Each line states the lever or the channel, then the fact that belongs to it. Deposit shares are written as percentages in the line. One channel can hold several issuer shares at once.</p>
           <div class="b4-explorer__bars" id="dv3-lev-bars"></div>
         </div>
 
         <div class="b4-explorer__panel" id="dv3-panel-rights" role="tabpanel" aria-labelledby="dv3-tab-rights" hidden>
           <div class="b4-explorer__summary" id="dv3-rig-summary" aria-live="polite"></div>
+          <p class="fg-route-key"><strong>How to read this.</strong> These are the scoreboard criteria, in the order the essay sets them. Each line names the test and what it checks.</p>
           <div class="b4-explorer__bars" id="dv3-rig-bars"></div>
         </div>
 
@@ -477,7 +479,7 @@
     <!-- site-chrome:footer END -->
   </main>
 
-  <script defer src="/script.js?v=236"></script>
+  <script defer src="/script.js?v=242"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -89,7 +89,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=782" />
+  <link rel="stylesheet" href="/styles.css?v=785" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -163,7 +163,7 @@
           "name": "What did SVB stress testing reveal about Circle versus Coinbase?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical regulatory-intensity scores but showed sharply different stress retention during the Silicon Valley Bank failure. CLII measures regulatory obligations, not stress resilience."
+            "text": "Circle (CLII 0.92) and Coinbase (CLII 0.85) had near-identical regulatory-intensity scores and sharply different stress retention during the Silicon Valley Bank failure. CLII measures regulatory obligations. Stress retention is a separate reading."
           }
         },
         {
@@ -412,6 +412,7 @@
             </div>
           </div>
           <div class="b4-explorer__summary" id="a1-macro-summary" aria-live="polite"></div>
+          <p class="fg-route-key"><strong>How to read this.</strong> On the trace views, bar length is the trace statistic on a 0-to-55 axis, so the estimate and the critical value share one scale. On the yield-spread view, each line states its own percent. A bank-deposit share and a forecast-error variance share stay in the words.</p>
           <div class="b4-explorer__bars" id="a1-macro-bars"></div>
         </div>
 
@@ -426,6 +427,7 @@
             </div>
           </div>
           <div class="b4-explorer__summary" id="a1-stress-summary" aria-live="polite"></div>
+          <p class="fg-route-key"><strong>How to read this.</strong> On the SVB view, bar length is that gateway's volume multiple against Curve 3pool at 12.35 times the 28-day baseline. On the chain view, each line states its own share. Ethereum net flow, a market maker's counterparty share, and a chain's Tier 1 share use different denominators.</p>
           <div class="b4-explorer__bars" id="a1-stress-bars"></div>
         </div>
 
@@ -656,7 +658,7 @@
     <!-- site-chrome:footer END -->
   </main>
 
-  <script defer src="/script.js?v=236"></script>
+  <script defer src="/script.js?v=246"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

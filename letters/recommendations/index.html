@@ -83,7 +83,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=782" />
+  <link rel="stylesheet" href="/styles.css?v=785" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1254,11 +1254,13 @@
 
           <div class="b4-explorer__panel" id="recs-panel-topics" role="tabpanel" aria-labelledby="recs-tab-topics">
             <div class="b4-explorer__summary" id="recs-top-summary" aria-live="polite"></div>
+            <p class="fg-route-key"><strong>How to read this.</strong> Each line states how many recommendations carry that subject. Where a line groups several subjects, each count is written out.</p>
             <div class="b4-explorer__bars" id="recs-top-bars"></div>
           </div>
 
           <div class="b4-explorer__panel" id="recs-panel-agencies" role="tabpanel" aria-labelledby="recs-tab-agencies" hidden>
             <div class="b4-explorer__summary" id="recs-ag-summary" aria-live="polite"></div>
+            <p class="fg-route-key"><strong>How to read this.</strong> Each line states how many recommendations went to that agency. Where a line groups two agencies, both counts are written out.</p>
             <div class="b4-explorer__bars" id="recs-ag-bars"></div>
           </div>
 
@@ -1308,7 +1310,7 @@
     <!-- site-chrome:footer END -->
   </main>
 
-  <script defer src="/script.js?v=236"></script>
+  <script defer src="/script.js?v=243"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
