@@ -157,9 +157,35 @@ def main():
             print(f"  - {d}")
         return 1
 
+    # Structural guard for .ai-table responsive cards (<=1023px):
+    # 1. Every <table class="ai-table ..."> on agent-infrastructure/index.html must carry
+    #    a modifier class with matching td:nth-of-type(N)::before rules in styles.css
+    #    so hiding <thead> below 1024px never leaves a table without column labels.
+    # 2. .agent-infra-page .ai-table tbody td must not use display:grid, which splits
+    #    inline children (<a>, <em>, <code>, <span>) into separate grid items.
+    css_path = os.path.join(root, "styles.css")
+    if os.path.isfile(css_path):
+        with open(css_path, encoding="utf-8", errors="replace") as fh:
+            css_text = fh.read()
+        if re.search(r"\.agent-infra-page\s+\.ai-table\s+tbody\s+td\s*\{[^}]*display\s*:\s*grid", css_text, re.S):
+            print("check_agent_infra_stats: FAIL .agent-infra-page .ai-table tbody td uses display:grid in styles.css, "
+                  "which splits inline <a>/<em>/<span> elements into separate grid cells.")
+            return 1
+        for tbl_m in re.finditer(r'<table\s+class="([^"]*\bai-table\b[^"]*)"', texts[AI]):
+            classes = tbl_m.group(1).split()
+            mods = [c for c in classes if c.startswith("ai-table--") and c != "ai-table--effectiveness"]
+            if not mods:
+                print(f'check_agent_infra_stats: FAIL bare <table class="{tbl_m.group(1)}"> in {AI} '
+                      "is missing an ai-table--* modifier class for mobile td::before column labels.")
+                return 1
+            if not any(f".{mod} td:nth-of-type(1)::before" in css_text for mod in mods):
+                print(f'check_agent_infra_stats: FAIL <table class="{tbl_m.group(1)}"> in {AI} '
+                      "has no matching .ai-table--* td:nth-of-type(1)::before rule in styles.css.")
+                return 1
+
     if not args.quiet:
         print(f"check_agent_infra_stats: OK. attempts={n} stopped={s} overridden={o} "
-              f"agree across {len(found)} mention(s) on both pages.")
+              f"agree across {len(found)} mention(s) on both pages, and all .ai-table cards are intact.")
     return 0
 
 

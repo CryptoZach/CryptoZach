@@ -20990,13 +20990,24 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 .ai-table--scale td:first-child{ width:11rem; }
 .ai-table--scale .ai-val{ width:10rem; }
 
+/* The tokenization-to-fleet bridge table pairs two equal comparison columns
+   beside a compact control-primitive row header. */
+.ai-table--bridge th:first-child,
+.ai-table--bridge td:first-child{ width:13.5rem; }
+.ai-table--bridge td:nth-of-type(1),
+.ai-table--bridge td:nth-of-type(2){ width:calc((100% - 13.5rem) / 2); }
+
 @media (max-width:640px){
   .ai-table th,
   .ai-table td{ padding:0.7rem 0.8rem; }
   .ai-table caption{ padding:0.7rem 0.8rem 0.6rem; }
   .ai-table--scale th:first-child,
   .ai-table--scale td:first-child,
-  .ai-table--scale .ai-val{ width:auto; }
+  .ai-table--scale .ai-val,
+  .ai-table--bridge th:first-child,
+  .ai-table--bridge td:first-child,
+  .ai-table--bridge td:nth-of-type(1),
+  .ai-table--bridge td:nth-of-type(2){ width:auto; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -21949,23 +21960,33 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
     border:0;
     border-bottom:1px solid var(--line);
   }
+  /* Prose cells use display:block so inline links (<a>), emphasis (<em>),
+     code (<code>), and gloss spans (<span class="ai-class-gloss">) stay in a
+     single inline formatting context instead of splitting into separate CSS
+     Grid items. Compact numeric/value cells opt into a two-sided flex row. */
   .agent-infra-page .ai-table tbody td{
-    display:grid;
-    grid-template-columns:minmax(6.8rem, 0.45fr) minmax(0, 1fr);
-    gap:var(--space-sm);
+    display:block;
     width:auto;
-    padding:0.55rem 0 0;
+    padding:0.6rem 0 0;
     border:0;
     text-align:left !important;
     white-space:normal;
   }
+  .agent-infra-page .ai-table tbody td + td{
+    margin-top:0.15rem;
+  }
   .agent-infra-page .ai-table tbody td::before{
+    display:block;
+    margin-bottom:0.2rem;
     color:var(--muted);
     font-size:var(--text-xs);
     font-weight:700;
     letter-spacing:0.08em;
     line-height:1.45;
     text-transform:uppercase;
+  }
+  .agent-infra-page .ai-table tbody td[data-label]::before{
+    content:attr(data-label);
   }
   .agent-infra-page .ai-table--scale td:nth-of-type(1)::before{ content:"Value"; }
   .agent-infra-page .ai-table--scale td:nth-of-type(2)::before{ content:"How counted"; }
@@ -21979,11 +22000,26 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   .agent-infra-page .ai-table--refusals td:nth-of-type(4)::before{ content:"First seen"; }
   .agent-infra-page .ai-table--pattern td:nth-of-type(1)::before{ content:"What readers believed"; }
   .agent-infra-page .ai-table--pattern td:nth-of-type(2)::before{ content:"What measurement found"; }
+  .agent-infra-page .ai-table--bridge td:nth-of-type(1)::before{ content:"Tokenized money & securities"; }
+  .agent-infra-page .ai-table--bridge td:nth-of-type(2)::before{ content:"AI agent fleets & agentic payments"; }
   .agent-infra-page .ai-val{ white-space:normal; }
-  /* Card rows are a two-column grid. A nowrap pill's min-content width is
-     wider than the value column, and the glyphs paint past the card while
-     the page scroll width stays equal to the viewport. Let the pill wrap
-     inside the column. Desktop tables keep the single-line pill. */
+  .agent-infra-page .ai-table tbody td.ai-num,
+  .agent-infra-page .ai-table tbody td.ai-val,
+  .agent-infra-page .ai-table--refusals tbody td{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    column-gap:0.75rem;
+    row-gap:0.25rem;
+  }
+  .agent-infra-page .ai-table tbody td.ai-num::before,
+  .agent-infra-page .ai-table tbody td.ai-val::before,
+  .agent-infra-page .ai-table--refusals tbody td::before{
+    display:inline-block;
+    margin-bottom:0;
+    flex:1 1 6.5rem;
+  }
   .agent-infra-page .ai-table tbody td > *{
     min-width:0;
     max-width:100%;
@@ -22009,6 +22045,8 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
     row-gap:0.35rem;
   }
   .agent-infra-page .ai-table tbody td:has(.ai-verdict)::before{
+    display:inline-block;
+    margin-bottom:0;
     flex:1 1 6.5rem;
   }
   .agent-infra-page .ai-table .ai-verdict{
