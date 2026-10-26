@@ -29,8 +29,7 @@ except the feed, which is generated whole):
         outcome            condensed status under that heading: as-of date, recommendation
                            disposition, cross-references; a long note folds
         related            the Related cards (supplements, same proceeding, same cycle,
-                           every paper the registry lists, the hub, the
-                           recommendation index)
+                           every paper the registry lists)
 
     Hand-authored letter-page order (the markers above are stamped into it; --check
     refuses a page that drifts): docket summary, macro context, thesis, then the
@@ -447,20 +446,19 @@ def gen_index(m):
     return out
 
 
-def filing_admin_paragraph(m):
-    """Where the letters were filed. Administrative, so it sits inside the folded ledger."""
-    counts = {}
-    for l in m.federal:
-        ch = l["docket"]["channel"]
-        counts[ch] = counts.get(ch, 0) + 1
-    chans = ", ".join(f"{esc(ch)} ({n})" for ch, n in sorted(counts.items(), key=lambda kv: -kv[1]))
-    intl = [l for l in m.letters if l["series"] == "international"]
-    intl_note = ""
-    if intl:
-        intl_note = (" The international series ("
-                     + ", ".join(esc(l["agency"]) for l in intl)
-                     + ") is listed for completeness and does not change the federal count.")
-    return f"The {word(m.n_federal)} federal letters were filed via {chans}.{intl_note}"
+_STATUS_BOILER = (
+    "No final rule located as of the verification date.",
+    "No final strategic plan located as of the verification date.",
+    "No final report located as of the verification date.",
+)
+
+
+def visible_note(note):
+    """Drop a note that only restates the status chip. Keep any fact it adds."""
+    text = note or ""
+    for sentence in _STATUS_BOILER:
+        text = text.replace(sentence, " ")
+    return " ".join(text.split())
 
 
 def gen_outcomes(m):
@@ -523,11 +521,11 @@ def gen_outcomes(m):
                 f'        <td data-label="Status">{status}</td>',
                 f'        <td data-label="Recommendations">{esc(recs)}</td>',
                 "      </tr>"]
-        if o.get("note"):
+        note = visible_note(o.get("note"))
+        if note:
             srcs = " ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
-            out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(o["note"])}{(" " + srcs) if srcs else ""}</td></tr>')
-    out += ["    </tbody>", "  </table>", "</div>",
-            f'<p class="letters-outcomes-lede">{filing_admin_paragraph(m)}</p>']
+            out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(note)}{(" " + srcs) if srcs else ""}</td></tr>')
+    out += ["    </tbody>", "  </table>", "</div>"]
     watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
     if watch:
         out.append('<h3 id="next-dates">Next dates</h3>')
@@ -625,10 +623,11 @@ def gen_outcome(m, l):
             note = f": {esc(r['status_note'])}" if r.get("status_note") else ""
             out.append(f'  <li><a href="#rec-{r["n"]}">Recommendation {r["n"]}</a> <span class="rec-status rec-status--{attr(r["status"])}">{esc(REC_STATUS_LABEL[r["status"]])}</span>{note}</li>')
         out.append("</ul>")
-    if o.get("note"):
+    note = visible_note(o.get("note"))
+    if note:
         srcs = "; ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
-        body = f'{esc(o["note"])}{(" Source: " + srcs + ".") if srcs else ""}'
-        if len(o["note"]) > 400:
+        body = f'{esc(note)}{(" Source: " + srcs + ".") if srcs else ""}'
+        if len(note) > 400:
             out += ['<details class="letter-status-more">',
                     "  <summary>Status note</summary>",
                     f'  <p class="letter-outcome-note">{body}</p>',
@@ -676,13 +675,8 @@ def gen_related(m, l):
         sub = (f"Defines the {m.frameworks[defines[0]]} framework this letter applies." if defines
                else "The research behind this letter.")
         cards += related_card(p["url"], p["kind"].capitalize(), p["label"], sub)
-    intl = [x for x in m.letters if x["series"] == "international"]
-    hub_sub = f"{word(m.n_federal).capitalize()} federal letters" + (
-        f" and {word(len(intl))} international {'response' if len(intl) == 1 else 'responses'}" if intl else "")
-    cards += related_card("/letters/", "All letters", "the program hub",
-                          f"{hub_sub}; filter by agency, cycle or framework; outcomes by proceeding.")
-    cards += related_card("/letters/recommendations/", "Recommendation index", f"all {m.n_recs} asks in one table",
-                          "Filter by agency, topic and status.")
+    if not cards:
+        return []
     out = ['<section class="companions" aria-labelledby="companions-heading">',
            '  <h3 id="companions-heading">Related</h3>',
            '  <div class="companion-cards">']
@@ -958,9 +952,10 @@ def gen_tracker(m):
                 f'        <td data-label="Status">{status}</td>',
                 f'        <td data-label="Program letter">{letters}</td>',
                 "      </tr>"]
-        if r.get("note"):
+        note = visible_note(r.get("note"))
+        if note:
             srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">{esc(s_["title"])}</a>' for s_ in r.get("sources", []))
-            out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(r["note"])}{(" " + srcs) if srcs else ""}</td></tr>')
+            out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(note)}{(" " + srcs) if srcs else ""}</td></tr>')
     out += ["    </tbody>", "  </table>", "</div>"]
     st = (t or {}).get("statute")
     if st:

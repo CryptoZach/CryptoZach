@@ -86,7 +86,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=781" />
+  <link rel="stylesheet" href="/styles.css?v=783" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -230,7 +230,7 @@
       </div>
       <div id="program-overview" class="section-title">
         <h1 id="research-title">Nine-paper research program across two tracks</h1>
-        <p><strong>Digital money should be programmable money.</strong> Nine SSRN papers, one memo, and six briefings in two tracks, with nine titles in development.<br>Filter by audience, track, or status, or jump to a track below.</p>
+        <p><strong>Digital money should be programmable money.</strong> One track on stablecoins, gateways, and tokenized securities. One track on token networks under stress.</p>
       </div>
 
       <div class="research-filters-js" role="group" aria-label="Filter research" hidden>
@@ -274,14 +274,7 @@
         <h2 id="best-first-read-title" class="visually-hidden">Featured papers</h2>
         <article id="institutional-design" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="protocol-design policy" data-track="track-b" data-status="accepted" data-key="52 protocols; 133 protocol-controlled-address exclusions">
           <a class="writing-link writing-link--thumb" href="/papers/governance-concentration/">
-            <div class="writing-meta">
-              <div class="card-badges">
-                <span class="badge badge-status-published">Published at Frontiers</span>
-                <span class="badge badge-access-code">Code available</span>
-              </div>
-              <span class="writing-meta-line">Aug 2026 · <em>Frontiers in Blockchain</em> 9:1853465 · Also on SSRN · Protocol&nbsp;Design&nbsp;/&nbsp;Governance</span>
-              <p class="writing-evidence-type">Evidence type: 52-protocol PCA-corrected cross-section + five-class protocol-controlled-address exclusion typology</p>
-            </div>
+            
             <img class="writing-thumb thumb-square" src="/Publication-Images/B2_Sector_Concentration_N52.webp" width="2643" height="2400" alt="Boxplots of post-exclusion governance HHI by architecture across 52 protocols: DePIN is more concentrated than DeFi and L1/Infrastructure (Kruskal-Wallis p = 0.005)" loading="eager" />
 
             <div class="writing-copy">
@@ -289,11 +282,20 @@
               <p class="writing-thesis"><strong>Launch allocation is uninformative about governance concentration; post-distribution structure is.</strong></p>
               <p class="writing-teaser">A 52-protocol PCA-corrected cross-section: allocation null, sector significant, delegation amplifies.</p>
               <p class="writing-excerpt">
-                <strong>What it is:</strong> A protocol-controlled-address-corrected cross-section of 52 protocols (DePIN, DeFi, L1/L2 infrastructure, social tokens). Launch allocation is uninformative about post-distribution concentration (insider allocation Pearson r = 0.09, p = 0.55, N = 50); insider-wallet retention is the operating mechanism (Spearman rho = 0.44, p = 0.005); DePIN governance is more concentrated than DeFi after correction (Mann-Whitney p = 0.028, Cohen's d = 0.65); the subsidy correlation is a single Livepeer outlier; delegation amplifies voting concentration above holdings in 13 of 18 protocols. The methodological core is a generalizable five-class protocol-controlled-address exclusion typology that removes 133 addresses across 38 protocols and corrects a median 2.3x (maximum roughly 18x) inflation in prior holder-list studies.
+                A protocol-controlled-address-corrected cross-section of 52 protocols (DePIN, DeFi, L1/L2 infrastructure, social tokens). Launch allocation is uninformative about post-distribution concentration (insider allocation Pearson r = 0.09, p = 0.55, N = 50); insider-wallet retention is the operating mechanism (Spearman rho = 0.44, p = 0.005); DePIN governance is more concentrated than DeFi after correction (Mann-Whitney p = 0.028, Cohen's d = 0.65); the subsidy correlation is a single Livepeer outlier; delegation amplifies voting concentration above holdings in 13 of 18 protocols. The methodological core is a generalizable five-class protocol-controlled-address exclusion typology that removes 133 addresses across 38 protocols and corrects a median 2.3x (maximum roughly 18x) inflation in prior holder-list studies.
               </p>
             </div>
 
-          </a>
+          
+<div class="writing-meta">
+              <div class="card-badges">
+                <span class="badge badge-status-published">Published at Frontiers</span>
+                <span class="badge badge-access-code">Code available</span>
+              </div>
+              <span class="writing-meta-line">Aug 2026 · <em>Frontiers in Blockchain</em> 9:1853465 · Also on SSRN</span>
+              <p class="writing-evidence-type">Evidence type: 52-protocol PCA-corrected cross-section + five-class protocol-controlled-address exclusion typology</p>
+            </div>
+</a>
           <div class="writing-card-actions">
             <a class="writing-arrow" href="/papers/governance-concentration/">Open paper summary <span aria-hidden="true">→</span></a>
             <a class="writing-thread" href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1853465/full" target="_blank" rel="noopener noreferrer" aria-label="Read in Frontiers in Blockchain" title="Read in Frontiers in Blockchain">Frontiers</a>
@@ -302,21 +304,14 @@
           </div>
           <details class="card-expand card-expand--inline">
             <summary>More on relevance and audience</summary>
-            <p class="research-why"><strong>Why it matters:</strong> Gives Track B a criteria layer for evaluating protocol governance alongside simulation results. The lead-finding framing (allocation null plus four supporting findings, including significant sector effect and insider-retention mechanism) replaces earlier "universal covariate null" framing.</p>
+            <p class="research-why"><strong>Why it matters:</strong> Gives Track B a criteria layer for evaluating protocol governance alongside simulation results.</p>
             <p class="research-audience"><strong>Who it's for:</strong> Governance designers, DAO researchers, and protocol teams.</p>
           </details>
         </article>
 
         <article id="mvep" class="writing-item writing-card research-card research-card--featured featured-paper-card writing-card--has-actions" data-audience="asset-management risk-committee tokenization policy" data-track="track-a" data-status="public" data-key="10 categories; 14-product scorecard; 20-regime insolvency matrix">
           <a class="writing-link writing-link--thumb" href="/papers/mvep/">
-            <div class="writing-meta">
-              <div class="card-badges">
-                <span class="badge badge-public">Public</span>
-                <span class="badge badge-access-code">Code available</span>
-              </div>
-              <span class="writing-meta-line">June 2026 · SSRN v2 · Editor-invited: Journal of Financial Regulation · Asset&nbsp;Management&nbsp;/&nbsp;Tokenization</span>
-              <p class="writing-evidence-type">Evidence type: Framework + stress scenarios</p>
-            </div>
+            
             <img class="writing-thumb thumb-wide" src="/Publication-Images/Equivalence_Pack.webp" width="1200" height="732" alt="Minimum Viable Equivalence Pack: ten-category diligence checklist for tokenized products" loading="lazy" />
 
             <div class="writing-copy">
@@ -324,11 +319,19 @@
               <p class="writing-thesis"><strong>Committee readiness requires proving legal, operational, and economic equivalence under stress.</strong></p>
               <p class="writing-teaser">What tokenized products must prove before institutions should treat them as equivalent.</p>
               <p class="writing-excerpt">
-                <strong>What it is:</strong> Ten diligence categories, each with a required artifact and pass or fail test, applied to a nine-product sample plus five comparators across three regulatory tiers. It adds a fourteen-product scorecard, RLUSD and other comparator columns, collateral interoperability analysis (Binance Portfolio Margin, Ceffu custody), independent corroboration from scholarly sources, and an OCC GENIUS Act implementing rule readout with a submitted comment letter. SVB and follow-on stablecoin contagion anchor the framework; Tier 1 products under banking law and the 1940 Act satisfy nearly every category, while no stablecoin product approaches them.
+                Ten diligence categories, each with a required artifact and pass or fail test, applied to a nine-product sample plus five comparators across three regulatory tiers. It adds a fourteen-product scorecard, RLUSD and other comparator columns, collateral interoperability analysis (Binance Portfolio Margin, Ceffu custody), independent corroboration from scholarly sources, and an OCC GENIUS Act implementing rule readout with a submitted comment letter. SVB and follow-on stablecoin contagion anchor the framework; Tier 1 products under banking law and the 1940 Act satisfy nearly every category, while no stablecoin product approaches them.
               </p>
             </div>
 
-          </a>
+          
+<div class="writing-meta">
+              <div class="card-badges">
+                <span class="badge badge-access-code">Code available</span>
+              </div>
+              <span class="writing-meta-line">June 2026 · SSRN · Editor-invited: Journal of Financial Regulation</span>
+              <p class="writing-evidence-type">Evidence type: Framework + stress scenarios</p>
+            </div>
+</a>
           <div class="writing-card-actions">
             <a class="writing-arrow" href="/papers/mvep/">Open paper summary <span aria-hidden="true">→</span></a>
             <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -376,14 +379,7 @@
         <li id="routing-the-dollar" data-audience="policy central-bank market-infrastructure stablecoin" data-track="track-a" data-status="public" data-key="19 gateways; 51 addresses; 9 chains; $60.6T transfer volume">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/routing-the-dollar/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge badge-access-code">Code available</span>
-                </div>
-                <span class="writing-meta-line">Mar 2026 · SSRN · Prepared for FRBNY Dollar Conference · Policy&nbsp;/&nbsp;Markets&nbsp;/&nbsp;Stablecoins</span>
-                <p class="writing-evidence-type">Evidence type: On-chain panel + stress episodes</p>
-              </div>
+              
               <picture><source type="image/webp" srcset="/Publication-Images/Routing_The_Dollar_CLII-thumb.webp" /><img class="writing-thumb thumb-clii" src="/Publication-Images/Routing_The_Dollar_CLII.png" width="3200" height="1800" alt="Routing the Dollar: CLII diagram showing gateway classification across 19 entities" loading="lazy" /></picture>
               <div class="writing-title-stack">
                 <h3 class="writing-title">Routing the Dollar</h3>
@@ -392,10 +388,18 @@
               <div class="writing-copy">
                 <p class="writing-teaser">How the gateway that routes a dollar stablecoin changes its regulatory exposure, its response to Fed policy, and its behavior under stress.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A data-driven study of 19 gateway entities and 51 wallet addresses showing that the same dollar token inherits different regulatory obligations, different Fed-policy sensitivity, and different crisis behavior depending on who routes it. Introduces the Control Layer Intensity Index (CLII), which measures how heavily regulated each gateway is from 0 to 1 across five dimensions (licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions). A high CLII score means a gateway faces more regulatory obligations; stress performance depends on entity-specific conditions the CLII does not measure. Circle and Coinbase had near-identical CLII scores but showed sharply different stress retention during SVB, consistent with entity-specific banking exposure driving outcomes. These are descriptive findings, not causal estimates.
+                  A data-driven study of 19 gateway entities and 51 wallet addresses showing that the same dollar token inherits different regulatory obligations, different Fed-policy sensitivity, and different crisis behavior depending on who routes it. Introduces the Control Layer Intensity Index (CLII), which measures how heavily regulated each gateway is from 0 to 1 across five dimensions (licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions). A high CLII score means a gateway faces more regulatory obligations; stress performance depends on entity-specific conditions the CLII does not measure. Circle and Coinbase had near-identical CLII scores but showed sharply different stress retention during SVB, consistent with entity-specific banking exposure driving outcomes. These are descriptive findings, not causal estimates.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-access-code">Code available</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN · Prepared for FRBNY Dollar Conference</span>
+                <p class="writing-evidence-type">Evidence type: On-chain panel + stress episodes</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/routing-the-dollar/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -412,13 +416,7 @@
         <li id="who-controls-agentic-payments" data-audience="policy market-infrastructure stablecoin central-bank" data-track="track-a" data-status="public" data-key="Settlement census across three chains, validated at payment level">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/who-controls-agentic-payments/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Sep 2026 &middot; SSRN &middot; Agentic&nbsp;Payments&nbsp;/&nbsp;Market&nbsp;Structure&nbsp;/&nbsp;AI&nbsp;Accountability</span>
-                <p class="writing-evidence-type">Evidence type: On-chain settlement census across three chains, validated at payment level</p>
-              </div>
+              
               <div class="writing-title-stack">
                 <h3 class="writing-title">Who Controls Agentic Payments?</h3>
                 <p class="writing-thesis"><strong>The agent pays in a familiar stablecoin, but a facilitator decides whether the payment clears.</strong></p>
@@ -426,10 +424,15 @@
               <div class="writing-copy">
                 <p class="writing-teaser">The first control-layer measurement of x402: how concentrated the facilitator layer is, how much measured activity is subsidized rather than organic, and where accountability sits in the chain that delivers an agent-initiated payment.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A settlement census across Base, Polygon and Solana, the three chains carrying materially all x402 activity. July 2026 facilitator concentration measures HHI 6,512 by count and 4,700 by corrected dollars on Base, clearing both merger-guidelines thresholds on every reading. The count layer and the value layer have different monopolists on two chains independently. A buyer-cardinality classifier, the paper&#39;s methodological contribution, separates organic usage from pipeline activity using settlement data alone: it shows 55.8 percent of cross-chain payment counts coming from 52 buyer wallets under a public gas-rebate programme. Corrected cross-chain July volume is $583,430 across 10.06 million payments, so the structure is forming while the market is still small.
+                  A settlement census across Base, Polygon and Solana, the three chains carrying materially all x402 activity. July 2026 facilitator concentration measures HHI 6,512 by count and 4,700 by corrected dollars on Base, clearing both merger-guidelines thresholds on every reading. The count layer and the value layer have different monopolists on two chains independently. A buyer-cardinality classifier, the paper&#39;s methodological contribution, separates organic usage from pipeline activity using settlement data alone: it shows 55.8 percent of cross-chain payment counts coming from 52 buyer wallets under a public gas-rebate programme. Corrected cross-chain July volume is $583,430 across 10.06 million payments, so the structure is forming while the market is still small.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Sep 2026 &middot; SSRN</span>
+                <p class="writing-evidence-type">Evidence type: On-chain settlement census across three chains, validated at payment level</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/who-controls-agentic-payments/">Open paper summary <span aria-hidden="true">&rarr;</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7396241" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -444,23 +447,24 @@
         <li id="agentic-payments-control-layer" data-audience="policy market-infrastructure stablecoin central-bank" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/agentic-payments-control-layer/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">New memo</span>
-                </div>
-                <span class="writing-meta-line">Jun 2026 &middot; Tokenization Systems research memo &middot; Agentic&nbsp;Payments&nbsp;/&nbsp;Market&nbsp;Structure&nbsp;/&nbsp;AI&nbsp;Accountability</span>
-                <p class="writing-evidence-type">Evidence type: On-chain settlement census + payment-level validation across three chains</p>
-              </div>
+              
               <div class="writing-copy">
                 <h3 class="writing-title">The Control Layer of Agentic Payments</h3>
                 <p class="writing-thesis"><strong>Nobody measures who agentic payments route through. Measured: settlement is more concentrated than the stablecoin gateway layer it sits on, and the count and value layers have different monopolists.</strong></p>
                 <p class="writing-teaser">First facilitator-concentration measurement of x402 across Base, Polygon, and Solana: HHI 6,009 by count, subsidized and proxy pipelines exposed by buyer cardinality, irreversible settlement, and a composition chain with no accountable layer.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Control-layer measurement memo covering the facilitators that settle x402 agentic payments. May 2026 concentration exceeds the 2,500 highly-concentrated threshold on every reading (Base count HHI 6,009 / corrected volume HHI 4,040; Solana 4,203 / 4,915; Polygon effectively single-operator), and the dominant operator differs by layer on two chains independently. The largest count contributor is a chain operator's official facilitator under a public gas-rebate program (5.04 million May payments from 35 buyer wallets); the largest value contributor is a proxy facilitator with 17 buyers and a directly observable 0.99 percent fee. Corrected cross-chain May volume is $940,323 across 8.87 million payments: 2.83 percent of USDC transfer events and 0.0000376 percent of USDC transfer value on the same rails. Introduces buyer cardinality (payments per distinct buyer) as a structural classifier that separates pipeline activity from organic usage without wash-trading heuristics, and maps the composition chain (agent runtime, authorization protocol, facilitator, token issuer, chain) at which no layer holds reversal authority or committed remediation.
+                  Control-layer measurement memo covering the facilitators that settle x402 agentic payments. May 2026 concentration exceeds the 2,500 highly-concentrated threshold on every reading (Base count HHI 6,009 / corrected volume HHI 4,040; Solana 4,203 / 4,915; Polygon effectively single-operator), and the dominant operator differs by layer on two chains independently. The largest count contributor is a chain operator's official facilitator under a public gas-rebate program (5.04 million May payments from 35 buyer wallets); the largest value contributor is a proxy facilitator with 17 buyers and a directly observable 0.99 percent fee. Corrected cross-chain May volume is $940,323 across 8.87 million payments: 2.83 percent of USDC transfer events and 0.0000376 percent of USDC transfer value on the same rails. Introduces buyer cardinality (payments per distinct buyer) as a structural classifier that separates pipeline activity from organic usage without wash-trading heuristics, and maps the composition chain (agent runtime, authorization protocol, facilitator, token issuer, chain) at which no layer holds reversal authority or committed remediation.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">New memo</span>
+                </div>
+                <span class="writing-meta-line">Jun 2026 &middot; Tokenization Systems research memo</span>
+                <p class="writing-evidence-type">Evidence type: On-chain settlement census + payment-level validation across three chains</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/agentic-payments-control-layer/">Open memo <span aria-hidden="true">&rarr;</span></a>
             </div>
@@ -470,23 +474,24 @@
         <li id="ousd-yield-boundary" data-audience="policy stablecoin market-infrastructure compliance risk-committee" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/ousd-yield-boundary/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">New briefing</span>
-                </div>
-                <span class="writing-meta-line">Jul 2026 &middot; Tokenization Systems briefing &middot; GENIUS&nbsp;Act&nbsp;/&nbsp;Stablecoin&nbsp;Yield&nbsp;/&nbsp;Market&nbsp;Structure</span>
-                <p class="writing-evidence-type">Evidence type: Statutory and rule-text mapping</p>
-              </div>
+              
               <div class="writing-copy">
                 <h3 class="writing-title">Open USD and the Yield Boundary: Distributor Revenue-Share Under the GENIUS Act</h3>
                 <p class="writing-thesis"><strong>Open USD routes reserve revenue to 140 or more distribution partners, not holders. As announced, that design sits outside the GENIUS Act yield prohibition, both implementing proposals, and the pending CLARITY amendment.</strong></p>
-                <p class="writing-teaser">An ex-ante structural read published sixteen days before the GENIUS final rules: the two-hop map, the two exposure points, the Coinbase contrast, and four scoreable moves the rules could make.</p>
+                <p class="writing-teaser">The two-hop map, the two exposure points, the Coinbase contrast, and four moves the rules could make.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A briefing on the Open USD (OUSD) consortium stablecoin announced June 30, 2026 by Open Standard (Visa, Mastercard, Stripe, BlackRock, Coinbase, BNY, and 140 or more partners): zero minting and redemption fees, with reserve revenue, minus a management fee, returned to the businesses that adopt and distribute the token. The briefing decomposes the yield path into two hops and shows the announced design occupies the one cell that GENIUS Section 4(a)(11), the OCC's proposed rebuttable presumption, the FDIC's third-party-arrangements formulation, and pending CLARITY Section 404 all leave unaddressed. Two exposure points could pull it back across the line: a custody-law argument that a custodying partner is itself the holder, and the two-directional reading of the statutory word "solely." The Circle and Coinbase USDC rewards arrangement, a two-hop structure with a holder-facing payment, is the contrast case, and it is more exposed to the pending texts than the challenger design. Four moves the final rules (under the July 18, 2026 statutory deadline) could make are stated with consequences, so the analysis can be scored as final rule texts land.
+                  A briefing on the Open USD (OUSD) consortium stablecoin announced June 30, 2026 by Open Standard (Visa, Mastercard, Stripe, BlackRock, Coinbase, BNY, and 140 or more partners): zero minting and redemption fees, with reserve revenue, minus a management fee, returned to the businesses that adopt and distribute the token. The briefing decomposes the yield path into two hops and shows the announced design occupies the one cell that GENIUS Section 4(a)(11), the OCC's proposed rebuttable presumption, the FDIC's third-party-arrangements formulation, and pending CLARITY Section 404 all leave unaddressed. Two exposure points could pull it back across the line: a custody-law argument that a custodying partner is itself the holder, and the two-directional reading of the statutory word "solely." The Circle and Coinbase USDC rewards arrangement, a two-hop structure with a holder-facing payment, is the contrast case, and it is more exposed to the pending texts than the challenger design. Four moves the final rules (under the July 18, 2026 statutory deadline) could make are stated with consequences, so the analysis can be scored as final rule texts land.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">New briefing</span>
+                </div>
+                <span class="writing-meta-line">Jul 2026 &middot; Tokenization Systems briefing</span>
+                <p class="writing-evidence-type">Evidence type: Statutory and rule-text mapping</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/ousd-yield-boundary/">Open the briefing <span aria-hidden="true">&rarr;</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6267698" target="_blank" rel="noopener noreferrer" aria-label="Read Routing the Dollar on SSRN" title="Read Routing the Dollar on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> Routing the Dollar</a>
@@ -502,23 +507,24 @@
         <li id="oracle-problem-stablecoin-ratings" data-audience="risk-committee policy stablecoin market-infrastructure tokenization" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/oracle-problem-stablecoin-ratings/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">New briefing</span>
-                </div>
-                <span class="writing-meta-line">Jun 2026 &middot; Tokenization Systems briefing &middot; Credit&nbsp;Ratings&nbsp;/&nbsp;Stablecoins&nbsp;/&nbsp;On-chain&nbsp;Risk&nbsp;Data</span>
-                <p class="writing-evidence-type">Evidence type: Structural critique grounded in the credit-rating-conflict literature</p>
-              </div>
+              
               <div class="writing-copy">
                 <h3 class="writing-title">The Oracle Problem in Stablecoin Ratings</h3>
                 <p class="writing-thesis"><strong>The issuer-pays conflict named after 2008 is entering stablecoin assessment just as rating signals are delivered on-chain, where a smart contract can read a seller-commissioned score as a collateral input with no human in the loop.</strong></p>
                 <p class="writing-teaser">A conflict the post-2008 record studied at length and left intact is acquiring a new automation surface: a paid score wired into lending parameters that move capital before any person reviews them.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A briefing, not new research; the rigorous source is the MVEP working paper (SSRN 6363138). The two largest credit-rating firms are moving into stablecoin assessment at the same moment rating signals are being published on public blockchains as machine-readable data, where a smart contract can read a seller-commissioned score and wire it straight into collateral parameters (eligibility, haircuts, borrowing limits, liquidation thresholds) with no analyst or risk committee weighing it in between. The post-2008 reforms assumed a human circuit-breaker who could discount a score they distrusted; an automated on-chain consumer removes that person. This is NOT an allegation against any rater and makes no claim that any specific score is wrong, inflated, or biased; it is a structural reading of an incentive design under a new delivery channel. The buyer-side alternative is a diligence gate performed at the decision point (the Minimum Viable Equivalence Pack) paired with continuous drift monitoring (the Control Layer Intensity Index).
+                  A briefing, not new research; the rigorous source is the MVEP working paper (SSRN 6363138). The two largest credit-rating firms are moving into stablecoin assessment at the same moment rating signals are being published on public blockchains as machine-readable data, where a smart contract can read a seller-commissioned score and wire it straight into collateral parameters (eligibility, haircuts, borrowing limits, liquidation thresholds) with no analyst or risk committee weighing it in between. The post-2008 reforms assumed a human circuit-breaker who could discount a score they distrusted; an automated on-chain consumer removes that person. This is NOT an allegation against any rater and makes no claim that any specific score is wrong, inflated, or biased; it is a structural reading of an incentive design under a new delivery channel. The buyer-side alternative is a diligence gate performed at the decision point (the Minimum Viable Equivalence Pack) paired with continuous drift monitoring (the Control Layer Intensity Index).
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">New briefing</span>
+                </div>
+                <span class="writing-meta-line">Jun 2026 &middot; Tokenization Systems briefing</span>
+                <p class="writing-evidence-type">Evidence type: Structural critique grounded in the credit-rating-conflict literature</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/oracle-problem-stablecoin-ratings/">Open briefing <span aria-hidden="true">&rarr;</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read MVEP on SSRN" title="Read MVEP on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> MVEP</a>
@@ -534,23 +540,24 @@
         <li id="mvep-tcmag-comparison" data-audience="treasury asset-management risk-committee policy market-infrastructure tokenization" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link" href="/papers/mvep-tcmag-comparison/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">New briefing</span>
-                </div>
-                <span class="writing-meta-line">Apr 2026 &middot; Tokenization Systems briefing &middot; Tokenized&nbsp;Cash&nbsp;/&nbsp;Treasury&nbsp;Operations&nbsp;/&nbsp;Operator&nbsp;Diligence</span>
-                <p class="writing-evidence-type">Evidence type: Comparative framework analysis</p>
-              </div>
+              
               <div class="writing-copy">
                 <h3 class="writing-title">Tokenized Cash Management Principles and the Operator-Layer Diagnostic</h3>
                 <p class="writing-thesis"><strong>The Tokenized Cash Management Advisory Group (TCMAG) launched twelve buyer-side principles April 21, 2026. MVEP supplies the supply-side diagnostic. The frameworks are complementary, not competing.</strong></p>
-                <p class="writing-teaser">Mapping twelve TCMAG treasury-practitioner principles to the program's ten-category MVEP framework, with three gap categories surfaced for any future MVEP v2.</p>
+                <p class="writing-teaser">Twelve TCMAG treasury-practitioner principles mapped onto MVEP's ten categories, with three principles MVEP does not yet score.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Comparative briefing covering the twelve TCMAG principles published April 21, 2026, mapped against MVEP's ten supply-side categories. Eight of twelve principles map directly or partially to MVEP; three (Multi-Issuer architecture, Interoperability, Confidentiality) surface genuine gap candidates for any future MVEP v2 cycle. The briefing shows why the Multi-Bank principle (treasurers able to hold and move tokenized cash across many banks rather than being locked into one issuer) depends on neutral cross-bank clearing infrastructure (Ubyx is the canonical example). Without such a clearing layer, the program's analysis projects market consolidation around one or two dominant deposit-token issuers within roughly two years of launch, at which point multi-bank freedom becomes aspirational rather than operational. The briefing also maps the Legal Entity Identifier (LEI) standard maintained by GLEIF onto two MVEP requirements it sharpens: establishing what legal claim a tokenholder actually has against a named issuer, and keeping an auditable record of who is authorized to change a tokenized product's rules.
+                  Comparative briefing covering the twelve TCMAG principles published April 21, 2026, mapped against MVEP's ten supply-side categories. Eight of twelve principles map directly or partially to MVEP; three (Multi-Issuer architecture, Interoperability, Confidentiality) are gaps in the current ten categories. The briefing shows why the Multi-Bank principle (treasurers able to hold and move tokenized cash across many banks rather than being locked into one issuer) depends on neutral cross-bank clearing infrastructure (Ubyx is the canonical example). Without such a clearing layer, the program's analysis projects market consolidation around one or two dominant deposit-token issuers within roughly two years of launch, at which point multi-bank freedom becomes aspirational rather than operational. The briefing also maps the Legal Entity Identifier (LEI) standard maintained by GLEIF onto two MVEP requirements it sharpens: establishing what legal claim a tokenholder actually has against a named issuer, and keeping an auditable record of who is authorized to change a tokenized product's rules.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">New briefing</span>
+                </div>
+                <span class="writing-meta-line">Apr 2026 &middot; Tokenization Systems briefing</span>
+                <p class="writing-evidence-type">Evidence type: Comparative framework analysis</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/mvep-tcmag-comparison/">Open briefing summary <span aria-hidden="true">&rarr;</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6363138" target="_blank" rel="noopener noreferrer" aria-label="Read MVEP on SSRN" title="Read MVEP on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg> MVEP</a>
@@ -567,15 +574,7 @@
         <li id="seven-dollars" data-audience="policy stablecoin asset-management risk-committee market-infrastructure" data-track="track-a" data-status="public requestable" data-key="7 products; 5 operators; 5 regulatory regimes">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/seven-dollars/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">Working paper</span>
-                  <span class="badge badge-access-code">Code available</span>
-                </div>
-                <span class="writing-meta-line">Mar 2026 · SSRN · Stablecoins&nbsp;/&nbsp;Diligence</span>
-                <p class="writing-evidence-type">Evidence type: Cross-product framework + 2 stress episodes + within-operator natural experiment</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Seven_Dollars_Regulation_Equivalence.webp?v=20260716b" width="1950" height="1300" alt="Seven Dollars: scatter plot of CLII (regulatory intensity) vs collateral eligibility across seven dollar-denominated products; regulation does not predict equivalence" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Seven Dollars</h3>
@@ -584,10 +583,19 @@
               <div class="writing-copy">
                 <p class="writing-teaser">Operator regulation and product equivalence are separate dimensions. Regulation did not predict stress performance during SVB March 2023.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Cross-product comparison of USDC, USDT, USDG, PYUSD, DAI, USDe, and OUSG across a four-dimension structural taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile), CLII extended to five operators, an eight-metric collateral eligibility framework, and two production stress episodes (SVB March 2023, Circle pool incident March 27, 2025). Within-operator natural experiment: Paxos wound down BUSD while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same NYDFS trust charter. Each requires a structurally different institutional diligence package.
+                  Cross-product comparison of USDC, USDT, USDG, PYUSD, DAI, USDe, and OUSG across a four-dimension structural taxonomy (legal claim, ledger architecture, insolvency regime, liquidation profile), CLII extended to five operators, an eight-metric collateral eligibility framework, and two production stress episodes (SVB March 2023, Circle pool incident March 27, 2025). Within-operator natural experiment: Paxos wound down BUSD while PYUSD grew from $78M to $3.9B in 31 months under the same issuer and the same NYDFS trust charter. Each requires a structurally different institutional diligence package.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Working paper</span>
+                  <span class="badge badge-access-code">Code available</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN</span>
+                <p class="writing-evidence-type">Evidence type: Cross-product framework + 2 stress episodes + within-operator natural experiment</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/seven-dollars/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483118" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -604,14 +612,7 @@
         <li id="three-strategies" data-audience="policy central-bank market-infrastructure asset-management tokenization risk-committee exchange-operator transfer-agent clearinghouse" data-track="track-a" data-status="public requestable" data-key="8 entities; 3 strategies; 9 stress scenarios">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/three-strategies/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge">Working paper</span>
-                </div>
-                <span class="writing-meta-line">Mar 2026 · SSRN · Tokenization&nbsp;/&nbsp;Market&nbsp;infrastructure</span>
-                <p class="writing-evidence-type">Evidence type: Infrastructure map + MVEP cross-strategy mapping + 9 stress scenarios</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Three_Strategies_Infrastructure_Map.webp?v=20260514a" width="1814" height="1196" alt="Institutional Tokenization Infrastructure Map: ten participating entities across three strategies (Collateral Circuit, Yield Stack, Equity Rails); Securitize anchors transfer-agent role in all three" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Three Tokenization Strategies</h3>
@@ -620,10 +621,18 @@
               <div class="writing-copy">
                 <p class="writing-teaser">Securitize is transfer agent across all three strategies. A 72-hour operational failure would degrade all three simultaneously, a system-level risk that entity-level scoring does not capture.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Infrastructure map of the eight operating entities supplying institutional-tokenization building blocks (DTCC, Kinexys, Nasdaq, NYSE, Securitize, BNY, JPMorgan, Ubyx), dated March 27, 2026. Three strategies analyzed against the MVEP's ten diligence categories: a Regulated Collateral Circuit (DTC-tokenized Treasuries on Canton Network with bank-issued deposit tokens cleared at par through Ubyx), a Multi-Issuer Yield Stack (five tokenized Treasury products with a smart redemption router), and Tokenized Equity Rails (Nasdaq and NYSE). Securitize is the SEC-registered transfer agent in all three. The corporate-actions reconciliation gap (24/7 trading on a business-day register clock) requires an explicit architecture choice. The deposit-token market is control-layer competition applied to institutional settlement; Ubyx's multi-issuer clearing depth determines monopoly versus competitive outcome.
+                  Infrastructure map of the eight operating entities supplying institutional-tokenization building blocks (DTCC, Kinexys, Nasdaq, NYSE, Securitize, BNY, JPMorgan, Ubyx), dated March 27, 2026. Three strategies analyzed against the MVEP's ten diligence categories: a Regulated Collateral Circuit (DTC-tokenized Treasuries on Canton Network with bank-issued deposit tokens cleared at par through Ubyx), a Multi-Issuer Yield Stack (five tokenized Treasury products with a smart redemption router), and Tokenized Equity Rails (Nasdaq and NYSE). Securitize is the SEC-registered transfer agent in all three. The corporate-actions reconciliation gap (24/7 trading on a business-day register clock) requires an explicit architecture choice. The deposit-token market is control-layer competition applied to institutional settlement; Ubyx's multi-issuer clearing depth determines monopoly versus competitive outcome.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge">Working paper</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN</span>
+                <p class="writing-evidence-type">Evidence type: Infrastructure map + MVEP cross-strategy mapping + 9 stress scenarios</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/three-strategies/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483198" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -640,13 +649,7 @@
         <li id="dollar-v3-control-layer-war" data-audience="policy stablecoin market-infrastructure asset-management compliance" data-track="track-a" data-status="public requestable">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions research-card--dual-essays">
             <div class="writing-link writing-link--thumb writing-link--static" role="group" aria-labelledby="dollar-control-title">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public / requestable</span>
-                </div>
-                <span class="writing-meta-line">Dec 2025 to Jan 2026 · Medium · Policy&nbsp;/&nbsp;Payments&nbsp;/&nbsp;Stablecoins</span>
-                <p class="writing-evidence-type">Evidence type: Policy essays</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Dollarv3.webp" width="1400" height="933" alt="Dollar v3 and The Control Layer War: three digital-dollar objects and control-layer map" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 id="dollar-control-title" class="writing-title">Dollar v3 / The Control Layer War</h3>
@@ -655,14 +658,22 @@
               <div class="writing-copy">
                 <p class="writing-teaser">Two companion pages from one Track A output. Dollar v3 maps the four digital-dollar objects, Layer 0, and deposit mutation. The Control Layer War maps where compliance becomes operational.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Dollar v3 separates payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers by legal perimeter, reserve structure, and crisis behavior. The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 argument that stablecoins can reduce, recycle, or restructure deposits.<br />
+                  Dollar v3 separates payment stablecoins, tokenized deposits, deposit tokens, and yield wrappers by legal perimeter, reserve structure, and crisis behavior. The essay's term "deposit mutation" is the author's synthesis of the Federal Reserve's December 2025 argument that stablecoins can reduce, recycle, or restructure deposits.<br />
                   The Control Layer War maps how CLARITY-style provisions (House-passed form analyzed here) attach compliance to interfaces, routing defaults, holds, sweeps, and audit logs. The GENIUS Act reinforces the payment-stablecoin perimeter; deposit tokens and yield wrappers require separate treatment.
                 </p>
               </div>
             </div>
             <div class="writing-card-actions">
               <div class="writing-thumb-actions" role="group" aria-label="Open paper summaries">
-                <a class="writing-arrow" href="/papers/dollar-v3/">Dollar v3 summary <span aria-hidden="true">→</span></a>
+                <a class="writing-arrow" href="/papers/dollar-v3/">Dollar v3 summary <span aria-hidden="true">→</span>
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-public">Public / requestable</span>
+                </div>
+                <span class="writing-meta-line">Dec 2025 to Jan 2026 · Medium</span>
+                <p class="writing-evidence-type">Evidence type: Policy essays</p>
+              </div>
+</a>
                 <a class="writing-arrow" href="/papers/control-layer-war/">Control Layer summary <span aria-hidden="true">→</span></a>
               </div>
               <div class="writing-thread-group writing-thread-group--dual" role="group" aria-label="Threads on X">
@@ -681,13 +692,7 @@
         <li id="tokenized-equity" data-audience="asset-management risk-committee tokenization" data-track="track-a" data-status="public">
           <article class="writing-item writing-card research-card research-card--minimal writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/tokenized-equity/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Jul 2025 · Medium · Asset&nbsp;Management&nbsp;/&nbsp;Tokenization&nbsp;/&nbsp;Market&nbsp;Structure</span>
-                <p class="writing-evidence-type">Evidence type: Comparative launch analysis</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Tokenized-Equity-Image.png" width="1536" height="1024" alt="Tokenized Equity: Robinhood versus Backed comparison" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Tokenized Equity Vehicles</h3>
@@ -696,10 +701,15 @@
               <div class="writing-copy">
                 <p class="writing-teaser">A comparative launch analysis of two tokenized-equity architectures.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A comparative anatomy of two June 2025 tokenized-equity launches: Robinhood's broker-wrapped OTC stock-token exposure (where investors hold a derivative position, not the underlying share) versus Backed's open, transferable, share-backed xStocks (where a custodian holds the shares and the token tracks their value). Compares investor rights, custody chain, tradability, corporate-action treatment, and secondary-market liquidity.
+                  A comparative anatomy of two June 2025 tokenized-equity launches: Robinhood's broker-wrapped OTC stock-token exposure (where investors hold a derivative position, not the underlying share) versus Backed's open, transferable, share-backed xStocks (where a custodian holds the shares and the token tracks their value). Compares investor rights, custody chain, tradability, corporate-action treatment, and secondary-market liquidity.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Jul 2025 · Medium</span>
+                <p class="writing-evidence-type">Evidence type: Comparative launch analysis</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/tokenized-equity/">Open paper summary <span aria-hidden="true">→</span></a>
             </div>
@@ -736,14 +746,7 @@
         <li id="adaptive-tokenomics" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="240-run ensemble; coefficient of variation 0.544 to 0.087 under competitor shock">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/adaptive-tokenomics/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge badge-access-code">Code available</span>
-                </div>
-                <span class="writing-meta-line">Mar 2026 · SSRN · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-                <p class="writing-evidence-type">Evidence type: Simulation + systems engineering</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide thumb-exhibit-center thumb-discipline-map" src="/Publication-Images/exhibit_01_discipline_map.webp" width="1016" height="943" alt="Adaptive Tokenomics: discipline map and simulation architecture" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Adaptive Tokenomics</h3>
@@ -752,10 +755,18 @@
               <div class="writing-copy">
                 <p class="writing-teaser">Token design as systems engineering.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A complete token economy (MeshNet) built as a systems-engineering design laboratory and stress-tested across a 240-run agent-based ensemble plus additional sensitivity checks covering prolonged bear markets, competitor entry, regulatory shocks, and combined stress. Input parameters are drawn from real hardware costs across twelve DePIN protocols. Finds that adaptive emissions function as downside insurance (compressing worst-case outcomes by roughly 6x), slashing dominates token burns during the early growth phase, and the most important results depend on market conditions and parameter settings. Running the model once hides rare but severe downside scenarios that only appear when you run it hundreds of times with different starting conditions.
+                  A complete token economy (MeshNet) built as a systems-engineering design laboratory and stress-tested across a 240-run agent-based ensemble plus additional sensitivity checks covering prolonged bear markets, competitor entry, regulatory shocks, and combined stress. Input parameters are drawn from real hardware costs across twelve DePIN protocols. Finds that adaptive emissions function as downside insurance (compressing worst-case outcomes by roughly 6x), slashing dominates token burns during the early growth phase, and the most important results depend on market conditions and parameter settings. Running the model once hides rare but severe downside scenarios that only appear when you run it hundreds of times with different starting conditions.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-access-code">Code available</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN</span>
+                <p class="writing-evidence-type">Evidence type: Simulation + systems engineering</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/adaptive-tokenomics/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6364158" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -771,14 +782,7 @@
         <li id="operational-risk" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="About 624 runs; 3x to 6x dispersion compression">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/operational-risk/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge badge-access-code">Code available</span>
-                </div>
-                <span class="writing-meta-line">Mar 2026 · SSRN · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-                <p class="writing-evidence-type">Evidence type: 1,126-run simulation + operational-risk standards</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Table3_ValOS-NORS.png" width="2384" height="1630" alt="Operational Risk in Token Economies: ValOS-NORS standards bridge table" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Operational Risk in Token Economies</h3>
@@ -787,10 +791,18 @@
               <div class="writing-copy">
                 <p class="writing-teaser">What happens when infrastructure fails while operators stay.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A 624-configuration simulation study (1,126 runs) using published failure rates for Ethereum and Filecoin and bounding estimates for Helium and GEODNET. The adaptive controller's dispersion advantage over static emission holds in every stress scenario and widens under a sustained regulatory withdrawal (compression ratio 3.19x to 6.41x once operational risk is added), while it is a null under a one-off competitor shock. Reputation-weighted governance moves in the opposite direction, and the outcome depends on one design parameter: the uptime threshold operators must clear to recover their standing. When the designer sets that bar at 99%, real-world outage rates make recovery nearly impossible, and average reputation collapses to 0.28 on a 5.0 scale before operational risk is even added, and to 0.17 with it. When the designer lowers the bar to 95%, the system stabilizes.
+                  A 624-configuration simulation study (1,126 runs) using published failure rates for Ethereum and Filecoin and bounding estimates for Helium and GEODNET. The adaptive controller's dispersion advantage over static emission holds in every stress scenario and widens under a sustained regulatory withdrawal (compression ratio 3.19x to 6.41x once operational risk is added), while it is a null under a one-off competitor shock. Reputation-weighted governance moves in the opposite direction, and the outcome depends on one design parameter: the uptime threshold operators must clear to recover their standing. When the designer sets that bar at 99%, real-world outage rates make recovery nearly impossible, and average reputation collapses to 0.28 on a 5.0 scale before operational risk is even added, and to 0.17 with it. When the designer lowers the bar to 95%, the system stabilizes.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-access-code">Code available</span>
+                </div>
+                <span class="writing-meta-line">Mar 2026 · SSRN</span>
+                <p class="writing-evidence-type">Evidence type: 1,126-run simulation + operational-risk standards</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/operational-risk/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6352118" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -806,14 +818,7 @@
         <li id="geodepin" data-audience="protocol-design depin" data-track="track-b" data-status="public" data-key="34-month Helium panel; 13-protocol cross-section">
           <article class="writing-item writing-card research-card research-card--compact writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="/papers/who-burns-the-tokens/">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                  <span class="badge badge-access-code">Code available</span>
-                </div>
-                <span class="writing-meta-line">Apr 2026 · SSRN · Targeting Blockchain: Research and Applications (Elsevier) · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-                <p class="writing-evidence-type">Evidence type: 34-month Helium panel + 13-protocol cross-section + on-chain concentration measurements</p>
-              </div>
+              
               <img class="writing-thumb thumb-wide" src="/Publication-Images/Who_Burns_S2R_HHI.webp" width="2949" height="2068" alt="Who Burns the Tokens: Subsidy-to-Revenue ratio (S2R) vs direct-payer demand-concentration HHI; Helium (HHI 0.27) and Livepeer (HHI 0.31) at measured concentration, GEODNET, DIMO, and Hivemapper in the off-axis lane (demand off-chain, not measurable)" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Who Burns the Tokens?</h3>
@@ -822,10 +827,18 @@
               <div class="writing-copy">
                 <p class="writing-teaser">Helium's monthly S2R rose from 0.013 to a 1.84 peak over 34 months, crossing parity in October 2025. Demand concentration is measurable only for direct-payment protocols (Helium burn-signer HHI 0.27, Livepeer fee-payer HHI 0.31, both high); GEODNET's Foundation buy-and-burn relocates demand off-chain.</p>
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> GeoDePIN deep-dive into fiscal sustainability and demand concentration across 13 protocols. Helium's monthly Subsidy-to-Revenue ratio (S2R) rose from 0.013 to a peak of 1.84 over a 34-month window (May 2023 to February 2026), crossing monthly fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy (not separable on-chain without a formal event study). Demand concentration is measurable only for direct-payment protocols: Helium's burn-signer HHI is 0.27 (Top-5 ~90% of burns) and Livepeer's fee-payer HHI is 0.31; GEODNET's Foundation buy-and-burn relocates its demand base off-chain. GEODNET's Polygon-side token distribution separately concentrates: holdings HHI 0.14 with the team wallet at 25.3% of non-burned supply. Inherits the Governance Concentration protocol-controlled-address exclusion methodology (52-protocol companion cross-section) and Ostromian self-governance framing.
+                  GeoDePIN deep-dive into fiscal sustainability and demand concentration across 13 protocols. Helium's monthly Subsidy-to-Revenue ratio (S2R) rose from 0.013 to a peak of 1.84 over a 34-month window (May 2023 to February 2026), crossing monthly fiscal parity in October 2025, driven by the August 2025 emission halving and the full carrier-revenue burn policy (not separable on-chain without a formal event study). Demand concentration is measurable only for direct-payment protocols: Helium's burn-signer HHI is 0.27 (Top-5 ~90% of burns) and Livepeer's fee-payer HHI is 0.31; GEODNET's Foundation buy-and-burn relocates its demand base off-chain. GEODNET's Polygon-side token distribution separately concentrates: holdings HHI 0.14 with the team wallet at 25.3% of non-burned supply. Inherits the Governance Concentration protocol-controlled-address exclusion methodology (52-protocol companion cross-section) and Ostromian self-governance framing.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <div class="card-badges">
+                  <span class="badge badge-access-code">Code available</span>
+                </div>
+                <span class="writing-meta-line">Apr 2026 · SSRN · Targeting Blockchain: Research and Applications (Elsevier)</span>
+                <p class="writing-evidence-type">Evidence type: 34-month Helium panel + 13-protocol cross-section + on-chain concentration measurements</p>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="/papers/who-burns-the-tokens/">Open paper summary <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6483619" target="_blank" rel="noopener noreferrer" aria-label="Read on SSRN" title="Read on SSRN"><svg class="icon-ssrn-inline" aria-hidden="true" viewBox="0 6 24 13" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
@@ -853,22 +866,21 @@
         <li id="navigating-digital-assets" data-audience="policy asset-management compliance" data-track="earlier" data-status="public">
           <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Aug 2025 · Medium · Policy&nbsp;/&nbsp;Compliance</span>
-              </div>
+              
               <img class="writing-thumb" src="/Publication-Images/Navigating_the_New_Era_of_Digital_Assets.webp" width="1400" height="1012" alt="Navigating the New Era of Digital Assets cover" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Navigating the New Era of Digital Assets</h3>
               </div>
               <div class="writing-copy">
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> An operating timeline of the coordinated U.S. regulatory shift in July 2025, organized by effective date and mapped to obligations for each actor type (exchanges, custodians, issuers, DeFi interfaces).
+                  An operating timeline of the coordinated U.S. regulatory shift in July 2025, organized by effective date and mapped to obligations for each actor type (exchanges, custodians, issuers, DeFi interfaces).
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Aug 2025 · Medium</span>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
             </div>
@@ -878,22 +890,21 @@
         <li id="future-tokenomics" data-audience="protocol-design depin" data-track="earlier" data-status="public">
           <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Aug 2024 · Medium · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-              </div>
+              
               <img class="writing-thumb" src="/Publication-Images/The_Future_of_Tokenomics.webp" width="548" height="498" alt="The Future of Tokenomics cover" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">The Future of Tokenomics</h3>
               </div>
               <div class="writing-copy">
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Seven tokenomics sectors mapped to live implementations and assessed for maturity, from DeFi yield mechanics to DePIN coverage incentives.
+                  Seven tokenomics sectors mapped to live implementations and assessed for maturity, from DeFi yield mechanics to DePIN coverage incentives.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Aug 2024 · Medium</span>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="https://medium.com/borderless-capital/the-future-of-tokenomics-7-game-changing-innovations-set-to-reshape-decentralized-networks-2a4742562527" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
             </div>
@@ -903,22 +914,21 @@
         <li id="gamification" data-audience="protocol-design" data-track="earlier" data-status="public">
           <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Aug 2024 · Medium · Founders&nbsp;/&nbsp;Protocol&nbsp;teams</span>
-              </div>
+              
               <img class="writing-thumb" src="/Publication-Images/Gamification_In_Crypto-still.webp" data-animated-src="/Publication-Images/Gamification_In_Crypto.gif" width="2000" height="1125" alt="Gamification in Crypto cover" loading="lazy" />
               <div class="writing-title-stack">
                 <h3 class="writing-title">Gamification in Crypto</h3>
               </div>
               <div class="writing-copy">
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> Retention architectures and reward mechanics from nine live implementations across DeFi, gaming, and infrastructure protocols. Covers point systems, achievement tiers, social competition, and leaderboard design.
+                  Retention architectures and reward mechanics from nine live implementations across DeFi, gaming, and infrastructure protocols. Covers point systems, achievement tiers, social competition, and leaderboard design.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Aug 2024 · Medium</span>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="https://medium.com/@CryptoZach/why-habit-forming-experiences-are-essential-for-building-decentralized-communities-eb583ef7bac5" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://x.com/i/status/1825980270941544867" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
@@ -929,22 +939,21 @@
         <li id="intro-tokenomics" data-audience="protocol-design depin" data-track="earlier" data-status="public">
           <article class="writing-item writing-card research-card research-card--minimal research-card--earlier-work writing-card--has-actions">
             <a class="writing-link writing-link--thumb" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">
-              <div class="writing-meta">
-                <div class="card-badges">
-                  <span class="badge badge-public">Public</span>
-                </div>
-                <span class="writing-meta-line">Apr 2022 · Medium · Protocol&nbsp;Design&nbsp;/&nbsp;DePIN</span>
-              </div>
+              
               <picture><source type="image/webp" srcset="/Publication-Images/Introduction-to-Tokenomics.webp" /><img class="writing-thumb thumb-wide" src="/Publication-Images/Introduction-to-Tokenomics.png" width="928" height="927" alt="Introduction to Tokenomics: flywheel of liquidity, borrowing, borrowers, token price, and yield" loading="lazy" /></picture>
               <div class="writing-title-stack">
                 <h3 class="writing-title">Introduction to Tokenomics</h3>
               </div>
               <div class="writing-copy">
                 <p class="writing-excerpt">
-                  <strong>What it is:</strong> A practitioner's guide to incentive design, value capture, and mechanism risk across the lifecycle of a token economy. Covers supply schedules, staking mechanics, governance tradeoffs, and common failure modes.
+                  A practitioner's guide to incentive design, value capture, and mechanism risk across the lifecycle of a token economy. Covers supply schedules, staking mechanics, governance tradeoffs, and common failure modes.
                 </p>
               </div>
-            </a>
+            
+<div class="writing-meta">
+                <span class="writing-meta-line">Apr 2022 · Medium</span>
+              </div>
+</a>
             <div class="writing-card-actions">
               <a class="writing-arrow" href="https://medium.com/borderless-capital/introduction-to-tokenomics-c7af75c09bfe" target="_blank" rel="noopener noreferrer">Read <span aria-hidden="true">→</span></a>
               <a class="writing-thread" href="https://x.com/i/status/1517236122195316737" target="_blank" rel="noopener noreferrer" aria-label="Read thread"><svg class="icon-x-inline" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Read thread</a>
@@ -996,13 +1005,9 @@
 
       <section class="reveal" id="program-record" aria-labelledby="program-record-title">
         <h2 id="program-record-title">Program record</h2>
-        <p>Nine papers are on SSRN. Nine more are in draft. Filings, working titles, and the infrastructure behind the claims are below.</p>
+        <p>Nine papers are on SSRN. Nine more are in draft. The <a href="/letters/">federal comment program</a> is twenty-five letters across nineteen dockets and nine agencies. Filings, working titles, and the infrastructure behind the claims are below.</p>
         <details class="letters-fold">
-          <summary>Milestones, drafts, and infrastructure</summary>
-      <section id="program-milestones" aria-labelledby="program-milestones-title">
-        <h2 id="program-milestones-title">Program milestones</h2>
-        <p>All nine formal-program working papers are on SSRN. The <strong><a href="/letters/">Federal Comment Letter Program</a></strong> filed 25 comment letters across <strong>nineteen</strong> dockets and <strong>nine</strong> federal agencies: the first eight completed April 20, 2026, with two June deadline-day FinCEN supplements, a June 22 NCUA comment and supplement, a third FDIC comment (RIN 3064-AG29) on June 30, 2026, a first SEC comment on the Draft Strategic Plan (File Number DSP-3) on July 2, 2026, a third OCC comment (RIN 1557-AF55) on July 23, 2026, a fifth FinCEN comment on the joint permitted payment stablecoin issuer customer identification rule (RIN 1506-AB74, Docket FINCEN-2026-0101) on August 21, 2026, two FDIC comments (RINs 3064-AG21 and 3064-AG27) on August 24, 2026, a Board of Governors comment on its AML program rule (Docket No. R-1835) on September 21, 2026, a first CFTC comment (information collection 3038-0076) and an FDIC comment on its disclosure-of-information proposal (RIN 3064-AG30) on October 5, 2026, a Treasury comment on the GENIUS Act section 3 issuance restrictions and foreign issuer regimes (Docket TREAS-DO-2026-0496) on October 13, 2026, and, on October 19, 2026, an SEC comment on proposed Regulation Crypto Assets (File No. S7-2026-27), a Treasury section 3 supplement, and an SEC comment on conditional exemptions for tokenized NMS stock (File No. 4-927). Each letter page summarizes what the rule proposes, identifies gaps, and proposes specific recommendations. Both the SSRN set and the federal docket workstream for this cycle are complete to date.</p>
-      </section>
+          <summary>Drafts, landscape, and infrastructure</summary>
       <section class="reveal" id="in-development" aria-labelledby="in-development-title">
         <h2 id="in-development-title">In development</h2>
         <p>Nine working papers sit at full draft or later, in addition to the nine on SSRN and the agentic-payments memo above. They are listed so the program's current work is visible and not only its published record. None is posted yet; titles and framings are working versions and may change before posting.</p>
@@ -1158,15 +1163,16 @@
       items.sort(function(a, b) { return (b.key - a.key) || (a.i - b.i); });
       var table = document.createElement('table');
       table.className = 'letters-timeline research-list letters-stackable';
-      var html = '<thead><tr><th>Date</th><th>Paper</th><th>Thesis</th><th>Key numbers</th><th>Read</th></tr></thead><tbody>';
+      var html = '<thead><tr><th>Paper</th><th>Thesis</th><th>Date</th><th>Key numbers</th><th>Read</th></tr></thead><tbody>';
       function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
       items.forEach(function(it) {
         var read = it.href ? '<a href="' + esc(it.href) + '"' + (it.external ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + (it.external ? 'Open' : 'Summary') + '</a>' : '';
         it.links.forEach(function(l) { read += (read ? ' · ' : '') + '<a href="' + esc(l.href) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label) + '</a>'; });
-        html += '<tr data-card="' + it.i + '"><td data-label="Date">' + esc(it.date) + '</td>' +
+        html += '<tr data-card="' + it.i + '">' +
           '<td data-label="Paper"><strong>' + (it.href ? '<a href="' + esc(it.href) + '">' + esc(it.title) + '</a>' : esc(it.title)) + '</strong>' +
           (it.venue ? '<br><span class="letters-outcome-id">' + esc(it.venue) + '</span>' : '') + '</td>' +
           '<td data-label="Thesis">' + esc(it.thesis) + '</td>' +
+          '<td data-label="Date">' + esc(it.date) + '</td>' +
           '<td data-label="Key numbers">' + esc(it.number) + '</td>' +
           '<td data-label="Read">' + read + '</td></tr>';
       });
