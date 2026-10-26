@@ -25,12 +25,19 @@ except the feed, which is generated whole):
         outcomes           "Outcomes so far": one row per proceeding, plus next dates
         collection-jsonld  the CollectionPage ItemList
     letters/<slug>/index.html (every letter page)
-        status-badge       the status chip in the badge row
-        outcome            "What happened next": comment period, status, recommendation
-                           dispositions, internal cross-references
+        status-badge       the status chip inside the bottom "Docket and status" block
+        outcome            condensed status under that heading: as-of date, recommendation
+                           disposition, cross-references; a long note folds
         related            the Related cards (supplements, same proceeding, same cycle,
                            every paper the registry lists, the hub, the
                            recommendation index)
+
+    Hand-authored letter-page order (the markers above are stamped into it; --check
+    refuses a page that drifts): docket summary, macro context, thesis, then the
+    recommendations and the rest of the analysis, then a condensed docket-and-status
+    block (metadata strip, filing note, status badge, outcome). The hub reads the
+    same way: docket summary and macro context, the letter cards, what the program
+    established, then docket details and status folded at the bottom.
         (in place)         a status chip on each recommendation <li id="rec-N"> whose
                            status is not "pending"; removed again when it is
     letters/recommendations/index.html
@@ -380,7 +387,8 @@ def gen_card(m, l):
     gaps = l["gaps"]
     if l.get("gaps_label") and gaps.startswith(l["gaps_label"]):
         gaps = gaps[len(l["gaps_label"]):].strip()
-    meta = [l["filed"], l["agency_display"], l["frameworks_display"], m.rec_phrase(l), m.status_label(l)]
+    # Status lives in the outcomes ledger, not on every card.
+    meta = [b for b in (l["filed"], l["agency_display"], l["frameworks_display"], m.rec_phrase(l)) if b]
     lines = [f'<a href="/letters/{attr(l["slug"])}/" class="companion-card letter-card" {card_attrs(m, l)}>',
              f'  <span class="card-number">{esc(m.number_label(l))}</span>',
              f'  <strong>{esc(l["title"])}</strong>',
@@ -427,43 +435,63 @@ def gen_index(m):
     for l in m.newest_first():
         out += ["        " + ln for ln in gen_row(m, l)]
     out += ["      </tbody>", "    </table>", "  </div>", "</div>"]
-    # channels and series note
-    counts = {}
-    for l in m.federal:
-        ch = l["docket"]["channel"]
-        counts[ch] = counts.get(ch, 0) + 1
-    chans = ", ".join(f"{esc(ch)} ({n})" for ch, n in sorted(counts.items(), key=lambda kv: -kv[1]))
-    intl = [l for l in m.letters if l["series"] == "international"]
     combined = os.path.join(m.root, "letters", "all-letters.pdf")
     pdf_note = ""
     if os.path.isfile(combined):
         mb = os.path.getsize(combined) / 1e6
         pdf_note = (f' All {word(m.n_federal)} are also compiled, with a contents page and bookmarks, in '
                     f'<a href="/letters/all-letters.pdf">one PDF for reviewers</a> ({mb:.1f} MB).')
-    note = (f"The {word(m.n_federal)} federal letters were filed via {chans}. "
-            + (f"The international series ({', '.join(esc(l['agency']) for l in intl)}) is listed for completeness and does not change the federal count. " if intl else "")
-            + f'Every recommendation is also listed in the <a href="/letters/recommendations/">recommendation index</a>.'
+    note = ('Every recommendation is listed in the <a href="/letters/recommendations/">recommendation index</a>.'
             + pdf_note)
     out.append(f'<p class="letters-note">{note}</p>')
     return out
 
 
+def filing_admin_paragraph(m):
+    """Where the letters were filed. Administrative, so it sits inside the folded ledger."""
+    counts = {}
+    for l in m.federal:
+        ch = l["docket"]["channel"]
+        counts[ch] = counts.get(ch, 0) + 1
+    chans = ", ".join(f"{esc(ch)} ({n})" for ch, n in sorted(counts.items(), key=lambda kv: -kv[1]))
+    intl = [l for l in m.letters if l["series"] == "international"]
+    intl_note = ""
+    if intl:
+        intl_note = (" The international series ("
+                     + ", ".join(esc(l["agency"]) for l in intl)
+                     + ") is listed for completeness and does not change the federal count.")
+    return f"The {word(m.n_federal)} federal letters were filed via {chans}.{intl_note}"
+
+
 def gen_outcomes(m):
     tracker_link = (' The GENIUS Act rulemakings, including those the program did not comment on, are followed on the '
                     '<a href="/trackers/genius-act/">GENIUS Act rulemaking tracker</a>.' if m.tracker else '')
-    out = [f'<p class="letters-outcomes-lede">One row per rulemaking or consultation, in filing order; a joint rulemaking filed at several agency dockets is one row. Status as of {esc(fmt_date(m.verified_on))}.{tracker_link}</p>',
-           '<details class="letters-fold" open>',
-           '  <summary>Outcomes by proceeding, and next dates</summary>',
+    seen = []
+    for l in m.filing_order():
+        if l["proceeding"] not in seen:
+            seen.append(l["proceeding"])
+    counts = {}
+    for key in seen:
+        o = m.procs[key]["outcome"]
+        label = o.get("status_label") or STATE_LABEL[o["state"]]
+        counts[label] = counts.get(label, 0) + 1
+    def soften(label):
+        first = label.split(" ", 1)[0]
+        if first.isupper() and len(first) > 1:
+            return label
+        return label[:1].lower() + label[1:]
+    bits = [f"{n} {soften(label)}" for label, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))]
+    rollup = "Status: " + " &middot; ".join(bits) + "."
+    out = [f'<p class="letters-outcomes-lede">{rollup}</p>',
+           '<details class="letters-fold">',
+           '  <summary>Proceedings, sources, and next dates</summary>',
+           f'<p class="letters-outcomes-lede">One row per rulemaking or consultation, in filing order. A joint rulemaking filed at several agency dockets is one row.{tracker_link}</p>',
            '<div class="letters-timeline-table" role="region" aria-label="Outcomes by proceeding">',
            '  <table class="letters-timeline letters-outcomes letters-stackable">',
            "    <thead>",
            "      <tr><th>Proceeding</th><th>Letters</th><th>Comments closed</th><th>Status</th><th>Recommen&shy;dations</th></tr>",
            "    </thead>",
            "    <tbody>"]
-    seen = []
-    for l in m.filing_order():
-        if l["proceeding"] not in seen:
-            seen.append(l["proceeding"])
     for key in seen:
         p = m.procs[key]
         ls = [l for l in m.filing_order() if l["proceeding"] == key]
@@ -498,7 +526,8 @@ def gen_outcomes(m):
         if o.get("note"):
             srcs = " ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
             out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(o["note"])}{(" " + srcs) if srcs else ""}</td></tr>')
-    out += ["    </tbody>", "  </table>", "</div>"]
+    out += ["    </tbody>", "  </table>", "</div>",
+            f'<p class="letters-outcomes-lede">{filing_admin_paragraph(m)}</p>']
     watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
     if watch:
         out.append('<h3 id="next-dates">Next dates</h3>')
@@ -552,38 +581,43 @@ def gen_status_badge(m, l):
 
 
 def gen_outcome(m, l):
+    """Condensed status for the hand-authored "Docket and status" block.
+
+    The comment period stays in the page's metadata strip, and the status chip is
+    the status-badge region. A note longer than a short update folds.
+    """
     o = l["_outcome"]
-    cp = l["comment_period"]
-    out = ['<h2 id="what-happened-next">What happened next</h2>', '<dl class="letter-outcome">']
-    period = fmt_range(cp.get("open"), cp.get("close")) or "n/a"
-    if cp.get("note"):
-        period += f" ({cp['note']})"
-    out.append(f"  <div><dt>Comment period</dt><dd>{esc(period)}</dd></div>")
-    status = f'<span class="status-chip status-chip--{attr(m.status_class(l))}">{esc(m.status_label(l))}</span> as of {esc(fmt_date(m.verified_on))}'
-    if o.get("final_action"):
-        fa = o["final_action"]
-        link = f'<a href="{attr(fa["url"])}" target="_blank" rel="noopener noreferrer">{esc(fa.get("citation", "final text"))}</a>' if fa.get("url") else esc(fa.get("citation", ""))
-        status += f'<br>{link}{(", " + esc(fmt_date(fa["date"]))) if fa.get("date") else ""}'
-    out.append(f"  <div><dt>Status</dt><dd>{status}</dd></div>")
+    bits = [f"as of {esc(fmt_date(m.verified_on))}"]
     disp = m.rec_disposition(l)
     if disp:
-        out.append(f"  <div><dt>Recommendations</dt><dd>{esc(disp)}</dd></div>")
+        bits.append(esc(disp))
+    if o.get("final_action"):
+        fa = o["final_action"]
+        link = (f'<a href="{attr(fa["url"])}" target="_blank" rel="noopener noreferrer">{esc(fa.get("citation", "final text"))}</a>'
+                if fa.get("url") else esc(fa.get("citation", "")))
+        if fa.get("date"):
+            link += ", " + esc(fmt_date(fa["date"]))
+        if link:
+            bits.append(link)
+    out = [f'<p class="letter-status-line">{" &middot; ".join(bits)}</p>']
+    links = []
     if l.get("supplements"):
         parent = m.by_slug[l["supplements"]["slug"]]
         recs = l["supplements"].get("recommendations")
         tail = f", Recommendation {', '.join(str(r) for r in recs)}" if recs else ""
-        out.append(f'  <div><dt>Supplements</dt><dd><a href="/letters/{attr(parent["slug"])}/">No. {parent["number"]}: {esc(parent["short_title"])}</a>{esc(tail)}</dd></div>')
+        links.append(f'Supplements <a href="/letters/{attr(parent["slug"])}/">No. {parent["number"]}: {esc(parent["short_title"])}</a>{esc(tail)}')
     if l["_children"]:
         kids = ", ".join(f'<a href="/letters/{attr(c["slug"])}/">No. {c["number"]}: {esc(c["short_title"])}</a>' for c in l["_children"])
-        out.append(f"  <div><dt>Supplemented by</dt><dd>{kids}</dd></div>")
+        links.append(f"Supplemented by {kids}")
     refs = [r for r in m.referenced_by(l) if r["slug"] not in {c["slug"] for c in l["_children"]}]
     if refs:
-        links = ", ".join(f'<a href="/letters/{attr(r["slug"])}/">{esc(m.number_label(r))}</a>' for r in refs)
-        out.append(f"  <div><dt>Referenced by</dt><dd>later letters in the program: {links}</dd></div>")
+        ref_links = ", ".join(f'<a href="/letters/{attr(r["slug"])}/">{esc(m.number_label(r))}</a>' for r in refs)
+        links.append(f"Referenced by later letters: {ref_links}")
     if l.get("cited_by"):
         cites = "; ".join((f'<a href="{attr(c["url"])}" target="_blank" rel="noopener noreferrer">{esc(c["who"])}</a>' if c.get("url") else esc(c["who"])) + (f", {esc(c['what'])}" if c.get("what") else "") for c in l["cited_by"])
-        out.append(f"  <div><dt>Cited by</dt><dd>{cites}</dd></div>")
-    out.append("</dl>")
+        links.append(f"Cited by {cites}")
+    if links:
+        out.append(f'<p class="letter-status-links">{". ".join(links)}.</p>')
     decided = [r for r in l["recommendations"] if r["status"] != "pending"]
     if decided:
         out.append('<ul class="letter-outcome-recs">')
@@ -593,7 +627,14 @@ def gen_outcome(m, l):
         out.append("</ul>")
     if o.get("note"):
         srcs = "; ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
-        out.append(f'<p class="letter-outcome-note">{esc(o["note"])}{(" Source: " + srcs + ".") if srcs else ""}</p>')
+        body = f'{esc(o["note"])}{(" Source: " + srcs + ".") if srcs else ""}'
+        if len(o["note"]) > 400:
+            out += ['<details class="letter-status-more">',
+                    "  <summary>Status note</summary>",
+                    f'  <p class="letter-outcome-note">{body}</p>',
+                    "</details>"]
+        else:
+            out.append(f'<p class="letter-outcome-note">{body}</p>')
     return out
 
 
@@ -1073,6 +1114,55 @@ def selftest():
     return 1 if bad else 0
 
 
+def check_letter_reading_order(page, rel, problems):
+    """Docket summary and macro context, then thesis and recommendations, then docket details."""
+    if 'id="letter-title"' not in page:
+        return
+
+    def at(token):
+        return page.find(token)
+
+    thesis = at('class="paper-thesis"')
+    abstract = at('class="paper-abstract"')
+    record = at('class="letter-record"')
+    meta = at('class="paper-metadata-strip"')
+    badge = at("letters:status-badge START")
+    outcome = at("letters:outcome START")
+    related = at("letters:related START")
+    title = at('id="letter-title"')
+    missing = [name for name, pos in (
+        ("thesis", thesis), ("abstract", abstract), ("docket record", record),
+        ("metadata strip", meta), ("status badge", badge), ("outcome", outcome),
+        ("related", related)) if pos < 0]
+    if missing:
+        problems.append(f"{rel}: missing {', '.join(missing)}")
+        return
+    if badge < title:
+        problems.append(f"{rel}: status badge is above the title; it belongs in the docket record")
+    if meta < thesis:
+        problems.append(f"{rel}: docket details should follow the thesis, inside the docket record")
+    if not (thesis < abstract < record <= meta and record < badge < outcome < related):
+        problems.append(f"{rel}: reading order should be summary and context, thesis, recommendations, then docket details and status")
+    lead = at('class="letter-lead"')
+    if lead >= 0 and lead > thesis:
+        problems.append(f"{rel}: docket summary and macro context should precede the thesis")
+    if "letter-background" in page:
+        problems.append(f"{rel}: docket summary is still collapsed under letter-background")
+    if ">Program role<" in page:
+        problems.append(f"{rel}: Program role should be the macro context section above the thesis")
+
+
+def check_hub_reading_order(text, problems):
+    summary = text.find('id="program-summary"')
+    context = text.find('id="program-context"')
+    letters = text.find('id="the-letters"')
+    outcomes = text.find('id="program-outcomes"')
+    if not (0 <= summary < context < letters < outcomes):
+        problems.append("letters/index.html: docket summary and macro context should precede the letters; docket details and status should follow")
+    if summary != text.rfind('id="program-summary"'):
+        problems.append("letters/index.html: duplicate program-summary")
+
+
 def verify_registry_against_pages(m, problems):
     problems.extend(check_frameworks_and_papers(m.letters, m.frameworks, m.framework_papers, m.pages))
     for l in m.letters:
@@ -1090,6 +1180,10 @@ def verify_registry_against_pages(m, problems):
         for name in ("status-badge", "outcome", "related"):
             if region_bounds(page.split("\n"), name) is None:
                 problems.append(f"{rel}: missing region letters:{name}")
+        check_letter_reading_order(page, rel, problems)
+    hub_path = os.path.join(m.root, HUB_REL)
+    if os.path.isfile(hub_path):
+        check_hub_reading_order(read(hub_path), problems)
     counted = sum(l["rec_count"] for l in m.federal)
     listed = sum(len(l["recommendations"]) for l in m.federal)
     if counted != listed:

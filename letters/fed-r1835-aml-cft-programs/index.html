@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Federal Reserve R-1835
@@ -217,16 +217,19 @@
         <span class="badge">By email</span>
         <span class="badge">9 recommendations</span>
         <span class="badge">Board of Governors</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Federal Reserve R-1835 comment: adopt the coordination provisions the sibling rules carry, and give content to the term the protection turns on</h1>
 
-      <p class="paper-metadata-strip">Docket No. R-1835, RIN 7100-AG78 (91 Fed. Reg. 42363, July 9, 2026; FR Doc 2026-13919) &middot; 12 CFR Part 208, revising and republishing Section 208.63 &middot; Comment period: July 9, 2026 to September 8, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The Board proposes to revise and republish 12 CFR 208.63, the anti-money-laundering and countering-the-financing-of-terrorism program requirement for state member banks. It is the Board's contribution to a four-part rulemaking: FinCEN issued the program rule for financial institutions generally, and the OCC, the FDIC and the NCUA each issued a parallel rule for the institutions they supervise. The Board's proposal restructures the program requirement around a risk assessment, adds an effectiveness standard for independent testing, and adds a new paragraph (g) stating an enforcement-policy position: absent a significant or systemic failure, a deficiency identified in a bank's program will not itself be the basis for a significant AML or CFT supervisory action. That paragraph is the proposal's principal benefit to supervised institutions, and everything in this comment that concerns paragraph (g) concerns whether it can be relied on.</p>
+        <p>Two adjacency traps are worth naming, because the identifiers in this space are close enough to substitute for one another silently. This docket, R-1835, is not Docket R-1885, which is the Board's identifier on the separate joint FinCEN rulemaking on permitted payment stablecoin issuer customer identification. And the April 10, 2026 three-agency re-issuance at 91 Fed. Reg. 18304 carries RINs 1557-AF14, 3064-AF34 and 3133-AG08, not R-1835 or 7100-AG78.</p>
 
-      <p class="paper-status-note"><strong>Status: filed by email on September 21, 2026.</strong> The Board email channel does not issue a regulations.gov tracking number, and none is recorded. The PDF linked here is the as-filed artifact.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>This comment addresses the Board of Governors on its own rulemaking. It carries no overall letter count and no agency count in its body, deliberately: both would be order-dependent on the sequence in which the program's filings land, and an earlier draft's characterization of this as the program's first comment to the Board was removed on that ground before rendering. The Board was already a party to the joint FinCEN rulemaking on which the program filed at Docket FINCEN-2026-0101 on August 21, 2026, so the Board's engagement does not depend on this comment.</p>
+        <p>The relationship to the program's April joint anti-money-laundering comment is worth stating precisely, because it is easy to overstate. That letter's Recommendation 6 asked the three participating agencies, the OCC, the FDIC and the NCUA, for three provisions in their final rule, and it stated expressly that the program took no position on whether the Board should join the rulemaking or issue its own parallel rule. The Board is therefore not an agency that was asked to act, and its separate rulemaking is the one path that recommendation declined to advocate. No causation is claimed here. What is true is narrower and still useful: the program identified the supervisory-consistency question in April and took no position on how it should be resolved, and the Board proceeding separately does not resolve that question so much as present it in the concrete form the Board itself put as Question 23.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Four agencies are writing one anti-money-laundering program rule four times, and the only substantive divergence between the Board's version and its three siblings is the coordination mechanism itself.</strong> The OCC, FDIC and NCUA proposals each carry two provisions requiring consultation with and information sharing with FinCEN, at proposed 12 CFR 21.21(h) and (i), 326.8(h) and (i), and 748.2(h) and (i) respectively. The Board's proposed Section 208.63 contains no such provision. The Board's own Section IV.G.2 identifies the siblings' provisions and invites comment on whether to include the same or similar ones, which is Question 23. Its Alternatives Considered section then states that the proposed rule <em>does</em> include provisions requiring FinCEN's consultation on supervisory actions, which is inconsistent with both Section IV.G.2 and the regulatory text as proposed. Nine recommendations address that omission, the term the proposal's principal benefit to supervised institutions depends on and never defines, and a scope mismatch between the operative text and the regulatory flexibility analysis that runs against the institutions rather than for them.</p>
 
@@ -270,24 +273,22 @@
         <p>Third, scope integrity. Every operative paragraph of proposed Section 208.63 runs to a state member bank. The regulatory flexibility analysis, however, describes the proposal as applying to three populations, state member banks plus Edge and agreement corporations plus the branches, agencies and representative offices of foreign banks other than a federal branch or agency or an FDIC-insured state branch, and it costs the proposal over 464 small entities on that basis. The amendatory instruction revises only Section 208.63. The current CFR provisions that carry Section 208.63 to the other two populations, 211.5(m)(1) and 211.24(j)(1), each incorporate it for program development and administration, and proposed paragraph (g) is not a program-development requirement. The asymmetry runs against the institutions: the obligations carry to all three populations, and the protection may not.</p>
         <h2>A note on scope and evidence</h2>
         <p>Every operative provision and every numbered question this comment quotes is quoted from the notice text acquired in full from the Government Publishing Office, and 12 CFR 211.5(m) and 211.24(j) are quoted from the current Code of Federal Regulations. The docket history is measured rather than recalled: Docket R-1835 and RIN 7100-AG78 carry exactly two documents, the four-agency joint proposal at 89 Fed. Reg. 65242 of August 9, 2024, which closed October 8, 2024, and this Board-only notice at 91 Fed. Reg. 42363. Where the comment draws on the program's control-layer work, it does so to name a factor the Board's own framework already admits, not to make a claim about any named institution.</p>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The Board proposes to revise and republish 12 CFR 208.63, the anti-money-laundering and countering-the-financing-of-terrorism program requirement for state member banks. It is the Board's contribution to a four-part rulemaking: FinCEN issued the program rule for financial institutions generally, and the OCC, the FDIC and the NCUA each issued a parallel rule for the institutions they supervise. The Board's proposal restructures the program requirement around a risk assessment, adds an effectiveness standard for independent testing, and adds a new paragraph (g) stating an enforcement-policy position: absent a significant or systemic failure, a deficiency identified in a bank's program will not itself be the basis for a significant AML or CFT supervisory action. That paragraph is the proposal's principal benefit to supervised institutions, and everything in this comment that concerns paragraph (g) concerns whether it can be relied on.</p>
-        <p>Two adjacency traps are worth naming, because the identifiers in this space are close enough to substitute for one another silently. This docket, R-1835, is not Docket R-1885, which is the Board's identifier on the separate joint FinCEN rulemaking on permitted payment stablecoin issuer customer identification. And the April 10, 2026 three-agency re-issuance at 91 Fed. Reg. 18304 carries RINs 1557-AF14, 3064-AF34 and 3133-AG08, not R-1835 or 7100-AG78.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">Docket No. R-1835, RIN 7100-AG78 (91 Fed. Reg. 42363, July 9, 2026; FR Doc 2026-13919) &middot; 12 CFR Part 208, revising and republishing Section 208.63 &middot; Comment period: July 9, 2026 to September 8, 2026</p>
+        <p class="paper-status-note"><strong>Status: filed by email on September 21, 2026.</strong> The Board email channel does not issue a regulations.gov tracking number, and none is recorded. The PDF linked here is the as-filed artifact.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>July 9 to September 8, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>9 recommendations filed; no final action yet</dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 9 recommendations filed; no final action yet</p>
         <p class="letter-outcome-note">No final rule located as of the verification date. On September 29, 2026 the Board separately proposed its GENIUS Act rules for Board-supervised issuers (91 Fed. Reg. 61580 and 61660), with comments due 60 days after publication. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>This comment addresses the Board of Governors on its own rulemaking. It carries no overall letter count and no agency count in its body, deliberately: both would be order-dependent on the sequence in which the program's filings land, and an earlier draft's characterization of this as the program's first comment to the Board was removed on that ground before rendering. The Board was already a party to the joint FinCEN rulemaking on which the program filed at Docket FINCEN-2026-0101 on August 21, 2026, so the Board's engagement does not depend on this comment.</p>
-        <p>The relationship to the program's April joint anti-money-laundering comment is worth stating precisely, because it is easy to overstate. That letter's Recommendation 6 asked the three participating agencies, the OCC, the FDIC and the NCUA, for three provisions in their final rule, and it stated expressly that the program took no position on whether the Board should join the rulemaking or issue its own parallel rule. The Board is therefore not an agency that was asked to act, and its separate rulemaking is the one path that recommendation declined to advocate. No causation is claimed here. What is true is narrower and still useful: the program identified the supervisory-consistency question in April and took no position on how it should be resolved, and the Board proceeding separately does not resolve that question so much as present it in the concrete form the Board itself put as Question 23.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=255" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> FDIC AG29
@@ -216,14 +216,17 @@
         <span class="badge">June 30, 2026</span>
         <span class="badge">6 recommendations</span>
         <span class="badge">Third FDIC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG29 comment: a shared, reproducible control-posture record for PPSI supervision</h1>
 
-      <p class="paper-metadata-strip">RIN 3064-AG29 (91 Fed. Reg. 34171, June 5, 2026) &middot; Comments@fdic.gov email and the FDIC Federal Register publications portal (this docket is not on regulations.gov) &middot; Comment period: June 5, 2026 to August 4, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The AG29 rule sets Bank Secrecy Act and sanctions compliance standards for FDIC-supervised permitted payment stablecoin issuers (PPSIs). It amends subpart A of 12 CFR part 350 to add proposed Section 350.6(d) and establishes a new subpart C (Sections 350.200 to 350.204) with supervision and enforcement provisions for PPSI AML/CFT programs. Section 350.6(d) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. The substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582; this rule is principally a supervision-and-coordination instrument, specifying how the FDIC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>AG29 is the program's third FDIC comment, after the prudential activities rule (<a href="/letters/fdic-ag19-ppsi-activities/">AG19</a>) and the application-process rule (<a href="/letters/fdic-ag20-ppsi-application/">AG20</a>), and its thirteenth federal comment across six agencies. Filed June 30, 2026 via <code>Comments@fdic.gov</code> with RIN 3064-AG29 in the subject line and the FDIC Federal Register publications portal; the FDIC does not accept this docket via regulations.gov. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule and the FDIC prudential and application rules rather than duplicating them.</p>
+      </section>
 
       <p class="paper-thesis"><strong>The AG29 rule is the FDIC's supervision-and-coordination layer over a PPSI anti-money-laundering and sanctions program whose substance is set in the companion FinCEN and OFAC rule.</strong> Its two distinctive features, the effective-program disposition under proposed Section 350.201 and the FDIC-to-FinCEN advance-notice consultation under proposed Section 350.202, work as intended only when both agencies reason over the same measured control posture of the same operator. Six recommendations turn that requirement into practice, anchored on an effective-program determination that is observable and reproducible rather than attestation-based.</p>
 
@@ -262,23 +265,22 @@
         <p>The coordination architecture works as intended only if the FDIC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the FDIC itself identifies in Question 4. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The same problem recurs at the boundary of a dual-character instrument: where the token does not change, but its obligor, legal regime, and supervisory perimeter do.</p>
         <h2>Worked example: the dual-character token</h2>
         <p>The letter illustrates the coverage gap with the Hazel Network, a publicly announced arrangement described in a June 2026 white paper jointly published by Vantage Bank Texas and Custodia Bank, Inc. A single unified token is a deposit liability of Vantage Bank Texas, an FDIC-insured member bank, while held within the consortium, and becomes a payment stablecoin issued by Custodia Bank, a Wyoming special-purpose depository institution, when transferred outside it, with no settlement event marking the transition. The example is offered as a supervisable failure mode, not as an allegation of wrongdoing, and neither named institution is presented as an FDIC-supervised PPSI under this rule. It shows how the state in which the instrument is least clearly accountable can be the state the design routes to the entity less integrated into the Federal banking supervisory perimeter, which is the coverage seam Recommendations 5 and 6 ask the FDIC's examination and consultation machinery to close.</p>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The AG29 rule sets Bank Secrecy Act and sanctions compliance standards for FDIC-supervised permitted payment stablecoin issuers (PPSIs). It amends subpart A of 12 CFR part 350 to add proposed Section 350.6(d) and establishes a new subpart C (Sections 350.200 to 350.204) with supervision and enforcement provisions for PPSI AML/CFT programs. Section 350.6(d) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. The substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582; this rule is principally a supervision-and-coordination instrument, specifying how the FDIC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">RIN 3064-AG29 (91 Fed. Reg. 34171, June 5, 2026) &middot; Comments@fdic.gov email and the FDIC Federal Register publications portal (this docket is not on regulations.gov) &middot; Comment period: June 5, 2026 to August 4, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>June 5 to August 4, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>6 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/occ-af55-bsa-sanctions/">No. 15</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a>, <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 6 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/occ-af55-bsa-sanctions/">No. 15</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a>, <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a>.</p>
         <p class="letter-outcome-note">No final rule located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>AG29 is the program's third FDIC comment, after the prudential activities rule (<a href="/letters/fdic-ag19-ppsi-activities/">AG19</a>) and the application-process rule (<a href="/letters/fdic-ag20-ppsi-application/">AG20</a>), and its thirteenth federal comment across six agencies. Filed June 30, 2026 via <code>Comments@fdic.gov</code> with RIN 3064-AG29 in the subject line and the FDIC Federal Register publications portal; the FDIC does not accept this docket via regulations.gov. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule and the FDIC prudential and application rules rather than duplicating them.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -237,7 +237,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> CFTC 3038-0076
@@ -250,16 +250,17 @@
         <span class="badge">Regulations.gov</span>
         <span class="badge">4 recommendations</span>
         <span class="badge">First CFTC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">OMB review pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">CFTC 3038-0076 comment: define the evidentiary form of the tokenized-collateral equivalence determination</h1>
 
-      <p class="paper-metadata-strip">OMB Control No. 3038-0076, Docket CFTC-2026-1685 (91 Fed. Reg. 50816, August 6, 2026; FR Doc 2026-16048) &middot; Paperwork Reduction Act renewal covering 17 CFR 39.10 through 39.19, 39.21, 39.24 and 39.27 &middot; Filed at regulations.gov, Comment Tracking Number muw-1hze-km0l &middot; Comment period: August 6, 2026 to October 5, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>Information collection 3038-0076 covers the reporting requirements of thirteen Part 39 regulations, 39.10 through 39.19, 39.21, 39.24 and 39.27. Among them is the risk management regulation, 39.13, whose paragraph (g) limits the assets a clearing organization may accept as initial margin to those with minimal credit, market, and liquidity risks, requires haircuts set with stressed market conditions in view, and requires concentration limits or charges that protect the clearing organization's ability to liquidate margin assets quickly with minimal adverse price effects. The notice asks whether the collection has practical use and how the quality, usefulness, and clarity of the information collected could be enhanced. The comment answers those two questions, does not contest the burden estimate, and takes no position on any pending rulemaking.</p>
 
-      <p class="paper-status-note"><strong>Status: filed at regulations.gov on October 5, 2026, the closing day.</strong> Comment Tracking Number muw-1hze-km0l. The PDF linked here is the as-filed artifact.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>The program's first comment to the Commission, and the filing that brings the program to nine federal agencies. It continues a position the program took before a sibling regulator rather than opening a new one: the April 2026 comment to the OCC on its rule for permitted payment stablecoin issuers named the Commission as one of the regulators whose perimeter meets the collateral-eligibility seam, and recommended a standardized equivalence assessment as a supervisory tool.</p>
+      </section>
 
       <p class="paper-thesis"><strong>CFTC staff now expect clearing organizations to determine, instrument by instrument, whether a tokenized form of an asset conveys the rights of the asset in traditional form, and to be able to demonstrate it; the information the Commission collects from clearing organizations captures that determination in no defined form.</strong> Staff Letter 25-39 states that registrants are required to demonstrate that non-cash margin meets legal enforceability requirements, and the Divisions' frequently asked questions of September 24, 2026 apply the equivalence test to the investment of customer funds as something a clearing organization must be able to demonstrate. The President's Working Group report, which the CFTC's tokenized collateral initiative helps implement, recommended guidance under seven Part 39 regulations for clearing-organization acceptance of digital asset collateral, and all seven sit inside this collection. A supervisor reading the collection can see that a haircut was applied, but not whether the instrument conveys the rights the haircut assumes. Four recommendations ask the Commission to define the form of that record, without a new rule, a threshold, or added burden for clearing organizations that accept no tokenized collateral.</p>
 
@@ -297,23 +298,23 @@
         <p>The determination varies by tokenization structure rather than by asset class, and it conditions whether the 39.13(g) analysis rests on a sound premise. The collection records the haircut but not the determination beneath it. Under the definition the Office of Management and Budget applies to every collection, practical utility means actual rather than merely potential usefulness. A determination recorded, where it is recorded at all, in whatever form each of the collection's 204 respondents chooses has potential usefulness to the Commission; a defined form would make it actual.</p>
         <h2>A note on scope and evidence</h2>
         <p>The program's empirical work studies tokenized funds, stablecoins, and the gateway infrastructure through which they move. It has examined no clearing organization's collateral, and the measured findings in the comment are offered to illustrate a method and a failure mode, not as evidence about any registrant. Staff Letter 25-39 and the Divisions' frequently asked questions are characterized throughout as staff views, not as Commission action. Every quotation in the comment was checked against an archived copy of its source.</p>
-        <details class="letter-background">
-          <summary><h2>What the collection covers</h2></summary>
-        <p>Information collection 3038-0076 covers the reporting requirements of thirteen Part 39 regulations, 39.10 through 39.19, 39.21, 39.24 and 39.27. Among them is the risk management regulation, 39.13, whose paragraph (g) limits the assets a clearing organization may accept as initial margin to those with minimal credit, market, and liquidity risks, requires haircuts set with stressed market conditions in view, and requires concentration limits or charges that protect the clearing organization's ability to liquidate margin assets quickly with minimal adverse price effects. The notice asks whether the collection has practical use and how the quality, usefulness, and clarity of the information collected could be enhanced. The comment answers those two questions, does not contest the burden estimate, and takes no position on any pending rulemaking.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">OMB Control No. 3038-0076, Docket CFTC-2026-1685 (91 Fed. Reg. 50816, August 6, 2026; FR Doc 2026-16048) &middot; Paperwork Reduction Act renewal covering 17 CFR 39.10 through 39.19, 39.21, 39.24 and 39.27 &middot; Filed at regulations.gov, Comment Tracking Number muw-1hze-km0l &middot; Comment period: August 6, 2026 to October 5, 2026</p>
+        <p class="paper-status-note"><strong>Status: filed at regulations.gov on October 5, 2026, the closing day.</strong> Comment Tracking Number muw-1hze-km0l. The PDF linked here is the as-filed artifact.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">OMB review pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>August 6 to October 5, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">OMB review pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>4 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/sec-4-927-tokenized-nms-exemptions/">No. 25</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 4 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/sec-4-927-tokenized-nms-exemptions/">No. 25</a>.</p>
         <p class="letter-outcome-note">A Paperwork Reduction Act renewal: the outcome is an OMB approval of the collection, not a rule. The current approval expires December 31, 2026. Source: <a href="https://omb.report/omb/3038-0076" target="_blank" rel="noopener noreferrer">OMB control number 3038-0076 record (current approval expires December 31, 2026)</a>.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The program's first comment to the Commission, and the filing that brings the program to nine federal agencies. It continues a position the program took before a sibling regulator rather than opening a new one: the April 2026 comment to the OCC on its rule for permitted payment stablecoin issuers named the Commission as one of the regulators whose perimeter meets the collateral-eligibility seam, and recommended a standardized equivalence assessment as a supervisory tool.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

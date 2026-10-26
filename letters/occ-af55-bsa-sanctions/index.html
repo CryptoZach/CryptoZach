@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=255" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> OCC AF55
@@ -216,14 +216,17 @@
         <span class="badge">July 23, 2026</span>
         <span class="badge">8 recommendations</span>
         <span class="badge">Third OCC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">OCC AF55 comment: one measured control posture, extended to reserve assets, entity types, and OCC-FDIC alignment</h1>
 
-      <p class="paper-metadata-strip">RIN 1557-AF55, Docket OCC-2026-0463 (91 Fed. Reg. 37840, June 24, 2026) &middot; Filed at regulations.gov, Comment Tracking Number mry-7y1z-53lw &middot; Comment period: June 24, 2026 to July 24, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The AF55 rule sets Bank Secrecy Act and sanctions compliance standards for OCC-supervised permitted payment stablecoin issuers (PPSIs). It amends the OCC's March 2, 2026 proposed rule implementing the GENIUS Act (91 Fed. Reg. 10202) by adding proposed Section 15.13(c); adds a supervision and enforcement framework at new subpart R of part 19 (proposed Sections 19.260 through 19.262); and adds an information-sharing provision at new Section 4.19 of part 4. Section 15.13(c) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. As the OCC states, the proposal would not add requirements beyond FinCEN's and OFAC's; the substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582. This rule is therefore principally a supervision-and-coordination instrument, specifying how the OCC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>AF55 is the program's third OCC comment, after the core payment-stablecoin-issuance rule and its interface-conduct supplement (both on Docket OCC-2025-0372, RIN 1557-AF41), and its fifteenth federal comment across seven agencies. Filed July 23, 2026 at regulations.gov on Docket OCC-2026-0463, Comment Tracking Number mry-7y1z-53lw, two days before the July 24 comment close. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule (91 Fed. Reg. 18582), the OCC's March 2, 2026 issuance rule (91 Fed. Reg. 10202), and the FDIC's parallel BSA and sanctions rule (<a href="/letters/fdic-ag29-bsa-sanctions/">AG29</a>) rather than duplicating them.</p>
+      </section>
 
       <p class="paper-thesis"><strong>The AF55 rule is the OCC's supervision-and-coordination layer over a PPSI anti-money-laundering and sanctions program whose substance is set in the companion FinCEN and OFAC rule.</strong> Its coordination features, the advance-notice consultation under proposed Section 19.261 and the enforcement-and-supervision policy under proposed Section 19.262, work as intended only when the OCC and FinCEN reason over the same measured control posture of the same operator. Eight recommendations turn that requirement into examination practice and extend it to three surfaces distinctive to the OCC's proposal: uniform treatment across entity types, reserve-asset and holder-monetization protections, and alignment with the parallel FDIC rule.</p>
 
@@ -264,23 +267,22 @@
         <p>The coordination architecture works as intended only if the OCC and FinCEN read the same measured control posture of the same operator. Two agencies coordinating on a verbal account, or on separately gathered and non-comparable observations, produce duplicative examination, divergent determinations, and the logistical friction the OCC itself identifies in Question 10. A shared, reproducible measurement of control-layer posture, organized as a single supervisory record per operator, closes that gap. The comment then extends the same measured-object logic to three surfaces distinctive to the OCC's proposal, which the roughly 29 affected issuers span across bank affiliates, issuers not currently OCC-regulated, and white-label or consortium arrangements: uniform treatment across entity types (Questions 1 and 2), reserve-asset and holder-monetization protection (Questions 3, 4, and 5), and alignment with the parallel FDIC rule (Question 6).</p>
         <h2>Worked example: the dual-character token</h2>
         <p>The letter illustrates the coverage gap with the Hazel Network, a publicly announced arrangement described in a June 2026 white paper jointly published by Vantage Bank Texas and Custodia Bank, Inc. A single unified token is a deposit liability of Vantage Bank Texas, an FDIC-insured member bank, while held within the consortium, and becomes a payment stablecoin issued by Custodia Bank, a Wyoming special-purpose depository institution, when transferred outside it, with no settlement event marking the transition. The example is offered as a supervisable failure mode, not as an allegation of wrongdoing, and neither named institution is presented as an OCC-supervised PPSI under this rule. It shows how the state in which the instrument is least clearly accountable can be the state the design routes to the entity less integrated into the Federal banking supervisory perimeter, which is the coverage seam Recommendations 5 and 6 ask the OCC's examination and consultation machinery to close.</p>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The AF55 rule sets Bank Secrecy Act and sanctions compliance standards for OCC-supervised permitted payment stablecoin issuers (PPSIs). It amends the OCC's March 2, 2026 proposed rule implementing the GENIUS Act (91 Fed. Reg. 10202) by adding proposed Section 15.13(c); adds a supervision and enforcement framework at new subpart R of part 19 (proposed Sections 19.260 through 19.262); and adds an information-sharing provision at new Section 4.19 of part 4. Section 15.13(c) imposes the substantive obligation by incorporation, requiring each PPSI to comply with the Bank Secrecy Act, sections 4(a)(5) and 4(a)(6)(B) of the GENIUS Act, and applicable regulations at 31 CFR chapters V and X. As the OCC states, the proposal would not add requirements beyond FinCEN's and OFAC's; the substantive program content lives in the companion FinCEN and OFAC rule at 91 Fed. Reg. 18582. This rule is therefore principally a supervision-and-coordination instrument, specifying how the OCC examines and enforces against PPSIs and how it consults the Director of FinCEN before doing so.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">RIN 1557-AF55, Docket OCC-2026-0463 (91 Fed. Reg. 37840, June 24, 2026) &middot; Filed at regulations.gov, Comment Tracking Number mry-7y1z-53lw &middot; Comment period: June 24, 2026 to July 24, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>June 24 to July 24, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>8 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 8 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>.</p>
         <p class="letter-outcome-note">No final rule located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>AF55 is the program's third OCC comment, after the core payment-stablecoin-issuance rule and its interface-conduct supplement (both on Docket OCC-2025-0372, RIN 1557-AF41), and its fifteenth federal comment across seven agencies. Filed July 23, 2026 at regulations.gov on Docket OCC-2026-0463, Comment Tracking Number mry-7y1z-53lw, two days before the July 24 comment close. The recommendations coordinate with the companion FinCEN and OFAC PPSI program rule (91 Fed. Reg. 18582), the OCC's March 2, 2026 issuance rule (91 Fed. Reg. 10202), and the FDIC's parallel BSA and sanctions rule (<a href="/letters/fdic-ag29-bsa-sanctions/">AG29</a>) rather than duplicating them.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

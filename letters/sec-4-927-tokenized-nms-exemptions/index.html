@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -245,7 +245,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> SEC tokenized NMS stock exemptions
@@ -258,16 +258,17 @@
         <span class="badge">SEC comment form</span>
         <span class="badge">7 recommendations</span>
         <span class="badge">Third SEC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-open">Open for comment; no deadline set</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">SEC File No. 4-927 comment: collect from day one the facts tokenized NMS stock rulemaking will need, in a form checkable against the public ledger</h1>
 
-      <p class="paper-metadata-strip">File No. 4-927, Release No. 34-106402 (issued September 17, 2026; 91 Fed. Reg. 60168, September 22, 2026; FR Doc 2026-19388) &middot; Order Granting Temporary Conditional Exemptive Relief from the Definitions of "Exchange" and "Dealer" for Tokenized NMS Stock, and Request for Comment &middot; Filed through the SEC internet comment form, which issues no tracking number &middot; Comment period: open-ended; the Order sets no deadline</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>Release No. 34-106402, issued September 17, 2026 under section 36(a)(1) of the Securities Exchange Act of 1934 and published at 91 Fed. Reg. 60168 on September 22, 2026, grants two temporary, conditional exemptions that run until September 17, 2031. The TSV Exemption relieves a Tokenized Securities Venue, which trades Tokenized NMS Stock through AMM Liquidity Pools against a non-security crypto asset such as a stablecoin or against a tokenized money market fund, from the definition of "exchange" in section 3(a)(1). Its conditions include that the TSV's smart contracts be auditable, public and deployed on a public, permissionless distributed ledger; that it verify each Tokenized NMS Stock gives holders the same rights and privileges as traditional NMS stock of an equivalent class; that it describe its arrangements item by item in a Notice; that it publish U.S. dollar transaction data within ten minutes; and that its trading, aggregated with that of affiliated TSVs, stay within two tiers of volume and symbol limits. The Covered Firm Exemption relieves certain liquidity providers from the definition of "dealer" in section 3(a)(5) while the Commission evaluates the scope of that term more broadly. The Order requests comment on all aspects of the exemptions, poses ten numbered questions and sets no comment deadline. The SEC's press materials call it the Innovation Exemption; the Order itself uses the names TSV Exemption and Covered Firm Exemption.</p>
 
-      <p class="paper-status-note"><strong>Status: filed through the SEC internet comment form on October 19, 2026, at 8:51 p.m. Eastern, the time on the form's confirmation page.</strong> The form issues no tracking number, and as of October 20, 2026 the comment had not yet appeared among the received comments the Commission posts for File No. 4-927. The PDF linked here is the October 19 version of the letter, prepared as the filing attachment; it has not yet been compared with a posted copy.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>The program's third comment to the SEC, after its July 2, 2026 comment on the <a href="/letters/sec-dsp3-draft-strategic-plan/">Draft Strategic Plan (File Number DSP-3)</a> and its comment on proposed Regulation Crypto Assets (File No. S7-2026-27), filed earlier the same evening. Recommendation 2 applies the DSP-3 comment's recommendation of reproducible on-chain measurement of control, through an inventory of privileged functions, and Recommendation 6 is consistent with the effective-control positions the program has taken before FinCEN and the FDIC. The comment also refers, without restating them, to the program's comments to the OCC on <a href="/letters/occ-mvep-v4/">Docket OCC-2025-0372</a> and to the CFTC on <a href="/letters/cftc-3038-0076-dco-requirements/">Docket CFTC-2026-1685</a>. Beyond its seven recommendations, it offers suggested text for a modified Order covering the five highest-priority recommendations, a table setting out where this Order and adjacent proceedings at eight other agencies treat the same question differently, and answers to three anticipated objections. The SEC was already engaged, so the filing adds a docket and no agency.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Several of the Order's conditions turn on facts the public ledger already makes observable, but the Order collects those facts as descriptions of procedure, collects some of them only for a Tokenized Securities Venue's (TSV's) own smart contracts rather than for the assets traded in its pools, and does not collect others at all.</strong> The Order is designed to produce evidence for rulemaking over a five-year term, so the comment asks it to collect, from its first day, the facts that rulemaking will need, in a form a reviewer can check against the ledger rather than accept on representation. The Order's own condition that a TSV's smart contracts be auditable, public and deployed on a public, permissionless ledger is what makes the seven recommendations inexpensive: most of the facts they ask for are already public on that ledger.</p>
 
@@ -318,22 +319,25 @@
         <h2>A note on scope and evidence</h2>
         <p>The comment addresses Questions 1, 3, 4, 5, 8 and 10 and the operational part of Question 7. It takes no position on the duration or permanence of either exemption (Questions 2 and 9), on the calibration of the Tier 1 and Tier 2 limits (Question 6), on Regulation NMS relief for broker-dealer participants, on whether TSVs should trade securities other than NMS stock, or on the issuer notice and objection mechanics, because the program has no evidence to offer on them.</p>
         <p>Because Tokenized NMS Stock was not yet trading under the Order when the comment was filed, where a finding comes from other products the comment says so at the point of use and offers it for what it shows about the control layer of tokenized assets generally. The MVEP's subject is tokenized money and collateral products and the governance audit concerns governance tokens, so both are offered as method; the program's on-chain measurements are described without naming the products measured; and the comment states, as a limitation of the program's own index, that the Control Layer Intensity Index scores whether a capability exists, not the quality of the controls around it. None of the recommendations requires a program instrument: any reviewer may determine the facts they ask for by its own method. Every quotation was checked against an archived copy of its source and every Federal Register pin cite against the page it names, and statements of the Commission's staff are attributed to the staff, not the Commission.</p>
-        <details class="letter-background">
-          <summary><h2>What the order and its request for comment cover</h2></summary>
-        <p>Release No. 34-106402, issued September 17, 2026 under section 36(a)(1) of the Securities Exchange Act of 1934 and published at 91 Fed. Reg. 60168 on September 22, 2026, grants two temporary, conditional exemptions that run until September 17, 2031. The TSV Exemption relieves a Tokenized Securities Venue, which trades Tokenized NMS Stock through AMM Liquidity Pools against a non-security crypto asset such as a stablecoin or against a tokenized money market fund, from the definition of "exchange" in section 3(a)(1). Its conditions include that the TSV's smart contracts be auditable, public and deployed on a public, permissionless distributed ledger; that it verify each Tokenized NMS Stock gives holders the same rights and privileges as traditional NMS stock of an equivalent class; that it describe its arrangements item by item in a Notice; that it publish U.S. dollar transaction data within ten minutes; and that its trading, aggregated with that of affiliated TSVs, stay within two tiers of volume and symbol limits. The Covered Firm Exemption relieves certain liquidity providers from the definition of "dealer" in section 3(a)(5) while the Commission evaluates the scope of that term more broadly. The Order requests comment on all aspects of the exemptions, poses ten numbered questions and sets no comment deadline. The SEC's press materials call it the Innovation Exemption; the Order itself uses the names TSV Exemption and Covered Firm Exemption.</p>
-        </details>
-        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>n/a (open-ended request for comment; the Order sets no deadline)</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--open">Open for comment; no deadline set</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>7 recommendations filed; no final action yet</dd></div>
-        </dl>
-        <p class="letter-outcome-note">Two temporary, conditional exemptions under Exchange Act section 36(a)(1), in effect from September 17, 2026 until September 17, 2031: the TSV Exemption, from the definition of exchange, for venues that trade Tokenized NMS Stock through AMM Liquidity Pools, and the Covered Firm Exemption, from the definition of dealer, for certain liquidity providers. The Order requests comment on all aspects of the exemptions and sets no comment deadline; the Commission may modify the exemptions. Source: <a href="https://www.federalregister.gov/d/2026-19388" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-19388</a>; <a href="https://www.sec.gov/rules-regulations/2026/09/4-927" target="_blank" rel="noopener noreferrer">SEC, Release No. 34-106402 (File No. 4-927)</a>.</p>
-        <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The program's third comment to the SEC, after its July 2, 2026 comment on the <a href="/letters/sec-dsp3-draft-strategic-plan/">Draft Strategic Plan (File Number DSP-3)</a> and its comment on proposed Regulation Crypto Assets (File No. S7-2026-27), filed earlier the same evening. Recommendation 2 applies the DSP-3 comment's recommendation of reproducible on-chain measurement of control, through an inventory of privileged functions, and Recommendation 6 is consistent with the effective-control positions the program has taken before FinCEN and the FDIC. The comment also refers, without restating them, to the program's comments to the OCC on <a href="/letters/occ-mvep-v4/">Docket OCC-2025-0372</a> and to the CFTC on <a href="/letters/cftc-3038-0076-dco-requirements/">Docket CFTC-2026-1685</a>. Beyond its seven recommendations, it offers suggested text for a modified Order covering the five highest-priority recommendations, a table setting out where this Order and adjacent proceedings at eight other agencies treat the same question differently, and answers to three anticipated objections. The SEC was already engaged, so the filing adds a docket and no agency.</p>
       </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">File No. 4-927, Release No. 34-106402 (issued September 17, 2026; 91 Fed. Reg. 60168, September 22, 2026; FR Doc 2026-19388) &middot; Order Granting Temporary Conditional Exemptive Relief from the Definitions of "Exchange" and "Dealer" for Tokenized NMS Stock, and Request for Comment &middot; Filed through the SEC internet comment form, which issues no tracking number &middot; Comment period: open-ended; the Order sets no deadline</p>
+        <p class="paper-status-note"><strong>Status: filed through the SEC internet comment form on October 19, 2026, at 8:51 p.m. Eastern, the time on the form's confirmation page.</strong> The form issues no tracking number, and as of October 20, 2026 the comment had not yet appeared among the received comments the Commission posts for File No. 4-927. The PDF linked here is the October 19 version of the letter, prepared as the filing attachment; it has not yet been compared with a posted copy.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-open">Open for comment; no deadline set</span>
+          <!-- letters:status-badge END -->
+        </div>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <p class="letter-status-line">as of October 23, 2026 &middot; 7 recommendations filed; no final action yet</p>
+        <details class="letter-status-more">
+          <summary>Status note</summary>
+          <p class="letter-outcome-note">Two temporary, conditional exemptions under Exchange Act section 36(a)(1), in effect from September 17, 2026 until September 17, 2031: the TSV Exemption, from the definition of exchange, for venues that trade Tokenized NMS Stock through AMM Liquidity Pools, and the Covered Firm Exemption, from the definition of dealer, for certain liquidity providers. The Order requests comment on all aspects of the exemptions and sets no comment deadline; the Commission may modify the exemptions. Source: <a href="https://www.federalregister.gov/d/2026-19388" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-19388</a>; <a href="https://www.sec.gov/rules-regulations/2026/09/4-927" target="_blank" rel="noopener noreferrer">SEC, Release No. 34-106402 (File No. 4-927)</a>.</p>
+        </details>
+        <!-- letters:outcome END -->
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

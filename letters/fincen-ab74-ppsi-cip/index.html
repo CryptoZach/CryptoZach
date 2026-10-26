@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=267" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -203,7 +203,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> FinCEN AB74
@@ -215,14 +215,17 @@
         <span class="badge">August 21, 2026</span>
         <span class="badge">8 recommendations</span>
         <span class="badge">Fifth FinCEN comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FinCEN AB74 comment: codify the account boundary the footnote states, and count the population the rule actually reaches</h1>
 
-      <p class="paper-metadata-strip">RIN 1506-AB74, Docket FINCEN-2026-0101 (91 Fed. Reg. 37234, June 22, 2026) &middot; Filed at regulations.gov, Comment Tracking Number mt3-sunw-w2rq &middot; Comment period: June 22, 2026 to August 21, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The AB74 rule establishes a customer identification program for permitted payment stablecoin issuers (PPSIs). It is a joint proposal: FinCEN issued it with the OCC, the Board of Governors of the Federal Reserve System, the FDIC, and the NCUA, so one rule carries five agency identifier sets (FinCEN Docket FINCEN-2026-0101 and RIN 1506-AB74; OCC Docket OCC-2026-0331 and RIN 1557-AF53; Board Docket R-1885 and RIN 7100-AH18; FDIC RIN 3064-AG28; NCUA Docket NCUA-2026-0793 and RIN 3133-AG09). The rule works through three proposed definitions at 31 CFR 1033.100 (account, customer, and digital asset service provider) and a customer identification program at proposed 31 CFR 1033.220. Where the companion rulemaking at 91 Fed. Reg. 18582 sets what a PPSI's anti-money-laundering and sanctions programs must contain, this one sets something narrower and prior to it: who the issuer must identify, and what relationship triggers the duty to identify them. Every other obligation in the PPSI framework that operates on a customer or an account inherits the boundary these definitions draw.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>AB74 is the program's fifth FinCEN comment, after the general anti-money-laundering rulemaking (<a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>) and the joint FinCEN-OFAC PPSI program rulemaking (<a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>) and their June 9 supplements. It is the program's sixteenth federal comment letter, and the filing that made the Board of Governors of the Federal Reserve System the eighth federal agency the program has engaged. The Board is a party to this joint rulemaking (Docket No. R-1885, RIN 7100-AH18) without being the agency this comment is addressed to, which is the case that forced the counting rule to be written down: an agency is engaged once the program files in a proceeding it is party to, as addressee or as co-issuer, and counts once thereafter. Filed August 21, 2026 at regulations.gov on Docket FINCEN-2026-0101, Comment Tracking Number mt3-sunw-w2rq, on the closing day of the comment window. Because the rule is joint, the recommendations are written to coordinate with the sibling dockets rather than to duplicate them, and the adjacency traps are worth naming: FINCEN-2026-0101 is not FINCEN-2026-0100, FDIC RIN 3064-AG28 here is not AG29, OCC RIN 1557-AF53 is not AF55, and Board Docket R-1885 is not R-1835.</p>
+      </section>
 
       <p class="paper-thesis"><strong>The account definition is doing two different jobs in the GENIUS Act framework, and this proposal codifies only one of them while disclaiming the other in a footnote.</strong> Proposed 31 CFR 1033.100(a) defines an account for customer identification purposes as a formal relationship, expressly excluding bare ownership or control of an issuer's stablecoins. Separately, the GENIUS Act conditions the lawful-order obligation at 12 U.S.C. 5903(a)(6)(B) on a definition of lawful order that is itself framed in terms of accounts at 12 U.S.C. 5901(16)(B). Footnote 57 says the customer identification definition is not meant to reach that obligation, and it says so nowhere in the regulatory text, while proposed Section 1033.220(c) codifies the cross-reference without carrying the disclaimer with it. If the narrow definition is read into the preserved obligation, a blocking order directed at a wallet address would be directed at something the regulation says is not an account. Eight recommendations address that boundary, the object the population estimate measures, and how identity is verified.</p>
 
@@ -262,22 +265,21 @@
         <p>Three problems, each an instance of the same concern with what is observable and what is merely asserted. First, the account boundary: the disclaimer that keeps the customer identification definition out of the lawful-order obligation lives in a preamble footnote, while both the narrow definition and the lawful-order cross-reference live in codified text. Second, the measured population: the regulatory impact analysis derives its affected-population estimate from on-chain minting and redemption activity, while the rule's obligation attaches to contractually formalized relationships. Those are different objects, and independent measurement of the contractual perimeter finds counts three orders of magnitude below the analysis mean. Third, verification and screening: the rule permits reliance on digital identity credentials without saying what makes one trustworthy (a signature proves who issued a credential, not what that issuer checked), and it imposes a government-list comparison obligation for lists that have not yet been designated.</p>
         <h2>A note on scope and evidence</h2>
         <p>Where the comment draws on the program's empirical work, that work studies stablecoin issuers and decentralized-finance protocols as they operate today, not permitted payment stablecoin issuers, a category that has no occupants yet. Findings are offered to illustrate a measurement method and to supply data the Agencies expressly requested, not as claims about any future PPSI or as allegations about any named entity, and the letter flags the qualification at each point of use. Two externally sourced figures recur (882 verified redemption accounts at Tether and 1,834 Circle Mint accounts); both come from published legal scholarship, the Circle figure carries an as-of date of March 2025 in that source, and both are flagged with those provenance limits wherever they appear.</p>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The AB74 rule establishes a customer identification program for permitted payment stablecoin issuers (PPSIs). It is a joint proposal: FinCEN issued it with the OCC, the Board of Governors of the Federal Reserve System, the FDIC, and the NCUA, so one rule carries five agency identifier sets (FinCEN Docket FINCEN-2026-0101 and RIN 1506-AB74; OCC Docket OCC-2026-0331 and RIN 1557-AF53; Board Docket R-1885 and RIN 7100-AH18; FDIC RIN 3064-AG28; NCUA Docket NCUA-2026-0793 and RIN 3133-AG09). The rule works through three proposed definitions at 31 CFR 1033.100 (account, customer, and digital asset service provider) and a customer identification program at proposed 31 CFR 1033.220. Where the companion rulemaking at 91 Fed. Reg. 18582 sets what a PPSI's anti-money-laundering and sanctions programs must contain, this one sets something narrower and prior to it: who the issuer must identify, and what relationship triggers the duty to identify them. Every other obligation in the PPSI framework that operates on a customer or an account inherits the boundary these definitions draw.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">RIN 1506-AB74, Docket FINCEN-2026-0101 (91 Fed. Reg. 37234, June 22, 2026) &middot; Filed at regulations.gov, Comment Tracking Number mt3-sunw-w2rq &middot; Comment period: June 22, 2026 to August 21, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>June 22 to August 21, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>8 recommendations filed; no final action yet</dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 8 recommendations filed; no final action yet</p>
         <p class="letter-outcome-note">No final rule located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>AB74 is the program's fifth FinCEN comment, after the general anti-money-laundering rulemaking (<a href="/letters/fincen-aml-cft/">FINCEN-2026-0034</a>) and the joint FinCEN-OFAC PPSI program rulemaking (<a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>) and their June 9 supplements. It is the program's sixteenth federal comment letter, and the filing that made the Board of Governors of the Federal Reserve System the eighth federal agency the program has engaged. The Board is a party to this joint rulemaking (Docket No. R-1885, RIN 7100-AH18) without being the agency this comment is addressed to, which is the case that forced the counting rule to be written down: an agency is engaged once the program files in a proceeding it is party to, as addressee or as co-issuer, and counts once thereafter. Filed August 21, 2026 at regulations.gov on Docket FINCEN-2026-0101, Comment Tracking Number mt3-sunw-w2rq, on the closing day of the comment window. Because the rule is joint, the recommendations are written to coordinate with the sibling dockets rather than to duplicate them, and the adjacency traps are worth naming: FINCEN-2026-0101 is not FINCEN-2026-0100, FDIC RIN 3064-AG28 here is not AG29, OCC RIN 1557-AF53 is not AF55, and Board Docket R-1885 is not R-1835.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

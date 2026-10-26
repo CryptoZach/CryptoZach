@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=255" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Banking agencies joint AML
@@ -215,14 +215,17 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 18, 2026</span>
         <span class="badge">7 recommendations</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Banking agencies joint AML/CFT comment: banks increasingly perform control-layer functions in tokenized finance</h1>
 
-      <p class="paper-metadata-strip">91 Fed. Reg. 18304 &middot; Mixed: OCC via regulations.gov (OCC-2024-0005, RIN 1557-AF14); FDIC via fdic.gov + Comments@fdic.gov (RIN 3064-AF34); NCUA via regulations.gov (NCUA-2024-0033, RIN 3133-AG08). Same PDF filed at all three agency dockets per joint-rulemaking convention. &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The joint NPRM at 91 Fed. Reg. 18304 is a re-issuance of a 2024 joint rule (89 Fed. Reg. 65242) that previously included the Federal Reserve Board. The 2026 version preserves the four-pillar AML program architecture (internal policies, independent testing, designated officer, training) while adding risk assessment processes, a US-based AML/CFT officer requirement, AML/CFT Priorities consideration, and a culture of compliance requirement. Aligns bank AML with the AML Act of 2020.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>Multi-docket bank-side companion to FinCEN AML letters. The FRB non-participation response lives here as Recommendation 6. Same PDF filed at all three agency dockets per joint-rulemaking convention.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Banks increasingly perform control-layer functions in tokenized finance: reserve custody for PPSIs, tokenized deposit issuance, tokenized securities custody, operation as Federal qualified payment stablecoin issuers, and correspondent services to stablecoin issuers and interface operators.</strong> The joint rule is a 2026 re-issuance of a 2024 proposal that included the Federal Reserve Board. Recommendation 6 addresses the consistency gap FRB non-participation creates.</p>
 
@@ -266,23 +269,22 @@
               <li><strong>Parent-bank and subsidiary-PPSI AML program coordination is unspecified.</strong> Joint SAR filing under proposed 31 CFR 1033.320(d)(1)(ii)(B); FinCEN supervisory coordination.</li>
               <li><strong>Culture of compliance requirement is underspecified</strong> for control-layer function performance (not only documentary and procedural compliance).</li>
             </ul>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The joint NPRM at 91 Fed. Reg. 18304 is a re-issuance of a 2024 joint rule (89 Fed. Reg. 65242) that previously included the Federal Reserve Board. The 2026 version preserves the four-pillar AML program architecture (internal policies, independent testing, designated officer, training) while adding risk assessment processes, a US-based AML/CFT officer requirement, AML/CFT Priorities consideration, and a culture of compliance requirement. Aligns bank AML with the AML Act of 2020.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">91 Fed. Reg. 18304 &middot; Mixed: OCC via regulations.gov (OCC-2024-0005, RIN 1557-AF14); FDIC via fdic.gov + Comments@fdic.gov (RIN 3064-AF34); NCUA via regulations.gov (NCUA-2024-0033, RIN 3133-AG08). Same PDF filed at all three agency dockets per joint-rulemaking convention. &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>7 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-aml-cft/">No. 5</a>, <a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 7 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/fincen-aml-cft/">No. 5</a>, <a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6</a>.</p>
         <p class="letter-outcome-note">No final rule located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>Multi-docket bank-side companion to FinCEN AML letters. The FRB non-participation response lives here as Recommendation 6. Same PDF filed at all three agency dockets per joint-rulemaking convention.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

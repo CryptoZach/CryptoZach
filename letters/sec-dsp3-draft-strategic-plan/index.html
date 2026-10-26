@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=257" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> SEC DSP-3
@@ -216,14 +216,17 @@
         <span class="badge">July 2, 2026</span>
         <span class="badge">4 recommendations</span>
         <span class="badge">First SEC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final plan pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">SEC DSP-3 comment: a measured, reproducible decentralization standard for the digital-asset regulatory foundation</h1>
 
-      <p class="paper-metadata-strip">File Number DSP-3 (Draft Strategic Plan for Fiscal Years 2026 through 2030, published for public comment June 2026) &middot; SEC internet comment form &middot; Comments due July 2, 2026; filed on the close date</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The Draft Strategic Plan for Fiscal Years 2026 through 2030 sets the Commission's goals and objectives for the period. Objective 1.1 commits the Commission to "provide a firm regulatory foundation for digital assets and distributed ledger technologies through a rational, coherent, and principled approach," including modernized oversight so that "custody, trading, and staking services can operate under appropriate oversight without duplicative or conflicting requirements," clarified boundaries of securities law as applied to digital assets, and clarified jurisdictional questions between the SEC and the Commodity Futures Trading Commission. Objective 3.2 commits the Commission to modernize its technological infrastructure and support advanced analytics, with the plan stating that "the responsible use of artificial intelligence and blockchain technologies can further improve oversight, reduce costs, and unlock new efficiencies." The Goal 1 narrative states that "rules must be grounded in rigorous, unbiased assessments of costs and benefits."</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>The program's first comment to the SEC and its fourteenth federal submission, extending the Federal Comment Letter Program from the GENIUS-implementing banking agencies to the securities regulator; the SEC is the seventh agency engaged. Filed July 2, 2026 via the SEC internet comment form on the comment-period close date. The letter carries a recommendation routing table keyed to the plan provisions it responds to, suggested plan language, anticipated objections, and a sources appendix; the recommendations are direction-level, and none expands the plan's scope.</p>
+      </section>
 
       <p class="paper-thesis"><strong>The plan's digital-asset objectives turn on a measurement capability the plan does not yet name: where a framework depends on whether a crypto asset or system is decentralized, that decentralization must be measured against a reproducible standard, not asserted.</strong> The surface signals most readily reached misstate the object: naive holder lists inflate measured concentration by a median factor of 2.3 times in a fifty-two-protocol live-governance audit, and launch insider allocation does not predict where control settles (Pearson r = 0.09). Four direction-level recommendations, each anchored to quoted plan text, name the capabilities that make the plan's stated objective of a firm regulatory foundation operational.</p>
 
@@ -258,23 +261,22 @@
             </ol>
         <h2>The problem identified</h2>
         <p>Each of those commitments turns, at some point, on whether a crypto asset or system is decentralized, and the indicators most readily reached for that determination systematically misstate it. A fifty-two-protocol live-governance audit, accepted for publication at Frontiers in Blockchain, documents that naive holder lists inflate measured concentration by a median factor of 2.3 times, and up to approximately 18 times, once protocol-controlled addresses are removed. Launch insider allocation is uninformative about steady-state concentration (Pearson r = 0.09), and delegation amplifies voting power above token holdings in thirteen of eighteen protocols with sufficient governance data, by 2.5 to 25.6 times. Current insider retention, by contrast, is informative (Spearman rho = 0.44): decentralization is measurable from current on-chain state even where launch design is uninformative.</p>
-        <details class="letter-background">
-          <summary><h2>What the plan proposes</h2></summary>
-        <p>The Draft Strategic Plan for Fiscal Years 2026 through 2030 sets the Commission's goals and objectives for the period. Objective 1.1 commits the Commission to "provide a firm regulatory foundation for digital assets and distributed ledger technologies through a rational, coherent, and principled approach," including modernized oversight so that "custody, trading, and staking services can operate under appropriate oversight without duplicative or conflicting requirements," clarified boundaries of securities law as applied to digital assets, and clarified jurisdictional questions between the SEC and the Commodity Futures Trading Commission. Objective 3.2 commits the Commission to modernize its technological infrastructure and support advanced analytics, with the plan stating that "the responsible use of artificial intelligence and blockchain technologies can further improve oversight, reduce costs, and unlock new efficiencies." The Goal 1 narrative states that "rules must be grounded in rigorous, unbiased assessments of costs and benefits."</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">File Number DSP-3 (Draft Strategic Plan for Fiscal Years 2026 through 2030, published for public comment June 2026) &middot; SEC internet comment form &middot; Comments due July 2, 2026; filed on the close date</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final plan pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>June 2 to July 2, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final plan pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>4 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a>, <a href="/letters/sec-4-927-tokenized-nms-exemptions/">No. 25</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 4 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a>, <a href="/letters/sec-4-927-tokenized-nms-exemptions/">No. 25</a>.</p>
         <p class="letter-outcome-note">No final strategic plan located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The program's first comment to the SEC and its fourteenth federal submission, extending the Federal Comment Letter Program from the GENIUS-implementing banking agencies to the securities regulator; the SEC is the seventh agency engaged. Filed July 2, 2026 via the SEC internet comment form on the comment-period close date. The letter carries a recommendation routing table keyed to the plan provisions it responds to, suggested plan language, anticipated objections, and a sources appendix; the recommendations are direction-level, and none expands the plan's scope.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

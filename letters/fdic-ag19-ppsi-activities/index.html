@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=255" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> FDIC AG19 PPSI activities
@@ -215,14 +215,17 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 20, 2026</span>
         <span class="badge">12 recommendations</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG19 PPSI activities comment: MVEP-gated conditional deposit insurance pass-through</h1>
 
-      <p class="paper-metadata-strip">RIN 3064-AG19 (91 Fed. Reg. 18534) &middot; Comments@fdic.gov email (FDIC does not accept this docket via regulations.gov or a website filing form) &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The FDIC AG19 substantive rule defines the ongoing operational-supervision regime for FDIC-supervised PPSIs under the GENIUS Act. Headline provisions: 40 percent single-institution reserve concentration cap at §350.4(f); proposed §330.11(a)(3) default non-availability of pass-through deposit insurance for payment stablecoins; §350.6(b) private key management controls; §350.7(g) confidential weekly supervisory report; capital framework at §350.4 and related. Companion to <a href="/letters/fdic-ag20-ppsi-application/">AG20</a> (application rule, filed April 18). Together AG19 and AG20 define the FDIC's complete PPSI supervisory regime.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>Filed April 20, 2026, on permitted payment stablecoin activities, during a ten-day window across seven rulemakings, six dockets, and six federal agencies (April 10 to April 20, 2026). Comment letters have continued since. Filed the same calendar day the 8th paper (Governance Concentration) went SSRN-live, completing 8-of-8 SSRN: first same-day dual 8-of-8 milestone in program history. Recommendation 7 introduces the MVEP-gated conditional pass-through framework: the program's principal substantive contribution to the rulemaking cycle.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Filed April 20, 2026, on permitted payment stablecoin activities, during a ten-day window across seven rulemakings, six dockets, and six federal agencies (April 10 to April 20, 2026). Comment letters have continued since.</strong> Filed the same calendar day the 8th paper (Governance Concentration) went SSRN-live, completing 8-of-8 SSRN: first same-day dual 8-of-8 milestone in program history. Twelve recommendations in three groups plus one structural observation. Recommendation 7 (MVEP-gated conditional pass-through) is the program's principal substantive contribution to the rulemaking cycle.</p>
 
@@ -280,23 +283,22 @@
               <li><strong>Private key management at §350.6(b) relies on documentation review, not operational verification.</strong></li>
               <li><strong>§350.7(g) confidential weekly report does not surface control-layer observability data:</strong> reserve custody exposures, block-freeze-reject counts, largest secondary holders.</li>
             </ul>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The FDIC AG19 substantive rule defines the ongoing operational-supervision regime for FDIC-supervised PPSIs under the GENIUS Act. Headline provisions: 40 percent single-institution reserve concentration cap at §350.4(f); proposed §330.11(a)(3) default non-availability of pass-through deposit insurance for payment stablecoins; §350.6(b) private key management controls; §350.7(g) confidential weekly supervisory report; capital framework at §350.4 and related. Companion to <a href="/letters/fdic-ag20-ppsi-application/">AG20</a> (application rule, filed April 18). Together AG19 and AG20 define the FDIC's complete PPSI supervisory regime.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">RIN 3064-AG19 (91 Fed. Reg. 18534) &middot; Comments@fdic.gov email (FDIC does not accept this docket via regulations.gov or a website filing form) &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>12 recommendations filed; no final action yet</dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fdic-ag29-bsa-sanctions/">No. 13</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 12 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Referenced by later letters: <a href="/letters/fdic-ag29-bsa-sanctions/">No. 13</a>, <a href="/letters/fdic-ag21-resolution-submissions/">No. 17</a>, <a href="/letters/fdic-ag27-assessments/">No. 18</a>.</p>
         <p class="letter-outcome-note">Still a proposal in the October 5, 2026 survey of GENIUS Act rulemakings. The statutory July 18, 2026 rulemaking deadline passed without a final rule. Source: <a href="https://www.willkie.com/publications/2026/10/final-pieces-to-the-stablecoin-puzzle-federal-reserve-and-treasury-propose-genius-act" target="_blank" rel="noopener noreferrer">Willkie Farr &amp; Gallagher, Final Pieces to the Stablecoin Puzzle? (October 5, 2026)</a>.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>Filed April 20, 2026, on permitted payment stablecoin activities, during a ten-day window across seven rulemakings, six dockets, and six federal agencies (April 10 to April 20, 2026). Comment letters have continued since. Filed the same calendar day the 8th paper (Governance Concentration) went SSRN-live, completing 8-of-8 SSRN: first same-day dual 8-of-8 milestone in program history. Recommendation 7 introduces the MVEP-gated conditional pass-through framework: the program's principal substantive contribution to the rulemaking cycle.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

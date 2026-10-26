@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=255" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -204,7 +204,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> FinCEN AML/CFT
@@ -215,14 +215,17 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">April 18, 2026</span>
         <span class="badge">7 recommendations</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FinCEN AML/CFT NPRM comment: AML regulation as structurally a control-layer regime</h1>
 
-      <p class="paper-metadata-strip">FINCEN-2026-0034 (RIN 1506-AB72) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The FinCEN NPRM reforms AML/CFT programs across eleven financial-institution categories (banks, casinos, MSBs, broker-dealers, mutual funds, insurance, FCMs and IBCs, DPMSJs, credit card system operators, loan and finance companies, housing GSEs) in the first structural reform since the AML Act of 2020. It operationalizes the Act's risk-based, effectiveness-focused supervision directive, requires a US-based AML/CFT officer (31 U.S.C. 5318(h)(5)), mandates consideration of the AML/CFT Priorities, and introduces a risk assessment process requirement. The rule does not yet address PPSIs as a distinct category; PPSI-specific AML obligations live in <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>.</p>
+
+        <h2 id="macro-context">Macro context</h2>
+        <p>First of three AML-batch letters filed April 18, 2026. Sets out the structural control-layer observation across eleven FI categories before the PPSI-specific <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a> letter applies all three frameworks in depth.</p>
+      </section>
 
       <p class="paper-thesis"><strong>AML regulation has always been control-layer regulation: the Bank Secrecy Act attaches obligations to intermediaries, not to transactions or instruments.</strong> The FinCEN NPRM is the first structural AML reform since the AML Act of 2020. In tokenized finance, intermediation can be disaggregated across several layers (issuer, custodian, interface, router, sweep, hold and freeze). The letter argues the proposed rule's risk-based resource allocation directive is structurally compatible with control-layer-level risk assessment, and will be more effective if it articulates this compatibility explicitly.</p>
 
@@ -267,24 +270,22 @@
               <li><strong>Federal Reserve Board non-participation in the parallel banking-agency NPRM creates a coordination gap.</strong> Three rulemakings; one agency absent.</li>
               <li><strong>Independent testing for control-layer operators needs calibration.</strong> Testing must evaluate demonstrated on-chain capability, not inferred capability.</li>
             </ul>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The FinCEN NPRM reforms AML/CFT programs across eleven financial-institution categories (banks, casinos, MSBs, broker-dealers, mutual funds, insurance, FCMs and IBCs, DPMSJs, credit card system operators, loan and finance companies, housing GSEs) in the first structural reform since the AML Act of 2020. It operationalizes the Act's risk-based, effectiveness-focused supervision directive, requires a US-based AML/CFT officer (31 U.S.C. 5318(h)(5)), mandates consideration of the AML/CFT Priorities, and introduces a risk assessment process requirement. The rule does not yet address PPSIs as a distinct category; PPSI-specific AML obligations live in <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a>.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">FINCEN-2026-0034 (RIN 1506-AB72) &middot; regulations.gov &middot; Comment period: April 10, 2026 to June 9, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>April 10 to June 9, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>7 recommendations filed; no final action yet</dd></div>
-          <div><dt>Supplemented by</dt><dd><a href="/letters/fincen-aml-cft-supplemental/">No. 9: FinCEN AML/CFT supplemental</a></dd></div>
-          <div><dt>Referenced by</dt><dd>later letters in the program: <a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6</a>, <a href="/letters/banking-agencies-joint-aml/">No. 7</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>, <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 7 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Supplemented by <a href="/letters/fincen-aml-cft-supplemental/">No. 9: FinCEN AML/CFT supplemental</a>. Referenced by later letters: <a href="/letters/fincen-ofac-ppsi-sanctions/">No. 6</a>, <a href="/letters/banking-agencies-joint-aml/">No. 7</a>, <a href="/letters/fincen-ab74-ppsi-cip/">No. 16</a>, <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">No. 23</a>.</p>
         <p class="letter-outcome-note">No final rule located as of the verification date. The proposal provides a twelve-month implementation period after a final rule issues.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>First of three AML-batch letters filed April 18, 2026. Sets out the structural control-layer observation across eleven FI categories before the PPSI-specific <a href="/letters/fincen-ofac-ppsi-sanctions/">FINCEN-2026-0100</a> letter applies all three frameworks in depth.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

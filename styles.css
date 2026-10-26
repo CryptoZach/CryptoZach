@@ -4394,6 +4394,12 @@ section:has(.speaker-jump-to){
 }
 /* Excerpts: plain flow (no hanging indent beside narrow grid columns; it left a large empty wedge) */
 .research-library-page p.writing-excerpt{
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.research-library-page p.writing-excerpt{
   text-wrap:pretty;
 }
 .research-library-page ul.writing-list > li > article.research-card--earlier-work > .writing-link.writing-link--thumb > .writing-copy > p{
@@ -18024,6 +18030,10 @@ body.letters-landing .companion-card .card-thesis{
   line-height: 1.5;
 }
 body.letters-landing .companion-card .card-gaps{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   margin-top: 0.5rem;
   font-size: 0.78rem;
   color: var(--text-soft);
@@ -22222,6 +22232,63 @@ body.letters-landing .letters-timeline tr.letters-outcome-note td{font-size:var(
 .paper-abstract .letter-background summary h2{margin:0;display:inline}
 .letter-background > :not(summary){margin-top:var(--space-md)}
 .letter-background summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+/* Letter pages: summary and context lead; docket details and status sit in a short record. */
+.letter-lead{margin:var(--space-lg) 0 var(--space-xl)}
+.letter-page .letter-lead{margin-top:0}
+.letter-lead h2{
+  font-size:1.05rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--accent);
+  margin:var(--space-lg) 0 var(--space-sm);
+}
+.letter-lead h2:first-child{margin-top:0}
+.letter-lead p{margin:0 0 var(--space-md)}
+.letter-lead p:last-child{margin-bottom:0}
+.letter-record{
+  margin:var(--space-2xl) 0 var(--space-lg);
+  padding-top:var(--space-md);
+  border-top:1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.letter-record h2{
+  font-size:.95rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--muted);
+  margin:0 0 var(--space-sm);
+}
+.letter-record .paper-metadata-strip{margin:0 0 var(--space-sm);line-height:1.45}
+.letter-record .paper-status-note{font-size:var(--font-size-min);color:var(--muted);margin:0 0 var(--space-sm)}
+.letter-record-status{margin:0 0 var(--space-xs)}
+.letter-record-status .badge{margin:0}
+.letter-record .letter-status-line{margin:0 0 var(--space-xs);font-size:.95rem}
+.letter-record .letter-status-links,
+.letter-record .letter-outcome-note{margin:var(--space-xs) 0 0;font-size:var(--font-size-min);color:var(--muted)}
+.letter-record .letter-outcome-recs{margin-top:var(--space-sm)}
+.letter-status-more{margin-top:var(--space-sm)}
+.letter-status-more summary{cursor:pointer;list-style:none;font-weight:600;color:var(--accent);font-size:var(--font-size-min)}
+.letter-status-more summary::-webkit-details-marker{display:none}
+.letter-status-more summary::before{content:"+ "}
+.letter-status-more[open] summary::before{content:"\2212 "}
+.letter-status-more summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.letter-page .badge-public{display:none}
+.letter-page .companions{margin-top:var(--space-lg)}
+.letter-page .companions .companion-cards{grid-template-columns:1fr;gap:0}
+.letter-page .companions .companion-card{
+  padding:.55rem 0;
+  border:0;
+  border-bottom:1px solid color-mix(in srgb, currentColor 12%, transparent);
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+}
+.letter-page .companions .companion-card:hover{transform:none;box-shadow:none;border-bottom-color:var(--accent)}
+.letter-page .companions .companion-card strong{display:inline;font-size:.95rem}
+.letter-page .companions .companion-card span{display:inline;margin-left:.35rem}
+.letters-explorer-fold{margin:var(--space-xl) 0}
+.letters-explorer-fold > .b4-explorer{margin-top:var(--space-md)}
 .rec-anchor{font-variant-numeric:tabular-nums;white-space:nowrap}
 @media (max-width: 720px){
   .letters-toolbar .filter-label{min-width:0;flex-basis:100%}
@@ -22294,9 +22361,6 @@ body.letters-landing .letters-list td:nth-child(4){white-space:normal}
 .letters-fold summary::before{content:"+";font-weight:700}
 .letters-fold[open] summary::before{content:"\2212"}
 .letters-fold summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
-@media (min-width: 721px){
-  .letters-fold summary{display:none}
-}
 @media (max-width: 720px){
   .letters-toolbar .filter-group{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.3rem;scrollbar-width:thin}
   .letters-toolbar .filter-label{min-width:auto;flex:0 0 auto;flex-basis:auto}

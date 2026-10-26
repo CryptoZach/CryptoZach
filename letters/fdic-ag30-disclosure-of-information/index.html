@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -237,7 +237,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> FDIC AG30
@@ -250,16 +250,17 @@
         <span class="badge">By email</span>
         <span class="badge">4 recommendations</span>
         <span class="badge">FDIC</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Final rule pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">FDIC AG30 comment: build the aggregated-analysis channel into the rule, with safeguards</h1>
 
-      <p class="paper-metadata-strip">RIN 3064-AG30 (91 Fed. Reg. 39726, June 30, 2026; FR Doc 2026-13123) &middot; Disclosure of Information, Section II.C.7.d and Questions 20 to 23 only &middot; Comment period: June 30, 2026 to October 5, 2026, as extended by 91 Fed. Reg. 55501</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The FDIC proposes to revise Part 309, its rules on the disclosure of information, including confidential supervisory information. In Section II.C.7.d, "Disclosure of Data for Aggregated Analyses," the preamble considers letting third parties receive confidential information on an aggregated basis from multiple insured depository institutions, to provide transparency about and facilitate analysis of the supervisory process, and asks four questions, 20 through 23, about the extent of the sharing, the recipients, the limits on what is shared, re-identification, and the accuracy of resulting public disclosures. This comment addresses only that element.</p>
 
-      <p class="paper-status-note"><strong>Status: filed by email on October 5, 2026, the closing day.</strong> The FDIC email channel does not issue a tracking number, and none is recorded. The PDF linked here is the as-filed artifact.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>The comment follows the program's FDIC comments on the prudential activities rule (AG19), the application rule (AG20), the Bank Secrecy Act and sanctions rule (AG29), and the June 30 companion proposals on resolution submissions (AG21) and assessments (AG27). It is the first to take up the disclosure of supervisory information itself, the precondition for any outside analyst to verify how supervision is exercised from observable data. Tokenization Systems is a research organization of the kind the first recommendation would make eligible; the recommendation defines eligibility by criteria, conditions it on the same safeguards as every other recipient, and seeks access for no named party.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Supervisory material reaches the public today by exception, as when the Federal Reserve released its Silicon Valley Bank supervisory record after the failure; the FDIC proposes a standing channel that would let the supervisory process be examined before a failure rather than after one, and this comment supports it with safeguards.</strong> The channel appears only in the preamble: the proposed regulatory text contains no provision for it. Four recommendations: codify it as a new paragraph (f) of proposed Section 309.37 and open it to independent research organizations, as the OCC's parallel proposal already contemplates for a not-for-profit university or think-tank; keep institution-level confidential information inside a controlled environment and release only reviewed aggregates; protect the largest institutions with the minimum-count and dominance rules federal statistical agencies already apply to business data; and require public disclosures to be reproducible from a stated method.</p>
 
@@ -296,22 +297,22 @@
         <p>The channel exists only in the preamble. The proposed regulatory text of Part 309 contains no provision for aggregated analyses, and its only references to aggregation concern the aggregation of Freedom of Information Act requests and fees, so the channel's purpose and safeguards would bind no one. The preamble's example recipients, law firms and nonpartisan nonprofit banking trade associations, both represent parties to the supervision being analyzed. And supervisory data about banks has the shape that concentrates disclosure risk in the largest units: where one institution accounts for most of a category, an aggregate over many institutions still largely describes that one.</p>
         <h2>A note on scope and evidence</h2>
         <p>Recommendation 4 draws on the program's published study of 52 token protocols, which found that concentration figures in prior holder-list studies were inflated by a median factor of 2.3 because protocol-controlled addresses were counted as independent holders. That work concerns governance tokens, not insured depository institutions, and transfers to this rulemaking as method only. Recommendations 2 and 3 draw on the statistical disclosure control literature and on Statistical Policy Working Paper 22. The one bank-specific source is the Federal Reserve's own review of its supervision of Silicon Valley Bank. Every quotation in the comment was checked against an archived copy of its source.</p>
-        <details class="letter-background">
-          <summary><h2>What the rule proposes</h2></summary>
-        <p>The FDIC proposes to revise Part 309, its rules on the disclosure of information, including confidential supervisory information. In Section II.C.7.d, "Disclosure of Data for Aggregated Analyses," the preamble considers letting third parties receive confidential information on an aggregated basis from multiple insured depository institutions, to provide transparency about and facilitate analysis of the supervisory process, and asks four questions, 20 through 23, about the extent of the sharing, the recipients, the limits on what is shared, re-identification, and the accuracy of resulting public disclosures. This comment addresses only that element.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">RIN 3064-AG30 (91 Fed. Reg. 39726, June 30, 2026; FR Doc 2026-13123) &middot; Disclosure of Information, Section II.C.7.d and Questions 20 to 23 only &middot; Comment period: June 30, 2026 to October 5, 2026, as extended by 91 Fed. Reg. 55501</p>
+        <p class="paper-status-note"><strong>Status: filed by email on October 5, 2026, the closing day.</strong> The FDIC email channel does not issue a tracking number, and none is recorded. The PDF linked here is the as-filed artifact.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Final rule pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>June 30 to October 5, 2026 (as extended by 91 Fed. Reg. 55501)</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Final rule pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>4 recommendations filed; no final action yet</dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 4 recommendations filed; no final action yet</p>
         <p class="letter-outcome-note">The comment period was extended from August 31 to October 5, 2026 (91 Fed. Reg. 55501). No final rule located as of the verification date.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The comment follows the program's FDIC comments on the prudential activities rule (AG19), the application rule (AG20), the Bank Secrecy Act and sanctions rule (AG29), and the June 30 companion proposals on resolution submissions (AG21) and assessments (AG27). It is the first to take up the disclosure of supervisory information itself, the precondition for any outside analyst to verify how supervision is exercised from observable data. Tokenization Systems is a research organization of the kind the first recommendation would make eligible; the recommendation defines eligibility by criteria, conditions it on the same safeguards as every other recipient, and seeks access for no named party.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

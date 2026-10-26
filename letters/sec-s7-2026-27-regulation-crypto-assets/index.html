@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -245,7 +245,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> SEC Regulation Crypto Assets
@@ -258,16 +258,17 @@
         <span class="badge">SEC comment form</span>
         <span class="badge">8 recommendations</span>
         <span class="badge">Second SEC comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Comment period closed; final action pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">SEC Regulation Crypto Assets comment: an observable control condition for the Rule 400 safe harbor, not the issuer's representations alone</h1>
 
-      <p class="paper-metadata-strip">File No. S7-2026-27, RIN 3235-AN38; Release Nos. 33-11434 and 34-106150 (91 Fed. Reg. 54510, August 21, 2026; FR Doc 2026-17183) &middot; Regulation Crypto Assets, proposed 17 CFR part 228 &middot; Filed through the SEC internet comment form, which issues no tracking number; not yet posted by the Commission &middot; Comment period: August 21, 2026 to October 20, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>Proposed Regulation Crypto Assets would add a new 17 CFR part 228, Rules 100 through 500, with new Forms 1-CRYPTO, 1-KC, 1-SC, 1-UC, TR and NOR: a tailored offering regime for crypto assets with a startup exemption and a fundraising exemption, principles-based disclosure under Rule 103, and a safe harbor in Rule 400 for determining when a covered investment contract ceases to exist. Under proposed Rule 400(a) the issuer must have "completed or otherwise permanently ceased all essential managerial efforts that it represented or promised it would engage in" and must not be making, or intend to make, new representations or promises; Rule 400(b) requires a Form TR carrying a certification and a supporting analysis. On satisfaction, the crypto asset is deemed not to constitute, represent, or be subject to an investment contract for purposes of Section 2(a)(1) of the Securities Act and Section 3(a)(10) of the Exchange Act. Rule 400 would codify in part the Commission's 2026 Interpretation (91 Fed. Reg. 13714, March 23, 2026), issued together with guidance from the CFTC. The proposing release (Release Nos. 33-11434 and 34-106150) was published August 21, 2026 (91 Fed. Reg. 54510), carries 154 numbered questions, and its comment period closes October 20, 2026.</p>
 
-      <p class="paper-status-note"><strong>Status: filed through the SEC internet comment form on October 19, 2026 at 8:07 p.m. Eastern, the day before the comment period closes.</strong> The form issues no tracking number, and the Commission had not yet posted the comment when this page was prepared. The PDF linked here is the as-filed letter, dated October 19, 2026.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>The program's second comment to the SEC, after its July 2, 2026 comment on the <a href="/letters/sec-dsp3-draft-strategic-plan/">Draft Strategic Plan (File Number DSP-3)</a>, which recommended that the Commission measure decentralization from current on-chain state wherever a boundary or jurisdictional determination turns on it; proposed Rule 400 is the first rule text in which that recommendation has concrete purchase, and this comment supplies the operational detail the strategic-plan comment could only name. Recommendation 8 carries forward the effective-control position of the program's <a href="/letters/fincen-aml-cft/#rec-4">FinCEN AML/CFT comment</a> and its <a href="/letters/fdic-ag29-bsa-sanctions/#rec-5">FDIC AG29 comment</a>. The letter carries a recommendation routing table keyed to the release's numbered questions, suggested rule text for six of the eight recommendations, a cross-agency alignment and divergence table, anticipated objections, and a sources appendix. The SEC was already engaged, so the filing adds a docket and no agency.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Proposed Rule 400 conditions a permanent change in a crypto asset's status under the Federal securities laws on facts that are measurable from public data, but tests them only through the issuer's own certification about the issuer's own prior promises.</strong> Question 131 asks whether there is a more objective standard; the comment answers that there is, and that its core is a definition of control the Commission has already written. Control is measurable, but in the present tense: in the program's fifty-two-protocol live-governance audit, launch insider allocation does not predict where governance concentration settles (Pearson r = 0.09), while current insider retention carries information (Spearman rho = 0.44). Eight recommendations follow, six of them with suggested rule text.</p>
 
@@ -313,22 +314,25 @@
         <h2>A note on scope and evidence</h2>
         <p>The comment names no issuer or protocol. The audit measures launch allocation and insider retention against governance concentration; it does not measure offering-stage promises against later cessation of managerial efforts, and the comment draws from it only the limited inference stated above. Recommendation 1 also cites an on-chain admin-key and upgrade-authority audit of thirty-six protocols, in seventeen of which an upgrade authority could alter the core with no token-holder-governance-plus-timelock gate (one of them a borderline case, a permissioned thirteen-of-nineteen guardian set whose signers are independent rather than under common control). That count comes from a separate classification study that is unpublished, so the published article cannot be used to check it; the recommendation does not depend on it, and that sample is not the set of Rule 400 issuers.</p>
         <p>The comment cites the House-passed text of H.R. 3633 for its drafting, not as a forecast of legislation, does not recommend audited or third-party-verified control assessments, and answers fourteen of the release's 154 numbered questions, leaving the rest for lack of program evidence. Every quotation in the comment was checked against an archived copy of its source, including the proposing release, the Federal Register text of the 2026 Interpretation and the House-passed bill text.</p>
-        <details class="letter-background">
-          <summary><h2>What the proposal covers</h2></summary>
-        <p>Proposed Regulation Crypto Assets would add a new 17 CFR part 228, Rules 100 through 500, with new Forms 1-CRYPTO, 1-KC, 1-SC, 1-UC, TR and NOR: a tailored offering regime for crypto assets with a startup exemption and a fundraising exemption, principles-based disclosure under Rule 103, and a safe harbor in Rule 400 for determining when a covered investment contract ceases to exist. Under proposed Rule 400(a) the issuer must have "completed or otherwise permanently ceased all essential managerial efforts that it represented or promised it would engage in" and must not be making, or intend to make, new representations or promises; Rule 400(b) requires a Form TR carrying a certification and a supporting analysis. On satisfaction, the crypto asset is deemed not to constitute, represent, or be subject to an investment contract for purposes of Section 2(a)(1) of the Securities Act and Section 3(a)(10) of the Exchange Act. Rule 400 would codify in part the Commission's 2026 Interpretation (91 Fed. Reg. 13714, March 23, 2026), issued together with guidance from the CFTC. The proposing release (Release Nos. 33-11434 and 34-106150) was published August 21, 2026 (91 Fed. Reg. 54510), carries 154 numbered questions, and its comment period closes October 20, 2026.</p>
-        </details>
-        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>August 21 to October 20, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Comment period closed; final action pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>8 recommendations filed; no final action yet</dd></div>
-        </dl>
-        <p class="letter-outcome-note">Would add a new 17 CFR part 228 (Regulation Crypto Assets): a tailored offering regime for crypto assets with startup and fundraising exemptions, principles-based disclosure under Rule 103, and a Rule 400 safe harbor under which, once an issuer has completed or permanently ceased the essential managerial efforts it represented or promised and files a Form TR, the crypto asset is deemed no longer subject to an investment contract. The comment period closed October 20, 2026. Source: <a href="https://www.federalregister.gov/d/2026-17183" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-17183</a>; <a href="https://www.sec.gov/files/rules/proposed/2026/33-11434.pdf" target="_blank" rel="noopener noreferrer">SEC proposing release, Release No. 33-11434</a>.</p>
-        <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The program's second comment to the SEC, after its July 2, 2026 comment on the <a href="/letters/sec-dsp3-draft-strategic-plan/">Draft Strategic Plan (File Number DSP-3)</a>, which recommended that the Commission measure decentralization from current on-chain state wherever a boundary or jurisdictional determination turns on it; proposed Rule 400 is the first rule text in which that recommendation has concrete purchase, and this comment supplies the operational detail the strategic-plan comment could only name. Recommendation 8 carries forward the effective-control position of the program's <a href="/letters/fincen-aml-cft/#rec-4">FinCEN AML/CFT comment</a> and its <a href="/letters/fdic-ag29-bsa-sanctions/#rec-5">FDIC AG29 comment</a>. The letter carries a recommendation routing table keyed to the release's numbered questions, suggested rule text for six of the eight recommendations, a cross-agency alignment and divergence table, anticipated objections, and a sources appendix. The SEC was already engaged, so the filing adds a docket and no agency.</p>
       </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">File No. S7-2026-27, RIN 3235-AN38; Release Nos. 33-11434 and 34-106150 (91 Fed. Reg. 54510, August 21, 2026; FR Doc 2026-17183) &middot; Regulation Crypto Assets, proposed 17 CFR part 228 &middot; Filed through the SEC internet comment form, which issues no tracking number; not yet posted by the Commission &middot; Comment period: August 21, 2026 to October 20, 2026</p>
+        <p class="paper-status-note"><strong>Status: filed through the SEC internet comment form on October 19, 2026 at 8:07 p.m. Eastern, the day before the comment period closes.</strong> The form issues no tracking number, and the Commission had not yet posted the comment when this page was prepared. The PDF linked here is the as-filed letter, dated October 19, 2026.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Comment period closed; final action pending</span>
+          <!-- letters:status-badge END -->
+        </div>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <p class="letter-status-line">as of October 23, 2026 &middot; 8 recommendations filed; no final action yet</p>
+        <details class="letter-status-more">
+          <summary>Status note</summary>
+          <p class="letter-outcome-note">Would add a new 17 CFR part 228 (Regulation Crypto Assets): a tailored offering regime for crypto assets with startup and fundraising exemptions, principles-based disclosure under Rule 103, and a Rule 400 safe harbor under which, once an issuer has completed or permanently ceased the essential managerial efforts it represented or promised and files a Form TR, the crypto asset is deemed no longer subject to an investment contract. The comment period closed October 20, 2026. Source: <a href="https://www.federalregister.gov/d/2026-17183" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-17183</a>; <a href="https://www.sec.gov/files/rules/proposed/2026/33-11434.pdf" target="_blank" rel="noopener noreferrer">SEC proposing release, Release No. 33-11434</a>.</p>
+        </details>
+        <!-- letters:outcome END -->
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

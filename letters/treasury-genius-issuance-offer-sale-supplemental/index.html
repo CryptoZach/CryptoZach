@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -203,7 +203,7 @@
   </nav>
   <!-- site-chrome:header END -->
 
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Treasury issuance, offer and sale supplement
@@ -214,14 +214,14 @@
         <span class="badge badge-public">FILED</span>
         <span class="badge">October 19, 2026</span>
         <span class="badge">Supplemental comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Comment period closed; final action pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Treasury GENIUS Act section 3 supplemental comment: two corrections about the program's index, none to the seven recommendations</h1>
 
-      <p class="paper-metadata-strip">Docket No. TREAS-DO-2026-0496 (RIN 1505-AC95; 91 Fed. Reg. 53368) &middot; supplements comment TREAS-DO-2026-0496-0078 (tracking mv7-9dva-kbda) &middot; filed via regulations.gov (tracking mvf-ylm8-46my) &middot; Comment period: August 18, 2026 to October 19, 2026</p>
+      <section class="letter-lead" aria-label="Macro context">
+        <h2 id="macro-context">Macro context</h2>
+        <p>Twenty-fourth letter in the Federal Comment Letter Program, and the second on Docket TREAS-DO-2026-0496, after the October 13 comment it supplements. It corrects two statements in that comment about the program's own index, bringing them into line with the index's score of record and with the anchors the comment itself states, and leaves all seven recommendations, and the reasons given for them, unchanged.</p>
+      </section>
 
       <p class="paper-thesis"><strong>A deadline-day correction to the comment Tokenization Systems filed on October 13, 2026: it corrects two statements that comment made about the program's Control Layer Intensity Index and changes none of its seven recommendations.</strong> The comment reported a score of 0.95 for an issuer on the index's freeze and mint capability dimension, where the index's score of record is 0.90, and it said the index scores that capability "with published anchors," where the anchors are the ones the comment itself states. Neither correction changes the reasons given for the recommendations.</p>
 
@@ -254,18 +254,22 @@
           <li><strong>The score in Recommendation 2.</strong> <a href="/letters/treasury-genius-issuance-offer-sale/#rec-2">Recommendation 2</a> asked Treasury to state that reasonable due diligence extends to the controls around a compliance capability, not only to whether the capability exists. Its example was an incident on October 15, 2025, in which a minting address of a highly regulated issuer created 300 trillion units of a payment stablecoin, roughly five orders of magnitude above the token's circulating supply, and burned them 22 minutes later. The comment said that issuer "scored 0.95, the top anchor," on the index's freeze and mint capability dimension. The index's score of record for that issuer on that dimension is 0.90, as stated in Table B2 of the paper that defines the index, <a href="/papers/routing-the-dollar/">Routing the Dollar</a> (SSRN Working Paper No. 6267698). The 0.95 figure came from Section 6.7 of a second program paper, <a href="/papers/seven-dollars/">Seven Dollars</a> (SSRN Working Paper No. 6483118). The recommendation does not depend on the difference: the issuer's capability was rated high, while a supply cap, a per-transaction limit, and multisig minting were all absent.</li>
           <li><strong>The word "published" in Recommendation 1.</strong> <a href="/letters/treasury-genius-issuance-offer-sale/#rec-1">Recommendation 1</a> asked Treasury to state that reasonable due diligence includes an on-chain confirmation that the claimed compliance capability exists. It said the index scores that capability "with published anchors." The anchors, such as a verified freeze function together with a documented rapid-response process at the top of the scale, are the ones the comment itself states; no published paper sets them out. The word should have been "stated."</li>
         </ol>
+</div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">Docket No. TREAS-DO-2026-0496 (RIN 1505-AC95; 91 Fed. Reg. 53368) &middot; supplements comment TREAS-DO-2026-0496-0078 (tracking mv7-9dva-kbda) &middot; filed via regulations.gov (tracking mvf-ylm8-46my) &middot; Comment period: August 18, 2026 to October 19, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Comment period closed; final action pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>August 18 to October 19, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Comment period closed; final action pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Supplements</dt><dd><a href="/letters/treasury-genius-issuance-offer-sale/">No. 22: Treasury issuance, offer and sale</a>, Recommendation 1, 2</dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026</p>
+        <p class="letter-status-links">Supplements <a href="/letters/treasury-genius-issuance-offer-sale/">No. 22: Treasury issuance, offer and sale</a>, Recommendation 1, 2.</p>
         <p class="letter-outcome-note">Would add a new 12 CFR part 1523 on who may issue payment stablecoins in the United States and when digital asset service providers may offer or sell them to U.S. persons, including foreign issuers that meet the section 18 conditions. The comment period closed October 19, 2026 at 11:59 p.m. Eastern. Source: <a href="https://www.federalregister.gov/d/2026-16796" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-16796</a>; <a href="https://kpmg.com/us/en/articles/2026/genius-act-treasury-proposal-payment-stablecoins-reg-alert.html" target="_blank" rel="noopener noreferrer">KPMG regulatory alert on the Treasury proposal (August 2026)</a>.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>Twenty-fourth letter in the Federal Comment Letter Program, and the second on Docket TREAS-DO-2026-0496, after the October 13 comment it supplements. It corrects two statements in that comment about the program's own index, bringing them into line with the index's score of record and with the anchors the comment itself states, and leaves all seven recommendations, and the reasons given for them, unchanged.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">

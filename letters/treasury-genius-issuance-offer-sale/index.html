@@ -80,7 +80,7 @@
   <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
-  <link rel="stylesheet" href="/styles.css?v=273" />
+  <link rel="stylesheet" href="/styles.css?v=780" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -245,7 +245,7 @@
     </div>
   </nav>
   <!-- site-chrome:header END -->
-  <main id="main" class="paper-detail-page">
+  <main id="main" class="paper-detail-page letter-page">
     <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
       <nav class="paper-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Treasury issuance, offer and sale
@@ -258,16 +258,17 @@
         <span class="badge">Regulations.gov</span>
         <span class="badge">7 recommendations</span>
         <span class="badge">Second Treasury comment</span>
-        <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <span class="badge badge-status-pending">Comment period closed; final action pending</span>
-        <!-- letters:status-badge END -->
       </div>
 
       <h1 id="letter-title">Treasury GENIUS Act section 3 comment: confirm on-chain that a foreign issuer's lawful-order capability exists, then reach the controls around it</h1>
 
-      <p class="paper-metadata-strip">Docket TREAS-DO-2026-0496, RIN 1505-AC95 (91 Fed. Reg. 53368, August 18, 2026; FR Doc 2026-16796) &middot; GENIUS Act Regulations on Payment Stablecoin Issuance, Offer, and Sale, proposed 12 CFR part 1523 &middot; Filed at regulations.gov, Comment Tracking Number mv7-9dva-kbda; posted as comment TREAS-DO-2026-0496-0078 &middot; Comment period: August 18, 2026 to October 19, 2026</p>
+      <section class="letter-lead" aria-label="Docket summary and macro context">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>Proposed 12 CFR part 1523 implements section 3 of the GENIUS Act: who may issue payment stablecoins in the United States, and when digital asset service providers may offer or sell them to persons in the United States, including the stablecoins of foreign issuers that meet the section 18 conditions. Proposed Sec. 1523.3(c) governs reliance on a foreign issuer's representation about lawful orders, and proposed Sec. 1523.2(c) and Sec. 1523.3(e) take a reasonable-belief approach to issuance and to offers and sales that Treasury asks whether to replace with stricter alternatives. The notice was published August 18, 2026 (91 Fed. Reg. 53368), and its comment period closes October 19, 2026.</p>
 
-      <p class="paper-status-note"><strong>Status: filed at regulations.gov on October 13, 2026, six days before the close.</strong> Posted on October 14, 2026 as comment TREAS-DO-2026-0496-0078. The PDF linked here is the as-filed attachment, byte-identical to the copy Regulations.gov posted.</p>
+        <h2 id="macro-context">Macro context</h2>
+        <p>The program's second comment to Treasury, after its April 2026 comment on the principles for the GENIUS Act state-similarity assessment (TREAS-DO-2026-0232). It carries forward two positions from the program's FinCEN comments: that a list-comparison obligation is only as operative as the list and its notice mechanism, and that the account-based framing of the lawful-order obligation must be reconciled with wallet-based stablecoin transfers. Treasury was already engaged, so the filing adds a docket and no agency.</p>
+      </section>
 
       <p class="paper-thesis"><strong>Of the two facts proposed Sec. 1523.3(c) turns on, whether a foreign payment stablecoin issuer has the technological capability to comply with a lawful order is readable from its deployed contract and its on-chain history, while whether it will comply in the future is not observable at all.</strong> Treasury has correctly declined to require certainty about the second. The comment asks Treasury to take the corresponding step on the first: name an on-chain check that the capability exists as a floor of reasonable due diligence, then carry that diligence to the controls around the capability, a gap the comment states as a limitation of the program's own index.</p>
 
@@ -312,23 +313,23 @@
         <p>The two facts the representation covers are not equally observable. A freeze, burn or blacklist function either exists in a deployed contract or it does not, the authority to invoke it resides at an identifiable address, and prior invocations are public record, so the capability limb can be checked from outside the issuer without its cooperation. Whether the issuer will comply in the future cannot be observed at all. Left unstated, the diligence standard leaves the checkable limb to the issuer's assertion and the uncheckable one unfalsifiable in both directions.</p>
         <h2>A note on scope and evidence</h2>
         <p>The comment names no issuer. The production incident behind Recommendation 2 is drawn from the program's own analysis of a documented October 2025 overmint and is offered as a limitation of the program's own index, not as a finding about any operator. Every quotation in the comment was checked against an archived copy of its source, including the published Federal Register text and the government text of the Act.</p>
-        <details class="letter-background">
-          <summary><h2>What the proposal covers</h2></summary>
-        <p>Proposed 12 CFR part 1523 implements section 3 of the GENIUS Act: who may issue payment stablecoins in the United States, and when digital asset service providers may offer or sell them to persons in the United States, including the stablecoins of foreign issuers that meet the section 18 conditions. Proposed Sec. 1523.3(c) governs reliance on a foreign issuer's representation about lawful orders, and proposed Sec. 1523.2(c) and Sec. 1523.3(e) take a reasonable-belief approach to issuance and to offers and sales that Treasury asks whether to replace with stricter alternatives. The notice was published August 18, 2026 (91 Fed. Reg. 53368), and its comment period closes October 19, 2026.</p>
-        </details>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">Docket TREAS-DO-2026-0496, RIN 1505-AC95 (91 Fed. Reg. 53368, August 18, 2026; FR Doc 2026-16796) &middot; GENIUS Act Regulations on Payment Stablecoin Issuance, Offer, and Sale, proposed 12 CFR part 1523 &middot; Filed at regulations.gov, Comment Tracking Number mv7-9dva-kbda; posted as comment TREAS-DO-2026-0496-0078 &middot; Comment period: August 18, 2026 to October 19, 2026</p>
+        <p class="paper-status-note"><strong>Status: filed at regulations.gov on October 13, 2026, six days before the close.</strong> Posted on October 14, 2026 as comment TREAS-DO-2026-0496-0078. The PDF linked here is the as-filed attachment, byte-identical to the copy Regulations.gov posted.</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Comment period closed; final action pending</span>
+          <!-- letters:status-badge END -->
+        </div>
         <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
-        <h2 id="what-happened-next">What happened next</h2>
-        <dl class="letter-outcome">
-          <div><dt>Comment period</dt><dd>August 18 to October 19, 2026</dd></div>
-          <div><dt>Status</dt><dd><span class="status-chip status-chip--pending">Comment period closed; final action pending</span> as of October 23, 2026</dd></div>
-          <div><dt>Recommendations</dt><dd>7 recommendations filed; no final action yet</dd></div>
-          <div><dt>Supplemented by</dt><dd><a href="/letters/treasury-genius-issuance-offer-sale-supplemental/">No. 24: Treasury issuance, offer and sale supplemental</a></dd></div>
-        </dl>
+        <p class="letter-status-line">as of October 23, 2026 &middot; 7 recommendations filed; no final action yet</p>
+        <p class="letter-status-links">Supplemented by <a href="/letters/treasury-genius-issuance-offer-sale-supplemental/">No. 24: Treasury issuance, offer and sale supplemental</a>.</p>
         <p class="letter-outcome-note">Would add a new 12 CFR part 1523 on who may issue payment stablecoins in the United States and when digital asset service providers may offer or sell them to U.S. persons, including foreign issuers that meet the section 18 conditions. The comment period closed October 19, 2026 at 11:59 p.m. Eastern. Source: <a href="https://www.federalregister.gov/d/2026-16796" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-16796</a>; <a href="https://kpmg.com/us/en/articles/2026/genius-act-treasury-proposal-payment-stablecoins-reg-alert.html" target="_blank" rel="noopener noreferrer">KPMG regulatory alert on the Treasury proposal (August 2026)</a>.</p>
         <!-- letters:outcome END -->
-        <h2>Program role</h2>
-        <p>The program's second comment to Treasury, after its April 2026 comment on the principles for the GENIUS Act state-similarity assessment (TREAS-DO-2026-0232). It carries forward two positions from the program's FinCEN comments: that a list-comparison obligation is only as operative as the list and its notice mechanism, and that the account-based framing of the lawful-order obligation must be reconciled with wallet-based stablecoin transfers. Treasury was already engaged, so the filing adds a docket and no agency.</p>
-      </div>
+      </section>
 
       <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
       <section class="companions" aria-labelledby="companions-heading">
