@@ -9713,10 +9713,10 @@
 
     var state = { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0 };
     var presets = {
-      baseline: { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0, desc: '2026 Baseline: Issuers retain Treasury reserve carry and high concentration (USDC/USDT), while exchanges and routers control last-mile distribution and holds.' },
-      control:  { c1: 2.0, c2: 1.5, c3: 1.5, i1: 0.5, i2: 1.0, i3: 1.0, desc: 'Router-Centric CLARITY Equilibrium: Commoditized multi-issuer PPSI minting; wallets, exchanges, and automated sweep wrappers capture float and routing economics.' },
-      issuer:   { c1: 0.5, c2: 0.5, c3: 1.0, i1: 2.0, i2: 1.5, i3: 1.5, desc: 'Reserve-Carry Duopoly: Settlement concentrates in one or two dominant issuers that keep reserve spread and gate direct mint/burn access.' },
-      bank:     { c1: 1.5, c2: 1.5, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.5, desc: 'Bank Deposit-Token Walled Garden: Vertically integrated banks own both the obligated interface and the settlement liability; high scores on both axes contest the margin.' }
+      baseline: { c1: 1.0, c2: 1.0, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.0, desc: '2026 baseline: issuers still keep the interest on Treasury reserves, and USDC and USDT remain the concentrated settlement dollars. Exchanges and routers control the app the user opens, and they can hold a transfer.' },
+      control:  { c1: 2.0, c2: 1.5, c3: 1.5, i1: 0.5, i2: 1.0, i3: 1.0, desc: 'Many companies can issue. Wallets, exchanges, and automatic sweeps keep the routing income and the yield on idle balances.' },
+      issuer:   { c1: 0.5, c2: 0.5, c3: 1.0, i1: 2.0, i2: 1.5, i3: 1.5, desc: 'One or two issuers dominate settlement, keep the interest on reserves, and decide who can mint and redeem directly.' },
+      bank:     { c1: 1.5, c2: 1.5, c3: 1.5, i1: 1.5, i2: 1.5, i3: 1.5, desc: 'The same bank owns the app the customer opens and the deposit behind the token. Both scores are high, so neither side leads.' }
     };
 
     var activePreset = 'baseline';
@@ -9730,23 +9730,23 @@
       var iScore = state.i1 + state.i2 + state.i3;
       var diff = cScore - iScore;
 
-      var regime = 'Split / Contested';
-      var econOwner = 'Contested between reserve float (issuers) and routing/sweep fees (interfaces)';
+      var regime = 'Neither side leads';
+      var econOwner = 'The issuer keeps the interest on reserves, and the app keeps routing and sweep fees. Neither score leads.';
       if(cScore >= 4.0 && diff >= 2.0){
-        regime = 'Control-Dominant';
-        econOwner = 'Distribution & interfaces capture economics (sweep defaults, wrapper yield, order flow)';
+        regime = 'Control-dominant';
+        econOwner = 'Apps, wallets, and routers keep the income: the default sweep, the yield wrapper, and the routing of the user\'s orders.';
       } else if(iScore >= 4.0 && (-diff) >= 2.0){
-        regime = 'Issuer-Dominant';
-        econOwner = 'Issuers capture economics (Treasury reserve carry, direct mint/burn gatekeeping)';
+        regime = 'Issuer-dominant';
+        econOwner = 'Issuers keep the income: the interest on reserves, and the decision of who can mint and redeem.';
       }
 
-      var signStr = diff > 0 ? ('+' + diff.toFixed(1) + ' Control') : (diff < 0 ? ('+' + (-diff).toFixed(1) + ' Issuer') : '0.0 Parity');
+      var signStr = diff > 0 ? ('ControlScore leads by ' + diff.toFixed(1)) : (diff < 0 ? ('IssuerScore leads by ' + (-diff).toFixed(1)) : 'The scores are even');
 
       sumEl.innerHTML =
-        '<div class="b4-stat"><span class="b4-stat__label">Active TDRC Regime</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">Rule: score >= 4.0 and margin >= 2.0 over rival axis</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">ControlScore (0 to 6)</span><span class="b4-stat__val">' + cScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">C1 (' + state.c1.toFixed(1) + ') + C2 (' + state.c2.toFixed(1) + ') + C3 (' + state.c3.toFixed(1) + ')</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">IssuerScore (0 to 6)</span><span class="b4-stat__val">' + iScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">I1 (' + state.i1.toFixed(1) + ') + I2 (' + state.i2.toFixed(1) + ') + I3 (' + state.i3.toFixed(1) + ')</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Axis differential &amp; value capture</span><span class="b4-stat__val">' + signStr + '</span><span class="b4-stat__sub">' + econOwner + '</span></div>';
+        '<div class="b4-stat"><span class="b4-stat__label">Reading</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">Needs 4 or more, and a lead of 2 or more. Otherwise neither side leads.</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">ControlScore, the app layer (0 to 6)</span><span class="b4-stat__val">' + cScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Regulated-app share ' + state.c1.toFixed(1) + ' + sweeps and wrappers ' + state.c2.toFixed(1) + ' + holds and freezes ' + state.c3.toFixed(1) + '</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">IssuerScore, the issuing company (0 to 6)</span><span class="b4-stat__val">' + iScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Concentrated dollar ' + state.i1.toFixed(1) + ' + issuer keeps reserve interest ' + state.i2.toFixed(1) + ' + issuer gates minting ' + state.i3.toFixed(1) + '</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Who is ahead</span><span class="b4-stat__val">' + signStr + '</span><span class="b4-stat__sub">' + econOwner + '</span></div>';
 
       var cPct = Math.min(100, (cScore / 6.0) * 100).toFixed(1);
       var iPct = Math.min(100, (iScore / 6.0) * 100).toFixed(1);
@@ -9758,30 +9758,34 @@
         }).join('');
       }
 
-      var noteText = (presets[activePreset] && presets[activePreset].desc) || 'Custom component configuration: adjust any of the six 0-to-2 components below to test threshold crossings.';
+      var noteText = (presets[activePreset] && presets[activePreset].desc) || 'Custom setting. Change any of the six parts below. Each part runs from 0 to 2.';
+
+      function compRow(key, title, gloss, val){
+        return '<div class="tdrc-comp-row"><span><strong>' + title + '</strong><span class="tdrc-comp-gloss">' + gloss + '</span></span><span class="tdrc-comp-steps">' + stepBtns(key, val) + '</span></div>';
+      }
 
       barsEl.innerHTML =
         '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">ControlScore (Interfaces, Wallets, Routers, Default Sweeps)</span><span class="b4-bar-row__val">' + cScore.toFixed(1) + ' / 6.0</span></div>' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">ControlScore: the app, wallet, and router</span><span class="b4-bar-row__val">' + cScore.toFixed(1) + ' / 6.0</span></div>' +
           '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + cPct + '%"></div></div>' +
         '</div>' +
         '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">IssuerScore (Mint/Burn Issuers, Reserve Carry, Settlement Concentration)</span><span class="b4-bar-row__val">' + iScore.toFixed(1) + ' / 6.0</span></div>' +
+          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">IssuerScore: the company that issues the dollar</span><span class="b4-bar-row__val">' + iScore.toFixed(1) + ' / 6.0</span></div>' +
           '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + iPct + '%"></div></div>' +
           '<div class="b4-bar-row__meta">' + noteText + '</div>' +
         '</div>' +
         '<div class="tdrc-comp-grid">' +
           '<div class="tdrc-axis-col">' +
-            '<h5>ControlScore components (0 to 2 each)</h5>' +
-            '<div class="tdrc-comp-row"><span><strong>C1.</strong> Obligated-interface share of flows</span><span class="tdrc-comp-steps">' + stepBtns('c1', state.c1) + '</span></div>' +
-            '<div class="tdrc-comp-row"><span><strong>C2.</strong> Default sweep &amp; wrapper penetration</span><span class="tdrc-comp-steps">' + stepBtns('c2', state.c2) + '</span></div>' +
-            '<div class="tdrc-comp-row"><span><strong>C3.</strong> Holds / freeze usage as operating norm</span><span class="tdrc-comp-steps">' + stepBtns('c3', state.c3) + '</span></div>' +
+            '<h5>ControlScore, three parts, each 0 to 2</h5>' +
+            compRow('c1', 'C1. Share of flow through a regulated app', 'How much of the volume must pass an app or interface that has a legal duty to screen, hold, or report.', state.c1) +
+            compRow('c2', 'C2. Automatic sweeps and yield wrappers', 'How widely the app moves idle balances into another product by default, and how widely those yield products are used.', state.c2) +
+            compRow('c3', 'C3. Holds and freezes as a normal step', 'How ordinary it is to pause or freeze a transfer, rather than doing so only as an exception.', state.c3) +
           '</div>' +
           '<div class="tdrc-axis-col">' +
-            '<h5>IssuerScore components (0 to 2 each)</h5>' +
-            '<div class="tdrc-comp-row"><span><strong>I1.</strong> Settlement-object concentration</span><span class="tdrc-comp-steps">' + stepBtns('i1', state.i1) + '</span></div>' +
-            '<div class="tdrc-comp-row"><span><strong>I2.</strong> Reserve carry retention by issuer</span><span class="tdrc-comp-steps">' + stepBtns('i2', state.i2) + '</span></div>' +
-            '<div class="tdrc-comp-row"><span><strong>I3.</strong> Direct mint &amp; burn gatekeeping</span><span class="tdrc-comp-steps">' + stepBtns('i3', state.i3) + '</span></div>' +
+            '<h5>IssuerScore, three parts, each 0 to 2</h5>' +
+            compRow('i1', 'I1. How concentrated the settlement dollar is', 'How much settlement uses one or two dollar tokens, rather than many.', state.i1) +
+            compRow('i2', 'I2. Interest on reserves kept by the issuer', 'How much of the interest earned on the backing stays with the issuer, instead of the holder or a distribution partner.', state.i2) +
+            compRow('i3', 'I3. Who is allowed to mint and redeem', 'Whether the issuer still decides who can create or redeem tokens directly.', state.i3) +
           '</div>' +
         '</div>';
     }
@@ -10259,19 +10263,34 @@
       var barsEl = document.getElementById('fg-route-bars');
       if(!sumEl || !barsEl) return;
       var r = routes[curRoute] || routes.stablecoin;
+      var questions = {
+        'Classify': 'What kind of product is this, and which rulebook applies?',
+        'Trace': 'Where does the value sit, and who is in the chain behind it?',
+        'Map': 'Who can say no: freeze, halt, or reroute?',
+        'Compare': 'Does holding the token give you the rights you think you are buying?',
+        'Stress': 'What changes when the normal path stops?',
+        'Decide': 'Are the remaining gaps acceptable for the use you have in mind?'
+      };
       sumEl.innerHTML =
-        '<div class="b4-stat"><span class="b4-stat__label">Evaluation target</span><span class="b4-stat__val">' + r.target + '</span><span class="b4-stat__sub">Selected six-step decision path</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Primary research anchors</span><span class="b4-stat__val">' + r.anchor + '</span><span class="b4-stat__sub">Empirical and framework papers for this class</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Core scoring instruments</span><span class="b4-stat__val">' + r.primaryGate + '</span><span class="b4-stat__sub">Entry-gate and continuous-monitoring tools</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Primary failure seam</span><span class="b4-stat__val">' + r.focus + '</span><span class="b4-stat__sub">Where committee diligence concentrates first</span></div>';
+        '<div class="b4-stat"><span class="b4-stat__label">What you are evaluating</span><span class="b4-stat__val">' + r.target + '</span><span class="b4-stat__sub">The six steps below stay in this order for every product</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Papers to open</span><span class="b4-stat__val">' + r.anchor + '</span><span class="b4-stat__sub">The research this path is drawn from</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Scores to use</span><span class="b4-stat__val">' + r.primaryGate + '</span><span class="b4-stat__sub">The tests named in the steps</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Where this usually breaks</span><span class="b4-stat__val">' + r.focus + '</span><span class="b4-stat__sub">The first place to look for this product</span></div>';
 
-      barsEl.innerHTML = r.steps.map(function(s){
-        return '<div class="b4-bar-row">' +
-          '<div class="b4-bar-row__top"><span class="b4-bar-row__name">' + s.step + '</span><span class="b4-bar-row__val">' + s.tool + '</span></div>' +
-          '<div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + s.pct + '%"></div></div>' +
-          '<div class="b4-bar-row__meta">' + s.action + '</div>' +
-        '</div>';
-      }).join('');
+      barsEl.innerHTML = '<ol class="fg-route">' + r.steps.map(function(s){
+        var parts = String(s.step).split('. ');
+        var n = parts[0];
+        var name = parts.slice(1).join('. ') || s.step;
+        var q = questions[name] || '';
+        return '<li class="fg-route__step">' +
+          '<span class="fg-route__num">' + n + '</span>' +
+          '<div class="fg-route__body">' +
+            '<p class="fg-route__name">' + name + '</p>' +
+            (q ? '<p class="fg-route__q">' + q + '</p>' : '') +
+            '<p class="fg-route__tool">Tool: ' + s.tool + '</p>' +
+            '<p class="fg-route__ask">' + s.action + '</p>' +
+          '</div></li>';
+      }).join('') + '</ol>';
     }
 
     root.addEventListener('click', function(e){
@@ -12035,7 +12054,7 @@
 
     { cat: 'Explorer', title: 'Interactive MVEP 14-Product Scorecard & Self-Assessment Tool', url: '/frameworks/#mvep-scorecard', kw: 'mvep interactive scorecard calculator 14 products' },
     { cat: 'Explorer', title: 'Interactive 19-Gateway CLII Sensitivity & Weighting Explorer', url: '/frameworks/#clii-explorer', kw: 'clii 19 gateways circle coinbase tether binance curve 3pool' },
-    { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC) Simulator', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore float vs home screen' },
+    { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC): who keeps the income, the app or the issuer', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore app layer issuer reserve interest' },
     { cat: 'Explorer', title: 'Interactive Fleet Commits Chart (79 3-Day Bins, 68,000+ Commits)', url: '/agent-infrastructure/#ai-commit-chart', kw: 'commit chart 79 bins 3329 peak' },
 
     { cat: 'Resume', title: 'Resume Profile: Policy & Market Infrastructure', url: '/resume/policy/', kw: 'policy resume central bank fed occ fdic sec cftc' },
@@ -12307,9 +12326,18 @@
           '<div class="b4-stat"><span class="b4-stat__label">Recommended pre-read</span><span class="b4-stat__val"><a href="' + j.preread + '" style="color:inherit;text-decoration:underline;">' + j.prereadLabel + '</a></span><span class="b4-stat__sub">' + j.framework + '</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Send or copy brief</span><span class="b4-stat__val"><a id="csb-mailto-link" href="' + mailHref + '" style="color:inherit;text-decoration:underline;">Open in email &rarr;</a></span><span class="b4-stat__sub"><button type="button" class="access-link access-cite-btn" id="csb-copy-btn">Copy brief template</button></span></div>';
 
-        barsEl.innerHTML = j.deliverables.map(function(d){
-          return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + d.name + '</span><span class="b4-bar-row__val">' + d.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + d.pct + '%"></div></div><div class="b4-bar-row__meta">' + d.note + '</div></div>';
-        }).join('');
+        barsEl.innerHTML = '<ol class="fg-route">' + j.deliverables.map(function(d){
+          var parts = String(d.name).split('. ');
+          var n = parts[0];
+          var name = parts.slice(1).join('. ') || d.name;
+          return '<li class="fg-route__step">' +
+            '<span class="fg-route__num">' + n + '</span>' +
+            '<div class="fg-route__body">' +
+              '<p class="fg-route__name">' + name + '</p>' +
+              '<p class="fg-route__tool">' + d.val + '</p>' +
+              '<p class="fg-route__ask">' + d.note + '</p>' +
+            '</div></li>';
+        }).join('') + '</ol>';
 
         var copyBtn = document.getElementById('csb-copy-btn');
         if(copyBtn){
