@@ -559,7 +559,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
       </div>
       <div class="section-title">
         <h1 id="focus-title">Frameworks for tokenized infrastructure: classification, diligence, and monitoring.</h1>
-        <p class="structure-page-lede"><strong>Digital money should be programmable money.</strong> Each framework names what to test, what should change the view, and who acts when conditions deteriorate. The same tests extend to AI operators.</p>
+        <p class="structure-page-lede"><strong>Digital money should be programmable money.</strong> Each framework names what to test, what should change the view, and who acts when conditions deteriorate. Two of them, CLII and MVEP, extend to AI operators.</p>
       </div>
       <div class="track-overview">
         <div class="operating-model-stack" role="group" aria-label="Unifying thesis">
@@ -1039,7 +1039,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>CLII (Control Layer Intensity Index)</h3>
           <p class="card-eyebrow">Monitoring &middot; Post-approval drift detection</p>
           <p><strong>What it does.</strong> Scores each gateway (a stablecoin issuer or major distributor routing dollars between on-chain and off-chain rails; e.g., Circle, Coinbase, Tether) across five regulatory dimensions: licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions. Weighted 0-to-1 score per gateway.</p>
-          <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations. Stress retention is a separate reading. Circle (CLII 0.92) and Coinbase (CLII 0.85) sat close on CLII and far apart during SVB, because reserve-bank exposure and counterparty concentration sit outside the five dimensions.</p>
+          <p><strong>Why it matters.</strong> A high CLII score means more regulatory obligations. Stress retention is a separate reading. Circle (CLII 0.92) and Coinbase (CLII 0.85) sat close on CLII and far apart in stress retention during SVB. Circle's SVB exposure, a banking tie outside the five dimensions, is the leading explanation.</p>
           <p><strong>What triggers re-evaluation.</strong> A tier crossing (for example Tier 1 to Tier 2), a significant drop in any single dimension, a jump in volume concentration through one gateway, or a new dependency where multi-gateway traffic routes through one.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/routing-the-dollar/">Open Routing the Dollar <span aria-hidden="true">→</span></a> <a class="action secondary" href="#clii-explorer">Explore 19 gateways <span aria-hidden="true">↓</span></a></p>
         </article>
@@ -1395,7 +1395,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
                 <dl>
                   <div>
                     <dt>ControlScore</dt>
-                    <dd>How much of the path runs through the app, wallet, or router the user opens: the default that app sets, the automatic move of idle balances into another product, and the ability to hold or freeze a transfer. 0 means little of that. 6 means that layer runs the flow.</dd>
+                    <dd>How much of the flow runs through apps, wallets, or routers with a legal duty to screen: the share of flow they carry, how widely they sweep idle balances into yield products, and how often they hold or freeze transfers. 0 means little of that. 6 means that layer runs the flow.</dd>
                   </div>
                   <div>
                     <dt>IssuerScore</dt>
@@ -1445,7 +1445,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="card card--polished card--accent-b" id="burn-mechanism-classification">
           <h3>Burn Mechanism Classification</h3>
           <p class="card-eyebrow">Classification &middot; Fiscal sustainability</p>
-          <p><strong>What it does.</strong> Classifies token networks by payment architecture and payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates direct-payment architectures, where the customer base is observable on-chain, from buy-and-burn, single-relayer, and credit-intermediated models, which relocate customer demand off-chain.</p>
+          <p><strong>What it does.</strong> Classifies token networks by payment architecture and payer concentration using S2R (Subsidy-to-Revenue ratio, the fiscal-sustainability measure) and HHI (Herfindahl-Hirschman Index, the standard market-concentration measure). Differentiates direct-payment architectures, where the customer base is observable on-chain, from buy-and-burn, single-relayer, and credit-intermediated models, where a treasury, relayer, or credit contract signs in place of the customer and hides the customer base from on-chain view.</p>
           <p><strong>Why it matters.</strong> Payment architecture determines whether a network's demand concentration can be observed on-chain at all. Helium's direct-burn model: burn-signer HHI 0.27, Top-5 demand sources roughly 90% of burn volume. Livepeer's direct-fee model: fee-payer HHI 0.31. GEODNET's Foundation buy-and-burn relocates demand off-chain behind a single treasury signer. Helium's burn-mint parity crossing was driven jointly by the August 2025 emission halving and the full carrier-revenue burn policy.</p>
           <p><strong>What triggers re-evaluation.</strong> A change in S2R trajectory (as distinct from level), an emission halving or other supply-compression event, a shift in demand concentration or payment architecture, or a fiscal-parity crossing.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/who-burns-the-tokens/">Open Who Burns the Tokens? <span aria-hidden="true">→</span></a></p>
@@ -1579,7 +1579,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="card card--polished card--accent-a" id="clii-ai">
           <h3>CLII-AI (Control Layer Intensity Index for AI Operators)</h3>
           <p class="card-eyebrow">AI operator monitoring &middot; 5 regulatory-posture dimensions</p>
-          <p><strong>What it does.</strong> Extends the continuous-monitoring index to AI operators across five regulatory-posture dimensions: Regulatory Licensing, Evaluation Transparency, Access Gating, Compliance Infrastructure, and Geographic Restrictions. Like the stablecoin CLII, it measures who is supervised and what controls attach at the operator layer. Model quality is a separate question.</p>
+          <p><strong>What it does.</strong> Extends the continuous-monitoring index to AI operators across five regulatory-posture dimensions: Regulatory Licensing, Evaluation Transparency, Access Gating, Compliance Infrastructure, and Geographic Restrictions. Like the stablecoin CLII, it measures who is supervised and what controls attach at the operator layer. Whether a model is safe is a separate question.</p>
           <p><strong>Why it matters.</strong> An advisory warning states intent, whereas an armed gate enforces execution. On the live <a href="/agent-infrastructure/#measurement">Agent Infrastructure</a> fleet, the highest-volume advisory warning repeated in 84% of workspaces after firing, whereas armed hard gates refused the prohibited action 199 times in 200 (13,098 of 13,156 attempts across both machines). In agentic payments (<a href="/papers/who-controls-agentic-payments/"><em>Who Controls Agentic Payments?</em></a>), facilitator concentration across x402 on Base, Solana, and Polygon clears merger-guidelines thresholds on every chain.</p>
           <p class="framework-card-action"><a class="action secondary" href="/agent-infrastructure/#measurement">See fleet gate measurements <span aria-hidden="true">→</span></a> <a class="action secondary" href="/papers/who-controls-agentic-payments/">Open Who Controls Agentic Payments? <span aria-hidden="true">→</span></a></p>
         </article>

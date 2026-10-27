@@ -283,7 +283,7 @@
         <blockquote class="paper-thesis-line ai-thesis">
           <p>Only outcome measurement turns an assumed safeguard into a verified control.</p>
         </blockquote>
-        <p>The next section names the three jobs. Shared memory comes immediately after, because every reused result must trace to a verified record. Scale and the measurement sections follow, and the closing section states the scope and validation boundaries of a single-fleet study.</p>
+        <p>The next section names the three jobs. Shared memory comes immediately after, because every reused result must trace to an existing, attributable record. Scale and the measurement sections follow, and the closing section states the scope and validation boundaries of a single-fleet study.</p>
       </div>
     </section>
 
@@ -330,7 +330,7 @@
         <ol class="ai-principle-list">
           <li>
             <h3>Require valid references when work is saved</h3>
-            <p>Every reference to a finding, decision, or open question must resolve to an existing record; unresolved references remain empty and flag for human review.</p>
+            <p>References to findings, decisions, or open questions must resolve to existing records; a reference that does not resolve stays empty and is flagged for human review.</p>
           </li>
           <li>
             <h3>Preserve attribution with the result</h3>
@@ -536,7 +536,7 @@
         </div>
         <p class="ai-note"><strong>Interpretation boundary.</strong> Repeat rates rise with observation length, so only equal spans are compared. A falling rate shows the mistake recurred less often, which is consistent with teaching alongside concurrent model upgrades, workload shifts, or companion fixes landing in the same window.</p>
         <p><strong>This result changed the architecture.</strong> Teaching controls now explain the safer action, while enforcing controls stop an action when the wrong behavior can be identified precisely. Each is measured separately.</p>
-        <p>The result persisted when the observation window was held constant. Over equal windows of 595.6 hours (24.8 days) either side of 2026-08-04, re-measured on 2026-09-21, the failed-command warning moved from 81% (2,683 firings) to 87% (7,767 firings), while the unscoped-absence warning moved from 64% (606 firings) to 48% (1,078 firings). Stating the exact span makes the comparison reproducible: the instrument bounds both windows to the shorter side, so running the command later compares longer spans. Classes with sparse observations on either side remain ungraded so only powered comparisons receive a verdict.</p>
+        <p>The result persisted when the observation window was held constant. Over equal windows of 595.6 hours (24.8 days) either side of 2026-08-04, re-measured on 2026-09-21, the failed-command warning moved from 81% (2,683 firings) to 87% (7,767 firings), while the unscoped-absence warning moved from 64% (606 firings) to 48% (1,078 firings). Stating the exact span makes the comparison reproducible: the instrument bounds both windows to the shorter side, so running the command later compares longer spans. Classes with fewer than 20 firings on either side remain ungraded, so a verdict appears only where there is enough traffic to read a rate.</p>
         <blockquote class="paper-thesis-line ai-thesis">
           <p>Grade a safeguard by what agents do after it fires rather than by how often it appears.</p>
         </blockquote>
@@ -563,7 +563,7 @@
           <li><strong>Escalate only when the harm and the target are clear.</strong> Arming a hard gate requires both a high-repeat failure mode and an unambiguous signature for the prohibited action.</li>
           <li><strong>Measure false positives and overrides before arming.</strong> A gate that blocks valid work will train agents to bypass it or will be disabled entirely.</li>
         </ul>
-        <p>The strongest control replaces the unsafe path with a safe actuator; where an actuator is unavailable, a narrow hard gate refuses the command and logs every override.</p>
+        <p>The strongest control replaces the unsafe command with a helper that performs the safe action; where no such helper exists, a narrow hard gate refuses the command and logs every override.</p>
       </div>
     </section>
 

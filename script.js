@@ -8712,7 +8712,7 @@
       count: 'Single operator (over 99.9%)',
       countSub: 'Official Polygon Facilitator (24-address rotating fleet) generated 5.61M July payments (55.8% of all x402 counts)',
       val: '52 buyer wallets',
-      valSub: 'Under a public $1M gas-rebate program (687,453 POL funded); 52 wallets recirculate seeded USDC at ~$0.025/tx',
+      valSub: 'Public $1M gas-rebate program since March 2026; one treasury sent 687,453 POL to the 24 fleet addresses. 52 wallets recirculate seeded USDC at about $0.03 per payment',
       scale: '15.88% of Polygon USDC tx',
       scaleSub: 'Subsidized fleet alone accounts for ~1 in 6 Polygon USDC transfer events, distorting chain-level stats',
       rows: [
@@ -10133,7 +10133,7 @@
         ]
       },
       tokdep: {
-        rulebook: 'Federal Banking Law (FDI Act / OCC IL 1188)',
+        rulebook: 'Federal banking law (FDI Act and the bank\'s deposit terms)',
         claim: 'Direct deposit liability of the issuing commercial bank',
         insolvency: 'FDIC insurance (to $250k) + 12 USC 1821(d)(11) depositor preference',
         stress2am: 'Internal 24/7 book transfer; single-bank perimeter',
@@ -10146,10 +10146,10 @@
         ]
       },
       deptok: {
-        rulebook: 'Federal Banking Law + Interbank Clearing Rules',
-        claim: 'Fungible bank deposit liability on a dedicated multi-bank ledger',
+        rulebook: 'Federal banking law (FDI Act); acceptance at other banks needs a clearing layer such as Ubyx',
+        claim: 'A deposit claim on the issuing bank',
         insolvency: 'FDIA depositor preference (J2); MVEP Legal & Economic Indeterminate (3.7)',
-        stress2am: '24/7 interbank settlement across accepting institutions',
+        stress2am: '24/7 transfer on the issuer\'s rail; settlement at other banks depends on a clearing layer',
         rows: [
           { q: 'What the holder owns', a: 'A bank deposit recorded on a ledger other banks can accept.', note: 'It is built to be fungible across institutions. JPMD is the example.' },
           { q: 'If the issuer fails', a: 'Depositor preference if the issuing bank fails. On the MVEP scorecard, JPMD grades Indeterminate on legal and economic equivalence (3.7 each) and Non-Equivalent on operational equivalence (3.0).', note: 'Strength scores run from 1.0 to 5.0. JPMD holds the only Partial on rights parity (Category 1) in the 14-product sample.' },
@@ -10167,8 +10167,8 @@
           { q: 'What the holder owns', a: 'A fund share, a partnership interest, or a secured note, depending on the wrapper.', note: 'BENJI, BUIDL, and OUSG each use their own legal claim.' },
           { q: 'If the issuer fails', a: 'A 1940 Act fund such as BENJI passes the insolvency tests used in MVEP. BUIDL and OUSG, as offshore or private wrappers, come out ambiguous on that matrix.', note: 'BENJI is a 7-of-7 pass. BUIDL and OUSG stay in the ambiguous column.' },
           { q: 'When banks are closed', a: 'A Saturday margin call meets a limited pool of stablecoins and a net asset value that waits until markets open.', note: 'Instant redemption, where it exists, is only as large as that pool.' },
-          { q: 'Can another institution settle it', a: 'Only up to the pool and the whitelist. The cash it turns into is often a stablecoin.', note: 'The stablecoin weekend limit comes with the wrapper. USYC, BUIDL, and BENJI can also sit in margin pools without the holder choosing the counterparty.' },
-          { q: 'Does the holder receive the yield', a: 'Yes. The holder receives the fund value or its dividend.', note: 'This is where yield goes when a payment stablecoin keeps the reserve interest.' }
+          { q: 'Can another institution settle it', a: 'Only up to the pool and the whitelist. The cash it turns into is often a stablecoin.', note: 'Instant redemption pays out in a stablecoin such as USDC, so the wrapper inherits that stablecoin\'s weekend limits. USYC, BUIDL, and BENJI can also sit in off-exchange margin pools without the holder choosing the counterparty.' },
+          { q: 'Does the holder receive the yield', a: 'Yes. The holder receives the fund value or its dividend.', note: 'This is where yield goes when payment stablecoin issuers are barred from paying holders interest.' }
         ]
       }
     };
@@ -11542,7 +11542,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 5 agencies</span></div>';
           var aRows = [
             { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
-            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 25 recommendations', note: 'Operationalizes GENIUS Section 1033.240 freeze/block/reject capability and SVB Chow structural break (F = 7.41, p = 0.0012)' },
+            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 25 recommendations', note: 'Operationalizes the freeze/block/reject capability in proposed 31 CFR 1033.240 and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
             { name: 'OCC (3 letters: AF41 PPSI MVEP, AF41 control-layer supplemental, AF55 BSA & sanctions)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (OCC-2025-0372-0057); attaches MVEP v9 manuscript to the administrative record' },
             { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + Section 3 issuance & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
             { name: 'SEC (3 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock)', pct: 50, val: '3 letters · 19 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
@@ -11559,7 +11559,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB + SEC 4-927</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
           var fRows = [
             { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '19 of 25 federal letters (+FSB)', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
-            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '15 of 25 federal letters (+FSB)', note: 'Tests Legal, Operational, and Economic equivalence; adopted in OCC, FDIC, NCUA, SEC, and CFTC collateral filings' },
+            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '15 of 25 federal letters (+FSB)', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
             { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 44, val: '11 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
             { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 32, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
@@ -11633,7 +11633,7 @@
           { name: 'FDIC (3 NPRMs: RIN 3064-AG20 application, AG19 PPSI standards, AG29 BSA/sanctions)', pct: 100, val: '3 of 3 commented (Nos. 4, 8, 13) · All pending final rule', note: 'Covers IDI subsidiary issuance approvals, reserve/redemption standards, and BSA compliance' },
           { name: 'U.S. Department of the Treasury (3 actions: AC90 state-similarity, AC95 Section 3 issuance, s.4(c) IFR)', pct: 100, val: '1 IFR in effect · 2 NPRMs commented (Nos. 3, 22, 24)', note: 'September 30, 2026 interim final rule on state certification forms is the first GENIUS action in effect' },
           { name: 'OCC (2 NPRMs: RIN 1557-AF41 PPSI framework, RIN 1557-AF55 BSA & sanctions)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · Target Nov 2026', note: 'Comptroller stated August 20, 2026 that OCC intends to issue its final rule by November 2026' },
-          { name: 'FinCEN & Interagency (2 NPRMs: RIN 1506-AB73 sanctions/AML, RIN 1506-AB74 5-agency CIP)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Establishes block/freeze/reject technical mandates and customer identification rules across all 5 regulators' },
+          { name: 'FinCEN & Interagency (2 NPRMs: RIN 1506-AB73 sanctions/AML, RIN 1506-AB74 5-agency CIP)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Would set block/freeze/reject capability requirements and customer identification rules across all 5 regulators' },
           { name: 'NCUA (2 NPRMs: RIN 3133-AF69 PPSI licensing, RIN 3133-AG10 credit-union stablecoin standards)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts PPSI supervision and reserve rules to federally insured credit unions' },
           { name: 'Board of Governors of the Federal Reserve System (2 NPRMs: Docket R-1899 reserve/capital & subsidiary application)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
         ];
@@ -11772,7 +11772,7 @@
         if(!sumEl || !barsEl) return;
         var list = datItems.filter(function(r){ return curDat === 'all' || r.cat === curDat; });
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Items displayed</span><span class="b4-stat__val">' + list.length + ' of 17</span><span class="b4-stat__sub">8 live site feeds + 9 SSRN paper replication packages</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Items displayed</span><span class="b4-stat__val">' + list.length + ' of 17</span><span class="b4-stat__sub">8 live site feeds + 9 SSRN papers (7 with replication code)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">23 live across site</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Content &amp; data licence</span><span class="b4-stat__val">CC BY 4.0</span><span class="b4-stat__sub">Free to reuse with attribution and link; code per repo licence</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">42 pages (APA + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers &amp; 26 letters</span></div>';
@@ -11830,8 +11830,8 @@
           { name: '2. Reserves (Composition, bank concentration caps, daily valuation & segregation)', pct: 91, val: '30 recommendations (22.1%)', note: 'Addresses single-bank reserve lockups ($3.3B SVB lesson), custodian concentration, and eligible liquid assets' },
           { name: '3. Disclosure and reporting (3CRD point-of-use template, holder-rights memos)', pct: 88, val: '29 recommendations (21.3%)', note: 'Surfaces legal claim, reserve composition, and custody location where holders transact' },
           { name: '4. Supervision (Examiner cadences, shared control-posture records, drift triggers)', pct: 67, val: '22 recommendations (16.2%)', note: 'Aligns OCC, FDIC, FinCEN, Treasury, Federal Reserve, and NCUA examination playbooks' },
-          { name: '5. AML/CFT & 6. Interagency coordination (18 recommendations each)', pct: 55, val: '18 AML/CFT · 18 Coordination', note: 'Closes the Federal Reserve Section 208.63 consultation omission and harmonizes 5-agency CIP rules' },
-          { name: '7. Custody and collateral (16) & 8. Sanctions compliance (14)', pct: 48, val: '16 Custody · 14 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and GENIUS Section 1033.240 freeze/block/reject capability' },
+          { name: '5. AML/CFT & 6. Interagency coordination (18 recommendations each)', pct: 55, val: '18 AML/CFT · 18 Coordination', note: 'Asks the Board to add the FinCEN consultation provisions to Section 208.63 and asks for aligned five-agency CIP rules' },
+          { name: '7. Custody and collateral (16) & 8. Sanctions compliance (14)', pct: 48, val: '16 Custody · 14 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and the freeze/block/reject capability in proposed 31 CFR 1033.240' },
           { name: '9. Redemption (11), 10. Other (10), 11. Insolvency (8), 12. Deposit insurance (7), 13. Capital (2)', pct: 33, val: '38 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
         ];
         barsEl.innerHTML = readingList(tRows);
@@ -11851,7 +11851,7 @@
           { name: 'FinCEN & OFAC (5 letters: FINCEN-2026-0034, FINCEN-2026-0100, FINCEN-2026-0101)', pct: 69, val: '25 recommendations (18.4%)', note: 'Operationalizes PPSI freeze/block/reject capability, reserve-custody Chow break tests, and formal-relationship CIP scoping' },
           { name: 'SEC (3 letters: File DSP-3, File S7-2026-27, File 4-927)', pct: 53, val: '19 recommendations (14.0%)', note: 'Applies PCA-corrected governance concentration, Rule 400(a) observable control gates, and TSV corporate-actions hierarchy' },
           { name: 'U.S. Department of the Treasury (3 letters: TREAS-DO-2026-0232 & TREAS-DO-2026-0496)', pct: 36, val: '13 recommendations (9.6%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under Section 3' },
-          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.8%)', note: 'Establishes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
+          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.8%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
           { name: 'NCUA (2 letters: RIN 3133-AG10 + routing supplement) & Federal Reserve Board (Docket R-1835)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
           { name: 'Joint Banking Agencies (91 FR 18304) & CFTC (OMB 3038-0076 DCO requirements)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized DCO margin' }
         ];
@@ -11925,7 +11925,7 @@
         var o19Rows = [
           { name: 'Letter No. 23: SEC Regulation Crypto Assets (File No. S7-2026-27, 91 Fed. Reg. 54510)', pct: 100, val: '8 recommendations · Filed Oct 19, 2026', note: 'Adds an observable control condition to Rule 400(a) and requires Form TR to use PCA-excluded, delegation-aware governance metrics' },
           { name: 'Letter No. 22 & No. 24: Treasury GENIUS Section 3 Issuance, Offer & Sale (TREAS-DO-2026-0496)', pct: 88, val: '7 recommendations + supplemental · Oct 13 & 19', note: 'Grounds proposed s.1523.3(c) foreign-issuer technical capability in deployed contract code and keys s.8 checks to published determinations' },
-          { name: 'Letter No. 25: SEC Tokenized NMS Stock Conditional Exemptions (File No. 4-927, Rel. 34-106402)', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Requires Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
+          { name: 'Letter No. 25: SEC Tokenized NMS Stock Conditional Exemptions (File No. 4-927, Rel. 34-106402)', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Asks the SEC to require Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
         ];
         barsEl.innerHTML = readingList(o19Rows);
       }
@@ -12364,7 +12364,7 @@
       var curWork = 'rtd';
       var works = {
         rtd: {
-          title: 'Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar\'s International Functions',
+          title: 'Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar\'s International Functions in Digital Markets in Digital Markets',
           year: '2026', venue: 'SSRN Working Paper 6267698 (Prepared for FRBNY Fifth Conference on International Roles of the U.S. Dollar)',
           doi: '10.2139/ssrn.6267698', url: 'https://tokenization.systems/papers/routing-the-dollar/', key: 'zukowski2026routing'
         },
