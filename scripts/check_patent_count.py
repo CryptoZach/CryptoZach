@@ -24,9 +24,9 @@ GROUND TRUTH
 WHAT IT CHECKS (AND UPDATES WITH `--write`)
 -------------------------------------------
   1. No duplicate USPTO application numbers in `<div class="patent-areas">`.
-  2. Every application-count mention across `.html`, `.md`, `.txt`, and `.xml` files
-     (including `"All <N>, grouped by primary function"` and
-     `data-scale-uspto-applications="<N>"`) equals `N`.
+  2. Every application-count mention across `.html`, `.js`, `.md`, `.txt`, and `.xml` files
+     (including `"All <N>, grouped by primary function"`, `"<N> USPTO filings"`,
+     `"<N> provisional filings"`, and `data-scale-uspto-applications="<N>"`) equals `N`.
   3. Every patent-family count mention across `.html`, `.md`, `.txt`, and `.xml` files
      (including `(?:across|in) <F> (?:patent )?families` and
      `data-scale-uspto-families="<F>"`) equals `F`.
@@ -103,9 +103,14 @@ APP_PATTERNS = [
     re.compile(
         r"\b" + NUM_TOKEN + SEP
         + r"(?:filed\s+USPTO\s+(?:patent\s+)?applications?|USPTO\s+(?:provisional\s+|patent\s+)?applications?|"
+        r"USPTO\s+(?:provisional\s+)?filings?|provisional\s+filings?|"
         r"patents?\s+pending|provisional\s+(?:patent\s+)?applications?|patent\s+applications?)\b",
         re.I,
     ),
+    re.compile(r"\bShowing all\s+" + NUM_TOKEN + r"\s+applications\b", re.I),
+    re.compile(r"\ball\s+" + NUM_TOKEN + r"\s+filings\b", re.I),
+    re.compile(r"\bAll\s+" + NUM_TOKEN + r"\s+USPTO\s+provisional\b", re.I),
+    re.compile(r"·\s*" + NUM_TOKEN + r"\s+filings\s+·", re.I),
     re.compile(r"\bAll\s+" + NUM_TOKEN + r",\s+grouped\s+by\s+primary\s+function\b", re.I),
     re.compile(r'data-scale-uspto-applications="' + NUM_TOKEN + r'"', re.I),
 ]
@@ -117,6 +122,9 @@ FAMILY_PATTERNS = [
         re.I,
     ),
     re.compile(r'data-scale-uspto-families="' + NUM_TOKEN + r'"', re.I),
+    re.compile(r"\b" + NUM_TOKEN + r"(?:\s+[A-Za-z]+){0,2}\s+patent families\b", re.I),
+    re.compile(r"filings\s+·\s*" + NUM_TOKEN + r"\s+families\b", re.I),
+    re.compile(r"\(\s*" + NUM_TOKEN + r"\s+families\s*\)", re.I),
 ]
 
 APP_RE = re.compile(r"\b(\d{2}/\d{3},\d{3})\b")
@@ -247,19 +255,19 @@ def target_files():
             continue
         if rel == "":
             for p in sorted(base.iterdir()):
-                if p.is_file() and p.suffix in (".html", ".md") and p not in seen:
+                if p.is_file() and p.suffix in (".html", ".js", ".md") and p not in seen:
                     seen.add(p)
                     yield p
             continue
         for dirpath, dirnames, filenames in os.walk(base):
             dirnames[:] = sorted(d for d in dirnames if d not in PRUNE_DIRS)
             for name in sorted(filenames):
-                if name.endswith(".html") or name.endswith(".md"):
+                if name.endswith(".html") or name.endswith(".js") or name.endswith(".md"):
                     p = Path(dirpath) / name
                     if p not in seen:
                         seen.add(p)
                         yield p
-    for extra in ("llms.txt", "_config.yml", "sitemap.xml", "AI_Governance_Profile_Content.md"):
+    for extra in ("llms.txt", "_config.yml", "sitemap.xml", "script.js", "AI_Governance_Profile_Content.md"):
         p = ROOT / extra
         if p.is_file() and p not in seen:
             seen.add(p)
@@ -320,6 +328,40 @@ def plan_line(line, n_apps, n_families):
         new = new[:start] + repl + new[end:]
         changes.append((old, repl, kind, val, exp, snippet))
     return new, changes, hits
+
+
+CHIP_RE = re.compile(r'(<span class="patent-chip__n">)(\d+)(</span>)')
+
+
+def check_and_sync_chips(index_path, areas, n_apps, write_mode):
+    """Keep the patents filter chips equal to the enumerated area counts."""
+    text = index_path.read_text(encoding="utf-8", errors="replace")
+    found = list(CHIP_RE.finditer(text))
+    expected = [n_apps] + [len(a["apps"]) for a in areas]
+    problems = []
+    rel = str(index_path.relative_to(ROOT))
+    if len(found) != len(expected):
+        problems.append(
+            f"{rel}: {len(found)} patent-count chips, "
+            f"{len(expected)} expected (all areas plus one chip per area)"
+        )
+        return problems, 0
+    mismatches = []
+    for m, exp in zip(found, expected):
+        got = int(m.group(2))
+        if got != exp:
+            mismatches.append((m, got, exp))
+    if not mismatches:
+        return [], 0
+    if not write_mode:
+        for _, got, exp in mismatches:
+            problems.append(f"{rel}: patent chip says {got}, canonical count is {exp}")
+        return problems, 0
+    new = text
+    for m, _, exp in reversed(mismatches):
+        new = new[:m.start(2)] + str(exp) + new[m.end(2):]
+    index_path.write_text(new, encoding="utf-8")
+    return [], len(mismatches)
 
 
 def check_and_sync_jsonld_areas(index_path, areas, write_mode):
@@ -758,6 +800,11 @@ def main():
         problems.extend(pj_probs)
         surface_hits.extend(pj_hits)
         total_written += pj_written
+        chip_probs, chip_written = check_and_sync_chips(
+            index, truth_info["areas"], truth, args.write
+        )
+        problems.extend(chip_probs)
+        total_written += chip_written
 
     # Resumes DOCX and PDF
     r_probs, r_hits, r_written = check_and_sync_resumes(truth, n_families, args.write)
