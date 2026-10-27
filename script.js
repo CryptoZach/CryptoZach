@@ -7438,21 +7438,21 @@
   var PID_SCENARIOS = {
     regulatory: {
       label: 'Regulatory withdrawal (sustained)',
-      baseRatio: 3.19, baseCI: [1.32, 5.34], baseStaticCV: 0.307, basePidCV: 0.096, baseStaticN: 7138, basePidN: 8343,
-      opRatio: 6.41, opCI: [4.14, 9.46], opStaticCV: 0.513, opPidCV: 0.080, opStaticN: 4558, opPidN: 8667,
-      delta: '+3.22x', deltaSub: '95% CI [+0.10x, +6.85x] · Widens under sustained withdrawal'
+      baseRatio: 3.19, baseCI: [1.32, 5.34], baseStaticCV: 0.307, basePidCV: 0.096, baseStaticN: 10658, basePidN: 10368,
+      opRatio: 6.41, opCI: [4.14, 9.46], opStaticCV: 0.513, opPidCV: 0.080, opStaticN: 8821, opPidN: 10585,
+      delta: '+3.22', deltaSub: '95% CI [+0.10, +6.85] · Widens under sustained withdrawal (significant only without correction for multiple comparisons)'
     },
     competitor: {
       label: 'Competitor shock (one-off month 18)',
-      baseRatio: 5.53, baseCI: [3.16, 8.21], baseStaticCV: 0.520, basePidCV: 0.094, baseStaticN: 5471, basePidN: 8827,
-      opRatio: 5.37, opCI: [3.51, 7.67], opStaticCV: 0.459, opPidCV: 0.085, opStaticN: 4722, opPidN: 9389,
-      delta: '-0.16x', deltaSub: '95% CI [-3.47x, +2.83x] · Null change (controller already absorbs shock)'
+      baseRatio: 5.53, baseCI: [3.65, 8.36], baseStaticCV: 0.518, basePidCV: 0.094, baseStaticN: 8633, basePidN: 10088,
+      opRatio: 5.37, opCI: [3.53, 7.65], opStaticCV: 0.456, opPidCV: 0.085, opStaticN: 8957, opPidN: 10234,
+      delta: '-0.16', deltaSub: '95% CI [-3.47, +2.83] · No detectable change (controller already absorbs shock)'
     },
     bear: {
       label: 'Bear market (prolonged price contraction)',
-      baseRatio: 4.34, baseCI: [2.72, 6.23], baseStaticCV: 0.371, basePidCV: 0.085, baseStaticN: 6683, basePidN: 8741,
-      opRatio: 4.95, opCI: [3.31, 7.02], opStaticCV: 0.443, opPidCV: 0.089, opStaticN: 4912, opPidN: 8914,
-      delta: '+0.61x', deltaSub: '95% CI [-1.84x, +3.12x] · Tight tracking preserved in both arms'
+      baseRatio: 4.34, baseCI: [3.12, 6.58], baseStaticCV: 0.962, basePidCV: 0.222, baseStaticN: 3137, basePidN: 6604,
+      opRatio: 4.95, opCI: [3.60, 7.42], opStaticCV: 0.988, opPidCV: 0.199, opStaticN: 4142, opPidN: 6690,
+      delta: '+0.61', deltaSub: '95% CI [-1.96, +3.39] · No detectable change; static emission disperses most in this scenario (CV 0.96 to 0.99)'
     }
   };
 
@@ -7584,7 +7584,7 @@
 
       if(!pidSvg) return;
       var W = 880, H = 260, padL = 190, padR = 90, barW = W - padL - padR;
-      var maxCV = 0.60;
+      var maxCV = 1.00;
       function wOf(cv){ return Math.max(4, (cv / maxCV) * barW); }
 
       var rows = [
@@ -7601,7 +7601,9 @@
         svg += '<text x="' + (padL - 12) + '" y="' + (y + 18) + '" text-anchor="end" font-size="12.5" font-weight="600" fill="currentColor">' + r.label + '</text>';
         svg += '<rect x="' + padL + '" y="' + y + '" width="' + barW + '" height="26" rx="4" fill="currentColor" fill-opacity="0.06"/>';
         svg += '<rect x="' + padL + '" y="' + y + '" width="' + bw + '" height="26" rx="4" fill="' + r.color + '"/>';
-        svg += '<text x="' + (padL + parseFloat(bw) + 10) + '" y="' + (y + 18) + '" font-size="12" font-weight="600" fill="currentColor">CV ' + r.cv.toFixed(3) + ' (mean N = ' + r.n.toLocaleString() + ')</text>';
+        var lx = padL + parseFloat(bw) + 10, anchor = 'start', lfill = 'currentColor';
+        if(lx + 180 > W){ lx = padL + parseFloat(bw) - 8; anchor = 'end'; lfill = '#ffffff'; }
+        svg += '<text x="' + lx + '" y="' + (y + 18) + '" text-anchor="' + anchor + '" font-size="12" font-weight="600" fill="' + lfill + '">CV ' + r.cv.toFixed(3) + ' (mean N = ' + r.n.toLocaleString() + ')</text>';
       });
 
       pidSvg.innerHTML = svg;
@@ -8448,10 +8450,10 @@
   /* Exact 8-product collateral eligibility & operator CLII scores from Sections 3, 7.2, and 7.3 */
   var A3_PRODUCTS = [
     { name: 'USDC (Circle)', clii: 0.92, published: 0.777, rolling3y: 0.777, mechanical: 0.923, tier: 'A', tier3y: 'A', tierMech: 'A', limiter: 'Single redemption path; 10.4% SVB DEX depeg' },
-    { name: 'PYUSD (Paxos)', clii: 0.83, published: 0.753, rolling3y: 0.753, mechanical: 0.859, tier: 'A', tier3y: 'A', tierMech: 'A', limiter: 'Absolute secondary depth; Oct 2025 overmint test' },
+    { name: 'PYUSD (Paxos)', clii: null, published: 0.753, rolling3y: 0.753, mechanical: 0.859, tier: 'A', tier3y: 'A', tierMech: 'A', limiter: 'Absolute secondary depth; Oct 2025 overmint test' },
     { name: 'USDS (Sky / Maker)', clii: 0.15, published: 0.657, rolling3y: 0.657, mechanical: 0.637, tier: 'B', tier3y: 'B', tierMech: 'B', limiter: 'USDC contagion via PSM; on-chain data only' },
     { name: 'USDT (Tether)', clii: 0.52, published: 0.657, rolling3y: 0.800, mechanical: 0.674, tier: 'B', tier3y: 'A', tierMech: 'B', limiter: '42.7% historical 2018 depeg (0.80 Tier A on 3y window)' },
-    { name: 'USDe (Ethena)', clii: 0.35, published: 0.604, rolling3y: 0.604, mechanical: 0.577, tier: 'B', tier3y: 'B', tierMech: 'C', limiter: 'No instant fiat redemption; CEX basis counterparty' },
+    { name: 'USDe (Ethena)', clii: null, published: 0.604, rolling3y: 0.604, mechanical: 0.577, tier: 'B', tier3y: 'B', tierMech: 'C', limiter: 'No instant fiat redemption; CEX basis counterparty' },
     { name: 'DAI (MakerDAO)', clii: 0.15, published: 0.589, rolling3y: 0.589, mechanical: 0.575, tier: 'C', tier3y: 'C', tierMech: 'C', limiter: 'Hit $0.89 during SVB via $4.1B USDC PSM exposure' },
     { name: 'USDG (Paxos MAS)', clii: 0.83, published: 0.495, rolling3y: 0.495, mechanical: 0.552, tier: 'C', tier3y: 'C', tierMech: 'C', limiter: 'Near-zero DEX depth; single banking partner (DBS)' },
     { name: 'OUSG (Ondo)', clii: 0.61, published: 0.295, rolling3y: 0.295, mechanical: 0.288, tier: 'D', tier3y: 'D', tierMech: 'D', limiter: 'T+1/T+3 KYC-gated; Circle BUIDL pool dependency' }
@@ -8554,15 +8556,16 @@
         var val = r[curSpec] || 0;
         var tier = curSpec === 'rolling3y' ? r.tier3y : (curSpec === 'mechanical' ? r.tierMech : r.tier);
         var bw = Math.max(4, xOf(val) - padL).toFixed(1);
-        var cx = xOf(r.clii).toFixed(1);
+        var hasClii = typeof r.clii === 'number';
+        var cx = hasClii ? xOf(r.clii).toFixed(1) : null;
         var col = tierCol(tier);
 
         svg += '<text x="' + (padL - 10) + '" y="' + (y + 16) + '" text-anchor="end" font-size="12" font-weight="600" fill="currentColor">' + r.name + '</text>';
         svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + plotW + '" height="16" rx="4" fill="currentColor" fill-opacity="0.05"/>';
         svg += '<rect x="' + padL + '" y="' + (y + 4) + '" width="' + bw + '" height="16" rx="4" fill="' + col + '" fill-opacity="0.82"/>';
-        svg += '<circle cx="' + cx + '" cy="' + (y + 12) + '" r="5" fill="var(--bg)" stroke="currentColor" stroke-width="2.2"/>';
+        if(hasClii) svg += '<circle cx="' + cx + '" cy="' + (y + 12) + '" r="5" fill="var(--bg)" stroke="currentColor" stroke-width="2.2"/>';
 
-        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 16) + '" font-size="11" fill="currentColor"><tspan font-weight="700">' + val.toFixed(3) + ' (Tier ' + tier + ')</tspan> \u00b7 CLII ' + r.clii.toFixed(2) + '</text>';
+        svg += '<text x="' + (W - padR + 10) + '" y="' + (y + 16) + '" font-size="11" fill="currentColor"><tspan font-weight="700">' + val.toFixed(3) + ' (Tier ' + tier + ')</tspan> \u00b7 ' + (hasClii ? 'CLII ' + r.clii.toFixed(2) : 'CLII not scored') + '</text>';
       });
 
       eligSvg.innerHTML = svg;
@@ -8683,11 +8686,11 @@
       scale: '$583,430 / 10.06M tx',
       scaleSub: 'Cross-chain July 2026 corrected total; registry covers 92.3% of Base EIP-3009 authorizations',
       rows: [
-        { name: 'Coinbase CDP', countPct: 78.5, valPct: 24.1 },
-        { name: 'Meridian (mrdn proxy)', countPct: 0.4, valPct: 62.6 },
-        { name: 'Fluora / Fluxa', countPct: 14.2, valPct: 7.4 },
-        { name: 'payAI & Relai', countPct: 5.1, valPct: 4.3 },
-        { name: 'All other facilitators', countPct: 1.8, valPct: 1.6 }
+        { name: 'Coinbase CDP', countPct: 78.5, valPct: 27.3 },
+        { name: 'Meridian (mrdn proxy)', countPct: 0.2, valPct: 62.6 },
+        { name: 'fluxa', countPct: 18.8, valPct: 5.7 },
+        { name: 'payAI', countPct: 0.9, valPct: 0.7 },
+        { name: 'All other facilitators (incl. relai)', countPct: 1.6, valPct: 3.7 }
       ]
     },
     solana_jul: {
@@ -8698,22 +8701,23 @@
       scale: '24 Solana fee payers',
       scaleSub: 'Exact-SVM SPL TransferChecked with memo nonce; organic May cardinality 10.1 events/buyer',
       rows: [
-        { name: 'Dexter', countPct: 52.2, valPct: 16.5 },
-        { name: 'payAI', countPct: 14.8, valPct: 56.2 },
-        { name: 'Coinbase CDP', countPct: 28.4, valPct: 19.8 },
-        { name: 'Relai & Corbits', countPct: 4.6, valPct: 7.5 }
+        { name: 'Dexter', countPct: 52.2, valPct: 19.6 },
+        { name: 'payAI', countPct: 34.7, valPct: 56.2 },
+        { name: 'Coinbase CDP', countPct: 12.0, valPct: 11.5 },
+        { name: 'relai', countPct: 0.9, valPct: 12.4 },
+        { name: 'cascade', countPct: 0.2, valPct: 0.2 }
       ]
     },
     polygon_jul: {
-      count: 'Single-operator (~99.5%)',
+      count: 'Single operator (over 99.9%)',
       countSub: 'Official Polygon Facilitator (24-address rotating fleet) generated 5.61M July payments (55.8% of all x402 counts)',
       val: '52 buyer wallets',
       valSub: 'Under a public $1M gas-rebate program (687,453 POL funded); 52 wallets recirculate seeded USDC at ~$0.025/tx',
       scale: '15.88% of Polygon USDC tx',
       scaleSub: 'Subsidized fleet alone accounts for ~1 in 6 Polygon USDC transfer events, distorting chain-level stats',
       rows: [
-        { name: 'Polygon Facilitator (24-addr fleet)', countPct: 99.5, valPct: 99.2 },
-        { name: 'All other Polygon facilitators', countPct: 0.5, valPct: 0.8 }
+        { name: 'Polygon Facilitator (24-addr fleet)', countPct: 100.0, valPct: 100.0 },
+        { name: 'All other Polygon facilitators (hundreds of payments, tens of dollars a month)', countPct: 0.0, valPct: 0.0 }
       ]
     },
     base_may: {
@@ -8722,7 +8726,7 @@
       val: 'HHI 4,040 \u00b7 Meridian 57.2%',
       valSub: 'Corrected from $1,030,242 raw (HHI 5,621) to $652,882 after removing Meridian 2-hop double-count',
       scale: '$0.07 vs $33.86 avg tx',
-      scaleSub: 'Coinbase CDP averages $0.07/payment across 110,350 buyers; Meridian averages $33.86 across 17 buyers',
+      scaleSub: 'Coinbase CDP averages $0.07/payment across 84,664 of 110,766 Base buyers; Meridian averages $33.86 across 17 buyers',
       rows: [
         { name: 'coinbase (CDP)', countPct: 75.6, valPct: 25.8 },
         { name: 'mrdn (Meridian)', countPct: 0.4, valPct: 57.2 },
@@ -8957,7 +8961,7 @@
     { name: 'Livepeer (LPT)', arch: 'direct', cat: 'DeVIN', sink: 'Direct ETH fee', s2r: 0.010, s2rTxt: '~0 (ETH fee routing)', demHHI: '0.31 (Top-2 75%)', govHHI: '0.199 (0.033 unif.)' },
     { name: 'GEODNET (GEOD)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Foundation buy-burn', s2r: 0.219, s2rTxt: '0.219 (52.5% Oct peak)', demHHI: 'Off-chain (treasury signer)', govHHI: '0.14 Polygon (0.061 PCA)' },
     { name: 'Hivemapper (HONEY)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Single relayer burn', s2r: 0.183, s2rTxt: '0.183 (Feb 2026)', demHHI: 'Off-axis (96% 1 relayer)', govHHI: '0.020 post-PCA' },
-    { name: 'DIMO (DIMO)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Prepaid DCX credit', s2r: 0.350, s2rTxt: '4.24 1-mo license spike', demHHI: 'Off-axis (~100 credit wallets)', govHHI: '0.025 post-PCA (0.305 raw)' },
+    { name: 'DIMO (DIMO)', arch: 'intermediated', cat: 'GeoDePIN', sink: 'Prepaid DCX credit', s2r: null, s2rTxt: 'Not reported (bridge transfers)', demHHI: 'Unmeasured (series is bridge traffic)', govHHI: '0.025 post-PCA (0.305 raw)' },
     { name: 'Filecoin (FIL)', arch: 'low', cat: 'DeVIN', sink: 'Base fee + collateral', s2r: 0.045, s2rTxt: '~0.045 (0.14-0.41 w/ lock)', demHHI: 'Unmeasured', govHHI: '0.022 post-PCA' },
     { name: 'Render (RENDER)', arch: 'low', cat: 'DeVIN', sink: 'BME fee burn', s2r: 0.020, s2rTxt: 'Low (DeVIN benchmark)', demHHI: 'Unmeasured', govHHI: '0.027 post-PCA' },
     { name: 'WeatherXM (WXM)', arch: 'low', cat: 'GeoDePIN', sink: 'Subscription burn', s2r: 0.010, s2rTxt: 'Active (volume small)', demHHI: 'Unmeasured', govHHI: '0.148 post-PCA' },
@@ -9400,13 +9404,13 @@
         }).join('');
       } else if(curMacro === 'mbs'){
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Quantitative tightening (QT) trace</span><span class="b4-stat__val">48.18 (CV = 29.80)</span><span class="b4-stat__sub">Strongest cointegration regime as reserve spread widens</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Full-sample MBS trace (157 weeks)</span><span class="b4-stat__val">30.68 (CV = 29.80)</span><span class="b4-stat__sub">Clears 95% threshold across Feb 2023 to Jan 2026</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Easing regime trace &amp; level r</span><span class="b4-stat__val">17.71 (r = -0.98)</span><span class="b4-stat__sub">Supply nearly doubled ($162B to $305B) after Sep 2024 rate cut</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Tightening subsample (T = 85)</span><span class="b4-stat__val">p = 0.031</span><span class="b4-stat__sub">Cointegration holds under the conditional null (securities held outright)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Easing subsample (T = 72)</span><span class="b4-stat__val">p = 0.048 (marginal)</span><span class="b4-stat__sub">The relation holds in both regimes; the regime contrast in earlier drafts is withdrawn</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Easing level correlation</span><span class="b4-stat__val">r = -0.98</span><span class="b4-stat__sub">Supply nearly doubled ($162B to $305B) after Sep 2024 rate cut</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Pre-cut 180d rolling correlation</span><span class="b4-stat__val">+0.06</span><span class="b4-stat__sub">Near-zero bivariate correlation during late tightening</span></div>';
 
         var mbsRows = [
-          { label: 'Quantitative tightening regime (MBS specification)', val: 48.18, max: 55, badge: 'Trace 48.18 (95% CV = 29.80)', note: 'High Treasury bill rates widen issuer reserve carry; strongest equilibrium tie' },
+          { label: 'MBS full sample, as published in earlier drafts', val: 30.68, max: 55, badge: 'Trace 48.18 (95% CV = 29.80)', note: 'High Treasury bill rates widen issuer reserve carry; strongest equilibrium tie' },
           { label: 'Full 157-week sample (Feb 2023 to Jan 2026)', val: 30.68, max: 55, badge: 'Trace 30.68 (95% CV = 29.80)', note: 'Spans both tightening and post-September 2024 easing phases' },
           { label: '95% Johansen trace critical value (MBS system)', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'Standard 5% significance threshold for rank-0 test' },
           { label: 'Easing regime (post-September 2024 rate cuts)', val: 17.71, max: 55, badge: 'Trace 17.71 | Level r = -0.98', note: 'Lower T-bill yields compress gap against DeFi lending rates; aggregate supply expanded from $162B to $305B' }
@@ -9422,7 +9426,7 @@
       } else {
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Yield-spread Granger causality</span><span class="b4-stat__val">F = 11.30 (p = 0.001)</span><span class="b4-stat__sub">3m T-bill minus on-chain lending rate (Compound / Aave) forecasts supply growth</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">26-week variance share (FEVD)</span><span class="b4-stat__val">13.9% MBS / 2.2% Outright</span><span class="b4-stat__sub">5-week smoothed equilibrium adjustment half-life</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">26-week variance share (FEVD)</span><span class="b4-stat__val">2.2% (securities held outright)</span><span class="b4-stat__sub">5-week smoothed equilibrium adjustment half-life</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">25 FOMC meetings event study</span><span class="b4-stat__val">Null (p = 0.092 adj.)</span><span class="b4-stat__sub">No announcement effect survives Bonferroni correction</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Issuer bank-deposit recycling</span><span class="b4-stat__val">4% to 100%</span><span class="b4-stat__sub">Tether ~4%, Circle ~14%, Gemini ~100% held in bank deposits</span></div>';
 
@@ -9570,7 +9574,7 @@
       { id: 'J1', name: 'US registered fund (1940 Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'ICA s.17(f) custody, s.18(f)(1) priority, Ch.15, Rule 2a-7/22e-3, Reserve Primary 99.1c recovery' },
       { id: 'J7', name: 'Bermuda (DABA / BMA) [USYC issuer]', pass: 3, part: 4, fail: 0, verdict: 'PARTIAL (3 Pass, 4 Partial)', note: 'DABA s.18(4) statutory trust + 2025 Custody Rules; dual-layer split with Cayman fund (J6)' },
       { id: 'J2', name: 'US bank deposit (FDI Act) [JPMD]', pass: 4, part: 1, fail: 2, verdict: 'PARTIAL (Claim-side substitute)', note: 'D2/D4/D6/D7 PASS (12 USC 1821(d)(11) depositor preference); D1/D5 FAIL* structurally inapplicable' },
-      { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (Re-score trigger July 2026)', note: 'D3 Ch.15 & D5 23 NYCRR 200.9 PASS; GENIUS s.10(c)/s.11 enacted but dormant until effective date' },
+      { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (re-score when GENIUS takes effect on January 18, 2027)', note: 'D3 Ch.15 & D5 23 NYCRR 200.9 PASS; GENIUS s.10(c)/s.11 enacted but dormant until effective date' },
       { id: 'J9', name: 'Singapore (PSA / MAS / IRDA) [USDG]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (PSR reg 18B in force)', note: 'D3 IRDA s.252 & D5 reg 18C PASS; MAS SCS final framework unlegislated' },
       { id: 'J4', name: 'Delaware LP / UCC Art. 9 [OUSG, USDY]', pass: 2, part: 4, fail: 1, verdict: 'PARTIAL (Note) / AMBIGUOUS (LP)', note: 'D2/D3 PASS; D4 FAIL (no product statute); D5 Partial(+) on UCC 9-322 note backstop, LP fails' },
       { id: 'J6', name: 'Cayman fund (CIMA / Companies Act) [USYC fund]', pass: 0, part: 7, fail: 0, verdict: 'AMBIGUOUS (0 Pass, 7 Partial)', note: 'CIMA Segregation Rule 5.2/5.5; s.37(7) redeemed-vs-unredeemed rank split (Primeo / Herald)' },
@@ -10148,7 +10152,7 @@
         stress2am: '24/7 interbank settlement across accepting institutions',
         rows: [
           { q: 'What the holder owns', a: 'A bank deposit recorded on a ledger other banks can accept.', note: 'It is built to be fungible across institutions. JPMD is the example.' },
-          { q: 'If the issuer fails', a: 'Depositor preference if the issuing bank fails. On the MVEP scorecard, JPMD is Indeterminate: 3.7 out of 5.', note: 'That 3.7 is a diligence grade on a 0-to-5 scale. JPMD is the only product in the 14-product sample that clears the rights-parity test.' },
+          { q: 'If the issuer fails', a: 'Depositor preference if the issuing bank fails. On the MVEP scorecard, JPMD grades Indeterminate on legal and economic equivalence (3.7 each) and Non-Equivalent on operational equivalence (3.0).', note: 'Strength scores run from 1.0 to 5.0. JPMD holds the only Partial on rights parity (Category 1) in the 14-product sample.' },
           { q: 'When banks are closed', a: 'Can settle around the clock among banks that accept the rail.', note: 'The weekend question is which banks have agreed to take it.' },
           { q: 'Can another institution settle it', a: 'Yes, at banks that have agreed to take it. The path being built includes JPMorgan, DBS, and BNY.', note: 'If one token becomes the default, settlement can concentrate in one bank. Several accepted tokens would be a network instead.' },
           { q: 'Does the holder receive the yield', a: 'The design answers who else will settle the deposit.', note: 'Interest on reserves stays its own question, beside which banks will accept the token.' }
@@ -10204,9 +10208,9 @@
         primaryGate: 'Tokenization Infrastructure Map + MVEP Cat 2, 3 & 8',
         focus: 'Transfer-agent single point of failure, corporate actions, and DTC vs on-chain books',
         steps: [
-          { step: '1. Classify', pct: 100, tool: 'Tokenization Infrastructure Map (Three Strategies)', action: 'Classify as Strategy 1 (Nasdaq-DTC CSD-native), Strategy 2 (ICE-NYSE venue), or Strategy 3 (Securitize-Broadridge).' },
+          { step: '1. Classify', pct: 100, tool: 'Tokenization Infrastructure Map (Three Strategies)', action: 'Classify as Strategy 1 (Regulated Collateral Circuit), Strategy 2 (Multi-Issuer Yield Stack), or Strategy 3 (Tokenized Equity Rails).' },
           { step: '2. Trace', pct: 90, tool: ' Investor Claim & Custody Chain Audit', action: 'Separate direct § 224 registered ownership from Jersey SPV tracker certificates (xStocks) or OTC derivatives (Robinhood).' },
-          { step: '3. Map', pct: 88, tool: '10-Entity Shared-Dependency Matrix', action: 'Audit cross-strategy chokepoints: Securitize (all 3 strategies), BNY, Cantina, and Chainlink CCIP/oracles.' },
+          { step: '3. Map', pct: 88, tool: '10-Entity Shared-Dependency Matrix', action: 'Audit cross-strategy chokepoints: Securitize (all 3 strategies), BNY, Canton Network, and Chainlink CCIP/oracles.' },
           { step: '4. Compare', pct: 82, tool: 'MVEP Cat 2 (System of Record) & Cat 3 (Reconciliation)', action: 'Verify authoritative book hierarchy when 24/7 token transfers cross ex-dividend, split, or proxy-record cutoffs.' },
           { step: '5. Stress', pct: 80, tool: 'Shared-Operator Outage & Off-Hours Drift Simulator', action: 'Test a single-operator transfer-agent halt or weekend price divergence against closed cash equity markets.' },
           { step: '6. Decide', pct: 74, tool: 'Settlement & Corporate-Actions Sign-Off', action: 'Require explicit loss-allocation rules for record breaks and multi-issuer deposit-token clearing (Ubyx-style).' }
@@ -10373,19 +10377,19 @@
     var classes = {
       agentic: {
         name: 'Agentic systems & x402 payment rails',
-        clii: '0.28 to 0.62 (Split by facilitator / harness)',
+        clii: 'Bottom to middle tier (split by facilitator / harness)',
         gate: 'Non-Equivalent (Cat 1, 6, 8 & 10 bind)',
         seam: 'Irreversible push-payment + unlicensed facilitator HHI (4,040 to 6,009)',
         bars: [
-          { label: 'CLII-AI D1: Regulatory licensing & supervisory perimeter', pct: 25, val: '0.25 (Unlicensed facilitator layer)', note: 'x402 facilitators broadcast EIP-3009 / SPL authorizations without money-transmitter or payment-institution licensing' },
-          { label: 'CLII-AI D3: Access gating, holds & actuator enforcement', pct: 68, val: '0.68 (Armed harness gates vs protocol irreversibility)', note: 'Fleet hard gates hold 99.56% (13,098/13,156), but once x402 settles on-chain no protocol chargeback exists' },
+          { label: 'CLII-AI D1: Regulatory licensing & supervisory perimeter', pct: 25, val: 'Bottom tier, illustrative (unlicensed facilitator layer)', note: 'x402 facilitators broadcast EIP-3009 / SPL authorizations without money-transmitter or payment-institution licensing' },
+          { label: 'CLII-AI D3: Access gating, holds & actuator enforcement', pct: 68, val: 'Middle tier, illustrative (armed harness gates vs protocol irreversibility)', note: 'Fleet hard gates hold 99.56% (13,098/13,156), but once x402 settles on-chain no protocol chargeback exists' },
           { label: 'MVEP-AI Cat 2 & 3: System of record & lease reconciliation', pct: 85, val: 'Pass on committed leases; Fail on unattributed sellers', note: 'Time-bounded git leases prevent orphan tasks; top 25 Base x402 sellers remain pseudonymous' },
           { label: 'MVEP-AI Cat 6 & CSA: Execution finality & subsidy distortion', pct: 35, val: 'Fail (36.6% proxy overcount; 144k/buyer Polygon fleet)', note: 'Requires buyer-cardinality filtering and payment-level proxy-leg deduplication before trusting volume' }
         ]
       },
       composed: {
         name: 'Composed AI products (RAG / multi-provider workflows)',
-        clii: '0.52 (Inherits weakest downstream layer)',
+        clii: 'Middle tier (inherits weakest downstream layer)',
         gate: 'Weakest-link floor across model, retriever & tool chain',
         seam: 'Confabulated citations & silent upstream model drift',
         bars: [
@@ -10397,23 +10401,23 @@
       },
       api: {
         name: 'Enterprise foundation-model APIs',
-        clii: '0.74 (High contractual & compliance posture)',
+        clii: 'Middle tier (high contractual & compliance posture)',
         gate: 'Partial (Strong SLA/SOC2; weak weight-level change control)',
         seam: 'Silent checkpoint deprecation & burst vs budget rate-limit ambiguity',
         bars: [
-          { label: 'CLII-AI D4 & D5: Compliance infrastructure & geo/sanctions screening', pct: 85, val: '0.85 (Enterprise IAM, zero-retention, OFAC)', note: 'Strong identity, audit logging, and contractual data-isolation commitments' },
-          { label: 'CLII-AI D2: Evaluation transparency & system-card disclosure', pct: 70, val: '0.70 (Pre-release evals published)', note: 'Point-in-time benchmark disclosures exist, but post-launch quantization/routing drift is rarely attested' },
+          { label: 'CLII-AI D4 & D5: Compliance infrastructure & geo/sanctions screening', pct: 85, val: 'Top tier, illustrative (enterprise IAM, zero-retention, OFAC)', note: 'Strong identity, audit logging, and contractual data-isolation commitments' },
+          { label: 'CLII-AI D2: Evaluation transparency & system-card disclosure', pct: 70, val: 'Middle tier, illustrative (pre-release evals published)', note: 'Point-in-time benchmark disclosures exist, but post-launch quantization/routing drift is rarely attested' },
           { label: 'MVEP-AI Cat 6 & 7: Exception handling & symptom disambiguation', pct: 55, val: 'Partial (Shared HTTP 429 symptom)', note: 'Burst rate limits and exhausted usage budgets emit identical errors requiring opposite fleet actions' },
           { label: 'MVEP-AI Cat 8: Pinned-version & timelock guarantees', pct: 45, val: 'Fail / Partial (Short deprecation windows)', note: 'Endpoint aliases update without on-chain-style timelocks or deterministic reproducibility' }
         ]
       },
       chat: {
         name: 'Frontier consumer / enterprise chat interfaces',
-        clii: '0.68 (High interface gating; mutable system prompts)',
+        clii: 'Middle tier (high interface gating; mutable system prompts)',
         gate: 'Non-Equivalent for autonomous production workflows',
         seam: 'Unannounced system-prompt edits & context-window truncation',
         bars: [
-          { label: 'CLII-AI D3: Interface-level safety filters & refusal guardrails', pct: 80, val: '0.80 (Strong front-end moderation)', note: 'High refusal intensity at the chat surface, analogous to interface-level compliance in CLARITY' },
+          { label: 'CLII-AI D3: Interface-level safety filters & refusal guardrails', pct: 80, val: 'Top tier, illustrative (strong front-end moderation)', note: 'High refusal intensity at the chat surface, analogous to interface-level compliance in CLARITY' },
           { label: 'MVEP-AI Cat 2: Authoritative state & transcript exportability', pct: 50, val: 'Partial (Ephemeral UI state)', note: 'Session memory is platform-bound unless exported into a digest-verified transcript archive' },
           { label: 'MVEP-AI Cat 8: System-prompt & router change notification', pct: 30, val: 'Fail (Zero timelock on UI routing)', note: 'Model routers and hidden system instructions change continuously without customer sign-off' },
           { label: 'MVEP-AI Cat 10: Programmatic operability under stress', pct: 35, val: 'Fail (Human-in-the-loop UI only)', note: 'Cannot serve as an auditable machine-to-machine execution leg' }
@@ -10421,12 +10425,12 @@
       },
       open: {
         name: 'Open-weight self-hosted deployments',
-        clii: '0.18 at release -> Operator-determined in production',
+        clii: 'Bottom tier at release; operator-determined in production',
         gate: 'Inverts DAI pattern: deterministic weights, zero issuer recourse',
         seam: 'Full operational & liability burden shifts to deploying institution',
         bars: [
           { label: 'MVEP-AI Cat 2 & 8: Weight immutability & version pinning', pct: 95, val: 'Pass (Cryptographic weight hash)', note: 'Like DAI on Cat 2/3, self-hosted open weights eliminate silent vendor checkpoint drift' },
-          { label: 'CLII-AI D1 & D3: Upstream release-point gating', pct: 18, val: '0.18 (Permissionless weight distribution)', note: 'Once weights are public, upstream freeze or revocation is structurally impossible' },
+          { label: 'CLII-AI D1 & D3: Upstream release-point gating', pct: 18, val: 'Bottom tier, illustrative (permissionless weight distribution)', note: 'Once weights are public, upstream freeze or revocation is structurally impossible' },
           { label: 'MVEP-AI Cat 5: Upstream operator insolvency or warranty recourse', pct: 10, val: 'Fail* (Structural inapplicability)', note: 'No ongoing service debtor stands behind open weights; deploying enterprise owns 100% of liability' },
           { label: 'MVEP-AI Cat 4 & 10: Local harness & actuator enforcement', pct: 80, val: 'Determined by local operating layer', note: 'Requires buyer-operated hard gates, worktree isolation, and verifier instrumentation to clear committee' }
         ]
@@ -10454,7 +10458,7 @@
       var c = classes[curCls] || classes.agentic;
       sumEl.innerHTML =
         '<div class="b4-stat"><span class="b4-stat__label">Deployment class</span><span class="b4-stat__val">' + c.name + '</span><span class="b4-stat__sub">Evaluated under CLII-AI &amp; MVEP-AI</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Indicative CLII-AI range</span><span class="b4-stat__val">' + c.clii + '</span><span class="b4-stat__sub">Operator regulatory &amp; gating intensity (0 to 1)</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Illustrative CLII-AI tier</span><span class="b4-stat__val">' + c.clii + '</span><span class="b4-stat__sub">C2 bands: bottom below 0.30, middle 0.30 to 0.75, top above 0.75; not a scored assessment</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">MVEP-AI gate posture</span><span class="b4-stat__val">' + c.gate + '</span><span class="b4-stat__sub">Non-compensatory floor across 10 categories</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Primary failure seam</span><span class="b4-stat__val">' + c.seam + '</span><span class="b4-stat__sub">Where advisory rules fail without hard gates</span></div>';
 
@@ -10813,7 +10817,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Favorable case (2025 to 2027)</span><span class="b4-stat__val">~$50B TVL (~0.03% spreads)</span><span class="b4-stat__sub">US no-action/pilot relief, ESMA DLT cap lift, sustained chain uptime</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Base planning case</span><span class="b4-stat__val">~$10B TVL</span><span class="b4-stat__sub">Gradual EU/Asia growth, cautious US stance, no major custody/oracle failures</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Adverse case</span><span class="b4-stat__val">~$1B to $2B TVL</span><span class="b4-stat__sub">Regulatory reclassification, SPV/bridge failure, or prolonged market contraction</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">US institutional evolution</span><span class="b4-stat__val">Three Strategies (2026)</span><span class="b4-stat__sub">Nasdaq-DTC CSD-native, ICE-NYSE venue, and Securitize-Broadridge</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">US institutional evolution</span><span class="b4-stat__val">Three Strategies (2026)</span><span class="b4-stat__sub">Regulated Collateral Circuit, Multi-Issuer Yield Stack, and Tokenized Equity Rails</span></div>';
         var sRows = [
           { name: 'Favorable adoption scenario (2025 to 2027 illustrative planning case)', pct: 100, val: '~$50B TVL · ~3 bps spreads', note: 'Requires US regulatory relief (subsequently advanced in 2026 SEC tokenized NMS stock conditional exemptions) and deep DeFi arbitrage' },
           { name: 'Base adoption scenario (2025 to 2027 illustrative planning case)', pct: 20, val: '~$10B TVL', note: 'Driven by European MiFID/MiCA and Asian offshore demand with steady market-maker liquidity' },
@@ -10998,7 +11002,7 @@
           liability: 'Canonical book-entry reconciliation, whitelist gating & collateral haircuts',
           tdrc: 'Infrastructure-Gated (Three Strategies institutional perimeter)',
           bars: [
-            { name: 'Transfer-agent & CSD canonical record authority (MVEP Cat 2)', pct: 95, val: 'Authoritative ownership book', note: 'Matches Strategy 1 (Nasdaq-DTC) and Strategy 3 (Securitize-Broadridge) where registered books govern' },
+            { name: 'Transfer-agent & CSD canonical record authority (MVEP Cat 2)', pct: 95, val: 'Authoritative ownership book', note: 'Matches Strategy 1 (Regulated Collateral Circuit) and Strategy 3 (Tokenized Equity Rails) where registered books govern' },
             { name: 'Collateral eligibility & clearinghouse haircut gating (CFTC 3038-0076)', pct: 88, val: 'Venue & DCO admission gate', note: 'Clearing organizations and exchanges define which tokenized instruments qualify as margin' },
             { name: 'Permissionless secondary-market composability', pct: 30, val: 'Constrained by allowlists', note: 'High institutional legibility, but whitelist transfer restrictions limit open DeFi liquidity' }
           ]
@@ -11397,12 +11401,12 @@
           url: '/resume/policy/',
           pdf: '/resumes/Zukowski_Resume_Policy.pdf?v=20261009',
           mandate: 'Central banks, regulatory agencies, clearinghouses & financial-stability teams',
-          proof: 'FRBNY Dollar Conference paper + 25 federal letters (136 recs across 9 agencies)',
+          proof: 'Paper prepared for the FRBNY Dollar Conference + 25 federal letters (136 recs across 9 agencies)',
           frameworks: 'CLII, MVEP, 3CRD, MGCPT & TDRC',
           bars: [
             { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '25 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
             { name: 'Monetary-policy transmission & gateway concentration econometrics', pct: 95, val: '$60.6T 9-chain panel · 19 gateways', note: 'Johansen cointegration under conditional randomization null, SVB/BUSD stress rotation, and CLII scoring' },
-            { name: 'Clearing, CSD & settlement-finality market structure', pct: 92, val: 'Three Strategies + Seven Dollars', note: 'Analyzes Nasdaq-DTC, ICE-NYSE, and Securitize-Broadridge strategies plus 20-regime insolvency law' }
+            { name: 'Clearing, CSD & settlement-finality market structure', pct: 92, val: 'Three Strategies + Seven Dollars', note: 'Analyzes three tokenization strategies (Regulated Collateral Circuit, Multi-Issuer Yield Stack, Tokenized Equity Rails) plus 20-regime insolvency law' }
           ]
         },
         asset: {
@@ -11537,13 +11541,13 @@
             '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">136 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 5 agencies</span></div>';
           var aRows = [
-            { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 33 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
-            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 33 recommendations', note: 'Operationalizes GENIUS Section 1033.240 freeze/block/reject capability and SVB Chow structural break (F = 7.41, p = 0.0012)' },
+            { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
+            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 25 recommendations', note: 'Operationalizes GENIUS Section 1033.240 freeze/block/reject capability and SVB Chow structural break (F = 7.41, p = 0.0012)' },
             { name: 'OCC (3 letters: AF41 PPSI MVEP, AF41 control-layer supplemental, AF55 BSA & sanctions)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (OCC-2025-0372-0057); attaches MVEP v9 manuscript to the administrative record' },
             { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + Section 3 issuance & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
             { name: 'SEC (3 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock)', pct: 50, val: '3 letters · 19 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
             { name: 'NCUA (2 letters: RIN 3133-AG10 credit-union PPSI standards + routing supplemental)', pct: 33, val: '2 letters · 11 recommendations', note: 'Completes coverage of every GENIUS-implementing agency and flags cross-agency charter-arbitrage gaps' },
-            { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 15 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
+            { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 20 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
             { name: 'Financial Stability Board (International consultation: Sound Practices for Responsible Adoption of AI)', pct: 25, val: '1 international response (All 7 Qs)', note: 'Introduces CLII-AI, MVEP-AI, and the live x402 agentic-payments settlement census to global supervisors' }
           ];
           barsEl.innerHTML = readingList(aRows);
@@ -11568,13 +11572,13 @@
         var barsEl = document.getElementById('let-cyc-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">GENIUS implementation cycle</span><span class="b4-stat__val">14 letters (78 recs)</span><span class="b4-stat__sub">Spans OCC, FDIC, FinCEN/OFAC, Treasury, and NCUA</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (21 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and Federal Reserve R-1835</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">GENIUS implementation cycle</span><span class="b4-stat__val">14 letters (76 recs)</span><span class="b4-stat__sub">Spans OCC, FDIC, FinCEN/OFAC, Treasury, and NCUA</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and Federal Reserve R-1835</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">FDIC resolution &amp; risk pricing</span><span class="b4-stat__val">3 letters (14 recs)</span><span class="b4-stat__sub">AG21 resolution plans, AG27 assessments, AG30 disclosure</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, CFTC DCOs</span></div>';
         var cRows = [
-          { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 78 recommendations', note: 'Covers PPSI chartering, reserve custody, state-similarity principles, foreign issuer Section 3 rules, and CIP/sanctions' },
-          { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Fed R-1835)', pct: 35, val: '4 letters · 21 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
+          { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 76 recommendations', note: 'Covers PPSI chartering, reserve custody, state-similarity principles, foreign issuer Section 3 rules, and CIP/sanctions' },
+          { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Fed R-1835)', pct: 35, val: '4 letters · 23 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
           { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (DSP-3, S7-2026-27, File 4-927)', pct: 30, val: '3 letters · 19 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
           { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure (AG21, AG27, AG30)', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
           { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' }
@@ -11647,7 +11651,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Section 3 DASP restriction</span><span class="b4-stat__val">July 18, 2028</span><span class="b4-stat__sub">3 years post-enactment: US platforms limited to PPSI coins</span></div>';
         var sRows = [
           { name: 'Milestone 1: July 18, 2025 (GENIUS Act Enactment, Pub. L. 119-27)', pct: 100, val: 'Completed (Month 0)', note: 'Sets federal PPSI perimeter, 1:1 liquid reserve mandate, Bankruptcy Code holder priority, and Section 4(a)(11) yield ban' },
-          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (proposals still pending)', note: 'Final rules missed the eight-month mark, so the 120-day prong falls on January 18, 2027 or later.' },
+          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (no final rule by the deadline)', note: 'No primary regulator issued a final rule by September 20, 2026, so the 120-day prong cannot fall before January 18, 2027.' },
           { name: 'Milestone 3: November 30, 2026 (Federal Reserve R-1899 & Treasury s.4(c) IFR Comment Close)', pct: 82, val: 'Active window (Month 16)', note: 'Concludes initial notice-and-comment across all primary federal payment stablecoin regulators' },
           { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: 'The 18-month prong of Section 20 sets the effective date at January 18, 2027. Final rules were still open on September 20, 2026.' },
           { name: 'Milestone 5: July 18, 2028 (Section 3 Digital Asset Service Provider Perimeter Lock)', pct: 40, val: 'Month 36 enforcement gate', note: 'Three years after enactment, DASPs may offer or sell to U.S. persons only payment stablecoins issued by qualified PPSIs or compliant foreign issuers' }
@@ -11754,7 +11758,7 @@
         { cat: 'tracka', pct: 100, name: 'Routing the Dollar replication (GitHub v43-post-conference + #a1-routing-explorer)', badge: 'SSRN 6267698 · $60.6T panel', note: '157-week 9-chain panel, 51-address Ethereum gateway registry, Johansen conditional randomization null, and SVB/BUSD scripts' },
         { cat: 'tracka', pct: 98, name: 'Minimum Viable Equivalence Pack replication (GitHub mvep-replication + #a2-mvep-explorer)', badge: 'SSRN 6363138 · 14 products · 20 regimes', note: 'Exhibit 1 scorecard, Exhibit 2 20-regime Category 5 insolvency matrix (140 primary-source cells), and Exhibit 3 rating generator' },
         { cat: 'tracka', pct: 92, name: 'Seven Dollars replication (GitHub v1.0 + #a3-dollars-explorer)', badge: 'SSRN 6483118 · 8-metric eligibility + 11-product US-holder', note: 'Collateral eligibility scoring across published, 3-year rolling, and mechanical specs plus 5-marker US-holder classification' },
-        { cat: 'tracka', pct: 86, name: 'Three Tokenization Strategies explorer (#a4-strategy-explorer)', badge: 'SSRN 6483198 · 10-entity dependency matrix', note: 'Interactive shared-operator outage simulator (Securitize, BNY, Cantina, Chainlink) and corporate-actions cutoff matrix' },
+        { cat: 'tracka', pct: 86, name: 'Three Tokenization Strategies explorer (#a4-strategy-explorer)', badge: 'SSRN 6483198 · 10-entity dependency matrix', note: 'Interactive shared-operator outage simulator (Securitize, BNY, Canton Network, Chainlink) and corporate-actions cutoff matrix' },
         { cat: 'tracka', pct: 90, name: 'Who Controls Agentic Payments? explorer (#c4-x402-explorer & #x402-memo-explorer)', badge: 'SSRN 7396241 · 138 facilitator addresses', note: 'Base, Solana, and Polygon facilitator HHI (count vs value monopolists), buyer-cardinality classifier, and Meridian 2-hop reconciliation' },
         { cat: 'trackb', pct: 100, name: 'Governance Concentration replication (GitHub v1.0.4 + #b2-gov-explorer)', badge: 'Frontiers 9:1853465 · 52 protocols', note: '133 PCA exclusions across 38 protocols, 50-protocol allocation null (r = 0.09), and 18-protocol Snapshot/Tally delegation dataset' },
         { cat: 'trackb', pct: 94, name: 'Who Burns the Tokens? replication (GitHub + #b3-burns-explorer)', badge: 'SSRN 6483619 · 34m Helium S2R + 13 protocols', note: 'Helium 34-month burn-to-emission series, Top-5 payer HHI (0.27), and 13-protocol payment-architecture observability matrix' },
@@ -11998,7 +12002,7 @@
     { cat: 'Paper', title: 'Routing the Dollar: Gateway Infrastructure & Monetary Policy Transmission', url: '/papers/routing-the-dollar/', kw: 'ssrn 6267698 frbny clii 19 gateways $60.6t svb busd cointegration trace 46.01' },
     { cat: 'Paper', title: 'Minimum Viable Equivalence Pack (MVEP): 10-Category Diligence Framework', url: '/papers/mvep/', kw: 'ssrn 6363138 14 products 20 insolvency regimes benji buidl usdc jpmd rlusd' },
     { cat: 'Paper', title: 'Seven Dollars: Comparative Framework for Dollar-Denominated Products', url: '/papers/seven-dollars/', kw: 'ssrn 6483118 collateral eligibility us holder design markers ppsi' },
-    { cat: 'Paper', title: 'Three Tokenization Strategies: Nasdaq-DTC, ICE-NYSE & Securitize', url: '/papers/three-strategies/', kw: 'ssrn 6483198 securitize dtcc broadridge corporate actions deposit tokens' },
+    { cat: 'Paper', title: 'Three Tokenization Strategies: Infrastructure Competition, Settlement Architecture, and Operational Risk', url: '/papers/three-strategies/', kw: 'ssrn 6483198 securitize dtcc broadridge corporate actions deposit tokens' },
     { cat: 'Paper', title: 'Who Controls Agentic Payments? Facilitator Concentration in x402', url: '/papers/who-controls-agentic-payments/', kw: 'ssrn 7396241 x402 base solana polygon coinbase cdp meridian dexter hhi' },
     { cat: 'Paper', title: 'Adaptive Tokenomics: PID Controllers & 240-Run MeshNet Ensemble', url: '/papers/adaptive-tokenomics/', kw: 'ssrn 6364158 pid controller meshnet 240 runs depin emissions' },
     { cat: 'Paper', title: 'Auditing Governance Concentration Beyond Token Allocation (52 Protocols)', url: '/papers/governance-concentration/', kw: 'frontiers 1853465 ssrn 6599278 52 protocols pca exclusion delegation hhi' },
@@ -12222,7 +12226,7 @@
           prereadLabel: '19-Gateway CLII Sensitivity Explorer',
           deliverables: [
             { name: '1. Five-Dimension CLII Gateway & Counterparty Scoring', pct: 96, val: '0.00 to 1.00 score', note: 'Scores licensing, reserve transparency, freeze capability, compliance infrastructure, and geographic restrictions' },
-            { name: '2. Shared-Operator Chokepoint & Outage Simulation', pct: 92, val: 'Transfer agent, custody, oracle', note: 'Maps cross-product concentration in Securitize, BNY, Ceffu, Marex, Cantina, and Chainlink CCIP' },
+            { name: '2. Shared-Operator Chokepoint & Outage Simulation', pct: 92, val: 'Transfer agent, custody, oracle', note: 'Maps cross-product concentration in Securitize, BNY, Ceffu, Marex, Canton Network, and Chainlink CCIP' },
             { name: '3. SVB & BUSD Stress-Rotation Contingency Plan', pct: 86, val: 'Weekend escape-valve routing', note: 'Models secondary liquidity retention if primary bank wires or issuer redemptions halt over a weekend' }
           ]
         },

@@ -268,6 +268,8 @@ class Model:
         for r in l["recommendations"]:
             counts[r["status"]] = counts.get(r["status"], 0) + 1
         if list(counts) == ["pending"]:
+            if l["_outcome"]["state"] == "final":
+                return f"{plural(l['rec_count'], 'recommendation')} filed; not yet assessed against the final rule"
             return f"{plural(l['rec_count'], 'recommendation')} filed; no final action yet"
         parts = [f"{n} {REC_STATUS_LABEL[s].lower()}" for s, n in counts.items() if s != "pending"]
         if counts.get("pending"):
@@ -917,7 +919,7 @@ def gen_tracker(m):
     n_final = sum(1 for r in rows if r["state"] == "final")
     n_pending = sum(1 for r in rows if r["state"] == "closed-pending")
     bits = [f"{n} rulemakings", f"{n_comm} with a program letter", f"{n_open} open for comment",
-            f"{n_pending} awaiting final action", f"{n_final} in effect"]
+            f"{n_pending} awaiting final action", f"{n_final} with a final rule"]
     out = [f'<p class="letters-meta-strip">{" &middot; ".join(esc(b) for b in bits)}</p>',
            f'<p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. Rows with a letter link to the program\'s comment; the others are listed so the implementation picture is complete. Status as of {esc(fmt_date(m.verified_on))}.</p>',
            '<div class="letters-timeline-table" role="region" aria-label="GENIUS Act rulemakings">',
