@@ -988,7 +988,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <span class="stack-step-num" aria-hidden="true">4</span>
               <div class="stack-step-body">
                 <h4 class="stack-step-title">Diagnose realized governance concentration</h4>
-                <p class="stack-step-desc"><a href="/papers/governance-concentration/"><strong>Governance-Concentration Diagnostic</strong></a>. Sector, insider retention, and delegation patterns explain post-launch concentration where initial allocation is uninformative.</p>
+                <p class="stack-step-desc"><a href="/papers/governance-concentration/"><strong>Governance-Concentration Diagnostic</strong></a>. Sector and insider retention are associated with post-launch concentration, delegation can amplify voting power beyond holdings, and initial allocation is uninformative.</p>
               </div>
             </li>
           </ol>
@@ -1031,7 +1031,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
           <h3>MVEP (Minimum Viable Equivalence Pack)</h3>
           <p class="card-eyebrow">Diligence &middot; Pre-launch entry gate</p>
           <p><strong>What it does.</strong> Tests three equivalence claims (legal, operational, economic) across ten diligence categories: Rights Parity, System of Record, Records and Reconciliation, Custody and Customer Property, Insolvency Posture, Settlement Finality, Reorganization and Exception Handling, Governance and Change Control, Disclosures, and Collateral Operability. For tokenized Treasuries, the paper identifies three liquidation paths, four constraints on path availability, and seven stress scenarios.</p>
-          <p><strong>Why it matters.</strong> Institutional adoption requires demonstrating equivalence across all three claims before launch. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
+          <p><strong>Why it matters.</strong> Under MVEP, a product is not ready for institutional adoption until it demonstrates equivalence across all three claims. MVEP is the entry gate before launch or committee approval; missing artifacts or failed tests block the gate.</p>
           <p><strong>What triggers re-evaluation.</strong> A missing artifact, a failed test, a failure sequence with no documented recovery plan, or an unclear loss-absorption path.</p>
           <p class="framework-card-action"><a class="action secondary" href="/papers/mvep/">Open Minimum Viable Equivalence Pack <span aria-hidden="true">→</span></a></p>
         </article>
@@ -1378,7 +1378,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
         <article class="card card--polished card--accent-b" id="dollar-v3-regime-classifier" style="grid-column: span 12;">
           <h3>Tokenized Dollar Regime Classifier (TDRC)</h3>
           <p class="card-eyebrow">Market structure &middot; Equilibrium classification</p>
-          <p><strong>What it does.</strong> Classifies who keeps the income on a U.S. tokenized dollar. <strong>ControlScore</strong> (0 to 6) measures the app layer: how much flow must pass an app with a legal duty, how far automatic sweeps and yield wrappers have spread, and how routine it is to hold or freeze a transfer. <strong>IssuerScore</strong> (0 to 6) measures the issuer: how concentrated the settlement dollar is, how much of the interest on reserves the issuer keeps, and whether the issuer still decides who can mint and redeem. Each score is three parts, and each part runs from 0 to 2. The reading uses a three-month average, and weekly readings in a stress. Control-dominant means ControlScore is at least 4 and leads IssuerScore by at least 2. Issuer-dominant is the same test in the other direction. Otherwise neither side leads.</p>
+          <p><strong>What it does.</strong> Classifies the U.S. tokenized-dollar market by which layer dominates, in income and in control: the apps, wallets, and routers users go through, or the issuers. <strong>ControlScore</strong> (0 to 6) measures the app layer: how much flow must pass an app with a legal duty, how far automatic sweeps and yield wrappers have spread, and how routine it is to hold or freeze a transfer. <strong>IssuerScore</strong> (0 to 6) measures the issuer: how concentrated the settlement dollar is, how much of the interest on reserves the issuer keeps, and whether the issuer still decides who can mint and redeem. Each score is three parts, and each part runs from 0 to 2. The reading uses a three-month average, and weekly readings in a stress. Control-dominant means ControlScore is at least 4 and leads IssuerScore by at least 2. Issuer-dominant is the same test in the other direction. Otherwise neither side leads.</p>
           <p><strong>Why it matters.</strong> It names who keeps the income and who carries the compliance duty, and whether policy is moving that split. Safety and solvency sit outside this score. CLII, on its own 0-to-1 scale, scores how regulated a gateway is.</p>
           <p><strong>What triggers re-evaluation.</strong> Three or more of six leading policy signposts moving the same direction in a quarter (GENIUS implementation rulemaking; CBDC (central bank digital currency) posture; bank deposit-token launches; offshore perimeter tightening; committee leadership plus markup calendar changes; SEC-CFTC 2026 Joint Final Rule on Crypto Taxonomy), or two or more component scores flipping in a quarter.</p>
 
@@ -1403,7 +1403,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
                   </div>
                   <div>
                     <dt>The call</dt>
-                    <dd>Control-dominant when ControlScore is at least 4 and leads IssuerScore by at least 2. Issuer-dominant is the same test the other way. Otherwise the reading is split: both scores stay within 2, or both sit below 4. A higher score means that layer holds more of the income and the operating rules.</dd>
+                    <dd>Control-dominant when ControlScore is at least 4 and leads IssuerScore by at least 2. Issuer-dominant is the same test the other way. Otherwise the reading is split: the higher score is below 4, or the lead is less than 2. A higher score means that layer holds more of the income and the operating rules.</dd>
                   </div>
                 </dl>
               </div>
@@ -1472,7 +1472,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
     <section class="reveal" id="frameworks-in-rulemaking" aria-labelledby="rulemaking-title">
       <div class="section-title">
         <h2 id="rulemaking-title">Frameworks in active rulemaking</h2>
-        <p>25 federal comment letters apply these frameworks to live OCC, FDIC, FinCEN, Treasury, NCUA, SEC, Board of Governors, CFTC, and joint banking-agency dockets. Each letter ties a framework primitive to a specific regulatory question: <strong>MVEP</strong> (Minimum Viable Equivalence Pack, ten-category product diligence standard), <strong>CLII</strong> (Control Layer Intensity Index, 0-to-1 gateway regulatory intensity score), <strong>MGCPT</strong> (MVEP-Gated Conditional Pass-Through, conditioning FDIC deposit insurance pass-through on six MVEP categories), and <strong>3CRD</strong> (Three-Category Reserve Disclosure, point-of-use customer disclosure of legal claim, reserve composition, and custody location).</p>
+        <p>Of the program&rsquo;s 25 federal comment letters, 23 apply these frameworks to live OCC, FDIC, FinCEN, Treasury, NCUA, SEC, Board of Governors, CFTC, and joint banking-agency dockets, each tying a framework primitive to a specific regulatory question: <strong>MVEP</strong> (Minimum Viable Equivalence Pack, ten-category product diligence standard), <strong>CLII</strong> (Control Layer Intensity Index, 0-to-1 gateway regulatory intensity score), <strong>MGCPT</strong> (MVEP-Gated Conditional Pass-Through, conditioning FDIC deposit insurance pass-through on six MVEP categories), and <strong>3CRD</strong> (Three-Category Reserve Disclosure, point-of-use customer disclosure of legal claim, reserve composition, and custody location). The table lists 16 of the principal letters filed through October 5, 2026.</p>
       </div>
       <div class="structure-table-wrap" role="region" aria-label="Federal comment letter program">
         <table class="agenda-table">
@@ -1562,7 +1562,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             <tr>
               <td><a href="/letters/fdic-ag30-disclosure-of-information/">FDIC supervisory disclosure-of-information comment</a></td>
               <td>RIN 3064-AG30</td>
-              <td class="framework-invoked"><span class="framework-invoked-name" title="Statistical disclosure control: cell-suppression and dominance thresholds for supervisory data releases">Statistical disclosure control</span></td>
+              <td class="framework-invoked"><span class="framework-invoked-name" title="Statistical disclosure control: cell-suppression and dominance thresholds for supervisory data releases">Statistical disclosure control</span> <span class="framework-invoked-qualifier">a method, not one of the program&rsquo;s frameworks</span></td>
             </tr>
           </tbody>
         </table>
@@ -1628,9 +1628,9 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
               <span class="b4-explorer__control-label">Equivalence claim</span>
               <div class="b4-explorer__pills">
                 <button type="button" class="b4-pill is-active" data-aifw-dim="all" aria-pressed="true">All 10 categories + companion test</button>
-                <button type="button" class="b4-pill" data-aifw-dim="legal" aria-pressed="false">Legal &amp; contractual (C1, C4, C5)</button>
-                <button type="button" class="b4-pill" data-aifw-dim="operational" aria-pressed="false">Operational &amp; state integrity (C2, C3, C7, C8)</button>
-                <button type="button" class="b4-pill" data-aifw-dim="economic" aria-pressed="false">Economic &amp; execution finality (C6, C9, C10, CSA)</button>
+                <button type="button" class="b4-pill" data-aifw-dim="legal" aria-pressed="false">Legal (C1, C5; shared: C4, C9)</button>
+                <button type="button" class="b4-pill" data-aifw-dim="operational" aria-pressed="false">Operational (C2, C3, C7, C8, C10; shared: C4, C9)</button>
+                <button type="button" class="b4-pill" data-aifw-dim="economic" aria-pressed="false">Economic (C6; shared: C9)</button>
               </div>
             </div>
           </div>
@@ -1727,7 +1727,7 @@ main > section + section{margin-top:clamp(28px,3.5vw,44px);padding-top:clamp(56p
             </tr>
             <tr>
               <td><a href="#dollar-v3-regime-classifier"><strong>TDRC</strong> (Tokenized Dollar Regime Classifier)</a></td>
-              <td>Says who keeps the income on a tokenized dollar. ControlScore (0 to 6) is the app, wallet, and router. IssuerScore (0 to 6) is the company that issues the dollar and keeps the interest on its reserves.</td>
+              <td>Says which layer dominates the U.S. tokenized-dollar market, the apps or the issuers. ControlScore (0 to 6) is the app, wallet, and router. IssuerScore (0 to 6) is the company that issues the dollar and keeps the interest on its reserves.</td>
               <td><a href="/papers/dollar-v3/"><em>Dollar v3</em></a></td>
             </tr>
           </tbody>

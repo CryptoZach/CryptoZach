@@ -216,7 +216,7 @@
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
         <p class="ai-hero-support">The evidence is below: dated measurements from more than 68,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
-        <p class="ai-measured-as">Updated <time datetime="2026-10-25">2026-10-25</time>. Every figure is regenerated from its producer at each revision, and changes from prior measurements remain visible.</p>
+        <p class="ai-measured-as">Updated <time datetime="2026-10-25">2026-10-25</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
       data-scale-commits-floored="68000"
       data-scale-concurrency-p75="14"
@@ -245,8 +245,8 @@
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
         <div class="ai-proof-item" role="listitem"><strong>68,000+</strong><span>commits observed since March</span></div>
         <div class="ai-proof-item" role="listitem"><strong>14</strong><span>typical overlap; peak 61</span></div>
-        <div class="ai-proof-item" role="listitem"><strong>63,230</strong><span>advisory outcomes graded</span></div>
-        <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>199 in 200</strong><span>armed gates held</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>63,230</strong><span>warning firings tracked for repeats</span></div>
+        <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>199 in 200</strong><span>gated attempts refused</span></div>
       </div>
       <p class="ai-note ai-strip-gloss">All figures come from one operator's fleet. The measurement sections define the repeat and override rates behind these headline results.</p>
       <div class="primer-hero-ctas ai-hero-ctas" role="group" aria-label="Page actions">
@@ -352,7 +352,7 @@
       <div class="explainer">
         <h2 id="scale-title">System scale</h2>
         <p>The identity rules above, and the safeguards measured in the next sections, run inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
-        <p class="ai-note">The figures below describe that workload as measured on 2026-09-30; the comment-letter count is from 2026-10-20, the commit count is from 2026-10-25, the warning figures are from 2026-10-25, the hard-gate figures are from 2026-10-23, the skill count is from 2026-10-01, the concurrency figures are from 2026-09-28, and the pre-commit and queue figures are from 2026-09-21. Each is regenerated from its source and never manually carried forward.</p>
+        <p class="ai-note">Each figure below carries its own measurement date: commits and warnings 2026-10-25, hard gates 2026-10-23, comment letters 2026-10-20, skills 2026-10-01, shared state files 2026-09-30, concurrency 2026-09-28, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
             <p class="ai-metric-value">68,000+</p>
@@ -371,7 +371,7 @@
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">63,230</p>
-            <p class="ai-metric-label">Warning outcomes graded</p>
+            <p class="ai-metric-label">Warning firings</p>
             <p class="ai-metric-was">37 classes across 107 days</p>
           </article>
           <article class="ai-metric">
@@ -488,7 +488,7 @@
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the commits row was measured 2026-10-25, the advisory warnings row was measured 2026-10-25, the skill library row was measured 2026-10-01, the concurrency row was measured 2026-09-28, the hard-refusal row was measured 2026-10-23 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the commits row was measured 2026-10-25, the advisory warnings row was measured 2026-10-25, the skill library row was measured 2026-10-01, the concurrency row was measured 2026-09-28, the hard-gate attempts row was measured 2026-10-23 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
@@ -497,7 +497,7 @@
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">14; peak 61</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-09-28 across both hosts: median 7, typical busy overlap 14 (75th percentile), 90th percentile 21, peak 61 on 2026-09-05. The claim of 12 to 55 concurrent agents, set 2026-09-26, is supported at both ends: the typical overlap of 14 is at least 12, and the peak of 61 exceeds 55. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">63,230</td><td class="ai-how">Across 37 classes over 107 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
-                <tr><th scope="row">Hard refusals</th><td class="ai-val">13,156</td><td class="ai-how">Calls that reached an armed gate across the 12 classes that carry one, on both of the fleet's machines, through 2026-10-23. 13,098 refused, 58 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
+                <tr><th scope="row">Attempts at a hard gate</th><td class="ai-val">13,156</td><td class="ai-how">Calls that reached an armed gate across the 12 classes that carry one, on both of the fleet's machines, through 2026-10-23. 13,098 refused, 58 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">78</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
                 <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
@@ -513,10 +513,10 @@
       <div class="explainer">
         <h2 id="measurement-title">Measure whether safeguards change behavior</h2>
         <p>A warning can fire thousands of times and still have no effect. To separate activity from effectiveness, we track what happens after a workspace first sees each warning. A workspace is one agent's isolated checkout of the shared codebase.</p>
-        <p><strong>The core metric is repeat rate</strong> (called saturation inside the instrument): the share of workspaces where the same warning appears again after its first appearance. A high repeat rate shows the behavior requires an enforcing gate; a lower rate is consistent with teaching while remaining an observational association.</p>
+        <p><strong>The core metric is repeat rate</strong> (called saturation inside the instrument): the share of workspaces where the same warning appears again after its first appearance. A high repeat rate shows the warning alone is not changing the behavior; a lower rate is consistent with teaching, an observational association rather than proof of cause.</p>
         <aside class="ai-finding">
           <p class="ai-finding-label">The largest result</p>
-          <p>The warning for treating a failed command as successful generated 13,975 events, more than half of all warnings, and returned in 84% of workspaces. A trigger dashboard would make it look heavily used; outcome data showed that stopping the mistake required an armed gate.</p>
+          <p>The warning for treating a failed command as successful generated 13,975 events, more than half of all warnings, and returned in 84% of workspaces. A trigger dashboard would make it look heavily used; outcome data showed the warning alone was not stopping the mistake.</p>
         </aside>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness ai-table--advisories">
@@ -525,16 +525,16 @@
               <tr><th scope="col">What the warning caught</th><th scope="col" class="ai-num-head">Times fired</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Warning returned</th><th scope="col">What the rate suggests</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">A failed command treated as success <span class="ai-class-gloss">Instrument label: Pipe-exit misread</span></th><td class="ai-num">13,975</td><td class="ai-num">2,260</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:84%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>84%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Requires an enforcing gate</span></td></tr>
+              <tr><th scope="row">A failed command treated as success <span class="ai-class-gloss">Instrument label: Pipe-exit misread</span></th><td class="ai-num">13,975</td><td class="ai-num">2,260</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:84%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>84%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Warning alone not enough</span></td></tr>
               <tr><th scope="row">Absence claimed without a scoped search <span class="ai-class-gloss">Instrument label: Unscoped negative claim</span></th><td class="ai-num">2,271</td><td class="ai-num">1,128</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:50%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>50%</span></td><td><span class="ai-verdict ai-verdict--borderline" title="The warning still returns in about half of observed workspaces">Returns in half of workspaces</span></td></tr>
-              <tr><th scope="row">A recursive or broad delete command <span class="ai-class-gloss">Instrument label: Recursive delete; includes <code>rm -rf</code> and similar wipe paths</span></th><td class="ai-num">2,143</td><td class="ai-num">780</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:64%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>64%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Requires an enforcing gate</span></td></tr>
-              <tr><th scope="row">A running script edited in place <span class="ai-class-gloss">Instrument label: Edit running script</span></th><td class="ai-num">1,674</td><td class="ai-num">518</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:69%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>69%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Requires an enforcing gate</span></td></tr>
+              <tr><th scope="row">A recursive or broad delete command <span class="ai-class-gloss">Instrument label: Recursive delete; includes <code>rm -rf</code> and similar wipe paths</span></th><td class="ai-num">2,143</td><td class="ai-num">780</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:64%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>64%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Warning alone not enough</span></td></tr>
+              <tr><th scope="row">A running script edited in place <span class="ai-class-gloss">Instrument label: Edit running script</span></th><td class="ai-num">1,674</td><td class="ai-num">518</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:69%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>69%</span></td><td><span class="ai-verdict ai-verdict--wallpaper" title="The warning repeats in most workspaces after its first appearance">Warning alone not enough</span></td></tr>
               <tr><th scope="row">History position used as proof of deployment <span class="ai-class-gloss">Instrument label: Ancestry as landedness</span></th><td class="ai-num">994</td><td class="ai-num">679</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:32%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>32%</span></td><td><span class="ai-verdict ai-verdict--teaching" title="The warning repeats in fewer than half of observed workspaces">Consistent with teaching</span></td></tr>
               <tr><th scope="row">A delete-protection gate tested incorrectly <span class="ai-class-gloss">Instrument label: Destructive-probe check</span></th><td class="ai-num">641</td><td class="ai-num">454</td><td class="ai-num ai-num--key"><span class="ai-rate" style="--rate:29%"><span class="ai-rate-track" aria-hidden="true"><span class="ai-rate-fill"></span></span>29%</span></td><td><span class="ai-verdict ai-verdict--teaching" title="The warning repeats in fewer than half of observed workspaces">Consistent with teaching</span></td></tr>
             </tbody>
           </table>
         </div>
-        <p class="ai-note"><strong>Interpretation boundary.</strong> Repeat rates rise with observation length, so only equal spans are compared. A falling rate shows the mistake recurred less often, which is consistent with teaching alongside concurrent model upgrades, workload shifts, or companion fixes landing in the same window.</p>
+        <p class="ai-note"><strong>Interpretation boundary.</strong> Repeat rates rise with observation length, so only equal spans are compared. A falling rate shows the mistake recurred less often. That fits teaching, and fits equally a model upgrade, a workload shift, or another fix in the same window: with no control group, the data cannot separate them.</p>
         <p><strong>This result changed the architecture.</strong> Teaching controls now explain the safer action, while enforcing controls stop an action when the wrong behavior can be identified precisely. Each is measured separately.</p>
         <p>The result persisted when the observation window was held constant. Over equal windows of 595.6 hours (24.8 days) either side of 2026-08-04, re-measured on 2026-09-21, the failed-command warning moved from 81% (2,683 firings) to 87% (7,767 firings), while the unscoped-absence warning moved from 64% (606 firings) to 48% (1,078 firings). Stating the exact span makes the comparison reproducible: the instrument bounds both windows to the shorter side, so running the command later compares longer spans. Classes with fewer than 20 firings on either side remain ungraded, so a verdict appears only where there is enough traffic to read a rate.</p>
         <blockquote class="paper-thesis-line ai-thesis">
@@ -560,7 +560,7 @@
         <p><strong>Enforcement requires delivery at the point of action.</strong> A documented, loaded, or triggered rule becomes an enforcing control only when its delivery path intercepts the action and refuses or removes the unsafe choice.</p>
         <p>Two design rules follow:</p>
         <ul class="ai-rule-list">
-          <li><strong>Escalate only when the harm and the target are clear.</strong> Arming a hard gate requires both a high-repeat failure mode and an unambiguous signature for the prohibited action.</li>
+          <li><strong>Escalate only when the harm and the target are clear.</strong> Arming a hard gate requires evidence of harm and an unambiguous signature for the prohibited action; a high repeat rate alone does not qualify.</li>
           <li><strong>Measure false positives and overrides before arming.</strong> A gate that blocks valid work will train agents to bypass it or will be disabled entirely.</li>
         </ul>
         <p>The strongest control replaces the unsafe command with a helper that performs the safe action; where no such helper exists, a narrow hard gate refuses the command and logs every override.</p>
@@ -856,13 +856,13 @@
         <h2 id="not-claimed-title">Scope and validation boundaries</h2>
         <p>The operating layer runs daily in production on our fleet; cross-organization reliability requires second-environment measurement. Five boundaries define the scope of these results.</p>
         <ul class="ai-not-list">
-          <li><strong>Current access.</strong> The layer runs every day for one research program, and a product is being built from it. External access currently runs through design partnerships while public release and pricing remain in development.<span class="ai-not-cta"><a href="#work-with-us">The available ways to engage are below &rarr;</a></span></li>
-          <li><strong>External validation.</strong> Every measurement comes from one operator's fleet. Extending these findings to outside teams requires measuring transfer in a second operating environment.</li>
+          <li><strong>Current access.</strong> The layer runs every day for one research program, and a product is being built from it. Outside teams can apply for a design partnership; a public release, trial, and pricing are still in development.<span class="ai-not-cta"><a href="#work-with-us">The available ways to engage are below &rarr;</a></span></li>
+          <li><strong>External validation.</strong> Every measurement comes from one operator's fleet, the only fleet the layer runs on today. Extending these findings to outside teams requires measuring transfer in a second operating environment.</li>
           <li><strong>Technical scope.</strong> The layer coordinates agents, preserves attribution and shared-state integrity, and evaluates controls around existing foundation models.</li>
-          <li><strong>Security scope.</strong> Isolated sessions protect cooperating agents from corrupting one another's work and complement dedicated sandboxes for untrusted or hostile code.</li>
+          <li><strong>Security scope.</strong> Isolated sessions protect cooperating agents from corrupting one another's work; untrusted or hostile code still needs a dedicated sandbox and security product.</li>
           <li><strong>Generalization.</strong> The results describe this system's controls under its observed workload. Observation periods and counting rules remain attached so readers can judge how far each result should travel.</li>
         </ul>
-        <p class="ai-closing-creds"><strong>What exists today.</strong> The layer has run on our fleet since March 2026 and is measured continuously. Its architecture is covered by 46 USPTO applications across 36 families. The surrounding research program includes nine papers on SSRN, one peer-reviewed publication in <em>Frontiers in Blockchain</em>, and 25 federal regulatory comment letters.</p>
+        <p class="ai-closing-creds"><strong>What exists today.</strong> The layer has run on our fleet since March 2026 and is measured continuously. Its architecture is covered by 40 of the program&rsquo;s 46 USPTO applications (Areas 1 to 5). The surrounding research program includes nine papers on SSRN, one peer-reviewed publication in <em>Frontiers in Blockchain</em>, and 25 federal regulatory comment letters.</p>
         <p class="ai-closing-creds"><strong>The product thesis.</strong> Measuring what agents do after a safeguard fires is what separates a configured rule from a verified control.</p>
       </div>
     </section>

@@ -268,8 +268,9 @@
 
       <span class="paper-track-badge paper-track-badge--a">Track A: Stablecoin and dollar infrastructure</span>
       <div class="paper-badges">
-        <span class="badge badge-public">Public on SSRN</span>
-        <span class="badge">March 28, 2026</span>
+        <span class="badge">Dated March 28, 2026</span>
+        <span class="badge badge-public">On SSRN since April 20, 2026</span>
+        <span class="badge">Revised July 2026</span>
         <span class="badge">Working paper</span>
         <a class="badge badge-access-code" href="https://github.com/Research-Publications-and-Data/Seven-Dollars/tree/v1.0" target="_blank" rel="noopener noreferrer">Code available</a>
       </div>
@@ -455,7 +456,7 @@
         <h2>Finding 3. Contagion flows from simple to complex, and the risk migrated instead of disappearing</h2>
         <p>During SVB, USDC depegged to about $0.87. DAI depegged to about $0.89 because its Peg Stability Module (PSM), a smart contract that lets holders swap USDC for DAI at par to keep DAI pinned to the dollar, held a large USDC position, making DAI a downstream dependent of Circle's banking exposure. On March 27, 2025, Circle's instant BUIDL redemption facility experienced 23 hours of limited availability; Ondo Finance activated backup liquidity facilities during that window, evidence consistent with the redemption pool's stress propagating to OUSG through its BUIDL holdings. In both events, the direction was simple-to-complex: payment stablecoin to wrapper.</p>
         <p>Each of the seven products has since traded its SVB-era concentration for a structurally different one. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG was designed with segregation but depends on a single banking partner. OUSG diversified its underlyings but concentrated its instant-redemption path on one pool. The concentration migrated; it did not disappear. Forward risk assessment has to name the current concentration, not the last one.</p>
-        <p class="brief-what-this-means"><strong>What this means:</strong> Contagion modeling must trace upstream-to-downstream dependencies: a payment stablecoin with a reserve concentration is the upstream node, and the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> Contagion flows from simple payment stablecoins to complex products, the opposite of the direction usually assumed in traditional finance: a payment stablecoin under reserve or operational stress is the upstream node, and the wrappers, baskets, and composed products that hold it are the downstream nodes.</p>
 
         <h2>Operational controls: the October 2025 PYUSD overmint</h2>
         <p>A production event on October 15, 2025 shows the limit of an operator-level score. A Paxos minting address created 300 trillion PYUSD in a single transaction, roughly five orders of magnitude above the circulating supply, and burned it 22 minutes later; the peg held, with DEX pricing within 0.03 percent of par. The CLII scores whether an operator holds freeze and mint authority, and Paxos scores high on that dimension. It does not score the quality of the operational controls around that authority: a supply cap, a per-transaction limit, and multisig minting were all absent. The event illustrates that the capability the CLII measures is a real operational risk, while showing that capability and control quality are separate questions.</p>

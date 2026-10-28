@@ -39,6 +39,8 @@ except the feed, which is generated whole):
     established, then docket details and status folded at the bottom.
         (in place)         a status chip on each recommendation <li id="rec-N"> whose
                            status is not "pending"; removed again when it is
+        (in place)         the date chip under the breadcrumb (the first badge in the
+                           paper-badges row), written "Filed <date>" from the registry
     letters/recommendations/index.html
         recommendations    every recommendation in one filterable table
         recs-jsonld        the page's ItemList
@@ -481,7 +483,10 @@ def gen_outcomes(m):
             return label
         return label[:1].lower() + label[1:]
     bits = [f"{n} {soften(label)}" for label, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))]
-    rollup = "Status: " + " &middot; ".join(bits) + "."
+    intl = sorted({l["agency_display"] for l in m.letters if l.get("series") == "international" and l["proceeding"] in seen})
+    incl = f" ({', '.join(intl)} included)" if intl else ""
+    rollup = (f"Status of the {len(seen)} proceedings below, one per rulemaking or consultation{incl}: "
+              + " &middot; ".join(bits) + ".")
     out = [f'<p class="letters-outcomes-lede">{rollup}</p>',
            '<details class="letters-fold">',
            '  <summary>Proceedings, sources, and next dates</summary>',
@@ -612,7 +617,7 @@ def gen_outcome(m, l):
     refs = [r for r in m.referenced_by(l) if r["slug"] not in {c["slug"] for c in l["_children"]}]
     if refs:
         ref_links = ", ".join(f'<a href="/letters/{attr(r["slug"])}/">{esc(m.number_label(r))}</a>' for r in refs)
-        links.append(f"Referenced by later letters: {ref_links}")
+        links.append(f"Referenced by other letters: {ref_links}")
     if l.get("cited_by"):
         cites = "; ".join((f'<a href="{attr(c["url"])}" target="_blank" rel="noopener noreferrer">{esc(c["who"])}</a>' if c.get("url") else esc(c["who"])) + (f", {esc(c['what'])}" if c.get("what") else "") for c in l["cited_by"])
         links.append(f"Cited by {cites}")
@@ -702,6 +707,21 @@ def sync_rec_chips(page, l):
             inner = inner + f' <span class="rec-status rec-status--{attr(r["status"])}">{esc(REC_STATUS_LABEL[r["status"]])}</span>'
         page = page[:mm.start()] + mm.group(1) + inner + mm.group(3) + page[mm.end():]
     return page
+
+
+FILED_CHIP_RE = re.compile(r'(<div class="paper-badges[^"]*">\s*<span class="badge">)([^<]*)(</span>)')
+
+
+def sync_filed_chip(page, l, rel, problems):
+    """Write the date chip under the breadcrumb as "Filed <date>" from the registry, so it says what it dates."""
+    mm = FILED_CHIP_RE.search(page)
+    if not mm:
+        problems.append(f"{rel}: no date chip under the breadcrumb (a paper-badges row whose first badge is the filed date)")
+        return page
+    want = f"Filed {fmt_date(l['filed'])}"
+    if mm.group(2) == want:
+        return page
+    return page[:mm.start(2)] + want + page[mm.end(2):]
 
 
 # ----------------------------------------------------------------------------- recommendation index
@@ -1076,7 +1096,8 @@ def check_frameworks_and_papers(letters, frameworks, framework_papers, pages):
 
 
 def selftest():
-    """Prove each frameworks-and-papers check can FAIL on a synthetic bad case, and passes a good one."""
+    """Prove each frameworks-and-papers check can FAIL on a synthetic bad case, and passes a good one.
+    Also prove the filed-date chip is written from the registry and fires on a page without one."""
     fw = {"mvep": "MVEP", "clii": "CLII"}
     fp = {"mvep": "/papers/mvep/", "clii": "/papers/routing-the-dollar/"}
     good_papers = [{"kind": "paper", "label": "MVEP", "url": "/papers/mvep/"},
@@ -1102,6 +1123,23 @@ def selftest():
         ("a registry paper missing from the tags fires",
          run(page=good_page.replace('href="/papers/routing-the-dollar/"', 'href="/papers/other/"')), 1),
         ("a section reference is not an id", run(page=good_page.replace(">MVEP<", ">MVEP, Section 3(a)<")), 0),
+    ]
+
+    chip_page = ('<div class="paper-badges">\n        <span class="badge">April 10, 2026</span>\n'
+                 '        <span class="badge">3 recommendations</span>\n      </div>')
+
+    def chip(page):
+        probs = []
+        out = sync_filed_chip(page, {"filed": "2026-04-10"}, "x", probs)
+        if '<span class="badge">Filed April 10, 2026</span>' not in out:
+            probs.append("filed chip not written")
+        return probs
+
+    cases += [
+        ("a bare date chip is written as Filed <date>", chip(chip_page), 0),
+        ("a chip already reading Filed <date> is kept", chip(chip_page.replace(">April", ">Filed April")), 0),
+        ("a chip date that differs from the registry is rewritten", chip(chip_page.replace("April 10", "April 11")), 0),
+        ("a page with no date chip fires", chip("<div>no chip</div>"), 2),
     ]
     bad = [(name, len(got), want) for name, got, want in cases if len(got) != want]
     for name, got, want in bad:
@@ -1212,6 +1250,7 @@ def build(m):
         text = stamp(text, "outcome", gen_outcome(m, l), problems, rel)
         text = stamp(text, "related", gen_related(m, l), problems, rel)
         text = sync_rec_chips(text, l)
+        text = sync_filed_chip(text, l, rel, problems)
         outputs[rel] = text
     # recommendation index
     recs_path = os.path.join(m.root, RECS_REL)

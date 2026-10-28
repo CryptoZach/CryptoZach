@@ -7409,29 +7409,29 @@
 
   /* Exact simulation series from gap2_reputation_sweep.csv & counterfactual_downtime_clearance.json */
   var TAU_STEPS = [
-    { tau: 0.99, rep: 0.1753, active: 0.9271, clearCoded: 0.7243, clearDrawn: 0.6377, clearBinom: 0.6370 },
-    { tau: 0.98, rep: 0.3712, active: 0.9585, clearCoded: 0.7243, clearDrawn: 0.6377, clearBinom: 0.9248 },
-    { tau: 0.97, rep: 0.5733, active: 0.9746, clearCoded: 0.7931, clearDrawn: 0.7107, clearBinom: 0.9896 },
-    { tau: 0.96, rep: 0.7810, active: 0.9803, clearCoded: 0.8588, clearDrawn: 0.7798, clearBinom: 0.9990 },
-    { tau: 0.95, rep: 0.9985, active: 0.9866, clearCoded: 0.9061, clearDrawn: 0.8400, clearBinom: 0.9999 },
-    { tau: 0.94, rep: 1.2131, active: 0.9886, clearCoded: 0.9372, clearDrawn: 0.8878, clearBinom: 1.0000 },
-    { tau: 0.93, rep: 1.4258, active: 0.9912, clearCoded: 0.9575, clearDrawn: 0.9228, clearBinom: 1.0000 },
-    { tau: 0.92, rep: 1.6305, active: 0.9927, clearCoded: 0.9669, clearDrawn: 0.9389, clearBinom: 1.0000 },
-    { tau: 0.91, rep: 1.8256, active: 0.9935, clearCoded: 0.9745, clearDrawn: 0.9564, clearBinom: 1.0000 },
-    { tau: 0.90, rep: 2.0110, active: 0.9942, clearCoded: 0.9803, clearDrawn: 0.9693, clearBinom: 1.0000 }
+    { tau: 0.99, rep: 0.1841, clearCoded: 0.72428, clearDrawn: 0.63769, clearBinom: 0.63691 },
+    { tau: 0.98, rep: 0.3685, clearCoded: 0.79242, clearDrawn: 0.72132, clearBinom: 0.92496 },
+    { tau: 0.97, rep: 0.5791, clearCoded: 0.84461, clearDrawn: 0.78629, clearBinom: 0.98937 },
+    { tau: 0.96, rep: 0.7911, clearCoded: 0.88332, clearDrawn: 0.83674, clearBinom: 0.99887 },
+    { tau: 0.95, rep: 1.0007, clearCoded: 0.91316, clearDrawn: 0.87577, clearBinom: 0.9999 },
+    { tau: 0.94, rep: 1.2129, clearCoded: 0.93526, clearDrawn: 0.90575, clearBinom: 0.99999 },
+    { tau: 0.93, rep: 1.4175, clearCoded: 0.9517, clearDrawn: 0.92867, clearBinom: 1.0 },
+    { tau: 0.92, rep: 1.6154, clearCoded: 0.96424, clearDrawn: 0.94615, clearBinom: 1.0 },
+    { tau: 0.91, rep: 1.8116, clearCoded: 0.97338, clearDrawn: 0.9594, clearBinom: 1.0 },
+    { tau: 0.90, rep: 1.9974, clearCoded: 0.98032, clearDrawn: 0.96937, clearBinom: 1.0 }
   ];
 
   var DELTA_STEPS = [
-    { delta: 0.01, repAt99: 0.3338 },
-    { delta: 0.02, repAt99: 0.3249 },
-    { delta: 0.05, repAt99: 0.2998 },
-    { delta: 0.10, repAt99: 0.2623 },
-    { delta: 0.15, repAt99: 0.2294 },
-    { delta: 0.25, repAt99: 0.1753 },
-    { delta: 0.35, repAt99: 0.1342 },
-    { delta: 0.50, repAt99: 0.0908 },
-    { delta: 0.75, repAt99: 0.0497 },
-    { delta: 1.00, repAt99: 0.0299 }
+    { delta: 0.01, repAt99: 0.3282, repAt95: 1.3542 },
+    { delta: 0.05, repAt99: 0.2893, repAt95: 1.2819 },
+    { delta: 0.10, repAt99: 0.2522, repAt95: 1.2006 },
+    { delta: 0.15, repAt99: 0.2239, repAt95: 1.1273 },
+    { delta: 0.20, repAt99: 0.2019, repAt95: 1.0611 },
+    { delta: 0.25, repAt99: 0.1841, repAt95: 1.0007 },
+    { delta: 0.30, repAt99: 0.1697, repAt95: 0.9452 },
+    { delta: 0.40, repAt99: 0.1478, repAt95: 0.8473 },
+    { delta: 0.50, repAt99: 0.1331, repAt95: 0.7654 },
+    { delta: 1.00, repAt99: 0.1004, repAt95: 0.5183 }
   ];
 
   /* Exact 30-seed bootstrap data from results_all3/headline_bootstrap.json */
@@ -7481,26 +7481,30 @@
       var tRow = TAU_STEPS[tIdx] || TAU_STEPS[0];
       var dRow = DELTA_STEPS[dIdx] || DELTA_STEPS[5];
 
-      /* Scale reputation when incident penalty delta_rep varies relative to baseline 0.25 */
-      var deltaScale = dRow.repAt99 / 0.1753;
-      var adjRep = Math.min(5.0, tRow.rep * (tIdx === 0 ? deltaScale : (1 + (deltaScale - 1) * 0.38)));
-      var voteMult = Math.pow(1 + adjRep, 2);
+      /* Stored values only: the threshold sweep runs at the baseline delta_rep 0.25; the delta_rep sweep runs at the 0.99 and 0.95 thresholds */
+      var adjRep = null;
+      if(dRow.delta === 0.25) adjRep = tRow.rep;
+      else if(tRow.tau === 0.99) adjRep = dRow.repAt99;
+      else if(tRow.tau === 0.95) adjRep = dRow.repAt95;
+      var voteMult = adjRep === null ? null : Math.pow(1 + adjRep, 2);
 
       if(tauValEl) tauValEl.textContent = tRow.tau.toFixed(2) + (tRow.tau === 0.99 ? ' (default)' : (tRow.tau === 0.95 ? ' (recommended)' : ''));
       if(deltaValEl) deltaValEl.textContent = dRow.delta.toFixed(2) + (dRow.delta === 0.25 ? ' (baseline)' : '');
 
-      if(mRep) mRep.textContent = adjRep.toFixed(2);
+      if(mRep) mRep.textContent = adjRep === null ? 'n/a' : adjRep.toFixed(2);
       if(mRepSub){
-        if(adjRep < 0.45){
+        if(adjRep === null){
+          mRepSub.textContent = 'Not in the stored sweeps: the penalty sweep was run at the 0.99 and 0.95 thresholds only';
+        } else if(adjRep < 0.45){
           mRepSub.textContent = 'Collapsed (governance disabled; baseline 0.28 without op-risk)';
         } else if(adjRep < 1.15){
-          mRepSub.textContent = 'Restored (~1.0 steady state; ' + (tRow.active * 100).toFixed(1) + '% operators above floor)';
+          mRepSub.textContent = 'Restored (~1.0 steady state)';
         } else {
-          mRepSub.textContent = 'High recovery (' + (tRow.active * 100).toFixed(1) + '% operators active; steady state ~' + adjRep.toFixed(1) + ')';
+          mRepSub.textContent = 'High recovery (steady state ~' + adjRep.toFixed(1) + ')';
         }
       }
-      if(mVote) mVote.textContent = voteMult.toFixed(2) + 'x';
-      if(mVoteSub) mVoteSub.textContent = 'At R = ' + adjRep.toFixed(2) + ' vs 1.00x floor (36.0x ceiling at R = 5.0)';
+      if(mVote) mVote.textContent = voteMult === null ? 'n/a' : voteMult.toFixed(2) + 'x';
+      if(mVoteSub) mVoteSub.textContent = adjRep === null ? 'No stored reputation value at this setting' : 'At R = ' + adjRep.toFixed(2) + ' vs 1.00x floor (36.0x ceiling at R = 5.0)';
       if(mClear) mClear.textContent = (tRow.clearCoded * 100).toFixed(1) + '%';
       if(mClearSub){
         mClearSub.textContent = 'As-coded episodic (1.1d mean) · ' +
@@ -7531,7 +7535,7 @@
       var repPath = '', codedPath = '', drawnPath = '';
       TAU_STEPS.forEach(function(s, i){
         var x = xOf(i).toFixed(1);
-        var rVal = Math.min(maxRep, s.rep * (i === 0 ? deltaScale : (1 + (deltaScale - 1) * 0.38)));
+        var rVal = Math.min(maxRep, s.rep);
         repPath += (i === 0 ? 'M' : 'L') + x + ',' + yRep(rVal).toFixed(1) + ' ';
         codedPath += (i === 0 ? 'M' : 'L') + x + ',' + yPct(s.clearCoded).toFixed(1) + ' ';
         drawnPath += (i === 0 ? 'M' : 'L') + x + ',' + yPct(s.clearDrawn).toFixed(1) + ' ';
@@ -7543,10 +7547,10 @@
 
       /* Highlight active tau column */
       var selX = xOf(tIdx).toFixed(1);
-      var selYRep = yRep(adjRep).toFixed(1);
+      var selYRep = adjRep === null ? null : yRep(adjRep).toFixed(1);
       var selYCoded = yPct(tRow.clearCoded).toFixed(1);
       svg += '<line x1="' + selX + '" y1="' + padT + '" x2="' + selX + '" y2="' + (H - padB) + '" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3"/>';
-      svg += '<circle cx="' + selX + '" cy="' + selYRep + '" r="5.5" fill="#b45309"/>';
+      if(selYRep !== null) svg += '<circle cx="' + selX + '" cy="' + selYRep + '" r="5.5" fill="#b45309"/>';
       svg += '<circle cx="' + selX + '" cy="' + selYCoded + '" r="5" fill="#10b981"/>';
 
       /* X-axis ticks */
@@ -7705,7 +7709,7 @@
   var B2_TREAT_META = {
     pca: {
       sector: '0.067 vs 0.026',
-      sectorSub: '2.6x higher in DePIN (N = 15) than DeFi (N = 18) · L1/L2 Infra mean 0.022 · Kruskal-Wallis p = 0.005',
+      sectorSub: '2.6x higher in DePIN than DeFi (balanced 15 vs 15) · L1/L2 Infra mean 0.022 · Kruskal-Wallis p = 0.005',
       test: 'd = 0.65 (p = 0.028)',
       testSub: 'Voter-inclusive pass-through of record (15 vs 15) · Powered Model 4 (N = 50) log-HHI p = 0.0107',
       mech: 'r = 0.09 vs \u03c1 = 0.44',
@@ -8058,7 +8062,7 @@
       s3: [0, 0, 0, 0, 1, 1, 0, 0, 0, 1]
     },
     jpmd: {
-      span: '1 of 3 strategies (primary)',
+      span: '2 of 3 strategies (primary in S1)',
       spanSub: 'Kinexys USD deposit token (live on Base; native Canton issuance announced Jan 7, 2026) + BENJI custodian in S2',
       scen: 'Scenario 1B single-bank outage',
       scenSub: '100% single-bank deposit exposure on JPMD cash leg; Kinexys outage stops cash settlement unless Ubyx reroutes',
@@ -8192,7 +8196,7 @@
       });
 
       svg += '<g transform="translate(' + padL + ', 32)" font-size="10.5" fill="currentColor">' +
-        '<rect x="0" y="0" width="11" height="11" rx="2" fill="#dc2626" fill-opacity="0.85"/><text x="15" y="9">Primary 72h outage failure point</text>' +
+        '<rect x="0" y="0" width="11" height="11" rx="2" fill="#dc2626" fill-opacity="0.85"/><text x="15" y="9">Primary outage failure point</text>' +
         '<rect x="205" y="0" width="11" height="11" rx="2" fill="#0ea5e9" fill-opacity="0.75"/><text x="220" y="9">Active entity dependency</text>' +
         '<rect x="385" y="0" width="11" height="11" rx="2" fill="currentColor" fill-opacity="0.08"/><text x="400" y="9">Independent / unaffected</text>' +
         '</g>';
@@ -9270,7 +9274,7 @@
         var cads = [
           { label: '7-day cadence (rapid)', dev: 16.0, col: '#d97706', note: '16.0% dev \u00b7 76.4K/d vol \u00b7 728 floor steps (overreacts)' },
           { label: '14-day cadence (spec default)', dev: 22.0, col: '#94a3b8', note: '22.0% dev \u00b7 aligns with 14d governance window' },
-          { label: '21-day cadence (optimal)', dev: 15.5, col: '#10b981', note: '15.5% dev (best) \u00b7 62.7K/d vol \u00b7 146 floor steps' },
+          { label: '21-day cadence (lowest deviation, single seed)', dev: 15.5, col: '#10b981', note: '15.5% dev (lowest) \u00b7 62.7K/d vol \u00b7 146 floor steps' },
           { label: '30-day cadence (slow)', dev: 21.0, col: '#94a3b8', note: '21.0% dev \u00b7 lags 18-month shock recovery' }
         ];
         var mechHost = document.getElementById('b1-cad-list');
@@ -9459,7 +9463,7 @@
           { name: 'OKX (Tier 2, CLII 0.40)', mult: 3.44, vol: '$0.43B/d', note: 'Offshore exchange 24/7 secondary-market routing' },
           { name: 'Bybit (Tier 2, CLII 0.40)', mult: 3.39, vol: '$0.14B/d', note: 'Offshore exchange settlement flow' },
           { name: 'Coinbase (Tier 1, CLII 0.85)', mult: 2.63, vol: '$4.03B/d', note: '56% of Tier 1 volume; no direct SVB reserve lockup' },
-          { name: 'Binance (Tier 2, CLII 0.38)', mult: 2.20, vol: '$4.39B/d', note: 'Largest gross volume hub; absorbed $16.1B post-BUSD migration toward USDT' },
+          { name: 'Binance (Tier 2, CLII 0.38)', mult: 2.20, vol: '$4.39B/d', note: 'Largest gross volume hub (2.20x baseline in SVB week); separately, in the February 2023 BUSD wind-down, displaced BUSD moved mainly to USDT through Binance-adjacent routing' },
           { name: 'Kraken (Tier 2, CLII 0.58)', mult: 2.14, vol: '$0.82B/d', note: 'Secondary fiat and stablecoin conversion venue' },
           { name: 'Tether Treasury (Tier 2, CLII 0.45)', mult: 1.77, vol: '$0.45B/d', note: 'Gained ~$1.7B net supply over 5 days while USDC lost $5.1B' },
           { name: 'Circle Treasury (Tier 1, CLII 0.92)', mult: 1.39, vol: '$3.42B/d', note: '$3.3B SVB reserve exposure disclosed; primary redemptions bottlenecked over weekend' }
@@ -9736,19 +9740,19 @@
       var diff = cScore - iScore;
 
       var regime = 'Split';
-      var econOwner = 'The issuer keeps the interest on reserves, and the app keeps routing and sweep fees. The two scores stay within 2, or both sit below 4.';
+      var econOwner = 'The issuer keeps the interest on reserves, and the app keeps routing and sweep fees. Neither side reaches 4 with a lead of 2 or more.';
       if(cScore >= 4.0 && diff >= 2.0){
         regime = 'Control-dominant';
-        econOwner = 'Apps, wallets, and routers keep the income: the default sweep, the yield wrapper, and the routing of the user\'s orders.';
+        econOwner = 'Apps, wallets, and routers lead: they set the default sweep, the yield wrapper, and the routing of the user\'s orders.';
       } else if(iScore >= 4.0 && (-diff) >= 2.0){
         regime = 'Issuer-dominant';
-        econOwner = 'Issuers keep the income: the interest on reserves, and the decision of who can mint and redeem.';
+        econOwner = 'Issuers lead: they keep the interest on reserves and decide who can mint and redeem.';
       }
 
       var signStr = diff > 0 ? ('ControlScore leads by ' + diff.toFixed(1)) : (diff < 0 ? ('IssuerScore leads by ' + (-diff).toFixed(1)) : 'The scores are even');
 
       sumEl.innerHTML =
-        '<div class="b4-stat"><span class="b4-stat__label">Reading</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">A side leads at 4 or more, with a lead of 2. Otherwise the reading is split.</span></div>' +
+        '<div class="b4-stat"><span class="b4-stat__label">Reading</span><span class="b4-stat__val">' + regime + '</span><span class="b4-stat__sub">A side leads at 4 or more, with a lead of 2 or more. Otherwise the reading is split.</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">ControlScore, the app layer (0 to 6)</span><span class="b4-stat__val">' + cScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Regulated-app share ' + state.c1.toFixed(1) + ' + sweeps and wrappers ' + state.c2.toFixed(1) + ' + holds and freezes ' + state.c3.toFixed(1) + '</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">IssuerScore, the issuing company (0 to 6)</span><span class="b4-stat__val">' + iScore.toFixed(1) + ' / 6.0</span><span class="b4-stat__sub">Concentrated dollar ' + state.i1.toFixed(1) + ' + issuer keeps reserve interest ' + state.i2.toFixed(1) + ' + issuer gates minting ' + state.i3.toFixed(1) + '</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Who is ahead</span><span class="b4-stat__val">' + signStr + '</span><span class="b4-stat__sub">' + econOwner + '</span></div>';
@@ -9870,15 +9874,19 @@
     var canonEl = document.querySelector('link[rel="canonical"]');
     var url = getMeta('citation_fulltext_html_url') || (canonEl ? canonEl.getAttribute('href') : '') || window.location.href;
     var journal = getMeta('citation_journal_title') || '';
+    /* BibTeX type: @article only where a journal title exists; SSRN working papers are @techreport; the rest are @misc */
+    var bibType = journal ? 'article' : 'misc';
     if(!journal){
       if(window.location.pathname.indexOf('/letters/') === 0){
         var strip = document.querySelector('.paper-metadata-strip');
         var docketPart = strip ? (strip.textContent || '').split(/[·\u00b7]/)[0].trim() : '';
-        journal = docketPart ? ('Federal Comment Letter (' + docketPart + '), Tokenization Systems') : 'Federal Comment Letter, Tokenization Systems';
+        var letterKind = /^Financial Stability Board/.test(docketPart) ? 'International Consultation Response' : 'Federal Comment Letter';
+        journal = docketPart ? (letterKind + ' (' + docketPart + '), Tokenization Systems') : (letterKind + ', Tokenization Systems');
       } else if(window.location.pathname.indexOf('/notes/') === 0){
         journal = 'Tokenization Systems Research Note';
       } else if(getMeta('citation_title')){
         journal = 'SSRN Working Paper';
+        bibType = 'techreport';
       } else {
         journal = 'Tokenization Systems Research Briefing';
       }
@@ -9901,12 +9909,14 @@
     var slugWord = (title.toLowerCase().match(/[a-z0-9]{4,}/) || ['paper'])[0];
     var bibKey = last.toLowerCase().replace(/[^a-z0-9]/g, '') + year + slugWord;
     var bibLines = [
-      '@article{' + bibKey + ',',
+      '@' + bibType + '{' + bibKey + ',',
       '  author = {' + authorFormatted + '},',
-      '  title = {' + title + '},',
-      '  journal = {' + journal + '},',
-      '  year = {' + year + '},'
+      '  title = {' + title + '},'
     ];
+    if(bibType === 'article') bibLines.push('  journal = {' + journal + '},');
+    else if(bibType === 'techreport'){ bibLines.push('  institution = {SSRN},'); bibLines.push('  type = {Working Paper},'); }
+    else bibLines.push('  howpublished = {' + journal + '},');
+    bibLines.push('  year = {' + year + '},');
     if(vol) bibLines.push('  volume = {' + vol + '},');
     if(page) bibLines.push('  pages = {' + page + '},');
     if(doi) bibLines.push('  doi = {' + doi + '},');
@@ -9968,13 +9978,13 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 63,230 across 37 classes</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Highest-volume repeat rate</span><span class="b4-stat__val">84% saturation</span><span class="b4-stat__sub">Pipe-exit misread (13,975 firings across 2,260 workspaces)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Classes requiring hard gate</span><span class="b4-stat__val">3 of 6 (&gt;60% repeat)</span><span class="b4-stat__sub">Pipe-exit (84%), edit-running-script (69%), recursive-delete (64%)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Warning alone not enough</span><span class="b4-stat__val">3 of 6 (&gt;60% repeat)</span><span class="b4-stat__sub">Pipe-exit (84%), edit-running-script (69%), recursive-delete (64%)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Classes consistent with teaching</span><span class="b4-stat__val">2 of 6 (~30% repeat)</span><span class="b4-stat__sub">Ancestry-as-landedness (32%), destructive-probe check (29%)</span></div>';
 
         var rows = [
-          { name: 'Pipe-exit misread (failed command treated as success)', rate: 84, badge: '84% repeat · 13,975 firings (2,260 workspaces)', note: 'Verdict: Requires an enforcing gate; unambiguous subset armed (2,080 blocked, <1% override)' },
-          { name: 'Edit running script (live script modified in place)', rate: 69, badge: '69% repeat · 1,674 firings (518 workspaces)', note: 'Verdict: Requires an enforcing gate; advisory warning alone does not stop recurrence' },
-          { name: 'Recursive delete (broad rm -rf or directory wipe path)', rate: 64, badge: '64% repeat · 2,143 firings (780 workspaces)', note: 'Verdict: Requires an enforcing gate; destructive signature intercepted at point of action' },
+          { name: 'Pipe-exit misread (failed command treated as success)', rate: 84, badge: '84% repeat · 13,975 firings (2,260 workspaces)', note: 'Verdict: Warning alone not enough; unambiguous subset armed (2,080 blocked, <1% override)' },
+          { name: 'Edit running script (live script modified in place)', rate: 69, badge: '69% repeat · 1,674 firings (518 workspaces)', note: 'Verdict: Warning alone not enough; advisory warning alone does not stop recurrence' },
+          { name: 'Recursive delete (broad rm -rf or directory wipe path)', rate: 64, badge: '64% repeat · 2,143 firings (780 workspaces)', note: 'Verdict: Warning alone not enough; destructive signature intercepted at point of action' },
           { name: 'Unscoped negative claim (absence claimed without scoped search)', rate: 50, badge: '50% repeat · 2,271 firings (1,128 workspaces)', note: 'Verdict: Borderline (returns in half of workspaces; dropped from 64% to 48% in equal-span test)' },
           { name: 'Ancestry as landedness (history position used as deployment proof)', rate: 32, badge: '32% repeat · 994 firings (679 workspaces)', note: 'Verdict: Consistent with teaching; repeats in fewer than one-third of workspaces' },
           { name: 'Destructive-probe check (delete-protection gate tested unsafely)', rate: 29, badge: '29% repeat · 641 firings (454 workspaces)', note: 'Verdict: Consistent with teaching; lowest saturation among the top six classes' }
@@ -10177,13 +10187,13 @@
       stablecoin: {
         target: 'Stablecoin or payment gateway',
         anchor: 'Routing the Dollar + Seven Dollars + MVEP',
-        primaryGate: 'CLII (0 to 1) + MVEP Cat 1, 5, 6 & CSA',
+        primaryGate: 'CLII (0 to 1) + MVEP Categories 1, 5, 6 and the Cash Settlement Asset test',
         focus: 'Gateway bank exposure, reserve segregation, and 24/7 conversion',
         steps: [
           { step: '1. Classify', pct: 100, tool: 'Comparative Framework for Dollar Products (Seven Dollars)', action: 'Partition For-US-holders (PPSI anchor: USDC, PYUSD, RLUSD) vs Offshore-targeted (USDT) across 5 design markers.' },
           { step: '2. Trace', pct: 90, tool: 'Routing the Dollar + Credit Migration Model', action: 'Map reserve custody, bank-deposit recycling share (Tether ~4%, Circle ~14%, Gemini ~100%), and PSM contagion links.' },
           { step: '3. Map', pct: 85, tool: 'Control Layer Intensity Index (CLII) + TDRC', action: 'Score all routing gateways across licensing, transparency, freeze authority, compliance, and geo-restrictions.' },
-          { step: '4. Compare', pct: 80, tool: 'MVEP (10 categories + CSA companion test) + 3CRD', action: 'Verify Category 1 Rights Parity, Category 5 Jurisdiction Matrix (J1 to J16), and 3CRD point-of-use disclosures.' },
+          { step: '4. Compare', pct: 80, tool: 'MVEP (10 categories + Cash Settlement Asset companion test) + 3CRD', action: 'Verify Category 1 Rights Parity, Category 5 jurisdiction matrix (20 legal regimes), and 3CRD point-of-use disclosures.' },
           { step: '5. Stress', pct: 75, tool: 'SVB & BUSD Gateway Rotation Benchmark', action: 'Test weekend bank closure (Tier 1 swing 63% -> 13%) and cease-mint regulatory wind-down routing.' },
           { step: '6. Decide', pct: 70, tool: 'Committee Gate & Continuous Drift Trigger', action: 'Set counterparty caps, require 24-hour CLII drift notification, and define fallback settlement rails.' }
         ]
@@ -10191,11 +10201,11 @@
       treasury: {
         target: 'Tokenized Treasury or MMF collateral',
         anchor: 'Minimum Viable Equivalence Pack (MVEP) + Seven Dollars',
-        primaryGate: 'MVEP Cat 4, 5, 10 & Recursive CSA',
+        primaryGate: 'MVEP Categories 4, 5, 10 and the recursive Cash Settlement Asset test',
         focus: '2am Saturday margin liquidation, whitelist locks, and recursive USDC redemption',
         steps: [
           { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP Section 5)', action: 'Distinguish 1940 Act MMF (BENJI J1), BVI Reg D fund (BUIDL J5), Delaware LP (OUSG J4), and secured note (USDY).' },
-          { step: '2. Trace', pct: 92, tool: 'Composed-Product Layer Audit + Recursive CSA', action: 'Trace every wrapper layer to its cash settlement asset (e.g., OUSG -> BUIDL -> Circle USDC instant pool).' },
+          { step: '2. Trace', pct: 92, tool: 'Composed-Product Layer Audit + recursive Cash Settlement Asset test', action: 'Trace every wrapper layer to its cash settlement asset (e.g., OUSG -> BUIDL -> Circle USDC instant pool).' },
           { step: '3. Map', pct: 84, tool: 'Transfer-Agent & Custodian Control Map', action: 'Identify the transfer agent (Securitize / Franklin), custodian (BNY / Ceffu / Marex), and admin key signers.' },
           { step: '4. Compare', pct: 78, tool: 'MVEP Exhibit 2 (Cat 5 Matrix) & Exhibit 3 (Composite)', action: 'Compare non-compensatory Legal, Operational, and Economic grades; check D5 statutory rehypothecation limits.' },
           { step: '5. Stress', pct: 88, tool: 'Seven Collateral Stress Scenarios (2am Saturday Test)', action: 'Simulate simultaneous instant-pool depletion, whitelist secondary-market illiquidity, and weekend NAV closure.' },
@@ -10240,7 +10250,7 @@
           { step: '2. Trace', pct: 92, tool: 'x402 Settlement Fingerprint & Proxy-Leg Reconciliation', action: 'Trace EIP-3009 / SPL settlement through the facilitator set and strip 2-hop proxy double-counting (-36.6% on Base).' },
           { step: '3. Map', pct: 90, tool: 'Count vs Value Facilitator HHI & Buyer Cardinality', action: 'Measure facilitator HHI on both count and dollar layers and compute payments per distinct buyer (26.7 Base vs 144k Polygon).' },
           { step: '4. Compare', pct: 85, tool: 'CLII-AI (5 dimensions) & MVEP-AI (10 categories)', action: 'Audit session-attributed provenance, time-bounded task leases, and irreversible push-payment loss allocation.' },
-          { step: '5. Stress', pct: 88, tool: 'Advisory Saturation vs Armed Hard-Gate Outcome Test', action: 'Measure workspace repeat rate after warnings (84% pipe-exit) vs armed gate hold rate (99.56%, 13,098 of 13,156 stopped).' },
+          { step: '5. Stress', pct: 88, tool: 'Advisory Saturation vs Armed Hard-Gate Outcome Test', action: 'Measure how often warnings recur in the same workspace (84% for the top warning) vs armed gate hold rate (99.56%, 13,098 of 13,156 stopped).' },
           { step: '6. Decide', pct: 78, tool: 'Operator Perimeter & Actuator Arming Sign-Off', action: 'Replace high-repeat advisories with narrow hard gates, require known-false verifier checks, and gate outbound acts.' }
         ]
       }
@@ -10365,7 +10375,7 @@
     }
     function pairList(rows){
       return '<ul class="fg-route fg-route--plain">' + rows.map(function(r){
-        var dim = r.dim.charAt(0).toUpperCase() + r.dim.slice(1);
+        var dim = r.dim.split(' ').map(function(d){ return d.charAt(0).toUpperCase() + d.slice(1); }).join(' + ');
         return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + r.cat + '</p><p class="fg-route__q">' + dim + '</p><p class="fg-route__tool">Tokenized asset (MVEP): ' + r.tok + '</p><p class="fg-route__ask">AI operator (MVEP-AI): ' + r.ai + '</p></div></li>';
       }).join('') + '</ul>';
     }
@@ -10438,17 +10448,17 @@
     };
 
     var crosswalk = [
-      { dim: 'legal', cat: 'Category 1: Rights Parity', tok: 'Token-to-underlying legal claim memo (UCC Art. 8/12)', ai: 'Contractual output ownership, IP indemnity, and authority-to-bind scope for agent actions', pct: 90 },
+      { dim: 'legal', cat: 'Category 1: Rights Parity', tok: 'Token-to-underlying legal claim memo (UCC Art. 8/12)', ai: 'Capability and access parity: claims match benchmarked, verifiable capabilities, and downgrades are disclosed', pct: 90 },
       { dim: 'operational', cat: 'Category 2: System of Record', tok: 'Canonical ownership ledger (transfer agent vs chain)', ai: 'Session-attributed commit provenance and authoritative state store across concurrent agents', pct: 95 },
       { dim: 'operational', cat: 'Category 3: Records & Reconciliation', tok: 'Daily NAV / wallet balance reconciliation & break logs', ai: 'Save-time reference validation (preventing confabulated IDs) and startup truncation checks', pct: 92 },
-      { dim: 'legal', cat: 'Category 4: Custody & Customer Property', tok: 'Statutory/trust segregation & qualified custodian control', ai: 'Per-session git worktree isolation, data zero-retention, and credential/key perimeter scoping', pct: 88 },
+      { dim: 'legal operational', cat: 'Category 4: Custody & Customer Property', tok: 'Statutory/trust segregation & qualified custodian control', ai: 'Per-session git worktree isolation, data zero-retention, and credential/key perimeter scoping', pct: 88 },
       { dim: 'legal', cat: 'Category 5: Insolvency Posture', tok: '20-regime bankruptcy priority & rehypothecation matrix', ai: 'Vendor-exit continuity, escrowed weights/prompts, and off-branch task-lease recovery on crash', pct: 85 },
       { dim: 'economic', cat: 'Category 6: Settlement Finality', tok: 'Value integrity, par convertibility & halt triggers', ai: 'Action & payment irreversibility bounds (x402 push-payment holds, pre-commit hard gates)', pct: 94 },
       { dim: 'operational', cat: 'Category 7: Reorg & Exception Handling', tok: 'Chain rollback detection, halt criteria & loss allocation', ai: 'Known-false verifier testing, three-valued state checks (present/absent/undetermined) & rollback', pct: 90 },
       { dim: 'operational', cat: 'Category 8: Governance & Change Control', tok: 'Multisig thresholds, named signers & 48h/7d timelocks', ai: 'Model checkpoint pinning, live hook-byte verification, and logged override auditing (99.56% hold)', pct: 96 },
-      { dim: 'economic', cat: 'Category 9: Disclosures', tok: '3CRD point-of-use reserve, claim & custody disclosure', ai: 'Explicit saturation/override telemetry and bounded-scan unmeasured-remainder disclosure', pct: 86 },
-      { dim: 'economic', cat: 'Category 10: Collateral / Stress Operability', tok: '2am Saturday liquidation across 3 paths under stress', ai: 'Throughput under peak concurrency (61 sessions), CPU-load gate independence & handoff continuity', pct: 92 },
-      { dim: 'economic', cat: 'Companion: Recursive Settlement / Dependency Test', tok: 'Trace every redemption asset (BUIDL -> USDC)', ai: 'Trace every composed tool, facilitator (Meridian/CDP), and upstream model in the agent chain', pct: 95 }
+      { dim: 'legal operational economic', cat: 'Category 9: Disclosures', tok: '3CRD point-of-use reserve, claim & custody disclosure', ai: 'Explicit saturation/override telemetry and bounded-scan unmeasured-remainder disclosure', pct: 86 },
+      { dim: 'operational', cat: 'Category 10: Collateral / Stress Operability', tok: '2am Saturday liquidation across 3 paths under stress', ai: 'Dependency operability: deprecation policy, version commitments, export procedures, and a viable exit path', pct: 92 },
+      { dim: 'companion', cat: 'Companion: Recursive Settlement / Dependency Test', tok: 'Trace every redemption asset (BUIDL -> USDC)', ai: 'Trace every composed tool, facilitator (Meridian/CDP), and upstream model in the agent chain', pct: 95 }
     ];
 
     function renderClasses(){
@@ -10469,7 +10479,7 @@
       var sumEl = document.getElementById('aifw-cw-summary');
       var barsEl = document.getElementById('aifw-cw-bars');
       if(!sumEl || !barsEl) return;
-      var filtered = crosswalk.filter(function(r){ return curDim === 'all' || r.dim === curDim; });
+      var filtered = crosswalk.filter(function(r){ return curDim === 'all' || r.dim.split(' ').indexOf(curDim) >= 0; });
       sumEl.innerHTML =
         '<div class="b4-stat"><span class="b4-stat__label">Categories shown</span><span class="b4-stat__val">' + filtered.length + ' of 11</span><span class="b4-stat__sub">10 MVEP-AI categories + recursive dependency companion</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Core analytical invariance</span><span class="b4-stat__val">1-to-1 structural map</span><span class="b4-stat__sub">Token label : Gateway gate :: Prompt rule : Armed harness gate</span></div>' +
@@ -10623,7 +10633,7 @@
           bars: [
             { label: 'OUSD viability if "holder" = ultimate economic customer', pct: 95, val: 'Fully open (Defuses custody theory)', note: 'Partner exchanges are intermediaries, not holders, leaving Hop 1 completely outside s.4(a)(11)' },
             { label: 'OUSD viability if "holder" = omnibus custodial key controller', pct: 30, val: 'Arms partner-as-holder theory', note: 'Omnibus-custodying partners become statutory holders; balance-based share faces "solely" litigation' },
-            { label: 'Likelihood in July 18, 2026 final rules', pct: 25, val: 'Low (Neither NPRM proposed a definition)', note: 'Definitional silence in both March/April proposals makes a sudden final-rule codification less likely' }
+            { label: 'Outcome in the final rules (statutorily due July 18, 2026)', pct: 100, val: 'OCC: holder = beneficial owner', note: 'Neither proposal defined the term; the OCC final rule of October 23, 2026 does (12 CFR 15.2): a payment stablecoin holder is the beneficial owner, not a custodian that only controls the stablecoin for others. The FDIC, NCUA and Federal Reserve rules are pending' }
           ]
         },
         m4: {
@@ -10714,7 +10724,7 @@
       var curTcmag = 'all';
       var tcmagRows = [
         { type: 'direct', pct: 95, name: '1. Compliance (cross-jurisdictional)', mvep: 'MVEP Cat 1 (Rights Parity) + Cat 8 (Governance)', note: 'Direct overlap; MVEP adds explicit 3-tier statutory and ISO 17442 LEI entity-identification rigor.' },
-        { type: 'gap', pct: 35, name: '2. Multi-Bank / Multi-Issuer Architecture', mvep: 'MVEP v2 Gap Candidate (Anchored in Three Strategies)', note: 'Without Ubyx-style clearing, deposit-token settlement tips to 1 or 2 issuers within 24 months.' },
+        { type: 'gap', pct: 35, name: '2. Multi-Bank / Multi-Issuer Architecture', mvep: 'MVEP v2 Gap Candidate (Anchored in Three Strategies)', note: 'Working hypothesis, not yet tested: without Ubyx-style clearing, deposit-token settlement consolidates around one or two issuers within 24 months of launch.' },
         { type: 'partial', pct: 70, name: '3. Accounting Standards (Cash-equivalent treatment)', mvep: 'MVEP Cat 2 (System of Record) + Cat 9 (Disclosures)', note: 'Partial overlap; TCMAG emphasizes corporate balance-sheet valuation classification.' },
         { type: 'buyer', pct: 25, name: '4. Integrated (Corporate TMS / ERP connectivity)', mvep: 'Buyer-side treasury scope (Outside operator diagnostic)', note: 'Enterprise workflow integration requirement rather than an issuer/operator equivalence property.' },
         { type: 'direct', pct: 95, name: '5. Secure (Key management & custody resilience)', mvep: 'MVEP Cat 4 (Custody) + Cat 7 (Reorg / Exception Handling)', note: 'Direct overlap on qualified custody control of movements and key compromise containment.' },
@@ -10724,7 +10734,7 @@
         { type: 'partial', pct: 75, name: '9. 24/7 Operations (Always-on settlement & liquidity)', mvep: 'MVEP Cat 6 (Settlement Finality) + Cat 10', note: 'Partial overlap; MVEP tests weekend banking-hour redemption gaps and finite instant-pool capacity.' },
         { type: 'direct', pct: 96, name: '10. Controls (Maker-checker, SOD, audit trails)', mvep: 'MVEP Cat 8 (Governance) + Cat 3 (Reconciliation)', note: 'Direct overlap; MVEP specifies 3-of-5 / 4-of-7 multisig and 48h/7d timelock benchmarks.' },
         { type: 'direct', pct: 100, name: '11. Settlement Finality (Legal & technical irrevocability)', mvep: 'MVEP Cat 6 (Settlement Finality)', note: 'Direct name and substance match: combines technical confirmation, par value integrity, and halt rules.' },
-        { type: 'partial', pct: 78, name: '12. Operational Resilience (Incident recovery & continuity)', mvep: 'MVEP Cat 7 (Reorg / Exception Handling)', note: 'Partial overlap; MVEP focuses on chain reorgs/rollbacks while TCMAG spans broader business continuity.' }
+        { type: 'direct', pct: 78, name: '12. Operational Resilience (Incident recovery & continuity)', mvep: 'MVEP Cat 7 (Reorg / Exception Handling)', note: 'Direct overlap on incident and exception handling (MVEP Category 7).' }
       ];
 
       function renderTcmag(){
@@ -10734,9 +10744,9 @@
         var list = tcmagRows.filter(function(r){ return curTcmag === 'all' || r.type === curTcmag; });
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Principles displayed</span><span class="b4-stat__val">' + list.length + ' of 12</span><span class="b4-stat__sub">TCMAG April 21, 2026 corporate-treasury principles</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Direct or partial MVEP coverage</span><span class="b4-stat__val">8 of 12 principles</span><span class="b4-stat__sub">4 direct overlaps + 4 partial overlaps with MVEP v9</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Direct or partial MVEP coverage</span><span class="b4-stat__val">8 of 12 principles</span><span class="b4-stat__sub">5 direct overlaps or name matches + 3 partial overlaps with MVEP v9</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">MVEP v2 expansion shortlist</span><span class="b4-stat__val">3 operator gap candidates</span><span class="b4-stat__sub">Multi-Bank/Multi-Issuer, Interoperability, and Confidentiality</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Deposit-token tipping horizon</span><span class="b4-stat__val">24 months</span><span class="b4-stat__sub">Window before settlement consolidates without neutral clearing</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Hypothesized tipping horizon</span><span class="b4-stat__val">24 months (untested)</span><span class="b4-stat__sub">Window before settlement consolidates without neutral clearing</span></div>';
         barsEl.innerHTML = readingList(list.map(function(r){ return { name: r.name, val: r.mvep, note: r.note }; }));
       }
 
@@ -10814,14 +10824,14 @@
         var barsEl = document.getElementById('eq-scen-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Favorable case (2025 to 2027)</span><span class="b4-stat__val">~$50B TVL (~0.03% spreads)</span><span class="b4-stat__sub">US no-action/pilot relief, ESMA DLT cap lift, sustained chain uptime</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Base planning case</span><span class="b4-stat__val">~$10B TVL</span><span class="b4-stat__sub">Gradual EU/Asia growth, cautious US stance, no major custody/oracle failures</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Adverse case</span><span class="b4-stat__val">~$1B to $2B TVL</span><span class="b4-stat__sub">Regulatory reclassification, SPV/bridge failure, or prolonged market contraction</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Favorable case (2025 to 2027)</span><span class="b4-stat__val">~$50B tokenized market cap</span><span class="b4-stat__sub">US no-action/pilot relief, ESMA DLT cap lift, sustained chain uptime</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Base planning case</span><span class="b4-stat__val">~$10B tokenized market cap</span><span class="b4-stat__sub">Gradual EU/Asia growth, cautious US stance, no major custody/oracle failures</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Adverse case</span><span class="b4-stat__val">~$1B to $2B tokenized market cap</span><span class="b4-stat__sub">Regulatory reclassification, SPV/bridge failure, or prolonged market contraction</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">US institutional evolution</span><span class="b4-stat__val">Three Strategies (2026)</span><span class="b4-stat__sub">Regulated Collateral Circuit, Multi-Issuer Yield Stack, and Tokenized Equity Rails</span></div>';
         var sRows = [
-          { name: 'Favorable adoption scenario (2025 to 2027 illustrative planning case)', pct: 100, val: '~$50B TVL · ~3 bps spreads', note: 'Requires US regulatory relief (subsequently advanced in 2026 SEC tokenized NMS stock conditional exemptions) and deep DeFi arbitrage' },
-          { name: 'Base adoption scenario (2025 to 2027 illustrative planning case)', pct: 20, val: '~$10B TVL', note: 'Driven by European MiFID/MiCA and Asian offshore demand with steady market-maker liquidity' },
-          { name: 'Adverse adoption scenario (2025 to 2027 illustrative planning case)', pct: 4, val: '~$1B to $2B TVL', note: 'Capped by wrapper reclassification or an oracle/bridge/custody incident that fragments liquidity' }
+          { name: 'Favorable adoption scenario (2025 to 2027 illustrative planning case)', pct: 100, val: '~$50B tokenized market cap', note: 'Requires US regulatory relief (subsequently advanced in 2026 SEC tokenized NMS stock conditional exemptions) and deep DeFi arbitrage' },
+          { name: 'Base adoption scenario (2025 to 2027 illustrative planning case)', pct: 20, val: '~$10B tokenized market cap', note: 'Driven by European MiFID/MiCA and Asian offshore demand with steady market-maker liquidity' },
+          { name: 'Adverse adoption scenario (2025 to 2027 illustrative planning case)', pct: 4, val: '~$1B to $2B tokenized market cap', note: 'Capped by wrapper reclassification or an oracle/bridge/custody incident that fragments liquidity' }
         ];
         barsEl.innerHTML = sRows.map(function(b){
           return '<div class="b4-bar-row">' +
@@ -11289,7 +11299,7 @@
           audience: 'Asset managers, risk committees, custodians & allocators',
           timeline: '2 to 4 weeks (defined-scope project)',
           deliverable: 'Pass/fail MVEP report + remediation roadmap + CLII drift triggers',
-          proof: '~250 investments backed at Borderless; Thorchain $200M collapse modeled 13m ahead',
+          proof: '~250 investments backed at Borderless; Thorchain $200M collapse modeled 13 months ahead',
           bars: [
             { name: 'Phase 1: Legal & Insolvency Equivalence Audit (MVEP Cat 1, 4, 5 & Exhibit 2)', pct: 95, val: 'Week 1 to 2', note: 'Tests UCC Art. 8/12 rights parity, custodian segregation, and 20-regime bankruptcy priority' },
             { name: 'Phase 2: Operational & Settlement Stress Audit (MVEP Cat 2, 3, 6, 7, 8, 10 & CSA)', pct: 90, val: 'Week 2 to 3', note: 'Audits transfer-agent reconciliation, admin-key timelocks, recursive USDC dependencies, and 2am Saturday liquidation' },
@@ -11354,9 +11364,9 @@
           '<div class="b4-stat"><span class="b4-stat__label">Builder workshop</span><span class="b4-stat__val">60 to 90 minutes</span><span class="b4-stat__sub">Protocol teams, stablecoin product leads &amp; DePIN founders</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Delivery mode</span><span class="b4-stat__val">In-person or virtual</span><span class="b4-stat__sub">Custom decks + interactive explorer walk-throughs</span></div>';
         var tRows = [
-          { name: 'TS-WORKSHOP-POLICY: Policy Briefing on Stablecoin & Tokenization Infrastructure (30 to 45m)', pct: 60, val: 'Routing the Dollar + CLII + GENIUS/CLARITY', note: 'Covers regime-dependent Fed transmission, SVB/BUSD gateway rotation, and where compliance attaches' },
-          { name: 'TS-WORKSHOP-DILIGENCE: Institutional Diligence Session: Applying MVEP (45 to 60m)', pct: 80, val: 'MVEP 10 Categories + Exhibits 1 to 3', note: 'Walks committees through non-compensatory equivalence scoring, 20 insolvency regimes, and the 2am Saturday test' },
-          { name: 'TS-WORKSHOP-BUILDER: Builder Workshop: Tokenomics, Governance & Diligence (60 to 90m)', pct: 100, val: 'Adaptive Tokenomics + Operational Risk + S2R', note: 'Stress-tests reserve design, redemption paths, PID emissions, and PCA-corrected governance concentration' }
+          { name: 'Policy Briefing on Stablecoin & Tokenization Infrastructure (30 to 45 min)', pct: 60, val: 'Routing the Dollar + CLII + GENIUS/CLARITY', note: 'Covers regime-dependent Fed transmission, SVB/BUSD gateway rotation, and where compliance attaches' },
+          { name: 'Institutional Diligence Session: Applying MVEP (45 to 60 min)', pct: 80, val: 'MVEP 10 Categories + Exhibits 1 to 3', note: 'Walks committees through non-compensatory equivalence scoring, 20 insolvency regimes, and the 2am Saturday test' },
+          { name: 'Builder Workshop: Tokenomics, Governance & Diligence (60 to 90 min)', pct: 100, val: 'Adaptive Tokenomics + Operational Risk + S2R', note: 'Stress-tests reserve design, redemption paths, PID emissions, and PCA-corrected governance concentration' }
         ];
         barsEl.innerHTML = readingList(tRows);
       }
@@ -11457,7 +11467,7 @@
           frameworks: 'CLII-AI, MVEP-AI, Lease Coordination & Outcome-Graded Safeguards',
           bars: [
             { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '14 typical / 61 peak concurrent agents', note: 'Built production operating layer across 68,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
-            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '63,230 advisories · 13,098/13,156 gate stops', note: 'Proved 84% workspace repeat rate on top advisory warning vs 99.56% hold rate on armed hard gates' },
+            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '63,230 advisory firings · 13,098 of 13,156 gate attempts refused', note: 'Measured an 84% workspace repeat rate on the top advisory warning vs a 99.56% hold rate on armed hard gates' },
             { name: 'Intellectual property & international AI supervisory policy', pct: 94, val: '46 USPTO filings · FSB AI consultation', note: '36 patent families covering provenance, verifiers, and fleet governance; Frontiers in Blockchain publication' }
           ]
         },
@@ -11466,7 +11476,7 @@
           url: '/resume/risk-controls/',
           pdf: '/resumes/Zukowski_Resume_Risk.pdf?v=20261009',
           mandate: 'CROs, enterprise risk committees, clearinghouse risk desks & operational-resilience teams',
-          proof: 'Thorchain $200M collapse modeled 13m ahead; 74 ValOS vectors -> 624-config battery',
+          proof: 'Thorchain $200M collapse modeled 13 months ahead; 74 ValOS vectors -> 624-config battery',
           frameworks: 'MVEP Non-Compensatory Floor, ValOS/NORS Simulation & Vacuous-Check Controls',
           bars: [
             { name: 'Ex-ante structural failure modeling & stress-scenario engineering', pct: 98, val: 'Thorchain 10-step memo (Dec 2023)', note: 'Predicted step-by-step insolvency sequence 13 months before the $200M collapse occurred' },
@@ -11487,7 +11497,7 @@
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">Selected role profile</span><span class="b4-stat__val"><a href="' + r.url + '" style="color:inherit;text-decoration:underline;">' + r.title + '</a></span><span class="b4-stat__sub"><a href="' + r.pdf + '" target="_blank" rel="noopener noreferrer">Download tailored PDF</a></span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Target hiring context</span><span class="b4-stat__val">' + r.mandate + '</span><span class="b4-stat__sub">Decision-maker alignment</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Headline quantitative proof</span><span class="b4-stat__val">' + r.proof + '</span><span class="b4-stat__sub">Verified production &amp; research metrics</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Headline quantitative proof</span><span class="b4-stat__val">' + r.proof + '</span><span class="b4-stat__sub">As stated on the profile and program pages</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Core frameworks applied</span><span class="b4-stat__val">' + r.frameworks + '</span><span class="b4-stat__sub">Reusable diagnostic instruments</span></div>';
           barsEl.innerHTML = readingList(r.bars);
         }
@@ -11539,7 +11549,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">25 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to October 19, 2026 across 19 dockets</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">9 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">136 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 5 agencies</span></div>';
+            '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 6 agencies</span></div>';
           var aRows = [
             { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
             { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 25 recommendations', note: 'Operationalizes the freeze/block/reject capability in proposed 31 CFR 1033.240 and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
@@ -11555,11 +11565,11 @@
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">CLII invocations</span><span class="b4-stat__val">19 letters</span><span class="b4-stat__sub">5-dimension operator regulatory intensity &amp; drift index</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">MVEP invocations</span><span class="b4-stat__val">15 letters</span><span class="b4-stat__sub">10-category non-compensatory product equivalence standard</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Control-layer &amp; 3CRD / MGCPT</span><span class="b4-stat__val">11 letters</span><span class="b4-stat__sub">Point-of-use reserve disclosure &amp; pass-through gating</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB + SEC 4-927</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
+            '<div class="b4-stat"><span class="b4-stat__label">Control-layer frame</span><span class="b4-stat__val">11 letters</span><span class="b4-stat__sub">Holds, routing defaults &amp; PCA exclusion</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB response</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
           var fRows = [
-            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '19 of 25 federal letters (+FSB)', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
-            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '15 of 25 federal letters (+FSB)', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
+            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '18 of 25 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
+            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '14 of 25 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
             { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 44, val: '11 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
             { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 32, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
@@ -11626,13 +11636,13 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Tracked GENIUS actions</span><span class="b4-stat__val">14 rulemakings</span><span class="b4-stat__sub">Published Dec 19, 2025 through Sep 30, 2026</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Rulemaking status split</span><span class="b4-stat__val">1 in effect · 2 open · 11 pending</span><span class="b4-stat__sub">Treasury s.4(c) IFR in effect; 2 Fed proposals open to Nov 30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Rulemaking status split</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury s.4(c) IFR in effect; OCC final rule published Oct 23; 2 Fed proposals open to Nov 30</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Program letter coverage</span><span class="b4-stat__val">10 of 14 rulemakings</span><span class="b4-stat__sub">14 GENIUS-cycle comment letters filed (Nos. 1-4, 6, 8, 10-13, 15-16, 22, 24)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Next major target</span><span class="b4-stat__val">November 2026</span><span class="b4-stat__sub">OCC final-rule target &amp; Nov 30 Fed / Treasury IFR comment close</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Next major target</span><span class="b4-stat__val">November 2026</span><span class="b4-stat__sub">Nov 30 Fed / Treasury IFR comment close</span></div>';
         var gRows = [
           { name: 'FDIC (3 NPRMs: RIN 3064-AG20 application, AG19 PPSI standards, AG29 BSA/sanctions)', pct: 100, val: '3 of 3 commented (Nos. 4, 8, 13) · All pending final rule', note: 'Covers IDI subsidiary issuance approvals, reserve/redemption standards, and BSA compliance' },
           { name: 'U.S. Department of the Treasury (3 actions: AC90 state-similarity, AC95 Section 3 issuance, s.4(c) IFR)', pct: 100, val: '1 IFR in effect · 2 NPRMs commented (Nos. 3, 22, 24)', note: 'September 30, 2026 interim final rule on state certification forms is the first GENIUS action in effect' },
-          { name: 'OCC (2 NPRMs: RIN 1557-AF41 PPSI framework, RIN 1557-AF55 BSA & sanctions)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · Target Nov 2026', note: 'Comptroller stated August 20, 2026 that OCC intends to issue its final rule by November 2026' },
+          { name: 'OCC (2 NPRMs: RIN 1557-AF41 PPSI framework, RIN 1557-AF55 BSA & sanctions)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · AF41 final rule published Oct 23, 2026', note: 'The AF41 final rule was published October 23, 2026 (91 FR 67000) and takes effect January 18, 2027; AF55 is pending a final rule' },
           { name: 'FinCEN & Interagency (2 NPRMs: RIN 1506-AB73 sanctions/AML, RIN 1506-AB74 5-agency CIP)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Would set block/freeze/reject capability requirements and customer identification rules across all 5 regulators' },
           { name: 'NCUA (2 NPRMs: RIN 3133-AF69 PPSI licensing, RIN 3133-AG10 credit-union stablecoin standards)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts PPSI supervision and reserve rules to federally insured credit unions' },
           { name: 'Board of Governors of the Federal Reserve System (2 NPRMs: Docket R-1899 reserve/capital & subsidiary application)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
@@ -11692,12 +11702,12 @@
           '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">68,000+ fleet commits</span><span class="b4-stat__sub">14 typical / 61 peak concurrent sessions; 99.56% gate hold</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">On-chain &amp; DePIN families</span><span class="b4-stat__val">6 attribution filings</span><span class="b4-stat__sub">Reputation recovery threshold &amp; control-attribution interlock</span></div>';
         var arRows = [
-          { name: 'Area 4: Coordination, fleet governance, and session continuity (64/231,533 to 64/180,865)', pct: 100, val: '11 filings (23.9%)', note: 'Time-bounded task leases, off-branch compare-and-swap claim admission, resource-triggered handoff, and outward-act governance' },
-          { name: 'Area 3: Provenance and artifact coherence (64/107,069 to 64/143,852)', pct: 72.7, val: '8 filings (17.4%)', note: 'Tamper-evident coordination-proof logging, count-in-artifact staleness detection, and seal-to-log provenance chains' },
+          { name: 'Area 4: Coordination, fleet governance, and session continuity (64/107,073 to 64/231,533)', pct: 100, val: '11 filings (23.9%)', note: 'Time-bounded task leases, off-branch compare-and-swap claim admission, resource-triggered handoff, and outward-act governance' },
+          { name: 'Area 3: Provenance and artifact coherence (64/107,069 to 64/174,912)', pct: 72.7, val: '8 filings (17.4%)', note: 'Tamper-evident coordination-proof logging, count-in-artifact staleness detection, and seal-to-log provenance chains' },
           { name: 'Area 5: Measurement and detector validity (64/135,000 to 64/174,920)', pct: 72.7, val: '8 filings (17.4%)', note: 'Instrument-absence controls, calibration-gated detector promotion, typed-judgment offload (Jev), and observer-first arming' },
-          { name: 'Area 1: Concurrent repository integrity (64/071,767 to 64/137,910)', pct: 72.7, val: '8 filings (17.4%)', note: 'Per-session staging isolation, push-time landing concurrency control, edit-intent collision gating, and false-vs-true contention' },
-          { name: 'Area 6: On-chain governance and control attribution (64/128,867 to 64/120,240)', pct: 54.5, val: '6 filings (13.0%)', note: 'Self-calibrating reputation-recovery threshold and deterministic multi-surface control-attribution interlock (PCA exclusion)' },
-          { name: 'Area 2: Evidence and retrieval quality (64/097,316 to 64/143,857)', pct: 45.5, val: '5 filings (10.9%)', note: 'Authority-aware context routing, evidence-grounding for cited values, and conjunctive detection of omitted/unsupported claims' }
+          { name: 'Area 1: Concurrent repository integrity (64/071,767 to 64/183,971)', pct: 72.7, val: '8 filings (17.4%)', note: 'Per-session staging isolation, push-time landing concurrency control, edit-intent collision gating, and false-vs-true contention' },
+          { name: 'Area 6: On-chain governance and control attribution (64/120,240 to 64/138,859)', pct: 54.5, val: '6 filings (13.0%)', note: 'Self-calibrating reputation-recovery threshold and deterministic multi-surface control-attribution interlock (PCA exclusion)' },
+          { name: 'Area 2: Evidence and retrieval quality (64/095,597 to 64/183,968)', pct: 45.5, val: '5 filings (10.9%)', note: 'Authority-aware context routing, evidence-grounding for cited values, and conjunctive detection of omitted/unsupported claims' }
         ];
         barsEl.innerHTML = arRows.map(function(b){
           return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
@@ -11714,7 +11724,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Operational Risk (B4)</span><span class="b4-stat__val">64/128,867 &amp; 64/135,014</span><span class="b4-stat__sub">Self-calibrating reputation-recovery threshold (95% vs 99%)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">MVEP &amp; Comment Letters</span><span class="b4-stat__val">64/095,597 &amp; 64/128,862</span><span class="b4-stat__sub">Evidence-grounded assessments &amp; derived-artifact admission control</span></div>';
         var ppRows = [
-          { name: 'Agent Infrastructure (/agent-infrastructure/) -> Areas 1, 3, 4 & 5', pct: 96, val: '64/071,767 · 64/180,865 · 64/174,920', note: 'Directly implements worktree staging isolation, time-bounded task leases, known-false verifier checks, and observer-first hard gates' },
+          { name: 'Agent Infrastructure (/agent-infrastructure/) -> Areas 1 to 5', pct: 96, val: '64/071,767 · 64/180,865 · 64/174,920', note: 'Directly implements worktree staging isolation, time-bounded task leases, known-false verifier checks, and observer-first hard gates' },
           { name: 'Auditing Governance Concentration (/papers/governance-concentration/) -> Area 6', pct: 90, val: '64/130,737 · 64/136,352 · 64/138,859', note: 'Formalizes the 5-class PCA exclusion typology and frontier-relative typed absence outcome when pseudonymous control is undetermined' },
           { name: 'Operational Risk in Token Economies (/papers/operational-risk/) -> Area 6', pct: 88, val: '64/128,867 · 64/135,014', note: 'Formalizes the self-calibrating reputation-recovery threshold that prevents threshold-induced governance collapse under validator downtime' },
           { name: 'MVEP & 25-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
@@ -11773,9 +11783,9 @@
         var list = datItems.filter(function(r){ return curDat === 'all' || r.cat === curDat; });
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Items displayed</span><span class="b4-stat__val">' + list.length + ' of 17</span><span class="b4-stat__sub">8 live site feeds + 9 SSRN papers (7 with replication code)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">23 live across site</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">On every paper and briefing page</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Content &amp; data licence</span><span class="b4-stat__val">CC BY 4.0</span><span class="b4-stat__sub">Free to reuse with attribution and link; code per repo licence</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">42 pages (APA + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers &amp; 26 letters</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">44 pages (formatted citation + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers, 26 letters &amp; 2 notes</span></div>';
         barsEl.innerHTML = readingList(list.map(function(b){ return { name: b.name, val: b.badge, note: b.note }; }));
       }
 
@@ -11920,7 +11930,7 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Filing window</span><span class="b4-stat__val">Oct 13 to Oct 19, 2026</span><span class="b4-stat__sub">4 submissions across 3 federal dockets (Letters No. 22 to 25)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">New recommendations</span><span class="b4-stat__val">22 concrete asks</span><span class="b4-stat__sub">Brings program total to 25 letters and 136 recommendations</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Treasury Section 3</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; CLII 0.90 record fix</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Treasury Section 3</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; corrected CLII score (0.90)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">SEC Crypto &amp; NMS Stock</span><span class="b4-stat__val">Letters No. 23 &amp; No. 25</span><span class="b4-stat__sub">Rule 400(a) observable control test &amp; TSV corporate-actions hierarchy</span></div>';
         var o19Rows = [
           { name: 'Letter No. 23: SEC Regulation Crypto Assets (File No. S7-2026-27, 91 Fed. Reg. 54510)', pct: 100, val: '8 recommendations · Filed Oct 19, 2026', note: 'Adds an observable control condition to Rule 400(a) and requires Form TR to use PCA-excluded, delegation-aware governance metrics' },
@@ -11936,13 +11946,14 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">July 18, 2026 deadline</span><span class="b4-stat__val">0 final rules issued</span><span class="b4-stat__sub">1-year Section 13 statutory rulemaking deadline elapsed</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Current 14-action state</span><span class="b4-stat__val">1 in effect · 2 open · 11 pending</span><span class="b4-stat__sub">Treasury s.4(c) state-certification IFR in effect Sep 30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">14-action state as of Oct 23</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury s.4(c) state-certification IFR in effect Sep 30; OCC final rule published Oct 23</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Binding effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">18-month statutory prong governs automatically post-Sep 20</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Open comment windows</span><span class="b4-stat__val">Through Nov 30, 2026</span><span class="b4-stat__sub">Federal Reserve R-1899 + companion &amp; Treasury s.4(c) IFR</span></div>';
         var o12Rows = [
-          { name: 'Awaiting final action (11 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 78.6, val: '11 of 14 rulemakings (78.6%)', note: 'Spans OCC AF41/AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
+          { name: 'Awaiting final action (10 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 71.4, val: '10 of 14 rulemakings (71.4%)', note: 'Spans OCC AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
           { name: 'Open for public comment (Federal Reserve Board Docket R-1899 & subsidiary application proposal)', pct: 14.3, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
-          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' }
+          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' },
+          { name: 'Final rule published (OCC, RIN 1557-AF41 PPSI framework)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Published October 23, 2026 (91 FR 67000); takes effect January 18, 2027' }
         ];
         barsEl.innerHTML = o12Rows.map(function(b){
           return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
@@ -12019,7 +12030,7 @@
 
     { cat: 'Explorer', title: 'Interactive MVEP 14-Product Scorecard & Self-Assessment Tool', url: '/frameworks/#mvep-scorecard', kw: 'mvep interactive scorecard calculator 14 products' },
     { cat: 'Explorer', title: 'Interactive 19-Gateway CLII Sensitivity & Weighting Explorer', url: '/frameworks/#clii-explorer', kw: 'clii 19 gateways circle coinbase tether binance curve 3pool' },
-    { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC): who keeps the income, the app or the issuer', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore app layer issuer reserve interest' },
+    { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC): which layer dominates, the app or the issuer', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore app layer issuer reserve interest' },
     { cat: 'Explorer', title: 'Interactive Fleet Commits Chart (79 3-Day Bins, 68,000+ Commits)', url: '/agent-infrastructure/#ai-commit-chart', kw: 'commit chart 79 bins 3329 peak' },
 
     { cat: 'Resume', title: 'Resume Profile: Policy & Market Infrastructure', url: '/resume/policy/', kw: 'policy resume central bank fed occ fdic sec cftc' },
@@ -12088,7 +12099,7 @@
           '<button type="button" class="cz-cmdk-esc" id="cz-cmdk-close">ESC</button>' +
         '</div>' +
         '<ul class="cz-cmdk-list" id="cz-cmdk-list"></ul>' +
-        '<div class="cz-cmdk-foot"><span>\u2191\u2193 to navigate \u00b7 Enter to open</span><span>42 citable pages \u00b7 25 interactive explorers</span></div>' +
+        '<div class="cz-cmdk-foot"><span>\u2191\u2193 to navigate \u00b7 Enter to open</span><span>One-click citations on every paper, letter, and note</span></div>' +
       '</div>';
     document.body.appendChild(backdrop);
     inputEl = document.getElementById('cz-cmdk-input');
@@ -12261,7 +12272,7 @@
           preread: '/agent-infrastructure/#ai-control-explorer',
           prereadLabel: 'Fleet Advisory vs Hard-Gate Explorer',
           deliverables: [
-            { name: '1. Advisory Saturation vs Armed Hard-Gate Outcome Audit', pct: 98, val: '99.56% hold benchmark', note: 'Measures workspace repeat rates after warnings (84% pipe-exit) and replaces high-repeat advisories with narrow hard gates' },
+            { name: '1. Advisory Saturation vs Armed Hard-Gate Outcome Audit', pct: 98, val: '99.56% hold benchmark', note: 'Measures how often warnings recur in the same workspace (84% for the top warning) and replaces high-repeat advisories with narrow hard gates' },
             { name: '2. Per-Session Worktree Isolation & Time-Bounded Lease Architecture', pct: 94, val: '14 typical / 61 peak agents', note: 'Prevents concurrent write collisions and recovers orphaned tasks automatically when agent sessions exit' },
             { name: '3. x402 Facilitator Concentration & Known-False Verifier Audit', pct: 90, val: 'MVEP-AI 10 categories', note: 'Eliminates confabulated finding references, vacuous passing checks, and unattributed agentic payment legs' }
           ]
@@ -12364,7 +12375,7 @@
       var curWork = 'rtd';
       var works = {
         rtd: {
-          title: 'Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar\'s International Functions in Digital Markets in Digital Markets',
+          title: 'Routing the Dollar: Gateway Infrastructure, Monetary Policy Transmission, and the Dollar\'s International Functions in Digital Markets',
           year: '2026', venue: 'SSRN Working Paper 6267698 (Prepared for FRBNY Fifth Conference on International Roles of the U.S. Dollar)',
           doi: '10.2139/ssrn.6267698', url: 'https://tokenization.systems/papers/routing-the-dollar/', key: 'zukowski2026routing'
         },
@@ -12420,13 +12431,13 @@
         var barsEl = document.getElementById('abt-pil-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">Plus 1 peer-reviewed journal article, 1 memo &amp; 6 briefings</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">12 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, ValOS/NORS, S2R, CLII-AI, MVEP-AI</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">One also peer-reviewed (Frontiers in Blockchain), plus 1 memo &amp; 6 briefings</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">13 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, and eight more, plus the CLII-AI and MVEP-AI extensions</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">25 federal letters (+FSB)</span><span class="b4-stat__sub">136 recommendations across 19 dockets and 9 federal agencies</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">46 USPTO applications</span><span class="b4-stat__sub">Across 36 patent families · 68,000+ commits · 99.56% gate hold</span></div>';
         var pRows = [
-          { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 7 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
-          { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '12 scoring & gating tools', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
+          { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 1 memo & 6 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
+          { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '13 frameworks', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
           { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '25 federal comment letters · 136 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
           { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '46 USPTO filings across 36 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 13,098 hard-gate stops' }
         ];
@@ -12439,12 +12450,15 @@
         if(!sumEl || !barsEl) return;
         var w = works[curWork] || works.rtd;
         var apa = 'Zukowski, Zach (' + w.year + '). "' + w.title + '." ' + w.venue + (w.doi ? ('. https://doi.org/' + w.doi) : ('. ' + w.url));
-        var bib = '@article{' + w.key + ',\n  author = {Zukowski, Zach},\n  title = {' + w.title + '},\n  journal = {' + w.venue + '},\n  year = {' + w.year + '},' + (w.doi ? ('\n  doi = {' + w.doi + '},') : '') + '\n  url = {' + w.url + '}\n}';
+        var ssrnM = /^SSRN Working Paper (\d+)/.exec(w.venue);
+        var isDataset = /\[Data set\]$/.test(w.title);
+        var venueBib = ssrnM ? ('\n  institution = {SSRN},\n  type = {Working Paper},\n  number = {' + ssrnM[1] + '},') : (isDataset ? ('\n  howpublished = {' + w.venue + '},') : ('\n  journal = {' + w.venue + '},'));
+        var bib = '@' + (ssrnM ? 'techreport' : (isDataset ? 'misc' : 'article')) + '{' + w.key + ',\n  author = {Zukowski, Zach},\n  title = {' + w.title + '},' + venueBib + '\n  year = {' + w.year + '},' + (w.doi ? ('\n  doi = {' + w.doi + '},') : '') + '\n  url = {' + w.url + '}\n}';
 
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Selected work</span><span class="b4-stat__val"><a href="' + w.url + '" style="color:inherit;text-decoration:underline;">Open page &rarr;</a></span><span class="b4-stat__sub">' + w.venue + '</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Author &amp; ORCID</span><span class="b4-stat__val">Zach Zukowski</span><span class="b4-stat__sub">0009-0006-3642-2450</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Copy APA / Chicago</span><span class="b4-stat__val"><button type="button" class="access-link access-cite-btn" id="abt-copy-apa">Copy formatted citation</button></span><span class="b4-stat__sub">Ready for footnotes &amp; references</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Copy formatted citation</span><span class="b4-stat__val"><button type="button" class="access-link access-cite-btn" id="abt-copy-apa">Copy formatted citation</button></span><span class="b4-stat__sub">Ready for footnotes &amp; references</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Copy BibTeX</span><span class="b4-stat__val"><button type="button" class="access-link access-cite-btn" id="abt-copy-bib">Copy BibTeX entry</button></span><span class="b4-stat__sub">Key: ' + w.key + '</span></div>';
 
         barsEl.innerHTML =

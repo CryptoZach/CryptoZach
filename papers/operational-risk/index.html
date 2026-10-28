@@ -404,14 +404,14 @@
 
         <h3>3. Reputation is the true fragility point</h3>
         <p>The seasonal award requires an operator's uptime to read above 0.99 at the season boundary. Uptime is a persistent state that evolves as a driftless bounded random walk (clipped at 1.0 above and 0.5 below): simulated on its own across 40,000 paths, the walk settles at a mean of 0.827, whereas the calibrated downtime process implies an as-coded operator up-fraction of 0.9875 (at the model's 0.5 percent daily incident rate, outages averaging about 2.5 effective days leave operators up 98.75 percent of the time, or 98.27 percent on the full 3.5-day drawn outage length). The variable the 0.99 gate reads therefore understates the up-fraction the failure process produces by roughly 16.0 percentage points (15.6 points pre-decrement). Once uptime drifts below the threshold, the award stops firing and the 15% seasonal decay compounds without offset. The seasonal update has a closed-form steady state of roughly 5.7 times the average per-season gain, which is what makes the threshold sweep diagnostic rather than merely remedial.</p>
-        <p>The paper treats this as structural collapse: the uptime threshold is set above what the operator base&rsquo;s uptime process can sustain. Average reputation decays to 0.28 on a 0-to-5 scale in the economic-only baseline and to 0.17 once operational risk is added, effectively disabling reputation-weighted governance; the layer only deepens a collapse that is already nearly total, so the defect belongs to the base design rather than to operational risk. Gating recovery on within-season downtime days instead of the boundary uptime state clears from 0.72 at the 0.99 threshold to 0.98 at 0.90 under the model&rsquo;s episodic process as coded (mean 1.1 seasonal down-days, or 1.5 days clearing 0.64 to 0.97 on the pre-decrement drawn duration, versus 0.45 under independent daily draws).</p>
+        <p>The paper treats this as structural collapse: the uptime threshold is set above what the operator base&rsquo;s uptime process can sustain. Average reputation decays to 0.28 on a 0-to-5 scale in the economic-only baseline and to 0.17 once operational risk is added, effectively disabling reputation-weighted governance; the layer only deepens a collapse that is already nearly total, so the defect belongs to the base design rather than to operational risk. If recovery instead counted downtime days within the season, the share of operators qualifying would rise from 72% at the 0.99 threshold to 98% at 0.90 under the model&rsquo;s clustered outages (1.1 down-days per season on average, against 0.45 if each day failed independently; 64% to 97% on the longer drawn outage length).</p>
         <p>The fix is specific: lower the recovery threshold. At 0.95, average reputation restores to approximately 1.0 by year 5. At 0.90, it restores to approximately 2.0. Changing the decay parameter alone does not restore stability at the 0.99 threshold. This is one of the most actionable findings in the paper.</p>
 
         <figure class="b4-explorer" id="b4-oprisk-explorer" aria-labelledby="b4-exp-title">
           <div class="b4-exp__head">
             <div>
               <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Simulation Explorer</p>
-              <h4 id="b4-exp-title">Stress-test the reputation threshold, downtime-count rule, and PID dispersion compression</h4>
+              <h4 id="b4-exp-title">Explore the stored threshold sweep, downtime-count counterfactual, and 30-seed dispersion results</h4>
             </div>
             <div class="b4-exp__tabs" role="tablist" aria-label="Operational-risk explorer views">
               <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-b4-tab="reputation">1. Reputation threshold &amp; clearance</button>
@@ -453,7 +453,7 @@
 <div class="b4-exp__chart-wrap">
               <svg id="b4-rep-svg" viewBox="0 0 880 290" width="880" height="290" role="img" aria-label="Reputation score and counterfactual clearance across recovery thresholds 0.99 to 0.90"></svg>
             </div>
-            <p class="b4-exp__note">Source: <code>gap2_reputation_sweep.csv</code> and <code>counterfactual_downtime_clearance.json</code> (400,000 Monte Carlo paths, seed 42). Because no decision rule in the base simulation reads the reputation score, each threshold replays the seasonal scoring rule over the same fixed trajectory.</p>
+            <p class="b4-exp__note">Source: <code>gap2_reputation_sweep.csv</code> and <code>counterfactual_downtime_clearance.json</code> (400,000 Monte Carlo paths, seed 42). Because no decision rule in the base simulation reads the reputation score, each threshold replays the seasonal scoring rule over the same fixed trajectory. The brown line is the threshold sweep at the baseline incident penalty of 0.25; the penalty sweep was run at the 0.99 and 0.95 thresholds only, so other combinations show n/a.</p>
           </div>
 
           <div class="b4-exp__panel" id="b4-panel-pid" role="tabpanel" hidden>
@@ -477,15 +477,15 @@
               </div>
               <div class="b4-exp__card">
                 <span class="b4-exp__label">Op-risk shift (change in ratio)</span>
-                <strong class="b4-exp__val" id="b4-p-delta">+3.22x</strong>
-                <span class="b4-exp__sub" id="b4-p-delta-sub">95% CI [+0.10x, +6.85x] · Widens under sustained withdrawal</span>
+                <strong class="b4-exp__val" id="b4-p-delta">+3.22</strong>
+                <span class="b4-exp__sub" id="b4-p-delta-sub">95% CI [+0.10, +6.85] · Widens under sustained withdrawal (significant only without correction for multiple comparisons)</span>
               </div>
             </div>
-                        <p class="fg-route-key"><strong>How to read this.</strong> Bar length is the coefficient of variation against a 0.60 display ceiling. A shorter bar is tighter node-count tracking around the 10,000-node target. The CV and the mean node count are written beside the bar.</p>
+                        <p class="fg-route-key"><strong>How to read this.</strong> Bar length is the coefficient of variation against a 1.0 display ceiling. A shorter bar means outcomes cluster more tightly across the 30 seeds; CV is measured around each arm&rsquo;s own mean, not the 10,000-node target. The CV and the mean node count are written beside the bar.</p>
 <div class="b4-exp__chart-wrap">
               <svg id="b4-pid-svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="PID vs static outcome dispersion across 30 seeds"></svg>
             </div>
-            <p class="b4-exp__note">Source: <code>headline_bootstrap.json</code> (30 seeds per arm, 20,000 bootstrap resamples, seed 42). Lower coefficient of variation (CV) means tighter node-count tracking around the 10,000-node target.</p>
+            <p class="b4-exp__note">Source: <code>headline_bootstrap.json</code> (30 seeds per arm, 20,000 bootstrap resamples, seed 42). A lower coefficient of variation (CV) means outcomes cluster more tightly across the 30 seeds; CV is measured around each arm&rsquo;s own mean, not the 10,000-node target.</p>
           </div>
         </figure>
 
@@ -519,7 +519,7 @@
           <p><span class="key-num" aria-hidden="true">4</span><span class="key-num-copy"><strong>Reputation collapse and instrumentation gap</strong><br>
           At 0.99 uptime threshold: average reputation 0.28/5.0 economic-only, 0.17/5.0 with operational risk (year-5 boundary walk mean 0.827 vs 0.9875 as-coded up-fraction on 2.525 effective down epochs, a 16.0-point instrumentation gap; 0.9827 and 15.6 points on the 3.525-day pre-decrement drawn duration)<br>
           At 0.95 threshold: average reputation ~1.0 by year 5 · At 0.90 threshold: average reputation ~2.0 by year 5<br>
-          Counterfactual within-season downtime-count rule: clears from 0.72 at 0.99 to 0.98 at 0.90 as coded (mean 1.1 seasonal down-days; 0.64 to 0.97 on 1.5 drawn down-days)<br>
+          Counterfactual within-season downtime-count rule: the share of operators qualifying rises from 72% at 0.99 to 98% at 0.90 as coded (1.1 down-days per season on average; 64% to 97% on the 1.5-day drawn duration)<br>
           Driver is the recovery threshold, not the decay rate: at threshold 0.99 even the smallest decay penalty leaves reputation near 0.33</span></p>
           <p><span class="key-num" aria-hidden="true">5</span><span class="key-num-copy"><strong>ValOS/NORS mapping</strong><br>
           74 active ValOS risk vectors · 64 testable controls · 36 NORS control objectives to 7 simulatable parameters</span></p>

@@ -349,7 +349,7 @@
         <div class="b4-exp__head">
           <div>
             <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Interactive Dependency &amp; Outage Matrix</p>
-            <h4 id="a4-exp-title">Simulate 72-hour entity outages across the 3 tokenization strategies and compare corporate-action architectures</h4>
+            <h4 id="a4-exp-title">Explore which entities each strategy relies on for each MVEP category under the paper&rsquo;s stress scenarios, and compare corporate-action architectures</h4>
           </div>
           <div class="b4-exp__tabs" role="tablist" aria-label="Three strategies explorer views">
             <button type="button" class="b4-exp__tab is-active" role="tab" aria-selected="true" data-a4-tab="outage">1. Shared-entity outage simulator (10 entities)</button>
@@ -360,14 +360,14 @@
         <div class="b4-exp__panel" id="a4-panel-outage" role="tabpanel">
           <div class="b4-exp__controls">
             <div class="b4-exp__control">
-              <label>Select an infrastructure entity to inspect cross-strategy dependencies and 72-hour outage propagation:</label>
+              <label>Select an infrastructure entity to inspect cross-strategy dependencies under the paper&rsquo;s stress scenarios:</label>
               <div class="b4-exp__scen-group" role="group" aria-label="Infrastructure entity selector">
                 <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a4-entity="securitize">Securitize (3/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="dtc">DTCC / DTC (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="ubyx">Ubyx (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="canton">Canton Network (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="bny">BNY (3/3)</button>
-                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="jpmd">Kinexys / JPMD (1/3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="jpmd">Kinexys / JPMD (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="citi">Citi (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="ondo">Ondo / Oasis Pro (2/3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-entity="nasdaq">Nasdaq (1/3)</button>
@@ -383,7 +383,7 @@
               <span class="b4-exp__sub" id="a4-m-span-sub">Transfer agent for BUIDL (S1 &amp; S2) and first digital TA on NYSE Digital Trading Platform (S3)</span>
             </div>
             <div class="b4-exp__card">
-              <span class="b4-exp__label">72-hour outage / stress scenario</span>
+              <span class="b4-exp__label">Outage / stress scenario</span>
               <strong class="b4-exp__val" id="a4-m-scen">System-wide TA freeze</strong>
               <span class="b4-exp__sub" id="a4-m-scen-sub">Scenario 3C + Section 5: halts minting, burning, and register updates across all three strategies simultaneously</span>
             </div>
@@ -394,11 +394,11 @@
             </div>
           </div>
 
-                    <p class="fg-route-key"><strong>How to read this.</strong> Each cell is one operator's role in that strategy. Red is a primary 72-hour outage point. Blue is an active dependency.</p>
+                    <p class="fg-route-key"><strong>How to read this.</strong> Each cell is one operator's role in that strategy. Red is a primary outage point. Blue is an active dependency.</p>
 <div class="b4-exp__chart-wrap">
             <svg id="a4-outage-svg" viewBox="0 0 880 350" width="880" height="350" role="img" aria-label="3 strategies by 10 MVEP categories dependency and outage propagation matrix"></svg>
           </div>
-          <p class="b4-exp__note">Source: Sections 2, 4, 5, and 9 of <em>Three Tokenization Strategies</em> (SSRN 6483198). Cells highlight which of the 10 MVEP diligence categories each strategy relies on the selected entity to satisfy, and how a 72-hour disruption propagates.</p>
+          <p class="b4-exp__note">Source: Sections 2, 4, 5, and 9 of <em>Three Tokenization Strategies</em> (SSRN 6483198). Cells highlight which of the 10 MVEP diligence categories each strategy relies on the selected entity to satisfy. Cell shading is an editorial reading of Sections 2, 4, 5, and 9; the paper&rsquo;s 72-hour outage case is Securitize (Scenario 3C).</p>
         </div>
 
         <div class="b4-exp__panel" id="a4-panel-corp" role="tabpanel" hidden>

@@ -220,7 +220,7 @@ def read_site_hard_gates() -> dict:
         ai_raw, re.I,
     )
     m_date = re.search(
-        r"Hard refusals</th><td class=\"ai-val\">\d[\d,]*</td><td class=\"ai-how\">[^<]*?through\s+(\d{4}-\d{2}-\d{2})",
+        r"(?:Hard refusals|Attempts at a hard gate)</th><td class=\"ai-val\">\d[\d,]*</td><td class=\"ai-how\">[^<]*?through\s+(\d{4}-\d{2}-\d{2})",
         ai_raw, re.I,
     )
     m_home = re.search(
@@ -337,17 +337,17 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
         ai_new,
     )
     ai_new = re.sub(
-        r"(the hard-gate figures are from )\d{4}-\d{2}-\d{2}",
+        r"((?:the hard-gate figures are from|, hard gates) )\d{4}-\d{2}-\d{2}",
         rf"\g<1>{date_iso}",
         ai_new,
     )
     ai_new = re.sub(
-        r"(the hard-refusal row was measured )\d{4}-\d{2}-\d{2}( over both machines)",
+        r"(the (?:hard-refusal|hard-gate attempts) row was measured )\d{4}-\d{2}-\d{2}( over both machines)",
         rf"\g<1>{date_iso}\g<2>",
         ai_new,
     )
     ai_new = re.sub(
-        r'(<tr><th scope="row">Hard refusals</th><td class="ai-val">)\d[\d,]*(</td><td class="ai-how">Calls that reached an armed gate across the \d+ classes that carry one, on both of the fleet\'s machines, through )\d{4}-\d{2}-\d{2}(\.\s*)\d[\d,]*(\s+refused,\s+)\d[\d,]*(\s+overridden with the documented escape)',
+        r'(<tr><th scope="row">(?:Hard refusals|Attempts at a hard gate)</th><td class="ai-val">)\d[\d,]*(</td><td class="ai-how">Calls that reached an armed gate across the \d+ classes that carry one, on both of the fleet\'s machines, through )\d{4}-\d{2}-\d{2}(\.\s*)\d[\d,]*(\s+refused,\s+)\d[\d,]*(\s+overridden with the documented escape)',
         rf"\g<1>{attempts_s}\g<2>{date_iso}\g<3>{stopped_s}\g<4>{overridden_s}\g<5>",
         ai_new,
     )
