@@ -8918,17 +8918,17 @@
 (function(){
   'use strict';
 
-  /* Exact Helium S2R series from Section 5.1.1 Tables */
+  /* Helium S2R series: monthly values from Table 3; trailing windows from Table 3a for Oct 2025 to Feb 2026, and for earlier months recomputed the same way (burns summed over issuance) from the monthly series of record */
   var B3_HNT_POINTS = [
     { label: 'May 23', monthly: 0.013, t3m: 0.013, t6m: 0.013, ttm: 0.013, burned: '37.2K', issued: '2.88M' },
-    { label: 'Sep 23', monthly: 0.119, t3m: 0.068, t6m: 0.045, ttm: 0.038, burned: '138.7K', issued: '1.17M' },
-    { label: 'Jan 24', monthly: 0.052, t3m: 0.055, t6m: 0.062, ttm: 0.049, burned: '75.6K', issued: '1.46M' },
-    { label: 'Jun 24', monthly: 0.024, t3m: 0.031, t6m: 0.040, ttm: 0.048, burned: '28.2K', issued: '1.16M' },
-    { label: 'Nov 24', monthly: 0.137, t3m: 0.078, t6m: 0.058, ttm: 0.056, burned: '159.5K', issued: '1.16M' },
-    { label: 'Mar 25', monthly: 0.107, t3m: 0.095, t6m: 0.088, ttm: 0.069, burned: '200.4K', issued: '1.88M' },
-    { label: 'Jun 25', monthly: 0.376, t3m: 0.245, t6m: 0.172, ttm: 0.115, burned: '708.9K', issued: '1.88M' },
-    { label: 'Aug 25', monthly: 0.869, t3m: 0.520, t6m: 0.310, ttm: 0.155, burned: '532.9K', issued: '613.5K' },
-    { label: 'Sep 25', monthly: 0.587, t3m: 0.611, t6m: 0.355, ttm: 0.168, burned: '456.2K', issued: '776.7K' },
+    { label: 'Sep 23', monthly: 0.119, t3m: 0.053, t6m: 0.037, ttm: 0.037, burned: '138.7K', issued: '1.17M' },
+    { label: 'Jan 24', monthly: 0.052, t3m: 0.038, t6m: 0.056, ttm: 0.039, burned: '75.6K', issued: '1.46M' },
+    { label: 'Jun 24', monthly: 0.024, t3m: 0.031, t6m: 0.036, ttm: 0.042, burned: '28.2K', issued: '1.16M' },
+    { label: 'Nov 24', monthly: 0.137, t3m: 0.063, t6m: 0.044, ttm: 0.041, burned: '159.5K', issued: '1.16M' },
+    { label: 'Mar 25', monthly: 0.107, t3m: 0.074, t6m: 0.054, ttm: 0.044, burned: '200.4K', issued: '1.88M' },
+    { label: 'Jun 25', monthly: 0.376, t3m: 0.156, t6m: 0.115, ttm: 0.075, burned: '708.9K', issued: '1.88M' },
+    { label: 'Aug 25', monthly: 0.869, t3m: 0.341, t6m: 0.181, ttm: 0.107, burned: '532.9K', issued: '613.5K' },
+    { label: 'Sep 25', monthly: 0.587, t3m: 0.384, t6m: 0.240, ttm: 0.134, burned: '456.2K', issued: '776.7K' },
     { label: 'Oct 25', monthly: 1.570, t3m: 0.980, t6m: 0.410, ttm: 0.190, burned: '975.3K', issued: '621.4K' },
     { label: 'Nov 25', monthly: 0.880, t3m: 0.980, t6m: 0.560, ttm: 0.220, burned: '546.8K', issued: '621.4K' },
     { label: 'Dec 25', monthly: 1.552, t3m: 1.350, t6m: 0.780, ttm: 0.340, burned: '1.21M', issued: '776.7K' },
