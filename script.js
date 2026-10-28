@@ -9409,14 +9409,14 @@
       } else if(curMacro === 'mbs'){
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Tightening subsample (T = 85)</span><span class="b4-stat__val">p = 0.031</span><span class="b4-stat__sub">Cointegration holds under the conditional null (securities held outright)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Easing subsample (T = 72)</span><span class="b4-stat__val">p = 0.048 (marginal)</span><span class="b4-stat__sub">The relation holds in both regimes, on the MBS series too (p = 0.051 and 0.049); the regime contrast in earlier drafts is withdrawn</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Easing subsample (T = 72)</span><span class="b4-stat__val">p = 0.048 (marginal)</span><span class="b4-stat__sub">The relation with Federal Reserve securities appears in both tightening and easing. On the mortgage-backed-securities series the same split is p = 0.051 and 0.049</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Easing level correlation</span><span class="b4-stat__val">r = -0.98</span><span class="b4-stat__sub">Supply nearly doubled ($162B to $305B) after Sep 2024 rate cut</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Pre-cut 180d rolling correlation</span><span class="b4-stat__val">+0.06</span><span class="b4-stat__sub">Near-zero bivariate correlation during late tightening</span></div>';
 
         var mbsRows = [
-          { label: 'Full 157-week sample (Feb 2023 to Jan 2026), as published in earlier drafts', val: 30.68, max: 55, badge: 'Trace 30.68 (p = 0.13)', note: 'Clears the asymptotic value but not the finite-sample one, so it is not a rejection at 5 percent' },
-          { label: 'Asymptotic 5% critical value', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'At T = 157 the nominal 5% test built on it has an actual size of 0.15' },
-          { label: 'Finite-sample 5% critical value (Monte Carlo, T = 157)', val: 35.3, max: 55, badge: 'CV = 35.3', note: 'Independent random walks carrying the data&rsquo;s own drifts and variances, with nothing estimated inside' }
+          { label: 'Published MBS full-sample trace (T = 157)', val: 30.68, max: 55, badge: 'Trace 30.68 (p = 0.13)', note: 'Clears the asymptotic 29.80 line and misses the finite-sample 5 percent line at 35.3. That is why it is not a 5 percent rejection. The p-values above are the securities-held-outright subsamples, not this trace.' },
+          { label: 'Asymptotic 5 percent critical value', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'The full-sample line earlier drafts used for the short subsamples too. That comparison produced the withdrawn tightening trace of 48.18 and easing trace of 17.71.' },
+          { label: 'Finite-sample 5 percent critical value (T = 157)', val: 35.3, max: 55, badge: 'CV = 35.3', note: 'Estimation-free Monte Carlo on this sample. The nominal 5 percent test has size 0.15, so 30.68 corresponds to p = 0.13.' }
         ];
         barsEl.innerHTML = mbsRows.map(function(r){
           var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
@@ -9436,7 +9436,7 @@
         var spRows = [
           { label: 'Gemini (GUSD) bank-deposit reserve recycling share', val: 100, max: 100, badge: '~100% bank deposits', note: 'Reserves remain inside commercial banking perimeter' },
           { label: 'Circle (USDC) bank-deposit reserve recycling share', val: 14, max: 100, badge: '~14% bank deposits', note: '86% in short-duration Treasuries and repo via Circle Reserve Fund (BNY)' },
-          { label: 'Fed + ON RRP 26-week forecast-error variance share (MBS system)', val: 13.9, max: 100, badge: '13.9% variance share', note: '2.2% in securities-held-outright system; 5-week error-correction half-life' },
+          { label: 'Fed + ON RRP 26-week forecast-error variance share', val: 2.2, max: 100, badge: '2.2% of supply variance', note: 'Securities held outright. Earlier drafts reported 13.9% on the mortgage-backed-securities series. Smoothed half-life is about five weeks.' },
           { label: 'Tether (USDT) bank-deposit reserve recycling share', val: 4, max: 100, badge: '~4% bank deposits', note: 'Predominantly Treasury bills and repo; minimal commercial-bank deposit recycling' }
         ];
         barsEl.innerHTML = readingList(spRows.map(function(r){ return { name: r.label, val: r.badge, note: r.note }; }));

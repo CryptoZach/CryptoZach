@@ -4605,7 +4605,7 @@ section:has(.speaker-jump-to){
     justify-content:flex-end;
   }
   .research-library-page ul.writing-list > li > article.research-card--dual-essays > .writing-card-actions .writing-thumb-actions{
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
     justify-content:flex-end;
   }
   .research-library-page ul.writing-list > li > article.writing-card--has-actions > .writing-link .writing-meta,
@@ -4625,6 +4625,9 @@ section:has(.speaker-jump-to){
   .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions > .writing-link .writing-title-stack{
     padding-right:min(52%, 22rem);
     box-sizing:border-box;
+  }
+  .research-library-page ul.writing-list > li > article.research-card--dual-essays.writing-card--has-actions:has(> .writing-card-actions) > .writing-link--static.writing-link--thumb .writing-copy{
+    padding-right:min(52%, 22rem);
   }
 }
 @media (min-width: 1024px){
