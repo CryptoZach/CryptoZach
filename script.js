@@ -9409,15 +9409,14 @@
       } else if(curMacro === 'mbs'){
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Tightening subsample (T = 85)</span><span class="b4-stat__val">p = 0.031</span><span class="b4-stat__sub">Cointegration holds under the conditional null (securities held outright)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Easing subsample (T = 72)</span><span class="b4-stat__val">p = 0.048 (marginal)</span><span class="b4-stat__sub">The relation holds in both regimes; the regime contrast in earlier drafts is withdrawn</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Easing subsample (T = 72)</span><span class="b4-stat__val">p = 0.048 (marginal)</span><span class="b4-stat__sub">The relation holds in both regimes, on the MBS series too (p = 0.051 and 0.049); the regime contrast in earlier drafts is withdrawn</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Easing level correlation</span><span class="b4-stat__val">r = -0.98</span><span class="b4-stat__sub">Supply nearly doubled ($162B to $305B) after Sep 2024 rate cut</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Pre-cut 180d rolling correlation</span><span class="b4-stat__val">+0.06</span><span class="b4-stat__sub">Near-zero bivariate correlation during late tightening</span></div>';
 
         var mbsRows = [
-          { label: 'MBS full sample, as published in earlier drafts', val: 30.68, max: 55, badge: 'Trace 48.18 (95% CV = 29.80)', note: 'High Treasury bill rates widen issuer reserve carry; strongest equilibrium tie' },
-          { label: 'Full 157-week sample (Feb 2023 to Jan 2026)', val: 30.68, max: 55, badge: 'Trace 30.68 (95% CV = 29.80)', note: 'Spans both tightening and post-September 2024 easing phases' },
-          { label: '95% Johansen trace critical value (MBS system)', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'Standard 5% significance threshold for rank-0 test' },
-          { label: 'Easing regime (post-September 2024 rate cuts)', val: 17.71, max: 55, badge: 'Trace 17.71 | Level r = -0.98', note: 'Lower T-bill yields compress gap against DeFi lending rates; aggregate supply expanded from $162B to $305B' }
+          { label: 'Full 157-week sample (Feb 2023 to Jan 2026), as published in earlier drafts', val: 30.68, max: 55, badge: 'Trace 30.68 (p = 0.13)', note: 'Clears the asymptotic value but not the finite-sample one, so it is not a rejection at 5 percent' },
+          { label: 'Asymptotic 5% critical value', val: 29.80, max: 55, badge: 'CV = 29.80', note: 'At T = 157 the nominal 5% test built on it has an actual size of 0.15' },
+          { label: 'Finite-sample 5% critical value (Monte Carlo, T = 157)', val: 35.3, max: 55, badge: 'CV = 35.3', note: 'Independent random walks carrying the data&rsquo;s own drifts and variances, with nothing estimated inside' }
         ];
         barsEl.innerHTML = mbsRows.map(function(r){
           var pct = Math.min(100, (r.val / r.max) * 100).toFixed(1);
