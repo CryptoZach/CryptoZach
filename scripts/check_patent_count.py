@@ -113,6 +113,9 @@ APP_PATTERNS = [
     re.compile(r"·\s*" + NUM_TOKEN + r"\s+filings\s+·", re.I),
     re.compile(r"\bAll\s+" + NUM_TOKEN + r",\s+grouped\s+by\s+primary\s+function\b", re.I),
     re.compile(r'data-scale-uspto-applications="' + NUM_TOKEN + r'"', re.I),
+    # Site-search keywords in script.js ("patents uspto <N> applications <F> families"); missed by the forms
+    # above on the 2026-11-03 bump to 49. Measured before adding: 1 match site-wide, the keyword string.
+    re.compile(r"\buspto\s+" + NUM_TOKEN + r"\s+applications\b", re.I),
 ]
 
 FAMILY_PATTERNS = [
@@ -123,7 +126,12 @@ FAMILY_PATTERNS = [
     ),
     re.compile(r'data-scale-uspto-families="' + NUM_TOKEN + r'"', re.I),
     re.compile(r"\b" + NUM_TOKEN + r"(?:\s+[A-Za-z]+){0,2}\s+patent families\b", re.I),
-    re.compile(r"filings\s+·\s*" + NUM_TOKEN + r"\s+families\b", re.I),
+    # "applications · <F> families" is the explorer kicker on patents/index.html, which this pattern missed
+    # on two bumps (42/32 to 46/36 left "32 families"; 46/36 to 49/39 left "36 families"). Measured before
+    # widening: 2 matches site-wide, the kicker and the registry badge, both genuine.
+    re.compile(r"(?:filings|applications)\s+·\s*" + NUM_TOKEN + r"\s+families\b", re.I),
+    # The same site-search keywords ("applications <F> families"): 1 match site-wide.
+    re.compile(r"\bapplications\s+" + NUM_TOKEN + r"\s+families\b", re.I),
     re.compile(r"\(\s*" + NUM_TOKEN + r"\s+families\s*\)", re.I),
 ]
 
