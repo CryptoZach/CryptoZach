@@ -627,6 +627,9 @@ def check_and_sync_resumes(n_apps, n_families, write_mode):
                         for item in zin.infolist():
                             data = new_xml.encode("utf-8") if item.filename == "word/document.xml" else zin.read(item.filename)
                             zout.writestr(item, data)
+                    # mkstemp creates the file 0600; keep the resume's own mode so a rewrite never
+                    # narrows it (2026-11-02: six resumes went 0644 -> 0600 on a --write run).
+                    shutil.copymode(fpath, tmp_path)
                     os.replace(tmp_path, fpath)
                     modified_docx.append(fpath)
 
