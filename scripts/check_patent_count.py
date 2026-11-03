@@ -488,8 +488,12 @@ def check_and_sync_resumes(n_apps, n_families, write_mode):
     if not resumes_dir.is_dir():
         return [], [], 0
 
+    # "US" as well as "USPTO" (2026-11-03): the AI governance resume's prose reads "Filed <N> US patent
+    # applications across <F> families", and with only "USPTO" this guard rewrote that sentence's F and
+    # never read its N, so it shipped "Filed 41 US patent applications across 39 families" while reporting
+    # every mention in agreement. "US" is case-sensitive so the pronoun "us" cannot match.
     app_pat = re.compile(
-        r"\b" + NUM_TOKEN + r"(\s+(?:filed\s+)?USPTO\s+(?:patent\s+)?applications?\b)",
+        r"\b" + NUM_TOKEN + r"(\s+(?:filed\s+)?(?:USPTO|(?-i:US))\s+(?:patent\s+)?applications?\b)",
         re.I,
     )
     fam_pat = re.compile(
