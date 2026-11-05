@@ -355,11 +355,11 @@
         <div class="b4-exp__panel" id="a3-panel-eligibility" role="tabpanel">
           <div class="b4-exp__controls">
             <div class="b4-exp__control">
-              <label>Scoring specification &amp; depeg window (Sections 7.2 &amp; 7.3):</label>
+              <label>Scoring specification &amp; depeg window (from the collateral eligibility results and robustness exhibit):</label>
               <div class="b4-exp__scen-group" role="group" aria-label="Eligibility scoring specification">
                 <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a3-spec="published">Published composite (full-history depeg)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-spec="rolling3y">3-year rolling window (USDT sensitivity)</button>
-                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-spec="mechanical">Mechanical 8-metric rule (Section 7.3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-spec="mechanical">Mechanical 8-metric rule (robustness exhibit)</button>
               </div>
             </div>
           </div>
@@ -386,17 +386,17 @@
 <div class="b4-exp__chart-wrap">
             <svg id="a3-elig-svg" viewBox="0 0 880 310" width="880" height="310" role="img" aria-label="Collateral eligibility composite score versus operator CLII across 8 dollar products"></svg>
           </div>
-          <p class="b4-exp__note">Source: Tables in Sections 3, 7.2, and 7.3 of <em>Seven Dollars</em> (SSRN 6483118; replication tag <code>v1.0</code>). Solid bars show collateral eligibility composite (0 to 1); hollow markers show operator CLII score (0 to 1).</p>
+          <p class="b4-exp__note">Source: The tables on the CLII and collateral eligibility in <em>Seven Dollars</em> (SSRN 6483118; replication tag <code>v1.0</code>). Solid bars show collateral eligibility composite (0 to 1); hollow markers show operator CLII score (0 to 1).</p>
         </div>
 
         <div class="b4-exp__panel" id="a3-panel-design" role="tabpanel" hidden>
           <div class="b4-exp__controls">
             <div class="b4-exp__control">
-              <label>Filter 11-product sample by US-holder design class (Section 3.2):</label>
+              <label>Filter 11-product sample by US-holder design class:</label>
               <div class="b4-exp__scen-group" role="group" aria-label="US-holder design class filter">
                 <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a3-class="all">All 11 products</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="us">For US holders (5)</button>
-                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="ppsi">PPSI-eligible anchor (3)</button>
+                <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="ppsi">Permitted-issuer-eligible anchor (3)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="offshore">Offshore-targeted (4)</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a3-class="boundary">Boundary cases (2)</button>
               </div>
@@ -410,7 +410,7 @@
               <span class="b4-exp__sub">5 For-US-holders + 4 Offshore-targeted; 2 boundary cases (FDUSD, USD1)</span>
             </div>
             <div class="b4-exp__card">
-              <span class="b4-exp__label">US PPSI-eligible anchor</span>
+              <span class="b4-exp__label">US permitted-issuer-eligible anchor</span>
               <strong class="b4-exp__val">USDC &middot; PYUSD &middot; RLUSD</strong>
               <span class="b4-exp__sub">All 3 built under NYDFS trust or OCC national-trust pathways + full KYC &amp; Allow-US posture</span>
             </div>
@@ -425,7 +425,7 @@
 <div class="b4-exp__chart-wrap">
             <svg id="a3-design-svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="Five-marker US-holder design scorecard across 11 dollar products"></svg>
           </div>
-          <p class="b4-exp__note">Source: Section 3.2 Table of <em>Seven Dollars</em> (SSRN 6483118). Distinguishes structural product taxonomy (what the token is) from target-holder design (who the token is built for under the GENIUS Act and its implementing rules, including the FDIC proposal, RIN 3064-AG19).</p>
+          <p class="b4-exp__note">Source: The US-holder design table in <em>Seven Dollars</em> (SSRN 6483118). Distinguishes structural product taxonomy (what the token is) from target-holder design (who the token is built for under the GENIUS Act and its implementing rules, including the FDIC&rsquo;s proposed requirements and standards for the stablecoin issuers it supervises).</p>
         </div>
       </figure>
 
@@ -449,7 +449,7 @@
         <p class="brief-what-this-means"><strong>What this means:</strong> If the objective is to supervise the gateway, the CLII is the correct instrument. If the objective is to assess whether a specific product will hold its peg under a specific stress, the MVEP is the correct instrument. Supervisory practice that uses one framework to answer both questions produces false comfort.</p>
 
         <h2>Finding 2. Collateral eligibility ranks products differently than regulation does</h2>
-        <p>The paper scores each product across eight observable metrics: secondary market depth, instant redemption availability, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, and contagion independence. Products are assigned to four tiers based on the composite score (Tier A is strongest, Tier D is most restricted; tier assignments are author-specified in the manuscript &sect;7.2 table, with cutoffs inferable from the per-product composites reported there). USDC leads at 0.777 (Tier A). PYUSD, issued by the same operator (Paxos) that wound down BUSD two years earlier, follows at 0.753 (Tier A). USDS and USDT tie at 0.657 (Tier B); USDS is Sky Protocol's upgraded token (1:1 with DAI, from the MakerDAO-to-Sky rename), not a rename of DAI, which remains active and scores 0.589 (Tier C). OUSG (Ondo Finance's tokenized short-term US Treasury wrapper) ranks last at 0.295 (Tier D) despite having three liquidation paths, the most in the sample.</p>
+        <p>The paper scores each product across eight observable metrics: secondary market depth, instant redemption availability, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, and contagion independence. Products are assigned to four tiers based on the composite score (Tier A is strongest, Tier D is most restricted; tier assignments are author-specified in the manuscript&rsquo;s collateral eligibility results table, with cutoffs inferable from the per-product composites reported there). USDC leads at 0.777 (Tier A). PYUSD, issued by the same operator (Paxos) that wound down BUSD two years earlier, follows at 0.753 (Tier A). USDS and USDT tie at 0.657 (Tier B); USDS is Sky Protocol's upgraded token (1:1 with DAI, from the MakerDAO-to-Sky rename), not a rename of DAI, which remains active and scores 0.589 (Tier C). OUSG (Ondo Finance's tokenized short-term US Treasury wrapper) ranks last at 0.295 (Tier D) despite having three liquidation paths, the most in the sample.</p>
         <p>The OUSG result inverts the intuition that more paths means more eligibility. Path count is a flow measure; path quality, defined by depth, availability, and independence, determines what gets liquidated under stress. Three paths that all depend on a single redemption pool (Circle's instant-redemption facility for BUIDL, BlackRock's tokenized Treasury fund held as the underlying of OUSG) degrade in correlated ways.</p>
         <p class="brief-what-this-means"><strong>What this means:</strong> Collateral eligibility must be measured directly against observable metrics, product by product; regulatory posture, operator market cap, and redemption path count are weak proxies for it.</p>
 
@@ -463,11 +463,11 @@
         <p class="brief-what-this-means"><strong>What this means:</strong> Assessing a product requires verifying the operational controls around mint and freeze authority (supply caps, per-transaction limits, and multisig thresholds) alongside the operator's regulatory posture.</p>
 
         <h2>US-holder design axis (Q2 extension)</h2>
-        <p>A complementary five-marker design scorecard classifies products by the markers that determine whether a product is built for US holders or for offshore distribution. The scorecard is additive to the structural framework that determines MVEP binding categories and is most useful for the AG19 payment-stablecoin eligibility question, where the bifurcation between For-US-holders and Offshore-targeted products is sharp.</p>
-        <p>The markers cover five design dimensions. M1 (KYC depth) measures holder-identification strength at issuance and redemption. M2 (redemption channel) records whether redemption is open to all holders or gated through verified accounts. M3 (legal-structure jurisdiction) records the issuer entity's primary regulator (NYDFS trust, OCC trust, BVI, Hong Kong, Bermuda). M4 (geofencing posture) records whether the product blocks US IPs at issuance and at secondary markets. M5 (dollar-instrument legal-character) records whether the product is a payment-stablecoin candidate (AG19-eligible), a tokenized money market fund, or a synthetic yield position.</p>
+        <p>A complementary five-marker design scorecard classifies products by the markers that determine whether a product is built for US holders or for offshore distribution. The scorecard is additive to the structural framework that determines MVEP binding categories and is most useful for the question of payment-stablecoin eligibility under the FDIC&rsquo;s proposed issuer requirements, where the bifurcation between For-US-holders and Offshore-targeted products is sharp.</p>
+        <p>The markers cover five design dimensions. M1 (KYC depth) measures holder-identification strength at issuance and redemption. M2 (redemption channel) records whether redemption is open to all holders or gated through verified accounts. M3 (legal-structure jurisdiction) records the issuer entity's primary regulator (NYDFS trust, OCC trust, BVI, Hong Kong, Bermuda). M4 (geofencing posture) records whether the product blocks US IPs at issuance and at secondary markets. M5 (dollar-instrument legal-character) records whether the product is a payment-stablecoin candidate (eligible under the FDIC proposal), a tokenized money market fund, or a synthetic yield position.</p>
         <p>Applied across an eleven-product sample, the markers partition the landscape into three classes. Five products are For-US-holders (USDC, USDS, PYUSD, RLUSD, FRAX). Four are Offshore-targeted (USDT, USDe, USDY, USDM). Two are boundary cases (FDUSD, USD1). Clean-classification reaches approximately 82 percent.</p>
-        <p>The PPSI-eligibility intersection narrows the regulatorily-tractable design class to a three-product anchor: USDC, PYUSD, RLUSD. All three issuers built their US programs under New York-regulated trust or limited-purpose-trust frameworks (Paxos via the NYDFS trust charter it held until its OCC national trust conversion, conditionally approved December 12, 2025, and now Paxos Trust Company, N.A. under OCC supervision; Ripple-Standard Custody via NYDFS limited-purpose trust granted December 2024; Circle via state MTLs plus the late-2025 OCC trust-bank charter pathway), making New York the de facto US PPSI-eligibility staging regulator.</p>
-        <p class="brief-what-this-means"><strong>What this means:</strong> The structural taxonomy answers what a product is; the design-axis lens answers who the product is built for. Both must be applied for an AG19 eligibility assessment.</p>
+        <p>The intersection with permitted payment stablecoin issuer (PPSI) eligibility narrows the regulatorily-tractable design class to a three-product anchor: USDC, PYUSD, RLUSD. All three issuers built their US programs under New York-regulated trust or limited-purpose-trust frameworks (Paxos via the NYDFS trust charter it held until its OCC national trust conversion, conditionally approved December 12, 2025, and now Paxos Trust Company, N.A. under OCC supervision; Ripple-Standard Custody via NYDFS limited-purpose trust granted December 2024; Circle via state MTLs plus the late-2025 OCC trust-bank charter pathway), making New York the de facto US PPSI-eligibility staging regulator.</p>
+        <p class="brief-what-this-means"><strong>What this means:</strong> The structural taxonomy answers what a product is; the design-axis lens answers who the product is built for. Both must be applied to assess eligibility under the FDIC proposal.</p>
 
         <h2>Who should care</h2>
         <p><strong>Policymakers.</strong> If the goal is to prevent a repeat of SVB, the instrument that would detect the condition is custody concentration at the product level, not regulatory intensity at the operator level. Both instruments are useful; they answer different questions and cannot substitute for each other.</p>
@@ -487,8 +487,8 @@
           <li>CLII extended to five operators using the Routing the Dollar methodology.</li>
           <li>MVEP category binding predicted from the taxonomy and checked against each product.</li>
           <li>Eight-metric collateral eligibility framework scored across the seven products.</li>
-          <li>Those eligibility composites operationalized metric by metric (Section 7.3): one explicit scoring rule per metric, each grounded only in a fact the paper already states, so a reader can check the scores rather than take them on trust. The mechanical composites reproduce the published rank ordering, and the residuals are printed rather than hidden (mean absolute gap 0.049).</li>
-          <li>Five-marker US-holder design scorecard tabulated across an eleven-product sample (Section 3.2), sorting each product into for-US-holders, offshore-targeted, or boundary case.</li>
+          <li>Those eligibility composites operationalized metric by metric in a robustness exhibit: one explicit scoring rule per metric, each grounded only in a fact the paper already states, so a reader can check the scores rather than take them on trust. The mechanical composites reproduce the published rank ordering, and the residuals are printed rather than hidden (mean absolute gap 0.049).</li>
+          <li>Five-marker US-holder design scorecard tabulated across an eleven-product sample, sorting each product into for-US-holders, offshore-targeted, or boundary case.</li>
           <li>Two production stress episodes analyzed (SVB March 2023, Circle pool March 2025).</li>
           <li>SVB counterfactual applied to current structures for each product.</li>
           <li>Within-operator natural experiment documented (Paxos BUSD wind-down vs PYUSD scale-up under the same NYDFS trust charter).</li>
@@ -497,11 +497,11 @@
         <h2>Abstract</h2>
         <p><strong>Opening and claim boundary.</strong> Seven dollar-denominated digital products (USDC, USDT, USDG, PYUSD, DAI, USDe, OUSG) share a denomination and a target price. Each requires a structurally different institutional diligence package. The analysis is descriptive; none of the findings should be read as causal estimates.</p>
         <p><strong>Data.</strong> Operator filings, reserve attestations, on-chain holdings, Dune Analytics queries, CoinGecko and Token Terminal market metrics, two stress episodes (SVB March 2023, Circle pool incident March 27, 2025), and a within-operator natural experiment (Paxos BUSD vs PYUSD, same issuer and NYDFS trust charter, opposite outcomes over 31 months).</p>
-        <p><strong>Classification (Section 2).</strong> Four-dimension taxonomy predicts which MVEP categories are binding for each product. Payment stablecoins cluster on Categories 1, 4, 5 (rights parity, custody, insolvency). DAI clusters on Categories 2, 8, 10 (system of record, governance, collateral operability). OUSG clusters on Categories 2, 5, 10 (multi-layer records, GP concentration, constrained liquidation).</p>
-        <p><strong>CLII extension (Section 3).</strong> Circle 0.92, Paxos (USDG) 0.83, Ondo 0.61, Tether 0.52, MakerDAO/Sky 0.15. Evidence consistent with a regulatory-intensity ranking that does not predict stress performance.</p>
-        <p><strong>Collateral eligibility (Section 4).</strong> USDC 0.777, PYUSD 0.753, USDS 0.657, USDT 0.657, USDe 0.604, DAI 0.589, USDG 0.495, OUSG 0.295. Eight metrics: secondary market depth, instant redemption, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, contagion independence.</p>
-        <p><strong>Contagion analysis (Section 5).</strong> Direction ran simple-to-complex in both observed stress episodes. USDC depeg propagated to DAI through the PSM (pre-SVB PSM USDC balance approximately $2.1B; surged to $4.1B during crisis). BUIDL instant-redemption stress propagated to OUSG through the Circle-operated pool.</p>
-        <p><strong>Risk migration (Section 6).</strong> Structural comparison of pre-SVB and post-SVB concentration points across the seven products. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG: segregated architecture, single banking partner. OUSG: diversified underlyings, single instant-redemption pool.</p>
+        <p><strong>Classification.</strong> Four-dimension taxonomy predicts which MVEP categories are binding for each product. Payment stablecoins cluster on Categories 1, 4, 5 (rights parity, custody, insolvency). DAI clusters on Categories 2, 8, 10 (system of record, governance, collateral operability). OUSG clusters on Categories 2, 5, 10 (multi-layer records, GP concentration, constrained liquidation).</p>
+        <p><strong>CLII extension.</strong> Circle 0.92, Paxos (USDG) 0.83, Ondo 0.61, Tether 0.52, MakerDAO/Sky 0.15. Evidence consistent with a regulatory-intensity ranking that does not predict stress performance.</p>
+        <p><strong>Collateral eligibility.</strong> USDC 0.777, PYUSD 0.753, USDS 0.657, USDT 0.657, USDe 0.604, DAI 0.589, USDG 0.495, OUSG 0.295. Eight metrics: secondary market depth, instant redemption, maximum observed depeg, liquidation path count, business-hours coverage, transfer restriction model, reserve transparency, contagion independence.</p>
+        <p><strong>Contagion analysis.</strong> Direction ran simple-to-complex in both observed stress episodes. USDC depeg propagated to DAI through the PSM (pre-SVB PSM USDC balance approximately $2.1B; surged to $4.1B during crisis). BUIDL instant-redemption stress propagated to OUSG through the Circle-operated pool.</p>
+        <p><strong>Risk migration (the Silicon Valley Bank counterfactual).</strong> Structural comparison of pre-SVB and post-SVB concentration points across the seven products. USDC moved from multi-bank deposit risk to single-custodian operational risk. USDG: segregated architecture, single banking partner. OUSG: diversified underlyings, single instant-redemption pool.</p>
         <p><strong>Robustness.</strong> USDT maximum depeg (42.7%) is historical (2018 banking disruption). A three-year rolling window lifts USDT's composite to approximately 0.80 (Tier A). Full-history specification is primary; three-year sensitivity is included as robustness.</p>
         <p><strong>Scope boundary.</strong> Dependency matrix is 7x7 direct dependencies. Indirect dependencies through shared infrastructure (Ethereum congestion, exchange counterparty risk) are discussed but not quantified. CLII scores for Paxos and Ondo are author-assessed from public information. USDe CEX counterparty risk is a qualitative factor, not a metric score.</p>
 

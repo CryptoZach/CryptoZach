@@ -385,7 +385,7 @@
             <div class="b4-exp__card">
               <span class="b4-exp__label">Outage / stress scenario</span>
               <strong class="b4-exp__val" id="a4-m-scen">System-wide TA freeze</strong>
-              <span class="b4-exp__sub" id="a4-m-scen-sub">Scenario 3C + Section 5: halts minting, burning, and register updates across all three strategies simultaneously</span>
+              <span class="b4-exp__sub" id="a4-m-scen-sub">Scenario 3C + the Securitize concentration analysis: halts minting, burning, and register updates across all three strategies simultaneously</span>
             </div>
             <div class="b4-exp__card">
               <span class="b4-exp__label">Primary MVEP failure chain</span>
@@ -398,13 +398,13 @@
 <div class="b4-exp__chart-wrap">
             <svg id="a4-outage-svg" viewBox="0 0 880 350" width="880" height="350" role="img" aria-label="3 strategies by 10 MVEP categories dependency and outage propagation matrix"></svg>
           </div>
-          <p class="b4-exp__note">Source: Sections 2, 4, 5, and 9 of <em>Three Tokenization Strategies</em> (SSRN 6483198). Cells highlight which of the 10 MVEP diligence categories each strategy relies on the selected entity to satisfy. Cell shading is an editorial reading of Sections 2, 4, 5, and 9; the paper&rsquo;s 72-hour outage case is Securitize (Scenario 3C).</p>
+          <p class="b4-exp__note">Source: the sections on the infrastructure map, stress scenarios, Securitize concentration and the MVEP application in <em>Three Tokenization Strategies</em> (SSRN 6483198). Cells highlight which of the 10 MVEP diligence categories each strategy relies on the selected entity to satisfy. Cell shading is an editorial reading of those sections; the paper&rsquo;s 72-hour outage case is Securitize (Scenario 3C).</p>
         </div>
 
         <div class="b4-exp__panel" id="a4-panel-corp" role="tabpanel" hidden>
           <div class="b4-exp__controls">
             <div class="b4-exp__control">
-              <label>Select a corporate-action reconciliation architecture for 24/7 tokenized equities (Section 6.2):</label>
+              <label>Select a corporate-action reconciliation architecture for 24/7 tokenized equities:</label>
               <div class="b4-exp__scen-group" role="group" aria-label="Corporate action architecture selector">
                 <button type="button" class="b4-exp__scen is-active" aria-pressed="true" data-a4-arch="halt">Architecture A: Trading halt window</button>
                 <button type="button" class="b4-exp__scen" aria-pressed="false" data-a4-arch="chain">Architecture B: Blockchain-as-authoritative</button>
@@ -435,7 +435,7 @@
 <div class="b4-exp__chart-wrap">
             <svg id="a4-corp-svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-label="Weekend corporate-action record-date timeline comparing DTC register and 24/7 blockchain ledger"></svg>
           </div>
-          <p class="b4-exp__note">Source: Section 6 (Scenario 3A, Figure 4) of <em>Three Tokenization Strategies</em> (SSRN 6483198). Illustrates a Friday 4:00 PM stock-split announcement with a Monday record date across 24/7 weekend trading.</p>
+          <p class="b4-exp__note">Source: the corporate actions reconciliation section (Scenario 3A, Figure 4) of <em>Three Tokenization Strategies</em> (SSRN 6483198). Illustrates a Friday 4:00 PM stock-split announcement with a Monday record date across 24/7 weekend trading.</p>
         </div>
       </figure>
 
@@ -471,9 +471,9 @@
 
         <p class="paper-callout"><strong>Forthcoming.</strong> The pre-funded-clearing architecture extension is drafted and will be added after author verification with Ubyx. The extension is not a revision; it is additional analysis of how pre-funded DvP reshapes the binding constraints.</p>
 
-        <h2>Bank revenue surfaces (post-AG19)</h2>
+        <h2>Bank revenue surfaces (after the FDIC&rsquo;s proposed stablecoin issuer rule)</h2>
         <p>Bank tokenized-dollar issuance distributes revenue across seven non-yield surfaces: S1 custody fees, S2 settlement-rail fees, S3 foreign-exchange spread, S4 treasury-management fees, S5 on-ramp and off-ramp fees, S6 programmability fees, and S7 attestation and disclosure fees. The settlement-layer rent that Finding 4 describes anchors S2; bank-custodian capture (BNY, JPMorgan, Clear Street) on tokenized money market fund management-fee load anchors S1 at approximately 12 to 20 basis points. Aggregate annual revenue across the cohort sits in the $1.4B to $3.0B order-of-magnitude band.</p>
-        <p>Deposit-token operators concentrate revenue at S2 plus an indirect treasury-management margin on customer deposit balances, structurally distinct from payment-stablecoin issuers (reserve-yield, preserved at the issuer level by AG19 but prohibited from passing through to holders) and from tokenized money market fund operators (S4, 20 to 50 basis points). Bank-issued deposit-token revenue ships at qualitative-only public-disclosure level: tokenization-specific revenue is folded into consolidated deposit-product reporting, and 10-K, 10-Q, and Call Reports do not yet require disaggregation. This is a structural disclosure gap rather than an operator opacity choice.</p>
+        <p>Deposit-token operators concentrate revenue at S2 plus an indirect treasury-management margin on customer deposit balances, structurally distinct from payment-stablecoin issuers (reserve-yield, preserved at the issuer level by the FDIC&rsquo;s proposal but prohibited from passing through to holders) and from tokenized money market fund operators (S4, 20 to 50 basis points). Bank-issued deposit-token revenue ships at qualitative-only public-disclosure level: tokenization-specific revenue is folded into consolidated deposit-product reporting, and 10-K, 10-Q, and Call Reports do not yet require disaggregation. This is a structural disclosure gap rather than an operator opacity choice.</p>
         <p><strong>Strategy 2 fee-capture anchor.</strong> Treasury-management fees on the underlying tokenized Treasury products are the high-confidence empirical surface for Strategy 2's revenue capture. Public fee schedules place BUIDL at 0.20 to 0.50 percent, BENJI at approximately 0.20 percent, and OUSG at 0.15 percent net. The custody sub-component flows to bank custodians (BNY for BUIDL; JPMorgan and Clear Street for related products) at approximately 12 to 20 basis points; the residual flows to the issuer and to the smart redemption router operator.</p>
 
         <h2>Who should care</h2>
@@ -502,11 +502,11 @@
         <h2>Abstract</h2>
         <p><strong>Opening and claim boundary.</strong> Institutional tokenization of US securities is proceeding through three distinct strategies. The analysis is prospective and descriptive; the stress scenarios are hypothetical, no DTC-tokenized Treasury has been used as margin collateral in production, no smart redemption router operates at institutional scale, and no tokenized equity has processed a stock split on a 24/7 trading rail. None of the findings should be read as causal estimates.</p>
         <p><strong>Data.</strong> Public regulatory filings and announcements from March 2025 through March 2026; SEC approvals (Nasdaq March 18, 2026; NYSE-Securitize MoU March 24, 2026; BNY tokenized deposits January 9, 2026; DTCC SEC no-action authorization for Canton-based Russell 1000 pilot); public technical specifications for Canton Network, Kinexys JPMD, and Ubyx clearing; author-assessed CLII scores for participant entities based on public information.</p>
-        <p><strong>Strategy 1 (Section 3.1).</strong> Regulated Collateral Circuit. DTC-tokenized Treasuries as 24/7 margin collateral, asset leg on Canton, cash leg in bank-issued deposit tokens (JPMD primary; BNY, Citi optional), clearing through Ubyx. Three liquidation paths specified: secondary market, redemption, bilateral swap. Satisfies all ten MVEP categories by construction.</p>
-        <p><strong>Strategy 2 (Section 3.2).</strong> Multi-Issuer Yield Stack. Composed product holding five tokenized Treasury products (BUIDL, BENJI, FDIT, WTGXX, ULTRA) with a smart redemption router that queries available liquidity and routes to the deepest available pool. Five layers: underlying, router, transfer-agent aggregation, yield-mechanism normalization, multi-chain deployment (Canton, Ethereum, Solana). The Ondo-Oasis Pro acquisition closes the Category 2 gap the MVEP identifies.</p>
-        <p><strong>Strategy 3 (Section 3.3).</strong> Tokenized Equity Rails. Issuance-to-trading pipeline for US equities on SEC-approved exchange infrastructure. Nasdaq-Kraken partnership for global distribution; NYSE-Securitize MoU for digital transfer-agent services. Same CUSIP, same rights, same order book.</p>
-        <p><strong>Cross-cutting findings (Section 5).</strong> Securitize concentration risk: entity is transfer agent in all three strategies; no documented fallback. Corporate-actions reconciliation gap: three architectures specified. Deposit-token competition: Ubyx clearing function determines monopoly versus multi-issuer outcome.</p>
-        <p><strong>Phase gates (Section 8).</strong> Quantitative thresholds for each strategy transition. Phase 1 to Phase 2: $100M minted on Canton circuit, 30 days of JPMD 24/7 settlement without material downtime, two-issuer Ubyx clearing, one end-to-end off-hours margin call. Phase 2 to Phase 3: 90 consecutive days of exchange tokenized-equity trading, one corporate action processed with documented reconciliation, Securitize demonstrating SEC-registered TA functions for fund shares and equities, 2% daily volume-to-outstanding ratio for 30 consecutive days.</p>
+        <p><strong>Strategy 1.</strong> Regulated Collateral Circuit. DTC-tokenized Treasuries as 24/7 margin collateral, asset leg on Canton, cash leg in bank-issued deposit tokens (JPMD primary; BNY, Citi optional), clearing through Ubyx. Three liquidation paths specified: secondary market, redemption, bilateral swap. Satisfies all ten MVEP categories by construction.</p>
+        <p><strong>Strategy 2.</strong> Multi-Issuer Yield Stack. Composed product holding five tokenized Treasury products (BUIDL, BENJI, FDIT, WTGXX, ULTRA) with a smart redemption router that queries available liquidity and routes to the deepest available pool. Five layers: underlying, router, transfer-agent aggregation, yield-mechanism normalization, multi-chain deployment (Canton, Ethereum, Solana). The Ondo-Oasis Pro acquisition closes the Category 2 gap the MVEP identifies.</p>
+        <p><strong>Strategy 3.</strong> Tokenized Equity Rails. Issuance-to-trading pipeline for US equities on SEC-approved exchange infrastructure. Nasdaq-Kraken partnership for global distribution; NYSE-Securitize MoU for digital transfer-agent services. Same CUSIP, same rights, same order book.</p>
+        <p><strong>Cross-cutting findings.</strong> Securitize concentration risk: entity is transfer agent in all three strategies; no documented fallback. Corporate-actions reconciliation gap: three architectures specified. Deposit-token competition: Ubyx clearing function determines monopoly versus multi-issuer outcome.</p>
+        <p><strong>Phase gates.</strong> Quantitative thresholds for each strategy transition. Phase 1 to Phase 2: $100M minted on Canton circuit, 30 days of JPMD 24/7 settlement without material downtime, two-issuer Ubyx clearing, one end-to-end off-hours margin call. Phase 2 to Phase 3: 90 consecutive days of exchange tokenized-equity trading, one corporate action processed with documented reconciliation, Securitize demonstrating SEC-registered TA functions for fund shares and equities, 2% daily volume-to-outstanding ratio for 30 consecutive days.</p>
         <p><strong>Scope boundary.</strong> CLII scores for strategy participants are author-assessed from public information; Securitize's score in particular would require internal compliance documentation to validate. Phase-gate thresholds reflect the author's assessment of institutional-adoption minimums; different institutional contexts may require different thresholds. The corporate-actions analysis is forward-looking; no jurisdiction has finalized a regulatory framework for 24/7 corporate-action processing.</p>
 
         <div class="paper-key-numbers">

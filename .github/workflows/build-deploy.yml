@@ -77,6 +77,7 @@ jobs:
             if [ "$rc" -ge 2 ]; then echo "::warning::$* could not run (exit $rc); not blocking"; fi
           }
           run_check scripts/check_letter_count.py --quiet
+          run_check scripts/check_plain_language.py --quiet
           run_check scripts/check_paper_count.py --quiet
           run_check scripts/check_patent_count.py --quiet
           run_check scripts/check_home_stats.py --quiet

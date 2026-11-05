@@ -68,7 +68,7 @@ VERDICT_MEANING = {
     "UNASSESSED": "No verdict of record: no assessment was performed.",
 }
 TAGS = {
-    "T2": "Section 5.4, Table 4 (the full ten-category assessment of BUIDL, BENJI, OUSG and USDY)",
+    "T2": "the paper's full ten-category assessment of BUIDL, BENJI, OUSG and USDY",
     "SUM": "the summary table (Category 1, Category 6 and the Cash Settlement Asset test for the nine-product sample)",
     "F5": "Finding 5 (Tier 2 custody, reconciliation and insolvency cells)",
     "F6": "Finding 6 (DAI's operational cells)",

@@ -5743,6 +5743,7 @@
   // but not the lowercase word). Longer docket forms are listed before
   // their short variants so the regex matches the full form preferentially
   // (e.g., "RIN 3064-AG19" before "AG19").
+  // plain-language-ignore-start: these tables auto-link a term if a page ever carries it; they are not reader text.
   var TERMS = [
     'RIN 3064-AG19', 'RIN 3064-AG20',
     'OCC-2025-0372', 'FINCEN-2026-0034', 'FINCEN-2026-0100',
@@ -5772,6 +5773,7 @@
     'GENIUS':              'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f',
     'CLARITY':             'https://medium.com/@CryptoZach/navigating-the-new-era-of-digital-assets-how-recent-u-s-64a29c4b061f'
   };
+  // plain-language-ignore-end
 
   var pattern = new RegExp('\\b(' + TERMS.join('|') + ')\\b', 'g');
 
@@ -8011,7 +8013,7 @@
       span: '3 of 3 strategies',
       spanSub: 'Transfer agent for BUIDL (S1 & S2) and first digital TA on NYSE Digital Trading Platform (S3; NYSE: SECZ)',
       scen: 'System-wide TA freeze',
-      scenSub: 'Scenario 3C + Section 5: 72-hour outage halts minting, burning, and register updates across all three strategies simultaneously',
+      scenSub: 'Scenario 3C + the Securitize concentration analysis: 72-hour outage halts minting, burning, and register updates across all three strategies simultaneously',
       mvep: 'Cat. 2 \u2192 Cat. 10',
       mvepSub: 'System of record (Cat. 2) freezes; collateral operability (Cat. 10) degrades; no fallback digital TA documented',
       s1: [0, 2, 1, 0, 0, 1, 0, 0, 1, 2],
@@ -8097,7 +8099,7 @@
     },
     nasdaq: {
       span: '1 of 3 strategies',
-      spanSub: 'SEC-approved tokenized equities trading (Release 34-105047, March 18, 2026); same CUSIP and order book; Kraken gateway',
+      spanSub: 'SEC-approved tokenized equities trading (approval order of March 18, 2026); same CUSIP and order book; Kraken gateway',
       scen: 'Scenario 3B venue arbitrage',
       scenSub: 'T+1 DTC settlement on Nasdaq vs T+0 instant settlement on NYSE creates cross-venue holder ambiguity',
       mvep: 'Cat. 1, 3 & Cat. 6',
@@ -8484,7 +8486,7 @@
     },
     mechanical: {
       top: 'USDC (0.923) \u00b7 PYUSD (0.859)',
-      topSub: 'Section 7.3 mechanical 8-metric rule reproduces the exact rank ordering (mean absolute residual 0.049)',
+      topSub: 'Robustness check: a mechanical 8-metric rule reproduces the exact rank ordering (mean absolute residual 0.049)',
       div: 'USDT 0.674 vs USDG 0.552',
       divSub: 'Weights: Depth 0.20, Redemption 0.15, Max depeg 0.15, Paths 0.10, Hours 0.10, Restrictions 0.10, Transparency 0.10, Independence 0.10',
       contagion: 'OUSG 0.288 (3 paths, Tier D)',
@@ -9576,29 +9578,29 @@
     ];
 
     var regimesSample = [
-      { id: 'J1', name: 'US registered fund (1940 Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'ICA s.17(f) custody, s.18(f)(1) priority, Ch.15, Rule 2a-7/22e-3, Reserve Primary 99.1c recovery' },
-      { id: 'J7', name: 'Bermuda (DABA / BMA) [USYC issuer]', pass: 3, part: 4, fail: 0, verdict: 'PARTIAL (3 Pass, 4 Partial)', note: 'DABA s.18(4) statutory trust + 2025 Custody Rules; dual-layer split with Cayman fund (J6)' },
-      { id: 'J2', name: 'US bank deposit (FDI Act) [JPMD]', pass: 4, part: 1, fail: 2, verdict: 'PARTIAL (Claim-side substitute)', note: 'D2/D4/D6/D7 PASS (12 USC 1821(d)(11) depositor preference); D1/D5 FAIL* structurally inapplicable' },
-      { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (re-score when GENIUS takes effect on January 18, 2027)', note: 'D3 Ch.15 & D5 23 NYCRR 200.9 PASS; GENIUS s.10(c)/s.11 enacted but dormant until effective date' },
-      { id: 'J9', name: 'Singapore (PSA / MAS / IRDA) [USDG]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (PSR reg 18B in force)', note: 'D3 IRDA s.252 & D5 reg 18C PASS; MAS SCS final framework unlegislated' },
-      { id: 'J4', name: 'Delaware LP / UCC Art. 9 [OUSG, USDY]', pass: 2, part: 4, fail: 1, verdict: 'PARTIAL (Note) / AMBIGUOUS (LP)', note: 'D2/D3 PASS; D4 FAIL (no product statute); D5 Partial(+) on UCC 9-322 note backstop, LP fails' },
-      { id: 'J6', name: 'Cayman fund (CIMA / Companies Act) [USYC fund]', pass: 0, part: 7, fail: 0, verdict: 'AMBIGUOUS (0 Pass, 7 Partial)', note: 'CIMA Segregation Rule 5.2/5.5; s.37(7) redeemed-vs-unredeemed rank split (Primeo / Herald)' },
-      { id: 'J5', name: 'BVI fund (Insolvency Act 2003) [BUIDL]', pass: 0, part: 6, fail: 1, verdict: 'AMBIGUOUS (D5 rehypothecation FAIL)', note: 'MFR reg 7 segregation PARTIAL, but no statutory rehypothecation limit in BVI fund law (D5 FAIL)' },
+      { id: 'J1', name: 'US registered fund (1940 Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'Investment Company Act custody and capital-structure priority, Bankruptcy Code cross-border recognition, SEC money market fund rules, Reserve Primary 99.1c recovery' },
+      { id: 'J7', name: 'Bermuda (DABA / BMA) [USYC issuer]', pass: 3, part: 4, fail: 0, verdict: 'PARTIAL (3 Pass, 4 Partial)', note: 'Digital Asset Business Act statutory estate carve-out + 2025 Custody Rules; dual-layer split with Cayman fund (J6)' },
+      { id: 'J2', name: 'US bank deposit (FDI Act) [JPMD]', pass: 4, part: 1, fail: 2, verdict: 'PARTIAL (Claim-side substitute)', note: 'D2/D4/D6/D7 PASS (federal depositor preference); D1/D5 FAIL* structurally inapplicable' },
+      { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (re-score when GENIUS takes effect on January 18, 2027)', note: 'D3 Bankruptcy Code cross-border recognition & D5 New York limit on reusing customer assets PASS; GENIUS segregation and holder priority enacted but dormant until effective date' },
+      { id: 'J9', name: 'Singapore (PSA / MAS / IRDA) [USDG]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (customer-asset trust rule in force)', note: 'D3 Singapore adoption of the cross-border Model Law & D5 limit on transferring customer assets PASS; MAS stablecoin final framework unlegislated' },
+      { id: 'J4', name: 'Delaware LP / UCC secured-transactions rules [OUSG, USDY]', pass: 2, part: 4, fail: 1, verdict: 'PARTIAL (Note) / AMBIGUOUS (LP)', note: 'D2/D3 PASS; D4 FAIL (no product statute); D5 Partial(+) on first-to-file lien priority backstop for the note, LP fails' },
+      { id: 'J6', name: 'Cayman fund (CIMA / Companies Act) [USYC fund]', pass: 0, part: 7, fail: 0, verdict: 'AMBIGUOUS (0 Pass, 7 Partial)', note: 'CIMA Segregation of Assets Rule; Companies Act redeemed-vs-unredeemed rank split (Primeo / Herald)' },
+      { id: 'J5', name: 'BVI fund (Insolvency Act 2003) [BUIDL]', pass: 0, part: 6, fail: 1, verdict: 'AMBIGUOUS (D5 rehypothecation FAIL)', note: 'Mutual Funds Regulations custodian segregation PARTIAL, but no statutory rehypothecation limit in BVI fund law (D5 FAIL)' },
       { id: 'J2S', name: 'US insured bank, non-deposit stablecoin [SoFiUSD]', pass: 0, part: 5, fail: 2, verdict: 'AMBIGUOUS (D1 & D5 FAIL)', note: 'Not a deposit: FDIC insurance & depositor preference disclaimed; $99.76M/$100.01M uninsured cash' },
-      { id: 'J3F', name: 'OCC uninsured national trust bank [USD1, PYUSD]', pass: 0, part: 4, fail: 3, verdict: 'AMBIGUOUS (D3, D5, D7 FAIL)', note: '12 CFR Part 51 receivership; NYDFS layer scoped away; no statutory rehypothecation constraint' },
+      { id: 'J3F', name: 'OCC uninsured national trust bank [USD1, PYUSD]', pass: 0, part: 4, fail: 3, verdict: 'AMBIGUOUS (D3, D5, D7 FAIL)', note: 'OCC receivership rules for uninsured national banks; NYDFS layer scoped away; no statutory rehypothecation constraint' },
       { id: 'J8', name: 'El Salvador (CNAD / quiebra) [USDT]', pass: 0, part: 1, fail: 6, verdict: 'FAIL (6/7 Fail)', note: 'Zero statutory segregation, priority, or rehypothecation limits; 3-jurisdiction split (SV/BVI/HK)' },
       { id: 'J10', name: 'No-entity protocol [DAI]', pass: 0, part: 0, fail: 7, verdict: 'FAIL* (7/7 Structural Inapplicability)', note: 'No legal entity, debtor, claim, or insolvency forum exists; Black Thursday resolved outside law' }
     ];
 
     var regimesIntl = [
-      { id: 'J14A', name: 'UAE Abu Dhabi free zone (ADGM FSRA)', pass: 6, part: 0, fail: 1, verdict: '6/7 PASS (D7 untested)', note: 'COBS 14.12 deemed trust + S263(2) insolvency primacy + Ch 19A super-priority + Model Law (S271)' },
-      { id: 'J11', name: 'EU MiCA (Reg 2023/1114) [EURC]', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'MiCA Art 54 + EMD2 Art 7(1) statutory segregation & priority; D6 national-law override gap' },
-      { id: 'J13', name: 'Hong Kong (Stablecoins Ord. Cap. 656 / HKMA)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Cap. 656 Sch 2 statutory trust & priority; common-law comity (no UNCITRAL Model Law)' },
-      { id: 'J14Z', name: 'UAE Dubai free zone (VARA Rulebooks)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Custody III.B + FRVA III.B.4 estate exclusion; onshore UAE federal insolvency forum' },
-      { id: 'J16', name: 'Japan PSA EPI framework (FSA 2025)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'PSA Art 2(9) trust + Art 59(1) holder priority + 50% deposit floor; no in-class precedent' },
-      { id: 'J14', name: 'UAE federal (CBUAE PTSR Circular 2/2024)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D2, D4, D5)', note: 'PTSR Art 22.5 priority & escrow; D1 bank-vs-nonbank split under Decree-Law 51' },
-      { id: 'J15', name: 'Switzerland (DLT Act 2021 / DEBA Art 242a)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D1, D4, D5)', note: 'DEBA Art 242a bankruptcy surrender & Banking Act Art 37d; no special crypto-holder priority class' },
-      { id: 'J12', name: 'UK (FCA CP25/14 + EMR 2011 / Ipagoo)', pass: 1, part: 5, fail: 1, verdict: '1/7 PASS (D3 CBIR Model Law)', note: 'Ipagoo [2022] EWCA Civ 302 confirmed statutory trust + asset-pool top-up, but FCA regime still draft' }
+      { id: 'J14A', name: 'UAE Abu Dhabi free zone (ADGM FSRA)', pass: 6, part: 0, fail: 1, verdict: '6/7 PASS (D7 untested)', note: 'Client-money deemed trust + client-asset rules prevailing in insolvency + holder super-priority + enacted cross-border Model Law' },
+      { id: 'J11', name: 'EU MiCA [EURC]', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'MiCA + EU e-money directive statutory segregation & priority; D6 national-law override gap' },
+      { id: 'J13', name: 'Hong Kong (Stablecoins Ordinance / HKMA)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Stablecoins Ordinance statutory ringfence & priority, with an issuer-level trust under the HKMA guideline; common-law comity (no UNCITRAL Model Law)' },
+      { id: 'J14Z', name: 'UAE Dubai free zone (VARA Rulebooks)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'VARA custody and fiat-referenced asset rules: estate exclusion; onshore UAE federal insolvency forum' },
+      { id: 'J16', name: 'Japan PSA EPI framework (FSA 2025)', pass: 4, part: 2, fail: 1, verdict: '4/7 PASS (D1, D2, D4, D5)', note: 'Payment Services Act trust route + statutory holder priority + 50% deposit floor; no in-class precedent' },
+      { id: 'J14', name: 'UAE federal (central bank Payment Token Services Regulation)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D2, D4, D5)', note: 'Payment Token Services Regulation priority & escrow; D1 bank-vs-nonbank split under UAE federal insolvency law' },
+      { id: 'J15', name: 'Switzerland (DLT Act 2021 / bankruptcy surrender rule)', pass: 3, part: 3, fail: 1, verdict: '3/7 PASS (D1, D4, D5)', note: 'Bankruptcy surrender of crypto assets & Banking Act custody segregation; no special crypto-holder priority class' },
+      { id: 'J12', name: 'UK (FCA draft stablecoin rules + Electronic Money Regulations / Ipagoo)', pass: 1, part: 5, fail: 1, verdict: '1/7 PASS (D3 Cross-Border Insolvency Regulations)', note: 'Ipagoo (English Court of Appeal, 2022) found no statutory trust but an asset pool with holder priority and top-up; the FCA regime, with its proposed trust, is still draft' }
     ];
 
     function renderComposite(){
@@ -9616,7 +9618,7 @@
         '<div class="b4-stat"><span class="b4-stat__label">Headline equivalence rate</span><span class="b4-stat__val">0 of 14 Equivalent</span><span class="b4-stat__sub">Non-compensatory floor caps every product on its weakest dimension</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Highest overall strength</span><span class="b4-stat__val">BENJI &amp; RLUSD (3.5)</span><span class="b4-stat__sub">Followed by JPMD (3.3), BUIDL (3.2), and USDY (3.2)</span></div>' +
         '<div class="b4-stat"><span class="b4-stat__label">Sole dimension above Indeterminate</span><span class="b4-stat__val">RLUSD Economic (4.3)</span><span class="b4-stat__sub">Substantially Equivalent on Economic; sole CSA companion Pass</span></div>' +
-        '<div class="b4-stat"><span class="b4-stat__label">Universal legal ceiling</span><span class="b4-stat__val">UCC Art. 12 Subtest 1.1</span><span class="b4-stat__sub">13 of 14 fail Cat 1 Rights Parity; JPMD alone is Indeterminate (3.7)</span></div>';
+        '<div class="b4-stat"><span class="b4-stat__label">Universal legal ceiling</span><span class="b4-stat__val">Commercial-code take-free test (Subtest 1.1)</span><span class="b4-stat__sub">13 of 14 fail Cat 1 Rights Parity; JPMD alone is Indeterminate (3.7)</span></div>';
 
       barsEl.innerHTML = sorted.map(function(p){
         var score = curDim === 'legal' ? p.legal : (curDim === 'operational' ? p.op : (curDim === 'economic' ? p.econ : p.overall));
@@ -9644,8 +9646,8 @@
           '<div class="b4-stat"><span class="b4-stat__label">Structural inapplicability (Fail*)</span><span class="b4-stat__val">J2 (D1/D5) &amp; J10 (7/7)</span><span class="b4-stat__sub">J2 marks D1 and D5 inapplicable (a deposit has no separate customer asset). J10 marks all 7 dimensions inapplicable (no legal entity).</span></div>';
       } else {
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Highest international score</span><span class="b4-stat__val">J14A: ADGM (6/7 Pass)</span><span class="b4-stat__sub">Deemed trust + S263(2) insolvency primacy + UNCITRAL Model Law</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">4/7 Pass statutory regimes</span><span class="b4-stat__val">MiCA, HK Cap. 656, VARA, Japan</span><span class="b4-stat__sub">All pass D1 segregation, D2 priority, D4 statute, and D5 rehypothecation</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Highest international score</span><span class="b4-stat__val">J14A: ADGM (6/7 Pass)</span><span class="b4-stat__sub">Deemed trust + client-asset rules prevailing in insolvency + UNCITRAL Model Law</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">4/7 Pass statutory regimes</span><span class="b4-stat__val">MiCA, HK Stablecoins Ordinance, VARA, Japan</span><span class="b4-stat__sub">All pass D1 segregation, D2 priority, D4 statute, and D5 rehypothecation</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Universal international gap</span><span class="b4-stat__val">D7 Recovery Record (0/8 Pass)</span><span class="b4-stat__sub">No bespoke payment-stablecoin regime has completed an in-class insolvency</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Forced-conversion gap (D6)</span><span class="b4-stat__val">7 of 8 Partial</span><span class="b4-stat__sub">National insolvency moratoria and reorganization powers remain open</span></div>';
       }
@@ -9880,7 +9882,8 @@
     if(!journal){
       if(window.location.pathname.indexOf('/letters/') === 0){
         var strip = document.querySelector('.paper-metadata-strip');
-        var docketPart = strip ? (strip.textContent || '').split(/[·\u00b7]/)[0].trim() : '';
+        /* data-citation-docket holds the official number for citations; the strip's visible text is plain words. */
+        var docketPart = strip ? ((strip.getAttribute('data-citation-docket') || '').trim() || (strip.textContent || '').split(/[·\u00b7]/)[0].trim()) : '';
         var letterKind = /^Financial Stability Board/.test(docketPart) ? 'International Consultation Response' : 'Federal Comment Letter';
         journal = docketPart ? (letterKind + ' (' + docketPart + '), Tokenization Systems') : (letterKind + ', Tokenization Systems');
       } else if(window.location.pathname.indexOf('/notes/') === 0){
@@ -10131,9 +10134,9 @@
 
     var objects = {
       stablecoin: {
-        rulebook: 'GENIUS Act (PPSI) / State MTL / Trust',
+        rulebook: 'GENIUS Act (permitted issuers) / State money transmitter license / Trust',
         claim: 'A claim on reserves, by contract or statute',
-        insolvency: 'GENIUS s.11 priority (when active); state/offshore split today',
+        insolvency: 'GENIUS Act holder priority (when active); state/offshore split today',
         stress2am: 'On-chain swaps stay live; direct fiat mint/burn bottlenecked by banking hours',
         rows: [
           { q: 'What the holder owns', a: 'A claim on reserves, by contract or statute.', note: 'The holder\'s claim runs through the issuer. The reserve bank holds the assets.' },
@@ -10146,7 +10149,7 @@
       tokdep: {
         rulebook: 'Federal banking law (FDI Act and the bank\'s deposit terms)',
         claim: 'Direct deposit liability of the issuing commercial bank',
-        insolvency: 'FDIC insurance (to $250k) + 12 USC 1821(d)(11) depositor preference',
+        insolvency: 'FDIC insurance (to $250k) + federal depositor preference',
         stress2am: 'Internal 24/7 book transfer; single-bank perimeter',
         rows: [
           { q: 'What the holder owns', a: 'A deposit at that one bank.', note: 'The token is a new record of a liability the bank already had. An HSBC token is an HSBC deposit.' },
@@ -10170,7 +10173,7 @@
         ]
       },
       mmf: {
-        rulebook: 'Investment Company Act of 1940 (Rule 2a-7) / Reg D / Reg S',
+        rulebook: 'Investment Company Act of 1940 (money market fund rule) / private placement (Reg D) / offshore (Reg S)',
         claim: 'Beneficial fund share, LP interest, or secured note',
         insolvency: '7/7 Pass for 1940 Act (BENJI J1); Ambiguous for BVI/LP (BUIDL J5, OUSG J4)',
         stress2am: '2am Saturday margin-call gap: finite USDC pool vs Monday NAV',
@@ -10191,7 +10194,7 @@
         primaryGate: 'CLII (0 to 1) + MVEP Categories 1, 5, 6 and the Cash Settlement Asset test',
         focus: 'Gateway bank exposure, reserve segregation, and 24/7 conversion',
         steps: [
-          { step: '1. Classify', pct: 100, tool: 'Comparative Framework for Dollar Products (Seven Dollars)', action: 'Partition For-US-holders (PPSI anchor: USDC, PYUSD, RLUSD) vs Offshore-targeted (USDT) across 5 design markers.' },
+          { step: '1. Classify', pct: 100, tool: 'Comparative Framework for Dollar Products (Seven Dollars)', action: 'Partition For-US-holders (permitted-issuer anchor: USDC, PYUSD, RLUSD) vs Offshore-targeted (USDT) across 5 design markers.' },
           { step: '2. Trace', pct: 90, tool: 'Routing the Dollar + Credit Migration Model', action: 'Map reserve custody, bank-deposit recycling share (Tether ~4%, Circle ~14%, Gemini ~100%), and PSM contagion links.' },
           { step: '3. Map', pct: 85, tool: 'Control Layer Intensity Index (CLII) + TDRC', action: 'Score all routing gateways across licensing, transparency, freeze authority, compliance, and geo-restrictions.' },
           { step: '4. Compare', pct: 80, tool: 'MVEP (10 categories + Cash Settlement Asset companion test) + 3CRD', action: 'Verify Category 1 Rights Parity, Category 5 jurisdiction matrix (20 legal regimes), and 3CRD point-of-use disclosures.' },
@@ -10205,7 +10208,7 @@
         primaryGate: 'MVEP Categories 4, 5, 10 and the recursive Cash Settlement Asset test',
         focus: '2am Saturday margin liquidation, whitelist locks, and recursive USDC redemption',
         steps: [
-          { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP Section 5)', action: 'Distinguish 1940 Act MMF (BENJI J1), BVI Reg D fund (BUIDL J5), Delaware LP (OUSG J4), and secured note (USDY).' },
+          { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP paper)', action: 'Distinguish 1940 Act MMF (BENJI J1), BVI Reg D fund (BUIDL J5), Delaware LP (OUSG J4), and secured note (USDY).' },
           { step: '2. Trace', pct: 92, tool: 'Composed-Product Layer Audit + recursive Cash Settlement Asset test', action: 'Trace every wrapper layer to its cash settlement asset (e.g., OUSG -> BUIDL -> Circle USDC instant pool).' },
           { step: '3. Map', pct: 84, tool: 'Transfer-Agent & Custodian Control Map', action: 'Identify the transfer agent (Securitize / Franklin), custodian (BNY / Ceffu / Marex), and admin key signers.' },
           { step: '4. Compare', pct: 78, tool: 'MVEP Exhibit 2 (Cat 5 Matrix) & Exhibit 3 (Composite)', action: 'Compare non-compensatory Legal, Operational, and Economic grades; check D5 statutory rehypothecation limits.' },
@@ -10220,7 +10223,7 @@
         focus: 'Transfer-agent single point of failure, corporate actions, and DTC vs on-chain books',
         steps: [
           { step: '1. Classify', pct: 100, tool: 'Tokenization Infrastructure Map (Three Strategies)', action: 'Classify as Strategy 1 (Regulated Collateral Circuit), Strategy 2 (Multi-Issuer Yield Stack), or Strategy 3 (Tokenized Equity Rails).' },
-          { step: '2. Trace', pct: 90, tool: ' Investor Claim & Custody Chain Audit', action: 'Separate direct § 224 registered ownership from Jersey SPV tracker certificates (xStocks) or OTC derivatives (Robinhood).' },
+          { step: '2. Trace', pct: 90, tool: ' Investor Claim & Custody Chain Audit', action: 'Separate direct registered ownership on a Delaware stock ledger from Jersey SPV tracker certificates (xStocks) or OTC derivatives (Robinhood).' },
           { step: '3. Map', pct: 88, tool: '10-Entity Shared-Dependency Matrix', action: 'Audit cross-strategy chokepoints: Securitize (all 3 strategies), BNY, Canton Network, and Chainlink CCIP/oracles.' },
           { step: '4. Compare', pct: 82, tool: 'MVEP Cat 2 (System of Record) & Cat 3 (Reconciliation)', action: 'Verify authoritative book hierarchy when 24/7 token transfers cross ex-dividend, split, or proxy-record cutoffs.' },
           { step: '5. Stress', pct: 80, tool: 'Shared-Operator Outage & Off-Hours Drift Simulator', action: 'Test a single-operator transfer-agent halt or weekend price divergence against closed cash equity markets.' },
@@ -10449,7 +10452,7 @@
     };
 
     var crosswalk = [
-      { dim: 'legal', cat: 'Category 1: Rights Parity', tok: 'Token-to-underlying legal claim memo (UCC Art. 8/12)', ai: 'Capability and access parity: claims match benchmarked, verifiable capabilities, and downgrades are disclosed', pct: 90 },
+      { dim: 'legal', cat: 'Category 1: Rights Parity', tok: 'Token-to-underlying legal claim memo (Uniform Commercial Code)', ai: 'Capability and access parity: claims match benchmarked, verifiable capabilities, and downgrades are disclosed', pct: 90 },
       { dim: 'operational', cat: 'Category 2: System of Record', tok: 'Canonical ownership ledger (transfer agent vs chain)', ai: 'Session-attributed commit provenance and authoritative state store across concurrent agents', pct: 95 },
       { dim: 'operational', cat: 'Category 3: Records & Reconciliation', tok: 'Daily NAV / wallet balance reconciliation & break logs', ai: 'Save-time reference validation (preventing confabulated IDs) and startup truncation checks', pct: 92 },
       { dim: 'legal operational', cat: 'Category 4: Custody & Customer Property', tok: 'Statutory/trust segregation & qualified custodian control', ai: 'Per-session git worktree isolation, data zero-retention, and credential/key perimeter scoping', pct: 88 },
@@ -10562,42 +10565,42 @@
           holderPay: 'None announced (0 bps to end holders)',
           exposure: 'Outside all 4 texts facially; pivots on calibration & custody holder status',
           bars: [
-            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 15, badge: 'Outside facially', note: 'Statute bars issuer-to-holder yield; OUSD pays distribution partners, unless partner omnibus wallet is deemed the holder' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202, 2-prong presumption)', pct: 10, badge: 'Prong 2 unmet (Safe side)', note: 'Presumption requires both issuer-to-partner AND partner-to-holder payment; preamble protects white-label profit sharing' },
-            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 40, badge: 'Contested only if balance-calibrated', note: 'Broader third-party phrasing still requires characterizing B2B partner revenue share as yield on stablecoins' },
-            { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 10, badge: 'Outside (Targets Hop 2 only)', note: 'Bars digital-asset service providers from paying customer yield; does not bar receiving issuer revenue share' }
+            { text: 'GENIUS Act ban on issuers paying holders yield (Enacted statute)', pct: 15, badge: 'Outside facially', note: 'Statute bars issuer-to-holder yield; OUSD pays distribution partners, unless partner omnibus wallet is deemed the holder' },
+            { text: 'OCC Proposed Rule for its stablecoin issuers (2-prong presumption)', pct: 10, badge: 'Prong 2 unmet (Safe side)', note: 'Presumption requires both issuer-to-partner AND partner-to-holder payment; preamble protects white-label profit sharing' },
+            { text: 'FDIC Proposed Rule for its stablecoin issuers (3rd-party arrangements)', pct: 40, badge: 'Contested only if balance-calibrated', note: 'Broader third-party phrasing still requires characterizing B2B partner revenue share as yield on stablecoins' },
+            { text: 'CLARITY Act service-provider yield ban (Senate-stage print)', pct: 10, badge: 'Outside (Targets Hop 2 only)', note: 'Bars digital-asset service providers from paying customer yield; does not bar receiving issuer revenue share' }
           ]
         },
         usdc: {
           hops: '2 Hops ($907.9M Circle -> Coinbase -> Customer Rewards)',
           holderPay: 'Yes (Advertised platform rewards on held USDC)',
-          exposure: 'Directly targeted by OCC 2-prong presumption & CLARITY s.404',
+          exposure: 'Directly targeted by OCC 2-prong presumption & the CLARITY yield ban',
           bars: [
-            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 65, badge: 'Contested (Reiners custody theory)', note: 'If exchange omnibus wallet is the statutory holder, balance-proportional revenue share faces direct statutory tension' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202, 2-prong presumption)', pct: 95, badge: 'Facially triggers both prongs', note: 'Issuer pays related party (Prong 1) and party pays holder rewards (Prong 2); shifts rebuttal burden to issuer' },
-            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 90, badge: 'Directly in scope', note: 'Two-hop customer reward structure is the core third-party arrangement the proposal targets' },
-            { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 95, badge: 'Prohibits Hop 2 customer rewards', note: 'Expressly bars service providers from paying yield to US customers solely for holding stablecoin balances' }
+            { text: 'GENIUS Act ban on issuers paying holders yield (Enacted statute)', pct: 65, badge: 'Contested (Reiners custody theory)', note: 'If exchange omnibus wallet is the statutory holder, balance-proportional revenue share faces direct statutory tension' },
+            { text: 'OCC Proposed Rule for its stablecoin issuers (2-prong presumption)', pct: 95, badge: 'Facially triggers both prongs', note: 'Issuer pays related party (Prong 1) and party pays holder rewards (Prong 2); shifts rebuttal burden to issuer' },
+            { text: 'FDIC Proposed Rule for its stablecoin issuers (3rd-party arrangements)', pct: 90, badge: 'Directly in scope', note: 'Two-hop customer reward structure is the core third-party arrangement the proposal targets' },
+            { text: 'CLARITY Act service-provider yield ban (Senate-stage print)', pct: 95, badge: 'Prohibits Hop 2 customer rewards', note: 'Expressly bars service providers from paying yield to US customers solely for holding stablecoin balances' }
           ]
         },
         direct: {
-          hops: '1 Direct Hop (PPSI -> Token Holder)',
+          hops: '1 Direct Hop (Issuer -> Token Holder)',
           holderPay: 'Yes (Direct cash, token, or rebase interest)',
           exposure: 'Categorically prohibited across all enacted and proposed texts',
           bars: [
-            { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 100, badge: 'Categorically prohibited', note: 'Bars any form of interest or yield paid by a PPSI or foreign issuer solely in connection with holding, use, or retention' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
-            { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on FDIC-supervised subsidiary stablecoin issuers' },
+            { text: 'GENIUS Act ban on issuers paying holders yield (Enacted statute)', pct: 100, badge: 'Categorically prohibited', note: 'Bars any form of interest or yield paid by a permitted or foreign issuer solely in connection with holding, use, or retention' },
+            { text: 'OCC Proposed Rule for its stablecoin issuers', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
+            { text: 'FDIC Proposed Rule for its stablecoin issuers', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on FDIC-supervised subsidiary stablecoin issuers' },
             { text: 'Market-structure consequence (Dollar v3 / Seven Dollars)', pct: 100, badge: 'Pushes yield into wrappers', note: 'Direct holder yield must use registered 1940 Act MMFs (BENJI) or offshore/Reg D wrappers (BUIDL, OUSG, USDY)' }
           ]
         },
         merchant: {
           hops: 'Independent Commercial / Activity Reward',
           holderPay: 'Checkout discount or non-balance transaction reward',
-          exposure: 'Expressly carved out across OCC preamble & CLARITY s.404',
+          exposure: 'Expressly carved out across OCC preamble & the CLARITY yield ban',
           bars: [
-            { text: 'GENIUS Act Section 4(a)(11) ("solely" qualifier)', pct: 10, badge: 'Permitted (Not solely for holding)', note: 'Conditioned on commercial purchase or bona fide transaction rather than balance retention' },
+            { text: 'GENIUS Act yield ban ("solely" qualifier)', pct: 10, badge: 'Permitted (Not solely for holding)', note: 'Conditioned on commercial purchase or bona fide transaction rather than balance retention' },
             { text: 'OCC Proposed Rule Preamble', pct: 5, badge: 'Expressly permitted', note: 'Preamble confirms rule does not bar merchants from independently offering discounts for stablecoin payment' },
-            { text: 'CLARITY Act Section 404 Carve-Out', pct: 15, badge: 'Permitted activity carve-out', note: 'Permits rewards based on bona fide activities not economically equivalent to deposit interest' },
+            { text: 'CLARITY Act Yield Ban Carve-Out', pct: 15, badge: 'Permitted activity carve-out', note: 'Permits rewards based on bona fide activities not economically equivalent to deposit interest' },
             { text: 'CEA April 2026 Bank-Lending Estimate', pct: 20, badge: '$2.1B (~0.02% of total loans)', note: 'CEA white paper finds the entire yield prohibition shifts bank lending by only ~0.02% at baseline' }
           ]
         }
@@ -10632,18 +10635,18 @@
           usdcStatus: 'Decided by definition direction',
           shift: 'Resolves the Reiners omnibus-custody question in one stroke',
           bars: [
-            { label: 'OUSD viability if "holder" = ultimate economic customer', pct: 95, val: 'Fully open (Defuses custody theory)', note: 'Partner exchanges are intermediaries, not holders, leaving Hop 1 completely outside s.4(a)(11)' },
+            { label: 'OUSD viability if "holder" = ultimate economic customer', pct: 95, val: 'Fully open (Defuses custody theory)', note: 'Partner exchanges are intermediaries, not holders, leaving Hop 1 completely outside the GENIUS yield ban' },
             { label: 'OUSD viability if "holder" = omnibus custodial key controller', pct: 30, val: 'Arms partner-as-holder theory', note: 'Omnibus-custodying partners become statutory holders; balance-based share faces "solely" litigation' },
-            { label: 'Outcome in the final rules (statutorily due July 18, 2026)', pct: 100, val: 'OCC: holder = beneficial owner', note: 'Neither proposal defined the term; the OCC final rule of October 23, 2026 does (12 CFR 15.2): a payment stablecoin holder is the beneficial owner, not a custodian that only controls the stablecoin for others. The FDIC, NCUA and Federal Reserve rules are pending' }
+            { label: 'Outcome in the final rules (statutorily due July 18, 2026)', pct: 100, val: 'OCC: holder = beneficial owner', note: 'Neither proposal defined the term; the OCC final rule of October 23, 2026 does: a payment stablecoin holder is the beneficial owner, not a custodian that only controls the stablecoin for others. The FDIC, NCUA and Federal Reserve rules are pending' }
           ]
         },
         m4: {
           title: 'Move 4: Track statute & refer third-party gap to Congress',
           ousdStatus: 'SURVIVES COMPLETELY',
-          usdcStatus: 'Governed by CLARITY s.404 if enacted',
+          usdcStatus: 'Governed by the CLARITY yield ban if enacted',
           shift: 'Preserves 3-of-4-move survival asymmetry for consortium distribution',
           bars: [
-            { label: 'Announced OUSD 1-hop revenue share viability', pct: 96, val: 'Undisturbed federally', note: 'Even if Congress later enacts CLARITY Section 404, Section 404 closes Hop 2 (customer rewards), not Hop 1' },
+            { label: 'Announced OUSD 1-hop revenue share viability', pct: 96, val: 'Undisturbed federally', note: 'Even if Congress later enacts the CLARITY yield ban, that ban closes Hop 2 (customer rewards), not Hop 1' },
             { label: 'Distribution-layer capture of Treasury reserve float', pct: 90, val: 'High (TDRC ControlScore shift)', note: 'Confirms briefings core theorem: holders are excluded while reserve carry flows to distribution partners' },
             { label: 'Survival rate across all 4 plausible rulemaking moves', pct: 75, val: 'Survives 3 of 4 moves', note: 'Only a broad Move 2 or control-based Move 3 reaches OUSD, and only if its undisclosed calibration is balance-based' }
           ]
@@ -10780,7 +10783,7 @@
           bars: [
             { name: 'Backed xStocks: Collateral segregation & issuer-insolvency remoteness', pct: 82, val: '1:1 SPV shares + Security Agent', note: 'Liechtenstein-approved prospectus + ISIN; holders are secured creditors of the Jersey SPV collateral pool' },
             { name: 'Robinhood Stock Tokens: Simplicity of single-counterparty wrapper', pct: 75, val: 'Closed-loop MiFID broker contract', note: 'No external custody chain for the user to manage, but 100% counterparty credit exposure to Robinhood Europe UAB' },
-            { name: 'Direct registered shareholder parity (DGCL § 224 / Strategy 1 benchmark)', pct: 15, val: '0 of 2 (Economic exposure only)', note: 'Both June 30, 2025 European launches are intermediary wrappers rather than direct transfer-agent book-entry shares' }
+            { name: 'Direct registered shareholder parity (Delaware stock-ledger law / Strategy 1 benchmark)', pct: 15, val: '0 of 2 (Economic exposure only)', note: 'Both June 30, 2025 European launches are intermediary wrappers rather than direct transfer-agent book-entry shares' }
           ]
         },
         liquidity: {
@@ -11003,7 +11006,7 @@
           tdrc: 'Issuer-dominant: IssuerScore at least 4, and ahead of ControlScore by at least 2',
           bars: [
             { name: 'Reserve carry retention & settlement-object concentration', pct: 90, val: 'High issuer spread capture', note: 'Two dominant issuers capture Treasury bill float while interfaces remain thin pass-throughs' },
-            { name: 'Token-contract freeze & lawful-order compliance (GENIUS s.4)', pct: 85, val: 'Issuer-level admin key', note: 'Supervisory obligations concentrate at mint/burn onboarding and contract-level sanctions blacklists' },
+            { name: 'Token-contract freeze & lawful-order compliance (GENIUS Act issuer requirements)', pct: 85, val: 'Issuer-level admin key', note: 'Supervisory obligations concentrate at mint/burn onboarding and contract-level sanctions blacklists' },
             { name: 'Downstream DeFi & secondary-venue visibility', pct: 35, val: 'Limited beyond first hop', note: 'Issuer-only gating struggles to monitor composed wrappers or omnibus exchange routing without router hooks' }
           ]
         },
@@ -11014,7 +11017,7 @@
           tdrc: 'Infrastructure-Gated (Three Strategies institutional perimeter)',
           bars: [
             { name: 'Transfer-agent & CSD canonical record authority (MVEP Cat 2)', pct: 95, val: 'Authoritative ownership book', note: 'Matches Strategy 1 (Regulated Collateral Circuit) and Strategy 3 (Tokenized Equity Rails) where registered books govern' },
-            { name: 'Collateral eligibility & clearinghouse haircut gating (CFTC 3038-0076)', pct: 88, val: 'Venue & DCO admission gate', note: 'Clearing organizations and exchanges define which tokenized instruments qualify as margin' },
+            { name: 'Collateral eligibility & clearinghouse haircut gating (CFTC clearing organization reporting)', pct: 88, val: 'Venue & clearing organization admission gate', note: 'Clearing organizations and exchanges define which tokenized instruments qualify as margin' },
             { name: 'Permissionless secondary-market composability', pct: 30, val: 'Constrained by allowlists', note: 'High institutional legibility, but whitelist transfer restrictions limit open DeFi liquidity' }
           ]
         }
@@ -11098,14 +11101,14 @@
         if(curDv3 === 'levers'){
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">Organizing architecture</span><span class="b4-stat__val">5 interacting policy levers</span><span class="b4-stat__sub">Tightening one lever shifts commercial pressure to the others</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Payment-stablecoin perimeter</span><span class="b4-stat__val">GENIUS Act (Pub. L. 119-27)</span><span class="b4-stat__sub">1:1 liquid reserves, monthly disclosures, s.11 priority, 0% holder yield</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Bank execution perimeter</span><span class="b4-stat__val">OCC IL 1188 (Riskless principal)</span><span class="b4-stat__sub">Permits national bank crypto intermediation; operational risk remains</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Payment-stablecoin perimeter</span><span class="b4-stat__val">GENIUS Act</span><span class="b4-stat__sub">1:1 liquid reserves, monthly disclosures, holder priority in insolvency, 0% holder yield</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Bank execution perimeter</span><span class="b4-stat__val">OCC letter on riskless principal trades</span><span class="b4-stat__sub">Permits national bank crypto intermediation; operational risk remains</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">2030 to 2035 end state</span><span class="b4-stat__val">4-object hybrid stack</span><span class="b4-stat__sub">Stablecoins (cash leg), deposit tokens, tokenized deposits &amp; MMF wrappers</span></div>';
           var lRows = [
-            { name: 'Lever 1: Who can issue in practice (Federal PPSI, State-certified, or IDI subsidiary)', pct: 90, val: 'GENIUS 3-lane charter map', note: 'Sets the entry gate and determines whether nonbanks or bank subsidiaries dominate issuance' },
-            { name: 'Lever 2: Where yield is allowed to live (GENIUS s.4(a)(11) vs 1940 Act / Reg D wrappers)', pct: 95, val: 'Drives wrapper & sweep migration', note: 'Barring interest on payment stablecoins pushes yield into tokenized MMFs (BENJI, BUIDL) and distributor revenue share' },
+            { name: 'Lever 1: Who can issue in practice (Federal permitted issuer, State-certified, or insured bank subsidiary)', pct: 90, val: 'GENIUS 3-lane charter map', note: 'Sets the entry gate and determines whether nonbanks or bank subsidiaries dominate issuance' },
+            { name: 'Lever 2: Where yield is allowed to live (GENIUS yield ban vs 1940 Act / Reg D wrappers)', pct: 95, val: 'Drives wrapper & sweep migration', note: 'Barring interest on payment stablecoins pushes yield into tokenized MMFs (BENJI, BUIDL) and distributor revenue share' },
             { name: 'Lever 3: Layer 0 reserve placement & backstop expectations (T-bills, RRP vs commercial banks)', pct: 88, val: 'Governs panic & run direction', note: 'Reserve custody location determines whether stress triggers flight-to-T-bills or bank deposit outflows' },
-            { name: 'Lever 4: Offshore dollar perimeter (Treasury GENIUS s.3 / s.8 foreign issuer rules)', pct: 82, val: 'USDT vs US-regulated gateways', note: 'Determines whether offshore coins can route through US interfaces or remain segmented offshore' },
+            { name: 'Lever 4: Offshore dollar perimeter (Treasury GENIUS Act foreign issuer rules)', pct: 82, val: 'USDT vs US-regulated gateways', note: 'Determines whether offshore coins can route through US interfaces or remain segmented offshore' },
             { name: 'Lever 5: Open public spine vs private walled-garden bank ledgers', pct: 85, val: 'Interoperability determinant', note: 'Decides whether deposit tokens achieve cross-bank fungibility or fragment into single-bank islands' }
           ];
           barsEl.innerHTML = readingList(lRows);
@@ -11114,7 +11117,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">Anchor Fed study</span><span class="b4-stat__val">Dec 17, 2025 FEDS Note</span><span class="b4-stat__sub">Du, Sonawane, and Watsky (DOI 10.17016/2380-7172.3958)</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Three Fed deposit channels</span><span class="b4-stat__val">Reduce, Recycle, Restructure</span><span class="b4-stat__sub">Synthesized in Dollar v3 as deposit-funding mutation</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Observed deposit recycling</span><span class="b4-stat__val">4% to 100% by issuer</span><span class="b4-stat__sub">Tether ~4%, Circle ~14%, Gemini ~100% (Routing the Dollar)</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Supervisory blind spot</span><span class="b4-stat__val">FDIC AG21 &amp; AG27</span><span class="b4-stat__sub">Concentrated uninsured wholesale reserve deposits raise run risk</span></div>';
+            '<div class="b4-stat"><span class="b4-stat__label">Supervisory blind spot</span><span class="b4-stat__val">FDIC resolution &amp; assessment proposals</span><span class="b4-stat__sub">Concentrated uninsured wholesale reserve deposits raise run risk</span></div>';
           var dRows = [
             { name: '1. Deposit reduction (Reserves placed in Treasury bills or ON RRP outside commercial banks)', pct: 86, val: 'Circle ~86% / Tether ~96% non-deposit', note: 'Shifts funding from commercial-bank retail deposits toward sovereign short-term debt' },
             { name: '2. Deposit recycling (Reserves redeposited as commercial-bank demand deposits)', pct: 50, val: 'Circle ~14% / Gemini ~100%', note: 'Keeps funding inside the banking system, but concentrates it at a small number of crypto-serving banks' },
@@ -11302,7 +11305,7 @@
           deliverable: 'Pass/fail MVEP report + remediation roadmap + CLII drift triggers',
           proof: '~250 investments backed at Borderless; Thorchain $200M collapse modeled 13 months ahead',
           bars: [
-            { name: 'Phase 1: Legal & Insolvency Equivalence Audit (MVEP Cat 1, 4, 5 & Exhibit 2)', pct: 95, val: 'Week 1 to 2', note: 'Tests UCC Art. 8/12 rights parity, custodian segregation, and 20-regime bankruptcy priority' },
+            { name: 'Phase 1: Legal & Insolvency Equivalence Audit (MVEP Cat 1, 4, 5 & Exhibit 2)', pct: 95, val: 'Week 1 to 2', note: 'Tests Uniform Commercial Code rights parity, custodian segregation, and 20-regime bankruptcy priority' },
             { name: 'Phase 2: Operational & Settlement Stress Audit (MVEP Cat 2, 3, 6, 7, 8, 10 & CSA)', pct: 90, val: 'Week 2 to 3', note: 'Audits transfer-agent reconciliation, admin-key timelocks, recursive USDC dependencies, and 2am Saturday liquidation' },
             { name: 'Phase 3: Committee Sign-Off Pack & Continuous Monitoring Setup (CLII + 3CRD)', pct: 85, val: 'Week 3 to 4', note: 'Delivers non-compensatory composite rating, remediation conditions, and 24-hour gateway drift triggers' }
           ]
@@ -11313,7 +11316,7 @@
           deliverable: 'Architecture memo: legal wrapper, custody/settlement stack & redemption design',
           proof: 'MVEP prospective design + Three Strategies + Uniswap fee-switch delegate committee',
           bars: [
-            { name: 'Phase 1: Object & Rulebook Selection (Seven Dollars + Four Dollar Objects)', pct: 95, val: 'Week 1 to 2', note: 'Selects between PPSI stablecoin, tokenized deposit, multi-bank deposit token, or 1940 Act / Reg D wrapper' },
+            { name: 'Phase 1: Object & Rulebook Selection (Seven Dollars + Four Dollar Objects)', pct: 95, val: 'Week 1 to 2', note: 'Selects between permitted-issuer stablecoin, tokenized deposit, multi-bank deposit token, or 1940 Act / Reg D wrapper' },
             { name: 'Phase 2: Custody, Transfer-Agent & Redemption Plumbing (Three Strategies)', pct: 92, val: 'Week 3 to 5', note: 'Structures canonical system of record, corporate-actions cutoff hierarchy, and multi-path redemption' },
             { name: 'Phase 3: Pre-Committee Red-Flag Review & Regulatory Filing Alignment', pct: 88, val: 'Week 6 to 8', note: 'Runs prospective MVEP 10-category gate check before code and legal agreements lock' }
           ]
@@ -11441,7 +11444,7 @@
           proof: '19-gateway CLII + 11-product US-holder scorecard + x402 facilitator census',
           frameworks: 'CLII, TDRC, Two-Hop Yield Boundary & Buyer-Cardinality Classifier',
           bars: [
-            { name: 'Gateway routing, reserve economics & distribution structuring', pct: 96, val: 'CLII + OUSD / USDC 2-hop analysis', note: 'Maps reserve carry retention vs distributor revenue share under GENIUS s.4(a)(11) and CLARITY s.404' },
+            { name: 'Gateway routing, reserve economics & distribution structuring', pct: 96, val: 'CLII + OUSD / USDC 2-hop analysis', note: 'Maps reserve carry retention vs distributor revenue share under the GENIUS and CLARITY yield bans' },
             { name: 'Cross-chain settlement & agentic payment facilitation (x402)', pct: 92, val: '138 facilitator addresses · 3 chains', note: 'Measures count vs value monopolists, proxy-settlement spreads (99 bps vs 14 bps), and subsidy pipelines' },
             { name: 'Portfolio advisory across payment & infrastructure founders', pct: 90, val: '100 portfolio companies advised 1-on-1', note: 'Hands-on reserve, redemption, and go-to-market structuring across six years' }
           ]
@@ -11552,13 +11555,13 @@
             '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">148 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 6 agencies</span></div>';
           var aRows = [
-            { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
-            { name: 'FinCEN & OFAC (6 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP, AB77 A7 Network special measure)', pct: 100, val: '6 letters · 30 recommendations', note: 'Operationalizes the freeze/block/reject capability in proposed 31 CFR 1033.240 and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
-            { name: 'OCC (3 letters: AF41 PPSI MVEP, AF41 control-layer supplemental, AF55 BSA & sanctions)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (OCC-2025-0372-0057); attaches MVEP v9 manuscript to the administrative record' },
-            { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + Section 3 issuance & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
-            { name: 'SEC (4 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock, S7-2026-30 Transfer Agent Rules)', pct: 67, val: '4 letters · 26 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
-            { name: 'NCUA (2 letters: RIN 3133-AG10 credit-union PPSI standards + routing supplemental)', pct: 33, val: '2 letters · 11 recommendations', note: 'Completes coverage of every GENIUS-implementing agency and flags cross-agency charter-arbitrage gaps' },
-            { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 20 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
+            { name: 'FDIC (6 letters: stablecoin issuer standards, subsidiary applications, resolution submissions, deposit insurance assessments, Bank Secrecy Act and sanctions standards, confidential information disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (issuer standards letter, Recommendation 7) and wholesale reserve-deposit run-risk metrics (resolution and assessments letters)' },
+            { name: 'FinCEN & OFAC (6 letters: anti-money-laundering program rewrite + supplement, stablecoin issuer sanctions rule + supplement, joint customer identification rule for issuers, A7 Network special measure)', pct: 100, val: '6 letters · 30 recommendations', note: 'Operationalizes the block, freeze and reject capability FinCEN proposes to require of issuers and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
+            { name: 'OCC (3 letters: MVEP comment on its stablecoin issuer rule, control-layer supplemental, Bank Secrecy Act and sanctions standards)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (Letter No. 1); attaches MVEP v9 manuscript to the administrative record' },
+            { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + issuance, offer and sale rule & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
+            { name: 'SEC (4 letters: draft strategic plan, proposed Regulation Crypto Assets, tokenized stock trading exemptions, proposed transfer agent rules)', pct: 67, val: '4 letters · 26 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
+            { name: 'NCUA (2 letters: GENIUS Act standards for the stablecoin issuers it licenses + routing supplemental)', pct: 33, val: '2 letters · 11 recommendations', note: 'Completes coverage of every GENIUS-implementing agency and flags cross-agency charter-arbitrage gaps' },
+            { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: Federal Reserve anti-money-laundering rule, CFTC clearing organization reporting, joint bank anti-money-laundering rule)', pct: 50, val: '3 letters · 20 recommendations', note: 'Covers Fed AML coordination omission, CFTC clearing organization tokenized collateral haircuts, and joint banking AML harmonization' },
             { name: 'Financial Stability Board (International consultation: Sound Practices for Responsible Adoption of AI)', pct: 25, val: '1 international response (All 7 Qs)', note: 'Introduces CLII-AI, MVEP-AI, and the live x402 agentic-payments settlement census to global supervisors' }
           ];
           barsEl.innerHTML = readingList(aRows);
@@ -11572,7 +11575,7 @@
             { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 70, val: '18 of 27 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
             { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 56, val: '14 of 27 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
             { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 48, val: '13 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
-            { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 30, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
+            { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 30, val: 'OCC, Treasury & FDIC issuer standards core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
           barsEl.innerHTML = readingList(fRows);
         }
@@ -11584,16 +11587,16 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">GENIUS implementation cycle</span><span class="b4-stat__val">14 letters (76 recs)</span><span class="b4-stat__sub">Spans OCC, FDIC, FinCEN/OFAC, Treasury, and NCUA</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and Federal Reserve R-1835</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">FDIC resolution &amp; risk pricing</span><span class="b4-stat__val">3 letters (14 recs)</span><span class="b4-stat__sub">AG21 resolution plans, AG27 assessments, AG30 disclosure</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">5 letters (30 recs)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, Transfer Agent Rules, CFTC DCOs</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and the Federal Reserve</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">FDIC resolution &amp; risk pricing</span><span class="b4-stat__val">3 letters (14 recs)</span><span class="b4-stat__sub">Large-bank resolution plans, deposit insurance assessments, confidential information disclosure</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">5 letters (30 recs)</span><span class="b4-stat__sub">Draft strategic plan, Regulation Crypto Assets, tokenized stock, transfer agent rules, CFTC clearing organizations</span></div>';
         var cRows = [
-          { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 76 recommendations', note: 'Covers PPSI chartering, reserve custody, state-similarity principles, foreign issuer Section 3 rules, and CIP/sanctions' },
-          { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Fed R-1835)', pct: 35, val: '4 letters · 23 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
-          { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (DSP-3, S7-2026-27, File 4-927, S7-2026-30)', pct: 38, val: '4 letters · 26 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
-          { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure (AG21, AG27, AG30)', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
-          { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' },
-          { name: 'Cycle 6: FinCEN Special Measure on the A7 Network (FINCEN-2026-0265)', pct: 14, val: '1 letter · 5 recommendations', note: 'Supports the prohibition and asks for listed addresses, a stated role for payment stablecoin issuers, and a safe harbor that separates blocking from returning' }
+          { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 76 recommendations', note: 'Covers stablecoin issuer chartering, reserve custody, state-similarity principles, foreign issuer rules, and customer identification and sanctions' },
+          { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Federal Reserve)', pct: 35, val: '4 letters · 23 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
+          { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (draft strategic plan, Regulation Crypto Assets, tokenized stock exemptions, transfer agent rules)', pct: 38, val: '4 letters · 26 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
+          { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
+          { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (CFTC reporting renewal, Financial Stability Board)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to clearing organization tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' },
+          { name: 'Cycle 6: FinCEN Special Measure on the A7 Network (proposed ban on transfers involving its Sub-Agents)', pct: 14, val: '1 letter · 5 recommendations', note: 'Supports the prohibition and asks for listed addresses, a stated role for payment stablecoin issuers, and a safe harbor that separates blocking from returning' }
         ];
         barsEl.innerHTML = readingList(cRows);
       }
@@ -11638,16 +11641,16 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Tracked GENIUS actions</span><span class="b4-stat__val">14 rulemakings</span><span class="b4-stat__sub">Published Dec 19, 2025 through Sep 30, 2026</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Rulemaking status split</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury s.4(c) IFR in effect; OCC final rule published Oct 23; 2 Fed proposals open to Nov 30</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Rulemaking status split</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury state-certification interim final rule in effect; OCC final rule published Oct 23; 2 Fed proposals open to Nov 30</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Program letter coverage</span><span class="b4-stat__val">10 of 14 rulemakings</span><span class="b4-stat__sub">14 GENIUS-cycle comment letters filed (Nos. 1-4, 6, 8, 10-13, 15-16, 22, 24)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Next major target</span><span class="b4-stat__val">November 2026</span><span class="b4-stat__sub">Nov 30 Fed / Treasury IFR comment close</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Next major target</span><span class="b4-stat__val">November 2026</span><span class="b4-stat__sub">Nov 30 Fed / Treasury interim final rule comment close</span></div>';
         var gRows = [
-          { name: 'FDIC (3 NPRMs: RIN 3064-AG20 application, AG19 PPSI standards, AG29 BSA/sanctions)', pct: 100, val: '3 of 3 commented (Nos. 4, 8, 13) · All pending final rule', note: 'Covers IDI subsidiary issuance approvals, reserve/redemption standards, and BSA compliance' },
-          { name: 'U.S. Department of the Treasury (3 actions: AC90 state-similarity, AC95 Section 3 issuance, s.4(c) IFR)', pct: 100, val: '1 IFR in effect · 2 NPRMs commented (Nos. 3, 22, 24)', note: 'September 30, 2026 interim final rule on state certification forms is the first GENIUS action in effect' },
-          { name: 'OCC (2 NPRMs: RIN 1557-AF41 PPSI framework, RIN 1557-AF55 BSA & sanctions)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · AF41 final rule published Oct 23, 2026', note: 'The AF41 final rule was published October 23, 2026 (91 FR 67000) and takes effect January 18, 2027; AF55 is pending a final rule' },
-          { name: 'FinCEN & Interagency (2 NPRMs: RIN 1506-AB73 sanctions/AML, RIN 1506-AB74 5-agency CIP)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Would set block/freeze/reject capability requirements and customer identification rules across all 5 regulators' },
-          { name: 'NCUA (2 NPRMs: RIN 3133-AF69 PPSI licensing, RIN 3133-AG10 credit-union stablecoin standards)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts PPSI supervision and reserve rules to federally insured credit unions' },
-          { name: 'Board of Governors of the Federal Reserve System (2 NPRMs: Docket R-1899 reserve/capital & subsidiary application)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
+          { name: 'FDIC (3 proposed rules: subsidiary applications, stablecoin issuer standards, Bank Secrecy Act and sanctions standards)', pct: 100, val: '3 of 3 commented (Nos. 4, 8, 13) · All pending final rule', note: 'Covers insured bank subsidiary issuance approvals, reserve/redemption standards, and Bank Secrecy Act compliance' },
+          { name: 'U.S. Department of the Treasury (3 actions: state-similarity principles; issuance, offer and sale rule; state-certification interim final rule)', pct: 100, val: '1 interim final rule in effect · 2 proposed rules commented (Nos. 3, 22, 24)', note: 'September 30, 2026 interim final rule on state certification forms is the first GENIUS action in effect' },
+          { name: 'OCC (2 proposed rules: stablecoin issuer framework, Bank Secrecy Act and sanctions standards)', pct: 100, val: '2 of 2 commented (Nos. 1, 2, 15) · Issuer framework final rule published Oct 23, 2026', note: 'The issuer framework final rule was published October 23, 2026 and takes effect January 18, 2027; the Bank Secrecy Act and sanctions rule is pending a final rule' },
+          { name: 'FinCEN & Interagency (2 proposed rules: issuer sanctions and anti-money-laundering programs, 5-agency customer identification program)', pct: 100, val: '2 of 2 commented (Nos. 6, 10, 16) · Pending final rule', note: 'Would set block/freeze/reject capability requirements and customer identification rules across all 5 regulators' },
+          { name: 'NCUA (2 proposed rules: investing in and licensing stablecoin issuers, standards for the issuers it licenses)', pct: 50, val: '1 commented (Nos. 11, 12) · Both pending final rule', note: 'Adapts stablecoin issuer supervision and reserve rules to federally insured credit unions' },
+          { name: 'Board of Governors of the Federal Reserve System (2 proposed rules: issuer reserves and capital, subsidiary applications)', pct: 40, val: '2 open for comment until Nov 30, 2026', note: 'Published September 29, 2026; completes the primary federal regulator proposal set' }
         ];
         barsEl.innerHTML = readingList(gRows);
       }
@@ -11657,16 +11660,16 @@
         var barsEl = document.getElementById('gen-st-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Enactment date</span><span class="b4-stat__val">July 18, 2025</span><span class="b4-stat__sub">S. 1582 signed into law as Public Law 119-27</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Section 13 rule deadline</span><span class="b4-stat__val">July 18, 2026 (Passed)</span><span class="b4-stat__sub">1-year statutory deadline elapsed with 0 final rules issued</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Section 20 effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">Earlier of 18 months post-enactment or 120d after final rules</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Section 3 DASP restriction</span><span class="b4-stat__val">July 18, 2028</span><span class="b4-stat__sub">3 years post-enactment: US platforms limited to PPSI coins</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Enactment date</span><span class="b4-stat__val">July 18, 2025</span><span class="b4-stat__sub">GENIUS Act signed into law</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">GENIUS Act rule deadline</span><span class="b4-stat__val">July 18, 2026 (Passed)</span><span class="b4-stat__sub">1-year statutory deadline elapsed with 0 final rules issued</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">GENIUS Act effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">Earlier of 18 months post-enactment or 120d after final rules</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Service-provider sale restriction</span><span class="b4-stat__val">July 18, 2028</span><span class="b4-stat__sub">3 years post-enactment: US platforms limited to coins from permitted issuers</span></div>';
         var sRows = [
-          { name: 'Milestone 1: July 18, 2025 (GENIUS Act Enactment, Pub. L. 119-27)', pct: 100, val: 'Completed (Month 0)', note: 'Sets federal PPSI perimeter, 1:1 liquid reserve mandate, Bankruptcy Code holder priority, and Section 4(a)(11) yield ban' },
-          { name: 'Milestone 2: July 18, 2026 (Section 13 Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (no final rule by the deadline)', note: 'No primary regulator issued a final rule by September 20, 2026, so the 120-day prong cannot fall before January 18, 2027.' },
-          { name: 'Milestone 3: November 30, 2026 (Federal Reserve R-1899 & Treasury s.4(c) IFR Comment Close)', pct: 82, val: 'Active window (Month 16)', note: 'Concludes initial notice-and-comment across all primary federal payment stablecoin regulators' },
-          { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: 'The 18-month prong of Section 20 sets the effective date at January 18, 2027. Final rules were still open on September 20, 2026.' },
-          { name: 'Milestone 5: July 18, 2028 (Section 3 Digital Asset Service Provider Perimeter Lock)', pct: 40, val: 'Month 36 enforcement gate', note: 'Three years after enactment, DASPs may offer or sell to U.S. persons only payment stablecoins issued by qualified PPSIs or compliant foreign issuers' }
+          { name: 'Milestone 1: July 18, 2025 (GENIUS Act Enactment)', pct: 100, val: 'Completed (Month 0)', note: 'Sets federal stablecoin issuer perimeter, 1:1 liquid reserve mandate, Bankruptcy Code holder priority, and the ban on issuers paying holders yield' },
+          { name: 'Milestone 2: July 18, 2026 (Statutory Rulemaking Deadline, 12 months)', pct: 100, val: 'Elapsed (no final rule by the deadline)', note: 'No primary regulator issued a final rule by September 20, 2026, so the 120-day prong cannot fall before January 18, 2027.' },
+          { name: 'Milestone 3: November 30, 2026 (Comment Close on Federal Reserve Issuer Rules & Treasury State-Certification Rule)', pct: 82, val: 'Active window (Month 16)', note: 'Concludes initial notice-and-comment across all primary federal payment stablecoin regulators' },
+          { name: 'Milestone 4: January 18, 2027 (Statutory Effective Date, 18 months after enactment)', pct: 75, val: 'Binding effective date (Month 18)', note: 'The 18-month prong of the GENIUS Act sets the effective date at January 18, 2027. Final rules were still open on September 20, 2026.' },
+          { name: 'Milestone 5: July 18, 2028 (Digital Asset Service Provider Perimeter Lock)', pct: 40, val: 'Month 36 enforcement gate', note: 'Three years after enactment, digital asset service providers may offer or sell to U.S. persons only payment stablecoins issued by qualified permitted issuers or compliant foreign issuers' }
         ];
         barsEl.innerHTML = readingList(sRows);
       }
@@ -11761,7 +11764,7 @@
       var datItems = [
         { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 27 federal + 1 FSB · 21 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 148 recommendations, and proceeding outcomes' },
         { cat: 'feeds', pct: 96, name: 'Recommendation index (/letters/recommendations.csv)', badge: 'CSV · 153 rows', note: 'Flat one-row-per-ask export with letter number, agency, filing date, ask summary, full text, topics, and status' },
-        { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under Pub. L. 119-27 with RIN, Federal Register citation, comment window, and status' },
+        { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under the GENIUS Act with regulation ID number, Federal Register citation, comment window, and status' },
         { cat: 'feeds', pct: 95, name: 'MVEP scorecard & composite rating (/data/mvep/*.csv)', badge: '2 CSVs · 154 cells + 14 ratings', note: 'Exhibit 1 (11 rows x 14 products) and Exhibit 3 non-compensatory composite ratings mirrored from mvep-replication' },
         { cat: 'feeds', pct: 90, name: 'Patent portfolio registry (/patents/patents.json)', badge: 'JSON · 49 filings · 39 families', note: 'All 49 USPTO provisional serial numbers and descriptions grouped across the 6 technical problem areas' },
         { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 79 3d bins + 237 1d bins', note: '67,675 commits in series (68,264 on ref) from March 2 through October 24, 2026 in America/New_York time' },
@@ -11842,9 +11845,9 @@
           { name: '3. Reserves (Composition, bank concentration caps, daily valuation & segregation)', pct: 81, val: '30 recommendations (20.3%)', note: 'Addresses single-bank reserve lockups ($3.3B SVB lesson), custodian concentration, and eligible liquid assets' },
           { name: '2. Disclosure and reporting (3CRD point-of-use template, holder-rights memos)', pct: 89, val: '33 recommendations (22.3%)', note: 'Surfaces legal claim, reserve composition, and custody location where holders transact' },
           { name: '4. Supervision (Examiner cadences, shared control-posture records, drift triggers)', pct: 70, val: '26 recommendations (17.6%)', note: 'Aligns OCC, FDIC, FinCEN, Treasury, Federal Reserve, and NCUA examination playbooks' },
-          { name: '5. AML/CFT (22) & 6. Interagency coordination (18)', pct: 59, val: '22 AML/CFT · 18 Coordination', note: 'Asks the Board to add the FinCEN consultation provisions to Section 208.63 and asks for aligned five-agency CIP rules' },
-          { name: '7. Custody and collateral (19) & 8. Sanctions compliance (18)', pct: 51, val: '19 Custody · 18 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and the freeze/block/reject capability in proposed 31 CFR 1033.240' },
-          { name: '9. Redemption (12), 10. Other (11), 11. Insolvency (9), 12. Deposit insurance (7), 13. Capital (2)', pct: 32, val: '41 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
+          { name: '5. AML/CFT (22) & 6. Interagency coordination (18)', pct: 59, val: '22 AML/CFT · 18 Coordination', note: 'Asks the Board to add the FinCEN consultation provisions to its proposed anti-money-laundering program rule and asks for aligned five-agency customer identification rules' },
+          { name: '7. Custody and collateral (19) & 8. Sanctions compliance (18)', pct: 51, val: '19 Custody · 18 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC clearing organizations / Binance) and the block, freeze and reject capability FinCEN proposes to require of issuers' },
+          { name: '9. Redemption (12), 10. Other (11), 11. Insolvency (9), 12. Deposit insurance (7), 13. Capital (2)', pct: 32, val: '41 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (FDIC issuer standards letter, Recommendation 7), 2am Saturday redemption gates, and the 22:1 capital gap between money services businesses and banks' }
         ];
         barsEl.innerHTML = readingList(tRows);
       }
@@ -11854,18 +11857,18 @@
         var barsEl = document.getElementById('recs-ag-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Largest agency docket set</span><span class="b4-stat__val">FDIC (36 asks)</span><span class="b4-stat__sub">Across AG19, AG20, AG21, AG27, AG29, and AG30</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Illicit-finance &amp; CIP</span><span class="b4-stat__val">FinCEN / OFAC (30 asks)</span><span class="b4-stat__sub">Across AML/CFT, PPSI sanctions, 5-agency CIP, and the A7 Network special measure</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Market structure &amp; clearing</span><span class="b4-stat__val">SEC (26) &amp; CFTC (4)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, Transfer Agent Rules, DCOs</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Largest agency docket set</span><span class="b4-stat__val">FDIC (36 asks)</span><span class="b4-stat__sub">Across issuer standards, subsidiary applications, resolution, assessments, Bank Secrecy Act, and disclosure</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Illicit-finance &amp; customer identification</span><span class="b4-stat__val">FinCEN / OFAC (30 asks)</span><span class="b4-stat__sub">Across AML/CFT, issuer sanctions, 5-agency customer identification, and the A7 Network special measure</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Market structure &amp; clearing</span><span class="b4-stat__val">SEC (26) &amp; CFTC (4)</span><span class="b4-stat__sub">Draft strategic plan, Regulation Crypto Assets, tokenized stock, transfer agent rules, clearing organizations</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Charter &amp; state-similarity</span><span class="b4-stat__val">Treasury (13) · OCC (12) · NCUA (11)</span><span class="b4-stat__sub">Plus Federal Reserve (9) and Joint Banking Agencies (7)</span></div>';
         var agRows = [
-          { name: 'FDIC (6 letters: AG19, AG20, AG21, AG27, AG29, AG30)', pct: 100, val: '36 recommendations (24.3%)', note: 'Covers PPSI activities, MGCPT pass-through insurance, resolution plans, run-risk assessments, and statistical disclosure' },
-          { name: 'FinCEN & OFAC (6 letters: FINCEN-2026-0034, FINCEN-2026-0100, FINCEN-2026-0101, FINCEN-2026-0265)', pct: 83, val: '30 recommendations (20.3%)', note: 'Operationalizes PPSI freeze/block/reject capability, reserve-custody Chow break tests, and formal-relationship CIP scoping' },
-          { name: 'SEC (4 letters: File DSP-3, File S7-2026-27, File 4-927, File S7-2026-30)', pct: 72, val: '26 recommendations (17.6%)', note: 'Applies PCA-corrected governance concentration, Rule 400(a) observable control gates, and TSV corporate-actions hierarchy' },
-          { name: 'U.S. Department of the Treasury (3 letters: TREAS-DO-2026-0232 & TREAS-DO-2026-0496)', pct: 36, val: '13 recommendations (8.8%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under Section 3' },
-          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.1%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
-          { name: 'NCUA (2 letters: RIN 3133-AG10 + routing supplement) & Federal Reserve Board (Docket R-1835)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
-          { name: 'Joint Banking Agencies (91 FR 18304) & CFTC (OMB 3038-0076 DCO requirements)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized DCO margin' }
+          { name: 'FDIC (6 letters: issuer standards, subsidiary applications, resolution, assessments, Bank Secrecy Act, disclosure)', pct: 100, val: '36 recommendations (24.3%)', note: 'Covers stablecoin issuer activities, MGCPT pass-through insurance, resolution plans, run-risk assessments, and statistical disclosure' },
+          { name: 'FinCEN & OFAC (6 letters on the anti-money-laundering program rewrite, issuer sanctions rule, joint customer identification rule, and A7 Network measure)', pct: 83, val: '30 recommendations (20.3%)', note: 'Operationalizes issuer block, freeze and reject capability, reserve-custody Chow break tests, and formal-relationship customer identification scoping' },
+          { name: 'SEC (4 letters: draft strategic plan, Regulation Crypto Assets, tokenized stock exemptions, transfer agent rules)', pct: 72, val: '26 recommendations (17.6%)', note: 'Applies PCA-corrected governance concentration, observable control gates for the proposed crypto safe harbor, and tokenized securities venue corporate-actions hierarchy' },
+          { name: 'U.S. Department of the Treasury (3 letters on state-similarity principles & the issuance, offer and sale rule)', pct: 36, val: '13 recommendations (8.8%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under the GENIUS Act limits on who may offer and sell stablecoins' },
+          { name: 'OCC (3 letters: MVEP comment on its stablecoin issuer rule + supplemental, Bank Secrecy Act and sanctions standards)', pct: 33, val: '12 recommendations (8.1%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
+          { name: 'NCUA (2 letters: stablecoin issuer standards + routing supplement) & Federal Reserve Board (anti-money-laundering program rule)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
+          { name: 'Joint Banking Agencies (bank anti-money-laundering program rule) & CFTC (clearing organization reporting)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized clearing organization margin' }
         ];
         barsEl.innerHTML = readingList(agRows);
       }
@@ -11932,12 +11935,12 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Filing window</span><span class="b4-stat__val">Oct 13 to Oct 19, 2026</span><span class="b4-stat__sub">4 submissions across 3 federal dockets (Letters No. 22 to 25)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">New recommendations</span><span class="b4-stat__val">22 concrete asks</span><span class="b4-stat__sub">Brings program total to 25 letters and 136 recommendations</span></div>' + /* count-guard-ignore: dated snapshot of the October 23 note */
-          '<div class="b4-stat"><span class="b4-stat__label">Treasury Section 3</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; corrected CLII score (0.90)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">SEC Crypto &amp; NMS Stock</span><span class="b4-stat__val">Letters No. 23 &amp; No. 25</span><span class="b4-stat__sub">Rule 400(a) observable control test &amp; TSV corporate-actions hierarchy</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Treasury issuance and sale rule</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; corrected CLII score (0.90)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">SEC Crypto &amp; Tokenized Stock</span><span class="b4-stat__val">Letters No. 23 &amp; No. 25</span><span class="b4-stat__sub">Observable control test for the proposed crypto safe harbor &amp; tokenized securities venue corporate-actions hierarchy</span></div>';
         var o19Rows = [
-          { name: 'Letter No. 23: SEC Regulation Crypto Assets (File No. S7-2026-27, 91 Fed. Reg. 54510)', pct: 100, val: '8 recommendations · Filed Oct 19, 2026', note: 'Adds an observable control condition to Rule 400(a) and requires Form TR to use PCA-excluded, delegation-aware governance metrics' },
-          { name: 'Letter No. 22 & No. 24: Treasury GENIUS Section 3 Issuance, Offer & Sale (TREAS-DO-2026-0496)', pct: 88, val: '7 recommendations + supplemental · Oct 13 & 19', note: 'Grounds proposed s.1523.3(c) foreign-issuer technical capability in deployed contract code and keys s.8 checks to published determinations' },
-          { name: 'Letter No. 25: SEC Tokenized NMS Stock Conditional Exemptions (File No. 4-927, Rel. 34-106402)', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Asks the SEC to require Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
+          { name: 'Letter No. 23: SEC Proposed Regulation Crypto Assets', pct: 100, val: '8 recommendations · Filed Oct 19, 2026', note: 'Adds an observable control condition to the proposed crypto safe harbor and requires its transition report to use PCA-excluded, delegation-aware governance metrics' },
+          { name: 'Letter No. 22 & No. 24: Treasury Proposed Rule on Stablecoin Issuance, Offer & Sale', pct: 88, val: '7 recommendations + supplemental · Oct 13 & 19', note: 'Grounds a foreign issuer\'s represented technical capability in deployed contract code and keys the check for noncompliant foreign issuers to published determinations' },
+          { name: 'Letter No. 25: SEC Conditional Exemptions for Tokenized Stock Trading', pct: 88, val: '7 recommendations · Filed Oct 19, 2026', note: 'Asks the SEC to require Tokenized Securities Venues to disclose third-party tokenizer insolvency posture, 24/7 corporate-action cutoff architecture, and tx hashes' }
         ];
         barsEl.innerHTML = readingList(o19Rows);
       }
@@ -11947,15 +11950,15 @@
         var barsEl = document.getElementById('not-o12-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">July 18, 2026 deadline</span><span class="b4-stat__val">0 final rules issued</span><span class="b4-stat__sub">1-year Section 13 statutory rulemaking deadline elapsed</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">14-action state as of Oct 23</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury s.4(c) state-certification IFR in effect Sep 30; OCC final rule published Oct 23</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">July 18, 2026 deadline</span><span class="b4-stat__val">0 final rules issued</span><span class="b4-stat__sub">1-year statutory rulemaking deadline elapsed</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">14-action state as of Oct 23</span><span class="b4-stat__val">2 with a final rule · 2 open · 10 pending</span><span class="b4-stat__sub">Treasury state-certification interim final rule in effect Sep 30; OCC final rule published Oct 23</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Binding effective date</span><span class="b4-stat__val">January 18, 2027</span><span class="b4-stat__sub">18-month statutory prong governs automatically post-Sep 20</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Open comment windows</span><span class="b4-stat__val">Through Nov 30, 2026</span><span class="b4-stat__sub">Federal Reserve R-1899 + companion &amp; Treasury s.4(c) IFR</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Open comment windows</span><span class="b4-stat__val">Through Nov 30, 2026</span><span class="b4-stat__sub">Federal Reserve issuer rules + companion &amp; Treasury state-certification rule</span></div>';
         var o12Rows = [
-          { name: 'Awaiting final action (10 proposals closed for comment, including Treasury Section 3 on Oct 19)', pct: 71.4, val: '10 of 14 rulemakings (71.4%)', note: 'Spans OCC AF55, FDIC AG19/AG20/AG29, FinCEN AB73/AB74, NCUA AF69/AG10, and Treasury AC90/AC95' },
-          { name: 'Open for public comment (Federal Reserve Board Docket R-1899 & subsidiary application proposal)', pct: 14.3, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
-          { name: 'In effect (Treasury Stablecoin Certification Review Committee Section 4(c) Interim Final Rule)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' },
-          { name: 'Final rule published (OCC, RIN 1557-AF41 PPSI framework)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Published October 23, 2026 (91 FR 67000); takes effect January 18, 2027' }
+          { name: 'Awaiting final action (10 proposals closed for comment, including the Treasury issuance and sale rule on Oct 19)', pct: 71.4, val: '10 of 14 rulemakings (71.4%)', note: 'Spans OCC (Bank Secrecy Act), FDIC (issuer standards, applications, Bank Secrecy Act), FinCEN (sanctions programs, customer identification), NCUA (licensing, issuer standards), and Treasury (state similarity, issuance)' },
+          { name: 'Open for public comment (Federal Reserve Board issuer rules & subsidiary application proposal)', pct: 14.3, val: '2 of 14 rulemakings (14.3%)', note: 'Published in the Federal Register September 29, 2026; comments close November 30, 2026' },
+          { name: 'In effect (Treasury Stablecoin Certification Review Committee Interim Final Rule on state certifications)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Issued September 30, 2026 setting state certification forms and procedures; comments accepted through November 30, 2026' },
+          { name: 'Final rule published (OCC stablecoin issuer framework)', pct: 7.1, val: '1 of 14 rulemakings (7.1%)', note: 'Published October 23, 2026; takes effect January 18, 2027' }
         ];
         barsEl.innerHTML = o12Rows.map(function(b){
           return '<div class="b4-bar-row"><div class="b4-bar-row__top"><span class="b4-bar-row__name">' + b.name + '</span><span class="b4-bar-row__val">' + b.val + '</span></div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:' + b.pct + '%"></div></div><div class="b4-bar-row__meta">' + b.note + '</div></div>';
@@ -12025,7 +12028,7 @@
     { cat: 'Briefing', title: 'The Control Layer of Agentic Payments (x402 Empirical Memo)', url: '/papers/agentic-payments-control-layer/', kw: 'x402 memo 138 facilitator addresses meridian 2-hop proxy buyer cardinality' },
     { cat: 'Briefing', title: 'The Oracle Problem in Stablecoin Ratings (Issuer-Pays vs On-Chain Feeds)', url: '/papers/oracle-problem-stablecoin-ratings/', kw: 'credit ratings moodys sp white jiang griffin tang ousd consortium' },
     { cat: 'Briefing', title: 'Tokenized Cash Management Principles (12 TCMAG Principles vs 10 MVEP)', url: '/papers/mvep-tcmag-comparison/', kw: 'tcmag corporate treasurers multi-bank interoperability confidentiality lei' },
-    { cat: 'Briefing', title: 'Open USD (OUSD) & the GENIUS Section 4(a)(11) Yield Boundary', url: '/papers/ousd-yield-boundary/', kw: 'ousd open standard 140 partners 2 hop yield prohibition coinbase circle $907.9m' },
+    { cat: 'Briefing', title: 'Open USD (OUSD) & the GENIUS Yield Boundary', url: '/papers/ousd-yield-boundary/', kw: 'ousd open standard 140 partners 2 hop yield prohibition section 4(a)(11) coinbase circle $907.9m' },
     { cat: 'Briefing', title: 'Dollar v3: Four Dollar Objects, Layer 0 & Deposit Funding Mutation', url: '/papers/dollar-v3/', kw: 'dollar v3 feds note reduce recycle restructure occ il 1188' },
     { cat: 'Briefing', title: 'The Control Layer War: CLARITY Act Defaults, Holds & Routing', url: '/papers/control-layer-war/', kw: 'clarity act hr 5403 router-centric issuer-centric time-to-release' },
     { cat: 'Briefing', title: 'Tokenized Equity Vehicles: Robinhood Stock Tokens vs Backed xStocks', url: '/papers/tokenized-equity/', kw: 'robinhood arbitrum backed xstocks jersey spv solana spl' },
@@ -12097,7 +12100,7 @@
     backdrop.innerHTML =
       '<div class="cz-cmdk-dialog">' +
         '<div class="cz-cmdk-top">' +
-          '<input type="search" class="cz-cmdk-input" id="cz-cmdk-input" placeholder="Jump to any paper, framework, letter, explorer, dataset, or resume (e.g., MVEP, x402, AG19, TDRC)..." autocomplete="off" spellcheck="false" />' +
+          '<input type="search" class="cz-cmdk-input" id="cz-cmdk-input" placeholder="Jump to any paper, framework, letter, explorer, dataset, or resume (e.g., MVEP, x402, FDIC, TDRC)..." autocomplete="off" spellcheck="false" />' +
           '<button type="button" class="cz-cmdk-esc" id="cz-cmdk-close">ESC</button>' +
         '</div>' +
         '<ul class="cz-cmdk-list" id="cz-cmdk-list"></ul>' +
@@ -12214,7 +12217,7 @@
           preread: '/papers/mvep/#a2-mvep-explorer',
           prereadLabel: 'MVEP 14-Product & 20-Regime Explorer',
           deliverables: [
-            { name: '1. Non-compensatory Legal, Operational & Economic Equivalence Scorecard', pct: 100, val: '10 categories + CSA', note: 'Tests UCC Art. 8/12 rights parity, transfer-agent system of record, custody segregation, and 20-regime bankruptcy priority' },
+            { name: '1. Non-compensatory Legal, Operational & Economic Equivalence Scorecard', pct: 100, val: '10 categories + CSA', note: 'Tests Uniform Commercial Code rights parity, transfer-agent system of record, custody segregation, and 20-regime bankruptcy priority' },
             { name: '2. 2am Saturday Collateral & Redemption Stress Audit', pct: 92, val: '3 paths · 7 scenarios', note: 'Evaluates instant-redemption pool capacity, whitelist ATS liquidity, and weekend banking-hour conversion gaps' },
             { name: '3. Remediation Roadmap & 24-Hour CLII Drift Triggers', pct: 88, val: 'Committee sign-off pack', note: 'Names the binding constraint and sets post-approval gateway monitoring thresholds' }
           ]
@@ -12262,9 +12265,9 @@
           preread: '/trackers/genius-act/#genius-timeline-explorer',
           prereadLabel: 'GENIUS Act 14-Rulemaking Explorer',
           deliverables: [
-            { name: '1. Statutory & NPRM Provision-to-Product Translation', pct: 96, val: '14 GENIUS rulemakings', note: 'Maps OCC, FDIC, Treasury, FinCEN, Federal Reserve, SEC, and CFTC proposals onto product and compliance gates' },
-            { name: '2. Two-Hop Yield Boundary & TDRC Equilibrium Assessment', pct: 92, val: 'Section 4(a)(11) & CLARITY s.404', note: 'Evaluates issuer reserve carry vs 1-hop partner revenue share (OUSD) vs 2-hop customer rewards (USDC)' },
-            { name: '3. Comment-Letter Strategy & Administrative-Record Evidence Pack', pct: 88, val: '25-letter benchmark', note: 'Grounds policy positions in reproducible on-chain data and statutory text' }
+            { name: '1. Statutory & Proposed-Rule Provision-to-Product Translation', pct: 96, val: '14 GENIUS rulemakings', note: 'Maps OCC, FDIC, Treasury, FinCEN, Federal Reserve, SEC, and CFTC proposals onto product and compliance gates' },
+            { name: '2. Two-Hop Yield Boundary & TDRC Equilibrium Assessment', pct: 92, val: 'GENIUS & CLARITY yield bans', note: 'Evaluates issuer reserve carry vs 1-hop partner revenue share (OUSD) vs 2-hop customer rewards (USDC)' },
+            { name: '3. Comment-Letter Strategy & Administrative-Record Evidence Pack', pct: 88, val: '27-letter benchmark', note: 'Grounds policy positions in reproducible on-chain data and statutory text' }
           ]
         },
         'ai-fleet': {
