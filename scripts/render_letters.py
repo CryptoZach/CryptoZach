@@ -998,6 +998,7 @@ def public_letter(l):
     out = {k: v for k, v in l.items() if not k.startswith("_")}
     out["url"] = f"{SITE}/letters/{l['slug']}/"
     out["pdf_url"] = SITE + l["pdf"] if l.get("pdf") else None   # null: filed as comment-box text, no attachment
+    out["identifiers"] = letter_identifiers(l)   # every official number for this letter; the search palette reads it
     return out
 
 

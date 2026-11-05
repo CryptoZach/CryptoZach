@@ -12087,6 +12087,37 @@
     }).join('');
   }
 
+  function applyQuery(){
+    var q = (inputEl.value || '').trim().toLowerCase();
+    var terms = q ? q.split(/\s+/) : [];
+    filtered = ITEMS.filter(function(it){
+      if(!terms.length) return !it.searchOnly;
+      var hay = (it.title + ' ' + it.cat + ' ' + it.kw + ' ' + it.url).toLowerCase();
+      return terms.every(function(t){ return hay.indexOf(t) !== -1; });
+    });
+    activeIdx = 0;
+    renderList();
+  }
+
+  /* Filed letters join from the site's own data file when the palette first opens, so a reader can
+     jump to one by its name or its official number and the list cannot fall behind the filings.
+     They show only in answer to a search, which keeps the opening list short. */
+  var lettersRequested = false;
+  function loadLetters(){
+    if(lettersRequested) return;
+    lettersRequested = true;
+    fetch('/letters/letters.json').then(function(r){
+      return r.ok ? r.json() : null;
+    }).then(function(data){
+      if(!data || !data.letters) return;
+      data.letters.forEach(function(l){
+        ITEMS.push({ cat: 'Letter', title: l.short_title, url: '/letters/' + l.slug + '/', searchOnly: true,
+          kw: [l.headline, l.agency_long].concat(l.identifiers || []).join(' ') });
+      });
+      if(inputEl && (inputEl.value || '').trim()) applyQuery();
+    }).catch(function(){ lettersRequested = false; });
+  }
+
   function buildModal(){
     if(backdrop) return;
     ensureStyles();
@@ -12110,17 +12141,7 @@
     inputEl = document.getElementById('cz-cmdk-input');
     listEl = document.getElementById('cz-cmdk-list');
 
-    inputEl.addEventListener('input', function(){
-      var q = (inputEl.value || '').trim().toLowerCase();
-      var terms = q ? q.split(/\s+/) : [];
-      filtered = ITEMS.filter(function(it){
-        if(!terms.length) return true;
-        var hay = (it.title + ' ' + it.cat + ' ' + it.kw + ' ' + it.url).toLowerCase();
-        return terms.every(function(t){ return hay.indexOf(t) !== -1; });
-      });
-      activeIdx = 0;
-      renderList();
-    });
+    inputEl.addEventListener('input', applyQuery);
 
     inputEl.addEventListener('keydown', function(e){
       if(e.key === 'ArrowDown'){
@@ -12148,10 +12169,9 @@
 
   function openModal(){
     buildModal();
-    filtered = ITEMS.slice();
-    activeIdx = 0;
+    loadLetters();
     inputEl.value = '';
-    renderList();
+    applyQuery();
     backdrop.hidden = false;
     setTimeout(function(){ inputEl.focus(); }, 10);
   }
