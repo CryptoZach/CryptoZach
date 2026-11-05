@@ -935,6 +935,7 @@ def tracker_rows(m):
         rows.append({"key": key, "agency": ls[0]["agency"], "agency_long": p["agency"], "name": p["name"],
                      "identifier": p["identifier"], "fr": p.get("fr"),
                      "kind": "Final rule" if o["state"] == "final" and p["kind"] == "Proposed rule" else p["kind"], "url": p.get("url"),
+                     "fr_label": "proposed at " if o["state"] == "final" and p["kind"] == "Proposed rule" else "",
                      "published": opens[0] if opens else None, "comment_close": closes[-1] if closes else None,
                      "comment_close_note": None, "state": o["state"],
                      "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
@@ -959,10 +960,10 @@ def tracker_letter_cell(m, l):
     filed = f'filed {esc(fmt_date(l["filed"]))}'
     channel = l["docket"].get("channel") or ""
     if l["docket"].get("comment_url"):
-        filed += f' &middot; <a href="{attr(l["docket"]["comment_url"])}" target="_blank" rel="noopener noreferrer">posted comment</a>'
+        filed += f'<br><a href="{attr(l["docket"]["comment_url"])}" target="_blank" rel="noopener noreferrer">posted comment</a>'
     elif "email" in channel:
         filed += " by email"
-    return link + f'<br><span class="letters-outcome-id">{filed}</span>'
+    return f'<span class="tracker-letter">{link}<br><span class="letters-outcome-id">{filed}</span></span>'
 
 
 def split_name(name):
@@ -996,7 +997,7 @@ def gen_tracker(m):
         head, tail = split_name(r["name"])
         agency = esc(head or r["agency"])
         title = (f'<a href="{attr(r["url"])}" target="_blank" rel="noopener noreferrer">{esc(tail)}</a>' if r.get("url") else esc(tail))
-        ident = esc(r["identifier"]) + (f"; {esc(r['fr'])}" if r.get("fr") else "")
+        ident = esc(r["identifier"]) + (f"; {esc(r.get('fr_label', ''))}{esc(r['fr'])}" if r.get("fr") else "")
         if r["comment_close"]:
             # By the date, not the state: an interim final rule is in effect and still taking comments.
             comments = ("open until " if not_past(r["comment_close"], m.verified_on) else "closed ") + fmt_date(r["comment_close"])
@@ -1009,7 +1010,7 @@ def gen_tracker(m):
             fa = r["final_action"]
             status += f'<br><span class="letters-outcome-id">{esc(fa.get("citation", ""))}{" (" + esc(fmt_date(fa["date"])) + ")" if fa.get("date") else ""}</span>'
         if r["letters"]:
-            letters = "<br>".join(tracker_letter_cell(m, l) for l in r["letters"])
+            letters = "".join(tracker_letter_cell(m, l) for l in r["letters"])
         else:
             letters = '<span class="tracker-none">none filed</span>'
         out += ["      <tr" + (' class="tracker-row--commented"' if r["commented"] else "") + ">",
