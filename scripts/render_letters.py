@@ -995,14 +995,16 @@ def gen_tracker(m):
         if srcs:
             out.append(f'  <li class="tracker-statute__source">Text: {srcs}</li>')
         out.append("</ul>")
+    # Next dates sit above the table: what happens next is the first thing a reader of a tracker wants.
     watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
     if watch:
-        out.append('<h2 id="next-dates">Next dates</h2>')
-        out.append('<ul class="letters-watch">')
+        head = ['<h2 id="next-dates">Next dates</h2>', '<ul class="letters-watch">']
         for w in watch:
             srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">source</a>' for s_ in w.get("sources", []))
-            out.append(f'  <li><time datetime="{attr(w["date"])}">{esc(fmt_date(w["date"]))}</time>: {esc(w["text"])}{(" (" + srcs + ")") if srcs else ""}</li>')
-        out.append("</ul>")
+            head.append(f'  <li><time datetime="{attr(w["date"])}">{esc(fmt_date(w["date"]))}</time>: {esc(w["text"])}{(" (" + srcs + ")") if srcs else ""}</li>')
+        head.append("</ul>")
+        at = out.index('<div class="letters-timeline-table" role="region" aria-label="GENIUS Act rulemakings">')
+        out[at:at] = head
     out.append(f'<p class="letters-asof">Last checked {esc(fmt_date(m.verified_on))}. The same rows are published as <a href="/trackers/genius-act/genius-act.json">JSON</a>; the program\'s own letters and their outcomes are on the <a href="/letters/#program-outcomes">letters page</a>.</p>')
     return out
 
