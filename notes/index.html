@@ -271,24 +271,10 @@
       .notes-page ul.notes-kinds{padding-left:1.2rem;color:var(--text-soft);line-height:1.6}
     </style>
     <section class="reveal notes-page">
-      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> Notes
-      </nav>
       <p class="kicker kicker--subpage"><span class="kicker-dot" aria-hidden="true"></span> Notes</p>
-      <h1 style="font-size:clamp(1.75rem, 3vw, 2.5rem);margin:0 0 var(--space-md);letter-spacing:-0.01em;">Notes.</h1>
-      <p class="about-lede"><strong>Short, dated notes between the papers: where a rulemaking stands, what an event changed, whether two products are still equivalent.</strong> Each note is a snapshot on its date; the <a href="/trackers/genius-act/">tracker</a> and the <a href="/letters/">letters page</a> carry the current state.</p>
+      <h1 style="font-size:clamp(1.75rem, 3vw, 2.5rem);margin:0 0 var(--space-md);letter-spacing:-0.01em;">Short, dated notes between the papers.</h1>
+      <p class="about-lede">Where a rulemaking stands, what an event changed, whether two products are still equivalent. Each note is a snapshot on its date; the <a href="/trackers/genius-act/">tracker</a> and the <a href="/letters/">letters page</a> carry the current state.</p>
 
-      <div class="letters-follow">
-        <p class="letters-follow__label">Follow the notes</p>
-        <a class="letters-follow__feed" href="/notes/feed.xml">Atom feed</a>
-        <form class="letters-follow__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
-          <label class="visually-hidden" for="notes-follow-email">Email address</label>
-          <input id="notes-follow-email" class="letters-follow__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
-          <input type="hidden" name="tag" value="notes">
-          <button class="letters-follow__button" type="submit">Email me each note</button>
-        </form>
-        <p class="letters-follow__note">One email per note, nothing else. The monthly digest is a separate list in the footer. <a href="/privacy/">Privacy</a>.</p>
-      </div>
 
       <!-- notes:index START (generated from scripts/notes_registry.json; edit the registry, then: python3 scripts/render_notes.py --write) -->
       <p class="letters-meta-strip">3 notes &middot; newest first</p>
@@ -310,6 +296,17 @@
         </li>
       </ol>
       <!-- notes:index END -->
+      <div class="letters-follow">
+        <p class="letters-follow__label">Follow the notes</p>
+        <a class="letters-follow__feed" href="/notes/feed.xml">Atom feed</a>
+        <form class="letters-follow__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="visually-hidden" for="notes-follow-email">Email address</label>
+          <input id="notes-follow-email" class="letters-follow__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
+          <input type="hidden" name="tag" value="notes">
+          <button class="letters-follow__button" type="submit">Email me each note</button>
+        </form>
+        <p class="letters-follow__note">One email per note, nothing else. The monthly digest is a separate list in the footer. <a href="/privacy/">Privacy</a>.</p>
+      </div>
 
       <h2 class="notes-h" id="kinds">What appears here</h2>
       <ul class="notes-kinds">
@@ -318,35 +315,6 @@
         <li><strong>Routing notes</strong>: observations on how dollars move between gateways, the subject of <a href="/papers/routing-the-dollar/">Routing the Dollar</a>.</li>
         <li><strong>Equivalence checks</strong>: whether a product still clears the categories it cleared when a paper scored it.</li>
       </ul>
-
-      <figure class="b4-explorer" id="notes-snapshot-explorer" aria-labelledby="not-exp-title">
-        <div class="b4-explorer__head">
-          <div>
-            <p class="b4-explorer__kicker">Interactive status &amp; filing snapshot · October 2026 dispatches</p>
-            <h3 id="not-exp-title" class="b4-explorer__title">Inspect the October 13 to 19 SEC/Treasury filings and the GENIUS Act rulemaking status as of October 23</h3>
-          </div>
-          <div class="b4-explorer__tabs" role="tablist" aria-label="Notes interactive views">
-            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="not-panel-oct19" id="not-tab-oct19" data-not-tab="oct19">1. Oct 19 SEC &amp; Treasury filings (4 letters, 22 asks)</button>
-            <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="not-panel-oct12" id="not-tab-oct12" data-not-tab="oct12">2. GENIUS Act status as of Oct 23 (14 rulemakings)</button>
-          </div>
-        </div>
-
-        <div class="b4-explorer__panel" id="not-panel-oct19" role="tabpanel" aria-labelledby="not-tab-oct19">
-          <div class="b4-explorer__summary" id="not-o19-summary" aria-live="polite"></div>
-          <p class="fg-route-key"><strong>How to read this.</strong> Each line states the letter and its recommendation count.</p>
-          <div class="b4-explorer__bars" id="not-o19-bars"></div>
-        </div>
-
-        <div class="b4-explorer__panel" id="not-panel-oct12" role="tabpanel" aria-labelledby="not-tab-oct12" hidden>
-          <div class="b4-explorer__summary" id="not-o12-summary" aria-live="polite"></div>
-          <p class="fg-route-key"><strong>How to read this.</strong> Bar length is that status as a share of the 14 rulemakings. The count is written in the line.</p>
-          <div class="b4-explorer__bars" id="not-o12-bars"></div>
-        </div>
-
-        <figcaption class="b4-explorer__foot">
-          Syndication: <a href="/notes/feed.xml">Notes Atom feed</a> · Live rulemaking state: <a href="/trackers/genius-act/">GENIUS Act tracker</a> and <a href="/letters/">Letters</a>.
-        </figcaption>
-      </figure>
     </section>
     <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
     <footer class="site-footer reveal">
