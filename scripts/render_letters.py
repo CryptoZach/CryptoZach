@@ -926,6 +926,18 @@ def tracker_rows(m):
     return rows
 
 
+def tracker_letter_cell(m, l):
+    """One filed letter in the tracker: its page by name, its filing date and, once the agency has posted it, the posted copy."""
+    link = f'<a href="/letters/{attr(l["slug"])}/">{esc(m.number_label(l))}: {esc(l["short_title"])}</a>'
+    filed = f'filed {esc(fmt_date(l["filed"]))}'
+    channel = l["docket"].get("channel") or ""
+    if l["docket"].get("comment_url"):
+        filed += f' &middot; <a href="{attr(l["docket"]["comment_url"])}" target="_blank" rel="noopener noreferrer">posted comment</a>'
+    elif "email" in channel:
+        filed += " by email"
+    return link + f'<br><span class="letters-outcome-id">{filed}</span>'
+
+
 def split_name(name):
     """'OCC: GENIUS Act implementation ...' -> ('OCC', 'GENIUS Act implementation ...')."""
     if ": " in name:
@@ -942,10 +954,11 @@ def gen_tracker(m):
     n_open = sum(1 for r in rows if r["state"] == "open")
     n_final = sum(1 for r in rows if r["state"] == "final")
     n_pending = sum(1 for r in rows if r["state"] == "closed-pending")
-    bits = [f"{n} rulemakings", f"{n_comm} with a program letter", f"{n_open} open for comment",
+    n_letters = sum(len(r["letters"]) for r in rows)
+    bits = [f"{n} rulemakings", f"{n_comm} with a program letter ({n_letters} letters filed)", f"{n_open} open for comment",
             f"{n_pending} awaiting final action", f"{n_final} with a final rule"]
     out = [f'<p class="letters-meta-strip">{" &middot; ".join(esc(b) for b in bits)}</p>',
-           f'<p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. Rows with a letter link to the program\'s comment; the others are listed so the implementation picture is complete. Status as of {esc(fmt_date(m.verified_on))}.</p>',
+           f'<p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. The last column links each comment the program filed, with its filing date and, once the agency has posted it, the posted copy; the other rows are listed so the implementation picture is complete. Status as of {esc(fmt_date(m.verified_on))}.</p>',
            '<div class="letters-timeline-table" role="region" aria-label="GENIUS Act rulemakings">',
            '  <table class="letters-timeline letters-outcomes letters-stackable tracker-table">',
            "    <thead>",
@@ -968,7 +981,7 @@ def gen_tracker(m):
             fa = r["final_action"]
             status += f'<br><span class="letters-outcome-id">{esc(fa.get("citation", ""))}{" (" + esc(fmt_date(fa["date"])) + ")" if fa.get("date") else ""}</span>'
         if r["letters"]:
-            letters = ", ".join(f'<a href="/letters/{attr(l["slug"])}/">{esc(m.number_label(l))}</a>' for l in r["letters"])
+            letters = "<br>".join(tracker_letter_cell(m, l) for l in r["letters"])
         else:
             letters = '<span class="tracker-none">none filed</span>'
         out += ["      <tr" + (' class="tracker-row--commented"' if r["commented"] else "") + ">",
@@ -1039,7 +1052,8 @@ def gen_tracker_json(m):
                      "status_label": r["status_label"], "note": r.get("note"), "sources": r.get("sources", []),
                      "final_action": r.get("final_action"),
                      "program_letters": [{"number": l["number"], "slug": l["slug"], "filed": l["filed"],
-                                          "url": f"{SITE}/letters/{l['slug']}/"} for l in r["letters"]]})
+                                          "url": f"{SITE}/letters/{l['slug']}/",
+                                          "posted_comment_url": l["docket"].get("comment_url")} for l in r["letters"]]})
     data = {"_generated": "render_letters.py from scripts/letters_registry.json; do not edit",
             "title": (m.tracker or {}).get("title"), "url": f"{SITE}/trackers/genius-act/",
             "verified_on": m.verified_on, "statute": (m.tracker or {}).get("statute"),
