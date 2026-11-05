@@ -6242,7 +6242,7 @@
         searchRow.className = 'letters-search-row';
         var searchId = index ? 'letters-hub-search' : 'recs-index-search';
         var placeholder = index
-          ? 'Filter letters by keyword, docket, RIN, agency, or framework...'
+          ? 'Filter letters by keyword, agency, framework, or official number...'
           : 'Filter all ' + total + ' recommendations by keyword, letter, agency, or topic (e.g., MVEP, pass-through, custody)...';
         searchRow.innerHTML =
           '<label class="visually-hidden" for="' + searchId + '">Search</label>' +
@@ -6263,7 +6263,8 @@
           }
         }
         if(query){
-          var hay = (el.textContent || '').toLowerCase();
+          /* data-identifiers keeps docket, RIN and citation searches working: those numbers are no longer visible text. */
+          var hay = ((el.textContent || '') + ' ' + (el.getAttribute('data-identifiers') || '')).toLowerCase();
           if(hay.indexOf(query) < 0) return false;
         }
         return true;
@@ -8361,7 +8362,8 @@
       else if(tr.querySelector('.status-chip--final')) statusState = 'final';
       var agencyEl = tr.querySelector('.tracker-agency');
       var agencyTxt = agencyEl ? agencyEl.textContent : '';
-      var fullTxt = (tr.textContent + ' ' + (noteTr ? noteTr.textContent : '')).toLowerCase();
+      /* data-identifiers keeps docket, RIN and citation searches working: those numbers are no longer visible text. */
+      var fullTxt = (tr.textContent + ' ' + (noteTr ? noteTr.textContent : '') + ' ' + (tr.getAttribute('data-identifiers') || '')).toLowerCase();
       items.push({
         tr: tr,
         noteTr: noteTr,

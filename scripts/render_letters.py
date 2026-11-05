@@ -28,6 +28,10 @@ except the feed, which is generated whole):
         status-badge       the status chip inside the bottom "Docket and status" block
         outcome            condensed status under that heading: as-of date, recommendation
                            disposition, cross-references; a long note folds
+        official-references
+                           a collapsed block holding the letter's docket, RIN, Federal
+                           Register citation and posted comment id: the one place on a
+                           letter page where those numbers are visible text
         related            the Related cards (supplements, same proceeding, same cycle,
                            every paper the registry lists)
 
@@ -72,6 +76,13 @@ Modes:
     --selftest
               prove each frameworks-and-papers check fires on a synthetic bad case (and
               stays quiet on a good one and on a section reference such as "3(a)").
+
+Identifiers (dockets, RINs, file numbers, Federal Register and CFR citations, section and
+rule numbers, agency codes) are not reader text on the generated surfaces. They live in the
+registry as data, in the machine-readable exports, in link title attributes, in the
+data-identifiers attribute the page searches read, and in each letter page's collapsed
+Official references block. --check refuses an identifier in generated visible text.
+scripts/plain_language_glossary.json says what each one means.
 
 Resolves the tree from cwd (falling back to the script's clone), so it runs from
 either clone. Depends only on the stdlib.
@@ -142,6 +153,63 @@ def attr(s):
 
 def word(n):
     return WORDS.get(n, str(n))
+
+
+def title_attr(text):
+    """A hover title for a link: where an identifier stays once it leaves the visible text."""
+    return f' title="{attr(text)}"' if text else ""
+
+
+def source_link(s, label=None):
+    """A source link: readable words as its text, the record's number (if any) in its hover title."""
+    return (f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer"'
+            f'{title_attr(s.get("ref"))}>{esc(label or s["title"])}</a>')
+
+
+def cite_variants(cite):
+    """A Federal Register citation in both spellings, so a search for either finds it."""
+    mm = re.fullmatch(r"(\d+) (?:Fed\. Reg\.|FR) (\d+)", cite or "")
+    if mm:
+        return [f"{mm.group(1)} Fed. Reg. {mm.group(2)}", f"{mm.group(1)} FR {mm.group(2)}"]
+    return [cite] if cite else []
+
+
+def unique(items):
+    seen, out = set(), []
+    for item in items:
+        if item and item not in seen:
+            seen.add(item)
+            out.append(item)
+    return out
+
+
+def proceeding_identifiers(p):
+    """Every number a reader might search a proceeding by (registry data, never visible text)."""
+    out = [part.strip() for part in (p.get("identifier") or "").split(";")]
+    out += cite_variants(p.get("fr"))
+    if p.get("fr_doc"):
+        out.append(f"FR Doc {p['fr_doc']}")
+    if p.get("cfr"):
+        out.append(p["cfr"])
+    out += p.get("also_identifiers") or []
+    out += p.get("search_terms") or []
+    fa = (p.get("outcome") or {}).get("final_action") or {}
+    if fa.get("ref"):
+        out += [part.strip() for part in fa["ref"].split(";")]
+        out += cite_variants(fa.get("citation"))
+    return unique(out)
+
+
+def letter_identifiers(l):
+    d = l["docket"]
+    out = [d.get("label"), f"RIN {d['rin']}" if d.get("rin") else None, *cite_variants(d.get("fr_citation")),
+           d.get("comment_id"), d.get("tracking_number")]
+    return unique(out + proceeding_identifiers(l["_proc"]))
+
+
+def proceeding_hover(p):
+    """The numbers that used to sit under a proceeding's name, for the title of its link."""
+    return "; ".join(unique([p.get("identifier"), p.get("fr")]))
 
 
 def fmt_date(iso):
@@ -402,7 +470,8 @@ def gen_toolbar(m):
 def card_attrs(m, l):
     return (f'data-slug="{attr(l["slug"])}" data-agency="{attr(l["agency"])}" data-cycle="{attr(l["cycle"])}" '
             f'data-frameworks="{attr(" ".join(l["frameworks"]))}" data-status="{attr(m.status_class(l))}" '
-            f'data-filed="{attr(l["filed"])}" data-number="{l["number"] or 0}" data-series="{attr(l["series"])}"')
+            f'data-filed="{attr(l["filed"])}" data-number="{l["number"] or 0}" data-series="{attr(l["series"])}" '
+            f'data-identifiers="{attr(" | ".join(letter_identifiers(l)))}"')
 
 
 def gen_card(m, l):
@@ -425,8 +494,11 @@ def gen_card(m, l):
 
 def gen_row(m, l):
     docket = l["docket"]
-    dock = (f'<a href="{attr(docket["url"])}" target="_blank" rel="noopener noreferrer">{esc(docket["label"])}</a>'
-            if docket.get("url") else esc(docket["label"]))
+    plain = l["_proc"]["plain_name"]
+    plain = plain[:1].upper() + plain[1:]
+    hover = title_attr("; ".join(unique([docket["label"], proceeding_hover(l["_proc"])])))
+    dock = (f'<a href="{attr(docket["url"])}" target="_blank" rel="noopener noreferrer"{hover}>{esc(plain)}</a>'
+            if docket.get("url") else esc(plain))
     recs = str(l["rec_count"]) if l["rec_count"] else ("supp." if l.get("supplements") else "")
     return [f"<tr {card_attrs(m, l)}>",
             f'  <td data-label="Filed"><time datetime="{attr(l["filed"])}">{esc(l["filed"])}</time></td>',
@@ -479,6 +551,14 @@ _STATUS_BOILER = (
 def not_past(date, asof):
     """ISO dates of day or month precision: true while the date is not before the as-of date at the same precision."""
     return date >= asof[:len(date)]
+
+
+def final_action_text(fa):
+    """The final action in words, linked, with its citation in the hover title; then its date."""
+    label = fa.get("label") or "Final text"
+    linked = (f'<a href="{attr(fa["url"])}" target="_blank" rel="noopener noreferrer"{title_attr(fa.get("ref"))}>{esc(label)}</a>'
+              if fa.get("url") else f'<span{title_attr(fa.get("ref"))}>{esc(label)}</span>')
+    return linked + (f" ({esc(fmt_date(fa['date']))})" if fa.get("date") else "")
 
 
 def visible_note(note):
@@ -540,12 +620,12 @@ def gen_outcomes(m):
                     else f"{n_recs} filed; none decided yet")
         else:
             recs = f"{n_recs} filed: " + ", ".join(f"{n} {REC_STATUS_LABEL[s].lower()}" for s, n in counts.items())
-        name = (f'<a href="{attr(p["url"])}" target="_blank" rel="noopener noreferrer">{esc(p["name"])}</a>' if p.get("url") else esc(p["name"]))
-        ident = esc(p["identifier"]) + (f"; {esc(p['fr'])}" if p.get("fr") else "")
+        hover = title_attr(proceeding_hover(p))
+        name = (f'<a href="{attr(p["url"])}" target="_blank" rel="noopener noreferrer"{hover}>{esc(p["name"])}</a>' if p.get("url") else f'<span{hover}>{esc(p["name"])}</span>')
+        ident = esc("Final rule" if o["state"] == "final" and p["kind"] == "Proposed rule" else p["kind"])
         status = f'<span class="status-chip status-chip--{attr(STATE_CLASS.get(o["state"], "pending"))}">{esc(o.get("status_label") or STATE_LABEL[o["state"]])}</span>'
         if o.get("final_action"):
-            fa = o["final_action"]
-            status += f'<br><span class="letters-outcome-id">{esc(fa.get("citation", ""))}{" (" + esc(fmt_date(fa["date"])) + ")" if fa.get("date") else ""}</span>'
+            status += f'<br><span class="letters-outcome-id">{final_action_text(o["final_action"])}</span>'
         out += ["      <tr>",
                 f'        <td data-label="Proceeding">{name}<br><span class="letters-outcome-id">{ident}</span></td>',
                 f'        <td data-label="Letters">{letters}</td>',
@@ -555,7 +635,7 @@ def gen_outcomes(m):
                 "      </tr>"]
         note = visible_note(o.get("note"))
         if note:
-            srcs = " ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
+            srcs = " ".join(source_link(s) for s in o.get("sources", []))
             out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(note)}{(" " + srcs) if srcs else ""}</td></tr>')
     out += ["    </tbody>", "  </table>", "</div>"]
     watch = m.current_watch()
@@ -563,7 +643,7 @@ def gen_outcomes(m):
         out.append('<h3 id="next-dates">Next dates</h3>')
         out.append('<ul class="letters-watch">')
         for w in watch:
-            srcs = " ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">source</a>' for s in w.get("sources", []))
+            srcs = " ".join(source_link(s, "source") for s in w.get("sources", []))
             out.append(f'  <li><time datetime="{attr(w["date"])}">{esc(fmt_date(w["date"]))}</time>: {esc(w["text"])}{(" (" + srcs + ")") if srcs else ""}</li>')
         out.append("</ul>")
     out.append("</details>")
@@ -626,13 +706,7 @@ def gen_outcome(m, l):
     if disp:
         bits.append(esc(disp))
     if o.get("final_action"):
-        fa = o["final_action"]
-        link = (f'<a href="{attr(fa["url"])}" target="_blank" rel="noopener noreferrer">{esc(fa.get("citation", "final text"))}</a>'
-                if fa.get("url") else esc(fa.get("citation", "")))
-        if fa.get("date"):
-            link += ", " + esc(fmt_date(fa["date"]))
-        if link:
-            bits.append(link)
+        bits.append(final_action_text(o["final_action"]))
     out = [f'<p class="letter-status-line">{" &middot; ".join(bits)}</p>']
     links = []
     if l.get("supplements"):
@@ -661,7 +735,7 @@ def gen_outcome(m, l):
         out.append("</ul>")
     note = visible_note(o.get("note"))
     if note:
-        srcs = "; ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
+        srcs = "; ".join(source_link(s) for s in o.get("sources", []))
         body = f'{esc(note)}{(" Source: " + srcs + ".") if srcs else ""}'
         if len(note) > 400:
             out += ['<details class="letter-status-more">',
@@ -670,6 +744,39 @@ def gen_outcome(m, l):
                     "</details>"]
         else:
             out.append(f'<p class="letter-outcome-note">{body}</p>')
+    return out
+
+
+def gen_official_references(m, l):
+    """The letter's numbers, collapsed: the one place on a letter page where they are visible text."""
+    p, d, o = l["_proc"], l["docket"], l["_outcome"]
+
+    def link(url, text):
+        return f'<a href="{attr(url)}" target="_blank" rel="noopener noreferrer">{esc(text)}</a>' if url else esc(text)
+
+    items = []
+    for part in unique(x.strip() for x in (p.get("identifier") or "").split(";")):
+        items.append(link(d.get("url") or p.get("url"), part) if part.startswith(("Docket", "File")) else esc(part))
+    cite = p.get("fr") or d.get("fr_citation")
+    if cite:
+        doc = f" (FR Doc {p['fr_doc']})" if p.get("fr_doc") else ""
+        items.append("Federal Register: " + link(f"https://www.federalregister.gov/d/{p['fr_doc']}" if p.get("fr_doc") else None, cite + doc))
+    if p.get("cfr"):
+        items.append("Code of Federal Regulations: " + esc(p["cfr"]))
+    items += [esc(x) for x in p.get("also_identifiers") or []]
+    fa = o.get("final_action") or {}
+    if fa.get("ref"):
+        items.append("Final rule: " + link(fa.get("url"), fa["ref"]))
+    if d.get("comment_id"):
+        items.append("Posted comment: " + link(d.get("comment_url"), d["comment_id"]))
+    elif d.get("tracking_number"):
+        items.append("Regulations.gov tracking number: " + esc(d["tracking_number"]))
+    parent = m.by_slug[l["supplements"]["slug"]] if l.get("supplements") else None
+    if parent and parent["docket"].get("comment_id"):
+        items.append("Supplements posted comment: " + link(parent["docket"].get("comment_url"), parent["docket"]["comment_id"]))
+    out = ['<details class="letter-status-more letter-official-refs">', "  <summary>Official references</summary>", "  <ul>"]
+    out += [f"    <li>{item}</li>" for item in items]
+    out += ["  </ul>", "</details>"]
     return out
 
 
@@ -805,7 +912,8 @@ def gen_recommendations(m):
             rid = f"r-{l['number']}-{r['n']}"
             topics_attr = " ".join(t.replace(" ", "-").replace("/", "-").lower() for t in r["topics"])
             out += [f'      <tr id="{rid}" data-agency="{attr(l["agency"])}" data-cycle="{attr(l["cycle"])}" data-topic="{attr(topics_attr)}" '
-                    f'data-status="{attr(m.rec_status(l, r))}" data-filed="{attr(l["filed"])}" data-number="{l["number"]}" data-n="{r["n"]}">',
+                    f'data-status="{attr(m.rec_status(l, r))}" data-filed="{attr(l["filed"])}" data-number="{l["number"]}" data-n="{r["n"]}" '
+                    f'data-identifiers="{attr(" | ".join(unique([r.get("refs")] + letter_identifiers(l))))}">',
                     f'        <td data-label="No."><a href="#{rid}" class="rec-anchor">{l["number"]}.{r["n"]}</a></td>',
                     f'        <td data-label="Letter"><a href="/letters/{attr(l["slug"])}/">No. {l["number"]} {esc(l["short_title"])}</a><br>'
                     f'<span class="letters-outcome-id">{esc(l["agency_display"])} &middot; {esc(fmt_date(l["filed"]))}</span></td>',
@@ -876,7 +984,7 @@ def gen_feed(m):
                 f"    <updated>{l['filed']}T00:00:00Z</updated>",
                 f'    <category term="{xml(l["agency"])}" label="{xml(l["agency_display"])}"/>',
                 f'    <category term="{xml(l["cycle"])}" label="{xml(m.cycles[l["cycle"]]["label"])}"/>',
-                f"    <summary type=\"text\">{xml(l['thesis'])} Filed {xml(fmt_date(l['filed']))} on {xml(l['docket']['label'])}; {xml(m.rec_phrase(l))}; {xml(m.status_label(l).lower())}.</summary>",
+                f"    <summary type=\"text\">{xml(l['thesis'])} Filed {xml(fmt_date(l['filed']))} on {xml(l['_proc']['plain_name'])}; {xml(m.rec_phrase(l))}; {xml(m.status_label(l).lower())}.</summary>",
                 "  </entry>"]
     out.append("</feed>")
     return "\n".join(out) + "\n"
@@ -911,13 +1019,13 @@ def gen_recs_csv(m):
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator="\n")
     w.writerow(["letter_number", "letter_slug", "letter_title", "agency", "filed", "proceeding",
-                "docket", "rec_n", "rec_id", "ask", "text", "topics", "status", "status_note", "url"])
+                "docket", "rec_n", "rec_id", "ask", "text", "topics", "status", "status_note", "url", "refs"])
     for l in m.filing_order():
         for r in l["recommendations"]:
             w.writerow([l["number"] or "", l["slug"], l["title"], l["agency"], l["filed"], l["proceeding"],
                         l["docket"]["label"], r["n"], r["id"], r.get("ask", ""), r["text"],
                         " ".join(r.get("topics", [])), m.rec_status(l, r), r.get("status_note", "") or "",
-                        f"{SITE}/letters/{l['slug']}/#{r['id']}"])
+                        f"{SITE}/letters/{l['slug']}/#{r['id']}", r.get("refs", "")])
     return buf.getvalue()
 
 
@@ -940,6 +1048,7 @@ def tracker_rows(m):
                      "comment_close_note": None, "state": o["state"],
                      "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
                      "note": o.get("note"), "sources": o.get("sources", []), "final_action": o.get("final_action"),
+                     "also_identifiers": p.get("also_identifiers") or [], "data_identifiers": proceeding_identifiers(p),
                      "letters": ls, "commented": True})
     for a in (m.tracker or {}).get("actions", []):
         o = a["outcome"]
@@ -949,6 +1058,7 @@ def tracker_rows(m):
                      "comment_close_note": a.get("comment_close_note"), "state": o["state"],
                      "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
                      "note": o.get("note"), "sources": o.get("sources", []), "final_action": o.get("final_action"),
+                     "also_identifiers": a.get("also_identifiers") or [], "data_identifiers": proceeding_identifiers(a),
                      "letters": [], "commented": False})
     rows.sort(key=lambda r: (r["published"] or "9999", r["name"]))
     return rows
@@ -996,8 +1106,9 @@ def gen_tracker(m):
     for r in rows:
         head, tail = split_name(r["name"])
         agency = esc(head or r["agency"])
-        title = (f'<a href="{attr(r["url"])}" target="_blank" rel="noopener noreferrer">{esc(tail)}</a>' if r.get("url") else esc(tail))
-        ident = esc(r["identifier"]) + (f"; {esc(r.get('fr_label', ''))}{esc(r['fr'])}" if r.get("fr") else "")
+        hover = r["identifier"] + (f"; {r.get('fr_label', '')}{r['fr']}" if r.get("fr") else "")
+        title = (f'<a href="{attr(r["url"])}" target="_blank" rel="noopener noreferrer"{title_attr(hover)}>{esc(tail)}</a>'
+                 if r.get("url") else f'<span{title_attr(hover)}>{esc(tail)}</span>')
         if r["comment_close"]:
             # By the date, not the state: an interim final rule is in effect and still taking comments.
             comments = ("open until " if not_past(r["comment_close"], m.verified_on) else "closed ") + fmt_date(r["comment_close"])
@@ -1007,14 +1118,14 @@ def gen_tracker(m):
             comments = "n/a"
         status = f'<span class="status-chip status-chip--{attr(STATE_CLASS.get(r["state"], "pending"))}">{esc(r["status_label"])}</span>'
         if r.get("final_action"):
-            fa = r["final_action"]
-            status += f'<br><span class="letters-outcome-id">{esc(fa.get("citation", ""))}{" (" + esc(fmt_date(fa["date"])) + ")" if fa.get("date") else ""}</span>'
+            status += f'<br><span class="letters-outcome-id">{final_action_text(r["final_action"])}</span>'
         if r["letters"]:
             letters = "".join(tracker_letter_cell(m, l) for l in r["letters"])
         else:
             letters = '<span class="tracker-none">none filed</span>'
-        out += ["      <tr" + (' class="tracker-row--commented"' if r["commented"] else "") + ">",
-                f'        <td data-label="Rulemaking"><span class="tracker-agency">{agency}</span> {title}<br><span class="letters-outcome-id">{esc(r["kind"])}; {ident}</span></td>',
+        idents = " | ".join(unique(r["data_identifiers"] + [i for l in r["letters"] for i in letter_identifiers(l)]))
+        out += ["      <tr" + (' class="tracker-row--commented"' if r["commented"] else "") + f' data-identifiers="{attr(idents)}">',
+                f'        <td data-label="Rulemaking"><span class="tracker-agency">{agency}</span> {title}<br><span class="letters-outcome-id">{esc(r["kind"])}</span></td>',
                 f'        <td data-label="Published">{esc(fmt_date(r["published"])) if r["published"] else "n/a"}</td>',
                 f'        <td data-label="Comments">{comments}</td>',
                 f'        <td data-label="Status">{status}</td>',
@@ -1022,7 +1133,7 @@ def gen_tracker(m):
                 "      </tr>"]
         note = visible_note(r.get("note"))
         if note:
-            srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">{esc(s_["title"])}</a>' for s_ in r.get("sources", []))
+            srcs = " ".join(source_link(s_) for s_ in r.get("sources", []))
             out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(note)}{(" " + srcs) if srcs else ""}</td></tr>')
     out += ["    </tbody>", "  </table>", "</div>"]
     st = (t or {}).get("statute")
@@ -1033,7 +1144,7 @@ def gen_tracker(m):
         out.append(f'  <li><time datetime="{attr(st["rulemaking_deadline"])}">{esc(fmt_date(st["rulemaking_deadline"]))}</time>: statutory rulemaking deadline. {esc(st.get("rulemaking_deadline_note", ""))}</li>')
         out.append(f'  <li>Effective date: {esc(st["effective_note"])}</li>')
         out.append(f'  <li><time datetime="{attr(st["dasp_restriction"])}">{esc(fmt_date(st["dasp_restriction"]))}</time>: {esc(st["dasp_restriction_note"])}</li>')
-        srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">{esc(s_["title"])}</a>' for s_ in st.get("sources", []))
+        srcs = " ".join(source_link(s_) for s_ in st.get("sources", []))
         if srcs:
             out.append(f'  <li class="tracker-statute__source">Text: {srcs}</li>')
         out.append("</ul>")
@@ -1042,7 +1153,7 @@ def gen_tracker(m):
     if watch:
         head = ['<h2 id="next-dates">Next dates</h2>', '<ul class="letters-watch">']
         for w in watch:
-            srcs = " ".join(f'<a href="{attr(s_["url"])}" target="_blank" rel="noopener noreferrer">source</a>' for s_ in w.get("sources", []))
+            srcs = " ".join(source_link(s_, "source") for s_ in w.get("sources", []))
             head.append(f'  <li><time datetime="{attr(w["date"])}">{esc(fmt_date(w["date"]))}</time>: {esc(w["text"])}{(" (" + srcs + ")") if srcs else ""}</li>')
         head.append("</ul>")
         at = out.index('<div class="letters-timeline-table" role="region" aria-label="GENIUS Act rulemakings">')
@@ -1075,7 +1186,8 @@ def gen_tracker_json(m):
     rows = []
     for r in tracker_rows(m):
         rows.append({"key": r["key"], "agency": r["agency"], "agency_long": r["agency_long"], "name": r["name"],
-                     "identifier": r["identifier"], "federal_register": r.get("fr"), "kind": r["kind"], "url": r.get("url"),
+                     "identifier": r["identifier"], "federal_register": r.get("fr"), "also_identifiers": r.get("also_identifiers") or [],
+                     "kind": r["kind"], "url": r.get("url"),
                      "published": r["published"], "comment_close": r["comment_close"],
                      "comment_close_note": r.get("comment_close_note"), "status_state": r["state"],
                      "status_label": r["status_label"], "note": r.get("note"), "sources": r.get("sources", []),
@@ -1190,12 +1302,46 @@ def selftest():
         ("a chip date that differs from the registry is rewritten", chip(chip_page.replace("April 10", "April 11")), 0),
         ("a page with no date chip fires", chip("<div>no chip</div>"), 2),
     ]
+    cases += [
+        ("an identifier in visible text fires", visible_proxies("<td>RIN 3064-AG19; 91 Fed. Reg. 18534</td>"), 2),
+        ("an identifier in a title or data attribute does not fire",
+         visible_proxies('<a title="RIN 3064-AG19" data-identifiers="91 FR 18304">FDIC issuer standards</a>'), 0),
+        ("plain words do not fire", visible_proxies("<p>The section on reserves. Rule text. Comments closed.</p>"), 0),
+    ]
     bad = [(name, len(got), want) for name, got, want in cases if len(got) != want]
     for name, got, want in bad:
         print(f"render_letters selftest: FAIL {name}: {got} problem(s), wanted {want}", file=sys.stderr)
     if not bad:
         print(f"render_letters selftest: OK ({len(cases)} cases)")
     return 1 if bad else 0
+
+
+# What a reader must not see on a generated surface: the census of identifier shapes. A number here belongs in the
+# registry as data, in a title or data attribute, or in a letter page's Official references block.
+VISIBLE_PROXY_RE = re.compile(
+    r"\bRIN\s*\d{4}-[A-Z]{2}\d{2}\b"
+    r"|\bDocket(?:\s+No\.?)?\s+[A-Z0-9][\w.-]*\d[\w-]*"
+    r"|\bFile\s+(?:No\.?|Number)\s+[\w.-]+"
+    r"|\b(?:OCC|FINCEN|TREAS-DO|NCUA|CFTC|FDIC)-20\d\d-\d{3,4}(?:-\d{4})?\b|\bS7-20\d\d-\d+\b|\bR-1[89]\d\d\b|\b4-927\b|\bDSP-3\b"
+    r"|\b(?:AG|AF|AB|AC|AH)\d{2}\b"
+    r"|\b\d{2,3}\s+(?:Fed\.\s*Reg\.|FR)\s+\d{3,6}\b"
+    r"|\b\d{1,2}\s+(?:CFR|C\.F\.R\.|U\.S\.C\.|USC)\b"
+    r"|\b[Ss]ections?\s+\d[\w.()-]*|\b[Ss]ec\.\s+\d[\w.()-]*|§+\s*\d[\w.()-]*"
+    r"|\bRules?\s+\d{2,4}[\w()-]*"
+    r"|\bRelease\s+Nos?\.?\s*[\w-]+|\bOMB\s+(?:[Cc]ontrol\s+)?(?:No\.?\s*|[Nn]umber\s*)?\d{4}-\d{4}|\b3038-0076\b|\b34-\d{6}\b")
+
+
+def visible_proxies(fragment):
+    """Identifier-shaped strings in what a reader sees: tags (so title and data attributes) and scripts removed."""
+    text = re.sub(r"<script.*?</script>|<!--.*?-->", " ", fragment, flags=re.S)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return VISIBLE_PROXY_RE.findall(html.unescape(text))
+
+
+def check_visible_proxies(fragment_lines, where, problems):
+    for hit in unique(visible_proxies("\n".join(fragment_lines))):
+        problems.append(f"{where}: identifier {hit!r} in visible text; give the plain words and keep the number as data "
+                        "(see scripts/plain_language_glossary.json)")
 
 
 def check_letter_reading_order(page, rel, problems):
@@ -1261,7 +1407,7 @@ def verify_registry_against_pages(m, problems):
         for r in l["recommendations"]:
             if f'<li id="{r["id"]}">' not in page:
                 problems.append(f"{rel}: recommendation anchor id=\"{r['id']}\" not found (registry lists {l['rec_count']})")
-        for name in ("status-badge", "outcome", "related"):
+        for name in ("status-badge", "outcome", "official-references", "related"):
             if region_bounds(page.split("\n"), name) is None:
                 problems.append(f"{rel}: missing region letters:{name}")
         check_letter_reading_order(page, rel, problems)
@@ -1286,6 +1432,7 @@ def build(m):
         for name, body in (("summary", gen_summary(m)), ("toolbar", gen_toolbar(m)), ("index", gen_index(m)),
                            ("outcomes", gen_outcomes(m)), ("collection-jsonld", gen_collection_jsonld(m))):
             text = stamp(text, name, body, problems, HUB_REL)
+            check_visible_proxies(body, f"{HUB_REL} {name}", problems)
         outputs[HUB_REL] = text
     else:
         problems.append(f"{HUB_REL}: missing")
@@ -1297,7 +1444,9 @@ def build(m):
         rel = f"letters/{l['slug']}/index.html"
         text = stamp(page, "status-badge", gen_status_badge(m, l), problems, rel)
         text = stamp(text, "outcome", gen_outcome(m, l), problems, rel)
+        text = stamp(text, "official-references", gen_official_references(m, l), problems, rel)
         text = stamp(text, "related", gen_related(m, l), problems, rel)
+        check_visible_proxies(gen_outcome(m, l) + gen_related(m, l), f"{rel} status", problems)
         text = sync_rec_chips(text, l)
         text = sync_filed_chip(text, l, rel, problems)
         outputs[rel] = text
@@ -1306,6 +1455,7 @@ def build(m):
     if os.path.isfile(recs_path):
         text = read(recs_path)
         text = stamp(text, "recommendations", gen_recommendations(m), problems, RECS_REL)
+        check_visible_proxies(gen_recommendations(m), f"{RECS_REL} recommendations", problems)
         text = stamp(text, "recs-jsonld", gen_recs_jsonld(m), problems, RECS_REL)
         outputs[RECS_REL] = text
     else:
@@ -1319,6 +1469,7 @@ def build(m):
         if os.path.isfile(tracker_path):
             text = read(tracker_path)
             text = stamp(text, "tracker", gen_tracker(m), problems, TRACKER_REL)
+            check_visible_proxies(gen_tracker(m), f"{TRACKER_REL} tracker", problems)
             text = stamp(text, "tracker-jsonld", gen_tracker_jsonld(m), problems, TRACKER_REL)
             outputs[TRACKER_REL] = text
         else:
