@@ -53,6 +53,11 @@
       "label": "International",
       "order": 7,
       "blurb": "Responses to international standard-setting bodies."
+    },
+    "fincen-special-measure": {
+      "label": "FinCEN special measure",
+      "order": 8,
+      "blurb": "FinCEN's proposed special measure prohibiting transmittals of funds involving the A7 Network's Sub-Agents."
     }
   },
   "frameworks": {
@@ -507,6 +512,27 @@
           }
         ],
         "verified_on": "2026-11-04",
+        "final_action": null
+      }
+    },
+    "FINCEN-2026-0265": {
+      "name": "FinCEN: proposal of special measure prohibiting the transmittal of funds regarding transactions involving the A7 Network's Sub-Agents",
+      "agency": "Financial Crimes Enforcement Network",
+      "identifier": "RIN 1506-AB77; Docket FINCEN-2026-0265",
+      "fr": "91 Fed. Reg. 63208",
+      "url": "https://www.regulations.gov/docket/FINCEN-2026-0265",
+      "kind": "Proposed rule",
+      "outcome": {
+        "state": "closed-pending",
+        "status_label": "Comment period closed; final action pending",
+        "note": "Would add 31 CFR 1010.668, prohibiting covered financial institutions from engaging in transmittals of funds, including convertible virtual currency, involving the A7 Network's Sub-Agents. The comment period closed November 4, 2026.",
+        "sources": [
+          {
+            "title": "Federal Register, document 2026-20371",
+            "url": "https://www.federalregister.gov/d/2026-20371"
+          }
+        ],
+        "verified_on": "2026-11-05",
         "final_action": null
       }
     }
@@ -4112,6 +4138,118 @@
       "cited_by": [],
       "agencies": [
         "SEC"
+      ]
+    },
+    {
+      "slug": "fincen-ab77-a7-special-measure",
+      "number": 27,
+      "series": "federal",
+      "kind": "principal",
+      "supplements": null,
+      "title": "FinCEN A7 Network Special Measure (Docket FINCEN-2026-0265)",
+      "short_title": "FinCEN A7 Network special measure",
+      "headline": "FinCEN A7 Network special measure comment",
+      "h1": "FinCEN A7 Network comment: assign each crypto obligation to the party that can carry it out",
+      "description": "Letter to FinCEN on its proposed special measure against the A7 Network's Sub-Agents (Docket FINCEN-2026-0265): supports the prohibition, and asks for listed addresses, a stated role for stablecoin issuers, and a safe harbor that separates blocking from returning. Five recommendations.",
+      "filed": "2026-11-04",
+      "agency": "FinCEN",
+      "agency_display": "FinCEN",
+      "agency_long": "Financial Crimes Enforcement Network (FinCEN)",
+      "proceeding": "FINCEN-2026-0265",
+      "docket": {
+        "label": "FINCEN-2026-0265",
+        "url": "https://www.regulations.gov/docket/FINCEN-2026-0265",
+        "rin": "1506-AB77",
+        "fr_citation": "91 Fed. Reg. 63208",
+        "comment_id": null,
+        "comment_url": null,
+        "tracking_number": "mw3-257e-1srt",
+        "channel": "regulations.gov"
+      },
+      "comment_period": {
+        "open": "2026-10-05",
+        "close": "2026-11-04",
+        "note": null
+      },
+      "cycle": "fincen-special-measure",
+      "frameworks": [
+        "control-layer"
+      ],
+      "frameworks_display": "Control-layer, on-chain measurement",
+      "papers": [],
+      "pdf": "/letters/fincen-ab77-a7-special-measure/letter.pdf",
+      "thesis": "The proposal places nearly all of its work on convertible virtual currency (CVC) on the receiving institution, although FinCEN itself assesses that there are \"few, if any, readily available ways\" for that institution to reject an incoming transfer before receipt, and it does not say what the rule would require of the payment stablecoin issuers that are about to become covered by it.",
+      "gaps_label": "Gaps:",
+      "gaps": "Gaps: the proposed list identifies entities, while a blockchain transfer carries addresses, not names; payment stablecoin issuers become covered institutions by cross-reference, and neither proposal says what this rule then requires of them; the preamble's rule that OFAC blocking counts as compliance is not in the regulatory text; the safe harbor does not separate blocking from returning; the notice and records do not identify a transfer by its transaction hash.",
+      "card_meta": "2026-11-04 · FinCEN · Control-layer · 5 recs",
+      "rec_count": 5,
+      "recommendations": [
+        {
+          "n": 1,
+          "id": "rec-1",
+          "ask": "Adopt the prohibition on transmittals of funds rather than special measures one through five",
+          "text": "Adopt the prohibition on transmittals of funds rather than special measures one through five (Question 1). A7A5 transfers do not pass through correspondent accounts, and special measure five reaches only correspondent and payable-through accounts, a limit the President's Working Group on Digital Asset Markets identified in July 2025.",
+          "topics": [
+            "AML/CFT",
+            "sanctions"
+          ],
+          "status": "pending",
+          "status_note": null
+        },
+        {
+          "n": 2,
+          "id": "rec-2",
+          "ask": "Deliver Sub-Agent addresses, not only names, and state the minimum screening expected for convertible virtual currency",
+          "text": "Deliver Sub-Agent addresses, not only names, and state the minimum screening expected for convertible virtual currency (Question 3). A blockchain transfer carries addresses, not names. The list FinCEN shares through its FI-Portal should carry each Sub-Agent's known CVC addresses and blockchains and the A7A5 token contracts, including wrapped representations (separate tokens that stand for A7A5), in machine-readable form. The prohibition should reach a transmittal sent from or to a listed address; funds that passed through a listed address at some earlier point, and arrived from an address that is not on the list, should be handled through risk-based due diligence and suspicious activity reporting.",
+          "topics": [
+            "AML/CFT",
+            "sanctions",
+            "measurement and data"
+          ],
+          "status": "pending",
+          "status_note": null
+        },
+        {
+          "n": 3,
+          "id": "rec-3",
+          "ask": "State what the prohibition requires of payment stablecoin issuers, which become covered financial institutions by cross-reference",
+          "text": "State what the prohibition requires of payment stablecoin issuers, which become covered financial institutions by cross-reference. When FinCEN's pending issuer rule (FINCEN-2026-0100) is final, permitted payment stablecoin issuers will become covered institutions under this rule automatically. Prohibit their primary market dealings with listed Sub-Agents (issuing, redeeming, converting, or holding stablecoins for them), require, or at least recognize as compliance, a prompt freeze of a listed address that holds their stablecoin, and state that the rule does not require blanket monitoring of secondary market transfers (transfers between other holders).",
+          "topics": [
+            "AML/CFT",
+            "sanctions",
+            "supervision"
+          ],
+          "status": "pending",
+          "status_note": null
+        },
+        {
+          "n": 4,
+          "id": "rec-4",
+          "ask": "Put in the regulatory text the preamble's rule that OFAC blocking counts as compliance, and separate blocking from returning in the CVC safe harbor",
+          "text": "Put in the regulatory text the preamble's rule that OFAC blocking counts as compliance, and separate blocking from returning in the CVC safe harbor. In proposed section 1010.668(b)(1)(i), the provision that protects an institution after it receives CVC from a Sub-Agent, state separately when to block and when to reject and return, and say what to do when return is not feasible.",
+          "topics": [
+            "sanctions",
+            "AML/CFT"
+          ],
+          "status": "pending",
+          "status_note": null
+        },
+        {
+          "n": 5,
+          "id": "rec-5",
+          "ask": "Identify CVC transfers by transaction hash in the notice and records, and treat returns and freezes as permitted disclosures",
+          "text": "Identify CVC transfers by transaction hash in the notice and records, and treat returns and freezes as permitted disclosures (Question 2). For CVC, identify each transfer by its transaction hash, its unique public identifier, in the required notice and records, and confirm that a return transfer or an issuer freeze, both visible on the public blockchain, is a permitted disclosure even though FinCEN's list is non-public.",
+          "topics": [
+            "disclosure and reporting",
+            "measurement and data"
+          ],
+          "status": "pending",
+          "status_note": null
+        }
+      ],
+      "cited_by": [],
+      "agencies": [
+        "FinCEN"
       ]
     }
   ]
