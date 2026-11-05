@@ -592,7 +592,11 @@ def gen_outcome(m, l):
     the status-badge region. A note longer than a short update folds.
     """
     o = l["_outcome"]
-    bits = [f"as of {esc(fmt_date(m.verified_on))}"]
+    # A proceeding re-checked after the registry-wide date states its own, later date (its outcome.verified_on).
+    # Otherwise a letter filed after the last registry-wide check reads "as of" a day before it was filed
+    # (S7-2026-30, filed 2026-11-03, read "as of October 23, 2026"). Every older proceeding keeps the registry date.
+    asof = max(m.verified_on, o.get("verified_on") or m.verified_on)
+    bits = [f"as of {esc(fmt_date(asof))}"]
     disp = m.rec_disposition(l)
     if disp:
         bits.append(esc(disp))

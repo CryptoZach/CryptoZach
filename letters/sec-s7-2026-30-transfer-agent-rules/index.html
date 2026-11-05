@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-QZ4811E5F6');
+    (function(){
+      var loaded = false;
+      function loadGTM(){
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QZ4811E5F6';
+        document.head.appendChild(s);
+      }
+      var evs = ['mousedown','touchstart','keydown','scroll'];
+      function trig(){ loadGTM(); evs.forEach(function(e){document.removeEventListener(e, trig, true);}); }
+      evs.forEach(function(e){document.addEventListener(e, trig, {capture:true, once:true, passive:true});});
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function(){setTimeout(loadGTM, 3000);}, {timeout: 5000});
+      } else {
+        setTimeout(loadGTM, 3500);
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#0a0c10" />
+  <title>SEC File No. S7-2026-30 transfer agent rules comment | Tokenization Systems</title>
+  <meta name="description" content="Letter to the SEC on its proposed transfer agent rules (File No. S7-2026-30): say which record governs a tokenized security, reconcile on-chain supply to it, and define control on a shared ledger. Seven recommendations." />
+  <meta name="author" content="Zach Zukowski" />
+  <meta name="keywords" content="federal comment letter, SEC, File No. S7-2026-30, Release No. 34-106246, RIN 3235-AL55, transfer agent rules, master securityholder file, tokenized securities, distributed ledger, exclusive control, privileged functions, overissuance, reconciliation, Form TA-2, rule 17ad-17, lost securityholders, payment stablecoins, GENIUS Act, control layer" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="SEC File No. S7-2026-30 transfer agent rules comment" />
+  <meta property="og:description" content="Letter to the SEC on its proposed transfer agent rules (File No. S7-2026-30): say which record governs a tokenized security, reconcile on-chain supply to it, and define control on a shared ledger. Seven recommendations." />
+  <meta property="og:url" content="https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/" />
+  <meta property="og:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta property="og:image:width" content="1401" />
+  <meta property="og:image:height" content="933" />
+  <meta property="og:site_name" content="Tokenization Systems" />
+  <meta property="og:image:alt" content="Control layer illustration: the hold and freeze, routing, sweep and audit-log controls that sit over a tokenized asset, the layer whose privileged functions this comment asks the transfer agent rules to reach" />
+  <link rel="canonical" href="https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CryptoZach" />
+  <meta name="twitter:title" content="SEC File No. S7-2026-30 transfer agent rules comment" />
+  <meta name="twitter:description" content="Letter to the SEC on its proposed transfer agent rules (File No. S7-2026-30): say which record governs a tokenized security, reconcile on-chain supply to it, and define control on a shared ledger. Seven recommendations." />
+  <meta name="twitter:image" content="https://tokenization.systems/Publication-Images/Control_Layer.webp" />
+  <meta name="twitter:image:alt" content="Control layer illustration: the hold and freeze, routing, sweep and audit-log controls that sit over a tokenized asset, the layer whose privileged functions this comment asks the transfer agent rules to reach" />
+  <meta name="twitter:creator" content="@CryptoZach" />
+  <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="apple-touch-icon" href="/Publication-Images/Zachcoin-180.png" />
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== 'dark' && savedTheme !== 'light') {
+          savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+      }
+    })();
+  </script>
+  <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/archivo.woff2) format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format('woff2')}</style>
+  <link rel="stylesheet" href="/styles.css?v=782" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://tokenization.systems/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Letters",
+          "item": "https://tokenization.systems/letters/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SEC transfer agent rules",
+          "item": "https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "SEC File No. S7-2026-30 transfer agent rules comment",
+      "author": {
+        "@id": "https://tokenization.systems/#person"
+      },
+      "dateCreated": "2026-11-03",
+      "inLanguage": "en",
+      "description": "The SEC's proposed transfer agent rules let a crypto network carry the master securityholder file, but they do not say which record governs when a token and the off-chain file disagree, require no reconciliation of a token's supply to the file, and leave exclusive control undefined for a ledger the transfer agent shares with everyone else on the network. Seven recommendations ask the final rule to say which record governs, reconcile the token to it, define control as the power to change the ledger, bring a token's privileged functions inside the transfer agent's duties, hand them over with the records, and make visible which networks carry the official record.",
+      "url": "https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/",
+      "associatedMedia": {
+        "@type": "DigitalDocument",
+        "name": "Filed letter (PDF)",
+        "encodingFormat": "application/pdf",
+        "url": "https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/letter.pdf"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://tokenization.systems/letters/sec-s7-2026-30-transfer-agent-rules/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tokenization Systems",
+        "url": "https://tokenization.systems"
+      },
+      "datePublished": "2026-11-03",
+      "about": {
+        "@type": "Legislation",
+        "name": "SEC: Transfer Agent Rules, proposed amendments modernizing the transfer agent rules and Forms TA-1 and TA-2",
+        "legislationIdentifier": "File No. S7-2026-30; RIN 3235-AL55; Release No. 34-106246; 91 Fed. Reg. 56946",
+        "legislationType": "Proposed rule",
+        "legislationLegalForce": "https://schema.org/NotInForce",
+        "url": "https://www.sec.gov/comments/s7-2026-30/transfer-agent-rules",
+        "publisher": {
+          "@type": "GovernmentOrganization",
+          "name": "U.S. Securities and Exchange Commission"
+        }
+      },
+      "articleSection": "Regulatory commentary",
+      "audience": {
+        "@type": "GovernmentOrganization",
+        "name": "U.S. Securities and Exchange Commission"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "#letter-title",
+          ".paper-thesis"
+        ]
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/vault.css?v=9" />
+  <script src="/vault.js?v=8" defer></script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+<!-- site-chrome:header START (generated from _partials/header.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <!-- site-brand:mark START (generated from _partials/brand.html; edit that file, then: python3 scripts/render_brand.py --write) -->
+        <a href="/">
+          <canvas class="vault-headdial" width="120" height="120" aria-hidden="true"></canvas>
+          <b>Tokenization Systems</b>
+          <span>Independent tokenization research</span>
+        </a>
+<!-- site-brand:mark END -->
+      </div>
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu" title="Menu">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <div class="nav-links nav-links--desktop">
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
+          <span class="nav-sep" aria-hidden="true" style="display:inline-block;width:1px;height:1em;background:currentColor;opacity:.3;margin:0 .45rem;vertical-align:middle"></span>
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
+        </div>
+        <div class="header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <nav id="nav-mobile" class="nav-links nav-links--mobile nav-mobile" hidden inert aria-hidden="true" aria-label="Main navigation">
+    <div class="nav-directory">
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Evaluate</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink" href="/overview/">Field guide</a>
+          <a class="navlink" href="/frameworks/">Frameworks</a>
+          <a class="navlink" href="/research/">Research</a>
+          <a class="navlink" href="/letters/">Letters</a>
+        </div>
+      </div>
+      <div class="nav-directory__col">
+        <p class="nav-directory__label">Work with us</p>
+        <div class="mobile-nav-linkset">
+          <a class="navlink" href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a class="navlink" href="/contact/">Contact</a>
+          <a class="navlink" href="/resume/">Roles</a>
+        </div>
+        <p class="nav-directory__label">Separate product</p>
+        <div class="nav-directory__links">
+          <a class="navlink" href="/agent-infrastructure/">Agent Infrastructure</a>
+        </div>
+      </div>
+      <div class="nav-directory__col nav-directory__col--connect">
+        <p class="nav-directory__label">Connect</p>
+        <div class="nav-mobile-social header-social" role="group" aria-label="Social links">
+          <a class="header-social-link" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="header-social-link" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="header-social-link" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="header-social-link" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- site-chrome:header END -->
+  <main id="main" class="paper-detail-page letter-page">
+    <article class="reveal paper-page paper-detail" aria-labelledby="letter-title">
+      <nav class="paper-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> <a href="/letters/">Letters</a> <span class="paper-breadcrumb-sep" aria-hidden="true">&rsaquo;</span> SEC transfer agent rules
+      </nav>
+
+      <span class="paper-track-badge">SEC &middot; Federal Comment Letter Program</span>
+      <div class="paper-badges paper-badges--chips">
+        <span class="badge">Filed November 3, 2026</span>
+        <span class="badge">7 recommendations</span>
+      </div>
+
+      <h1 id="letter-title">SEC File No. S7-2026-30 comment: when a security's ownership is recorded on a crypto network, say which record is the security and who controls it</h1>
+
+      <section class="letter-lead" aria-label="Docket summary and where this letter fits">
+        <h2 id="docket-summary">Docket summary</h2>
+        <p>The SEC's proposed transfer agent rules (Release No. 34-106246, published September 4, 2026) would modernize rules written for paper certificates. They make the master securityholder file, which the release calls the record of who owns an issuer's securities, an electronic and technology-neutral record, and the amended definition "would permit a transfer agent to utilize a blockchain or other distributed ledger technology as its master securityholder file, or a component thereof, but it would not mandate it." The rule text requires the transfer agent to maintain "at all times exclusive control over the master securityholder file." The proposal also ties turnaround to the settlement cycle, replaces certificate-era safeguarding with a risk management rule, gives a departing transfer agent fifteen calendar days to hand over its records, and, for the first time, asks transfer agents to report on Form TA-2 how they use distributed ledgers and which tokenization models they service. Comments were due November 3, 2026.</p>
+
+        <h2 id="macro-context">Where this letter fits</h2>
+        <p>The program's fourth comment to the SEC, after its July 2, 2026 comment on the <a href="/letters/sec-dsp3-draft-strategic-plan/">Draft Strategic Plan (File Number DSP-3)</a> and its two October 19, 2026 comments, on <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/">proposed Regulation Crypto Assets (File No. S7-2026-27)</a> and on the <a href="/letters/sec-4-927-tokenized-nms-exemptions/">tokenized NMS stock exemptions (File No. 4-927)</a>. It carries two of those asks into the rule that governs the record itself: the 4-927 comment's request that a venue's equivalence verification address which record controls if the ledger and the off-chain record disagree, and how often token supply is reconciled to the shares held for holders (Recommendation 1), and the S7-2026-27 comment's request for an inventory of the admin keys, upgrade authorities, and mint and freeze functions associated with a crypto asset (Recommendation 3). Its control standard parallels the Commission's own custody proposal (File No. S7-2026-35) and the custody rule the OCC adopted under the GENIUS Act.</p>
+      </section>
+
+      <p class="paper-thesis"><strong>The proposal lets a crypto network carry the master securityholder file, the record of who owns an issuer's securities, but it does not say which record governs when a token and the off-chain file disagree, does not require that a token's supply be reconciled to the securities the file records, and does not define exclusive control for a ledger the transfer agent shares with everyone else on the network.</strong> The release asks related questions (Questions 83 and 84) but proposes no answer. The seven recommendations ask the final rule to finish the thought: say which record governs, reconcile the token to it, define control as the power to change the ledger, bring the token's privileged functions inside the transfer agent's duties, hand them over with the records, and let the Commission and the public see which networks carry the official record.</p>
+
+      <div class="paper-audience-tags" aria-label="Framework and paper cross-references">
+        <span class="paper-audience-tag">Framework: Control-layer (privileged functions; exclusive control on a shared ledger)</span>
+        <span class="paper-audience-tag">Paper: <a href="/papers/three-strategies/">Three Tokenization Strategies</a></span>
+        <span class="paper-audience-tag">Paper: <a href="/papers/mvep/">MVEP</a></span>
+        <span class="paper-audience-tag">Evidence: the proposing release, the Commission's custody proposal, the OCC's GENIUS Act custody rule, a registered fund's disclosure for its tokenized shares, and the public record of two network-level freezes in 2026</span>
+      </div>
+
+      <div class="paper-access-block access-block">
+        <div class="access-primary">
+          <a class="action primary cta-primary" href="/letters/sec-s7-2026-30-transfer-agent-rules/letter.pdf" target="_blank" rel="noopener noreferrer">View comment (PDF)</a>
+          <a class="action secondary" href="https://www.sec.gov/rules-regulations/public-comments/s7-2026-30" target="_blank" rel="noopener noreferrer">Received comments on SEC.gov</a>
+        </div>
+        <div class="access-secondary">
+          <a class="access-link" href="https://www.sec.gov/files/rules/proposed/2026/34-106246.pdf" target="_blank" rel="noopener noreferrer">The proposing release, Release No. 34-106246 (PDF)</a>
+          <span class="access-sep" aria-hidden="true">&middot;</span>
+          <a class="access-link" href="https://www.federalregister.gov/d/2026-18190" target="_blank" rel="noopener noreferrer">Federal Register, 91 Fed. Reg. 56946</a>
+          <span class="access-sep" aria-hidden="true">&middot;</span>
+          <a class="access-link" href="/letters/">All twenty-six filed letters</a>
+          <span class="access-sep" aria-hidden="true">&middot;</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="text">Copy citation</button>
+          <span class="access-sep" aria-hidden="true">&middot;</span>
+          <button type="button" class="access-link access-cite-btn" data-cite-format="bibtex">Copy BibTeX</button>
+        </div>
+      </div>
+
+      <div class="paper-abstract">
+        <h2>Recommendations</h2>
+        <ol>
+          <li id="rec-1"><strong>State which record governs, reconcile on-chain supply to the master securityholder file every business day, and count excess supply in the overissuance test</strong> (Questions 45, 50, 83, 84 and 105). Require the recordkeeping transfer agent, for each tokenized issue, to designate in writing whether the crypto network is the master securityholder file, a component of it, or a copy, and which record governs if they disagree, and to disclose that designation to holders. Add to rule 17ad-9(g) a record difference when the quantity of a tokenized issue outstanding on any crypto network differs from the quantity the file records, reconciled at least every business day, so that a difference left unresolved is reported as an aged record difference under rule 17ad-11. Count units outstanding on a network in excess of the file in the overissuance test, and extend the duty to resolve an overissuance to such supply, whoever created it. Decline the exemption Question 105 floats for a file kept exclusively on an immutable blockchain network: a public ledger's history persists only while the network and its archive nodes do. As proposed, tokens minted beyond the file, by an exploit, a bridge to another network or an error, are neither a record difference nor an overissuance, although monitoring for overissuance is one of a transfer agent's statutory functions.</li>
+          <li id="rec-2"><strong>Define exclusive control of a ledger component as sole authority to create, cancel, or freeze units or move them without the holder's authorization, held by the transfer agent or exercised only on its instruction, under joint authorization</strong> (Questions 82, 84 and 99). The rule requires the transfer agent to keep "exclusive control" over the master securityholder file but does not define the term, and the release reads the ability to view a ledger and furnish copies as independent access; anyone can view and copy a public ledger. Define exclusive control, for any component of the file kept on a crypto network, as sole authority to create, cancel or freeze units, or to transfer them without the holder's authorization, held by the transfer agent or by a person acting only on its instruction under an agreement the transfer agent can terminate, and exercised under joint authorization of at least two persons it designates. Holders would still transfer their own units. The joint-authorization element follows the Commission's own custody proposal for advisers (File No. S7-2026-35), and the standard parallels the control test the OCC adopted for custody under the GENIUS Act. Where a person other than the transfer agent can freeze or move units at the level of the network, as the Arbitrum Security Council did in emergency responses to two exploits in 2026, the transfer agent should identify that person to holders, and that network should carry only a copy of the record, with the off-chain file governing.</li>
+          <li id="rec-3"><strong>Treat the privileged functions of a token as transfer agent functions</strong> (Questions 50, 84, 109 and 140). The rule text records the results of a token's privileged functions, in the transfer journal's issuances, cancellations and transfers, but never names the functions or says who holds them. Require that each privileged function of a tokenized issue's own contract be held by the recordkeeping transfer agent or be exercisable only on its instruction; require issuer authorization for every creation or cancellation of units, as rule 17ad-10(e) already requires for changes to the control book; require joint authorization and a transfer journal entry for every use of a privileged function, including freezes, pauses and changes to the contract's logic, recording any instruction or legal order the use rests on; require disclosure to holders of which persons hold which functions; confirm that a resale restriction enforced in a token contract is a restrictive legend under proposed rule 17ad-31, so that lifting it is a removal subject to the rule; and name these functions in any guidance on what makes a risk material under rule 17ad-12(a)(2). These are transfer agent functions in fact; the rule should make them transfer agent functions in law.</li>
+          <li id="rec-4"><strong>Hand over control with the records, and plan for a transfer agent's failure</strong> (Questions 101, 104 and 110). Proposed rule 17ad-7(i) requires a departing transfer agent to deliver its records within fifteen calendar days. For a tokenized issue, records are not enough: a successor that receives the records but not the privileged roles of the token contract cannot correct, reissue or move units, and a withheld key gives a departing transfer agent the same leverage a withheld file does. Require the handover to include every privileged role and key the transfer agent holds or controls for each tokenized issue, or their revocation and reissue to the successor; require the business continuity plan under rule 17ad-12(c) to address network halts and forks, contract exploits, bridge failures, and loss or compromise of keys; and keep the rule that there can be only one recordkeeping transfer agent for an issue, applied across networks, so that one transfer agent is accountable for reconciling every representation of the issue. The release reports that of the 144 transfer agents that withdrew from registration between 2016 and 2025, 56 (39 percent) indicated a successor transfer agent for each issue; in a concentrated market, one transfer agent's failure can reach many tokenized issues at once.</li>
+          <li id="rec-5"><strong>Keep payment stablecoins and tokenized deposits out of "funds" unless held under stated conditions</strong> (Questions 108 and 113). Question 113 asks whether stablecoins and tokenized deposits can be the funds a transfer agent holds for issuers and securityholders. A token held for securityholders carries risks a deposit account does not: loss of keys, an issuer's freeze or redemption halt, and network failure. Permit them to stand in for funds only if they are payment stablecoins of permitted payment stablecoin issuers under the GENIUS Act, or deposit liabilities of a depository institution recorded on a crypto network; they are held by a bank or trust company in a for-the-benefit-of wallet, not by the transfer agent itself; the transfer agent keeps per-client records and reconciles them to the wallet's balance on the network at least every business day; and the business continuity plan addresses a freeze or redemption halt by the issuer. Segregate tokens the transfer agent holds for securityholders, such as undelivered distributions, from its own assets on the same terms the rule applies to funds.</li>
+          <li id="rec-6"><strong>Make tokenization visible on Form TA-2</strong> (Questions 16, 19, 21 and 23). Proposed Question 4(e) counts the issues for which a registrant kept the master securityholder file using distributed ledger technology "in whole or in part," a count that lumps a ledger that is the whole official record with one that is only a component of it and misses a ledger that only copies it, and no question links an issue to the network that carries its record. Split Question 4(e) into issues for which the ledger is the file, a component of it, or a synchronized copy; require, by issue and publicly, the network and contract address of each tokenized issue, as entries on the list of issues serviced that amended Question 13 would already require; define the issuer-sponsored and third-party-sponsored models in the form instructions; and make the names of distributed ledger platforms and tokenization agents public. A contract address is already public on its network; the form would only connect it to the transfer agent of record, and asks for no key, wallet or holder information.</li>
+          <li id="rec-7"><strong>Make the wallet address part of position detail for tokenized positions, and address lost keys</strong> (Questions 37, 41 and 116). Require the wallet address, and the network, as position detail for every tokenized position, in addition to, and not instead of, the holder's name and mailing address, with procedures for changes of address and for lost keys. A wallet address shows which key can move the units; it does not show who holds them, and it fails as a way to reach the holder at the moment that matters most, when the key is lost. In rule 17ad-17, define the transaction limb of account activity for tokenized positions as transactions initiated or directed by, and reasonably attributable to, the holder, and not an unsolicited incoming transfer or automatic distribution alone, since on many networks anyone can send a token to any address; and treat a holder as an unresponsive payee when a payment goes to a wallet that has shown no such transaction for the inactivity period, with the written notice sent to the mailing address of record, so that the holder can be found before its property is lost.</li>
+        </ol>
+        <h2>The problem identified</h2>
+        <p>A transfer agent's central record is moving on-chain while the rule that governs it is silent on the questions a ledger raises. The proposal states that the master securityholder file "is the authoritative record of who owns an issuer's securities" and lets that file sit on a crypto network, in whole or in part. A token can also mirror the file without being part of it, and as drafted, units minted beyond the file are then neither a record difference nor an overissuance. The exposure is documented: a 2026 whitepaper by Google Quantum AI with the Ethereum Foundation, UC Berkeley and Stanford observes that for fiat-backed stablecoins and tokenized treasuries a compromise of issuer keys "would allow arbitrary minting" even though "the offchain represented reserves remain untouched." In that event the file would balance and the overissuance test would show nothing.</p>
+        <p>Control is the other half. The rule requires the transfer agent to keep exclusive control over the file but does not define the term, and the release treats the ability to view a ledger and furnish copies as independent access. Anyone can view and copy a public ledger; control is the power to change it. A token's privileged functions, to mint, burn, freeze, force a transfer of, pause or upgrade it, are that power, and the rule text records their results without naming the functions or the persons who hold them. The answers matter because the market is concentrated and moving on-chain at once: the release reports that, as of 2025, the 10 largest transfer agents account for approximately 82 percent of individual securityholder accounts.</p>
+        <p>When the Commission issued the proposal, then-Commissioner Peirce posed four questions for public feedback, and on October 29, 2026 the Director of the Division of Trading and Markets highlighted two of them. The comment answers all four. Transfer agents will perform fewer clerical tasks and more control tasks (Recommendations 2 and 3). Digital identifiers such as wallet addresses should be collected in addition to names and mailing addresses, not instead of them (Recommendation 7). The amendments to rule 17ad-17 are appropriate given state inactivity standards, with one clarification for tokenized positions: an unsolicited incoming transfer or automatic distribution should not by itself count as activity (Recommendation 7). And disclosure of service providers on Form TA-2 is appropriate, and for the infrastructure that carries the official record it should be public (Recommendation 6).</p>
+        <h2>A note on scope and evidence</h2>
+        <p>The comment supports the proposal's direction and addresses one question it raises and leaves open: when a security's ownership is recorded on a crypto network, which record is the security, and who controls it. Its seven recommendations answer 21 of the release's numbered questions, and the filed letter adds suggested rule text, a comparison with the Commission's custody proposal (File No. S7-2026-35) and the OCC's final rule implementing the GENIUS Act, and replies to six anticipated objections. The recommended definition of exclusive control names a result, not a mechanism: multisignature contracts, threshold signing and administrator roles can each meet it, and holders' own transfers are untouched. The comment does not question the emergency actions it cites, and statements of the Commission's staff are attributed to the staff, not the Commission.</p>
+      </div>
+
+      <section class="letter-record" id="what-happened-next" aria-labelledby="docket-and-status">
+        <h2 id="docket-and-status">Docket and status</h2>
+        <p class="paper-metadata-strip">File No. S7-2026-30, RIN 3235-AL55; Release No. 34-106246 (91 Fed. Reg. 56946, September 4, 2026; FR Doc 2026-18190) &middot; Transfer Agent Rules &middot; Comment period: September 4, 2026 to November 3, 2026</p>
+        <div class="letter-record-status">
+          <!-- letters:status-badge START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+          <span class="badge badge-status-pending">Comment period closed; final action pending</span>
+          <!-- letters:status-badge END -->
+        </div>
+        <!-- letters:outcome START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+        <p class="letter-status-line">as of November 4, 2026 &middot; 7 recommendations filed; no final action yet</p>
+        <details class="letter-status-more">
+          <summary>Status note</summary>
+          <p class="letter-outcome-note">Would modernize the transfer agent rules: the master securityholder file becomes an electronic, technology-neutral record that a transfer agent may keep on a blockchain or other distributed ledger, or a component of one, under its exclusive control; turnaround is tied to the settlement cycle; certificate-era safeguarding gives way to a risk management rule; and Form TA-2 asks, for the first time, how transfer agents use distributed ledgers and which tokenization models they service. The comment period closed November 3, 2026. Source: <a href="https://www.federalregister.gov/d/2026-18190" target="_blank" rel="noopener noreferrer">Federal Register, document 2026-18190</a>; <a href="https://www.sec.gov/files/rules/proposed/2026/34-106246.pdf" target="_blank" rel="noopener noreferrer">SEC proposing release, Release No. 34-106246</a>.</p>
+        </details>
+        <!-- letters:outcome END -->
+      </section>
+
+      <!-- letters:related START (generated from scripts/letters_registry.json; edit the registry, then: python3 scripts/render_letters.py --write) -->
+      <section class="companions" aria-labelledby="companions-heading">
+        <h3 id="companions-heading">Related</h3>
+        <div class="companion-cards">
+          <a href="/letters/sec-s7-2026-27-regulation-crypto-assets/" class="companion-card">
+            <strong>Same cycle: SEC Regulation Crypto Assets &rarr;</strong>
+            <span>October 19, 2026 &middot; SEC &middot; Comment period closed; final action pending</span>
+          </a>
+          <a href="/letters/sec-4-927-tokenized-nms-exemptions/" class="companion-card">
+            <strong>Same cycle: SEC tokenized NMS stock exemptions &rarr;</strong>
+            <span>October 19, 2026 &middot; SEC &middot; Open for comment; no deadline set</span>
+          </a>
+          <a href="/papers/three-strategies/" class="companion-card">
+            <strong>Paper: Three Tokenization Strategies &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+          <a href="/papers/mvep/" class="companion-card">
+            <strong>Paper: MVEP &rarr;</strong>
+            <span>The research behind this letter.</span>
+          </a>
+        </div>
+      </section>
+      <!-- letters:related END -->
+
+      <p class="paper-contact-strip">Questions about this comment? <a href="mailto:Zach@Tokenization.Systems?subject=Comment%20on%20SEC%20File%20No.%20S7-2026-30%20(Transfer%20Agent%20Rules)">Zach@Tokenization.Systems</a></p>
+    </article>
+
+    <!-- site-chrome:footer START (generated from _partials/footer.html; edit the partial, then: python3 scripts/render_chrome.py --write) -->
+    <footer class="site-footer reveal">
+      <div class="footer-top">
+        <div class="footer-copy"><span class="footer-copy__mark">©</span> <span class="footer-copy__year" id="year"></span> <span class="footer-copy__brand">Tokenization&nbsp;Systems</span></div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/overview/">Field guide</a>
+          <a href="/frameworks/">Frameworks</a>
+          <a href="/research/">Research</a>
+          <a href="/agent-infrastructure/">Agent Infrastructure</a>
+          <a href="/letters/">Letters</a>
+          <a href="/trackers/genius-act/">GENIUS tracker</a>
+          <a href="/notes/">Notes</a>
+          <a href="/resume/">Resume</a>
+          <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="footer-links">
+          <a class="footer-social" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="footer-social" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="footer-social" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a>
+          <a class="footer-social" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-newsletter" aria-labelledby="footer-newsletter-pitch">
+        <p class="footer-newsletter__pitch" id="footer-newsletter-pitch">Monthly research digest. New papers, frameworks, regulatory events.</p>
+        <form class="footer-newsletter__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+          <input id="footer-newsletter-email" class="footer-newsletter__input" type="email" name="email" placeholder="you@route.money" autocomplete="email" required>
+          <button class="footer-newsletter__button" type="submit">Subscribe</button>
+        </form>
+        <p class="footer-newsletter__privacy">No spam. Unsubscribe anytime. <a href="/privacy/">Privacy</a>.</p>
+      </div>
+      <p class="footer-tagline">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
+    </footer>
+    <!-- site-chrome:footer END -->
+  </main>
+
+  <script defer src="/script.js?v=236"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
