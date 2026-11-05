@@ -1308,6 +1308,10 @@ def selftest():
         ("an identifier in a title or data attribute does not fire",
          visible_proxies('<a title="RIN 3064-AG19" data-identifiers="91 FR 18304">FDIC issuer standards</a>'), 0),
         ("plain words do not fire", visible_proxies("<p>The section on reserves. Rule text. Comments closed.</p>"), 0),
+        ("a regulation by letter, a form number and a statute by year fire",
+         visible_proxies("<p>Regulation H, Form TA-2 and the 1940 Act</p>"), 3),
+        ("names that are not stand-ins do not fire",
+         visible_proxies("<p>Regulation Crypto Assets, Form TR and the Exchange Act</p>"), 0),
     ]
     bad = [(name, len(got), want) for name, got, want in cases if len(got) != want]
     for name, got, want in bad:
@@ -1329,7 +1333,11 @@ VISIBLE_PROXY_RE = re.compile(
     r"|\b\d{1,2}\s+(?:CFR|C\.F\.R\.|U\.S\.C\.|USC)\b"
     r"|\b[Ss]ections?\s+\d[\w.()-]*|\b[Ss]ec\.\s+\d[\w.()-]*|§+\s*\d[\w.()-]*"
     r"|\bRules?\s+\d{2,4}[\w()-]*"
-    r"|\bRelease\s+Nos?\.?\s*[\w-]+|\bOMB\s+(?:[Cc]ontrol\s+)?(?:No\.?\s*|[Nn]umber\s*)?\d{4}-\d{4}|\b3038-0076\b|\b34-\d{6}\b")
+    r"|\bRelease\s+Nos?\.?\s*[\w-]+|\bOMB\s+(?:[Cc]ontrol\s+)?(?:No\.?\s*|[Nn]umber\s*)?\d{4}-\d{4}|\b3038-0076\b|\b34-\d{6}\b"
+    r"|\bInterpretive Letter\s*(?:No\.\s*|#)?\d+"
+    r"|\bReg(?:ulation)?\.?\s+(?:[A-Z]|NMS)\b"
+    r"|\bForm\s+[A-Z0-9]+-[A-Z0-9]+\b"
+    r"|\b(?:1[89]|20)\d\d Act\b")
 
 
 def visible_proxies(fragment):

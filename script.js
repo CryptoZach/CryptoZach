@@ -8503,7 +8503,7 @@
     { prod: 'FRAX', grp: 'us', ppsi: false, m1: 'None', m2: 'DeFi-only', m3: 'Decentralized', m4: 'Allow-US', m5: 'Non-PPSI', cls: 'For US holders' },
     { prod: 'USDT', grp: 'offshore', ppsi: false, m1: 'None to Light', m2: 'Hybrid', m3: 'El Salvador', m4: 'Ambiguous', m5: 'Offshore variant', cls: 'Offshore-targeted' },
     { prod: 'USDe', grp: 'offshore', ppsi: false, m1: 'None to Light', m2: 'Hybrid', m3: 'Offshore', m4: 'Block-US', m5: 'Synthetic yield', cls: 'Offshore-targeted' },
-    { prod: 'USDY', grp: 'offshore', ppsi: false, m1: 'Full KYC', m2: 'Issuer (non-US)', m3: 'US / Reg S', m4: 'Block-US', m5: 'Offshore note', cls: 'Offshore-targeted' },
+    { prod: 'USDY', grp: 'offshore', ppsi: false, m1: 'Full KYC', m2: 'Issuer (non-US)', m3: 'US / offshore exemption', m4: 'Block-US', m5: 'Offshore note', cls: 'Offshore-targeted' },
     { prod: 'USDM', grp: 'offshore', ppsi: false, m1: 'Full KYC', m2: 'Hybrid (non-US)', m3: 'Bermuda', m4: 'Block-US', m5: 'Yield-bearing', cls: 'Offshore-targeted' },
     { prod: 'FDUSD', grp: 'boundary', ppsi: false, m1: 'Light to Full', m2: 'Hybrid', m3: 'Offshore (HK)', m4: 'Ambiguous', m5: 'Ambiguous', cls: 'Boundary case' },
     { prod: 'USD1', grp: 'boundary', ppsi: false, m1: 'None to Light', m2: 'Undocumented', m3: 'US-affiliated', m4: 'Ambiguous', m5: 'PPSI-ineligible', cls: 'Boundary case' }
@@ -9561,10 +9561,10 @@
     var curCohort = 'sample';
 
     var products = [
-      { name: 'BENJI (Franklin Templeton 1940 Act MMF)', overall: 3.5, legal: 3.7, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Adequate', bind: 'Economic / Collateral Operability FAIL (no 24/7 pool) & Cat 1/8' },
+      { name: 'BENJI (Franklin Templeton registered money market fund)', overall: 3.5, legal: 3.7, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Adequate', bind: 'Economic / Collateral Operability FAIL (no 24/7 pool) & Cat 1/8' },
       { name: 'RLUSD (Ripple / NYDFS Trust)', overall: 3.5, legal: 3.0, legalGate: 'Non-Equivalent', op: 3.5, opGate: 'Non-Equivalent', econ: 4.3, econGate: 'Substantially Eq.', disc: 'Partial', bind: 'Legal / Rights Parity FAIL (sole product passing CSA companion test)' },
       { name: 'JPMD (JPMorgan Deposit Token)', overall: 3.3, legal: 3.7, legalGate: 'Indeterminate', op: 3.0, opGate: 'Non-Equivalent', econ: 3.7, econGate: 'Indeterminate', disc: 'None published', bind: 'Operational / Governance & Change Control FAIL (sole non-fail on C1)' },
-      { name: 'BUIDL (BlackRock / BVI Reg D Fund)', overall: 3.2, legal: 3.0, legalGate: 'Non-Equivalent', op: 3.7, opGate: 'Non-Equivalent', econ: 3.3, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL & recursive USDC CSA dependency' },
+      { name: 'BUIDL (BlackRock / BVI private placement fund)', overall: 3.2, legal: 3.0, legalGate: 'Non-Equivalent', op: 3.7, opGate: 'Non-Equivalent', econ: 3.3, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Legal / Rights Parity FAIL & recursive USDC CSA dependency' },
       { name: 'USDY (Ondo Tokenized Secured Note)', overall: 3.2, legal: 3.3, legalGate: 'Non-Equivalent', op: 3.5, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Cash Settlement Asset FAIL & Legal / Rights Parity FAIL' },
       { name: 'USDG (Paxos / MAS & Global Dollar)', overall: 3.0, legal: 3.3, legalGate: 'Non-Equivalent', op: 3.2, opGate: 'Non-Equivalent', econ: 3.0, econGate: 'Non-Equivalent', disc: 'Partial', bind: 'Economic / Settlement Finality FAIL & Legal / Rights Parity FAIL' },
       { name: 'DAI (MakerDAO No-Entity Protocol)', overall: 2.9, legal: 1.0, legalGate: 'Non-Equivalent', op: 3.3, opGate: 'Non-Equivalent', econ: 2.7, econGate: 'Non-Equivalent', disc: 'Adequate', bind: 'Legal / Rights Parity & Cat 5 FAIL* (no legal entity or debtor claim)' },
@@ -9578,7 +9578,7 @@
     ];
 
     var regimesSample = [
-      { id: 'J1', name: 'US registered fund (1940 Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'Investment Company Act custody and capital-structure priority, Bankruptcy Code cross-border recognition, SEC money market fund rules, Reserve Primary 99.1c recovery' },
+      { id: 'J1', name: 'US registered fund (Investment Company Act) [BENJI]', pass: 7, part: 0, fail: 0, verdict: 'PASS (7/7 Pass)', note: 'Investment Company Act custody and capital-structure priority, Bankruptcy Code cross-border recognition, SEC money market fund rules, Reserve Primary 99.1c recovery' },
       { id: 'J7', name: 'Bermuda (DABA / BMA) [USYC issuer]', pass: 3, part: 4, fail: 0, verdict: 'PARTIAL (3 Pass, 4 Partial)', note: 'Digital Asset Business Act statutory estate carve-out + 2025 Custody Rules; dual-layer split with Cayman fund (J6)' },
       { id: 'J2', name: 'US bank deposit (FDI Act) [JPMD]', pass: 4, part: 1, fail: 2, verdict: 'PARTIAL (Claim-side substitute)', note: 'D2/D4/D6/D7 PASS (federal depositor preference); D1/D5 FAIL* structurally inapplicable' },
       { id: 'J3', name: 'US trust / MTL + dormant GENIUS [USDC]', pass: 2, part: 5, fail: 0, verdict: 'PARTIAL (re-score when GENIUS takes effect on January 18, 2027)', note: 'D3 Bankruptcy Code cross-border recognition & D5 New York limit on reusing customer assets PASS; GENIUS segregation and holder priority enacted but dormant until effective date' },
@@ -9640,7 +9640,7 @@
       var list = curCohort === 'intl' ? regimesIntl : regimesSample;
       if(curCohort === 'sample'){
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Only 7/7 Pass regime</span><span class="b4-stat__val">J1: 1940 Act (BENJI)</span><span class="b4-stat__sub">Statutory custody, flat capital structure, and 99.1c recovery precedent</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Only 7/7 Pass regime</span><span class="b4-stat__val">J1: Investment Company Act (BENJI)</span><span class="b4-stat__sub">Statutory custody, flat capital structure, and 99.1c recovery precedent</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Charter-relocation traps</span><span class="b4-stat__val">J2S (SoFiUSD) &amp; J3F (USD1/PYUSD)</span><span class="b4-stat__sub">Federal charters relocate claims without curing non-deposit or D5 gaps</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Offshore dispersion</span><span class="b4-stat__val">Bermuda J7 vs El Salvador J8</span><span class="b4-stat__sub">Bermuda passes D1/D4/D5; El Salvador fails 6 of 7 dimensions</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Structural inapplicability (Fail*)</span><span class="b4-stat__val">J2 (D1/D5) &amp; J10 (7/7)</span><span class="b4-stat__sub">J2 marks D1 and D5 inapplicable (a deposit has no separate customer asset). J10 marks all 7 dimensions inapplicable (no legal entity).</span></div>';
@@ -10173,13 +10173,13 @@
         ]
       },
       mmf: {
-        rulebook: 'Investment Company Act of 1940 (money market fund rule) / private placement (Reg D) / offshore (Reg S)',
+        rulebook: 'Investment Company Act of 1940 (money market fund rule) / private placement exemption / offshore exemption',
         claim: 'Beneficial fund share, LP interest, or secured note',
-        insolvency: '7/7 Pass for 1940 Act (BENJI J1); Ambiguous for BVI/LP (BUIDL J5, OUSG J4)',
+        insolvency: '7/7 Pass for the Investment Company Act (BENJI J1); Ambiguous for BVI/LP (BUIDL J5, OUSG J4)',
         stress2am: '2am Saturday margin-call gap: finite USDC pool vs Monday NAV',
         rows: [
           { q: 'What the holder owns', a: 'A fund share, a partnership interest, or a secured note, depending on the wrapper.', note: 'BENJI, BUIDL, and OUSG each use their own legal claim.' },
-          { q: 'If the issuer fails', a: 'A 1940 Act fund such as BENJI passes the insolvency tests used in MVEP. BUIDL and OUSG, as offshore or private wrappers, come out ambiguous on that matrix.', note: 'BENJI is a 7-of-7 pass. BUIDL and OUSG stay in the ambiguous column.' },
+          { q: 'If the issuer fails', a: 'A registered fund such as BENJI passes the insolvency tests used in MVEP. BUIDL and OUSG, as offshore or private wrappers, come out ambiguous on that matrix.', note: 'BENJI is a 7-of-7 pass. BUIDL and OUSG stay in the ambiguous column.' },
           { q: 'When banks are closed', a: 'A Saturday margin call meets a limited pool of stablecoins and a net asset value that waits until markets open.', note: 'Instant redemption, where it exists, is only as large as that pool.' },
           { q: 'Can another institution settle it', a: 'Only up to the pool and the whitelist. The cash it turns into is often a stablecoin.', note: 'Instant redemption pays out in a stablecoin such as USDC, so the wrapper inherits that stablecoin\'s weekend limits. USYC, BUIDL, and BENJI can also sit in off-exchange margin pools without the holder choosing the counterparty.' },
           { q: 'Does the holder receive the yield', a: 'Yes. The holder receives the fund value or its dividend.', note: 'This is where yield goes when payment stablecoin issuers are barred from paying holders interest.' }
@@ -10208,7 +10208,7 @@
         primaryGate: 'MVEP Categories 4, 5, 10 and the recursive Cash Settlement Asset test',
         focus: '2am Saturday margin liquidation, whitelist locks, and recursive USDC redemption',
         steps: [
-          { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP paper)', action: 'Distinguish 1940 Act MMF (BENJI J1), BVI Reg D fund (BUIDL J5), Delaware LP (OUSG J4), and secured note (USDY).' },
+          { step: '1. Classify', pct: 100, tool: 'Four Legal Structures Taxonomy (MVEP paper)', action: 'Distinguish a registered money market fund (BENJI J1), a BVI private placement fund (BUIDL J5), a Delaware LP (OUSG J4), and a secured note (USDY).' },
           { step: '2. Trace', pct: 92, tool: 'Composed-Product Layer Audit + recursive Cash Settlement Asset test', action: 'Trace every wrapper layer to its cash settlement asset (e.g., OUSG -> BUIDL -> Circle USDC instant pool).' },
           { step: '3. Map', pct: 84, tool: 'Transfer-Agent & Custodian Control Map', action: 'Identify the transfer agent (Securitize / Franklin), custodian (BNY / Ceffu / Marex), and admin key signers.' },
           { step: '4. Compare', pct: 78, tool: 'MVEP Exhibit 2 (Cat 5 Matrix) & Exhibit 3 (Composite)', action: 'Compare non-compensatory Legal, Operational, and Economic grades; check D5 statutory rehypothecation limits.' },
@@ -10590,7 +10590,7 @@
             { text: 'GENIUS Act ban on issuers paying holders yield (Enacted statute)', pct: 100, badge: 'Categorically prohibited', note: 'Bars any form of interest or yield paid by a permitted or foreign issuer solely in connection with holding, use, or retention' },
             { text: 'OCC Proposed Rule for its stablecoin issuers', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
             { text: 'FDIC Proposed Rule for its stablecoin issuers', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on FDIC-supervised subsidiary stablecoin issuers' },
-            { text: 'Market-structure consequence (Dollar v3 / Seven Dollars)', pct: 100, badge: 'Pushes yield into wrappers', note: 'Direct holder yield must use registered 1940 Act MMFs (BENJI) or offshore/Reg D wrappers (BUIDL, OUSG, USDY)' }
+            { text: 'Market-structure consequence (Dollar v3 / Seven Dollars)', pct: 100, badge: 'Pushes yield into wrappers', note: 'Direct holder yield must use registered money market funds (BENJI) or offshore and private placement wrappers (BUIDL, OUSG, USDY)' }
           ]
         },
         merchant: {
@@ -10939,13 +10939,13 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">External validation</span><span class="b4-stat__val">Moody\'s (March 2026)</span><span class="b4-stat__sub">Klotz and Hu methodology compared against MVEP across 14 products</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Threshold convergence</span><span class="b4-stat__val">USDT &amp; DAI</span><span class="b4-stat__sub">Both frameworks exclude USDT (no segregation) and DAI (no issuer)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Strongest posture unrated</span><span class="b4-stat__val">BENJI (1940 Act)</span><span class="b4-stat__sub">7/7 Pass on MVEP Cat 5, but out of stablecoin rating scope</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Strongest posture unrated</span><span class="b4-stat__val">BENJI (registered fund)</span><span class="b4-stat__sub">7/7 Pass on MVEP Cat 5, but out of stablecoin rating scope</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Epistemic / scope divergence</span><span class="b4-stat__val">USDC, PYUSD, USDG &amp; funds</span><span class="b4-stat__sub">Binary eligibility vs graded 7-dimension Cat 5 + recursive CSA</span></div>';
         var pRows = [
           { name: 'Pattern 1: Threshold convergence (USDT)', pct: 95, val: 'MVEP: Cat 5 Fail · Rating: Out of perimeter · Disagreement: No', note: 'Tether terms affirmatively decline to segregate reserve assets; fails both gates at the threshold' },
           { name: 'Pattern 2: Convergence with attribution risk (DAI)', pct: 90, val: 'MVEP: Fail* (No entity) · Rating: Out of scope · Disagreement: No', note: 'No legal issuer entity exists and exit runs through the USDC Peg Stability Module' },
           { name: 'Pattern 3: Surface disagreement, same protection (JPMD)', pct: 85, val: 'MVEP: Strong bank law · Rating: Reroute to issuer credit · Disagreement: No', note: 'A deposit is a bank liability (no customer asset to segregate); both credit FDI Act bank supervision' },
-          { name: 'Pattern 4: Strongest insolvency posture, out of rating perimeter (BENJI)', pct: 100, val: 'MVEP: 7/7 Cat 5 Pass (1940 Act) · Rating: Unrated · Disagreement: Yes (Scope)', note: 'Registered 1940 Act money market fund share has the strongest statutory segregation but sits outside stablecoin ratings' },
+          { name: 'Pattern 4: Strongest insolvency posture, out of rating perimeter (BENJI)', pct: 100, val: 'MVEP: 7/7 Cat 5 Pass (Investment Company Act) · Rating: Unrated · Disagreement: Yes (Scope)', note: 'Registered money market fund share has the strongest statutory segregation but sits outside stablecoin ratings' },
           { name: 'Pattern 5: Same facts, different reporting (USDC, PYUSD, USDG)', pct: 70, val: 'MVEP: Partial + re-score trigger · Rating: Binary gate · Disagreement: Yes (Epistemic)', note: 'GENIUS Act segregation is enacted but dormant until effective date; Circle S-1 concedes holder priority is untested' },
           { name: 'Pattern 6: Off-exchange collateral wrappers (USYC, BUIDL, OUSG, USDY)', pct: 65, val: 'MVEP: Graded 7 dims + recursive CSA · Rating: Out of scope · Disagreement: Yes (Detail)', note: 'MVEP tests composed redemption chains (BUIDL/OUSG -> USDC) and 2am Saturday collateral operability' }
         ];
@@ -11106,7 +11106,7 @@
             '<div class="b4-stat"><span class="b4-stat__label">2030 to 2035 end state</span><span class="b4-stat__val">4-object hybrid stack</span><span class="b4-stat__sub">Stablecoins (cash leg), deposit tokens, tokenized deposits &amp; MMF wrappers</span></div>';
           var lRows = [
             { name: 'Lever 1: Who can issue in practice (Federal permitted issuer, State-certified, or insured bank subsidiary)', pct: 90, val: 'GENIUS 3-lane charter map', note: 'Sets the entry gate and determines whether nonbanks or bank subsidiaries dominate issuance' },
-            { name: 'Lever 2: Where yield is allowed to live (GENIUS yield ban vs 1940 Act / Reg D wrappers)', pct: 95, val: 'Drives wrapper & sweep migration', note: 'Barring interest on payment stablecoins pushes yield into tokenized MMFs (BENJI, BUIDL) and distributor revenue share' },
+            { name: 'Lever 2: Where yield is allowed to live (GENIUS yield ban vs registered fund and private placement wrappers)', pct: 95, val: 'Drives wrapper & sweep migration', note: 'Barring interest on payment stablecoins pushes yield into tokenized MMFs (BENJI, BUIDL) and distributor revenue share' },
             { name: 'Lever 3: Layer 0 reserve placement & backstop expectations (T-bills, RRP vs commercial banks)', pct: 88, val: 'Governs panic & run direction', note: 'Reserve custody location determines whether stress triggers flight-to-T-bills or bank deposit outflows' },
             { name: 'Lever 4: Offshore dollar perimeter (Treasury GENIUS Act foreign issuer rules)', pct: 82, val: 'USDT vs US-regulated gateways', note: 'Determines whether offshore coins can route through US interfaces or remain segmented offshore' },
             { name: 'Lever 5: Open public spine vs private walled-garden bank ledgers', pct: 85, val: 'Interoperability determinant', note: 'Decides whether deposit tokens achieve cross-bank fungibility or fragment into single-bank islands' }
@@ -11316,7 +11316,7 @@
           deliverable: 'Architecture memo: legal wrapper, custody/settlement stack & redemption design',
           proof: 'MVEP prospective design + Three Strategies + Uniswap fee-switch delegate committee',
           bars: [
-            { name: 'Phase 1: Object & Rulebook Selection (Seven Dollars + Four Dollar Objects)', pct: 95, val: 'Week 1 to 2', note: 'Selects between permitted-issuer stablecoin, tokenized deposit, multi-bank deposit token, or 1940 Act / Reg D wrapper' },
+            { name: 'Phase 1: Object & Rulebook Selection (Seven Dollars + Four Dollar Objects)', pct: 95, val: 'Week 1 to 2', note: 'Selects between permitted-issuer stablecoin, tokenized deposit, multi-bank deposit token, or registered fund or private placement wrapper' },
             { name: 'Phase 2: Custody, Transfer-Agent & Redemption Plumbing (Three Strategies)', pct: 92, val: 'Week 3 to 5', note: 'Structures canonical system of record, corporate-actions cutoff hierarchy, and multi-path redemption' },
             { name: 'Phase 3: Pre-Committee Red-Flag Review & Regulatory Filing Alignment', pct: 88, val: 'Week 6 to 8', note: 'Runs prospective MVEP 10-category gate check before code and legal agreements lock' }
           ]
@@ -11867,7 +11867,7 @@
           { name: 'SEC (4 letters: draft strategic plan, Regulation Crypto Assets, tokenized stock exemptions, transfer agent rules)', pct: 72, val: '26 recommendations (17.6%)', note: 'Applies PCA-corrected governance concentration, observable control gates for the proposed crypto safe harbor, and tokenized securities venue corporate-actions hierarchy' },
           { name: 'U.S. Department of the Treasury (3 letters on state-similarity principles & the issuance, offer and sale rule)', pct: 36, val: '13 recommendations (8.8%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under the GENIUS Act limits on who may offer and sell stablecoins' },
           { name: 'OCC (3 letters: MVEP comment on its stablecoin issuer rule + supplemental, Bank Secrecy Act and sanctions standards)', pct: 33, val: '12 recommendations (8.1%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
-          { name: 'NCUA (2 letters: stablecoin issuer standards + routing supplement) & Federal Reserve Board (anti-money-laundering program rule)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
+          { name: 'NCUA (2 letters: stablecoin issuer standards + routing supplement) & Federal Reserve Board (anti-money-laundering program rule)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in the rules for state member banks' },
           { name: 'Joint Banking Agencies (bank anti-money-laundering program rule) & CFTC (clearing organization reporting)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized clearing organization margin' }
         ];
         barsEl.innerHTML = readingList(agRows);

@@ -15,7 +15,10 @@ code comments, and the term tables between plain-language-ignore-start and plain
 
 Precision, measured when this was written: the 1,131 hits on the tree before the rewrite were each read and rewritten by an
 editor, none reported as a non-proxy. Recall is narrower: a question number, a footnote number or "H.R. 3633" is a proxy this
-pattern list does not name, so a clean run does not mean no such pointer exists.
+pattern list does not name, so a clean run does not mean no such pointer exists. A census of the rendered text of all 70 pages
+found 5 question numbers, all on the Federal Reserve letter's page, where the numbers are the point (the notice skips two and
+repeats two), 0 footnote numbers and 0 bill numbers. Names that are not stand-ins stay: Form TR and Regulation Crypto Assets,
+the SEC's own names for what the page explains; the Exchange Act; and a paper's SSRN number and DOI beside its title.
 
 The glossary behind the rewrite is scripts/plain_language_glossary.json. Use it when a new page needs one of these.
 
@@ -38,6 +41,10 @@ PATTERNS = [
     ('section', r'(?i:\bsections?\s+\d[\w.()-]*|\bsec\.\s+\d[\w.()-]*)|§+\s*\d[\w.()-]*'),
     ('rule', r'\bRules?\s+\d{2,4}[\w()-]*'),
     ('release or OMB number', r'\bRelease\s+Nos?\.?\s*[\w-]+|\bOMB\s+(?:control\s+)?(?:No\.?\s*|number\s*)?\d{4}-\d{4}|\b3038-0076\b|\b34-\d{6}\b'),
+    ('interpretive letter number', r'\bInterpretive Letter\s*(?:No\.\s*|#)?\d+'),
+    ('regulation by letter', r'\bReg(?:ulation)?\.?\s+(?:[A-Z]|NMS)\b'),
+    ('form number', r'\bForm\s+[A-Z0-9]+-[A-Z0-9]+\b'),
+    ('statute by year', r'\b(?:1[89]|20)\d\d Act\b'),
 ]
 RX = [(name, re.compile(rx)) for name, rx in PATTERNS]
 PRUNE = {'.git', '.github', '.claude', '.codex', '_build', '_site', 'node_modules', 'handoff', 'scripts', 'data', 'assets', 'icons', 'ink-brand-kit',
