@@ -12037,7 +12037,7 @@
     { cat: 'Resume', title: 'Resume Profile: Asset Management & Tokenization', url: '/resume/asset-management/', kw: 'asset management resume borderless $500m 250 investments layerzero' },
     { cat: 'Resume', title: 'Resume Profile: Stablecoin & Payments Strategy', url: '/resume/stablecoin-payments/', kw: 'stablecoin payments operator resume reserves redemption' },
     { cat: 'Resume', title: 'Resume Profile: Digital Asset Product', url: '/resume/product/', kw: 'product manager resume tokenization lifecycle' },
-    { cat: 'Resume', title: 'Resume Profile: AI Governance & Infrastructure', url: '/resume/ai-governance-infrastructure/', kw: 'ai governance resume clii-ai mvep-ai 46 patents' },
+    { cat: 'Resume', title: 'Resume Profile: AI Governance & Infrastructure', url: '/resume/ai-governance-infrastructure/', kw: 'ai governance resume clii-ai mvep-ai 49 patents' },
     { cat: 'Resume', title: 'Resume Profile: Risk, Controls & Diligence', url: '/resume/risk-controls/', kw: 'risk controls resume thorchain $200m valos nors' }
   ];
 
