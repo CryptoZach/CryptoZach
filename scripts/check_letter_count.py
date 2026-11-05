@@ -72,7 +72,9 @@ SCAN_DIRS = ["", "letters", "resume", "overview", "frameworks", "research", "res
              "speaker-and-advisory", "agent-infrastructure", "contact", "papers",
              "about", "trackers", "notes", "patents", "data", "privacy"]
 
-EXTRA_FILES = ["llms.txt", "_config.yml", "sitemap.xml", "AI_Governance_Profile_Content.md"]
+# script.js carries the program totals in the explorers and the Cmd+K palette, which render on nine page types. It was
+# outside this check until 2026-11-05, and stayed at 25 letters, 19 dockets and 136 recommendations through two filings.
+EXTRA_FILES = ["llms.txt", "_config.yml", "sitemap.xml", "AI_Governance_Profile_Content.md", "script.js"]
 
 PRUNE_DIRS = {".git", ".claude", ".codex", "_build", "node_modules", "_site", "submissions"}
 
@@ -124,7 +126,10 @@ COUNT_PATTERNS = [
     re.compile(COUNT_TOKEN + SEP + r"federal\s+letters?\b", re.I),
     re.compile(r"All\s+" + COUNT_TOKEN + r"\s+filed\s+letters\b", re.I),
     re.compile(COUNT_TOKEN + r"\s+letters?\s+filed\b", re.I),
-    re.compile(r"\b" + COUNT_TOKEN + r"-letter\s+(?:federal\s+)?(?:comment\s+)?program\b", re.I),
+    re.compile(r"\b" + COUNT_TOKEN + r"-letter\s+(?:federal\s+)?(?:comment\s+|regulatory\s+)?program\b", re.I),
+    re.compile(r"\(" + COUNT_TOKEN + r"\s+letters,\s", re.I),
+    re.compile(r"\b" + COUNT_TOKEN + r"\s+letters\s+\(\+1\s+FSB\)", re.I),
+    re.compile(r"\b" + COUNT_TOKEN + r"\s+federal\s+\+\s+1\s+FSB\b", re.I),
     re.compile(r'data-scale-federal-comment-letters="' + COUNT_TOKEN + r'"', re.I),
 ]
 
@@ -138,6 +143,13 @@ DOCKET_PATTERNS = [
         r"(?:<strong>)?\b" + COUNT_TOKEN + SEP + r"dockets?,\s+" + NUMBER_WORD + SEP + r"(?:federal\s+)?agencies\b",
         re.I,
     ),
+    # "across nine agencies and nineteen dockets": the order the letters hub's three meta descriptions use.
+    re.compile(r"agencies" + SEP + r"and" + SEP + COUNT_TOKEN + SEP + r"dockets\b", re.I),
+    # The explorer forms: "Filed ... across 19 dockets", "\u00b7 19 dockets", "19 dockets and 9 federal agencies", "(25 Letters, 19 Dockets".
+    re.compile(r"\bFiled\b[^<]{0,60}\bacross\s+" + COUNT_TOKEN + r"\s+dockets\b", re.I),
+    re.compile(r"\u00b7\s+" + COUNT_TOKEN + r"\s+dockets\b", re.I),
+    re.compile(r"\b" + COUNT_TOKEN + r"\s+dockets\s+and\s+\d+\s+federal\s+agencies\b", re.I),
+    re.compile(r"\bletters,\s+" + COUNT_TOKEN + r"\s+dockets\b", re.I),
 ]
 
 # Agency total patterns (group 'n').
@@ -164,6 +176,13 @@ REC_PATTERNS = [
     re.compile(r"\b(?P<n>\d{2,3})\s+recommendations\s+across\s+(?:the\s+|all\s+)?(?:\d+|[A-Za-z-]+)?\s*(?:federal\s+)?(?:comment\s+)?letters\b", re.I),
     re.compile(r"every\s+one\s+of\s+the\s+(?P<n>\d{2,3})\s+recommendations\b", re.I),
     re.compile(r"<span class=\"letters-stat__num\">(?P<n>\d{2,3})</span><span class=\"letters-stat__label\">recommendations\b", re.I),
+]
+
+# Three digits only, so never one agency's or one letter's count, and not "Question 131 asks". Notes are skipped: a dated
+# note states the total as of its own date, which stays true.
+REC_PATTERNS_CURRENT_ONLY = [
+    re.compile(r"\b(?P<n>\d{3})-recommendation\b", re.I),
+    re.compile(r"(?<!Question )\b(?P<n>\d{3})\s+(?:concrete\s+|numbered\s+)?(?:asks|recommendations|recs)\b", re.I),
 ]
 
 # Principal and supplement decomposition pattern on letters/index.html.
@@ -507,7 +526,7 @@ def scan_detailed(root, stats):
                             })
 
             if not indiv_letter and recs is not None:
-                for pat in REC_PATTERNS:
+                for pat in REC_PATTERNS + ([] if rel.startswith("notes/") else REC_PATTERNS_CURRENT_ONLY):
                     for m in pat.finditer(line):
                         val = token_to_int(m.group("n"))
                         if val is None:

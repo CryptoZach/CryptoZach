@@ -104,7 +104,7 @@ AGENCY_ORDER = ["OCC", "FDIC", "FinCEN", "Treasury", "NCUA", "Federal Reserve", 
 STATE_LABEL = {"open": "Comment period open", "closed-pending": "Final action pending",
                "final": "Final action issued", "withdrawn": "Withdrawn"}
 STATE_CLASS = {"open": "open", "closed-pending": "pending", "final": "final", "withdrawn": "withdrawn"}
-REC_STATUS_LABEL = {"pending": "Pending", "adopted": "Adopted", "partly-adopted": "Partly adopted",
+REC_STATUS_LABEL = {"not-assessed": "Not yet assessed", "pending": "Pending", "adopted": "Adopted", "partly-adopted": "Partly adopted",
                     "not-adopted": "Not adopted", "noted": "Noted"}
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
           "September", "October", "November", "December"]
@@ -262,6 +262,25 @@ class Model:
             return f"supplements No. {parent['number']}"
         return plural(l["rec_count"], "recommendation")
 
+    def final_text(self, proceeding_key):
+        """What the final action on a proceeding is called: a plan or a report is not a rule."""
+        kind = self.procs[proceeding_key].get("kind", "").lower()
+        if "plan" in kind:
+            return "the published plan"
+        if "consultation" in kind:
+            return "the final report"
+        return "the final rule"
+
+    def rec_status(self, l, r):
+        """A recommendation still marked pending on a proceeding with final action is unassessed: "pending" means no final action yet."""
+        if r["status"] == "pending" and l["_outcome"]["state"] == "final":
+            return "not-assessed"
+        return r["status"]
+
+    def current_watch(self):
+        """Dates not yet past at the registry's as-of date, so a passed deadline cannot stay listed as next."""
+        return sorted((w for w in self.reg.get("watch", []) if not_past(w["date"], self.verified_on)), key=lambda w: w["date"])
+
     def rec_disposition(self, l):
         """Short text for how a letter's recommendations stand."""
         if l["rec_count"] == 0:
@@ -271,7 +290,7 @@ class Model:
             counts[r["status"]] = counts.get(r["status"], 0) + 1
         if list(counts) == ["pending"]:
             if l["_outcome"]["state"] == "final":
-                return f"{plural(l['rec_count'], 'recommendation')} filed; not yet assessed against the final rule"
+                return f"{plural(l['rec_count'], 'recommendation')} filed; not yet assessed against {self.final_text(l['proceeding'])}"
             return f"{plural(l['rec_count'], 'recommendation')} filed; no final action yet"
         parts = [f"{n} {REC_STATUS_LABEL[s].lower()}" for s, n in counts.items() if s != "pending"]
         if counts.get("pending"):
@@ -457,6 +476,11 @@ _STATUS_BOILER = (
 )
 
 
+def not_past(date, asof):
+    """ISO dates of day or month precision: true while the date is not before the as-of date at the same precision."""
+    return date >= asof[:len(date)]
+
+
 def visible_note(note):
     """Drop a note that only restates the status chip. Keep any fact it adds."""
     text = note or ""
@@ -512,7 +536,8 @@ def gen_outcomes(m):
         if n_recs == 0:
             recs = "n/a"
         elif list(counts) == ["pending"]:
-            recs = f"{n_recs} filed; none decided yet"
+            recs = (f"{n_recs} filed; not yet assessed against {m.final_text(key)}" if o["state"] == "final"
+                    else f"{n_recs} filed; none decided yet")
         else:
             recs = f"{n_recs} filed: " + ", ".join(f"{n} {REC_STATUS_LABEL[s].lower()}" for s, n in counts.items())
         name = (f'<a href="{attr(p["url"])}" target="_blank" rel="noopener noreferrer">{esc(p["name"])}</a>' if p.get("url") else esc(p["name"]))
@@ -533,7 +558,7 @@ def gen_outcomes(m):
             srcs = " ".join(f'<a href="{attr(s["url"])}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' for s in o.get("sources", []))
             out.append(f'      <tr class="letters-outcome-note"><td colspan="5">{esc(note)}{(" " + srcs) if srcs else ""}</td></tr>')
     out += ["    </tbody>", "  </table>", "</div>"]
-    watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
+    watch = m.current_watch()
     if watch:
         out.append('<h3 id="next-dates">Next dates</h3>')
         out.append('<ul class="letters-watch">')
@@ -735,7 +760,8 @@ def gen_recommendations(m):
     for l in letters:
         agencies[l["agency"]] = agencies.get(l["agency"], 0) + l["rec_count"]
         for r in l["recommendations"]:
-            statuses[r["status"]] = statuses.get(r["status"], 0) + 1
+            status = m.rec_status(l, r)
+            statuses[status] = statuses.get(status, 0) + 1
             for t in r["topics"]:
                 topics[t] = topics.get(t, 0) + 1
     out = ['<div class="letters-toolbar" hidden>',
@@ -754,7 +780,7 @@ def gen_recommendations(m):
     if len(statuses) > 1:
         out.append('    <div class="filter-group" data-axis="status"><span class="filter-label">Status:</span>')
         out.append("      " + chip("status", "all", "All", active=True))
-        for s in ["adopted", "partly-adopted", "noted", "not-adopted", "pending"]:
+        for s in ["adopted", "partly-adopted", "noted", "not-adopted", "not-assessed", "pending"]:
             if s in statuses:
                 out.append("      " + chip("status", s, REC_STATUS_LABEL[s], statuses[s]))
         out.append("    </div>")
@@ -779,13 +805,13 @@ def gen_recommendations(m):
             rid = f"r-{l['number']}-{r['n']}"
             topics_attr = " ".join(t.replace(" ", "-").replace("/", "-").lower() for t in r["topics"])
             out += [f'      <tr id="{rid}" data-agency="{attr(l["agency"])}" data-cycle="{attr(l["cycle"])}" data-topic="{attr(topics_attr)}" '
-                    f'data-status="{attr(r["status"])}" data-filed="{attr(l["filed"])}" data-number="{l["number"]}" data-n="{r["n"]}">',
+                    f'data-status="{attr(m.rec_status(l, r))}" data-filed="{attr(l["filed"])}" data-number="{l["number"]}" data-n="{r["n"]}">',
                     f'        <td data-label="No."><a href="#{rid}" class="rec-anchor">{l["number"]}.{r["n"]}</a></td>',
                     f'        <td data-label="Letter"><a href="/letters/{attr(l["slug"])}/">No. {l["number"]} {esc(l["short_title"])}</a><br>'
                     f'<span class="letters-outcome-id">{esc(l["agency_display"])} &middot; {esc(fmt_date(l["filed"]))}</span></td>',
                     f'        <td data-label="Recommendation"><a href="/letters/{attr(l["slug"])}/#{attr(r["id"])}">{esc(r["ask"])}</a></td>',
                     f'        <td data-label="Topics">{esc(", ".join(r["topics"]))}</td>',
-                    f'        <td data-label="Status"><span class="rec-status rec-status--{attr(r["status"])}">{esc(REC_STATUS_LABEL[r["status"]])}</span>'
+                    f'        <td data-label="Status"><span class="rec-status rec-status--{attr(r["status"])}">{esc(REC_STATUS_LABEL[m.rec_status(l, r)])}</span>'
                     + (f'<br><span class="letters-outcome-id">{esc(r["status_note"])}</span>' if r.get("status_note") else "") + "</td>",
                     "      </tr>"]
     out += ["    </tbody>", "  </table>", "</div>",
@@ -876,7 +902,7 @@ def gen_letters_json(m):
         "recommendation_statuses": m.reg["_meta"]["recommendation_statuses"],
         "letters": [public_letter(l) for l in m.filing_order()],
         "proceedings": m.procs,
-        "watch": m.reg.get("watch", []),
+        "watch": m.current_watch(),
     }
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
@@ -890,7 +916,7 @@ def gen_recs_csv(m):
         for r in l["recommendations"]:
             w.writerow([l["number"] or "", l["slug"], l["title"], l["agency"], l["filed"], l["proceeding"],
                         l["docket"]["label"], r["n"], r["id"], r.get("ask", ""), r["text"],
-                        " ".join(r.get("topics", [])), r["status"], r.get("status_note", "") or "",
+                        " ".join(r.get("topics", [])), m.rec_status(l, r), r.get("status_note", "") or "",
                         f"{SITE}/letters/{l['slug']}/#{r['id']}"])
     return buf.getvalue()
 
@@ -907,7 +933,8 @@ def tracker_rows(m):
         closes = sorted(l["comment_period"].get("close") for l in ls if l["comment_period"].get("close"))
         o = p["outcome"]
         rows.append({"key": key, "agency": ls[0]["agency"], "agency_long": p["agency"], "name": p["name"],
-                     "identifier": p["identifier"], "fr": p.get("fr"), "kind": p["kind"], "url": p.get("url"),
+                     "identifier": p["identifier"], "fr": p.get("fr"),
+                     "kind": "Final rule" if o["state"] == "final" and p["kind"] == "Proposed rule" else p["kind"], "url": p.get("url"),
                      "published": opens[0] if opens else None, "comment_close": closes[-1] if closes else None,
                      "comment_close_note": None, "state": o["state"],
                      "status_label": o.get("status_label") or STATE_LABEL[o["state"]],
@@ -955,7 +982,7 @@ def gen_tracker(m):
     n_final = sum(1 for r in rows if r["state"] == "final")
     n_pending = sum(1 for r in rows if r["state"] == "closed-pending")
     n_letters = sum(len(r["letters"]) for r in rows)
-    bits = [f"{n} rulemakings", f"{n_comm} with a program letter ({n_letters} letters filed)", f"{n_open} open for comment",
+    bits = [f"{n} rulemakings", f"{n_comm} with a program letter ({n_letters} comments filed)", f"{n_open} open for comment",
             f"{n_pending} awaiting final action", f"{n_final} with a final rule"]
     out = [f'<p class="letters-meta-strip">{" &middot; ".join(esc(b) for b in bits)}</p>',
            f'<p class="letters-outcomes-lede">One row per rulemaking, in order of Federal Register publication. The last column links each comment the program filed, with its filing date and, once the agency has posted it, the posted copy; the other rows are listed so the implementation picture is complete. Status as of {esc(fmt_date(m.verified_on))}.</p>',
@@ -971,7 +998,8 @@ def gen_tracker(m):
         title = (f'<a href="{attr(r["url"])}" target="_blank" rel="noopener noreferrer">{esc(tail)}</a>' if r.get("url") else esc(tail))
         ident = esc(r["identifier"]) + (f"; {esc(r['fr'])}" if r.get("fr") else "")
         if r["comment_close"]:
-            comments = ("open until " if r["state"] == "open" else "closed ") + fmt_date(r["comment_close"])
+            # By the date, not the state: an interim final rule is in effect and still taking comments.
+            comments = ("open until " if not_past(r["comment_close"], m.verified_on) else "closed ") + fmt_date(r["comment_close"])
             if r.get("comment_close_note"):
                 comments += f' <span class="letters-outcome-id">({esc(r["comment_close_note"])})</span>'
         else:
@@ -1009,7 +1037,7 @@ def gen_tracker(m):
             out.append(f'  <li class="tracker-statute__source">Text: {srcs}</li>')
         out.append("</ul>")
     # Next dates sit above the table: what happens next is the first thing a reader of a tracker wants.
-    watch = sorted(m.reg.get("watch", []), key=lambda w: w["date"])
+    watch = m.current_watch()
     if watch:
         head = ['<h2 id="next-dates">Next dates</h2>', '<ul class="letters-watch">']
         for w in watch:
@@ -1058,7 +1086,7 @@ def gen_tracker_json(m):
             "title": (m.tracker or {}).get("title"), "url": f"{SITE}/trackers/genius-act/",
             "verified_on": m.verified_on, "statute": (m.tracker or {}).get("statute"),
             "status_states": m.reg["_meta"]["outcome_states"], "rulemakings": rows,
-            "watch": m.reg.get("watch", [])}
+            "watch": m.current_watch()}
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 

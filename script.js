@@ -10561,7 +10561,7 @@
           exposure: 'Outside all 4 texts facially; pivots on calibration & custody holder status',
           bars: [
             { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 15, badge: 'Outside facially', note: 'Statute bars issuer-to-holder yield; OUSD pays distribution partners, unless partner omnibus wallet is deemed the holder' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199, 2-prong presumption)', pct: 10, badge: 'Prong 2 unmet (Safe side)', note: 'Presumption requires both issuer-to-partner AND partner-to-holder payment; preamble protects white-label profit sharing' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202, 2-prong presumption)', pct: 10, badge: 'Prong 2 unmet (Safe side)', note: 'Presumption requires both issuer-to-partner AND partner-to-holder payment; preamble protects white-label profit sharing' },
             { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 40, badge: 'Contested only if balance-calibrated', note: 'Broader third-party phrasing still requires characterizing B2B partner revenue share as yield on stablecoins' },
             { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 10, badge: 'Outside (Targets Hop 2 only)', note: 'Bars digital-asset service providers from paying customer yield; does not bar receiving issuer revenue share' }
           ]
@@ -10572,7 +10572,7 @@
           exposure: 'Directly targeted by OCC 2-prong presumption & CLARITY s.404',
           bars: [
             { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 65, badge: 'Contested (Reiners custody theory)', note: 'If exchange omnibus wallet is the statutory holder, balance-proportional revenue share faces direct statutory tension' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199, 2-prong presumption)', pct: 95, badge: 'Facially triggers both prongs', note: 'Issuer pays related party (Prong 1) and party pays holder rewards (Prong 2); shifts rebuttal burden to issuer' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202, 2-prong presumption)', pct: 95, badge: 'Facially triggers both prongs', note: 'Issuer pays related party (Prong 1) and party pays holder rewards (Prong 2); shifts rebuttal burden to issuer' },
             { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534, 3rd-party arrangements)', pct: 90, badge: 'Directly in scope', note: 'Two-hop customer reward structure is the core third-party arrangement the proposal targets' },
             { text: 'CLARITY Act Section 404 (Senate-stage print)', pct: 95, badge: 'Prohibits Hop 2 customer rewards', note: 'Expressly bars service providers from paying yield to US customers solely for holding stablecoin balances' }
           ]
@@ -10583,7 +10583,7 @@
           exposure: 'Categorically prohibited across all enacted and proposed texts',
           bars: [
             { text: 'GENIUS Act Section 4(a)(11) (Enacted statute)', pct: 100, badge: 'Categorically prohibited', note: 'Bars any form of interest or yield paid by a PPSI or foreign issuer solely in connection with holding, use, or retention' },
-            { text: 'OCC Proposed Rule (91 Fed. Reg. 10199)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
+            { text: 'OCC Proposed Rule (91 Fed. Reg. 10202)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on OCC-supervised Permitted Payment Stablecoin Issuers' },
             { text: 'FDIC Proposed Rule (91 Fed. Reg. 18534)', pct: 100, badge: 'Categorically prohibited', note: 'Direct prohibition on FDIC-supervised subsidiary stablecoin issuers' },
             { text: 'Market-structure consequence (Dollar v3 / Seven Dollars)', pct: 100, badge: 'Pushes yield into wrappers', note: 'Direct holder yield must use registered 1940 Act MMFs (BENJI) or offshore/Reg D wrappers (BUIDL, OUSG, USDY)' }
           ]
@@ -11331,7 +11331,7 @@
           audience: 'Policy teams, stablecoin issuers, bank strategy groups & clearinghouses',
           timeline: 'Retained advisory or docket-specific sprint',
           deliverable: 'Decision memos, comment-letter drafting, operating gates & TDRC signposts',
-          proof: '25 federal comment letters across 9 agencies (136 recommendations) + FSB AI response',
+          proof: '27 federal comment letters across 9 agencies (148 recommendations) + FSB AI response',
           bars: [
             { name: '1. GENIUS & CLARITY Rulemaking Translation (14 tracked GENIUS rulemakings)', pct: 95, val: 'Docket-to-product mapping', note: 'Translates OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, and CFTC proposals into engineering and compliance gates' },
             { name: '2. Control-Layer & Yield-Boundary Positioning (OUSD / TDRC / 3CRD / MGCPT)', pct: 90, val: 'Equilibrium & revenue modeling', note: 'Maps two-hop yield boundaries, pass-through insurance gating, and router vs issuer value capture' },
@@ -11410,10 +11410,10 @@
           url: '/resume/policy/',
           pdf: '/resumes/Zukowski_Resume_Policy.pdf?v=20261009',
           mandate: 'Central banks, regulatory agencies, clearinghouses & financial-stability teams',
-          proof: 'Paper prepared for the FRBNY Dollar Conference + 25 federal letters (136 recs across 9 agencies)',
+          proof: 'Paper prepared for the FRBNY Dollar Conference + 27 federal letters (148 recs across 9 agencies)',
           frameworks: 'CLII, MVEP, 3CRD, MGCPT & TDRC',
           bars: [
-            { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '25 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
+            { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '27 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
             { name: 'Monetary-policy transmission & gateway concentration econometrics', pct: 95, val: '$60.6T 9-chain panel · 19 gateways', note: 'Johansen cointegration under conditional randomization null, SVB/BUSD stress rotation, and CLII scoring' },
             { name: 'Clearing, CSD & settlement-finality market structure', pct: 92, val: 'Three Strategies + Seven Dollars', note: 'Analyzes three tokenization strategies (Regulated Collateral Circuit, Multi-Issuer Yield Stack, Tokenized Equity Rails) plus 20-regime insolvency law' }
           ]
@@ -11545,16 +11545,16 @@
         if(!sumEl || !barsEl) return;
         if(curLens === 'agency'){
           sumEl.innerHTML =
-            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">25 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to October 19, 2026 across 19 dockets</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">27 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to November 4, 2026 across 21 dockets</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">9 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">136 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">148 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 6 agencies</span></div>';
           var aRows = [
             { name: 'FDIC (6 letters: AG19 PPSI activities, AG20 application, AG21 resolution, AG27 assessments, AG29 BSA, AG30 disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (AG19 Rec 7) and wholesale reserve-deposit run-risk metrics (AG21/AG27)' },
-            { name: 'FinCEN & OFAC (5 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP)', pct: 83, val: '5 letters · 25 recommendations', note: 'Operationalizes the freeze/block/reject capability in proposed 31 CFR 1033.240 and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
+            { name: 'FinCEN & OFAC (6 letters: AML/CFT + supp., PPSI sanctions + supp., AB74 joint PPSI CIP, AB77 A7 Network special measure)', pct: 100, val: '6 letters · 30 recommendations', note: 'Operationalizes the freeze/block/reject capability in proposed 31 CFR 1033.240 and the SVB Chow structural break (F = 7.41, p = 0.0012)' },
             { name: 'OCC (3 letters: AF41 PPSI MVEP, AF41 control-layer supplemental, AF55 BSA & sanctions)', pct: 50, val: '3 letters · 12 recommendations', note: 'First filing in the program (OCC-2025-0372-0057); attaches MVEP v9 manuscript to the administrative record' },
             { name: 'U.S. Department of the Treasury (3 letters: GENIUS state-similarity + Section 3 issuance & supplemental)', pct: 50, val: '3 letters · 13 recommendations', note: 'Applies 3CRD disclosure and CLII observable contract capability vs unobservable foreign compliance intent' },
-            { name: 'SEC (3 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock)', pct: 50, val: '3 letters · 19 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
+            { name: 'SEC (4 letters: DSP-3 Strategic Plan, S7-2026-27 Reg Crypto Assets, File 4-927 Tokenized NMS Stock, S7-2026-30 Transfer Agent Rules)', pct: 67, val: '4 letters · 26 recommendations', note: 'Applies 52-protocol PCA exclusion typology (2.3x inflation fix) and MVEP/CLII ledger-verifiable exemption conditions' },
             { name: 'NCUA (2 letters: RIN 3133-AG10 credit-union PPSI standards + routing supplemental)', pct: 33, val: '2 letters · 11 recommendations', note: 'Completes coverage of every GENIUS-implementing agency and flags cross-agency charter-arbitrage gaps' },
             { name: 'Federal Reserve Board, CFTC & Joint Banking Agencies (3 letters: R-1835, OMB 3038-0076, 91 FR 18304)', pct: 50, val: '3 letters · 20 recommendations', note: 'Covers Fed AML coordination omission, CFTC DCO tokenized collateral haircuts, and joint banking AML harmonization' },
             { name: 'Financial Stability Board (International consultation: Sound Practices for Responsible Adoption of AI)', pct: 25, val: '1 international response (All 7 Qs)', note: 'Introduces CLII-AI, MVEP-AI, and the live x402 agentic-payments settlement census to global supervisors' }
@@ -11564,13 +11564,13 @@
           sumEl.innerHTML =
             '<div class="b4-stat"><span class="b4-stat__label">CLII invocations</span><span class="b4-stat__val">19 letters</span><span class="b4-stat__sub">5-dimension operator regulatory intensity &amp; drift index</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">MVEP invocations</span><span class="b4-stat__val">15 letters</span><span class="b4-stat__sub">10-category non-compensatory product equivalence standard</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Control-layer frame</span><span class="b4-stat__val">11 letters</span><span class="b4-stat__sub">Holds, routing defaults &amp; PCA exclusion</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Control-layer frame</span><span class="b4-stat__val">13 letters</span><span class="b4-stat__sub">Holds, routing defaults &amp; PCA exclusion</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB response</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
           var fRows = [
-            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 76, val: '18 of 25 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
-            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 60, val: '14 of 25 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
-            { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 44, val: '11 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
-            { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 32, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
+            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 70, val: '18 of 27 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
+            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 56, val: '14 of 27 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
+            { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 48, val: '13 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
+            { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 30, val: 'OCC, Treasury & FDIC AG19 core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
           barsEl.innerHTML = readingList(fRows);
         }
@@ -11584,13 +11584,14 @@
           '<div class="b4-stat"><span class="b4-stat__label">GENIUS implementation cycle</span><span class="b4-stat__val">14 letters (76 recs)</span><span class="b4-stat__sub">Spans OCC, FDIC, FinCEN/OFAC, Treasury, and NCUA</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">AML/CFT program reform</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">FinCEN, Joint Banking Agencies, and Federal Reserve R-1835</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">FDIC resolution &amp; risk pricing</span><span class="b4-stat__val">3 letters (14 recs)</span><span class="b4-stat__sub">AG21 resolution plans, AG27 assessments, AG30 disclosure</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">4 letters (23 recs)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, CFTC DCOs</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">SEC &amp; CFTC market structure</span><span class="b4-stat__val">5 letters (30 recs)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, Transfer Agent Rules, CFTC DCOs</span></div>';
         var cRows = [
           { name: 'Cycle 1: GENIUS Act Implementation (OCC, FDIC, Treasury, FinCEN/OFAC, NCUA)', pct: 100, val: '14 letters · 76 recommendations', note: 'Covers PPSI chartering, reserve custody, state-similarity principles, foreign issuer Section 3 rules, and CIP/sanctions' },
           { name: 'Cycle 2: AML/CFT Program Modernization (FinCEN, Joint Banking Agencies, Fed R-1835)', pct: 35, val: '4 letters · 23 recommendations', note: 'Identifies interagency consultation omissions and aligns risk-assessment metrics across banking and stablecoin supervisors' },
-          { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (DSP-3, S7-2026-27, File 4-927)', pct: 30, val: '3 letters · 19 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
+          { name: 'Cycle 3: SEC Digital-Asset & Tokenized Securities Rulemaking (DSP-3, S7-2026-27, File 4-927, S7-2026-30)', pct: 38, val: '4 letters · 26 recommendations', note: 'Replaces self-certified decentralization and procedural descriptions with reproducible on-chain control and finality tests' },
           { name: 'Cycle 4: FDIC Resolution Submissions, Assessments & Supervisory Disclosure (AG21, AG27, AG30)', pct: 25, val: '3 letters · 14 recommendations', note: 'Preserves uninsured-deposit concentration reporting and establishes statistical disclosure controls for research access' },
-          { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' }
+          { name: 'Cycle 5: CFTC Clearing Organization Collateral & International AI Supervision (3038-0076, FSB)', pct: 20, val: '2 filings · 4 CFTC recs + 7 FSB Qs', note: 'Applies MVEP Categories 4, 5, 6, and 10 to DCO tokenized collateral haircuts and MVEP-AI/CLII-AI to autonomous fleets' },
+          { name: 'Cycle 6: FinCEN Special Measure on the A7 Network (FINCEN-2026-0265)', pct: 14, val: '1 letter · 5 recommendations', note: 'Supports the prohibition and asks for listed addresses, a stated role for payment stablecoin issuers, and a safe harbor that separates blocking from returning' }
         ];
         barsEl.innerHTML = readingList(cRows);
       }
@@ -11726,7 +11727,7 @@
           { name: 'Agent Infrastructure (/agent-infrastructure/) -> Areas 1 to 5', pct: 96, val: '64/071,767 · 64/180,865 · 64/174,920', note: 'Directly implements worktree staging isolation, time-bounded task leases, known-false verifier checks, and observer-first hard gates' },
           { name: 'Auditing Governance Concentration (/papers/governance-concentration/) -> Area 6', pct: 90, val: '64/130,737 · 64/136,352 · 64/138,859', note: 'Formalizes the 5-class PCA exclusion typology and frontier-relative typed absence outcome when pseudonymous control is undetermined' },
           { name: 'Operational Risk in Token Economies (/papers/operational-risk/) -> Area 6', pct: 88, val: '64/128,867 · 64/135,014', note: 'Formalizes the self-calibrating reputation-recovery threshold that prevents threshold-induced governance collapse under validator downtime' },
-          { name: 'MVEP & 25-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
+          { name: 'MVEP & 27-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
         ];
         barsEl.innerHTML = readingList(ppRows);
       }
@@ -11756,13 +11757,13 @@
     if(datRoot){
       var curDat = 'all';
       var datItems = [
-        { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 25 federal + 1 FSB · 19 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 136 recommendations, and proceeding outcomes' },
-        { cat: 'feeds', pct: 96, name: 'Recommendation index (/letters/recommendations.csv)', badge: 'CSV · 136 rows', note: 'Flat one-row-per-ask export with letter number, agency, filing date, ask summary, full text, topics, and status' },
+        { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 27 federal + 1 FSB · 21 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 148 recommendations, and proceeding outcomes' },
+        { cat: 'feeds', pct: 96, name: 'Recommendation index (/letters/recommendations.csv)', badge: 'CSV · 153 rows', note: 'Flat one-row-per-ask export with letter number, agency, filing date, ask summary, full text, topics, and status' },
         { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under Pub. L. 119-27 with RIN, Federal Register citation, comment window, and status' },
         { cat: 'feeds', pct: 95, name: 'MVEP scorecard & composite rating (/data/mvep/*.csv)', badge: '2 CSVs · 154 cells + 14 ratings', note: 'Exhibit 1 (11 rows x 14 products) and Exhibit 3 non-compensatory composite ratings mirrored from mvep-replication' },
         { cat: 'feeds', pct: 90, name: 'Patent portfolio registry (/patents/patents.json)', badge: 'JSON · 49 filings · 39 families', note: 'All 49 USPTO provisional serial numbers and descriptions grouped across the 6 technical problem areas' },
         { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 79 3d bins + 237 1d bins', note: '67,675 commits in series (68,264 on ref) from March 2 through October 24, 2026 in America/New_York time' },
-        { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 25 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
+        { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 27 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
         { cat: 'feeds', pct: 82, name: 'Syndication feeds (/letters/feed.xml & /notes/feed.xml)', badge: 'Atom XML · 2 feeds', note: 'Subscribe to new regulatory filings and dated status/event notes' },
         { cat: 'tracka', pct: 100, name: 'Routing the Dollar replication (GitHub v43-post-conference + #a1-routing-explorer)', badge: 'SSRN 6267698 · $60.6T panel', note: '157-week 9-chain panel, 51-address Ethereum gateway registry, Johansen conditional randomization null, and SVB/BUSD scripts' },
         { cat: 'tracka', pct: 98, name: 'Minimum Viable Equivalence Pack replication (GitHub mvep-replication + #a2-mvep-explorer)', badge: 'SSRN 6363138 · 14 products · 20 regimes', note: 'Exhibit 1 scorecard, Exhibit 2 20-regime Category 5 insolvency matrix (140 primary-source cells), and Exhibit 3 rating generator' },
@@ -11784,7 +11785,7 @@
           '<div class="b4-stat"><span class="b4-stat__label">Items displayed</span><span class="b4-stat__val">' + list.length + ' of 17</span><span class="b4-stat__sub">8 live site feeds + 9 SSRN papers (7 with replication code)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Interactive explorers</span><span class="b4-stat__val">On every paper and briefing page</span><span class="b4-stat__sub">Every SSRN paper, briefing, and core hub has an interactive tool</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Content &amp; data licence</span><span class="b4-stat__val">CC BY 4.0</span><span class="b4-stat__sub">Free to reuse with attribution and link; code per repo licence</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">44 pages (formatted citation + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers, 26 letters &amp; 2 notes</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Citation support</span><span class="b4-stat__val">47 pages (formatted citation + BibTeX)</span><span class="b4-stat__sub">One-click Copy citation &amp; Copy BibTeX on all 16 papers, 28 letters &amp; 3 notes</span></div>';
         barsEl.innerHTML = readingList(list.map(function(b){ return { name: b.name, val: b.badge, note: b.note }; }));
       }
 
@@ -11812,7 +11813,7 @@
 })();
 
 /* ==========================================================================
-   Wave 5: 136-Recommendation Breakdown & Export, Notes Snapshot Explorer,
+   Wave 5: Recommendation Breakdown & Export, Notes Snapshot Explorer,
    and Universal Cmd+K / Ctrl+K Quick-Jump Command Palette
    ========================================================================== */
 (function(){
@@ -11822,7 +11823,7 @@
         return '<li class="fg-route__step"><div class="fg-route__body"><p class="fg-route__name">' + b.name + '</p><p class="fg-route__q">' + b.val + '</p><p class="fg-route__ask">' + b.note + '</p></div></li>';
       }).join('') + '</ul>';
     }
-    /* 1. 136-Recommendation Index Breakdown Explorer (#recs-breakdown-explorer) + Export Actions */
+    /* 1. Recommendation Index Breakdown Explorer (#recs-breakdown-explorer) + Export Actions */
     var recsRoot = document.getElementById('recs-breakdown-explorer');
     if(recsRoot){
       function renderRecsTopics(){
@@ -11830,18 +11831,18 @@
         var barsEl = document.getElementById('recs-top-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Total numbered asks</span><span class="b4-stat__val">136 recommendations</span><span class="b4-stat__sub">Across 21 principal letters (plus 4 supplements &amp; 1 FSB response)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Top 3 subject tags</span><span class="b4-stat__val">Measurement (33) · Reserves (30)</span><span class="b4-stat__sub">Followed by Disclosure &amp; reporting (29) and Supervision (22)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Prudential &amp; risk tags</span><span class="b4-stat__val">Custody (16) · Redemption (11)</span><span class="b4-stat__sub">Insolvency (8), Deposit insurance (7), and Capital (2)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Total numbered asks</span><span class="b4-stat__val">148 recommendations</span><span class="b4-stat__sub">Across 22 principal letters (plus 5 supplements &amp; 1 FSB response)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Top 3 subject tags</span><span class="b4-stat__val">Measurement (37) · Disclosure &amp; reporting (33)</span><span class="b4-stat__sub">Followed by Reserves (30) and Supervision (26)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Prudential &amp; risk tags</span><span class="b4-stat__val">Custody (19) · Redemption (12)</span><span class="b4-stat__sub">Insolvency (9), Deposit insurance (7), and Capital (2)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Machine-readable export</span><span class="b4-stat__val"><a href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="color:inherit;text-decoration:underline;">recommendations.csv</a></span><span class="b4-stat__sub">One row per ask with letter, agency, date, and anchor link</span></div>';
         var tRows = [
-          { name: '1. Measurement and data (On-chain verification, PCA exclusion, concentration metrics)', pct: 100, val: '33 recommendations (24.3%)', note: 'Replaces self-certified attestations with reproducible ledger queries, HHI thresholds, and cell-suppression standards' },
-          { name: '2. Reserves (Composition, bank concentration caps, daily valuation & segregation)', pct: 91, val: '30 recommendations (22.1%)', note: 'Addresses single-bank reserve lockups ($3.3B SVB lesson), custodian concentration, and eligible liquid assets' },
-          { name: '3. Disclosure and reporting (3CRD point-of-use template, holder-rights memos)', pct: 88, val: '29 recommendations (21.3%)', note: 'Surfaces legal claim, reserve composition, and custody location where holders transact' },
-          { name: '4. Supervision (Examiner cadences, shared control-posture records, drift triggers)', pct: 67, val: '22 recommendations (16.2%)', note: 'Aligns OCC, FDIC, FinCEN, Treasury, Federal Reserve, and NCUA examination playbooks' },
-          { name: '5. AML/CFT & 6. Interagency coordination (18 recommendations each)', pct: 55, val: '18 AML/CFT · 18 Coordination', note: 'Asks the Board to add the FinCEN consultation provisions to Section 208.63 and asks for aligned five-agency CIP rules' },
-          { name: '7. Custody and collateral (16) & 8. Sanctions compliance (14)', pct: 48, val: '16 Custody · 14 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and the freeze/block/reject capability in proposed 31 CFR 1033.240' },
-          { name: '9. Redemption (11), 10. Other (10), 11. Insolvency (8), 12. Deposit insurance (7), 13. Capital (2)', pct: 33, val: '38 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
+          { name: '1. Measurement and data (On-chain verification, PCA exclusion, concentration metrics)', pct: 100, val: '37 recommendations (25.0%)', note: 'Replaces self-certified attestations with reproducible ledger queries, HHI thresholds, and cell-suppression standards' },
+          { name: '3. Reserves (Composition, bank concentration caps, daily valuation & segregation)', pct: 81, val: '30 recommendations (20.3%)', note: 'Addresses single-bank reserve lockups ($3.3B SVB lesson), custodian concentration, and eligible liquid assets' },
+          { name: '2. Disclosure and reporting (3CRD point-of-use template, holder-rights memos)', pct: 89, val: '33 recommendations (22.3%)', note: 'Surfaces legal claim, reserve composition, and custody location where holders transact' },
+          { name: '4. Supervision (Examiner cadences, shared control-posture records, drift triggers)', pct: 70, val: '26 recommendations (17.6%)', note: 'Aligns OCC, FDIC, FinCEN, Treasury, Federal Reserve, and NCUA examination playbooks' },
+          { name: '5. AML/CFT (22) & 6. Interagency coordination (18)', pct: 59, val: '22 AML/CFT · 18 Coordination', note: 'Asks the Board to add the FinCEN consultation provisions to Section 208.63 and asks for aligned five-agency CIP rules' },
+          { name: '7. Custody and collateral (19) & 8. Sanctions compliance (18)', pct: 51, val: '19 Custody · 18 Sanctions', note: 'Covers off-exchange collateral commingling (CFTC DCOs / Binance) and the freeze/block/reject capability in proposed 31 CFR 1033.240' },
+          { name: '9. Redemption (12), 10. Other (11), 11. Insolvency (9), 12. Deposit insurance (7), 13. Capital (2)', pct: 32, val: '41 recommendations combined', note: 'Includes MGCPT conditional pass-through insurance (AG19 Rec 7), 2am Saturday redemption gates, and the 22:1 MSB-vs-bank capital gap' }
         ];
         barsEl.innerHTML = readingList(tRows);
       }
@@ -11852,15 +11853,15 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Largest agency docket set</span><span class="b4-stat__val">FDIC (36 asks)</span><span class="b4-stat__sub">Across AG19, AG20, AG21, AG27, AG29, and AG30</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Illicit-finance &amp; CIP</span><span class="b4-stat__val">FinCEN / OFAC (25 asks)</span><span class="b4-stat__sub">Across AML/CFT, PPSI sanctions, and 5-agency CIP</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Market structure &amp; clearing</span><span class="b4-stat__val">SEC (19) &amp; CFTC (4)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, DCOs</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Illicit-finance &amp; CIP</span><span class="b4-stat__val">FinCEN / OFAC (30 asks)</span><span class="b4-stat__sub">Across AML/CFT, PPSI sanctions, 5-agency CIP, and the A7 Network special measure</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Market structure &amp; clearing</span><span class="b4-stat__val">SEC (26) &amp; CFTC (4)</span><span class="b4-stat__sub">DSP-3, Reg Crypto Assets, Tokenized NMS Stock, Transfer Agent Rules, DCOs</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Charter &amp; state-similarity</span><span class="b4-stat__val">Treasury (13) · OCC (12) · NCUA (11)</span><span class="b4-stat__sub">Plus Federal Reserve (9) and Joint Banking Agencies (7)</span></div>';
         var agRows = [
-          { name: 'FDIC (6 letters: AG19, AG20, AG21, AG27, AG29, AG30)', pct: 100, val: '36 recommendations (26.5%)', note: 'Covers PPSI activities, MGCPT pass-through insurance, resolution plans, run-risk assessments, and statistical disclosure' },
-          { name: 'FinCEN & OFAC (5 letters: FINCEN-2026-0034, FINCEN-2026-0100, FINCEN-2026-0101)', pct: 69, val: '25 recommendations (18.4%)', note: 'Operationalizes PPSI freeze/block/reject capability, reserve-custody Chow break tests, and formal-relationship CIP scoping' },
-          { name: 'SEC (3 letters: File DSP-3, File S7-2026-27, File 4-927)', pct: 53, val: '19 recommendations (14.0%)', note: 'Applies PCA-corrected governance concentration, Rule 400(a) observable control gates, and TSV corporate-actions hierarchy' },
-          { name: 'U.S. Department of the Treasury (3 letters: TREAS-DO-2026-0232 & TREAS-DO-2026-0496)', pct: 36, val: '13 recommendations (9.6%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under Section 3' },
-          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.8%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
+          { name: 'FDIC (6 letters: AG19, AG20, AG21, AG27, AG29, AG30)', pct: 100, val: '36 recommendations (24.3%)', note: 'Covers PPSI activities, MGCPT pass-through insurance, resolution plans, run-risk assessments, and statistical disclosure' },
+          { name: 'FinCEN & OFAC (6 letters: FINCEN-2026-0034, FINCEN-2026-0100, FINCEN-2026-0101, FINCEN-2026-0265)', pct: 83, val: '30 recommendations (20.3%)', note: 'Operationalizes PPSI freeze/block/reject capability, reserve-custody Chow break tests, and formal-relationship CIP scoping' },
+          { name: 'SEC (4 letters: File DSP-3, File S7-2026-27, File 4-927, File S7-2026-30)', pct: 72, val: '26 recommendations (17.6%)', note: 'Applies PCA-corrected governance concentration, Rule 400(a) observable control gates, and TSV corporate-actions hierarchy' },
+          { name: 'U.S. Department of the Treasury (3 letters: TREAS-DO-2026-0232 & TREAS-DO-2026-0496)', pct: 36, val: '13 recommendations (8.8%)', note: 'Applies 3CRD reserve disclosures to state-similarity reviews and on-chain capability floors to foreign issuers under Section 3' },
+          { name: 'OCC (3 letters: OCC-2025-0372 MVEP + supplemental, RIN 1557-AF55 BSA/sanctions)', pct: 33, val: '12 recommendations (8.1%)', note: 'Proposes the MVEP 10-category diligence anchor, distribution-interface oversight, and OCC-FinCEN shared posture records' },
           { name: 'NCUA (2 letters: RIN 3133-AG10 + routing supplement) & Federal Reserve Board (Docket R-1835)', pct: 31, val: '11 NCUA · 9 Federal Reserve', note: 'Aligns credit-union stablecoin rules with OCC/FDIC and supplies missing FinCEN consultation text in Regulation H' },
           { name: 'Joint Banking Agencies (91 FR 18304) & CFTC (OMB 3038-0076 DCO requirements)', pct: 19, val: '7 Joint · 4 CFTC', note: 'Harmonizes bank AML programs and requires instrument-by-instrument MVEP equivalence records for tokenized DCO margin' }
         ];
@@ -11895,7 +11896,7 @@
         expGroup.innerHTML =
           '<span class="filter-label">Export:</span>' +
           '<button type="button" class="filter-btn" id="recs-copy-visible">Copy visible asks</button>' +
-          '<a class="filter-btn" href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="text-decoration:none;">Download CSV (136)</a>';
+          '<a class="filter-btn" href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="text-decoration:none;">Download CSV (153)</a>';
         controlsRow.appendChild(expGroup);
         var copyBtn = document.getElementById('recs-copy-visible');
         if(copyBtn){
@@ -11928,7 +11929,7 @@
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">Filing window</span><span class="b4-stat__val">Oct 13 to Oct 19, 2026</span><span class="b4-stat__sub">4 submissions across 3 federal dockets (Letters No. 22 to 25)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">New recommendations</span><span class="b4-stat__val">22 concrete asks</span><span class="b4-stat__sub">Brings program total to 25 letters and 136 recommendations</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">New recommendations</span><span class="b4-stat__val">22 concrete asks</span><span class="b4-stat__sub">Brings program total to 25 letters and 136 recommendations</span></div>' + /* count-guard-ignore: dated snapshot of the October 23 note */
           '<div class="b4-stat"><span class="b4-stat__label">Treasury Section 3</span><span class="b4-stat__val">Letters No. 22 &amp; No. 24</span><span class="b4-stat__sub">Foreign-issuer on-chain capability check &amp; corrected CLII score (0.90)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">SEC Crypto &amp; NMS Stock</span><span class="b4-stat__val">Letters No. 23 &amp; No. 25</span><span class="b4-stat__sub">Rule 400(a) observable control test &amp; TSV corporate-actions hierarchy</span></div>';
         var o19Rows = [
@@ -11998,8 +11999,8 @@
     { cat: 'Hub', title: 'Field Guide: How to Evaluate a Tokenized Product', url: '/overview/', kw: 'start here overview 4 dollar objects 6 step decision map classify trace map compare stress decide' },
     { cat: 'Hub', title: 'Frameworks Directory (MVEP, CLII, TDRC, 3CRD, MGCPT, CLII-AI, MVEP-AI)', url: '/frameworks/', kw: 'frameworks scorecard clii mvep tdrc 3crd mgcpt valos nors s2r' },
     { cat: 'Hub', title: 'Research Library (9 SSRN Papers, 1 Memo, 6 Briefings)', url: '/research/', kw: 'papers ssrn frontiers track a track b tokenomics depin' },
-    { cat: 'Hub', title: 'Federal Comment Letter Program (25 Letters, 19 Dockets, 136 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
-    { cat: 'Hub', title: '136-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
+    { cat: 'Hub', title: 'Federal Comment Letter Program (27 Letters, 21 Dockets, 148 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
+    { cat: 'Hub', title: '148-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
     { cat: 'Tracker', title: 'GENIUS Act Rulemaking Tracker (14 Implementing Actions)', url: '/trackers/genius-act/', kw: 'genius act s 1582 pub l 119-27 january 18 2027 effective date tracker' },
     { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 68000 commits 13098 hard gates 63230 advisories worktrees leases' },
     { cat: 'Hub', title: 'Patent-Pending Systems (49 USPTO Applications across 39 Families)', url: '/patents/', kw: 'patents uspto 49 applications 39 families 64/180,865 leases provenance' },
@@ -12419,7 +12420,7 @@
           doi: '10.2139/ssrn.6352118', url: 'https://tokenization.systems/papers/operational-risk/', key: 'zukowski2026oprisk'
         },
         letters: {
-          title: 'Tokenization Systems Federal Comment Letter Registry and 136-Recommendation Index [Data set]',
+          title: 'Tokenization Systems Federal Comment Letter Registry and 148-Recommendation Index [Data set]',
           year: '2026', venue: 'Tokenization Systems',
           doi: '', url: 'https://tokenization.systems/letters/letters.json', key: 'zukowski2026letters'
         }
@@ -12432,12 +12433,12 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">One also peer-reviewed (Frontiers in Blockchain), plus 1 memo &amp; 6 briefings</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">13 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, and eight more, plus the CLII-AI and MVEP-AI extensions</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">25 federal letters (+FSB)</span><span class="b4-stat__sub">136 recommendations across 19 dockets and 9 federal agencies</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">27 federal letters (+FSB)</span><span class="b4-stat__sub">148 recommendations across 21 dockets and 9 federal agencies</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">49 USPTO applications</span><span class="b4-stat__sub">Across 39 patent families · 68,000+ commits · 99.56% gate hold</span></div>';
         var pRows = [
           { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 1 memo & 6 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
           { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '13 frameworks', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
-          { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '25 federal comment letters · 136 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
+          { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '27 federal comment letters · 148 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
           { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '49 USPTO filings across 39 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 13,098 hard-gate stops' }
         ];
         barsEl.innerHTML = readingList(pRows);
@@ -12519,7 +12520,7 @@
       renderAbtCite();
     }
 
-    /* 3. Inline #rec-N Deep-Link & Ask Citation Copy on All 26 Comment Letter Pages */
+    /* 3. Inline #rec-N Deep-Link & Ask Citation Copy on All Comment Letter Pages */
     if(window.location.pathname.indexOf('/letters/') === 0){
       var recItems = document.querySelectorAll('.paper-abstract li[id^="rec-"]');
       if(recItems.length){
