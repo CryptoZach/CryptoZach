@@ -153,7 +153,8 @@ def sync_resumes(root, n, write_mode):
 
     pats = [
         re.compile(clc.COUNT_TOKEN + r"(\s+federal\s+comment\s+letters\b)", re.I),
-        re.compile(r"(Contributed\s+)" + clc.COUNT_TOKEN + r"(\s+comment\s+letters\s+to\s+federal\s+agencies\b)", re.I),
+        # Same widening as check_letter_count.py (2026-11-07): the resumes say "across a federal regulatory program".
+        re.compile(r"(Contributed\s+)" + clc.COUNT_TOKEN + r"(\s+comment\s+letters\s+(?:to\s+federal\s+agencies|across\s+a\s+federal)\b)", re.I),
     ]
     total_changes = 0
     files_changed = 0

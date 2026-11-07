@@ -605,7 +605,10 @@ def scan_detailed(root, stats):
     resumes_dir = os.path.join(root, "resumes")
     resume_letter_pats = [
         re.compile(COUNT_TOKEN + r"\s+federal\s+comment\s+letters\b", re.I),
-        re.compile(r"Contributed\s+" + COUNT_TOKEN + r"\s+comment\s+letters\s+to\s+federal\s+agencies\b", re.I),
+        # "across a federal" as well as "to federal agencies" (2026-11-07): the six resumes say "Contributed N
+        # comment letters across a federal regulatory program", which this pattern did not read, so the bullet
+        # stayed at 25 through the 26 and 27 letter updates while the check reported every mention in agreement.
+        re.compile(r"Contributed\s+" + COUNT_TOKEN + r"\s+comment\s+letters\s+(?:to\s+federal\s+agencies|across\s+a\s+federal)\b", re.I),
     ]
     if os.path.isdir(resumes_dir):
         for fname in sorted(os.listdir(resumes_dir)):
