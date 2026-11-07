@@ -97,6 +97,11 @@ jobs:
           # render_notes.py --check verifies the notes index and feed against
           # scripts/notes_registry.json and that every note page carries its date.
           run_check scripts/render_notes.py --check
+          # render_page_dates.py --check verifies that no page's JSON-LD dateModified is older
+          # than the last commit that changed the page's content (site chrome and markup-only
+          # edits excluded); --write moves the stale dates. Needs the full history this
+          # checkout already fetches, and exits 2 (not blocking) on a shallow clone.
+          run_check scripts/render_page_dates.py --check
           # render_mvep_scorecard.py --check verifies the frameworks page carries the MVEP
           # paper's Exhibit 1 and 3 data as mirrored in data/mvep/, and that the two CSVs agree.
           run_check scripts/render_mvep_scorecard.py --check

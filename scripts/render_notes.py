@@ -10,13 +10,16 @@ the index list into notes/index.html and writes notes/feed.xml whole. Author wor
     2. add the record to scripts/notes_registry.json
     3. python3 scripts/render_notes.py --write   (or: npm run build:notes)
     4. commit the registry, the note page, the index and the feed
+    Editing a published note later: python3 scripts/render_page_dates.py --write moves the
+    page's dateModified and the record's "updated" together, then re-renders the index and feed.
 
 Generated surfaces:
     notes/index.html   region notes:index (the list, newest first) and notes:index-jsonld
     notes/feed.xml     Atom feed (whole file)
 
 Modes: --check (default) verifies the surfaces match the registry and that every
-registry record has a page whose datePublished agrees; exit 1 on drift, 2 if the guard
+registry record has a page whose datePublished agrees with its date and whose dateModified,
+when present, agrees with its "updated"; exit 1 on drift, 2 if the guard
 cannot run. --write regenerates. Stdlib only; runs from either clone.
 """
 import argparse
@@ -183,6 +186,11 @@ def verify(m, problems):
             problems.append(f"{rel}: no datePublished in the page's JSON-LD")
         elif mm.group(1) != n["date"]:
             problems.append(f"{rel}: datePublished {mm.group(1)} differs from registry date {n['date']}")
+        dm = re.search(r'"dateModified":\s*"([^"]+)"', page)
+        updated = n.get("updated", n["date"])
+        if dm and dm.group(1)[:10] != updated:
+            problems.append(f"{rel}: dateModified {dm.group(1)} differs from registry updated {updated}"
+                            " (python3 scripts/render_page_dates.py --write moves both)")
         if "<h1" not in page:
             problems.append(f"{rel}: no h1")
         if n["kind"] not in m.kinds:
