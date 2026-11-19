@@ -215,15 +215,15 @@
       <div class="section-title">
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
-        <p class="ai-hero-support">The evidence is below: dated measurements from more than 85,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
-        <p class="ai-measured-as">Updated <time datetime="2026-11-15">2026-11-15</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
+        <p class="ai-hero-support">The evidence is below: dated measurements from more than 89,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
+        <p class="ai-measured-as">Updated <time datetime="2026-11-19">2026-11-19</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
-      data-scale-commits-floored="85000"
-      data-scale-concurrency-p75="17"
-      data-scale-concurrency-peak="40"
-      data-scale-advisory-firings="83519"
-      data-scale-advisory-classes="40"
-      data-scale-advisory-span-days="128"
+      data-scale-commits-floored="89000"
+      data-scale-concurrency-p75="18"
+      data-scale-concurrency-peak="57"
+      data-scale-advisory-firings="88473"
+      data-scale-advisory-classes="41"
+      data-scale-advisory-span-days="132"
       data-scale-coherence-gate-checks="192"
       data-scale-hard-fail-checks="51"
       data-scale-unsuppressable-checks="2"
@@ -243,9 +243,9 @@
 
       </div>
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
-        <div class="ai-proof-item" role="listitem"><strong>85,000+</strong><span>commits observed since March</span></div>
-        <div class="ai-proof-item" role="listitem"><strong>17</strong><span>typical overlap; peak 40</span></div>
-        <div class="ai-proof-item" role="listitem"><strong>83,519</strong><span>warning firings tracked for repeats</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>89,000+</strong><span>commits observed since March</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>18</strong><span>typical overlap; peak 57</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>88,473</strong><span>warning firings tracked for repeats</span></div>
         <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>199 in 200</strong><span>gated attempts refused</span></div>
       </div>
       <p class="ai-note ai-strip-gloss">All figures come from one operator's fleet. The measurement sections define the repeat and override rates behind these headline results.</p>
@@ -355,14 +355,14 @@
         <p class="ai-note">Each figure below carries its own measurement date: commits, warnings and skills 2026-11-15, concurrency 2026-11-08, hard gates 2026-10-23, comment letters 2026-10-20, shared state files 2026-09-30, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
-            <p class="ai-metric-value">85,000+</p>
+            <p class="ai-metric-value">89,000+</p>
             <p class="ai-metric-label">Commits observed</p>
             <p class="ai-metric-was">since 5 March 2026</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">17</p>
+            <p class="ai-metric-value">18</p>
             <p class="ai-metric-label">Typical concurrent sessions</p>
-            <p class="ai-metric-was">75th percentile; peak 40 on 2026-10-25</p>
+            <p class="ai-metric-was">75th percentile; peak 57 on 2026-11-14</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">192</p>
@@ -370,9 +370,9 @@
             <p class="ai-metric-was">51 hard-fail; 2 cannot be bypassed</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">83,519</p>
+            <p class="ai-metric-value">88,473</p>
             <p class="ai-metric-label">Warning firings</p>
-            <p class="ai-metric-was">40 classes across 128 days</p>
+            <p class="ai-metric-was">41 classes across 132 days</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">13,156</p>
@@ -489,15 +489,15 @@
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the commits row was measured 2026-11-15, the advisory warnings row was measured 2026-11-15, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-08, the hard-gate attempts row was measured 2026-10-23 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the commits row was measured 2026-11-19, the advisory warnings row was measured 2026-11-19, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-18, the hard-gate attempts row was measured 2026-10-23 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Commits</th><td class="ai-val">over 85,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose so the published floor stays valid between refreshes <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
-                <tr><th scope="row">Concurrent sessions</th><td class="ai-val">17; peak 40</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-11-08 across both hosts: median 12, typical busy overlap 17 (75th percentile), 90th percentile 23, peak 40 on 2026-10-25. The claim of 12 to 36 concurrent agents, set 2026-11-03, is supported at both ends: the typical overlap of 17 is at least 12, and the peak of 40 exceeds 36. The claim of 12 to 55 before it, set 2026-09-26 on the 2026-09-28 reading (typical overlap 14, peak 61 on 2026-09-05), failed its high end at every weekly re-verify from 2026-10-11. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
+                <tr><th scope="row">Commits</th><td class="ai-val">over 89,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose so the published floor stays valid between refreshes <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
+                <tr><th scope="row">Concurrent sessions</th><td class="ai-val">18; peak 57</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-11-18 across both hosts: median 13, typical busy overlap 18 (75th percentile), 90th percentile 25, peak 57 on 2026-11-14. The claim of 12 to 36 concurrent agents, set 2026-11-03, is supported at both ends: the typical overlap of 18 is at least 12, and the peak of 57 exceeds 36. The claim of 12 to 55 before it, set 2026-09-26 on the 2026-09-28 reading (typical overlap 14, peak 61 on 2026-09-05), failed its high end at every weekly re-verify from 2026-10-11. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
-                <tr><th scope="row">Advisory warnings</th><td class="ai-val">83,519</td><td class="ai-how">Across 40 classes over 128 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
+                <tr><th scope="row">Advisory warnings</th><td class="ai-val">88,473</td><td class="ai-how">Across 41 classes over 132 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
                 <tr><th scope="row">Attempts at a hard gate</th><td class="ai-val">13,156</td><td class="ai-how">Calls that reached an armed gate across the 12 classes that carry one, on both of the fleet's machines, through 2026-10-23. 13,098 refused, 58 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">79</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
