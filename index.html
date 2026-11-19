@@ -435,6 +435,7 @@ header{
   animation:flow 9s linear infinite;
 }
 @keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.hero::after{animation:none}}
 
 /* Hero geometry is the live site's: a 1fr copy column beside a 280-340px trust rail,
    with the live measures (primary 92ch, h1 70ch, subhead 78ch). The earlier 58-62ch

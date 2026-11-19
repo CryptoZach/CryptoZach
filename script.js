@@ -5930,21 +5930,24 @@
       bar.appendChild(inner);
       document.body.appendChild(bar);
 
+      // Shown once the access block has scrolled above the viewport, and hidden again while the site footer is on
+      // screen: the footer carries its own links, and a fixed bar over it covered the footer's bottom row (Search,
+      // Back to top, the theme choice), so a focused footer control could sit fully under it (WCAG 2.4.11).
+      var pastAccess = false, footerInView = false;
+      var footer = document.querySelector('footer.sf, footer.site-footer');
+      function sync(){ bar.classList.toggle('visible', pastAccess && !footerInView); }
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            bar.classList.remove('visible');
+          if(entry.target === footer){
+            footerInView = entry.isIntersecting;
           } else {
-            var r = entry.boundingClientRect;
-            if(r.top < 0){
-              bar.classList.add('visible');
-            } else {
-              bar.classList.remove('visible');
-            }
+            pastAccess = !entry.isIntersecting && entry.boundingClientRect.top < 0;
           }
         });
+        sync();
       }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
       io.observe(accessBlock);
+      if(footer) io.observe(footer);
     } catch(e){
       /* fail-soft */
     }

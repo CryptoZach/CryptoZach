@@ -7012,9 +7012,6 @@ main footer.sf{
   margin:0;
   padding:0;
 }
-.sf__nav{
-  align-items:start;
-}
 .sf a{
   color:inherit;
 }
@@ -7085,6 +7082,7 @@ main footer.sf{
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:var(--space-lg);
+  align-items:start;
 }
 .sf__label{
   margin:0 0 var(--space-sm);
@@ -19542,12 +19540,20 @@ body #contact .about-card .about-card-header h2{
   -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
   box-shadow: 0 -4px 18px color-mix(in srgb, var(--text) 6%, transparent);
+  /* Hidden means out of the Tab order too: visibility flips after the slide-out ends, so a keyboard user never
+     lands on a link that is off screen (WCAG 2.4.3, 2.4.7). */
+  visibility: hidden;
+  transition: transform .28s var(--ease-standard), opacity .22s var(--ease-standard), visibility 0s linear .28s;
 }
 .paper-action-bar.visible{
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
+  transition: transform .28s var(--ease-standard), opacity .22s var(--ease-standard), visibility 0s;
 }
+/* While the bar shows, a control that takes focus is scrolled clear of it, never under it (WCAG 2.4.11). */
+html:has(.paper-action-bar.visible){ scroll-padding-bottom: 5rem; }
 .paper-action-bar-inner{
   display: flex;
   flex-wrap: wrap;
