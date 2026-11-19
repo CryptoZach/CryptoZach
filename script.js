@@ -1,44 +1,75 @@
 (function(){
-  // Theme toggle: explicit saved choice wins; first visit respects OS
-  // prefers-color-scheme. Toggle definitively switches light <-> dark.
+  // THEME (2026-11-19): one controller for the header toggle and the footer's
+  // Light / Dark / System choice. A saved 'light' or 'dark' wins; with nothing
+  // saved the page follows the OS, and keeps following it when the OS changes.
+  // The header button flips light <-> dark and saves the choice; "System" in the
+  // footer clears it, which the header button alone could never do. The inline
+  // head script applies the same rule before first paint, so nothing flashes.
+  // home.js carries the same controller for the home page, which loads no script.js.
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
+  const THEME_KEY = 'theme';
+  const themeMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
   // Reading storage throws where site data is blocked or the page is sandboxed;
   // unguarded, that throw ends this whole script and every .reveal section stays hidden.
-  let saved = null;
-  try { saved = window.localStorage.getItem('theme'); } catch(e){ /* storage unavailable */ }
-  let isDark;
-  if(saved === 'dark'){
-    isDark = true;
-  } else if(saved === 'light'){
-    isDark = false;
-  } else {
-    isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function savedTheme(){
+    try {
+      const v = window.localStorage.getItem(THEME_KEY);
+      return (v === 'light' || v === 'dark') ? v : null;
+    } catch(e){ return null; }
   }
-
-  if(isDark){
-    root.setAttribute('data-theme','dark');
-    if(toggle) toggle.setAttribute('aria-pressed','true');
-  } else {
-    root.setAttribute('data-theme','light');
-    if(toggle) toggle.setAttribute('aria-pressed','false');
+  function osTheme(){ return themeMq && themeMq.matches ? 'dark' : 'light'; }
+  function syncThemeControls(){
+    const dark = root.getAttribute('data-theme') === 'dark';
+    const mode = savedTheme() || 'system';
+    if(toggle){
+      toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      toggle.setAttribute('title', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    document.querySelectorAll('input[data-theme-choice]').forEach(function(r){ r.checked = (r.value === mode); });
+    // The browser chrome takes the page's own ground, read rather than restated, so it cannot drift from
+    // the CSS (vault.css paints these pages, not the --bg literal in styles.css).
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta && document.body) meta.setAttribute('content', getComputedStyle(document.body).backgroundColor);
   }
+  function setThemeMode(mode){
+    if(mode === 'light' || mode === 'dark'){
+      try { window.localStorage.setItem(THEME_KEY, mode); } catch(e){ /* storage unavailable */ }
+      root.setAttribute('data-theme', mode);
+    } else {
+      try { window.localStorage.removeItem(THEME_KEY); } catch(e){ /* storage unavailable */ }
+      root.setAttribute('data-theme', osTheme());
+    }
+    syncThemeControls();
+  }
+  root.setAttribute('data-theme', savedTheme() || osTheme());
+  syncThemeControls();
 
   if(toggle){
     toggle.addEventListener('click', () => {
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      if(isDark){
-        root.setAttribute('data-theme','light');
-        try { window.localStorage.setItem('theme','light'); } catch(e){ /* storage unavailable */ }
-        toggle.setAttribute('aria-pressed','false');
-      } else {
-        root.setAttribute('data-theme','dark');
-        try { window.localStorage.setItem('theme','dark'); } catch(e){ /* storage unavailable */ }
-        toggle.setAttribute('aria-pressed','true');
-      }
+      setThemeMode(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
   }
+  document.addEventListener('change', function(e){
+    const t = e.target;
+    if(t && t.matches && t.matches('input[data-theme-choice]') && t.checked) setThemeMode(t.value);
+  });
+  if(themeMq){
+    const followOs = function(){
+      if(savedTheme()) return;
+      root.setAttribute('data-theme', osTheme());
+      syncThemeControls();
+    };
+    if(themeMq.addEventListener) themeMq.addEventListener('change', followOs);
+    else if(themeMq.addListener) themeMq.addListener(followOs);
+  }
+  // Another tab changed the choice: follow it here too.
+  window.addEventListener('storage', function(e){
+    if(e.key !== THEME_KEY) return;
+    root.setAttribute('data-theme', savedTheme() || osTheme());
+    syncThemeControls();
+  });
 
   // Scroll progress bar (hidden at top; avoids scaleX(0) subpixel glitches in some engines)
   const scrollProgress = document.querySelector('.scroll-progress');
@@ -166,7 +197,7 @@
     // visually overlap with the footer copyright (bottom-left) or socials
     // (bottom-right). Without this guard, the fixed-position button
     // occupies the same screen coordinates as footer content at scroll-end.
-    const footer = document.querySelector('footer.site-footer');
+    const footer = document.querySelector('footer.sf, footer.site-footer');
     if(footer && 'IntersectionObserver' in window){
       const observer = new IntersectionObserver((entries) => {
         footerVisible = entries[0].isIntersecting;
@@ -12192,14 +12223,28 @@
 
   function mountFooterTrigger(){
     ensureStyles();
+    // The shortcut is Command+K on Apple platforms and Ctrl+K everywhere else; the
+    // keydown handler above takes either, so the label names the one this reader has.
+    var plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+    var mac = /Mac|iPhone|iPad|iPod/i.test(plat);
+    var keyName = mac ? 'Command K' : 'Control K';
+    var existing = document.getElementById('cz-cmdk-trigger-btn');
+    if(existing){
+      // The footer partial ships the button (2026-11-19); bind it rather than inject one.
+      var kbd = existing.querySelector('[data-cmdk-key]');
+      if(kbd) kbd.textContent = mac ? '\u2318K' : 'Ctrl K';
+      existing.setAttribute('aria-label', 'Search the site, shortcut ' + keyName);
+      existing.addEventListener('click', openModal);
+      return;
+    }
     var footNav = document.querySelector('.footer-nav, .foot-nav');
-    if(footNav && !document.getElementById('cz-cmdk-trigger-btn')){
+    if(footNav){
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.id = 'cz-cmdk-trigger-btn';
       btn.className = 'cz-cmdk-trigger';
-      btn.setAttribute('aria-label', 'Open quick-jump search (Command+K)');
-      btn.textContent = 'Search \u2318K';
+      btn.setAttribute('aria-label', 'Search the site, shortcut ' + keyName);
+      btn.textContent = mac ? 'Search \u2318K' : 'Search Ctrl K';
       btn.addEventListener('click', openModal);
       footNav.appendChild(btn);
     }

@@ -1096,76 +1096,128 @@ a.plate:hover .stamp.pub{
 }
 
 
-/* the footer carries navigation and a subscribe surface again: the chrome swap had
-   dropped an 8-link nav, the Buttondown form and the only /privacy link on the site */
-/* Keep navigation on its own row above the centered subscription form. */
-.foot-top{
-  display:grid;grid-template-columns:minmax(0,1fr);
-  gap:1.25rem;align-items:center;
-  padding-bottom:1.9rem;margin-bottom:1.6rem;border-bottom:1px solid var(--mill);
+/* ── SITE FOOTER (redesign 2026-11-19) ─────────────────────────────────────────
+   The home page's copy of the shared footer: the same markup and order as every
+   other page (_partials/footer.html), styled from this page's own tokens because
+   the home page loads no styles.css. Grouped, labelled columns that mirror the
+   header's categories; one bottom bar for copyright, privacy, search, back to top
+   and the Light / Dark / System choice. Every pair meets WCAG 2.2 AA in both
+   themes: text 4.5:1, control boundaries and focus 3:1, tightest margin 1.46x.
+   The band is opaque. */
+footer.sf{
+  --sf-bg:var(--plate-2);
+  --sf-text:var(--ink-soft);
+  --sf-muted:var(--ink-mute);
+  --sf-hover:var(--accent-text);
+  --sf-line:var(--mill-2);
+  --sf-field:var(--plate);
+  --sf-field-border:#7c8494;
+  --sf-btn:var(--accent-fill);
+  --sf-btn-hover:var(--accent-hot);
+  --sf-btn-ink:var(--accent-fill-ink);
+  --sf-focus:var(--accent-text);
+  position:relative;z-index:1;
+  margin-top:clamp(3rem,6vw,5rem);
+  padding-block:3rem max(1.25rem, env(safe-area-inset-bottom, 0px));
+  background:var(--sf-bg);
+  border-top:1px solid var(--sf-line);
+  color:var(--sf-text);
+  font-size:1rem;line-height:1.4;
 }
-.foot-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem clamp(.6rem,1vw,1.25rem);min-width:0}
-.foot-nav a{
-  white-space:nowrap;
-  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  font-size:.75rem;font-weight:700;letter-spacing:.075em;text-transform:uppercase;
-  color:var(--ink-soft);
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) footer.sf{ --sf-field-border:#6b7280; }
 }
-.foot-nav a:hover{color:var(--accent-text)}
-/* margin-bottom:0 is load-bearing, not tidying. A <form> inherits a 16px bottom
-   margin here, and grid centring centres the MARGIN box, so the form's visible
-   box landed exactly half of that, 8px, above the nav block's centre line. That
-   was the residual after align-items:center and it is the whole of the reported
-   offset at 1440 and 1200. */
-.foot-sub{display:flex;gap:.6rem;flex-wrap:nowrap;margin-bottom:0;width:min(100%,32rem);justify-self:center}
-/* The email field shrinks while the subscription button keeps its full label. */
-.foot-sub__field{flex:1 1 140px;min-width:0;padding:.7rem .9rem;font-size:.75rem;text-align:center}
-.foot-sub .btn{flex:0 0 auto}
-@media (min-width:1280px){ .foot-nav{flex-wrap:nowrap} }
-
-/* ── FOOTER: mark left, line centred, social right ── */
-footer{border-top:1px solid var(--mill-2);margin-top:clamp(3rem,6vw,5rem);padding-block:2.5rem 3rem;position:relative;z-index:1}
-.foot{
-  position:relative;
-  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;
+:root[data-theme="light"] footer.sf{ --sf-field-border:#6b7280; }
+.sf__main{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) minmax(0,1.4fr);
+  gap:3rem clamp(24px,4vw,64px);
+  align-items:start;
+  padding-bottom:3rem;
 }
-.foot__mark{
-  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  font-size:.8125rem;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);
+.sf ul{list-style:none;margin:0;padding:0}
+.sf a{color:inherit}
+.sf__brand,.sf__nav,.sf__digest{margin:0;padding:0}
+.sf a:focus-visible,.sf button:focus-visible,.sf input:focus-visible{outline:2px solid var(--sf-focus);outline-offset:2px}
+.sf__name{margin:0 0 6px;font-family:"Archivo","Avenir Next","Segoe UI",sans-serif;font-size:1.125rem;font-weight:700}
+.sf__name a{text-decoration:none;border-radius:4px}
+.sf__name a:hover{color:var(--sf-hover);text-decoration:underline;text-underline-offset:.2em}
+.sf__mission{margin:0;max-width:36ch;color:var(--sf-muted);font-size:.875rem;line-height:1.6}
+.sf__social{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem !important}
+.sf__icon{
+  display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;
+  border:1px solid var(--sf-line);border-radius:10px;color:var(--sf-text);
+  transition:color .15s, border-color .15s;
 }
-.foot__mark #year::after{
-  content:"·";
-  margin-left:.4em;
-  color:color-mix(in srgb, var(--accent) 65%, transparent);
-  opacity:.7;
-  font-weight:400;
-  letter-spacing:0;
+.sf__icon svg{width:18px;height:18px;display:block;overflow:hidden}
+.sf__icon--wide svg{width:26px;height:26px}
+.sf__icon:hover{color:var(--sf-hover);border-color:currentColor}
+.sf__nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem;align-items:start}
+.sf__label{
+  margin:0 0 12px;color:var(--sf-muted);
+  font-family:"Archivo","Avenir Next","Segoe UI",sans-serif;
+  font-size:.8125rem;font-weight:700;letter-spacing:.08em;line-height:1.25;text-transform:uppercase;
 }
-.foot__line{
-  position:absolute;left:50%;transform:translateX(-50%);
-  text-align:center;
-  font-size:.875rem;line-height:1.75;color:var(--ink-mute);
-  text-wrap:balance;max-width:64ch;
+.sf__label--sub{margin-top:2rem}
+.sf__group a{display:inline-flex;align-items:center;min-height:32px;color:var(--sf-text);text-decoration:none;border-radius:4px}
+.sf__group a:hover{color:var(--sf-hover);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+.sf__digest-pitch{margin:0 0 12px;color:var(--sf-muted);font-size:.875rem;line-height:1.6}
+.sf__field-label{display:block;margin-bottom:6px;color:var(--sf-text);font-size:.875rem;font-weight:600}
+.sf__field-row{display:flex;flex-wrap:wrap;gap:8px}
+.sf__input{
+  flex:1 1 12rem;min-width:0;min-height:44px;padding:0 12px;
+  border:1px solid var(--sf-field-border);border-radius:8px;background:var(--sf-field);color:var(--sf-text);
+  font:inherit;font-size:1rem;
 }
-.foot__social{display:flex;align-items:center;gap:1rem}
-.foot__social a{
-  display:grid;place-items:center;width:30px;height:30px;
-  color:var(--ink-mute);transition:color .2s, transform .2s;
+.sf__input::placeholder{color:var(--sf-muted);opacity:1}
+.sf__button{
+  flex:0 0 auto;min-height:44px;padding:0 18px;border:1px solid var(--sf-btn);border-radius:8px;
+  background:var(--sf-btn);color:var(--sf-btn-ink);font:inherit;font-weight:600;cursor:pointer;
+  transition:background .15s, border-color .15s;
 }
-.foot__social a svg{width:17px;height:17px;display:block}
-.foot__social a:hover{color:var(--accent-text);transform:translateY(-2px)}
-@media (max-width:1100px){
-  .foot{flex-direction:column;text-align:center;gap:1.1rem}
-  .foot__line{position:static;transform:none;order:-1}
+.sf__button:hover{background:var(--sf-btn-hover);border-color:var(--sf-btn-hover)}
+.sf__fine{margin:12px 0 0;color:var(--sf-muted);font-size:.875rem}
+.sf__fine a{text-decoration:underline;text-underline-offset:.2em;border-radius:2px}
+.sf__fine a:hover{color:var(--sf-hover)}
+.sf__bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px 2rem;
+  padding-top:1.25rem;border-top:1px solid var(--sf-line);color:var(--sf-muted);font-size:.875rem;
 }
-/* the footer line reads as a sentence, so it leaves the uppercase label spec */
-.foot .label{
-  max-width:none;line-height:1.75;
-  font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  font-size:.875rem;font-weight:400;letter-spacing:.005em;text-transform:none;
-  color:var(--ink-mute);
+.sf__copy{margin:0;font-variant-numeric:tabular-nums}
+.sf__util{display:flex;flex-wrap:wrap;align-items:center;gap:2px 1.25rem;margin-right:auto !important}
+.sf__util a,.sf__search{
+  display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0;border:0;border-radius:4px;
+  background:none;color:var(--sf-text);font:inherit;text-decoration:none;cursor:pointer;
 }
-@media (max-width:1180px){ .foot .label{max-width:52ch} }
+.sf__util a:hover,.sf__search:hover{color:var(--sf-hover);text-decoration:underline;text-underline-offset:.2em}
+.sf__kbd{padding:1px 6px;border:1px solid var(--sf-line);border-radius:4px;color:var(--sf-muted);font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.75rem;line-height:1.4}
+.sf__theme{display:flex;align-items:center;gap:10px;margin:0;padding:0;border:0;min-width:0}
+.sf__theme-legend{float:left;padding:0;color:var(--sf-muted)}
+.sf__segs{display:inline-flex;padding:2px;border:1px solid var(--sf-field-border);border-radius:999px}
+.sf__seg{position:relative;display:inline-flex}
+.sf__seg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.sf__seg span{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;color:var(--sf-text);transition:background .15s, color .15s}
+.sf__seg input:hover:not(:checked) + span{color:var(--sf-hover);text-decoration:underline;text-underline-offset:.2em}
+.sf__seg input:checked + span{background:var(--sf-btn);color:var(--sf-btn-ink);font-weight:600}
+.sf__seg input:focus-visible + span{outline:2px solid var(--sf-focus);outline-offset:2px}
+@media (max-width:1023px){
+  .sf__main{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sf__nav{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:639px){
+  .sf__main{grid-template-columns:minmax(0,1fr);gap:2rem}
+  .sf__nav{grid-row:auto;gap:1.25rem}
+  .sf__bar{flex-direction:column;align-items:flex-start}
+  .sf__util{margin-right:0 !important}
+}
+@media (pointer:coarse){
+  .sf__group a,.sf__util a,.sf__search{min-height:44px}
+  .sf__icon{width:44px;height:44px}
+  .sf__seg span{min-height:40px;padding:0 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .sf__icon,.sf__button,.sf__seg span{transition:none}
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width:1080px){
@@ -1452,7 +1504,7 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
       <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
-    <button class="tog" type="button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+    <button class="tog" type="button" id="themeToggle" aria-pressed="false" aria-label="Dark theme" title="Switch to dark theme">
       <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>
     </button>
@@ -1880,42 +1932,78 @@ html.nav-open,html.nav-open body{overflow:hidden;touch-action:none}
   </div>
 </main>
 
-<footer>
-  <div class="wrap foot-top">
-    <nav class="foot-nav" aria-label="Footer navigation">
-      <a href="/overview/">Field guide</a>
-      <a href="/frameworks/">Frameworks</a>
-      <a href="/research/">Research</a>
-      <a href="/agent-infrastructure/">Agent Infrastructure</a>
-      <a href="/letters/">Letters</a>
-    <a href="/trackers/genius-act/">GENIUS tracker</a>
-    <a href="/notes/">Notes</a>
-      <a href="/resume/">Resume</a>
-      <a href="/speaker-and-advisory/">Advisory &amp; Speaking</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/privacy/">Privacy</a>
-    </nav>
-    <form class="foot-sub" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
-      <label class="visually-hidden" for="foot-email">Email address</label>
-      <input class="signup__field foot-sub__field" id="foot-email" type="email" name="email"
-             placeholder="you@route.money" autocomplete="email" required>
-      <button class="btn btn-primary" type="submit">Subscribe</button>
-    </form>
-  </div>
-  <div class="wrap foot">
-    <span class="foot__mark">&copy; <span id="year">2026</span> Tokenization Systems</span>
-    <span class="foot__line">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</span>
-    <span class="foot__social" role="group" aria-label="Social links">
-      <a href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <a href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-      <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402z"/></svg></a>
-      <a href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a>
-    </span>
+<footer class="sf" aria-labelledby="sf-title">
+  <h2 class="visually-hidden" id="sf-title">Site footer</h2>
+  <div class="sf__inner wrap">
+    <div class="sf__main">
+      <section class="sf__brand" aria-labelledby="sf-name">
+        <p class="sf__name" id="sf-name"><a href="/">Tokenization Systems</a></p>
+        <p class="sf__mission">Independent, empirically backed research on the infrastructure, controls, and institutions behind programmable money.</p>
+        <ul class="sf__social" aria-label="Profiles">
+          <li><a class="sf__icon" href="https://x.com/CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+          <li><a class="sf__icon" href="https://www.linkedin.com/in/zachzukowski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
+          <li><a class="sf__icon sf__icon--wide" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=10386216" target="_blank" rel="noopener noreferrer" aria-label="SSRN (opens in a new tab)"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3.087 7.242c-1.704 0-2.878.996-2.878 2.395 0 .627.21 1.141.611 1.56.45.465.932.723 2.058 1.108 1.173.37 1.398.483 1.64.66.417.337.658.803.658 1.301 0 1.013-.964 1.833-2.154 1.833-.723 0-1.478-.29-1.945-.756-.353-.353-.594-.755-.803-1.366-.032-.08-.065-.128-.129-.128-.08 0-.145.08-.145.192 0 .129.065.499.177.852.097.338.161.563.161.595.097.482.113.498.241.611.338.257 1.334.498 2.074.498 1.848 0 3.166-1.173 3.166-2.813 0-1.205-.787-2.073-2.41-2.604-1.624-.53-1.705-.579-2.074-.98a1.476 1.476 0 0 1-.386-1.013c0-.868.707-1.495 1.688-1.495 1.173 0 2.266.691 2.572 1.64.08.257.112.305.209.305.064 0 .128-.08.128-.193 0-.048-.016-.16-.032-.29-.177-1.092-.193-1.14-.21-1.333 0-.225-.047-.322-.16-.322a.121.121 0 0 0-.064.032c-.16.129-.177.145-.257.145a.495.495 0 0 1-.129-.032c-.852-.354-.996-.402-1.607-.402zm5.256.032c-1.222 0-2.17.498-2.604 1.302l.096.659c.017.096.016.16.016.193 0 .257-.16.45-.369.498.048.499.257.933.61 1.286.45.466.933.724 2.058 1.11 1.158.385 1.399.482 1.64.658.418.322.659.804.659 1.302 0 1.013-.964 1.833-2.154 1.833-.723 0-1.48-.29-1.945-.755a2.82 2.82 0 0 1-.386-.483c-.096.225-.209.45-.338.643.097.45.113.483.242.579.337.257 1.334.498 2.073.498 1.833 0 3.167-1.173 3.167-2.813-.032-1.173-.836-2.025-2.46-2.572-1.64-.546-1.72-.578-2.073-.98a1.477 1.477 0 0 1-.386-1.013c0-.884.707-1.495 1.688-1.495 1.173 0 2.25.691 2.572 1.64.08.257.128.305.209.305.064 0 .129-.08.129-.193 0-.048-.017-.144-.033-.289-.177-1.093-.192-1.141-.209-1.334 0-.225-.048-.322-.16-.322-.032 0-.049.016-.065.032-.16.13-.176.145-.257.145-.032 0-.064-.016-.129-.032-.835-.37-.996-.402-1.591-.402zm4.662.177c-.306 0-.643.016-.98.032-.724.048-.724.048-1.062.048h-.128a.81.81 0 0 1 .048.306c.016.128.016.193.112.723l.113.707a1.1 1.1 0 0 1 .016.193.51.51 0 0 1-.145.37v2.524c.29.417.434.9.434 1.446 0 .627-.177 1.19-.482 1.656-.08.579-.29.723-.82.884-.128.032-.16.048-.16.129 0 .096.048.128.176.128.048 0 .21-.016.338-.032.225-.032.563-.048.884-.048.627 0 1.318.016 1.479.048.177.016.321.032.402.032.112 0 .209-.048.209-.128s-.08-.129-.241-.145c-.933-.096-1.238-.434-1.206-1.35v-2.38c.016-.224.048-.257.386-.24h.723c.29 0 .37.048.515.273.048.08.08.128.08.144l1.623 2.492c.66 1.013 1.238 1.399 2.042 1.399.482 0 .932-.129.932-.258 0-.048-.048-.096-.112-.096-.691.016-1.158-.37-1.977-1.624l-1.833-2.668c1.06-.547 1.64-1.318 1.64-2.299 0-.707-.29-1.334-.804-1.72-.514-.385-1.174-.546-2.202-.546zm10.802.112c-.08 0-.177.016-.322.033-.16.032-.321.048-.595.048-.385 0-1.028-.032-1.27-.048l-.289-.016c-.128 0-.193.048-.193.128 0 .096.049.145.193.177 1.254.177 1.367.466 1.334 3.536v3.15c0 .21-.016.258-.08.242-.032 0-.08-.048-.177-.16l-6.044-6.88c-.128-.145-.209-.193-.353-.193-.048 0-.129 0-.225.016h-.113c-.032 0-.321 0-.514-.016.08.048.16.112.24.16.58.434.933 1.174.933 1.977 0 .129-.016.258-.032.37v4.18l.16.24c.145.21.258.386.37.547v-4.71c0-.225.032-.289.129-.289.064 0 .08.016.16.096l5.546 6.366c.21.241.21.241.306.241.16 0 .209-.097.209-.386v-.128c.016-.386.016-.98.016-1.817v-4.276l.016-.417c-.016-1.592.048-1.753.659-1.913.096-.016.129-.049.129-.113 0-.08-.08-.145-.193-.145zm-11.156.338c.611 0 1.27.209 1.64.547.466.385.739 1.028.739 1.64 0 1.092-.691 1.767-1.849 1.767h-.739c-.434-.016-.466-.048-.466-.466V8.721c0-.45 0-.499.08-.611.097-.129.29-.209.595-.209z"/></svg></a></li>
+          <li><a class="sf__icon" href="https://medium.com/@CryptoZach" target="_blank" rel="noopener noreferrer" aria-label="Medium (opens in a new tab)"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.52-6.42 3.38-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75S21.62 15.17 21.62 12 22.15 6.25 22.81 6.25 24 8.83 24 12z"/></svg></a></li>
+        </ul>
+      </section>
+      <nav class="sf__nav" aria-label="Footer">
+        <div class="sf__group">
+          <h3 class="sf__label" id="sf-evaluate">Evaluate</h3>
+          <ul aria-labelledby="sf-evaluate">
+            <li><a href="/overview/">Field guide</a></li>
+            <li><a href="/frameworks/">Frameworks</a></li>
+            <li><a href="/research/">Research</a></li>
+            <li><a href="/letters/">Letters</a></li>
+            <li><a href="/trackers/genius-act/">GENIUS tracker</a></li>
+            <li><a href="/notes/">Notes</a></li>
+          </ul>
+        </div>
+        <div class="sf__group">
+          <h3 class="sf__label" id="sf-work">Work with us</h3>
+          <ul aria-labelledby="sf-work">
+            <li><a href="/about/">About</a></li>
+            <li><a href="/speaker-and-advisory/">Advisory &amp; Speaking</a></li>
+            <li><a href="/resume/">Roles</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+          <h3 class="sf__label sf__label--sub" id="sf-product">Separate product</h3>
+          <ul aria-labelledby="sf-product">
+            <li><a href="/agent-infrastructure/">Agent Infrastructure</a></li>
+          </ul>
+        </div>
+      </nav>
+      <section class="sf__digest" aria-labelledby="sf-digest-title">
+        <h3 class="sf__label" id="sf-digest-title">Monthly digest</h3>
+        <p class="sf__digest-pitch" id="footer-newsletter-pitch">New papers, frameworks and regulatory events, once a month.</p>
+        <form class="sf__form" action="https://buttondown.email/api/emails/embed-subscribe/tokenizationsystems" method="POST">
+          <label class="sf__field-label" for="footer-newsletter-email">Email address</label>
+          <div class="sf__field-row">
+            <input id="footer-newsletter-email" class="sf__input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="sf-digest-privacy">
+            <button class="sf__button" type="submit">Subscribe</button>
+          </div>
+        </form>
+        <p class="sf__fine" id="sf-digest-privacy">No spam. Unsubscribe anytime. Read the <a href="/privacy/">privacy note</a>.</p>
+      </section>
+    </div>
+    <div class="sf__bar">
+      <p class="sf__copy">&copy; <span id="year">2026</span> Tokenization Systems</p>
+      <ul class="sf__util" aria-label="Site tools">
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a class="sf__top" href="#top">Back to top<span aria-hidden="true"> &uarr;</span></a></li>
+      </ul>
+      <fieldset class="sf__theme">
+        <legend class="sf__theme-legend">Theme</legend>
+        <div class="sf__segs">
+          <label class="sf__seg"><input type="radio" name="sf-theme" value="light" data-theme-choice><span>Light</span></label>
+          <label class="sf__seg"><input type="radio" name="sf-theme" value="dark" data-theme-choice><span>Dark</span></label>
+          <label class="sf__seg"><input type="radio" name="sf-theme" value="system" data-theme-choice><span>System</span></label>
+        </div>
+      </fieldset>
+    </div>
   </div>
 </footer>
 
-<script src="/home.js?v=1" defer></script>
+<script src="/home.js?v=2" defer></script>
 <script id="selected-work-shell-reaction">
 /* A soft contact field flexes the decorative mesh without moving its links. */
 (function(){

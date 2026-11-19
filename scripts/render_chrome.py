@@ -153,8 +153,10 @@ def find_legacy_region(lines, name):
             k = next(n for n in range(j + 1, len(lines))
                      if lines[n].strip() == "</nav>")
             return i, k
+        # "sf" is the footer since the 2026-11-19 redesign; "site-footer" is the class
+        # a page written before it still carries, so both are adoptable.
         i = next(n for n, l in enumerate(lines)
-                 if '<footer class="site-footer' in l)
+                 if '<footer class="sf' in l or '<footer class="site-footer' in l)
         k = next(n for n in range(i + 1, len(lines))
                  if lines[n].strip() == "</footer>")
         return i, k

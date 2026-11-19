@@ -192,7 +192,6 @@ svg{overflow:visible}
 .audience-icon svg,
 .card-icon svg,
 .header-social-link svg,
-.footer-social svg,
 .contact-social svg,
 .menu-toggle .icon,
 .theme-toggle .icon,
@@ -320,7 +319,7 @@ a{color:inherit}
 /* Same-origin navigations cross-fade instead of hard-cutting, and the persistent header and footer morph rather than flash. Unsupported browsers get today's instant navigation with no penalty. Disabled under reduced-motion, consistent with the rest of the motion system. */
 @view-transition{ navigation: auto; }
 header{ view-transition-name: site-header; }
-footer.site-footer{ view-transition-name: site-footer; }
+
 @media (prefers-reduced-motion: reduce){
   ::view-transition-group(*){ animation: none !important; }
 }
@@ -477,7 +476,6 @@ nav{
 .page-toc,
 .jump-bar,
 .speaker-jump-to,
-.footer-nav a,
 .nav-directory__label{
   font-family:var(--font-nav);
 }
@@ -1190,9 +1188,6 @@ body.contact-page .contact-page-foreground > .contact-page .route-card-desc{
   opacity:0.65;
 }
 
-body.contact-page .contact-page-foreground > footer.site-footer{
-  margin-top:var(--space-lg);
-}
 
 body.contact-page .contact-page-foreground > .contact-page .contact-social{
   padding-top:1.5rem;
@@ -6361,15 +6356,7 @@ body.speaker-page .speaker-hero{
   color:var(--accent);
   background:var(--accent-muted);
 }
-:root[data-theme="dark"] .footer-social{
-  border-color:rgba(255,255,255,.12);
-  color:var(--text-soft);
-}
-:root[data-theme="dark"] .footer-social:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-  background:var(--accent-muted);
-}
+
 .audience-icon{
   width:44px;
   height:44px;
@@ -6941,225 +6928,431 @@ body.speaker-page .speaker-hero{
   margin-top:var(--space-md);
 }
 
-/* ── Footer nav ── */
-.footer-nav{
-  display:flex;
-  gap:var(--space-md);
-  font-size:var(--font-size-min);
-  font-weight:500;
-}
-.footer-nav a{
-  text-decoration:none;
-  min-width:0;
-  color:var(--text-soft);
-  transition:color .15s;
-  border-radius:2px;
-}
-.footer-nav a:hover{color:var(--accent)}
-.footer-nav a:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
-
-/* ── Site footer (shared strip: copyright | nav | socials, then tagline) ── */
-footer.site-footer{
-  --footer-strip-bg:#05070a;
-  --footer-strip-border:rgba(255, 255, 255, 0.09);
-  --footer-strip-text:rgba(209, 213, 219, 0.92);
-  --footer-strip-muted:rgba(180, 186, 198, 0.88);
+/* ── Site footer (redesign 2026-11-19) ─────────────────────────────────────────
+   What it applies, by name:
+   - Proximity, common region and chunking (Gestalt; Miller): the eleven links were one
+     unlabelled row; they are now labelled groups on one tinted band.
+   - Consistency and standards (Nielsen 4; Jakob's law): the groups and labels are the
+     header's own (Evaluate, Work with us, Separate product), /resume/ reads "Roles" as it
+     does in the header, and copyright, privacy and back to top sit in the bottom bar
+     where readers look for them.
+   - Recognition over recall (Nielsen 6): the email field has a visible label, the search
+     button shows its shortcut for this platform, and the theme control names all three
+     choices, System included.
+   - User control and freedom (Nielsen 3): "System" hands the theme back to the OS, which
+     the one-button toggle in the header could never do once pressed.
+   - Fitts's law and WCAG 2.5.8: every target is at least 32px tall on a mouse and 44px on
+     touch; the social icons are 40px (44px on touch).
+   - Contrast (WCAG 1.4.3, 1.4.11, 2.4.11): every pair below meets WCAG 2.2 AA in both
+     themes (text 4.5:1, control boundaries and focus rings 3:1; tightest margin 1.46x).
+     The band is opaque, so no
+     gradient or animation sits behind its text.
+   - Landmarks (WCAG 1.3.1, 2.4.1): the footer is a direct child of body (contentinfo);
+     the full-bleed rule below only covers a page that still nests it in <main>. */
+/* The footer reads the vault tokens (vault.css, loaded by every chrome page, and the home page's own
+   copy), so its band, ink and controls are one palette on all 70 pages and follow the theme with the page.
+   Measured 2026-11-19: vault.css maps --bg to --void, so the light ground is #e9edf2, not styles.css's
+   #f3f4f6; a band drawn from styles.css values sat 0.004 luminance from it and did not read as a region. */
+footer.sf{
+  --sf-bg:var(--plate-2);
+  --sf-text:var(--ink-soft);
+  --sf-muted:var(--ink-mute);
+  --sf-hover:var(--accent-text);
+  --sf-line:var(--mill-2);
+  --sf-field:var(--plate);
+  --sf-field-border:#7c8494;
+  --sf-btn:var(--accent-fill);
+  --sf-btn-hover:var(--accent-hot);
+  --sf-btn-ink:var(--accent-fill-ink);
+  --sf-focus:var(--accent-text);
   position:relative;
   z-index:1;
-  /* Full-bleed: the footer lives inside <main>, which is capped at
-     var(--max). Pull the footer back out to span the entire viewport so
-     the dark band reaches both edges. <html>/<body> use overflow-x:clip
-     with scrollbar-gutter:stable, so 100vw cannot create a horizontal
-     scrollbar. The existing padding below keeps inner content inset. */
+  margin-top:var(--space-2xl);
+  padding:var(--space-xl) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
+  background:var(--sf-bg);
+  border-top:1px solid var(--sf-line);
+  color:var(--sf-text);
+  font-size:var(--text-base);
+  line-height:var(--leading-snug);
+  view-transition-name:site-footer;
+}
+/* The one value the vault has no token for: a field boundary that holds 3:1 against both the field and
+   the band (SC 1.4.11). --mill-2 is 1.8:1 there. */
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) footer.sf{ --sf-field-border:#6b7280; }
+}
+:root[data-theme="light"] footer.sf{ --sf-field-border:#6b7280; }
+main footer.sf{
   width:100vw;
   margin-left:calc(50% - 50vw);
   margin-right:calc(50% - 50vw);
-  margin-top:var(--space-lg);
-  padding:var(--space-lg) max(var(--page-gutter), env(safe-area-inset-right)) max(var(--space-md), env(safe-area-inset-bottom, 0px)) max(var(--page-gutter), env(safe-area-inset-left));
-  background:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 12%, transparent) 0%,
-      transparent 36%
-    ),
-    var(--footer-strip-bg);
-  color:var(--footer-strip-muted);
-  font-size:var(--font-size-min);
-  box-sizing:border-box;
 }
-:root[data-theme="light"] footer.site-footer{
-  --footer-strip-bg:#080a0f;
-  --footer-strip-border:rgba(255, 255, 255, 0.1);
-  --footer-strip-text:rgba(232, 234, 239, 0.94);
-  --footer-strip-muted:rgba(210, 214, 222, 0.9);
+.sf__inner{
+  max-width:var(--max);
+  margin:0 auto;
 }
-/* THE NAV COLUMN IS THE ONE THAT SHOULD YIELD, and it was the only one that
-   could not. With `auto` in the middle the nav took its full content width
-   FIRST (1266px, measured, and it does not wrap), leaving the two minmax(0,1fr)
-   columns 115px at 1600 and 35px at 1440. The copy needs 247, so it overflowed
-   its column by 212px and painted straight over "Overview" and "Frameworks",
-   and the social column got 35px so its four icons stacked FOUR rows deep.
-
-   The rule below at max-width 1320px already names this collision ("to keep
-   'Tokenization Systems' from clipping into 'Frameworks'") but guards the wrong
-   side of it: the parts want 1266 + 247 + 152 plus two gaps, about 1705px, so
-   the row does not fit until roughly a 1770px viewport and collides at every
-   common desktop width above the 1320 breakpoint, which is where it was
-   reported.
-
-   So: the two small items take their content width, the long list flexes and
-   wraps. That is width-independent and needs no breakpoint to be right. */
-footer.site-footer .footer-top{
+.sf__main{
   display:grid;
-  grid-template-columns:minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
-  align-items:center;
-  gap:var(--space-md);
-  width:100%;
+  grid-template-columns:minmax(0, 1.2fr) minmax(0, 2fr) minmax(0, 1.4fr);
+  gap:var(--space-xl) clamp(24px, 4vw, 64px);
+  align-items:start;
+  padding-bottom:var(--space-xl);
 }
-footer.site-footer .footer-nav{
-  flex-wrap:wrap;
-  justify-content:center;
+.sf ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+/* The page's own section and nav rules reach the footer now that it sits outside <main>: a 48px top
+   margin on every section and align-items:center on nav dropped three columns below the fourth
+   (measured 2026-11-19 with getComputedStyle). Every column starts on one line. */
+.sf__brand,
+.sf__nav,
+.sf__digest{
+  margin:0;
+  padding:0;
+}
+.sf__nav{
+  align-items:start;
+}
+.sf a{
+  color:inherit;
+}
+.sf a:focus-visible,
+.sf button:focus-visible,
+.sf input:focus-visible{
+  outline:2px solid var(--sf-focus);
+  outline-offset:2px;
 }
 
-/* NAV ON ITS OWN ROW above 1320, which is where the three-across layout is
-   active. One row cannot satisfy both constraints at once: for the nav to be
-   centred on the PAGE the two side columns must be EQUAL, and the copy (247px)
-   is wider than the social block (152px), so equal columns squeeze the social
-   block until its four icons stack four rows deep. Measured both ways before
-   choosing: auto/1fr/auto keeps the social block intact but puts the nav's
-   centre 95px left of the page axis the newsletter block sits on, which is the
-   misalignment that was reported; equal columns centre it and break the social
-   block. Giving the nav the full width resolves both, and it is the ordinary
-   footer shape: links centred over a copyright-left, social-right baseline. */
-@media (min-width: 1321px){
-  footer.site-footer .footer-top{
-    grid-template-columns:1fr auto 1fr;
-    grid-template-areas:
-      "nav  nav nav"
-      "copy .   social";
-    row-gap:var(--space-sm);
-  }
-  footer.site-footer .footer-nav{ grid-area:nav; }
-  footer.site-footer .footer-copy{ grid-area:copy; justify-self:start; }
-  footer.site-footer .footer-links{ grid-area:social; justify-self:end; flex-wrap:nowrap; }
+/* brand */
+.sf__name{
+  margin:0 0 var(--space-xs);
+  font-family:var(--font-nav);
+  font-size:1.125rem;
+  font-weight:700;
+  letter-spacing:-.005em;
 }
-footer.site-footer .footer-copy{
-  justify-self:start;
-  display:inline-flex;
-  align-items:baseline;
-  gap:0.4em;
-  color:var(--footer-strip-muted);
-  font-size:var(--font-size-min);
-  letter-spacing:0.02em;
-  line-height:1.5;
-  font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum" 1, "lnum" 1;
+.sf__name a{
+  text-decoration:none;
+  border-radius:4px;
 }
-footer.site-footer .footer-copy__mark{
-  color:color-mix(in srgb, var(--footer-strip-muted) 70%, transparent);
-  font-size:0.95em;
-  letter-spacing:0;
-  position:relative;
-  top:-0.02em;
+.sf__name a:hover{
+  color:var(--sf-hover);
+  text-decoration:underline;
+  text-underline-offset:.2em;
 }
-footer.site-footer .footer-copy__year{
-  color:var(--footer-strip-text);
-  font-weight:500;
-  font-variant-numeric:tabular-nums;
-  letter-spacing:0.04em;
+.sf__mission{
+  margin:0;
+  max-width:36ch;
+  color:var(--sf-muted);
+  font-size:var(--text-sm);
+  line-height:var(--leading-body);
 }
-footer.site-footer .footer-copy__brand{
-  color:var(--footer-strip-text);
-  font-weight:500;
-  white-space:nowrap;
-}
-footer.site-footer .footer-nav{
-  justify-self:center;
+.sf__social{
+  display:flex;
   flex-wrap:wrap;
-  justify-content:center;
+  gap:8px;
+  margin-top:var(--space-md) !important;
 }
-footer.site-footer .footer-links{
-  justify-self:end;
+.sf__icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border:1px solid var(--sf-line);
+  border-radius:10px;
+  color:var(--sf-text);
+  transition:color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+}
+.sf__icon svg{
+  width:18px;
+  height:18px;
+  overflow:hidden;
+}
+.sf__icon--wide svg{
+  width:26px;
+  height:26px;
+}
+.sf__icon:hover{
+  color:var(--sf-hover);
+  border-color:currentColor;
+}
+
+/* link groups */
+.sf__nav{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:var(--space-lg);
+}
+.sf__label{
+  margin:0 0 var(--space-sm);
+  color:var(--sf-muted);
+  font-family:var(--font-nav);
+  font-size:var(--text-xs);
+  font-weight:700;
+  letter-spacing:.08em;
+  line-height:var(--leading-tight);
+  text-transform:uppercase;
+}
+.sf__label--sub{
+  margin-top:var(--space-lg);
+}
+.sf__group a{
+  display:inline-flex;
+  align-items:center;
+  min-height:32px;
+  color:var(--sf-text);
+  text-decoration:none;
+  border-radius:4px;
+}
+.sf__group a:hover{
+  color:var(--sf-hover);
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:.2em;
+}
+
+/* monthly digest */
+.sf__digest-pitch{
+  margin:0 0 var(--space-sm);
+  color:var(--sf-muted);
+  font-size:var(--text-sm);
+  line-height:var(--leading-body);
+}
+.sf__field-label{
+  display:block;
+  margin-bottom:6px;
+  color:var(--sf-text);
+  font-size:var(--text-sm);
+  font-weight:600;
+}
+.sf__field-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.sf__input{
+  flex:1 1 12rem;
+  min-width:0;
+  min-height:44px;
+  padding:0 12px;
+  border:1px solid var(--sf-field-border);
+  border-radius:8px;
+  background:var(--sf-field);
+  color:var(--sf-text);
+  font:inherit;
+  font-size:var(--text-base);
+}
+.sf__input::placeholder{
+  color:var(--sf-muted);
+  opacity:1;
+}
+.sf__button{
+  flex:0 0 auto;
+  min-height:44px;
+  padding:0 18px;
+  border:1px solid var(--sf-btn);
+  border-radius:8px;
+  background:var(--sf-btn);
+  color:var(--sf-btn-ink);
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+  transition:background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+}
+.sf__button:hover{
+  background:var(--sf-btn-hover);
+  border-color:var(--sf-btn-hover);
+}
+.sf__fine{
+  margin:var(--space-sm) 0 0;
+  color:var(--sf-muted);
+  font-size:var(--text-sm);
+}
+.sf__fine a{
+  text-decoration:underline;
+  text-underline-offset:.2em;
+  border-radius:2px;
+}
+.sf__fine a:hover{
+  color:var(--sf-hover);
+}
+
+/* bottom bar: copyright, tools, theme */
+.sf__bar{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:8px;
+  gap:var(--space-sm) var(--space-lg);
+  padding-top:var(--space-md);
+  border-top:1px solid var(--sf-line);
+  color:var(--sf-muted);
+  font-size:var(--text-sm);
 }
-footer.site-footer .footer-links a{
-  text-decoration:none;
-  min-width:0;
-  color:var(--footer-strip-muted);
-  transition:color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard), transform .15s var(--ease-standard);
-  border-radius:2px;
+.sf__copy{
+  margin:0;
+  font-variant-numeric:tabular-nums;
 }
-footer.site-footer .footer-links a:hover{color:var(--accent)}
-footer.site-footer .footer-links a:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
+.sf__util{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:2px var(--space-md);
+  margin-right:auto !important;
 }
-footer.site-footer .footer-nav a{
-  color:var(--footer-strip-muted);
-  padding:6px 12px;
-  border-radius:var(--nav-radius);
-  border:1px solid transparent;
+.sf__util a,
+.sf__search{
   display:inline-flex;
   align-items:center;
-  min-height:var(--interactive-height-sm);
-  transition:color .15s var(--ease-standard), border-color .15s var(--ease-standard), background .15s var(--ease-standard);
+  gap:6px;
+  min-height:32px;
+  padding:0;
+  border:0;
+  border-radius:4px;
+  background:none;
+  color:var(--sf-text);
+  font:inherit;
+  text-decoration:none;
+  cursor:pointer;
 }
-footer.site-footer .footer-nav a:hover{
-  color:var(--footer-strip-text);
-  border-color:rgba(255, 255, 255, 0.12);
-  background:rgba(255, 255, 255, 0.06);
+.sf__util a:hover,
+.sf__search:hover{
+  color:var(--sf-hover);
+  text-decoration:underline;
+  text-underline-offset:.2em;
 }
-footer.site-footer .footer-nav a:focus-visible{
-  outline:2px solid var(--accent);
+.sf__kbd{
+  padding:1px 6px;
+  border:1px solid var(--sf-line);
+  border-radius:4px;
+  color:var(--sf-muted);
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size:.75rem;
+  line-height:1.4;
+}
+.sf__theme{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0;
+  padding:0;
+  border:0;
+  min-width:0;
+}
+.sf__theme-legend{
+  float:left;
+  padding:0;
+  color:var(--sf-muted);
+}
+.sf__segs{
+  display:inline-flex;
+  padding:2px;
+  border:1px solid var(--sf-field-border);
+  border-radius:999px;
+}
+.sf__seg{
+  position:relative;
+  display:inline-flex;
+}
+.sf__seg input{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  margin:0;
+  opacity:0;
+  cursor:pointer;
+}
+.sf__seg span{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 12px;
+  border-radius:999px;
+  color:var(--sf-text);
+  transition:background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+}
+.sf__seg input:hover:not(:checked) + span{
+  color:var(--sf-hover);
+  text-decoration:underline;
+  text-underline-offset:.2em;
+}
+.sf__seg input:checked + span{
+  background:var(--sf-btn);
+  color:var(--sf-btn-ink);
+  font-weight:600;
+}
+.sf__seg input:focus-visible + span{
+  outline:2px solid var(--sf-focus);
   outline-offset:2px;
 }
 
-.footer-social:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
+/* tablet: brand beside the digest, the link groups full width beneath */
+@media (max-width: 1023px){
+  .sf__main{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+  .sf__nav{
+    grid-column:1 / -1;
+    grid-row:2;
+  }
 }
-footer.site-footer .footer-social{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:32px;
-  height:32px;
-  min-width:32px;
-  min-height:32px;
-  border-radius:4px;
-  border:1px solid rgba(255, 255, 255, 0.22);
-  background:rgba(255, 255, 255, 0.04);
-  color:var(--footer-strip-text);
-  transition:border-color .15s var(--ease-standard), color .15s var(--ease-standard), background .15s var(--ease-standard), transform .15s var(--ease-standard);
+/* phone: one column, links still in two side-by-side groups, left aligned */
+@media (max-width: 639px){
+  .sf__main{
+    grid-template-columns:minmax(0, 1fr);
+    gap:var(--space-lg);
+  }
+  .sf__nav{
+    grid-row:auto;
+    gap:var(--space-md);
+  }
+  .sf__bar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .sf__util{
+    margin-right:0 !important;
+  }
 }
-footer.site-footer .footer-social:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-  background:rgba(91, 156, 245, 0.12);
-  transform:translateY(-1px);
+/* touch: 44px targets */
+@media (pointer: coarse){
+  .sf__group a,
+  .sf__util a,
+  .sf__search{
+    min-height:44px;
+  }
+  .sf__icon{
+    width:44px;
+    height:44px;
+  }
+  .sf__seg span{
+    min-height:40px;
+    padding:0 14px;
+  }
 }
-footer.site-footer .footer-social svg{
-  width:14px;
-  height:14px;
-  opacity:.85;
-  transition:opacity .15s var(--ease-standard);
+@media (prefers-reduced-motion: reduce){
+  .sf__icon,
+  .sf__button,
+  .sf__seg span{
+    transition:none;
+  }
 }
-footer.site-footer .footer-social:hover svg{
-  opacity:1;
-}
-footer.site-footer .footer-social[aria-label="SSRN"]{
-  width:32px;
-  height:32px;
-}
-footer.site-footer .footer-social[aria-label="SSRN"] svg{
-  width:24px;
-  height:24px;
+@media print{
+  footer.sf{
+    background:none;
+    border-top:1px solid #000;
+    color:#000;
+  }
+  .sf__social,
+  .sf__digest,
+  .sf__theme,
+  .sf__search,
+  .sf__top{
+    display:none;
+  }
 }
 
 /* About this site (footer-adjacent tagline block) */
@@ -7178,49 +7371,6 @@ footer.site-footer .footer-social[aria-label="SSRN"] svg{
   color: var(--muted-soft);
   font-size: var(--font-size-min);
   line-height: 1.55;
-}
-
-footer.site-footer .footer-tagline{
-  margin:var(--space-md) auto 0;
-  padding:var(--space-md) 0 0 calc(var(--space-md) + 3px);
-  border-top:1px solid var(--footer-strip-border);
-  /* Match the page content max-width (--max = 1400-1480px) so the tagline
-     spans the same horizontal length as the cards in the section above
-     instead of collapsing to a narrow column inside the full-bleed footer. */
-  max-width:var(--max);
-  border-left:3px solid var(--accent);
-  color:var(--footer-strip-muted);
-  font-size:var(--font-size-min);
-  font-style:italic;
-  min-width:0;
-  overflow-wrap:break-word;
-  word-break:break-word;
-  letter-spacing:.005em;
-  line-height:1.55;
-}
-/* Footer: collapse the 3-column grid (copy | nav | socials) to a single
-   stacked column at tablet/desktop widths where the columns cannot all fit
-   without the brand text in the copy column overflowing into the nav column.
-   The copy text is nowrap and the nav has 6 wide links plus 4 social icons,
-   so the 3-column grid only fits comfortably above ~1320px. Below that we
-   stack to keep "Tokenization Systems" from clipping into "Frameworks". */
-@media (max-width: 1320px){
-  footer.site-footer .footer-top{
-    grid-template-columns:1fr;
-    justify-items:center;
-    text-align:center;
-  }
-  footer.site-footer .footer-copy,
-  footer.site-footer .footer-nav,
-  footer.site-footer .footer-links{
-    justify-self:center;
-  }
-  footer.site-footer .footer-tagline{
-    text-align:left;
-    padding-left:calc(var(--space-md) + 3px);
-    /* Inherit max-width:var(--max) and margin:auto from the base rule so the
-       tagline aligns with the cards above instead of collapsing to 36rem. */
-  }
 }
 
 /* ── Back to top ── */
@@ -7392,8 +7542,7 @@ footer.site-footer .footer-tagline{
    widths the nav is already collapsed to the hamburger and there is room for
    the tagline. Its resting gold is a deliberate brand signal, so hiding it
    read as the styling having been reverted. */
-@media (max-width: 768px){
-}
+
 
 /* Collapse the desktop nav to the hamburger menu until the full row fits.
    The brand wordmark (held at its natural width, never squeezed) plus the 7
@@ -8056,9 +8205,6 @@ footer.site-footer .footer-tagline{
   .contact-links{flex-wrap:wrap}
   .contact-social{min-height:44px; padding:8px 14px}
 
-  .footer-top{flex-direction:column; align-items:flex-start; gap:var(--space-sm)}
-  .footer-nav{gap:var(--space-sm); font-size:var(--font-size-min); flex-wrap:wrap}
-  .footer-tagline{font-size:var(--font-size-min)}
   .resume-actions{flex-direction:column}
   .resume-actions .action{width:100%; justify-content:center; min-height:48px}
   .resume-actions--inline{flex-direction:row; flex-wrap:wrap}
@@ -8204,7 +8350,6 @@ footer.site-footer .footer-tagline{
 
   .grid{gap:var(--space-sm)}
 
-  .footer-tagline{max-width:none}
 }
 
 /* Very small mobile: <=360px (SE, Galaxy S series, etc.) */
@@ -8359,7 +8504,7 @@ footer.site-footer .footer-tagline{
     color:#666;
     word-break:break-all;
   }
-  .footer-social, .footer-links, .header-social{display:none}
+  .header-social{display:none}
 
   /* ── Print extensions: editorial elements added in the 2026-04-26 cycle ── */
 
@@ -8469,7 +8614,9 @@ footer.site-footer .footer-tagline{
    Medium overview article). Dotted underline differentiates from plain
    .term marks without shouting; on hover, solid accent. */
 .term.term-link{
-  color: color-mix(in srgb, var(--accent) 60%, currentColor);
+  /* 70% of the AA link ink (2026-11-19): 60% of --accent inside a muted <strong> read #5070a2, 4.27:1 on
+     the light ground; this mix holds 7.3:1 against the same gray and lightens with the ink in dark mode. */
+  color: color-mix(in srgb, var(--accent-text, var(--accent)) 70%, currentColor);
   text-decoration: none;
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 50%, transparent);
   transition: border-bottom-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
@@ -9226,7 +9373,9 @@ footer.site-footer .footer-tagline{
   margin-bottom: 2.5rem;
 }
 .brief-evidence-base{ font-size: 0.9em; opacity: 0.7; margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 0.5rem; }
-.brief-what-this-means{ border-left: 3px solid rgba(96, 165, 250, 0.3); padding-left: 1rem; margin-top: 0.75rem; font-style: italic; opacity: 0.85; }
+/* No opacity (2026-11-19): fading the whole block faded its links too, to 4.14:1 on the light ground; the
+   italic and the rule already set it apart. */
+.brief-what-this-means{ border-left: 3px solid rgba(96, 165, 250, 0.3); padding-left: 1rem; margin-top: 0.75rem; font-style: italic; }
 .brief-finding-summary-line{ font-weight: 600; }
 .brief-figure{
   margin: 0 0 2.5rem;
@@ -11564,8 +11713,6 @@ a.badge-access-code:hover{ background: #1a9c4b; border-color: #4ade80; color: #f
 
 .email-row a,
 .contact-info-item a,
-.footer-links a,
-.footer-nav a,
 .writing-more a,
 .research-footer-link a,
 .research-secondary-link a{
@@ -11584,12 +11731,11 @@ a.badge-access-code:hover{ background: #1a9c4b; border-color: #4ade80; color: #f
   }
 
   .hero-primary,
-  .section-title p,
-  .card p,
-  .writing-copy,
-  .writing-excerpt,
-  .contact-closing,
-  .footer-tagline{
+.section-title p,
+.card p,
+.writing-copy,
+.writing-excerpt,
+.contact-closing{
     max-width:none;
   }
 }
@@ -13085,8 +13231,7 @@ main > section:first-of-type{
 .featured-note,
 .utility-note,
 .track-context,
-.contact-closing,
-.footer-tagline{
+.contact-closing{
   margin-bottom: 0;
   text-wrap: pretty;
 }
@@ -13466,7 +13611,6 @@ main > section:first-of-type{
 .navlink,
 .page-toc-link,
 .contact-social,
-.footer-social,
 .writing-thread,
 .writing-status,
 .writing-date,
@@ -13479,9 +13623,6 @@ main > section:first-of-type{
 /* Focus ring consistency across nav + footer + cards */
 .navlink:focus-visible,
 .header-social-link:focus-visible,
-.footer-social:focus-visible,
-.footer-nav a:focus-visible,
-.footer-links a:focus-visible,
 .contact-social:focus-visible,
 .writing-thread:focus-visible,
 .research-card-action:focus-visible{
@@ -13801,23 +13942,7 @@ a.writing-arrow:focus{
    ============================================================ */
 
 @media (max-width: 768px){
-  .footer-top{
-    align-items: flex-start;
-  }
 
-  .footer-nav{
-    gap: 8px;
-  }
-
-  .footer-nav a{
-    min-height: 36px;
-    padding: 6px 10px;
-  }
-
-  .footer-social{
-    min-width: 36px;
-    min-height: 36px;
-  }
 
   .resume-actions,
   .resume-downloads{
@@ -14257,13 +14382,6 @@ details.card-expand[open] summary {
     justify-content: center;
   }
 
-  .site-footer .footer-links a,
-  .site-footer .footer-social a {
-    padding: 0.5rem 0;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
 }
 
 /* Sprint 9: companion papers ("Read next") on paper summary pages */
@@ -14562,11 +14680,6 @@ body.contact-page .contact-page-foreground > .contact-page .copy-email-btn:hover
   background: var(--glass-tint-strong);
 }
 
-footer.site-footer {
-  background: var(--glass-tint);
-  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(115%);
-}
 
 body.contact-page .contact-page-foreground > .contact-page .contact-email-row {
   border: none;
@@ -14650,31 +14763,27 @@ body.contact-page .contact-page-foreground > .contact-page .route-card:hover {
   }
 
   :is(.page-toc, .jump-bar, .speaker-jump-to, .structure-jump-to),
-  :is(.operating-model-stack, .start-here-rail),
-  :is(.frameworks-routing-table-wrap, .structure-table-wrap, .convergence-table-wrap),
-  :is(
+:is(.operating-model-stack, .start-here-rail),
+:is(.frameworks-routing-table-wrap, .structure-table-wrap, .convergence-table-wrap),
+:is(
     .action.secondary,
     .btn.btn-secondary:not(#hero *),
     .copy-email-btn,
     .page-toc-link,
     .jump-chip
   ),
-  .research-filters-js .filter-btn:not(.active),
-  body.contact-page .contact-page-foreground > .contact-page .contact-email-block,
-  body.contact-page .contact-page-foreground > .contact-page .contact-guidance,
-  body.contact-page .contact-page-foreground > .contact-page .route-card,
-  :is(.engagement-list > li, .talk-format-card details),
-  .featured-talk-content,
-  footer.site-footer {
+.research-filters-js .filter-btn:not(.active),
+body.contact-page .contact-page-foreground > .contact-page .contact-email-block,
+body.contact-page .contact-page-foreground > .contact-page .contact-guidance,
+body.contact-page .contact-page-foreground > .contact-page .route-card,
+:is(.engagement-list > li, .talk-format-card details),
+.featured-talk-content {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: var(--panel);
     border-color: var(--line);
   }
 
-  footer.site-footer .footer-tagline {
-    box-shadow: none;
-  }
 
   body.contact-page .contact-page-foreground > .contact-page .contact-email-row {
     background: transparent;
@@ -15864,89 +15973,18 @@ body.contact-page .contact-page-foreground > .contact-page .about-item .about-la
 /* Social icons: round (circle) shape + subtle hover glow. Current rule
    renders them at 4px border-radius; pill-round matches the site's pill
    vocabulary (card-tag-strip, filter-btn). */
-footer.site-footer .footer-social{
-  border-radius: 999px;
-  background: color-mix(in srgb, #fff 3%, transparent);
-  border-color: color-mix(in srgb, #fff 18%, transparent);
-}
 
-footer.site-footer .footer-social:hover{
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
-}
 
 /* Nav links: animated bottom accent underline on hover. Draws attention
    via movement while preserving the subtle hover background from the
    existing rule. */
-footer.site-footer .footer-nav a{
-  position: relative;
-  overflow: hidden;
-}
 
-footer.site-footer .footer-nav a::after{
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 5px;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform .25s var(--ease-standard);
-  pointer-events: none;
-}
-
-footer.site-footer .footer-nav a:hover::after{
-  transform: scaleX(1);
-}
 
 /* Copy line: subtle accent dot separator between year and brand. Visually
    distinguishes "2026" from "Tokenization Systems" without relying on the
    space-gap alone. */
-footer.site-footer .footer-copy{
-  align-items: center;
-}
 
-footer.site-footer .footer-copy__year::after{
-  content: "·";
-  margin-left: 0.4em;
-  color: color-mix(in srgb, var(--accent) 65%, transparent);
-  opacity: 0.7;
-  font-weight: 400;
-  letter-spacing: 0;
-}
 
-/* Footer tagline: upgrade with eyebrow "Mission" label above, matching the
-   uppercase-eyebrow vocabulary used elsewhere. Subtle; appears as a small
-   accent-tinted line before the italic tagline text. */
-footer.site-footer .footer-tagline{
-  position: relative;
-  padding-top: calc(var(--space-md) + 1.25rem);
-}
-
-footer.site-footer .footer-tagline::before{
-  content: "Mission";
-  position: absolute;
-  top: var(--space-md);
-  left: calc(var(--space-md) + 3px);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-style: normal;
-  color: color-mix(in srgb, var(--accent) 90%, transparent);
-  opacity: 0.85;
-}
-
-/* Stacked-mobile: when the footer switches to single-column at < 1320px,
-   ensure the "Mission" eyebrow aligns with the tagline's text-indent start
-   (left + 3px from the accent border). */
-@media (max-width: 1320px){
-  footer.site-footer .footer-tagline::before{
-    left: calc(var(--space-md) + 3px);
-  }
-}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Homepage hero polish: minimal refinements on the existing rich hero
@@ -16147,114 +16185,18 @@ body #hero.hero--homepage .hero-institutional.hero-qualifier .hero-signal:hover:
    Append-only. Layers over the existing footer rules from earlier cycle.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Remove the hard border-top; replace with a softer gradient fade that
-   blurs the content-to-footer transition. Use a ::before pseudo-element
-   positioned above the footer. */
-body footer.site-footer{
-  border-top: none;
-  /* Extended gradient layers: ambient accent halo at top + bottom + subtle
-     gradient running vertically through the band for depth. */
-  background:
-    radial-gradient(
-      ellipse 120% 80% at 50% 0%,
-      color-mix(in srgb, var(--accent) 10%, transparent) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 100% 60% at 50% 100%,
-      color-mix(in srgb, var(--accent) 5%, transparent) 0%,
-      transparent 70%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 6%, transparent) 0%,
-      transparent 48%,
-      color-mix(in srgb, var(--accent) 2%, transparent) 100%
-    ),
-    var(--footer-strip-bg);
-}
 
-/* Gradient fade mask above the footer so the hard horizontal edge softens
-   into the content area. Applied via ::before positioned overlapping the
-   top edge. */
-body footer.site-footer::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -80px;
-  height: 80px;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    color-mix(in srgb, var(--footer-strip-bg) 15%, transparent) 35%,
-    color-mix(in srgb, var(--footer-strip-bg) 45%, transparent) 65%,
-    color-mix(in srgb, var(--footer-strip-bg) 85%, transparent) 100%
-  );
-  z-index: 0;
-}
 
-/* Inner footer content lives above the gradient fade. */
-body footer.site-footer > *{
-  position: relative;
-  z-index: 1;
-}
 
 /* Tagline row: soften the internal border-top separator. Replace the hard
    1px line with a gradient underline that fades at the edges. */
-body footer.site-footer .footer-tagline{
-  border-top: none;
-  position: relative;
-}
 
-body footer.site-footer .footer-tagline::after{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    color-mix(in srgb, var(--footer-strip-border) 95%, transparent) 15%,
-    color-mix(in srgb, var(--footer-strip-border) 95%, transparent) 85%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
 
 /* Social icons: ghost treatment. Drop the visible border; let the icon
    breathe against the ambient background. Hover retains the accent glow. */
-body footer.site-footer .footer-social{
-  border: 1px solid transparent;
-  background: transparent;
-  transition: border-color .2s var(--ease-standard), background .2s var(--ease-standard), color .2s var(--ease-standard),
-              transform .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
-}
 
-body footer.site-footer .footer-social:hover{
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 8%, transparent),
-              0 2px 8px color-mix(in srgb, var(--accent) 15%, transparent);
-  transform: translateY(-1px);
-}
 
-/* Footer nav: remove the box-like hover border; rely on underline animation
-   from earlier cycle + subtle bg brightening. */
-body footer.site-footer .footer-nav a:hover{
-  border-color: transparent;
-  background: transparent;
-}
 
-/* Subtle parallax-feeling backdrop-filter blur on the whole footer band.
-   Adds glass-morphism when scrolling transient content behind. */
-body footer.site-footer{
-  backdrop-filter: blur(6px) saturate(110%);
-  -webkit-backdrop-filter: blur(6px) saturate(110%);
-}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Footer liquid pass 2: unify tagline + top-row into a single flowing
@@ -16266,79 +16208,22 @@ body footer.site-footer{
 
 /* Tagline: remove the left accent border, center the content + eyebrow,
    remove the top separator we added in the previous pass. */
-body footer.site-footer .footer-tagline{
-  border-left: none;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: calc(var(--space-md) + 1.5rem);
-  margin: 0 auto;
-  max-width: 70ch;
-  text-align: center;
-}
+
 
 /* Kill the gradient horizontal separator added in the last pass;
    the tagline flows continuously with the band. */
-body footer.site-footer .footer-tagline::after{
-  display: none;
-}
+
 
 /* MISSION eyebrow: already centered via transform from earlier cycle;
    ensure consistent positioning relative to the centered tagline. */
-body footer.site-footer .footer-tagline::before{
-  left: 50%;
-  transform: translateX(-50%);
-  color: color-mix(in srgb, var(--accent) 85%, transparent);
-  opacity: 0.85;
-}
 
-/* Rearrange footer internal order visually: tagline first, top-row second.
-   Uses flex reordering on the parent footer so HTML structure remains for
-   semantics + SEO. */
-body footer.site-footer{
-  display: flex;
-  flex-direction: column;
-}
-
-body footer.site-footer .footer-tagline{
-  order: 1;
-  margin-bottom: var(--space-lg);
-}
-
-body footer.site-footer .footer-top{
-  order: 2;
-}
 
 /* Top row: softer separator above (subtle gradient fade that matches the
    tagline placement; dimmer than a visible border). */
-body footer.site-footer .footer-top{
-  position: relative;
-  padding-top: var(--space-md);
-}
 
-body footer.site-footer .footer-top::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(60%, 320px);
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    color-mix(in srgb, var(--accent) 35%, transparent) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
 
 /* Mobile / stacked < 1320px: ensure the order swap remains consistent. */
-@media (max-width: 1320px){
-  body footer.site-footer .footer-tagline{
-    text-align: center;
-    padding-left: 0;
-  }
-}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Homepage About card polish: eyebrow label + upgraded title typography +
@@ -16499,39 +16384,15 @@ body #contact .about-card .about-card-ctas a.cta-primary:hover{
    intended. Tighten all three to a compact footer band.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Outer footer: reduce outer vertical padding */
-body footer.site-footer{
-  padding-top: var(--space-md);
-  padding-bottom: var(--space-sm);
-}
 
 /* Tagline: reduce top padding (MISSION eyebrow space) + trim bottom margin */
-body footer.site-footer .footer-tagline{
-  padding-top: 1.25rem;
-  margin-bottom: var(--space-sm);
-  max-width: 60ch;
-  line-height: 1.5;
-}
 
-body footer.site-footer .footer-tagline::before{
-  top: 0;
-  font-size: 0.6rem;
-}
 
 /* Top row (credit + nav + socials): tighten top padding */
-body footer.site-footer .footer-top{
-  padding-top: var(--space-sm);
-}
 
-body footer.site-footer .footer-top::before{
-  width: min(50%, 240px);
-}
 
 /* Top-edge gradient fade: reduce from 80px to 50px (less aggressive) */
-body footer.site-footer::before{
-  top: -50px;
-  height: 50px;
-}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Top navigation header polish: append-only refinements on the shared
@@ -16645,9 +16506,6 @@ header .navlink.active::after{
    only the orbital-flow effect is lost. */
 
 
-@media (prefers-reduced-motion: reduce){
-}
-
 /* Header social links: ghost treatment with accent glow on hover.
    Matches the footer ghost-icon pattern from f02db92. */
 header .header-social-link{
@@ -16720,24 +16578,6 @@ body #contact .about-card .about-card-meta p strong{
   font-size:var(--text-2xs);
 }
 
-/* Footer tagline: remove max-width constraint so it fits on one line on
-   desktop. Tagline string is ~100 chars; desktop container is wide enough
-   to accommodate without wrap. */
-body footer.site-footer .footer-tagline{
-  max-width: none;
-  padding-left: var(--space-md);
-  padding-right: var(--space-md);
-}
-
-/* Footer top-row gradient pip separator: remove (too close to MISSION
-   eyebrow, felt cluttered). Spacing alone will do the work. */
-body footer.site-footer .footer-top::before{
-  display: none;
-}
-
-body footer.site-footer .footer-top{
-  padding-top: var(--space-md);
-}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Focus-visible refinement + prose link conventions.
@@ -16833,15 +16673,6 @@ main li a:not([class])[target="_blank"]:hover::after{
       reposition to the lower-left so it never conflicts.
    ───────────────────────────────────────────────────────────────────────────── */
 
-body footer.site-footer .footer-tagline::before{
-  font-size:var(--text-2xs);
-  letter-spacing: 0.14em;
-  top: 0.25rem;
-}
-
-body footer.site-footer .footer-tagline{
-  padding-top: 2.25rem;
-}
 
 /* Back-to-top: reposition from bottom-right to bottom-left to avoid
    visual collision with the right-side footer social icons. Also bump
@@ -19836,9 +19667,7 @@ body #contact .about-card .about-card-header h2{
 :root[data-theme="light"] .paper-page h1{
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
-@media (prefers-reduced-motion: no-preference){
-  /* No animation; the rule above is a static text-shadow. */
-}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    /frameworks Framework-stack: side-by-side track sequences.
@@ -20366,90 +20195,6 @@ body #contact .about-card .about-card-header h2{
   border:0;
 }
 
-/* --- Footer newsletter (site-wide; lives between .footer-top and .footer-tagline) --- */
-footer.site-footer .footer-newsletter{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:center;
-  gap:var(--space-sm);
-  padding:var(--space-md) 0;
-  margin-top:var(--space-sm);
-  border-top:1px solid var(--footer-strip-border);
-  text-align:center;
-}
-footer.site-footer .footer-newsletter__pitch{
-  flex:1 1 100%;
-  margin:0;
-  color:var(--footer-strip-text);
-  font-size:var(--font-size-min);
-  letter-spacing:0.01em;
-}
-footer.site-footer .footer-newsletter__form{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  justify-content:center;
-}
-footer.site-footer .footer-newsletter__input{
-  appearance:none;
-  background:rgba(255,255,255,0.06);
-  border:1px solid var(--footer-strip-border);
-  color:var(--footer-strip-text);
-  padding:8px 12px;
-  border-radius:var(--radius-sm);
-  font-size:var(--font-size-min);
-  min-width:240px;
-  transition:border-color .15s var(--ease-standard), background .15s var(--ease-standard);
-}
-footer.site-footer .footer-newsletter__input:focus-visible{
-  border-color:var(--accent);
-  background:rgba(255,255,255,0.1);
-  outline:2px solid color-mix(in srgb, var(--accent) 60%, transparent);
-  outline-offset:1px;
-  box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-footer.site-footer .footer-newsletter__input::placeholder{
-  color:var(--footer-strip-muted);
-  opacity:0.85;
-}
-footer.site-footer .footer-newsletter__button{
-  appearance:none;
-  background:var(--accent);
-  color:#ffffff;
-  border:1px solid var(--accent);
-  padding:8px 18px;
-  border-radius:var(--radius-sm);
-  font-weight:600;
-  font-size:var(--font-size-min);
-  cursor:pointer;
-  transition:background .15s var(--ease-standard), transform .15s var(--ease-standard);
-}
-footer.site-footer .footer-newsletter__button:hover{
-  background:var(--accent-hover);
-  transform:translateY(-1px);
-}
-footer.site-footer .footer-newsletter__button:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
-footer.site-footer .footer-newsletter__privacy{
-  flex:1 1 100%;
-  margin:0;
-  color:var(--footer-strip-muted);
-  font-size:0.78rem;
-  letter-spacing:0.01em;
-}
-footer.site-footer .footer-newsletter__privacy a{
-  color:var(--footer-strip-text);
-  text-decoration:underline;
-  text-decoration-color:rgba(255,255,255,0.3);
-}
-footer.site-footer .footer-newsletter__privacy a:hover{
-  color:var(--accent);
-  text-decoration-color:var(--accent);
-}
 
 /* --- Hero newsletter band (homepage only; lives between #hero and #role-paths) --- */
 .hero-newsletter-band{
@@ -20519,7 +20264,9 @@ footer.site-footer .footer-newsletter__privacy a:hover{
 .hero-newsletter-band__button{
   appearance:none;
   background:var(--accent);
-  color:#ffffff;
+  /* The theme-aware CTA ink (2026-11-19): white held 8.2:1 on the light theme's navy but 2.79:1 on the
+     dark theme's light blue, which axe failed on /agent-infrastructure/. */
+  color:var(--accent-cta-text);
   border:1px solid var(--accent);
   padding:10px 22px;
   border-radius:var(--radius-sm);
@@ -20551,7 +20298,6 @@ footer.site-footer .footer-newsletter__privacy a:hover{
 
 /* Responsive: stack on narrow screens */
 @media (max-width:640px){
-  footer.site-footer .footer-newsletter__form,
   .hero-newsletter-band__form{
     flex-direction:column;
     width:100%;
@@ -20559,13 +20305,11 @@ footer.site-footer .footer-newsletter__privacy a:hover{
   /* flex:0 0 auto resets the desktop flex-basis (220px) so that in column-
      direction the basis does not become a vertical min-height for the input.
      Without this, .hero-newsletter-band__input renders as a ~220px-tall box. */
-  footer.site-footer .footer-newsletter__input,
   .hero-newsletter-band__input{
     flex:0 0 auto;
     width:100%;
     min-width:0;
   }
-  footer.site-footer .footer-newsletter__button,
   .hero-newsletter-band__button{
     flex:0 0 auto;
     width:100%;
@@ -21002,6 +20746,14 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
 :root:not([data-theme="dark"]) .agent-infra-page .ai-verdict--teaching{
   color:var(--status-positive-ink);
 }
+/* AA ink for every verdict chip on the light theme (2026-11-19). The chips sit on their own tint inside
+   tinted table rows, so the measured grounds are darker than the page: axe read the borderline amber at
+   2.32:1 on #e2dbd3 and the teaching green at 3.70:1 on #cbe2e0. The 800 steps of each hue clear 4.5:1
+   on those grounds (5.2:1 and 5.3:1) and on every lighter one. */
+:root:not([data-theme="dark"]) .ai-verdict--wallpaper{ color:#9f1239; }
+:root:not([data-theme="dark"]) .ai-verdict--borderline{ color:#92400e; }
+:root:not([data-theme="dark"]) .ai-verdict--teaching,
+:root:not([data-theme="dark"]) .agent-infra-page .ai-verdict--teaching{ color:#166534; }
 :root[data-theme="dark"] .agent-infra-page .ai-verdict--teaching{
   color:var(--status-positive-glow);
 }
@@ -22121,17 +21873,7 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
    overlap at 320 and a 118px bar at every width to 360, against 90px here and
    73px, unchanged, from 344 up. This costs nothing until the row actually runs
    out of room. */
-@media (max-width:374px){
-  /* The floor min-content resolves to is the widest unbreakable run in the
-     lockup, and that is NOT the wordmark: it is the tagline, whose first four
-     words are bound with non-breaking spaces so the line breaks before Advisory
-     rather than anywhere. That run is 166px, and with the mark it pushed the
-     brand to 214 and shoved the theme toggle 40px off the screen at 320.
-     overflow-wrap:anywhere lets the binding yield at this width only, so the
-     floor falls back to the wordmark and the controls stay reachable. The
-     binding still governs everywhere the row has room. */
-  
-}
+
 
 /* ── 2026-10-12 accessibility pass (axe-core and Lighthouse on the live site) ──
    Contrast: the track prefix (4.4:1), the active nav link, the brand tagline and the
@@ -22146,8 +21888,7 @@ body.contact-page .contact-page-foreground > .contact-page .about-label{color:#1
 :root[data-theme="dark"] body.contact-page .contact-page-foreground > .contact-page .about-label{color:#8fbcff}
 .brief-figure figcaption,.paper-exhibit-figure figcaption{opacity:.82}
 .structure-nav[hidden]{visibility:hidden}
-@media (max-width:480px){
-}
+
 
 /* Letters hub: agency filter chips (same look as the research filters, own hooks so
    the research filter script never binds to them). */
@@ -22828,10 +22569,19 @@ button.access-cite-btn,
   margin: 0;
   font: inherit;
   font-size: var(--font-size-min, 0.85rem);
-  color: var(--accent);
-  opacity: 0.85;
+  /* Full-strength link ink (2026-11-19). The accent at opacity .85 blended to #3d71be on the light
+     ground, 4.14:1, which axe failed on 316 buttons across 23 letter pages; --accent-text is the vault's
+     AA link ink (7.8:1 light, 10:1 dark). Hover keeps its underline, so the state change survives. */
+  color: var(--accent-text, var(--accent));
   cursor: pointer;
   text-decoration: none;
+}
+/* The per-recommendation tools on the letter pages (script.js builds them at .72rem, about 17px tall,
+   7px apart) are standalone targets, so WCAG 2.5.8 wants 24px. */
+.rec-inline-tools button.access-cite-btn{
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
 button.access-cite-btn:hover,
 button.access-cite-btn:focus-visible,
@@ -23189,6 +22939,13 @@ button.access-cite-btn:focus-visible,
   font-size: 0.76rem;
   color: var(--muted);
   line-height: 1.38;
+}
+/* A link in a stat caption is a standalone target, not one inside a sentence, so WCAG 2.5.8 wants
+   24px (2026-11-19: axe failed it on /resume/ in both themes at the caption's 17px line). */
+.b4-stat__sub a{
+  display: inline-block;
+  min-height: 24px;
+  padding-block: 4px;
 }
 .b4-explorer__bars{
   display: grid;

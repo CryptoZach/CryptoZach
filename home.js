@@ -96,12 +96,59 @@
     });
   })();
 
-  var saved = get('theme');
-  if (saved) root.setAttribute('data-theme', saved);
+  /* THEME (2026-11-19): the same controller script.js runs on every other page, here because the home page
+     loads no script.js. A saved 'light' or 'dark' wins; with nothing saved the page follows the OS and keeps
+     following it. The header button flips light <-> dark and saves the choice; the footer's Light / Dark /
+     System choice can also hand the theme back to the OS. aria-pressed tells assistive tech which theme is on
+     (the button had no state at all before), and the theme-color meta follows the page ground. */
+  var themeMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function savedTheme(){ var v = get('theme'); return (v === 'light' || v === 'dark') ? v : null; }
+  function osTheme(){ return themeMq && themeMq.matches ? 'dark' : 'light'; }
+  function syncThemeControls(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    var mode = savedTheme() || 'system';
+    var t = document.getElementById('themeToggle');
+    if (t){
+      t.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      t.setAttribute('title', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    var radios = document.querySelectorAll('input[data-theme-choice]');
+    for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === mode);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta && document.body) meta.setAttribute('content', getComputedStyle(document.body).backgroundColor);
+  }
+  function setThemeMode(mode){
+    if (mode === 'light' || mode === 'dark'){
+      set('theme', mode);
+      root.setAttribute('data-theme', mode);
+    } else {
+      try { localStorage.removeItem('theme'); } catch(e){}
+      root.setAttribute('data-theme', osTheme());
+    }
+    syncThemeControls();
+  }
+  root.setAttribute('data-theme', savedTheme() || osTheme());
+  syncThemeControls();
   document.getElementById('themeToggle').addEventListener('click', function(){
-    var dark = getComputedStyle(root).colorScheme.indexOf('dark') > -1;
-    var next = dark ? 'light' : 'dark';
-    root.setAttribute('data-theme', next); set('theme', next);
+    setThemeMode(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if (t && t.matches && t.matches('input[data-theme-choice]') && t.checked) setThemeMode(t.value);
+  });
+  if (themeMq){
+    var followOs = function(){
+      if (savedTheme()) return;
+      root.setAttribute('data-theme', osTheme());
+      syncThemeControls();
+    };
+    if (themeMq.addEventListener) themeMq.addEventListener('change', followOs);
+    else if (themeMq.addListener) themeMq.addListener(followOs);
+  }
+  window.addEventListener('storage', function(e){
+    if (e.key !== 'theme') return;
+    root.setAttribute('data-theme', savedTheme() || osTheme());
+    syncThemeControls();
   });
   /* isDark() resolved the entire root style on every call, and tintFor() calls
      it once per mark per frame purely to build a cache key. Measured at 390x844
