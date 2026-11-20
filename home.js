@@ -2304,6 +2304,16 @@ vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true
   /* The shared footer ships the search button (_partials/footer.html); on every other page script.js binds it.
      Here the first click loads script.js, which then binds the button itself, and opens the palette. */
   var searchBtn = document.getElementById('cz-cmdk-trigger-btn');
+  /* Name the shortcut this reader has, the way script.js does on every other page. Until the first click
+     loaded script.js, the button here kept the partial's default text and no label, so a Mac reader saw
+     Ctrl K on the homepage and the Command key everywhere else. */
+  if (searchBtn) {
+    var plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+    var mac = /Mac|iPhone|iPad|iPod/i.test(plat);
+    var keyEl = searchBtn.querySelector('[data-cmdk-key]');
+    if (keyEl) keyEl.textContent = mac ? '\u2318K' : 'Ctrl K';
+    searchBtn.setAttribute('aria-label', 'Search the site, shortcut ' + (mac ? 'Command K' : 'Control K'));
+  }
   if (searchBtn) searchBtn.addEventListener('click', function onFirstSearch(){
     searchBtn.removeEventListener('click', onFirstSearch);
     loadAndOpen();
