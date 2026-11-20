@@ -169,9 +169,14 @@ def measure_hard_gates(cutoff_date: str, sync_ssh: bool = False) -> dict:
                 except OSError:
                     pass
         except Exception:
+            # A cached peer table counts only when it holds the same cutoff: summing a stale peer table with a fresh
+            # local one would publish a figure that mixes two dates. Without it the measurement falls back to the
+            # page's own values below, labelled site_fallback.
             if peer_cache.is_file():
                 try:
-                    hosts_data[peer] = json.loads(peer_cache.read_text(encoding="utf-8"))
+                    cached = json.loads(peer_cache.read_text(encoding="utf-8"))
+                    if cached.get("cutoff_date") == cutoff_date[:10]:
+                        hosts_data[peer] = cached
                 except Exception:
                     pass
 
