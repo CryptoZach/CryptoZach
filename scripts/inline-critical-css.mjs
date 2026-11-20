@@ -142,6 +142,21 @@ function applyJsCacheBuster(html, jsVersion, homeVersion) {
   return out;
 }
 
+// home.js inserts <script src="/script.js..."> itself on the homepage's first search, so that URL is a quoted
+// literal in a JS file, not an HTML src the rewrite above sees. Point it at the same content-hashed address every
+// other page loads: a reader who has opened any other page already holds that copy, and a script.js change can never
+// pair with a stale cached one. Matches only the exact root path /script.js in quotes, with or without an existing
+// ?v= (the minified file keeps the literal). Returns the number of rewrites; 0 when home.js is absent or has none.
+async function bustHomeLazyScript(buildPath, jsVersion) {
+  const p = path.join(buildPath, 'home.js');
+  let src;
+  try { src = await fs.readFile(p, 'utf8'); } catch { return 0; }
+  let n = 0;
+  const out = src.replace(/(["'])\/script\.js(?:\?v=[^"']*)?\1/g, (m, q) => { n += 1; return `${q}/script.js?v=${jsVersion}${q}`; });
+  if (n) await fs.writeFile(p, out);
+  return n;
+}
+
 // Beasties 0.4.2 with preload: 'swap' (and most other preload modes)
 // emits THREE stylesheet references per file:
 //   1. <link rel="preload" ... onload="this.rel='stylesheet'" as="style">
@@ -276,6 +291,8 @@ async function main() {
 
   const cssVersion = await computeAssetVersion(buildPath, 'styles.css');
   const jsVersion = await computeAssetVersion(buildPath, 'script.js');
+  // Before home.js is hashed, so home.js's own ?v= changes whenever the script.js URL inside it does.
+  const homeLazy = jsVersion ? await bustHomeLazyScript(buildPath, jsVersion) : 0;
   const homeVersion = await computeAssetVersion(buildPath, 'home.js');
   // Hash every stylesheet at the build root, not just styles.css, so each one's
   // ?v= tracks its own content. Keyed by basename because that is what the href
@@ -292,7 +309,7 @@ async function main() {
   );
   console.log(
     jsVersion
-      ? `Cache-buster (JS):  content-hash ?v=${jsVersion} (sha256 of _site/script.js)`
+      ? `Cache-buster (JS):  content-hash ?v=${jsVersion} (sha256 of _site/script.js); home.js lazy-load URL set on ${homeLazy} literal(s)`
       : 'Cache-buster (JS):  script.js not found; preserving source ?v= integers'
   );
 

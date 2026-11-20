@@ -62,6 +62,11 @@ REF = re.compile(r'(?:href|src)="(?P<url>[^"]*?(?P<asset>' +
                  "|".join(a.replace(".", r"\.") for a in HASHED_ASSETS) +
                  r'))\?v=(?P<v>[^"&]+)"')
 
+# home.js inserts the script.js tag itself on the homepage's first search, so the quoted URL in the built home.js is a
+# reference to script.js too, and it must carry the one content hash every page's <script src> carries.
+LAZY_REF = re.compile(r'(["\'])/script\.js(?:\?v=(?P<v>[^"\'&]*))?\1')
+LAZY_FROM = "home.js (lazy load)"
+
 HASH_SHAPED = re.compile(r"^[0-9a-f]{7,64}$")
 INTEGER_SHAPED = re.compile(r"^\d+$")
 
@@ -86,6 +91,11 @@ def scan(site_dir: pathlib.Path):
             asset = m.group("asset")
             v = m.group("v")
             found[asset][classify(v)][v].append(rel)
+    home = site_dir / "home.js"
+    if home.is_file():
+        for m in LAZY_REF.finditer(home.read_text(encoding="utf-8", errors="replace")):
+            v = m.group("v") or ""
+            found["script.js"][classify(v) if v else "missing"][v or "(none)"].append(LAZY_FROM)
     return found, pages
 
 
@@ -108,6 +118,14 @@ def report(found, pages, site_dir) -> int:
         integers = kinds.get("integer", {})
         unknowns = kinds.get("unknown", {})
         hashes = kinds.get("hash", {})
+        missing = kinds.get("missing", {})
+
+        if missing:
+            rc = 1
+            print(f"check_built_cache_busters: FAIL. {asset} is loaded with NO ?v= from {LAZY_FROM}: that copy "
+                  f"is cached apart from every page's and is never busted when the asset changes.")
+            print(f"    FIX: build:critical-css (scripts/inline-critical-css.mjs, bustHomeLazyScript) must "
+                  f"rewrite the URL in the built home.js.")
 
         if integers:
             rc = 1
@@ -133,7 +151,7 @@ def report(found, pages, site_dir) -> int:
                   f"built against different copies of the asset:")
             for v, pgs in sorted(hashes.items(), key=lambda kv: -len(kv[1])):
                 print(f"    ?v={v}  {len(pgs)} page(s)")
-        if not integers and not unknowns and len(hashes) == 1:
+        if not integers and not unknowns and not missing and len(hashes) == 1:
             v = next(iter(hashes))
             print(f"check_built_cache_busters: OK. {asset} ships content hash ?v={v} on all "
                   f"{n} built reference(s).")
@@ -163,6 +181,20 @@ def selftest() -> int:
         rc = report(f, p, root / "b")
         legs.append(("regressed build (source integer shipped) FAILS", rc == 1, rc))
         ok &= rc == 1
+
+        # home.js's lazy-load URL is a script.js reference: the same hash passes, anything else fails.
+        for name, lazy, want in (("home.js lazy URL with the pages' hash passes", '"/script.js?v=9be14d70"', 0),
+                                 ("home.js lazy URL with a source integer FAILS", '"/script.js?v=237"', 1),
+                                 ("home.js lazy URL with no ?v= FAILS", '"/script.js"', 1),
+                                 ("home.js lazy URL with another hash FAILS", "'/script.js?v=deadbeef'", 1)):
+            d = root / ("h%d" % len(legs))
+            d.mkdir()
+            (d / "index.html").write_text(good, encoding="utf-8")
+            (d / "home.js").write_text("var s=document.createElement('script');s.src=%s;" % lazy, encoding="utf-8")
+            f, p = scan(d)
+            rc = report(f, p, d)
+            legs.append((name, rc == want, rc))
+            ok &= rc == want
 
         (root / "e").mkdir()
         f, p = scan(root / "e")

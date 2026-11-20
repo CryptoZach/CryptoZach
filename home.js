@@ -2286,7 +2286,8 @@ vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true
     if (loading) return;
     loading = true;
     var s = document.createElement('script');
-    /* versioned so a copy cached before script.js learned the __czMenuBound / __czThemeBound flags is not reused */
+    /* The build replaces this ?v= with script.js's content hash, the URL every other page loads
+       (scripts/inline-critical-css.mjs), so a reader who opened any other page already holds it. */
     s.src = '/script.js?v=237';
     s.onload = function(){
       var ev = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true });
