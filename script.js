@@ -49,7 +49,10 @@
   // script would change that ground unseen: read it again once every stylesheet has loaded.
   window.addEventListener('load', syncThemeControls);
 
-  if(toggle){
+  // home.js binds the header toggle on the home page and sets this flag; when the search palette lazy-loads
+  // this script there, a second click handler would flip the theme twice per click.
+  if(toggle && !window.__czThemeBound){
+    window.__czThemeBound = true;
     toggle.addEventListener('click', () => {
       setThemeMode(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
@@ -114,9 +117,11 @@
   // Mobile menu (toggle, Escape to close, close when viewport is desktop width)
   const menuToggle = document.getElementById('menuToggle');
   const navMobile = document.getElementById('nav-mobile');
-  // Must match the CSS nav-collapse breakpoint (styles.css @media max-width: 900px),
-  // otherwise the focus trap is inert in the 769-900px band where the hamburger shows.
-  const MOBILE_NAV_MQ = window.matchMedia('(max-width: 900px)');
+  // Must match the CSS nav-collapse breakpoint, otherwise the focus trap and the close-on-widen are inert
+  // in the band where the hamburger shows. styles.css collapses at @media (max-width: 1180px) (its note:
+  // the earlier ~900px boundary was miscalibrated for the 7-link nav); this read 900px until 2026-11-19,
+  // measured that day: the hamburger shows through 1180px and hides from 1181px.
+  const MOBILE_NAV_MQ = window.matchMedia('(max-width: 1180px)');
   function setMobileNavOpen(isOpen){
     if(!menuToggle || !navMobile) return;
     menuToggle.setAttribute('aria-expanded', String(isOpen));
@@ -139,7 +144,9 @@
       setMobileNavOpen(false);
     }
   }
-  if(menuToggle && navMobile){
+  // home.js drives the same shared menu on the home page and sets this flag first (see the theme note above).
+  if(menuToggle && navMobile && !window.__czMenuBound){
+    window.__czMenuBound = true;
     menuToggle.addEventListener('click', () => {
       const open = menuToggle.getAttribute('aria-expanded') === 'true';
       setMobileNavOpen(!open);

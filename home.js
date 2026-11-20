@@ -17,17 +17,22 @@
      leaves the a11y tree, focus to the first link on open, Escape closes and
      returns focus to the button, a Tab trap while open, the body scroll locked,
      and an automatic close when the viewport goes back past the breakpoint. The
-     media query below MUST match the CSS collapse at 900px: the shared version
-     carries a comment saying a mismatch there once left its focus trap inert in
-     the band where the hamburger showed. */
+     media query below MUST match the shared CSS collapse, which is 1180px since
+     the homepage takes its chrome styles from styles.css (render_chrome_css.py):
+     a mismatch leaves the focus trap inert in the band where the hamburger shows. */
   (function(){
     var btn = document.getElementById('menuToggle');
-    var panel = document.getElementById('nav-mobile-home');
+    var panel = document.getElementById('nav-mobile');
     if (!btn || !panel) return;
+    /* The header and its menu are stamped from _partials/header.html (2026-11-19), the markup every
+       other page carries, so this drives the shared #nav-mobile with script.js's state classes.
+       script.js, when the search palette lazy-loads it here, sees this flag and leaves the menu alone,
+       which would otherwise toggle twice per click and never open. */
+    window.__czMenuBound = true;
     /* MUST match the CSS collapse above. The shared implementation carries a
        comment recording that a mismatch here once left its focus trap inert in
        the band where the hamburger was showing. */
-    var MQ = window.matchMedia('(max-width: 1279px)');
+    var MQ = window.matchMedia('(max-width: 1180px)');
     var root = document.documentElement;
     var hdr = document.querySelector('header .hdr') || document.querySelector('header');
     function syncHeaderHeight(){
@@ -46,7 +51,7 @@
       hdrTimer = setTimeout(function(){ hdrTimer = null; syncHeaderHeight(); }, 200);
     }, { passive: true });
     function focusables(){
-      return panel.querySelectorAll('.nmh-set a, .nmh-social a');
+      return panel.querySelectorAll('.mobile-nav-linkset a.navlink, .nav-mobile-social a.header-social-link');
     }
     function setOpen(open){
       btn.setAttribute('aria-expanded', String(open));
@@ -54,7 +59,8 @@
       panel.hidden = !open;
       panel.inert = !open;
       panel.setAttribute('aria-hidden', String(!open));
-      root.classList.toggle('nav-open', open);
+      panel.classList.toggle('open', open);
+      root.classList.toggle('nav-mobile-open', open);
       if (open) syncHeaderHeight();
       if (open) window.requestAnimationFrame(function(){
         var first = focusables()[0]; if (first) first.focus();
@@ -129,6 +135,9 @@
   }
   root.setAttribute('data-theme', savedTheme() || osTheme());
   syncThemeControls();
+  /* script.js, if the search palette lazy-loads it here, reads this and does not bind the header toggle a
+     second time (two handlers flip the theme twice per click, so the button seemed dead after one search). */
+  window.__czThemeBound = true;
   document.getElementById('themeToggle').addEventListener('click', function(){
     setThemeMode(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
@@ -2272,17 +2281,31 @@ vaultMountDial(document.querySelector('header .vault-headdial'), { compact: true
 /* Load quick-jump command palette on the homepage via script.js if not already loaded */
 (function(){
   if(window.__czCmdKInitialized) return;
+  var loading = false;
+  function loadAndOpen(){
+    if (loading) return;
+    loading = true;
+    var s = document.createElement('script');
+    /* versioned so a copy cached before script.js learned the __czMenuBound / __czThemeBound flags is not reused */
+    s.src = '/script.js?v=237';
+    s.onload = function(){
+      var ev = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true });
+      document.dispatchEvent(ev);
+    };
+    document.body.appendChild(s);
+  }
   document.addEventListener('keydown', function onHomeKey(e){
     if((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
       e.preventDefault();
       document.removeEventListener('keydown', onHomeKey);
-      var s = document.createElement('script');
-      s.src = '/script.js';
-      s.onload = function(){
-        var ev = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true });
-        document.dispatchEvent(ev);
-      };
-      document.body.appendChild(s);
+      loadAndOpen();
     }
+  });
+  /* The shared footer ships the search button (_partials/footer.html); on every other page script.js binds it.
+     Here the first click loads script.js, which then binds the button itself, and opens the palette. */
+  var searchBtn = document.getElementById('cz-cmdk-trigger-btn');
+  if (searchBtn) searchBtn.addEventListener('click', function onFirstSearch(){
+    searchBtn.removeEventListener('click', onFirstSearch);
+    loadAndOpen();
   });
 })();

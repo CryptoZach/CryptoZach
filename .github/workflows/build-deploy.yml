@@ -88,6 +88,9 @@ jobs:
           run_check scripts/check_internal_links.py --quiet
           run_check scripts/render_home_stats.py --check
           run_check scripts/render_chrome.py --check
+          # render_chrome_css.py --check verifies the homepage's chrome styles are the ones styles.css and
+          # vault.css give every other page (the homepage loads neither, so they are stamped into it).
+          run_check scripts/render_chrome_css.py --check
           # render_brand.py --check verifies the brandmark (markup, rules, dial code) is one copy on every page.
           run_check scripts/render_brand.py --check
           # render_letters.py --check verifies the letters hub, every letter page's
