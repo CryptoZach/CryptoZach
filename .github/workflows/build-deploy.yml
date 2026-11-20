@@ -167,12 +167,22 @@ jobs:
       - name: Install browser for homepage interaction gate
         # A healthy install takes 15 to 25 s. A stalled download held this step to its 5-minute limit on 3 of the last 40 runs
         # (measured 2026-11-05), and each time the whole deploy failed. So a try gets 2 minutes and a stall gets a fresh try.
+        # The retries still lost 2 of 3 runs on 2026-11-20 (runs 643 and 645 spent 129 s and 140 s here: one try that ran
+        # out, then two that ended within seconds). When every try fails and the runner image carries Google Chrome, both
+        # gates below run on that Chrome (they read CHROME_EXECUTABLE_PATH) rather than the deploy stopping. A run whose
+        # download succeeds is unchanged.
         timeout-minutes: 7
         run: |
           for attempt in 1 2 3; do
             timeout 120 npx playwright install --with-deps chromium && exit 0
             echo "Browser install attempt $attempt did not finish; trying again."
           done
+          chrome="$(command -v google-chrome || true)"
+          if [ -n "$chrome" ]; then
+            echo "Browser install did not finish in 3 tries; the gates run on the runner's $("$chrome" --version)."
+            echo "CHROME_EXECUTABLE_PATH=$chrome" >> "$GITHUB_ENV"
+            exit 0
+          fi
           exit 1
 
       - name: Homepage load helper test (the gate's openHome)
