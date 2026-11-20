@@ -259,6 +259,13 @@ async function main() {
     // attribute at build time), so the live homepage could never render its
     // light theme (2026-10-12 audit). The homepage carries all of its CSS inline.
     reduceInlineStyles: false,
+    // Keep the theme's own rules in the inlined critical CSS (2026-11-20). They are written
+    // :root[data-theme=...] and :root:not([data-theme=...]), and no element carries data-theme
+    // when this runs (the head script sets it), so Beasties dropped every light rule from the
+    // extract. A light-mode visitor then got the dark ground (vault.css --void) until the
+    // deferred vault.css arrived, about 1.4 s with the stylesheet held back 1.5 s, and the
+    // browser chrome colour, read from that ground at start-up, stayed dark for the visit.
+    allowRules: [/^:root\[data-theme=/, /^:root:not\(\[data-theme=/],
     // Minimize the inlined critical CSS.
     compress: true,
     // Log level: silent to suppress harmless "Empty sub-selector"

@@ -45,6 +45,9 @@
   }
   root.setAttribute('data-theme', savedTheme() || osTheme());
   syncThemeControls();
+  // The chrome colour is read from the painted ground, and a stylesheet that arrives after this
+  // script would change that ground unseen: read it again once every stylesheet has loaded.
+  window.addEventListener('load', syncThemeControls);
 
   if(toggle){
     toggle.addEventListener('click', () => {
