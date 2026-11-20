@@ -1195,7 +1195,7 @@ footer.sf{
 .sf__theme{display:flex;align-items:center;gap:10px;margin:0;padding:0;border:0;min-width:0}
 .sf__theme-legend{float:left;padding:0;color:var(--sf-muted)}
 .sf__segs{display:inline-flex;padding:2px;border:1px solid var(--sf-field-border);border-radius:999px}
-.sf__seg{position:relative;display:inline-flex}
+.sf__seg{position:relative;display:inline-flex}@media (pointer:coarse){.sf__seg{min-height:44px}.sf__name a{display:inline-block;padding-block:4px;min-height:24px}}
 .sf__seg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .sf__seg span{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;color:var(--sf-text);transition:background .15s, color .15s}
 .sf__seg input:hover:not(:checked) + span{color:var(--sf-hover);text-decoration:underline;text-underline-offset:.2em}

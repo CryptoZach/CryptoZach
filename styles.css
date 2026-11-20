@@ -23045,3 +23045,23 @@ button.access-cite-btn:focus-visible,
   .brand a > span{font-size:.6875rem;letter-spacing:.03em}
 }
 /* site-brand:css END */
+
+/* Touch targets and reading measure (2026-11-20).
+   On a coarse pointer (a finger), the controls the audit found under 44 CSS px get a 44 px box: a bigger
+   target is faster and surer to hit (Fitts's law), WCAG 2.5.5 asks 44 and 2.5.8 sets 24 as the floor. Links in
+   dense tables and lists reach the 24 px floor without changing how a desktop page reads.
+   Running text gets the site's own measure token back (--measure-wide) where page rules had switched it off
+   (.overview-page and .agent-infra-page set max-width:none, .paper-page.paper-detail sets 100%), so prose that
+   ran to 160 characters a line on a wide screen, far past the comfortable 45 to 75, no longer makes each
+   return to the next line a search. Cards and tables keep their widths.
+   Measured by handoff/evidence/site_ui_redesign_2026-11-19/producers/audit_ux_principles.py (workflow repo). */
+@media (pointer: coarse){
+  .filter-btn, .jump-chip, .b4-pill, .page-toc-link, .sf__seg{ min-height: 44px; }
+  .tdrc-step-btn{ min-height: 44px; min-width: 44px; }
+  .start-here-filter{ display: inline-flex; align-items: center; min-height: 44px; }
+  .resume-evidence a{ display: flex; align-items: center; min-height: 44px; }
+  .about-profiles a{ display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+  .research-list td a, .letters-timeline td a, td.framework-invoked a.term, .sf__name a{ display: inline-block; padding-block: 4px; min-height: 24px; }
+}
+.overview-page .explainer p, .overview-page .explainer-section p, .agent-infra-page .explainer p,
+.paper-page.paper-detail .paper-abstract p{ max-width: var(--measure-wide); }
