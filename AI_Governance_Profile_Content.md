@@ -49,7 +49,7 @@ This version is built for teams that need infrastructure accountability, not slo
 
 ## Snapshot (two paragraphs)
 
-The research program sits at the intersection of digital money, tokenization, and institutional design. It pairs empirical gateway and stress evidence with frameworks that supervisors, risk committees, and product leaders can actually use in packets.
+The research program sits at the intersection of programmable money, tokenization, and institutional design. It pairs empirical gateway and stress evidence with frameworks that supervisors, risk committees, and product leaders can actually use in packets.
 
 The AI governance angle is explicit: participation in cross-sector governance conversations, plus a transferable method from stablecoin-scale control-layer research to AI infrastructure questions about disclosure, monitoring, and escalation.
 
