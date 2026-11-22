@@ -120,6 +120,12 @@ jobs:
           # producer refusal must read UNMEASURED, never the page's own figures, and every hard-gate
           # surface must take one figure. CI only, which the parity rule allows (CI may hold more).
           run_check scripts/test_update_site_metrics_hard_gates.py
+          # script.js's literal fleet figures follow the agent page's data-scale-* stamp and the commit
+          # chart's JSON (2026-11-22). Its explorers, cards and search index carried 68,000+ commits and
+          # 63,230 advisory firings for weeks after the page moved, because no tool read them. The check
+          # names each drifted figure, and scripts/sync_script_js_figures.py --write rewrites them all.
+          run_check scripts/sync_script_js_figures.py --check --quiet
+          run_check scripts/test_sync_script_js_figures.py
 
       - name: Sitemap lastmod from git history
         # Derives <lastmod> for every sitemap URL from the last commit that touched

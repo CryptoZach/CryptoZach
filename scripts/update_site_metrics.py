@@ -58,6 +58,7 @@ import check_paper_count as cpc  # noqa: E402
 import check_patent_count as cpat  # noqa: E402
 import check_scale_figures as csf  # noqa: E402
 import render_commit_chart as rcc  # noqa: E402
+import sync_script_js_figures as sjf  # noqa: E402
 
 
 def fmt_human_date(iso_date: str) -> str:
@@ -229,6 +230,27 @@ def measure_advisory_fleet(sync_ssh: bool = False) -> dict:
     }
 
 
+RATIO_DENOMINATORS = (10, 20, 50, 100, 200, 300, 400, 500, 1000)
+
+
+def override_ratio(attempts: int, overridden: int) -> "tuple[int, int] | None":
+    """The published "held in about X of every Y attempts", as (X, Y).
+
+    Y is the largest clean denominator with at most one override per Y attempts, so the sentence is a floor and never
+    reads a higher hold than the one measured: 47 overrides in 20,776 attempts (one in 442) reads 399 of every 400, and
+    52 in 20,781 (one in 399.6) reads 299 of every 300. None when more than one attempt in ten was overridden, where no
+    sentence of this shape is true. The sentences are then left as they are and check_agent_infra_stats.py refuses them.
+    """
+    if overridden <= 0:
+        y = RATIO_DENOMINATORS[-1]
+    else:
+        fits = [d for d in RATIO_DENOMINATORS if d * overridden <= attempts]
+        if not fits:
+            return None
+        y = fits[-1]
+    return y - 1, y
+
+
 def apply_hard_gate_updates(gate: dict) -> list[str]:
     """Update hard-gate refusal numbers and dates across index.html, agent-infrastructure/index.html, and frameworks/index.html."""
     changed = []
@@ -252,6 +274,13 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
         rf"\g<1>{attempts_s}\g<2>{date_human}\g<3>{stopped_s}\g<4>{overridden_s}\g<5>",
         home_new,
     )
+    ratio = override_ratio(gate["attempts"], gate["overridden"])
+    if ratio is None:
+        print(f"   The override-ratio sentences were left as they were: {gate['overridden']:,} overrides in "
+              f"{gate['attempts']:,} attempts fit no 'about X of every Y' floor, and check_agent_infra_stats.py refuses them.")
+    else:
+        home_new = re.sub(r"(holding in about )\d+ of every \d+( attempts)",
+                          rf"\g<1>{ratio[0]} of every {ratio[1]}\g<2>", home_new)
     if home_new != home_orig:
         home_path.write_text(home_new, encoding="utf-8")
         changed.append("index.html")
@@ -294,6 +323,9 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
         rf"\g<1>{stopped_s}\g<2>{attempts_s}\g<3>{date_human}\g<4>",
         ai_new,
     )
+    if ratio is not None:
+        ai_new = re.sub(r"(held in about )\d+ of every \d+( measured attempts)",
+                        rf"\g<1>{ratio[0]} of every {ratio[1]}\g<2>", ai_new)
     if ai_new != ai_orig:
         ai_path.write_text(ai_new, encoding="utf-8")
         changed.append("agent-infrastructure/index.html")
@@ -332,6 +364,14 @@ def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dic
     # 4. Shipped resume reference figures & site scale comparison
     resume_ref, resume_problems = csf.resume_reference(ROOT / "resumes")
     scale_disagree, _ = csf.compare(ROOT, resume_ref)
+
+    # 4b. script.js's literal fleet figures, against the agent page's stamp and the commit chart they follow
+    try:
+        sj_drift, sj_unchecked, sj_hits = sjf.check_text(
+            (ROOT / "script.js").read_text(encoding="utf-8"), sjf.reference(ROOT))
+        sj_error = ""
+    except (OSError, ValueError) as e:
+        sj_drift, sj_unchecked, sj_hits, sj_error = [], [], {}, str(e)
 
     # 5. Patents, Letters, Papers, Hero stats
     pat_truth = cpat.derive_patent_truth((ROOT / "patents" / "index.html").read_text(encoding="utf-8"))
@@ -385,6 +425,14 @@ def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dic
                 and gate_site["home_agree"]
                 and gate_site["fw_agree"]
             ),
+        },
+        {
+            "key": "script_js_figures",
+            "label": "script.js fleet figures",
+            "live": f"UNMEASURED: {sj_error}" if sj_error else f"{sum(sj_hits.values())} phrases follow the page's stamp",
+            "site": "; ".join((sj_drift + ["UNCHECKED " + u for u in sj_unchecked])[:3]) or sj_error,
+            "unmeasured": bool(sj_error),
+            "ok": not sj_error and not sj_drift and not sj_unchecked,
         },
         {
             "key": "patents",
@@ -508,10 +556,17 @@ def run_write_pipeline(sync_ssh: bool = False, with_resumes: bool = False) -> in
             print(f"Generator failed: {' '.join(cmd)}", file=sys.stderr)
             return r.returncode
 
+    print("5b. Rewriting script.js's fleet figures from the agent page's stamp and the commit chart...")
+    rc = sjf.main(["--write", "--quiet", "--root", str(ROOT)])
+    if rc != 0:
+        print("Generator failed: scripts/sync_script_js_figures.py --write", file=sys.stderr)
+        return rc
+
     print("6. Running verification guard suite...")
     guards = [
         [sys.executable, "scripts/check_scale_figures.py"],
         [sys.executable, "scripts/check_agent_infra_stats.py"],
+        [sys.executable, "scripts/sync_script_js_figures.py", "--check"],
         [sys.executable, "scripts/render_commit_chart.py", "--check"],
         [sys.executable, "scripts/render_home_stats.py", "--check"],
         [sys.executable, "scripts/check_home_stats.py"],

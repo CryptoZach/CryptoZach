@@ -14,6 +14,11 @@ own log, and a missing peer came back as site_fallback). The write-half arms tes
 and pass on it by design. The fake producer's day is one no served page carries, so no arm can pass by reading the
 page back.
 
+The ratio arms (2026-11-22): the pages say the gates "held in about X of every Y attempts". Nothing wrote or read that
+sentence, so 52 overrides at the 2026-11-21 attempts would have made "399 of every 400" false with every check
+passing. update_site_metrics.py now writes it as a floor (override_ratio) and check_agent_infra_stats.py refuses one
+the figures do not bear out. Point those arms at another copy of the checker with CAIS_UNDER_TEST=<path>.
+
 Run: python3 scripts/test_update_site_metrics_hard_gates.py    (exit 0 when every arm passes)
 Point it at another copy of the tool with USM_UNDER_TEST=<path>.
 """
@@ -22,6 +27,7 @@ import importlib.util
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -145,6 +151,35 @@ def main() -> int:
         check("the attempts row names the producer's class count", "across the 17 classes that carry one" in ai)
         check("the three pages were written", sorted(changed) == sorted(
             ["index.html", "agent-infrastructure/index.html", "frameworks/index.html"]), str(changed))
+
+        # The override ratio follows the figure, as a floor, and a sentence the figures do not bear out blocks.
+        home = (site / "index.html").read_text(encoding="utf-8")
+        check("the homepage ratio follows the figure (15 in 31,415 is one in 2,094: 999 of every 1000)",
+              "holding in about 999 of every 1000 attempts" in home)
+        check("the agent page ratio follows the figure", "held in about 999 of every 1000 measured attempts" in ai)
+        ratio = getattr(mod, "override_ratio", None)
+        check("the ratio is a floor at each boundary", ratio is not None and (
+            ratio(20776, 47), ratio(20781, 52), ratio(100, 0), ratio(1000, 100), ratio(100, 11)) == (
+            (399, 400), (299, 300), (999, 1000), (9, 10), None))
+        cais = os.environ.get("CAIS_UNDER_TEST", str(HERE / "check_agent_infra_stats.py"))
+
+        def run_cais():
+            r = subprocess.run([sys.executable, cais, "--root", str(site)], capture_output=True, text=True,
+                               timeout=120)
+            return r.returncode, r.stdout + r.stderr
+
+        rc, out = run_cais()
+        check("check_agent_infra_stats passes the written pages", rc == 0, out[-200:])
+        # 52 overrides at 20,781 attempts is one in 399.6, so "399 of every 400" would overstate the hold.
+        mod.apply_hard_gate_updates(dict(gate, attempts=20781, stopped=20729, overridden=52))
+        ai_path = site / "agent-infrastructure" / "index.html"
+        ai = ai_path.read_text(encoding="utf-8")
+        check("52 overrides in 20,781 attempts writes 299 of every 300",
+              "held in about 299 of every 300 measured attempts" in ai)
+        ai_path.write_text(ai.replace("about 299 of every 300", "about 399 of every 400"), encoding="utf-8")
+        rc, out = run_cais()
+        check("a ratio the figures do not bear out blocks (exit 1) and is named", rc == 1 and "OVERRIDE RATIO" in out,
+              out[-300:])
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print("%d failed" % len(failures) if failures else "all arms passed")

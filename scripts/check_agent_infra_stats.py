@@ -31,6 +31,10 @@ What it checks
 3. Agent-infrastructure scale metric: value N with "S stopped; O overridden".
 4. Agent-infrastructure method table: "S refused, O overridden".
 All extracted (N, S, O) triples must be identical, and S + O must equal N.
+5. The override ratio on both pages ("held in about X of every Y attempts") is a
+   floor the figures bear out: X is Y - 1 and O * Y is at most N. Nothing read it
+   before 2026-11-22, when 52 overrides at that day's attempts would have made the
+   published "399 of every 400" false with every check passing.
 
 Exit codes (pre-push layer-6 contract; see scripts/hooks/pre-push)
 ------------------------------------------------------------------
@@ -43,6 +47,7 @@ Usage
 -----
     python3 scripts/check_agent_infra_stats.py           # report; exit per above
     python3 scripts/check_agent_infra_stats.py --quiet   # print only on failure
+    python3 scripts/check_agent_infra_stats.py --root DIR   # check another copy of the site
 """
 import argparse
 import os
@@ -102,9 +107,10 @@ def repo_root():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--root", help="the site root to check (default: this checkout)")
     args = ap.parse_args()
 
-    root = repo_root()
+    root = args.root or repo_root()
     texts = {}
     for path in (HOME, AI, "frameworks/index.html"):
         full = os.path.join(root, path)
@@ -149,6 +155,16 @@ def main():
     n, s, o = ref.get("n", (None, None))[1], ref.get("s", (None, None))[1], ref.get("o", (None, None))[1]
     if not drift and None not in (n, s, o) and s + o != n:
         drift.append(f"internal arithmetic: stopped {s} plus overridden {o} is {s + o}, not attempts {n}")
+    # The override ratio, published as a floor. update_site_metrics.py writes it from the same figures
+    # (override_ratio), and this refuses a sentence the figures no longer bear out.
+    if not drift and None not in (n, o):
+        for path in (HOME, AI):
+            for m in re.finditer(r"(?:held|holding)\s+in\s+about\s+(\d[\d,]*)\s+of\s+every\s+(\d[\d,]*)", texts[path]):
+                x, y = int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))
+                if x != y - 1 or o * y > n:
+                    one = f"one in {n / o:.1f}" if o else "none"
+                    drift.append(f"OVERRIDE RATIO: {path} says the gates held in about {x} of every {y}, but {o} "
+                                 f"overrides in {n} attempts is {one} (the sentence must be a floor: X = Y - 1, O * Y <= N)")
 
     if drift:
         print("check_agent_infra_stats: DRIFT between the homepage gate figures and the "
