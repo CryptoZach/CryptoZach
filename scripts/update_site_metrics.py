@@ -12,7 +12,10 @@ Metrics tracked and synchronized:
      summed across both fleet hosts on `agent-infrastructure/index.html` and `resume/**/index.html`)
   3. Fleet hard-gate refusals & overrides (`attempts`, `stopped`, `overridden`, `armed_classes`,
      progress-bar width, and measurement dates across `index.html`, `agent-infrastructure/index.html`,
-     and `frameworks/index.html`)
+     and `frameworks/index.html`), read from the workflow repo's
+     `scripts/advisory_effectiveness_fleet.py refusals --through <last closed UTC day> --json`: both
+     machines, test-harness rows out. When that producer refuses, the row reads UNMEASURED and --write
+     leaves those surfaces alone; the page's own figures are never read back in place of a measurement.
   4. USPTO patent portfolio (`41` applications across `31` families and `6` problem areas on
      `patents/index.html`, `patents/patents.json`, `index.html`, `resume/**/index.html`)
   5. Federal comment letters, dockets, agencies & recommendations (`letters/**`,
@@ -35,7 +38,6 @@ import datetime as dt
 import json
 import os
 import re
-import socket
 import subprocess
 import sys
 from pathlib import Path
@@ -44,7 +46,6 @@ ROOT = Path(__file__).resolve().parent.parent
 WF_REPO = Path(os.environ.get("CZ_WORKFLOW_REPO", "/Users/zach/Tokenization_Systems_Website"))
 STATE_DIR = Path(os.path.expanduser(os.environ.get("CZ_STATE_DIR", "~/.local/state/cryptozach")))
 ADV_STORE = STATE_DIR / "advisory_host_tables"
-GATE_STORE = STATE_DIR / "hard_gate_host_tables"
 
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
@@ -64,155 +65,82 @@ def fmt_human_date(iso_date: str) -> str:
     return f"{d.day} {MONTHS[d.month - 1]} {d.year}"
 
 
-def scan_jsonl_hard_gates(lines, cutoff_iso: str) -> dict:
-    """Count raw deny and bypassed events in a hook fire log up to cutoff_iso."""
-    cutoff_prefix = cutoff_iso[:10] + "T23:59:59Z"
-    deny = bypassed = 0
-    per_class = {}
-    last_ts = ""
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            r = json.loads(line)
-        except Exception:
-            continue
-        ts = str(r.get("ts") or "")
-        if ts and ts > cutoff_prefix:
-            continue
-        if ts > last_ts:
-            last_ts = ts
-        mode = r.get("mode")
-        cls = str(r.get("class") or "?")
-        if mode == "deny":
-            deny += 1
-            row = per_class.setdefault(cls, {"deny": 0, "bypassed": 0})
-            row["deny"] += 1
-        elif mode == "bypassed":
-            bypassed += 1
-            row = per_class.setdefault(cls, {"deny": 0, "bypassed": 0})
-            row["bypassed"] += 1
-    return {
-        "cutoff_date": cutoff_iso[:10],
-        "last_ts": last_ts,
-        "deny": deny,
-        "bypassed": bypassed,
-        "attempts": deny + bypassed,
-        "classes": per_class,
-    }
+def last_closed_utc_day(now: "dt.datetime | None" = None) -> str:
+    """The last UTC day that has ended. The producer refuses a --through day that has not."""
+    now = now or dt.datetime.now(dt.timezone.utc)
+    return (now.date() - dt.timedelta(days=1)).isoformat()
 
 
-def measure_hard_gates(cutoff_date: str, sync_ssh: bool = False) -> dict:
-    """Measure hard-gate attempts, refusals, and overrides across both fleet machines."""
+def measure_hard_gates(sync_ssh: bool = False, through: "str | None" = None) -> dict:
+    """Hard-gate attempts, refusals and overrides over both fleet machines, from the workflow repo's producer.
+
+    `advisory_effectiveness_fleet.py refusals --through <day> --json` sums every host's table with the rows a test
+    harness wrote taken OUT of the figure (and counted beside it), and the rows that are exactly a probe string an
+    operator could also have typed kept IN (and counted beside it), under
+    handoff/decisions/reflect-log-fixture-rows-purge-or-filter.md in the workflow repo. It fails closed: a missing,
+    stale or unreadable host table is exit 3 with nothing on stdout. So does this function. A refusal comes back as
+    source "refused" with the producer's reason, and the page's own figures are never read back in its place. The
+    site_fallback it replaces compared the page with itself, and the raw count before it published 312 refusals and
+    16 overrides a harness wrote (card publish-corrected-hard-gate-figures-2026-11-06, PUBLISH-BOTH-MACHINES)."""
+    through = through or last_closed_utc_day()
+    fleet_script = WF_REPO / "scripts" / "advisory_effectiveness_fleet.py"
+    if not fleet_script.is_file():
+        return {"source": "refused", "cutoff_date": through, "reason": f"{fleet_script} is not present"}
     try:
-        GATE_STORE.mkdir(parents=True, exist_ok=True)
-    except OSError:
-        pass
-    me = socket.gethostname().split(".")[0]
-    local_log = Path(os.path.expanduser("~/.claude/cz_destructive_git_fires.jsonl"))
-
-    hosts_data = {}
-    if local_log.is_file():
-        local_stats = scan_jsonl_hard_gates(
-            local_log.read_text(encoding="utf-8", errors="replace").splitlines(),
-            cutoff_date,
+        if sync_ssh:
+            subprocess.run(
+                [sys.executable, str(fleet_script), "sync"],
+                cwd=str(WF_REPO), capture_output=True, text=True, timeout=180,
+            )
+        p = subprocess.run(
+            [sys.executable, str(fleet_script), "refusals", "--through", through, "--json"],
+            cwd=str(WF_REPO), capture_output=True, text=True, timeout=900,
         )
-        local_stats["host"] = me
-        hosts_data[me] = local_stats
-        try:
-            (GATE_STORE / f"{me}.json").write_text(json.dumps(local_stats, indent=2) + "\n", encoding="utf-8")
-        except OSError:
-            pass
-
-    peer = "pop-os" if me != "pop-os" else "Zachs-MacBook-Pro"
-    peer_cache = GATE_STORE / f"{peer}.json"
-    need_ssh = sync_ssh or not peer_cache.is_file()
-    if peer_cache.is_file() and not sync_ssh:
-        try:
-            cached = json.loads(peer_cache.read_text(encoding="utf-8"))
-            if cached.get("cutoff_date") == cutoff_date[:10]:
-                hosts_data[peer] = cached
-            else:
-                need_ssh = True
-        except Exception:
-            need_ssh = True
-
-    if need_ssh:
-        try:
-            remote_py = (
-                "import json, os, sys; "
-                f"cut = {json.dumps(cutoff_date[:10] + 'T23:59:59Z')}; "
-                "d = b = 0; cls = {}; last = ''; "
-                "f = open(os.path.expanduser('~/.claude/cz_destructive_git_fires.jsonl'), errors='replace'); "
-                "[\n"
-                "  None for l in f for r in ([json.loads(l)] if l.strip().startswith('{') else []) "
-                "  if str(r.get('ts','')) <= cut and ("
-                "    cls.setdefault(r.get('class','?'), {'deny':0,'bypassed':0}).__setitem__(r.get('mode'), "
-                "    cls.get(r.get('class','?'), {'deny':0,'bypassed':0}).get(r.get('mode'),0)+1) "
-                "    if r.get('mode') in ('deny','bypassed') else None"
-                "  )\n"
-                "]; "
-                "d = sum(v['deny'] for v in cls.values()); "
-                "b = sum(v['bypassed'] for v in cls.values()); "
-                f"print(json.dumps({{'host':{json.dumps(peer)},'cutoff_date':{json.dumps(cutoff_date[:10])},'deny':d,'bypassed':b,'attempts':d+b,'classes':cls}}))"
-            )
-            p = subprocess.run(
-                ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", peer, f"python3 -c {json.dumps(remote_py)}"],
-                capture_output=True, text=True, timeout=25,
-            )
-            if p.returncode == 0 and p.stdout.strip():
-                peer_stats = json.loads(p.stdout.strip().splitlines()[-1])
-                hosts_data[peer] = peer_stats
-                try:
-                    peer_cache.write_text(json.dumps(peer_stats, indent=2) + "\n", encoding="utf-8")
-                except OSError:
-                    pass
-        except Exception:
-            # A cached peer table counts only when it holds the same cutoff: summing a stale peer table with a fresh
-            # local one would publish a figure that mixes two dates. Without it the measurement falls back to the
-            # page's own values below, labelled site_fallback.
-            if peer_cache.is_file():
-                try:
-                    cached = json.loads(peer_cache.read_text(encoding="utf-8"))
-                    if cached.get("cutoff_date") == cutoff_date[:10]:
-                        hosts_data[peer] = cached
-                except Exception:
-                    pass
-
-    if len(hosts_data) == 2:
-        combined_classes = {}
-        for hdoc in hosts_data.values():
-            for c, counts in (hdoc.get("classes") or {}).items():
-                row = combined_classes.setdefault(c, {"deny": 0, "bypassed": 0})
-                row["deny"] += counts.get("deny", 0)
-                row["bypassed"] += counts.get("bypassed", 0)
-        stopped = sum(v["deny"] for v in combined_classes.values())
-        overridden = sum(v["bypassed"] for v in combined_classes.values())
-        attempts = stopped + overridden
+    except subprocess.TimeoutExpired as e:
+        return {"source": "refused", "cutoff_date": through,
+                "reason": "the producer's %s step ran past its bound" % ("sync" if "sync" in (e.cmd or []) else "refusals")}
+    if p.returncode != 0 or not p.stdout.strip():
+        why = (p.stderr or "").strip().splitlines()
         return {
-            "source": "fleet_logs",
-            "cutoff_date": cutoff_date[:10],
-            "attempts": attempts,
-            "stopped": stopped,
-            "overridden": overridden,
-            "armed_classes": len(combined_classes),
-            "bar_pct": round(stopped / attempts * 100.0, 1) if attempts else 0.0,
-            "hosts": hosts_data,
+            "source": "refused", "cutoff_date": through,
+            "reason": f"exit {p.returncode}: {why[-1][:300] if why else 'no reason printed'}",
         }
-
-    # Fallback to current page values when offline / CI without fleet logs
-    site_gate = read_site_hard_gates()
+    try:
+        doc = json.loads(p.stdout)
+        refused, overridden, attempts = int(doc["refused"]), int(doc["overridden"]), int(doc["attempts"])
+        classes = list(doc["classes"])
+    except (ValueError, KeyError, TypeError) as e:
+        return {"source": "refused", "cutoff_date": through, "reason": f"unreadable producer output: {e}"}
+    if attempts != refused + overridden:
+        return {
+            "source": "refused", "cutoff_date": through,
+            "reason": f"attempts {attempts} is not refused {refused} plus overridden {overridden}",
+        }
     return {
-        "source": "site_fallback",
-        "cutoff_date": site_gate["date_iso"],
-        "attempts": site_gate["attempts"],
-        "stopped": site_gate["stopped"],
-        "overridden": site_gate["overridden"],
-        "armed_classes": 12,
-        "bar_pct": round(site_gate["stopped"] / site_gate["attempts"] * 100.0, 1) if site_gate["attempts"] else 99.6,
-        "hosts": hosts_data,
+        "source": "fleet_producer",
+        "cutoff_date": str(doc.get("through") or through)[:10],
+        "attempts": attempts,
+        "stopped": refused,
+        "overridden": overridden,
+        "armed_classes": len(classes),
+        "bar_pct": round(refused / attempts * 100.0, 1) if attempts else 0.0,
+        "harness": doc.get("harness") or {},
+        "flagged": doc.get("ambiguous") or {},
+        "raw": doc.get("raw") or {},
+        "classes": classes,
+        "hosts": [h.get("host") for h in (doc.get("hosts") or []) if isinstance(h, dict)],
     }
+
+
+def hard_gate_live_text(gate: dict) -> str:
+    """The report's live column for the hard-gate row: the figure, or why there is none."""
+    if gate.get("source") != "fleet_producer":
+        return f"UNMEASURED: the producer refused through {gate.get('cutoff_date')} ({gate.get('reason')})"
+    h = gate.get("harness") or {}
+    return (
+        f"{gate['stopped']:,} / {gate['attempts']:,} ({gate['overridden']} overridden, {gate['bar_pct']:.1f}%, "
+        f"through {gate['cutoff_date']}; harness rows out: {h.get('refused', 0)} refused, {h.get('overridden', 0)} overridden)"
+    )
 
 
 def read_site_hard_gates() -> dict:
@@ -352,18 +280,13 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
         ai_new,
     )
     ai_new = re.sub(
-        r'(<tr><th scope="row">(?:Hard refusals|Attempts at a hard gate)</th><td class="ai-val">)\d[\d,]*(</td><td class="ai-how">Calls that reached an armed gate across the \d+ classes that carry one, on both of the fleet\'s machines, through )\d{4}-\d{2}-\d{2}(\.\s*)\d[\d,]*(\s+refused,\s+)\d[\d,]*(\s+overridden with the documented escape)',
-        rf"\g<1>{attempts_s}\g<2>{date_iso}\g<3>{stopped_s}\g<4>{overridden_s}\g<5>",
+        r'(<tr><th scope="row">(?:Hard refusals|Attempts at a hard gate)</th><td class="ai-val">)\d[\d,]*(</td><td class="ai-how">Calls that reached an armed gate across the )\d+( classes that carry one, on both of the fleet\'s machines, through )\d{4}-\d{2}-\d{2}(\.\s*)\d[\d,]*(\s+refused,\s+)\d[\d,]*(\s+overridden with the documented escape)',
+        rf"\g<1>{attempts_s}\g<2>{gate['armed_classes']}\g<3>{date_iso}\g<4>{stopped_s}\g<5>{overridden_s}\g<6>",
         ai_new,
     )
     ai_new = re.sub(
         r'(<p class="ai-callout-stat">)\d[\d,]*\s+of\s+\d[\d,]*(</p>\s*<p(?: class="ai-callout-text")?>actions stopped at a hard gate, on both of the fleet\'s machines through )\d+\s+[A-Za-z]+\s+\d{4}(\.\s*In the other )\d[\d,]*(\s+cases,\s+the agent used the documented override)',
         rf"\g<1>{stopped_s} of {attempts_s}\g<2>{date_human}\g<3>{overridden_s}\g<4>",
-        ai_new,
-    )
-    ai_new = re.sub(
-        r"(The figure above it was measured on )\d{4}-\d{2}-\d{2}( over both of the fleet's machines and twelve gate classes:\s*)\d[\d,]*(\s+blocked,\s+)\d[\d,]*(\s+overrides\.)",
-        rf"\g<1>{date_iso}\g<2>{stopped_s}\g<3>{overridden_s}\g<4>",
         ai_new,
     )
     ai_new = re.sub(
@@ -401,9 +324,9 @@ def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dic
     # 2. Advisory fleet metrics
     adv = measure_advisory_fleet(sync_ssh=sync_ssh)
 
-    # 3. Hard-gate metrics (bounded through the advisory / commit chart date so dates stay coherent)
-    cutoff_date = adv.get("last_date") or dt.date.today().isoformat()
-    gate_live = measure_hard_gates(cutoff_date=cutoff_date, sync_ssh=sync_ssh)
+    # 3. Hard-gate metrics: both machines through the last closed UTC day, harness rows out, from the workflow
+    #    repo's producer. It fails closed, and a refusal is reported as one, never replaced by the page's figures.
+    gate_live = measure_hard_gates(sync_ssh=sync_ssh)
     gate_site = read_site_hard_gates()
 
     # 4. Shipped resume reference figures & site scale comparison
@@ -451,10 +374,12 @@ def collect_report(refresh_commits: bool = False, sync_ssh: bool = False) -> dic
         {
             "key": "hard_gates",
             "label": "Hard-gate refusals (both machines)",
-            "live": f"{gate_live['stopped']:,} / {gate_live['attempts']:,} ({gate_live['overridden']} overridden, {gate_live['bar_pct']:.1f}%, through {gate_live['cutoff_date']})",
+            "live": hard_gate_live_text(gate_live),
             "site": f"{gate_site['stopped']:,} / {gate_site['attempts']:,} ({gate_site['overridden']} overridden, through {gate_site['date_iso']})",
+            "unmeasured": gate_live.get("source") != "fleet_producer",
             "ok": (
-                gate_live["attempts"] == gate_site["attempts"]
+                gate_live.get("source") == "fleet_producer"
+                and gate_live["attempts"] == gate_site["attempts"]
                 and gate_live["stopped"] == gate_site["stopped"]
                 and gate_live["overridden"] == gate_site["overridden"]
                 and gate_site["home_agree"]
@@ -523,7 +448,7 @@ def print_report(rep: dict):
     print(f"{'Metric':34s} | {'Live / Authoritative':46s} | {'Status':6s}")
     print("-" * 92)
     for m in rep["metrics"]:
-        status = "OK" if m["ok"] else "DRIFT"
+        status = "OK" if m["ok"] else ("UNMEASURED" if m.get("unmeasured") else "DRIFT")
         print(f"{m['label']:34s} | {m['live']:46s} | {status:6s}")
         if not m["ok"]:
             print(f"  -> Site currently shows: {m['site']}")
@@ -551,10 +476,16 @@ def run_write_pipeline(sync_ssh: bool = False, with_resumes: bool = False) -> in
             )
 
     print("3. Updating hard-gate refusal counts across index.html, agent-infrastructure/index.html, and frameworks/index.html...")
-    gate_changed = apply_hard_gate_updates(rep["raw"]["hard_gates_live"])
+    gate = rep["raw"]["hard_gates_live"]
+    gate_refused = gate.get("source") != "fleet_producer"
+    if gate_refused:
+        print(f"   Hard-gate surfaces left unchanged: {hard_gate_live_text(gate)}")
+        gate_changed = None
+    else:
+        gate_changed = apply_hard_gate_updates(gate)
     if gate_changed:
         print("   Updated hard-gate surfaces:", ", ".join(gate_changed))
-    else:
+    elif gate_changed is not None:
         print("   Hard-gate surfaces already up to date.")
 
     print("4. Refreshing interactive commit chart and scale figures...")
@@ -599,6 +530,10 @@ def run_write_pipeline(sync_ssh: bool = False, with_resumes: bool = False) -> in
             print(f"Guard failed: {' '.join(cmd)}", file=sys.stderr)
             return r.returncode
 
+    if gate_refused:
+        print("\nupdate_site_metrics: other surfaces updated and verified; the HARD-GATE figures are UNMEASURED and were "
+              "left as they were (the producer refused). Exit 3.")
+        return 3
     print("\nupdate_site_metrics: ALL SITE METRICS UPDATED AND VERIFIED.")
     return 0
 

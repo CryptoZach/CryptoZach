@@ -102,7 +102,7 @@
     "author": { "@type": "Person", "name": "Zach Zukowski", "url": "https://tokenization.systems/" },
     "publisher": { "@type": "Organization", "name": "Tokenization Systems", "url": "https://tokenization.systems/" },
     "datePublished": "2026-08-04",
-    "dateModified": "2026-11-19",
+    "dateModified": "2026-11-21",
     "inLanguage": "en",
     "about": [
       { "@type": "Thing", "name": "AI agent infrastructure" },
@@ -216,7 +216,7 @@
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
         <p class="ai-hero-support">The evidence is below: dated measurements from more than 90,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
-        <p class="ai-measured-as">Updated <time datetime="2026-11-19">2026-11-19</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
+        <p class="ai-measured-as">Updated <time datetime="2026-11-21">2026-11-21</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
       data-scale-commits-floored="90000"
       data-scale-concurrency-p75="18"
@@ -236,8 +236,8 @@
       data-scale-unowned-open="2515"
       data-scale-unowned-filed="5329"
       data-scale-unowned-closed="2814"
-      data-scale-hard-gate-deny="20448"
-      data-scale-hard-gate-bypass="62"
+      data-scale-hard-gate-deny="20729"
+      data-scale-hard-gate-bypass="47"
       data-scale-as-of="2026-09-30"
       data-scale-carried-from-2026-09-21="coherence-gate-checks hard-fail-checks unsuppressable-checks unowned-filed unowned-closed unowned-open"></div>
 
@@ -352,7 +352,7 @@
       <div class="explainer">
         <h2 id="scale-title">System scale</h2>
         <p>The identity rules above, and the safeguards measured in the next sections, run inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
-        <p class="ai-note">Each figure below carries its own measurement date: commits, warnings and hard gates 2026-11-19, concurrency 2026-11-18, skills 2026-11-15, comment letters 2026-10-20, shared state files 2026-09-30, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
+        <p class="ai-note">Each figure below carries its own measurement date: commits and warnings 2026-11-19, hard gates 2026-11-21, concurrency 2026-11-18, skills 2026-11-15, comment letters 2026-10-20, shared state files 2026-09-30, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
             <p class="ai-metric-value">90,000+</p>
@@ -375,9 +375,9 @@
             <p class="ai-metric-was">41 classes across 132 days</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">20,510</p>
+            <p class="ai-metric-value">20,776</p>
             <p class="ai-metric-label">Actions reached a hard gate</p>
-            <p class="ai-metric-was">20,448 stopped; 62 overridden</p>
+            <p class="ai-metric-was">20,729 stopped; 47 overridden</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">2,515</p>
@@ -489,7 +489,7 @@
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the commits row was measured 2026-11-19, the advisory warnings row was measured 2026-11-19, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-18, the hard-gate attempts row was measured 2026-11-19 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the commits row was measured 2026-11-19, the advisory warnings row was measured 2026-11-19, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-18, the hard-gate attempts row was measured 2026-11-21 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
@@ -498,7 +498,7 @@
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">18; peak 57</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-11-18 across both hosts: median 13, typical busy overlap 18 (75th percentile), 90th percentile 25, peak 57 on 2026-11-14. The claim of 12 to 36 concurrent agents, set 2026-11-03, is supported at both ends: the typical overlap of 18 is at least 12, and the peak of 57 exceeds 36. The claim of 12 to 55 before it, set 2026-09-26 on the 2026-09-28 reading (typical overlap 14, peak 61 on 2026-09-05), failed its high end at every weekly re-verify from 2026-10-11. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
                 <tr><th scope="row">Advisory warnings</th><td class="ai-val">89,425</td><td class="ai-how">Across 41 classes over 132 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
-                <tr><th scope="row">Attempts at a hard gate</th><td class="ai-val">20,510</td><td class="ai-how">Calls that reached an armed gate across the 15 classes that carry one, on both of the fleet's machines, through 2026-11-19. 20,448 refused, 62 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
+                <tr><th scope="row">Attempts at a hard gate</th><td class="ai-val">20,776</td><td class="ai-how">Calls that reached an armed gate across the 16 classes that carry one, on both of the fleet's machines, through 2026-11-21. 20,729 refused, 47 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">79</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
                 <tr><th scope="row">Canonical state</th><td class="ai-val">33 files</td><td class="ai-how">The durable record agents read at start and write at close. Unchanged since 2026-08-04</td></tr>
@@ -521,7 +521,7 @@
         </div>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness ai-table--advisories">
-            <caption>What happened after warnings fired. These six classes produced 21,698 of 24,166 warnings (90%) during the 73 days through 2026-09-21. The repeat rate is the share of workspaces where the same warning returned after its first appearance. Instrument labels appear beneath the plain-language names.</caption>
+            <caption>What happened after warnings fired. These six classes produced 21,698 of 24,166 warnings (90%) during the 73 days through 2026-09-21 on one machine. The repeat rate is the share of workspaces where the same warning returned after its first appearance. Instrument labels appear beneath the plain-language names.</caption>
             <thead>
               <tr><th scope="col">What the warning caught</th><th scope="col" class="ai-num-head">Times fired</th><th scope="col" class="ai-num-head">Workspaces</th><th scope="col" class="ai-num-head">Warning returned</th><th scope="col">What the rate suggests</th></tr>
             </thead>
@@ -572,31 +572,40 @@
       <div class="explainer">
         <h2 id="armed-title">What hard gates actually stopped</h2>
         <div class="ai-callout" role="note">
-          <p class="ai-callout-stat">20,448 of 20,510</p>
-          <p class="ai-callout-text">actions stopped at a hard gate, on both of the fleet's machines through 19 November 2026. In the other 62 cases, the agent used the documented override and continued. The gates therefore held in about 299 of every 300 measured attempts.</p>
+          <p class="ai-callout-stat">20,729 of 20,776</p>
+          <p class="ai-callout-text">actions stopped at a hard gate, on both of the fleet's machines through 21 November 2026. In the other 47 cases, the agent used the documented override and continued. The gates therefore held in about 399 of every 400 measured attempts.</p>
         </div>
         <p>A hard gate refuses an action instead of only warning about it. The table shows every armed gate class, how often it blocked an action, and how often an agent bypassed the block.</p>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness ai-table--refusals">
-            <caption>Hard-gate results over the 73 days through 2026-09-21, ranked by times blocked. An override means the agent used the documented escape and continued. Every block and override leaves a log entry. For the two oldest gate classes, “First seen” marks the start of the log; the gates may have been armed earlier. The table is that 73-day study of seven gate classes on one machine (2,547 blocked, 49 overrides). The figure above it was measured on 2026-11-19 over both of the fleet's machines and fifteen gate classes: 20,448 blocked, 62 overrides.</caption>
+            <caption>Hard-gate results on both of the fleet's machines through 2026-11-21, every armed gate class, ranked by times blocked. An override means the agent used the documented escape and continued. Every block and override leaves a log entry. Rows a test harness wrote are left out (312 blocks and 16 overrides). Another 57 blocks and 22 overrides exactly match a probe string an operator could also have typed. They stay in. With all of them out, no override rate rises. One machine's log starts 2026-07-10 and the other's 2026-08-30, so a class first seen within days of either start may have been armed earlier. The rows sum to 20,729 blocked and 47 overrides, the figure above on 2026-11-21.</caption>
             <thead>
               <tr><th scope="col">Action the gate stopped</th><th scope="col" class="ai-num-head">Times blocked</th><th scope="col" class="ai-num-head">Overrides</th><th scope="col" class="ai-num-head">Override rate</th><th scope="col">First seen</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Misreading a piped command's exit status <span class="ai-class-gloss">The deny mode of the failed-command warning</span></th><td class="ai-num">2,080</td><td class="ai-num">9</td><td class="ai-num ai-num--key">&lt;1%</td><td class="ai-how">2026-08-08</td></tr>
-              <tr><th scope="row">A shell modifier that silently truncates <span class="ai-class-gloss">Right-looking output, wrong path</span></th><td class="ai-num">186</td><td class="ai-num">16</td><td class="ai-num ai-num--key">8%</td><td class="ai-how">2026-08-18</td></tr>
-              <tr><th scope="row">Destroying a stash <span class="ai-class-gloss">Work another session may not have recovered</span></th><td class="ai-num">144</td><td class="ai-num">9</td><td class="ai-num ai-num--key">6%</td><td class="ai-how">2026-07-11</td></tr>
-              <tr><th scope="row">Writing a malformed shared config <span class="ai-class-gloss">One bad line breaks every session at once</span></th><td class="ai-num">48</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-07-26</td></tr>
-              <tr><th scope="row">Force-deleting a branch <span class="ai-class-gloss">Unmerged commits, no second copy</span></th><td class="ai-num">32</td><td class="ai-num">6</td><td class="ai-num ai-num--key">16%</td><td class="ai-how">2026-07-10</td></tr>
-              <tr><th scope="row">Rewriting critical shared config <span class="ai-class-gloss">Changes what every other session does next</span></th><td class="ai-num">32</td><td class="ai-num">1</td><td class="ai-num ai-num--key">3%</td><td class="ai-how">2026-08-05</td></tr>
-              <tr><th scope="row">Garbage-collecting the object store <span class="ai-class-gloss">Unreferenced work is unrecoverable after</span></th><td class="ai-num">25</td><td class="ai-num">8</td><td class="ai-num ai-num--key">24%</td><td class="ai-how">2026-07-31</td></tr>
+              <tr><th scope="row">Misreading a piped command's exit status <span class="ai-class-gloss">The deny mode of the failed-command warning</span></th><td class="ai-num">11,031</td><td class="ai-num">10</td><td class="ai-num ai-num--key">&lt;1%</td><td class="ai-how">2026-08-08</td></tr>
+              <tr><th scope="row">Reading a permission-gated source through a filter <span class="ai-class-gloss">A refused read looks the same as an empty one</span></th><td class="ai-num">3,397</td><td class="ai-num">5</td><td class="ai-num ai-num--key">&lt;1%</td><td class="ai-how">2026-09-04</td></tr>
+              <tr><th scope="row">A shell modifier that silently truncates <span class="ai-class-gloss">Right-looking output, wrong path</span></th><td class="ai-num">2,598</td><td class="ai-num">6</td><td class="ai-num ai-num--key">&lt;1%</td><td class="ai-how">2026-08-18</td></tr>
+              <tr><th scope="row">Claiming an absence without naming the search <span class="ai-class-gloss">Never says where it looked</span></th><td class="ai-num">1,625</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-08-30</td></tr>
+              <tr><th scope="row">Putting a commit landing under a timeout <span class="ai-class-gloss">The kill lands mid-commit and cannot say so</span></th><td class="ai-num">859</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-09-25</td></tr>
+              <tr><th scope="row">An emptiness label printed whatever the output <span class="ai-class-gloss">The label can contradict the result</span></th><td class="ai-num">389</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-09-28</td></tr>
+              <tr><th scope="row">Putting a checkout or rebase under a timeout <span class="ai-class-gloss">A kill mid-rewrite leaves a half-written tree</span></th><td class="ai-num">351</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-10-12</td></tr>
+              <tr><th scope="row">Destroying a stash <span class="ai-class-gloss">Work another session may not have recovered</span></th><td class="ai-num">106</td><td class="ai-num">13</td><td class="ai-num ai-num--key">11%</td><td class="ai-how">2026-07-11</td></tr>
+              <tr><th scope="row">Writing a malformed shared config <span class="ai-class-gloss">One bad line breaks every session at once</span></th><td class="ai-num">99</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-07-26</td></tr>
+              <tr><th scope="row">Backgrounding a landing from its own shell <span class="ai-class-gloss">Its result can no longer reach the session</span></th><td class="ai-num">75</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-10-30</td></tr>
+              <tr><th scope="row">Rewriting critical shared config <span class="ai-class-gloss">Changes what every other session does next</span></th><td class="ai-num">60</td><td class="ai-num">1</td><td class="ai-num ai-num--key">2%</td><td class="ai-how">2026-08-05</td></tr>
+              <tr><th scope="row">Garbage-collecting the object store <span class="ai-class-gloss">Unreferenced work is unrecoverable after</span></th><td class="ai-num">44</td><td class="ai-num">8</td><td class="ai-num ai-num--key">15%</td><td class="ai-how">2026-07-31</td></tr>
+              <tr><th scope="row">Running a test payload on another machine by hand <span class="ai-class-gloss">No containment if the connection drops</span></th><td class="ai-num">41</td><td class="ai-num">4</td><td class="ai-num ai-num--key">9%</td><td class="ai-how">2026-11-06</td></tr>
+              <tr><th scope="row">Force-deleting a branch <span class="ai-class-gloss">Unmerged commits, no second copy</span></th><td class="ai-num">31</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-07-22</td></tr>
+              <tr><th scope="row">A wait loop that matches its own command <span class="ai-class-gloss">The condition never changes, so it never ends</span></th><td class="ai-num">22</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-11-13</td></tr>
+              <tr><th scope="row">Reading or setting the Mac's launchd environment over ssh <span class="ai-class-gloss">It reaches the ssh session, not the launchd jobs</span></th><td class="ai-num">1</td><td class="ai-num">0</td><td class="ai-num ai-num--key">0%</td><td class="ai-how">2026-11-21</td></tr>
             </tbody>
           </table>
         </div>
         <p class="ai-note">The override log is essential. Without it, we could count how often a gate fired but could not tell whether the block held.</p>
         <p>An override remains necessary because a gate that blocks valid work needs a recovery path. The same override data also reveals gates that agents routinely step around.</p>
-        <p><strong>About 11% of warnings reached a hard gate.</strong> A gate is safe to arm only when the wrong action is unambiguous. Destroying a stash or force-deleting a branch can be recognized from the command. Piping one command into another is usually valid, so most failed-command warnings still remain advisory.</p>
-        <p><strong>Arming a gate covers only the unambiguous subset of a warning class.</strong> The failed-command class now has a deny mode that fired 2,080 times against 13,975 events (about 15%), with 9 documented overrides. The other 11,886 events in the class stayed advisory. The gate reaches more of the class than it did in August, while the broader piped-command cases remain advisory.</p>
+        <p><strong>More than a fifth of warnings reached a hard gate.</strong> A gate is safe to arm only when the wrong action is unambiguous. Destroying a stash or force-deleting a branch can be recognized from the command. Piping one command into another is usually valid, so most failed-command warnings still remain advisory.</p>
+        <p><strong>Arming a gate covers only the unambiguous subset of a warning class.</strong> On both machines through 21 November 2026, the failed-command class's deny mode blocked 11,031 actions, with 10 documented overrides: just under a third of the class's 34,604 events. The rest of the class stayed advisory. On the one machine the 73-day study measured, the share has risen from about 15% (2,080 of 13,975 events through 21 September 2026) to about 22%, while the broader piped-command cases remain advisory.</p>
         <blockquote class="paper-thesis-line ai-thesis">
           <p>A gate is effective when it intercepts the target behavior and holds with a low override rate.</p>
         </blockquote>
@@ -640,7 +649,7 @@
               <div class="b4-explorer__control-group" role="group" aria-label="Hard gate and silent failure view">
                 <span class="b4-explorer__control-label">View</span>
                 <div class="b4-explorer__pills">
-                  <button type="button" class="b4-pill is-active" data-ai-gate="refusals" aria-pressed="true">7 armed gate classes (hold vs override rate)</button>
+                  <button type="button" class="b4-pill is-active" data-ai-gate="refusals" aria-pressed="true">16 armed gate classes (hold vs override rate)</button>
                   <button type="button" class="b4-pill" data-ai-gate="silent" aria-pressed="false">11 silent failures where the signal looked healthy</button>
                 </div>
               </div>
@@ -823,7 +832,7 @@
               <tr>
                 <th scope="row">Advisory claim vs. enforced gate</th>
                 <td data-label="Tokenized money &amp; securities">Marketing terms or statutory labels vs. gateway freeze authority, compliance screening, and non-compensatory entry gates (<a href="/frameworks/#clii">CLII</a>, <a href="/frameworks/#mvep">MVEP</a>)</td>
-                <td class="ai-how" data-label="AI agent fleets &amp; agentic payments">The highest-volume advisory warning, which returned in <a href="#measurement">84% of workspaces</a>, vs. armed hard gates that refused the prohibited action <a href="#armed">299 times in 300</a> (20,448 of 20,510 attempts across both machines through 19 November 2026)</td>
+                <td class="ai-how" data-label="AI agent fleets &amp; agentic payments">The highest-volume advisory warning, which returned in <a href="#measurement">84% of workspaces</a>, vs. armed hard gates that refused the prohibited action <a href="#armed">399 times in 400</a> (20,729 of 20,776 attempts across both machines through 21 November 2026)</td>
               </tr>
               <tr>
                 <th scope="row">System of record &amp; provenance</th>

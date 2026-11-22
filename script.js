@@ -10076,19 +10076,28 @@
 
       if(curGate === 'refusals'){
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Fleet-wide hard-gate hold rate</span><span class="b4-stat__val">99.56% (199 of 200)</span><span class="b4-stat__sub">13,098 stopped of 13,156 attempts; 58 documented overrides</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">73-day single-host table</span><span class="b4-stat__val">2,547 blocked / 49 overrides</span><span class="b4-stat__sub">98.1% hold rate across the 7 initial armed gate classes</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Largest armed gate class</span><span class="b4-stat__val">2,080 blocked (&lt;1% override)</span><span class="b4-stat__sub">Deny mode of pipe-exit misread (9 overrides; 99.6% hold rate)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Zero-override gate class</span><span class="b4-stat__val">48 blocked / 0 overrides</span><span class="b4-stat__sub">Malformed shared config write gate (100% hold rate since 2026-07-26)</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">Fleet-wide hard-gate hold rate</span><span class="b4-stat__val">99.77%</span><span class="b4-stat__sub">20,729 stopped of 20,776 attempts through 2026-11-21; 47 documented overrides; test-harness rows excluded</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Armed gate classes</span><span class="b4-stat__val">16 on both machines</span><span class="b4-stat__sub">Every class with a hard gate, through 2026-11-21</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Largest armed gate class</span><span class="b4-stat__val">11,031 blocked (&lt;1% override)</span><span class="b4-stat__sub">Deny mode of pipe-exit misread (10 overrides; 99.9% hold rate)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Largest zero-override gate class</span><span class="b4-stat__val">1,625 blocked / 0 overrides</span><span class="b4-stat__sub">Claiming an absence without naming the search (100% hold rate since 2026-08-30)</span></div>';
 
         var gRows = [
-          { name: 'Writing a malformed shared config (first seen 2026-07-26)', hold: 100.0, badge: '100.0% hold · 48 blocked, 0 overrides (0% override)', note: 'Prevents a single broken configuration line from halting every concurrent session' },
-          { name: 'Misreading a piped command exit status (first seen 2026-08-08)', hold: 99.6, badge: '99.6% hold · 2,080 blocked, 9 overrides (<1% override)', note: 'Intercepts unambiguous pipe-exit misreads at point of execution' },
-          { name: 'Rewriting critical shared config (first seen 2026-08-05)', hold: 97.0, badge: '97.0% hold · 32 blocked, 1 override (3% override)', note: 'Protects shared operating instructions across concurrent agents' },
-          { name: 'Destroying a git stash (first seen 2026-07-11)', hold: 94.1, badge: '94.1% hold · 144 blocked, 9 overrides (6% override)', note: 'Prevents dropping stashed work another session may still need' },
-          { name: 'Shell modifier that silently truncates (first seen 2026-08-18)', hold: 92.1, badge: '92.1% hold · 186 blocked, 16 overrides (8% override)', note: 'Stops right-looking output generated from a truncated command path' },
-          { name: 'Force-deleting a branch (first seen 2026-07-10)', hold: 84.2, badge: '84.2% hold · 32 blocked, 6 overrides (16% override)', note: 'Blocks unmerged branch deletion where no second copy exists' },
-          { name: 'Garbage-collecting the object store (first seen 2026-07-31)', hold: 75.8, badge: '75.8% hold · 25 blocked, 8 overrides (24% override)', note: 'Prevents pruning unreferenced objects during concurrent worktree activity' }
+          { name: 'Claiming an absence without naming the search (first seen 2026-08-30)', hold: 100.0, badge: '100.0% hold · 1,625 blocked, 0 overrides (0% override)', note: 'Stops an absence claim that never names where it searched' },
+          { name: 'Putting a commit landing under a timeout (first seen 2026-09-25)', hold: 100.0, badge: '100.0% hold · 859 blocked, 0 overrides (0% override)', note: 'Stops a timeout that would kill a commit landing part way' },
+          { name: 'An emptiness label printed whatever the output (first seen 2026-09-28)', hold: 100.0, badge: '100.0% hold · 389 blocked, 0 overrides (0% override)', note: 'Stops an emptiness label printed whether or not the command found anything' },
+          { name: 'Putting a checkout or rebase under a timeout (first seen 2026-10-12)', hold: 100.0, badge: '100.0% hold · 351 blocked, 0 overrides (0% override)', note: 'Stops a timeout that would kill a checkout or rebase mid-rewrite' },
+          { name: 'Writing a malformed shared config (first seen 2026-07-26)', hold: 100.0, badge: '100.0% hold · 99 blocked, 0 overrides (0% override)', note: 'Prevents a single broken configuration line from halting every concurrent session' },
+          { name: 'Backgrounding a landing from its own shell (first seen 2026-10-30)', hold: 100.0, badge: '100.0% hold · 75 blocked, 0 overrides (0% override)', note: 'Stops a landing backgrounded where its result cannot reach the session' },
+          { name: 'Force-deleting a branch (first seen 2026-07-22)', hold: 100.0, badge: '100.0% hold · 31 blocked, 0 overrides (0% override)', note: 'Blocks unmerged branch deletion where no second copy exists' },
+          { name: 'A wait loop that matches its own command (first seen 2026-11-13)', hold: 100.0, badge: '100.0% hold · 22 blocked, 0 overrides (0% override)', note: 'Stops a wait loop whose condition matches its own command line' },
+          { name: 'Reading or setting the Mac\'s launchd environment over ssh (first seen 2026-11-21)', hold: 100.0, badge: '100.0% hold · 1 blocked, 0 overrides (0% override)', note: 'Stops a launchd environment read or write over ssh that reaches the wrong domain' },
+          { name: 'Misreading a piped command\'s exit status (first seen 2026-08-08)', hold: 99.9, badge: '99.9% hold · 11,031 blocked, 10 overrides (<1% override)', note: 'Intercepts unambiguous pipe-exit misreads at point of execution' },
+          { name: 'Reading a permission-gated source through a filter (first seen 2026-09-04)', hold: 99.9, badge: '99.9% hold · 3,397 blocked, 5 overrides (<1% override)', note: 'Stops a gated read whose denial a filter would hide as an empty result' },
+          { name: 'A shell modifier that silently truncates (first seen 2026-08-18)', hold: 99.8, badge: '99.8% hold · 2,598 blocked, 6 overrides (<1% override)', note: 'Stops right-looking output generated from a truncated command path' },
+          { name: 'Rewriting critical shared config (first seen 2026-08-05)', hold: 98.4, badge: '98.4% hold · 60 blocked, 1 override (2% override)', note: 'Protects shared operating instructions across concurrent agents' },
+          { name: 'Running a test payload on another machine by hand (first seen 2026-11-06)', hold: 91.1, badge: '91.1% hold · 41 blocked, 4 overrides (9% override)', note: 'Stops a hand-built test run on another machine that has no containment' },
+          { name: 'Destroying a stash (first seen 2026-07-11)', hold: 89.1, badge: '89.1% hold · 106 blocked, 13 overrides (11% override)', note: 'Prevents dropping stashed work another session may still need' },
+          { name: 'Garbage-collecting the object store (first seen 2026-07-31)', hold: 84.6, badge: '84.6% hold · 44 blocked, 8 overrides (15% override)', note: 'Prevents pruning unreferenced objects during concurrent worktree activity' }
         ];
         barsEl.innerHTML = gRows.map(function(r){
           return '<div class="b4-bar-row">' +
@@ -10298,7 +10307,7 @@
           { step: '2. Trace', pct: 92, tool: 'x402 Settlement Fingerprint & Proxy-Leg Reconciliation', action: 'Trace EIP-3009 / SPL settlement through the facilitator set and strip 2-hop proxy double-counting (-36.6% on Base).' },
           { step: '3. Map', pct: 90, tool: 'Count vs Value Facilitator HHI & Buyer Cardinality', action: 'Measure facilitator HHI on both count and dollar layers and compute payments per distinct buyer (26.7 Base vs 144k Polygon).' },
           { step: '4. Compare', pct: 85, tool: 'CLII-AI (5 dimensions) & MVEP-AI (10 categories)', action: 'Audit session-attributed provenance, time-bounded task leases, and irreversible push-payment loss allocation.' },
-          { step: '5. Stress', pct: 88, tool: 'Advisory Saturation vs Armed Hard-Gate Outcome Test', action: 'Measure how often warnings recur in the same workspace (84% for the top warning) vs armed gate hold rate (99.56%, 13,098 of 13,156 stopped).' },
+          { step: '5. Stress', pct: 88, tool: 'Advisory Saturation vs Armed Hard-Gate Outcome Test', action: 'Measure how often warnings recur in the same workspace (84% for the top warning) vs armed gate hold rate (99.77%, 20,729 of 20,776 stopped).' },
           { step: '6. Decide', pct: 78, tool: 'Operator Perimeter & Actuator Arming Sign-Off', action: 'Replace high-repeat advisories with narrow hard gates, require known-false verifier checks, and gate outbound acts.' }
         ]
       }
@@ -10440,7 +10449,7 @@
         seam: 'Irreversible push-payment + unlicensed facilitator HHI (4,040 to 6,009)',
         bars: [
           { label: 'CLII-AI D1: Regulatory licensing & supervisory perimeter', pct: 25, val: 'Bottom tier, illustrative (unlicensed facilitator layer)', note: 'x402 facilitators broadcast EIP-3009 / SPL authorizations without money-transmitter or payment-institution licensing' },
-          { label: 'CLII-AI D3: Access gating, holds & actuator enforcement', pct: 68, val: 'Middle tier, illustrative (armed harness gates vs protocol irreversibility)', note: 'Fleet hard gates hold 99.56% (13,098/13,156), but once x402 settles on-chain no protocol chargeback exists' },
+          { label: 'CLII-AI D3: Access gating, holds & actuator enforcement', pct: 68, val: 'Middle tier, illustrative (armed harness gates vs protocol irreversibility)', note: 'Fleet hard gates hold 99.77% (20,729/20,776), but once x402 settles on-chain no protocol chargeback exists' },
           { label: 'MVEP-AI Cat 2 & 3: System of record & lease reconciliation', pct: 85, val: 'Pass on committed leases; Fail on unattributed sellers', note: 'Time-bounded git leases prevent orphan tasks; top 25 Base x402 sellers remain pseudonymous' },
           { label: 'MVEP-AI Cat 6 & CSA: Execution finality & subsidy distortion', pct: 35, val: 'Fail (36.6% proxy overcount; 144k/buyer Polygon fleet)', note: 'Requires buyer-cardinality filtering and payment-level proxy-leg deduplication before trusting volume' }
         ]
@@ -10503,7 +10512,7 @@
       { dim: 'legal', cat: 'Category 5: Insolvency Posture', tok: '20-regime bankruptcy priority & rehypothecation matrix', ai: 'Vendor-exit continuity, escrowed weights/prompts, and off-branch task-lease recovery on crash', pct: 85 },
       { dim: 'economic', cat: 'Category 6: Settlement Finality', tok: 'Value integrity, par convertibility & halt triggers', ai: 'Action & payment irreversibility bounds (x402 push-payment holds, pre-commit hard gates)', pct: 94 },
       { dim: 'operational', cat: 'Category 7: Reorg & Exception Handling', tok: 'Chain rollback detection, halt criteria & loss allocation', ai: 'Known-false verifier testing, three-valued state checks (present/absent/undetermined) & rollback', pct: 90 },
-      { dim: 'operational', cat: 'Category 8: Governance & Change Control', tok: 'Multisig thresholds, named signers & 48h/7d timelocks', ai: 'Model checkpoint pinning, live hook-byte verification, and logged override auditing (99.56% hold)', pct: 96 },
+      { dim: 'operational', cat: 'Category 8: Governance & Change Control', tok: 'Multisig thresholds, named signers & 48h/7d timelocks', ai: 'Model checkpoint pinning, live hook-byte verification, and logged override auditing (99.77% hold)', pct: 96 },
       { dim: 'legal operational economic', cat: 'Category 9: Disclosures', tok: '3CRD point-of-use reserve, claim & custody disclosure', ai: 'Explicit saturation/override telemetry and bounded-scan unmeasured-remainder disclosure', pct: 86 },
       { dim: 'operational', cat: 'Category 10: Collateral / Stress Operability', tok: '2am Saturday liquidation across 3 paths under stress', ai: 'Dependency operability: deprecation policy, version commitments, export procedures, and a viable exit path', pct: 92 },
       { dim: 'companion', cat: 'Companion: Recursive Settlement / Dependency Test', tok: 'Trace every redemption asset (BUIDL -> USDC)', ai: 'Trace every composed tool, facilitator (Meridian/CDP), and upstream model in the agent chain', pct: 95 }
@@ -11511,11 +11520,11 @@
           url: '/resume/ai-governance-infrastructure/',
           pdf: '/resumes/Zukowski_Resume_AI_Governance_Infrastructure.pdf?v=20261009',
           mandate: 'AI safety/governance teams, multi-agent runtime builders & enterprise AI risk leads',
-          proof: '51 USPTO patent applications (41 families) · 68,000+ fleet commits · 99.56% gate hold',
+          proof: '51 USPTO patent applications (41 families) · 68,000+ fleet commits · 99.77% gate hold',
           frameworks: 'CLII-AI, MVEP-AI, Lease Coordination & Outcome-Graded Safeguards',
           bars: [
             { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '14 typical / 61 peak concurrent agents', note: 'Built production operating layer across 68,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
-            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '63,230 advisory firings · 13,098 of 13,156 gate attempts refused', note: 'Measured an 84% workspace repeat rate on the top advisory warning vs a 99.56% hold rate on armed hard gates' },
+            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '63,230 advisory firings · 20,729 of 20,776 gate attempts refused', note: 'Measured an 84% workspace repeat rate on the top advisory warning vs a 99.77% hold rate on armed hard gates' },
             { name: 'Intellectual property & international AI supervisory policy', pct: 94, val: '51 USPTO filings · FSB AI consultation', note: '41 patent families covering provenance, verifiers, and fleet governance; Frontiers in Blockchain publication' }
           ]
         },
@@ -11748,7 +11757,7 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">USPTO applications</span><span class="b4-stat__val">51 provisional filings</span><span class="b4-stat__sub">Filed in 2026 across 41 distinct patent families</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Largest problem area</span><span class="b4-stat__val">Coordination &amp; fleet (16)</span><span class="b4-stat__sub">Includes 64/180,865 (claim, lease, and park resolution)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">68,000+ fleet commits</span><span class="b4-stat__sub">14 typical / 61 peak concurrent sessions; 99.56% gate hold</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">68,000+ fleet commits</span><span class="b4-stat__sub">14 typical / 61 peak concurrent sessions; 99.77% gate hold</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">On-chain &amp; DePIN families</span><span class="b4-stat__val">6 attribution filings</span><span class="b4-stat__sub">Reputation recovery threshold &amp; control-attribution interlock</span></div>';
         var arRows = [
           { name: 'Area 4: Coordination, fleet governance, and session continuity (64/107,073 to 64/231,533)', pct: 100, val: '16 filings (31.4%)', note: 'Time-bounded task leases, off-branch compare-and-swap claim admission, resource-triggered handoff, and outward-act governance' },
@@ -12051,7 +12060,7 @@
     { cat: 'Hub', title: 'Federal Comment Letter Program (27 Letters, 21 Dockets, 148 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
     { cat: 'Hub', title: '148-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
     { cat: 'Tracker', title: 'GENIUS Act Rulemaking Tracker (14 Implementing Actions)', url: '/trackers/genius-act/', kw: 'genius act s 1582 pub l 119-27 january 18 2027 effective date tracker' },
-    { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 68000 commits 13098 hard gates 63230 advisories worktrees leases' },
+    { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 68000 commits 20729 hard gates 63230 advisories worktrees leases' },
     { cat: 'Hub', title: 'Patent-Pending Systems (51 USPTO Applications across 41 Families)', url: '/patents/', kw: 'patents uspto 51 applications 41 families 64/180,865 leases provenance' },
     { cat: 'Hub', title: 'Data & Code Catalog (JSON/CSV Feeds & Replication Repositories)', url: '/data/', kw: 'data code github replication json csv atom feeds' },
     { cat: 'Hub', title: 'Notes (Dated Rulemaking & Market-Structure Dispatches)', url: '/notes/', kw: 'notes october 2026 sec treasury genius act status' },
@@ -12355,7 +12364,7 @@
           preread: '/agent-infrastructure/#ai-control-explorer',
           prereadLabel: 'Fleet Advisory vs Hard-Gate Explorer',
           deliverables: [
-            { name: '1. Advisory Saturation vs Armed Hard-Gate Outcome Audit', pct: 98, val: '99.56% hold benchmark', note: 'Measures how often warnings recur in the same workspace (84% for the top warning) and replaces high-repeat advisories with narrow hard gates' },
+            { name: '1. Advisory Saturation vs Armed Hard-Gate Outcome Audit', pct: 98, val: '99.77% hold benchmark', note: 'Measures how often warnings recur in the same workspace (84% for the top warning) and replaces high-repeat advisories with narrow hard gates' },
             { name: '2. Per-Session Worktree Isolation & Time-Bounded Lease Architecture', pct: 94, val: '14 typical / 61 peak agents', note: 'Prevents concurrent write collisions and recovers orphaned tasks automatically when agent sessions exit' },
             { name: '3. x402 Facilitator Concentration & Known-False Verifier Audit', pct: 90, val: 'MVEP-AI 10 categories', note: 'Eliminates confabulated finding references, vacuous passing checks, and unattributed agentic payment legs' }
           ]
@@ -12517,12 +12526,12 @@
           '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">One also peer-reviewed (Frontiers in Blockchain), plus 1 memo &amp; 6 briefings</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">13 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, and eight more, plus the CLII-AI and MVEP-AI extensions</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">27 federal letters (+FSB)</span><span class="b4-stat__sub">148 recommendations across 21 dockets and 9 federal agencies</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">51 USPTO applications</span><span class="b4-stat__sub">Across 41 patent families · 68,000+ commits · 99.56% gate hold</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">51 USPTO applications</span><span class="b4-stat__sub">Across 41 patent families · 68,000+ commits · 99.77% gate hold</span></div>';
         var pRows = [
           { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 1 memo & 6 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
           { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '13 frameworks', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
           { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '27 federal comment letters · 148 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
-          { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '51 USPTO filings across 41 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 13,098 hard-gate stops' }
+          { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '51 USPTO filings across 41 families', note: 'Production coordination layer validated across 68,000+ commits, 63,230 advisory firings, and 20,729 hard-gate stops' }
         ];
         barsEl.innerHTML = readingList(pRows);
       }

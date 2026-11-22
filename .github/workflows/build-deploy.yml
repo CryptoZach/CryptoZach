@@ -115,6 +115,11 @@ jobs:
           # (scripts/hooks/pre-push) is absent from THIS list. Present in both lists on
           # purpose, so it cannot become a third list only one side runs.
           run_check scripts/check_guard_battery_parity.py --quiet
+          # The hard-gate figures come from the fleet producer or not at all (2026-11-22). The arms
+          # run update_site_metrics.py against a fake workflow repo, so they need no fleet here: a
+          # producer refusal must read UNMEASURED, never the page's own figures, and every hard-gate
+          # surface must take one figure. CI only, which the parity rule allows (CI may hold more).
+          run_check scripts/test_update_site_metrics_hard_gates.py
 
       - name: Sitemap lastmod from git history
         # Derives <lastmod> for every sitemap URL from the last commit that touched
