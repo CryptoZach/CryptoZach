@@ -357,7 +357,7 @@ def apply_hard_gate_updates(gate: dict) -> list[str]:
         ai_new,
     )
     ai_new = re.sub(
-        r'(<p class="ai-callout-stat">)\d[\d,]*\s+of\s+\d[\d,]*(</p>\s*<p>actions stopped at a hard gate, on both of the fleet\'s machines through )\d+\s+[A-Za-z]+\s+\d{4}(\.\s*In the other )\d[\d,]*(\s+cases,\s+the agent used the documented override)',
+        r'(<p class="ai-callout-stat">)\d[\d,]*\s+of\s+\d[\d,]*(</p>\s*<p(?: class="ai-callout-text")?>actions stopped at a hard gate, on both of the fleet\'s machines through )\d+\s+[A-Za-z]+\s+\d{4}(\.\s*In the other )\d[\d,]*(\s+cases,\s+the agent used the documented override)',
         rf"\g<1>{stopped_s} of {attempts_s}\g<2>{date_human}\g<3>{overridden_s}\g<4>",
         ai_new,
     )

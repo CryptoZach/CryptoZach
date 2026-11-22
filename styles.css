@@ -21595,8 +21595,12 @@ body #contact .about-card .card-expand .patent-filings .filing-no{
   text-transform:none;
   color:var(--text);
 }
-.agent-infra-page .ai-finding p,
-.agent-infra-page .ai-callout p{
+/* Box body text carries its own class (2026-11-21), so its width does not depend
+   on which page-level "p" rule comes last: at three classes this rule outranks
+   any ".page .container p" rule. The label and stat rules above now apply as
+   written, which restores their 0.35rem gap above the body text. */
+.agent-infra-page .ai-finding > .ai-finding-text,
+.agent-infra-page .ai-callout > .ai-callout-text{
   margin:0;
   max-width:none;
 }

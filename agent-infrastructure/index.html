@@ -517,7 +517,7 @@
         <p><strong>The core metric is repeat rate</strong> (called saturation inside the instrument): the share of workspaces where the same warning appears again after its first appearance. A high repeat rate shows the warning alone is not changing the behavior; a lower rate is consistent with teaching, an observational association rather than proof of cause.</p>
         <div class="ai-finding" role="note">
           <p class="ai-finding-label">The largest result</p>
-          <p>The warning for treating a failed command as successful generated 13,975 events, more than half of all warnings, and returned in 84% of workspaces. A trigger dashboard would make it look heavily used; outcome data showed the warning alone was not stopping the mistake.</p>
+          <p class="ai-finding-text">The warning for treating a failed command as successful generated 13,975 events, more than half of all warnings, and returned in 84% of workspaces. A trigger dashboard would make it look heavily used; outcome data showed the warning alone was not stopping the mistake.</p>
         </div>
         <div class="ai-table-wrap">
           <table class="ai-table ai-table--effectiveness ai-table--advisories">
@@ -573,7 +573,7 @@
         <h2 id="armed-title">What hard gates actually stopped</h2>
         <div class="ai-callout" role="note">
           <p class="ai-callout-stat">20,448 of 20,510</p>
-          <p>actions stopped at a hard gate, on both of the fleet's machines through 19 November 2026. In the other 62 cases, the agent used the documented override and continued. The gates therefore held in about 299 of every 300 measured attempts.</p>
+          <p class="ai-callout-text">actions stopped at a hard gate, on both of the fleet's machines through 19 November 2026. In the other 62 cases, the agent used the documented override and continued. The gates therefore held in about 299 of every 300 measured attempts.</p>
         </div>
         <p>A hard gate refuses an action instead of only warning about it. The table shows every armed gate class, how often it blocked an action, and how often an agent bypassed the block.</p>
         <div class="ai-table-wrap">
@@ -725,7 +725,7 @@
         <p>The queue scan above carried an honest label for an incomplete pass. A false-green result is a sharper risk: an assertion can pass without proving that the check read fresh state, reached the intended target, or could distinguish a valid state from a broken one.</p>
         <div class="ai-finding" role="note">
           <p class="ai-finding-label">Right answer, invalid check</p>
-          <p>A verifier reported that an external record was live. The record was live, but the network request had timed out and the assertion matched bytes left behind by the previous request. The answer was correct by accident.</p>
+          <p class="ai-finding-text">A verifier reported that an external record was live. The record was live, but the network request had timed out and the assertion matched bytes left behind by the previous request. The answer was correct by accident.</p>
         </div>
         <p>The correction was to clear state before every request, treat a failed request as <em>could not determine</em>, and test a deliberately false identifier to prove that the verifier could reject it.</p>
         <blockquote class="paper-thesis-line ai-thesis">
