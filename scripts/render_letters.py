@@ -61,6 +61,12 @@ except the feed, which is generated whole):
         tracker-jsonld     the page's ItemList
     trackers/genius-act/genius-act.json
                            the same rows as JSON (whole file)
+    index.html (the homepage)
+        home-latest        the "Latest:" line under "Regulatory engagement", from the newest federal
+                           letter's home_latest text ([label](/path/) becomes a link, a right arrow is
+                           written &rarr;). The newest letter must carry the text and link its own page,
+                           so a letter added without its homepage line fails --check, and the line moves
+                           in the same render as the letter count
 
 Modes:
     --check   (default) verify every generated surface matches what the registry would
@@ -106,6 +112,9 @@ LETTERS_JSON_REL = os.path.join("letters", "letters.json")
 RECS_CSV_REL = os.path.join("letters", "recommendations.csv")
 TRACKER_REL = os.path.join("trackers", "genius-act", "index.html")
 TRACKER_JSON_REL = os.path.join("trackers", "genius-act", "genius-act.json")
+HOME_REL = "index.html"
+# A link inside a letter's home_latest text: [label](/site/path/). Only site-relative paths become links.
+HOME_LINK_RE = re.compile(r"\[([^\]\n]+)\]\((/[^)\s]*)\)")
 SITE = "https://tokenization.systems"
 START_TMPL = ("<!-- letters:{name} START (generated from scripts/letters_registry.json;"
               " edit the registry, then: python3 scripts/render_letters.py --write) -->")
@@ -1313,6 +1322,32 @@ def selftest():
         ("names that are not stand-ins do not fire",
          visible_proxies("<p>Regulation Crypto Assets, Form TR and the Exchange Act</p>"), 0),
     ]
+
+    # the homepage Latest line: written from the newest letter, refused without its text or its own link
+    def home(letters):
+        class M:  # the one field gen_home_latest reads
+            federal = letters
+        probs = []
+        return probs, gen_home_latest(M, probs)
+
+    newest = {"slug": "b", "number": 2, "filed": "2026-11-23",
+              "home_latest": "a comment filed November 23. [Read the comment →](/letters/b/)"}
+    older = {"slug": "a", "number": 1, "filed": "2026-11-22", "home_latest": "older. [Read](/letters/a/)"}
+    good_probs, good_body = home([older, newest])
+    if not good_body or '<a href="/letters/b/">Read the comment &rarr;</a>' not in good_body[0]:
+        good_probs = good_probs + ["link not written"]
+    escaped = home([dict(newest, home_latest="<b>x</b> [Read](/letters/b/)")])[1][0]
+    offsite = home([dict(newest, home_latest="[x](https://example.com/) [Read](/letters/b/)")])[1][0]
+    cases += [
+        ("the newest letter's home_latest is written as the Latest line", good_probs, 0),
+        ("a newest letter with no home_latest fires", home([older, dict(newest, home_latest="")])[0], 1),
+        ("a home_latest that does not link its own page fires",
+         home([older, dict(newest, home_latest="a comment. [Read](/letters/a/)")])[0], 1),
+        ("a same-day tie goes to the higher number",
+         home([dict(older, filed="2026-11-23", number=3, home_latest=""), newest])[0], 1),
+        ("markup in the text is escaped, not passed through", [] if "&lt;b&gt;" in escaped else ["not escaped"], 0),
+        ("an off-site link stays text", [] if 'href="https' not in offsite else ["off-site link written"], 0),
+    ]
     bad = [(name, len(got), want) for name, got, want in cases if len(got) != want]
     for name, got, want in bad:
         print(f"render_letters selftest: FAIL {name}: {got} problem(s), wanted {want}", file=sys.stderr)
@@ -1429,6 +1464,40 @@ def verify_registry_against_pages(m, problems):
         problems.append(f"registry: rec_count total {counted} differs from listed recommendations {listed}")
 
 
+# ----------------------------------------------------------------------------- homepage
+def newest_federal(m):
+    """The federal letter the homepage calls Latest: the last filed, the higher number breaking a same-day tie."""
+    return max(m.federal, key=lambda l: (l["filed"], l["number"] or 0))
+
+
+def home_latest_html(text):
+    """A home_latest text as HTML: everything escaped, each [label](/path/) a link, a right arrow written &rarr;."""
+    out, pos = [], 0
+    for mm in HOME_LINK_RE.finditer(text):
+        out.append(esc(text[pos:mm.start()]))
+        out.append(f'<a href="{attr(mm.group(2))}">{esc(mm.group(1))}</a>')
+        pos = mm.end()
+    out.append(esc(text[pos:]))
+    return "".join(out).replace("→", "&rarr;")
+
+
+def gen_home_latest(m, problems):
+    """The homepage's "Latest:" line, from the newest federal letter's home_latest text, or None (and a problem).
+
+    It is written in the same render as the letter count, so the two cannot disagree. Before 2026-11-23 the line was
+    hand-written and stayed on letter 27 after letters 28 and 29 were published. The newest letter must carry the
+    text, and the text must link that letter's own page."""
+    l = newest_federal(m)
+    text = (l.get("home_latest") or "").strip()
+    if not text:
+        problems.append(f"registry: the newest federal letter, No. {l['number']} ({l['slug']}), has no home_latest: write "
+                        f"its homepage 'Latest:' line there, linking [Read the comment →](/letters/{l['slug']}/)")
+        return None
+    if f"](/letters/{l['slug']}/)" not in text:
+        problems.append(f"registry: home_latest of No. {l['number']} does not link its own page /letters/{l['slug']}/")
+    return [f'<p style="margin-top:.8rem"><strong>Latest:</strong> {home_latest_html(text)}</p>']
+
+
 def build(m):
     """Return {rel_path: new_text} for every generated surface, collecting problems."""
     problems = []
@@ -1445,6 +1514,15 @@ def build(m):
         outputs[HUB_REL] = text
     else:
         problems.append(f"{HUB_REL}: missing")
+    # homepage "Latest:" line
+    home_path = os.path.join(m.root, HOME_REL)
+    if os.path.isfile(home_path):
+        body = gen_home_latest(m, problems)
+        if body is not None:
+            outputs[HOME_REL] = stamp(read(home_path), "home-latest", body, problems, HOME_REL)
+            check_visible_proxies(body, f"{HOME_REL} home-latest", problems)
+    else:
+        problems.append(f"{HOME_REL}: missing")
     # letter pages
     for l in m.letters:
         page = m.pages.get(l["slug"])

@@ -11389,7 +11389,7 @@
           audience: 'Policy teams, stablecoin issuers, bank strategy groups & clearinghouses',
           timeline: 'Retained advisory or docket-specific sprint',
           deliverable: 'Decision memos, comment-letter drafting, operating gates & TDRC signposts',
-          proof: '29 federal comment letters across 9 agencies (159 recommendations) + FSB AI response',
+          proof: '30 federal comment letters across 9 agencies (160 recommendations) + FSB AI response',
           bars: [
             { name: '1. GENIUS & CLARITY Rulemaking Translation (14 tracked GENIUS rulemakings)', pct: 95, val: 'Docket-to-product mapping', note: 'Translates OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, and CFTC proposals into engineering and compliance gates' },
             { name: '2. Control-Layer & Yield-Boundary Positioning (OUSD / TDRC / 3CRD / MGCPT)', pct: 90, val: 'Equilibrium & revenue modeling', note: 'Maps two-hop yield boundaries, pass-through insurance gating, and router vs issuer value capture' },
@@ -11468,10 +11468,10 @@
           url: '/resume/policy/',
           pdf: '/resumes/Zukowski_Resume_Policy.pdf?v=20261009',
           mandate: 'Central banks, regulatory agencies, clearinghouses & financial-stability teams',
-          proof: 'Paper prepared for the FRBNY Dollar Conference + 29 federal letters (159 recs across 9 agencies)',
+          proof: 'Paper prepared for the FRBNY Dollar Conference + 30 federal letters (160 recs across 9 agencies)',
           frameworks: 'CLII, MVEP, 3CRD, MGCPT & TDRC',
           bars: [
-            { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '29 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
+            { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '30 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
             { name: 'Monetary-policy transmission & gateway concentration econometrics', pct: 95, val: '$60.6T 9-chain panel · 19 gateways', note: 'Johansen cointegration under conditional randomization null, SVB/BUSD stress rotation, and CLII scoring' },
             { name: 'Clearing, CSD & settlement-finality market structure', pct: 92, val: 'Three Strategies + Seven Dollars', note: 'Analyzes three tokenization strategies (Regulated Collateral Circuit, Multi-Issuer Yield Stack, Tokenized Equity Rails) plus 20-regime insolvency law' }
           ]
@@ -11603,9 +11603,9 @@
         if(!sumEl || !barsEl) return;
         if(curLens === 'agency'){
           sumEl.innerHTML =
-            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">29 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to November 4, 2026 across 23 dockets</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">30 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to November 4, 2026 across 24 dockets</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">9 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">159 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">160 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 6 agencies</span></div>';
           var aRows = [
             { name: 'FDIC (6 letters: stablecoin issuer standards, subsidiary applications, resolution submissions, deposit insurance assessments, Bank Secrecy Act and sanctions standards, confidential information disclosure)', pct: 100, val: '6 letters · 36 recommendations', note: 'Anchors MGCPT conditional pass-through insurance (issuer standards letter, Recommendation 7) and wholesale reserve-deposit run-risk metrics (resolution and assessments letters)' },
@@ -11625,8 +11625,8 @@
             '<div class="b4-stat"><span class="b4-stat__label">Control-layer frame</span><span class="b4-stat__val">13 letters</span><span class="b4-stat__sub">Holds, routing defaults &amp; PCA exclusion</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">AI extension (CLII-AI / MVEP-AI)</span><span class="b4-stat__val">FSB response</span><span class="b4-stat__sub">Autonomous agent fleets &amp; x402 facilitator concentration</span></div>';
           var fRows = [
-            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 70, val: '18 of 29 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
-            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 56, val: '14 of 29 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
+            { name: 'CLII (Control Layer Intensity Index): 0-to-1 gateway & operator scoring across 5 dimensions', pct: 70, val: '18 of 30 federal letters, plus the FSB response', note: 'Scores where regulatory obligations attach: licensing, transparency, freeze, compliance, and geography. Stress retention is its own reading.' },
+            { name: 'MVEP (Minimum Viable Equivalence Pack): 10-category buyer-side diligence gate', pct: 56, val: '14 of 30 federal letters, plus the FSB response', note: 'Tests Legal, Operational, and Economic equivalence; applied in the program\'s OCC, Treasury, FDIC, FinCEN, NCUA, SEC, and CFTC letters' },
             { name: 'Control-Layer Mandate & On-Chain Measurement (Holds, routing defaults, PCA exclusion)', pct: 48, val: '13 letters', note: 'Grounds supervisory triggers in directly observable contract state and PCA-corrected holder concentration' },
             { name: '3CRD (Three-Category Reserve Disclosure) & MGCPT (MVEP-Gated Conditional Pass-Through)', pct: 30, val: 'OCC, Treasury & FDIC issuer standards core asks', note: 'Surfaces legal claim, reserve composition, and custody location at point of use; gates FDIC pass-through on 6 MVEP categories' }
           ];
@@ -11785,7 +11785,7 @@
           { name: 'Agent Infrastructure (/agent-infrastructure/) -> Areas 1 to 5', pct: 96, val: '64/071,767 · 64/180,865 · 64/174,920', note: 'Directly implements worktree staging isolation, time-bounded task leases, known-false verifier checks, and observer-first hard gates' },
           { name: 'Auditing Governance Concentration (/papers/governance-concentration/) -> Area 6', pct: 90, val: '64/130,737 · 64/136,352 · 64/138,859', note: 'Formalizes the 5-class PCA exclusion typology and frontier-relative typed absence outcome when pseudonymous control is undetermined' },
           { name: 'Operational Risk in Token Economies (/papers/operational-risk/) -> Area 6', pct: 88, val: '64/128,867 · 64/135,014', note: 'Formalizes the self-calibrating reputation-recovery threshold that prevents threshold-induced governance collapse under validator downtime' },
-          { name: 'MVEP & 29-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
+          { name: 'MVEP & 30-Letter Regulatory Program (/papers/mvep/ & /letters/) -> Areas 2 & 3', pct: 85, val: '64/095,597 · 64/102,816 · 64/111,022', note: 'Governs evidence-grounding for cited statutory/empirical values and count-in-artifact staleness detection across 140+ letter mentions' }
         ];
         barsEl.innerHTML = readingList(ppRows);
       }
@@ -11815,13 +11815,13 @@
     if(datRoot){
       var curDat = 'all';
       var datItems = [
-        { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 29 federal + 1 FSB · 23 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 159 recommendations, and proceeding outcomes' },
+        { cat: 'feeds', pct: 100, name: 'Letters registry (/letters/letters.json)', badge: 'JSON · 30 federal + 1 FSB · 24 dockets', note: 'Complete machine-readable record of dockets, agencies, frameworks, 160 recommendations, and proceeding outcomes' },
         { cat: 'feeds', pct: 96, name: 'Recommendation index (/letters/recommendations.csv)', badge: 'CSV · 153 rows', note: 'Flat one-row-per-ask export with letter number, agency, filing date, ask summary, full text, topics, and status' },
         { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under the GENIUS Act with regulation ID number, Federal Register citation, comment window, and status' },
         { cat: 'feeds', pct: 95, name: 'MVEP scorecard & composite rating (/data/mvep/*.csv)', badge: '2 CSVs · 154 cells + 14 ratings', note: 'Exhibit 1 (11 rows x 14 products) and Exhibit 3 non-compensatory composite ratings mirrored from mvep-replication' },
         { cat: 'feeds', pct: 90, name: 'Patent portfolio registry (/patents/patents.json)', badge: 'JSON · 68 filings · 58 families', note: 'All 68 USPTO provisional serial numbers and descriptions grouped across the 6 technical problem areas' },
         { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 87 3d bins + 261 1d bins', note: '88,411 commits in series (90,535 on ref) from March 2 through November 17, 2026 in America/New_York time' },
-        { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 29 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
+        { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 30 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
         { cat: 'feeds', pct: 82, name: 'Syndication feeds (/letters/feed.xml & /notes/feed.xml)', badge: 'Atom XML · 2 feeds', note: 'Subscribe to new regulatory filings and dated status/event notes' },
         { cat: 'tracka', pct: 100, name: 'Routing the Dollar replication (GitHub v43-post-conference + #a1-routing-explorer)', badge: 'SSRN 6267698 · $60.6T panel', note: '157-week 9-chain panel, 51-address Ethereum gateway registry, Johansen conditional randomization null, and SVB/BUSD scripts' },
         { cat: 'tracka', pct: 98, name: 'Minimum Viable Equivalence Pack replication (GitHub mvep-replication + #a2-mvep-explorer)', badge: 'SSRN 6363138 · 14 products · 20 regimes', note: 'Exhibit 1 scorecard, Exhibit 2 20-regime Category 5 insolvency matrix (140 primary-source cells), and Exhibit 3 rating generator' },
@@ -11889,7 +11889,7 @@
         var barsEl = document.getElementById('recs-top-bars');
         if(!sumEl || !barsEl) return;
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Total numbered asks</span><span class="b4-stat__val">159 recommendations</span><span class="b4-stat__sub">Across 22 principal letters (plus 5 supplements &amp; 1 FSB response)</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Total numbered asks</span><span class="b4-stat__val">160 recommendations</span><span class="b4-stat__sub">Across 22 principal letters (plus 5 supplements &amp; 1 FSB response)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Top 3 subject tags</span><span class="b4-stat__val">Measurement (37) · Disclosure &amp; reporting (33)</span><span class="b4-stat__sub">Followed by Reserves (30) and Supervision (26)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Prudential &amp; risk tags</span><span class="b4-stat__val">Custody (19) · Redemption (12)</span><span class="b4-stat__sub">Insolvency (9), Deposit insurance (7), and Capital (2)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Machine-readable export</span><span class="b4-stat__val"><a href="/letters/recommendations.csv" download="tokenization-systems-recommendations.csv" style="color:inherit;text-decoration:underline;">recommendations.csv</a></span><span class="b4-stat__sub">One row per ask with letter, agency, date, and anchor link</span></div>';
@@ -12057,8 +12057,8 @@
     { cat: 'Hub', title: 'Field Guide: How to Evaluate a Tokenized Product', url: '/overview/', kw: 'start here overview 4 dollar objects 6 step decision map classify trace map compare stress decide' },
     { cat: 'Hub', title: 'Frameworks Directory (MVEP, CLII, TDRC, 3CRD, MGCPT, CLII-AI, MVEP-AI)', url: '/frameworks/', kw: 'frameworks scorecard clii mvep tdrc 3crd mgcpt valos nors s2r' },
     { cat: 'Hub', title: 'Research Library (9 SSRN Papers, 1 Memo, 6 Briefings)', url: '/research/', kw: 'papers ssrn frontiers track a track b tokenomics depin' },
-    { cat: 'Hub', title: 'Federal Comment Letter Program (29 Letters, 23 Dockets, 159 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
-    { cat: 'Hub', title: '159-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
+    { cat: 'Hub', title: 'Federal Comment Letter Program (30 Letters, 24 Dockets, 160 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
+    { cat: 'Hub', title: '160-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
     { cat: 'Tracker', title: 'GENIUS Act Rulemaking Tracker (14 Implementing Actions)', url: '/trackers/genius-act/', kw: 'genius act s 1582 pub l 119-27 january 18 2027 effective date tracker' },
     { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 90000 commits 20729 hard gates 89425 advisories worktrees leases' },
     { cat: 'Hub', title: 'Patent-Pending Systems (68 USPTO Applications across 58 Families)', url: '/patents/', kw: 'patents uspto 68 applications 58 families 64/180,865 leases provenance' },
@@ -12512,7 +12512,7 @@
           doi: '10.2139/ssrn.6352118', url: 'https://tokenization.systems/papers/operational-risk/', key: 'zukowski2026oprisk'
         },
         letters: {
-          title: 'Tokenization Systems Federal Comment Letter Registry and 159-Recommendation Index [Data set]',
+          title: 'Tokenization Systems Federal Comment Letter Registry and 160-Recommendation Index [Data set]',
           year: '2026', venue: 'Tokenization Systems',
           doi: '', url: 'https://tokenization.systems/letters/letters.json', key: 'zukowski2026letters'
         }
@@ -12525,12 +12525,12 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">One also peer-reviewed (Frontiers in Blockchain), plus 1 memo &amp; 6 briefings</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">13 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, and eight more, plus the CLII-AI and MVEP-AI extensions</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">29 federal letters (+FSB)</span><span class="b4-stat__sub">159 recommendations across 23 dockets and 9 federal agencies</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">30 federal letters (+FSB)</span><span class="b4-stat__sub">160 recommendations across 24 dockets and 9 federal agencies</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">68 USPTO applications</span><span class="b4-stat__sub">Across 58 patent families · 90,000+ commits · 99.77% gate hold</span></div>';
         var pRows = [
           { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 1 memo & 6 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
           { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '13 frameworks', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
-          { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '29 federal comment letters · 159 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
+          { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '30 federal comment letters · 160 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
           { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '68 USPTO filings across 58 families', note: 'Production coordination layer validated across 90,000+ commits, 89,425 advisory firings, and 20,729 hard-gate stops' }
         ];
         barsEl.innerHTML = readingList(pRows);
