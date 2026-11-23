@@ -57,7 +57,12 @@ def plan_line(line, stats, rel):
     """Return (new_line, [changes]) applying program count rewrites on one line."""
     if "count-guard-ignore" in line:
         return line, []
+    return apply_spans(line, plan_spans(line, stats, rel))
 
+
+def plan_spans(line, stats, rel):
+    """Every drifted count token in `line` (one line, or a file's joined logical text) as
+    (start, end, replacement, old, label). The caller applies the count-guard-ignore skip."""
     n = stats["n"]
     dockets = stats["dockets"]
     agencies = stats["agencies"]
@@ -111,7 +116,7 @@ def plan_line(line, stats, rel):
                 spans.append((m.start("n"), m.end("n"), repl, tok, "A"))
 
     if not indiv_letter and recs is not None:
-        for pat in clc.REC_PATTERNS:
+        for pat in clc.rec_patterns_for(rel):
             for m in pat.finditer(line):
                 tok = m.group("n")
                 val = clc.token_to_int(tok)
@@ -131,6 +136,11 @@ def plan_line(line, stats, rel):
             if val_s is not None and val_s != supplements:
                 spans.append((m.start("s"), m.end("s"), format_like(supplements, tok_s), tok_s, "S"))
 
+    return spans
+
+
+def apply_spans(line, spans):
+    """Apply (start, end, replacement, old, label) spans to line; return (new_line, [(old, new, label)])."""
     if not spans:
         return line, []
 
@@ -143,6 +153,37 @@ def plan_line(line, stats, rel):
         new = new[:start] + repl + new[end:]
         changes.append((old, repl, lbl))
     return new, changes
+
+
+def plan_file(rel, lines, stats):
+    """Plan one file the way check_letter_count.py reads it: an HTML, XML or Markdown file line by line, and any other
+    file (llms.txt, _config.yml, script.js) as one logical text whose lines are joined by a space, so a mention that
+    wraps across a line break is rewritten too (before 2026-11-23 the wrapped _config.yml mention was set by hand).
+    A token never spans lines, so each span maps back into one source line, and that line's count-guard-ignore
+    marker is honored as the check honors it. Returns (new_lines, [(line_index, old, new, label), ...])."""
+    out, changes = list(lines), []
+    if rel.replace(os.sep, "/").endswith((".html", ".xml", ".md")):
+        for i, line in enumerate(lines):
+            new_line, ch = plan_line(line, stats, rel)
+            if ch:
+                out[i] = new_line
+                changes.extend((i, *c) for c in ch)
+        return out, changes
+    joined, lineno_at = clc.logical_text(lines)
+    starts, pos = [], 0
+    for line in lines:
+        starts.append(pos)
+        pos += len(line.rstrip("\n")) + 1
+    by_line = {}
+    for start, end, repl, old, lbl in plan_spans(joined, stats, rel):
+        i = lineno_at(start) - 1
+        if "count-guard-ignore" in lines[i] or end - starts[i] > len(lines[i]):
+            continue
+        by_line.setdefault(i, []).append((start - starts[i], end - starts[i], repl, old, lbl))
+    for i, sp in sorted(by_line.items()):
+        out[i], ch = apply_spans(lines[i], sp)
+        changes.extend((i, *c) for c in ch)
+    return out, changes
 
 
 def sync_resumes(root, n, write_mode):
@@ -253,15 +294,13 @@ def main():
                 lines = fh.read().split("\n")
         except OSError:
             continue
-        changed = False
-        for i, line in enumerate(lines):
-            new_line, changes = plan_line(line, stats, rel)
-            if changes:
-                lines[i] = new_line
-                changed = True
-                total_changes += len(changes)
-                for old, repl, lbl in changes:
-                    report.append(f"  {rel}:{i + 1}  {old!r} -> {repl!r} [{lbl}]")
+        new_lines, changes = plan_file(rel, lines, stats)
+        changed = bool(changes)
+        if changed:
+            lines = new_lines
+            total_changes += len(changes)
+            for i, old, repl, lbl in changes:
+                report.append(f"  {rel}:{i + 1}  {old!r} -> {repl!r} [{lbl}]")
         if changed:
             files_changed += 1
             if args.write:

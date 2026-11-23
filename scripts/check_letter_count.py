@@ -185,6 +185,15 @@ REC_PATTERNS_CURRENT_ONLY = [
     re.compile(r"(?<!Question )\b(?P<n>\d{3})\s+(?:concrete\s+|numbered\s+)?(?:asks|recommendations|recs)\b", re.I),
 ]
 
+
+def rec_patterns_for(rel):
+    """The recommendation-total patterns that apply to one file: REC_PATTERNS everywhere, and the three-digit
+    current-only forms outside notes/. This check and render_letter_count.py's writer both read this one list, so
+    the writer rewrites every form the check flags. Until 2026-11-23 the writer read REC_PATTERNS alone, and adding
+    letters No. 28 and 29 left 14 three-digit mentions ("148 asks", "148-recommendation") to be set by hand."""
+    rel = rel.replace(os.sep, "/")
+    return REC_PATTERNS + ([] if rel.startswith("notes/") else REC_PATTERNS_CURRENT_ONLY)
+
 # Principal and supplement decomposition pattern on letters/index.html.
 PRINC_SUPP_RE = re.compile(
     r"(?P<p>" + NUMBER_WORD + r")\s+principal\s+letters?\s+and\s+(?P<s>" + NUMBER_WORD + r")\s+supplements?\b",
@@ -526,7 +535,7 @@ def scan_detailed(root, stats):
                             })
 
             if not indiv_letter and recs is not None:
-                for pat in REC_PATTERNS + ([] if rel.startswith("notes/") else REC_PATTERNS_CURRENT_ONLY):
+                for pat in rec_patterns_for(rel):
                     for m in pat.finditer(line):
                         val = token_to_int(m.group("n"))
                         if val is None:
