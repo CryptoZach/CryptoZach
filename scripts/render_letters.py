@@ -120,7 +120,15 @@ START_TMPL = ("<!-- letters:{name} START (generated from scripts/letters_registr
               " edit the registry, then: python3 scripts/render_letters.py --write) -->")
 END_TMPL = "<!-- letters:{name} END -->"
 
-AGENCY_ORDER = ["OCC", "FDIC", "FinCEN", "Treasury", "NCUA", "Federal Reserve", "SEC", "CFTC", "Joint", "FSB"]
+AGENCY_ORDER = ["OCC", "FDIC", "FinCEN", "Treasury", "IRS", "NCUA", "Federal Reserve", "SEC", "CFTC", "Joint", "FSB"]
+
+
+def check_agencies_listed(letters, order):
+    """A letter whose agency is not in AGENCY_ORDER gets no Agency filter chip on the hub or the recommendation
+    index, and nothing else says so: the IRS letter of 2026-11-23 rendered without one. Pure, for --selftest."""
+    return [f"registry: No. {l.get('number')} ({l['slug']}) has agency {l['agency']!r}, which is not in AGENCY_ORDER "
+            "in scripts/render_letters.py, so its letters get no Agency filter chip; add it there"
+            for l in letters if l["agency"] not in order]
 STATE_LABEL = {"open": "Comment period open", "closed-pending": "Final action pending",
                "final": "Final action issued", "withdrawn": "Withdrawn"}
 STATE_CLASS = {"open": "open", "closed-pending": "pending", "final": "final", "withdrawn": "withdrawn"}
@@ -1294,6 +1302,9 @@ def selftest():
         ("a registry paper missing from the tags fires",
          run(page=good_page.replace('href="/papers/routing-the-dollar/"', 'href="/papers/other/"')), 1),
         ("a section reference is not an id", run(page=good_page.replace(">MVEP<", ">MVEP, Section 3(a)<")), 0),
+        ("a listed agency passes", check_agencies_listed([{"slug": "x", "number": 1, "agency": "IRS"}], AGENCY_ORDER), 0),
+        ("an agency missing from the filter order fires",
+         check_agencies_listed([{"slug": "x", "number": 1, "agency": "BLS"}], AGENCY_ORDER), 1),
     ]
 
     chip_page = ('<div class="paper-badges">\n        <span class="badge">April 10, 2026</span>\n'
@@ -1439,6 +1450,7 @@ def check_hub_reading_order(text, problems):
 
 def verify_registry_against_pages(m, problems):
     problems.extend(check_frameworks_and_papers(m.letters, m.frameworks, m.framework_papers, m.pages))
+    problems.extend(check_agencies_listed(m.letters, AGENCY_ORDER))
     for l in m.letters:
         rel = f"letters/{l['slug']}/index.html"
         page = m.pages.get(l["slug"])
