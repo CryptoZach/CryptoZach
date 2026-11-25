@@ -104,7 +104,7 @@
       "mainEntity": {
         "@type": "ItemList",
         "name": "Tokenization Systems patent portfolio by problem area",
-        "numberOfItems": 6,
+        "numberOfItems": 8,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -127,18 +127,30 @@
           {
             "@type": "ListItem",
             "position": 4,
-            "name": "Coordination, fleet governance, and session continuity (44 filings)",
-            "description": "An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely."
+            "name": "Coordination (12 filings)",
+            "description": "Many agents share one repository and one queue of work. Without a shared rule for who holds a task and when a change may land, two of them take the same work, or land changes that undo each other."
           },
           {
             "@type": "ListItem",
             "position": 5,
+            "name": "Fleet governance (20 filings)",
+            "description": "A fleet of agents acts with its operator's account, keys and budget, so what any one session may publish, send, spend or run has to follow the operator's rules rather than the judgment of the session that wants to act."
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "Session continuity (12 filings)",
+            "description": "An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely."
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
             "name": "Measurement and detector validity (8 filings)",
             "description": "A detector is trustworthy only after it has been shown to fire on a real fault and stay quiet on a clean input. These filings separate a negative measurement from a check that never ran."
           },
           {
             "@type": "ListItem",
-            "position": 6,
+            "position": 8,
             "name": "On-chain governance and control attribution (6 filings)",
             "description": "In a pseudonymous system, one actor can hold many wallets, and addresses with no observed link have undetermined control, which is different from independent control."
           }
@@ -296,12 +308,14 @@
           <button type="button" class="patent-chip" data-patent-area="0" aria-pressed="false">Repository integrity <span class="patent-chip__n">8</span></button>
           <button type="button" class="patent-chip" data-patent-area="1" aria-pressed="false">Evidence &amp; retrieval <span class="patent-chip__n">5</span></button>
           <button type="button" class="patent-chip" data-patent-area="2" aria-pressed="false">Provenance &amp; coherence <span class="patent-chip__n">11</span></button>
-          <button type="button" class="patent-chip" data-patent-area="3" aria-pressed="false">Coordination &amp; fleet <span class="patent-chip__n">44</span></button>
-          <button type="button" class="patent-chip" data-patent-area="4" aria-pressed="false">Measurement validity <span class="patent-chip__n">8</span></button>
-          <button type="button" class="patent-chip" data-patent-area="5" aria-pressed="false">On-chain attribution <span class="patent-chip__n">6</span></button>
+          <button type="button" class="patent-chip" data-patent-area="3" aria-pressed="false">Coordination <span class="patent-chip__n">12</span></button>
+          <button type="button" class="patent-chip" data-patent-area="4" aria-pressed="false">Fleet governance <span class="patent-chip__n">20</span></button>
+          <button type="button" class="patent-chip" data-patent-area="5" aria-pressed="false">Session continuity <span class="patent-chip__n">12</span></button>
+          <button type="button" class="patent-chip" data-patent-area="6" aria-pressed="false">Measurement validity <span class="patent-chip__n">8</span></button>
+          <button type="button" class="patent-chip" data-patent-area="7" aria-pressed="false">On-chain attribution <span class="patent-chip__n">6</span></button>
         </div>
         <div class="patent-toolbar__meta">
-          <span id="patent-count-status" aria-live="polite">Showing all 82 applications across 6 problem areas (click any serial number to copy)</span>
+          <span id="patent-count-status" aria-live="polite">Showing all 82 applications across 8 problem areas (click any serial number to copy)</span>
           <button type="button" class="patent-reset" id="patent-reset" hidden>Clear filters</button>
         </div>
       </div>
@@ -346,52 +360,62 @@
             </ul>
           </div>
           <div class="patent-area">
-            <p><strong>Coordination, fleet governance, and session continuity</strong> An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely.</p>
+            <p><strong>Coordination</strong> Many agents share one repository and one queue of work. Without a shared rule for who holds a task and when a change may land, two of them take the same work, or land changes that undo each other.</p>
             <ul class="patent-filings">
               <li>Role-routed coordination and self-describing verification registries<span class="filing-no">64/231,533</span></li>
               <li>Recursive self-validation, evidence-grounded truth gathering, and fleet-scale coordination, admission, and reconciliation mechanisms<span class="filing-no">64/107,073</span></li>
-              <li>Resource-triggered session handoff with curated state preservation and in-flight work transfer<span class="filing-no">64/111,051</span></li>
-              <li>Multi-axis pre-launch admission governance with a shared-directory de-arm sentinel and telemetry-stream isolation<span class="filing-no">64/111,059</span></li>
               <li>Typed negative outcomes across coordination-record integrity, measurement integrity, actuator arming, and outbound-artifact gating<span class="filing-no">64/145,518</span></li>
-              <li>Peer-health-conditioned destructive-cleanup safety, session-identity liveness, and convergent ledger release for a shared coordination store<span class="filing-no">64/152,536</span></li>
-              <li>Operator-controlled perimeter, outward-act governance, and destructive-act forensics for agent fleets sharing an operator's account<span class="filing-no">64/179,067</span></li>
-              <li>Governed authority, activity integrity, guarded publication, and evidence controls for fleets of concurrent autonomous agents<span class="filing-no">64/179,086</span></li>
               <li>Claim, lease, and park resolution with off-branch compare-and-swap claim admission, enqueue-epoch publication fencing, and clock-bounded lease margins<span class="filing-no">64/180,865</span></li>
-              <li>Integrity, containment, landing, identity, and continuity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/183,981</span></li>
               <li>Verifiable contribution accounting, commit-time gating, serialized landing, worktree lifecycle, and session-start state controls for agent fleets sharing an operator's account and repository<span class="filing-no">64/183,991</span></li>
               <li>Coordination, landing, measurement-integrity, and containment controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/185,677</span></li>
-              <li>Commit-time regression arms, unattended signing identity, landing relay, capped-work recovery, and atomic clone moves for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/185,739</span></li>
+              <li>Holding a shared store's write-ahead log resident for a fleet of autonomous agents whose hooks open a fresh connection per tool call<span class="filing-no">64/193,495</span></li>
+              <li>Claim, attribution, measurement, arbitration, and session-certificate controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,926</span></li>
+              <li>Commit-gate, operator-view, hook-wiring, and host-service controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,934</span></li>
+              <li>Queue-grouping, off-main holding, verified-close, claim-carry, seat-request, and attribution controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,068</span></li>
+              <li>Enqueue-conflict, cross-session collision, landing-certificate, cross-host re-derivation, hook-shim, and claim-statement parity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,071</span></li>
+              <li>Routing-recall, letter-review, landing-shadow, external-fact, and landing-overlap controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,073</span></li>
+            </ul>
+          </div>
+          <div class="patent-area">
+            <p><strong>Fleet governance</strong> A fleet of agents acts with its operator's account, keys and budget, so what any one session may publish, send, spend or run has to follow the operator's rules rather than the judgment of the session that wants to act.</p>
+            <ul class="patent-filings">
+              <li>Multi-axis pre-launch admission governance with a shared-directory de-arm sentinel and telemetry-stream isolation<span class="filing-no">64/111,059</span></li>
+              <li>Operator-controlled perimeter, outward-act governance, and destructive-act forensics for agent fleets sharing an operator's account<span class="filing-no">64/179,067</span></li>
+              <li>Governed authority, activity integrity, guarded publication, and evidence controls for fleets of concurrent autonomous agents<span class="filing-no">64/179,086</span></li>
               <li>Operator authority, session messaging, launch provenance, fleet views, and unattended operation controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/189,312</span></li>
               <li>Publication, preservation, identity, decision, launch, and landing controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/190,192</span></li>
-              <li>Holding a shared store's write-ahead log resident for a fleet of autonomous agents whose hooks open a fresh connection per tool call<span class="filing-no">64/193,495</span></li>
-              <li>Attribution, citation, continuity, measurement, observation, and maintenance controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/197,749</span></li>
               <li>Containment, storage, landing, checkout, budget, and approval controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/197,751</span></li>
-              <li>Perimeter, continuity, commit-gate, landing, and wake controls for fleets of autonomous agents sharing an operator's account and repository (first of two applications filed under this title)<span class="filing-no">64/202,912</span></li>
               <li>Outward-act, publication, research, and document-production controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,914</span></li>
-              <li>Perimeter, continuity, commit-gate, landing, and wake controls for fleets of autonomous agents sharing an operator's account and repository (second of two applications filed under this title)<span class="filing-no">64/202,919</span></li>
-              <li>Decision, continuity, pickup, observation, and host-recovery controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,922</span></li>
-              <li>Decision-recovery, wake, mail, launch-budget, and specification-assembly controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,924</span></li>
-              <li>Claim, attribution, measurement, arbitration, and session-certificate controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,926</span></li>
               <li>Launch-routing, launch-proof, usage-gate, outward-kit, and published-figure controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,929</span></li>
               <li>Credit, landing-throughput, fleet-view, work-queue, and host-job controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,932</span></li>
-              <li>Commit-gate, operator-view, hook-wiring, and host-service controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,934</span></li>
               <li>Measurement, host-operation, launch-budget, and key-custody controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,935</span></li>
               <li>Research-corpus, document-build, evidence-store, and host-maintenance controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,936</span></li>
               <li>Research-tooling, intake-pipeline, form-containment, and plugin-admission controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,937</span></li>
               <li>Content-copy, evidence, decision, seat-state, and publication controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,940</span></li>
-              <li>Decision-apply, claim-release, launch-cancel, session-end, and work-queue controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,944</span></li>
               <li>Host-operation, containment, preservation, research, specification, and credit-ledger controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/204,456</span></li>
               <li>Root-retained namespace-registry, confinement, root-broker, observation, and outward-act controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/204,461</span></li>
               <li>Sandbox-launch, run-egress, study-lifecycle, container-broker, and local-socket controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/204,463</span></li>
               <li>Qualification-case cleanup, preserved-copy expiry, mirror-generation retirement, audit-record rotation, log-eviction, and filing-record controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,061</span></li>
               <li>Signing-identity, sealing, access-gate, decision-card, review-binding, and permission-dialog controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,064</span></li>
-              <li>Queue-grouping, off-main holding, verified-close, claim-carry, seat-request, and attribution controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,068</span></li>
-              <li>Launch-routing, landing-cost, correction-landing, resource-lease, publication-fence, and context-continuity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,069</span></li>
-              <li>Enqueue-conflict, cross-session collision, landing-certificate, cross-host re-derivation, hook-shim, and claim-statement parity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,071</span></li>
-              <li>Routing-recall, letter-review, landing-shadow, external-fact, and landing-overlap controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,073</span></li>
               <li>Runtime-qualification, study-isolation, drain-receipt, listing-cache, coverage-credit, and operator-presence controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,077</span></li>
-              <li>Reviewer-push, consumed-mail, signed-wake, wake-admission, launch-argument, specification-freeze, simulation-reporting, provider-admission, and credit-ledger controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,132</span></li>
               <li>Host-operation, containment, preservation, research, and specification controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,134</span></li>
+            </ul>
+          </div>
+          <div class="patent-area">
+            <p><strong>Session continuity</strong> An agent can exit in the middle of a task, and work marked as owned by a process that no longer exists is invisible to every other agent, so it sits untouched indefinitely.</p>
+            <ul class="patent-filings">
+              <li>Resource-triggered session handoff with curated state preservation and in-flight work transfer<span class="filing-no">64/111,051</span></li>
+              <li>Peer-health-conditioned destructive-cleanup safety, session-identity liveness, and convergent ledger release for a shared coordination store<span class="filing-no">64/152,536</span></li>
+              <li>Integrity, containment, landing, identity, and continuity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/183,981</span></li>
+              <li>Commit-time regression arms, unattended signing identity, landing relay, capped-work recovery, and atomic clone moves for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/185,739</span></li>
+              <li>Attribution, citation, continuity, measurement, observation, and maintenance controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/197,749</span></li>
+              <li>Perimeter, continuity, commit-gate, landing, and wake controls for fleets of autonomous agents sharing an operator's account and repository (first of two applications filed under this title)<span class="filing-no">64/202,912</span></li>
+              <li>Perimeter, continuity, commit-gate, landing, and wake controls for fleets of autonomous agents sharing an operator's account and repository (second of two applications filed under this title)<span class="filing-no">64/202,919</span></li>
+              <li>Decision, continuity, pickup, observation, and host-recovery controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,922</span></li>
+              <li>Decision-recovery, wake, mail, launch-budget, and specification-assembly controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,924</span></li>
+              <li>Decision-apply, claim-release, launch-cancel, session-end, and work-queue controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/202,944</span></li>
+              <li>Launch-routing, landing-cost, correction-landing, resource-lease, publication-fence, and context-continuity controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,069</span></li>
+              <li>Reviewer-push, consumed-mail, signed-wake, wake-admission, launch-argument, specification-freeze, simulation-reporting, provider-admission, and credit-ledger controls for fleets of autonomous agents sharing an operator's account and repository<span class="filing-no">64/206,132</span></li>
             </ul>
           </div>
           <div class="patent-area">
@@ -424,18 +448,18 @@
       <figure class="b4-explorer" id="patents-crosswalk-explorer" aria-labelledby="pat-exp-title">
         <div class="b4-explorer__head">
           <div>
-            <p class="b4-explorer__kicker">Interactive IP &amp; architecture crosswalk · 82 USPTO applications · 72 families · 6 problem areas</p>
-            <h3 id="pat-exp-title" class="b4-explorer__title">Explore the six technical problem areas and how they map to the empirical papers and fleet metrics</h3>
+            <p class="b4-explorer__kicker">Interactive IP &amp; architecture crosswalk · 82 USPTO applications · 72 families · 8 problem areas</p>
+            <h3 id="pat-exp-title" class="b4-explorer__title">Explore the eight technical problem areas and how they map to the empirical papers and fleet metrics</h3>
           </div>
           <div class="b4-explorer__tabs" role="tablist" aria-label="Patent portfolio interactive views">
-            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="pat-panel-areas" id="pat-tab-areas" data-pat-tab="areas">1. Six problem areas &amp; fleet controls</button>
+            <button type="button" class="b4-explorer__tab is-active" role="tab" aria-selected="true" aria-controls="pat-panel-areas" id="pat-tab-areas" data-pat-tab="areas">1. Eight problem areas &amp; fleet controls</button>
             <button type="button" class="b4-explorer__tab" role="tab" aria-selected="false" aria-controls="pat-panel-papers" id="pat-tab-papers" data-pat-tab="papers">2. Research-to-patent crosswalk</button>
           </div>
         </div>
 
         <div class="b4-explorer__panel" id="pat-panel-areas" role="tabpanel" aria-labelledby="pat-tab-areas">
           <div class="b4-explorer__summary" id="pat-ar-summary" aria-live="polite"></div>
-          <p class="fg-route-key"><strong>How to read this.</strong> Bar length is that area's filing count against the largest area, 44 filings. The percentage in the line is that area's share of all 82 filings.</p>
+          <p class="fg-route-key"><strong>How to read this.</strong> Bar length is that area's filing count against the largest area, 20 filings. The percentage in the line is that area's share of all 82 filings.</p>
           <div class="b4-explorer__bars" id="pat-ar-bars"></div>
         </div>
 
