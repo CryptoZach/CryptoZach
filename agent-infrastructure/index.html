@@ -53,7 +53,7 @@
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1920" />
   <meta property="og:image:height" content="880" />
-  <meta property="og:image:alt" content="Fleet commits per three days, March through 17 November 2026. Peak 3,329 from 29 August to 31 August." />
+  <meta property="og:image:alt" content="Fleet commits per three days, March through 23 November 2026. Peak 5,371 from 21 November to 23 November." />
   <link rel="canonical" href="https://tokenization.systems/agent-infrastructure/" />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -61,7 +61,7 @@
   <meta name="twitter:title" content="Agent Infrastructure" />
   <meta name="twitter:description" content="An operating layer for AI agent fleets: provenance for shared work, coordination that survives the agent, controls graded by outcome. Since March 2026." />
   <meta name="twitter:image" content="https://tokenization.systems/agent-infrastructure/commits-per-3-days.png" />
-  <meta name="twitter:image:alt" content="Fleet commits per three days, March through 17 November 2026. Peak 3,329 from 29 August to 31 August." />
+  <meta name="twitter:image:alt" content="Fleet commits per three days, March through 23 November 2026. Peak 5,371 from 21 November to 23 November." />
   <meta name="twitter:creator" content="@CryptoZach" />
 
   <link rel="icon" href="/Publication-Images/Zachcoin-32.png" type="image/png" sizes="32x32" />
@@ -215,15 +215,15 @@
       <div class="section-title">
         <h1 id="agent-infra-page-title">Run many AI agents on one codebase while keeping the work coordinated, attributable, and reproducible.</h1>
         <p class="ai-hero-lede">We built an operating layer that isolates concurrent work, records which agent and session produced each shared result and what it relied on, keeps shared references valid, and measures whether safeguards change behavior. It has run on our own fleet since March 2026.</p>
-        <p class="ai-hero-support">The evidence is below: dated measurements from more than 90,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
-        <p class="ai-measured-as">Updated <time datetime="2026-11-21">2026-11-21</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
+        <p class="ai-hero-support">The evidence is below: dated measurements from more than 98,000 commits, the controls that held, the warnings that repeated, and the failures that changed the design.</p>
+        <p class="ai-measured-as">Updated <time datetime="2026-11-25">2026-11-25</time>. Each figure carries the date it was last measured, and changes from prior measurements remain visible.</p>
     <div id="ai-scale-stamp" hidden
-      data-scale-commits-floored="90000"
+      data-scale-commits-floored="98000"
       data-scale-concurrency-p75="18"
       data-scale-concurrency-peak="57"
-      data-scale-advisory-firings="89425"
-      data-scale-advisory-classes="41"
-      data-scale-advisory-span-days="132"
+      data-scale-advisory-firings="98695"
+      data-scale-advisory-classes="45"
+      data-scale-advisory-span-days="138"
       data-scale-coherence-gate-checks="192"
       data-scale-hard-fail-checks="51"
       data-scale-unsuppressable-checks="2"
@@ -243,9 +243,9 @@
 
       </div>
       <div class="ai-proof-strip" role="list" aria-label="Headline measurements">
-        <div class="ai-proof-item" role="listitem"><strong>90,000+</strong><span>commits observed since March</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>98,000+</strong><span>commits observed since March</span></div>
         <div class="ai-proof-item" role="listitem"><strong>18</strong><span>typical overlap; peak 57</span></div>
-        <div class="ai-proof-item" role="listitem"><strong>89,425</strong><span>warning firings tracked for repeats</span></div>
+        <div class="ai-proof-item" role="listitem"><strong>98,695</strong><span>warning firings tracked for repeats</span></div>
         <div class="ai-proof-item ai-proof-item--held" role="listitem"><strong>299 in 300</strong><span>gated attempts refused</span></div>
       </div>
       <p class="ai-note ai-strip-gloss">All figures come from one operator's fleet. The measurement sections define the repeat and override rates behind these headline results.</p>
@@ -352,10 +352,10 @@
       <div class="explainer">
         <h2 id="scale-title">System scale</h2>
         <p>The identity rules above, and the safeguards measured in the next sections, run inside one shared repository used for research, drafting, verification, and infrastructure work. Sessions overlap in time and continue across context-window boundaries, so coordination and evidence must survive any one agent.</p>
-        <p class="ai-note">Each figure below carries its own measurement date: commits and warnings 2026-11-19, hard gates 2026-11-21, concurrency 2026-11-18, skills 2026-11-15, comment letters 2026-10-20, shared state files 2026-09-30, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
+        <p class="ai-note">Each figure below carries its own measurement date: commits and warnings 2026-11-25, hard gates 2026-11-21, concurrency 2026-11-18, skills 2026-11-15, comment letters 2026-10-20, shared state files 2026-09-30, and pre-commit checks and the queue 2026-09-21. Values come from their producers and are never retyped.</p>
         <div class="ai-metric-grid">
           <article class="ai-metric">
-            <p class="ai-metric-value">90,000+</p>
+            <p class="ai-metric-value">98,000+</p>
             <p class="ai-metric-label">Commits observed</p>
             <p class="ai-metric-was">since 5 March 2026</p>
           </article>
@@ -370,9 +370,9 @@
             <p class="ai-metric-was">51 hard-fail; 2 cannot be bypassed</p>
           </article>
           <article class="ai-metric">
-            <p class="ai-metric-value">89,425</p>
+            <p class="ai-metric-value">98,695</p>
             <p class="ai-metric-label">Warning firings</p>
-            <p class="ai-metric-was">41 classes across 132 days</p>
+            <p class="ai-metric-was">45 classes across 138 days</p>
           </article>
           <article class="ai-metric">
             <p class="ai-metric-value">20,776</p>
@@ -399,7 +399,7 @@
         <figure class="ai-commit-chart" id="ai-commit-chart" aria-label="Interactive fleet commits chart">
           <div class="ai-cc__bar">
             <div class="ai-cc__readout" id="ai-cc-readout" aria-live="polite">
-              <span class="ai-cc__summary">88,411 commits across 87 three-day bins · Peak 3,329 (Aug 29-31) · Latest complete bin 2,702 (15-17 Nov)</span>
+              <span class="ai-cc__summary">97,063 commits across 89 three-day bins · Peak 5,371 (Nov 21-23) · Latest complete bin 5,371 (21-23 Nov)</span>
             </div>
             <div class="ai-cc__controls" role="toolbar" aria-label="Chart view controls">
               <div class="ai-cc__group" role="group" aria-label="Aggregation mode">
@@ -415,7 +415,7 @@
             </div>
           </div>
           <div class="ai-cc__stage" id="ai-cc-stage" tabindex="0" role="application" aria-label="Fleet commits chart. Use left and right arrow keys or hover to inspect individual time windows.">
-            <svg xmlns="http://www.w3.org/2000/svg" id="ai-cc-svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-label="Commits per 3 days, March through 17 November 2026. Peak 3,329 from 29 August to 31 August.">
+            <svg xmlns="http://www.w3.org/2000/svg" id="ai-cc-svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-label="Commits per 3 days, March through 23 November 2026. Peak 5,371 from 21 November to 23 November.">
   <defs>
     <linearGradient id="ai-cc-fill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ccfbe5" stop-opacity="0.38"/>
@@ -443,27 +443,27 @@
   <circle cx="938" cy="22" r="3.2" fill="#0a0c10" stroke="#ccfbe5" stroke-opacity="0.55"/>
   <circle cx="22" cy="418" r="3.2" fill="#0a0c10" stroke="#5b9cf5" stroke-opacity="0.7"/>
   <circle cx="938" cy="418" r="3.2" fill="#0a0c10" stroke="#ccfbe5" stroke-opacity="0.55"/>
-  <g id="ai-cc-grid"><line x1="78" y1="352.0" x2="928" y2="352.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="356.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">0</text><line x1="78" y1="285.5" x2="928" y2="285.5" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="289.5" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">1,000</text><line x1="78" y1="219.0" x2="928" y2="219.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="223.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">2,000</text><line x1="78" y1="152.5" x2="928" y2="152.5" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="156.5" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">3,000</text><line x1="78" y1="86.0" x2="928" y2="86.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="90.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">4,000</text></g>
+  <g id="ai-cc-grid"><line x1="78" y1="352.0" x2="928" y2="352.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="356.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">0</text><line x1="78" y1="307.7" x2="928" y2="307.7" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="311.7" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">1,000</text><line x1="78" y1="263.3" x2="928" y2="263.3" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="267.3" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">2,000</text><line x1="78" y1="219.0" x2="928" y2="219.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="223.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">3,000</text><line x1="78" y1="174.7" x2="928" y2="174.7" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="178.7" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">4,000</text><line x1="78" y1="130.3" x2="928" y2="130.3" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="134.3" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">5,000</text><line x1="78" y1="86.0" x2="928" y2="86.0" stroke="#606c3e" stroke-opacity="0.45" stroke-width="1"/><text x="66" y="90.0" text-anchor="end" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">6,000</text></g>
   <g id="ai-cc-months">
 <text x="78.0" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Mar</text>
-<text x="175.7" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Apr</text>
-<text x="273.4" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">May</text>
-<text x="380.9" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Jun</text>
-<text x="478.6" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Jul</text>
-<text x="576.3" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Aug</text>
-<text x="674.0" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Sep</text>
-<text x="771.7" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Oct</text>
-<text x="879.1" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Nov</text>
+<text x="173.5" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Apr</text>
+<text x="269.0" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">May</text>
+<text x="374.1" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Jun</text>
+<text x="469.6" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Jul</text>
+<text x="565.1" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Aug</text>
+<text x="660.6" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Sep</text>
+<text x="756.1" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Oct</text>
+<text x="861.1" y="380" text-anchor="middle" fill="#9ca3af" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">Nov</text>
   </g>
-  <polygon id="ai-cc-area" points="78.0,352.0 78.0,352.0 87.8,351.9 97.5,352.0 107.3,352.0 117.1,352.0 126.9,347.5 136.6,349.3 146.4,351.3 156.2,343.8 165.9,351.6 175.7,351.6 185.5,352.0 195.2,352.0 205.0,351.9 214.8,351.9 224.6,349.1 234.3,347.4 244.1,336.6 253.9,346.7 263.6,345.0 273.4,350.0 283.2,349.1 292.9,350.3 302.7,346.5 312.5,347.1 322.3,344.2 332.0,323.8 341.8,331.2 351.6,342.3 361.3,335.2 371.1,331.9 380.9,343.6 390.6,347.7 400.4,337.8 410.2,341.0 420.0,316.8 429.7,324.2 439.5,326.9 449.3,324.6 459.0,318.5 468.8,279.7 478.6,292.2 488.3,310.8 498.1,285.2 507.9,325.9 517.7,281.4 527.4,314.8 537.2,261.0 547.0,245.3 556.7,292.0 566.5,235.5 576.3,289.9 586.0,241.9 595.8,258.0 605.6,278.1 615.4,248.0 625.1,267.1 634.9,266.0 644.7,246.7 654.4,257.0 664.2,130.6 674.0,138.7 683.7,202.0 693.5,213.3 703.3,158.1 713.1,254.9 722.8,198.1 732.6,209.0 742.4,194.7 752.1,238.7 761.9,196.4 771.7,199.2 781.4,313.3 791.2,210.2 801.0,241.9 810.8,271.1 820.5,276.3 830.3,266.5 840.1,197.9 849.8,179.2 859.6,226.2 869.4,195.7 879.1,155.8 888.9,179.9 898.7,173.8 908.5,154.0 918.2,172.3 918.2,352.0" fill="url(#ai-cc-fill)"/>
-  <polyline id="ai-cc-glow-line" points="78.0,352.0 87.8,351.9 97.5,352.0 107.3,352.0 117.1,352.0 126.9,347.5 136.6,349.3 146.4,351.3 156.2,343.8 165.9,351.6 175.7,351.6 185.5,352.0 195.2,352.0 205.0,351.9 214.8,351.9 224.6,349.1 234.3,347.4 244.1,336.6 253.9,346.7 263.6,345.0 273.4,350.0 283.2,349.1 292.9,350.3 302.7,346.5 312.5,347.1 322.3,344.2 332.0,323.8 341.8,331.2 351.6,342.3 361.3,335.2 371.1,331.9 380.9,343.6 390.6,347.7 400.4,337.8 410.2,341.0 420.0,316.8 429.7,324.2 439.5,326.9 449.3,324.6 459.0,318.5 468.8,279.7 478.6,292.2 488.3,310.8 498.1,285.2 507.9,325.9 517.7,281.4 527.4,314.8 537.2,261.0 547.0,245.3 556.7,292.0 566.5,235.5 576.3,289.9 586.0,241.9 595.8,258.0 605.6,278.1 615.4,248.0 625.1,267.1 634.9,266.0 644.7,246.7 654.4,257.0 664.2,130.6 674.0,138.7 683.7,202.0 693.5,213.3 703.3,158.1 713.1,254.9 722.8,198.1 732.6,209.0 742.4,194.7 752.1,238.7 761.9,196.4 771.7,199.2 781.4,313.3 791.2,210.2 801.0,241.9 810.8,271.1 820.5,276.3 830.3,266.5 840.1,197.9 849.8,179.2 859.6,226.2 869.4,195.7 879.1,155.8 888.9,179.9 898.7,173.8 908.5,154.0 918.2,172.3" fill="none" stroke="#5b9cf5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.35" filter="url(#ai-cc-glow)"/>
-  <polyline id="ai-cc-line" points="78.0,352.0 87.8,351.9 97.5,352.0 107.3,352.0 117.1,352.0 126.9,347.5 136.6,349.3 146.4,351.3 156.2,343.8 165.9,351.6 175.7,351.6 185.5,352.0 195.2,352.0 205.0,351.9 214.8,351.9 224.6,349.1 234.3,347.4 244.1,336.6 253.9,346.7 263.6,345.0 273.4,350.0 283.2,349.1 292.9,350.3 302.7,346.5 312.5,347.1 322.3,344.2 332.0,323.8 341.8,331.2 351.6,342.3 361.3,335.2 371.1,331.9 380.9,343.6 390.6,347.7 400.4,337.8 410.2,341.0 420.0,316.8 429.7,324.2 439.5,326.9 449.3,324.6 459.0,318.5 468.8,279.7 478.6,292.2 488.3,310.8 498.1,285.2 507.9,325.9 517.7,281.4 527.4,314.8 537.2,261.0 547.0,245.3 556.7,292.0 566.5,235.5 576.3,289.9 586.0,241.9 595.8,258.0 605.6,278.1 615.4,248.0 625.1,267.1 634.9,266.0 644.7,246.7 654.4,257.0 664.2,130.6 674.0,138.7 683.7,202.0 693.5,213.3 703.3,158.1 713.1,254.9 722.8,198.1 732.6,209.0 742.4,194.7 752.1,238.7 761.9,196.4 771.7,199.2 781.4,313.3 791.2,210.2 801.0,241.9 810.8,271.1 820.5,276.3 830.3,266.5 840.1,197.9 849.8,179.2 859.6,226.2 869.4,195.7 879.1,155.8 888.9,179.9 898.7,173.8 908.5,154.0 918.2,172.3" fill="none" stroke="#ccfbe5" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon id="ai-cc-area" points="78.0,352.0 78.0,352.0 87.6,351.9 97.1,352.0 106.7,352.0 116.2,352.0 125.8,349.0 135.3,350.2 144.9,351.5 154.4,346.5 164.0,351.7 173.5,351.7 183.1,352.0 192.6,352.0 202.2,352.0 211.7,351.9 221.3,350.1 230.8,348.9 240.4,341.8 249.9,348.5 259.5,347.3 269.0,350.7 278.6,350.1 288.1,350.9 297.7,348.3 307.2,348.8 316.8,346.8 326.3,333.2 335.9,338.1 345.4,345.5 355.0,340.8 364.5,338.6 374.1,346.4 383.6,349.1 393.2,342.5 402.7,344.6 412.3,328.5 421.8,333.5 431.4,335.3 440.9,333.7 450.5,329.7 460.0,303.8 469.6,312.1 479.1,324.5 488.7,307.5 498.2,334.6 507.8,305.0 517.3,327.2 526.9,291.3 536.4,280.8 546.0,312.0 555.5,274.3 565.1,310.6 574.6,278.6 584.2,289.4 593.7,302.7 603.3,282.7 612.8,295.4 622.4,294.7 631.9,281.8 641.5,288.6 651.0,204.4 660.6,209.8 670.1,252.0 679.7,259.6 689.2,222.7 698.8,287.3 708.3,249.4 717.9,256.6 727.4,247.1 737.0,276.5 746.5,248.3 756.1,250.1 765.6,326.2 775.2,257.4 784.7,278.6 794.3,298.1 803.8,301.5 813.4,295.0 822.9,249.3 832.5,236.8 842.0,268.2 851.6,247.8 861.1,221.2 870.7,237.3 880.2,233.2 889.8,220.0 899.3,232.2 908.9,206.5 918.4,113.9 918.4,352.0" fill="url(#ai-cc-fill)"/>
+  <polyline id="ai-cc-glow-line" points="78.0,352.0 87.6,351.9 97.1,352.0 106.7,352.0 116.2,352.0 125.8,349.0 135.3,350.2 144.9,351.5 154.4,346.5 164.0,351.7 173.5,351.7 183.1,352.0 192.6,352.0 202.2,352.0 211.7,351.9 221.3,350.1 230.8,348.9 240.4,341.8 249.9,348.5 259.5,347.3 269.0,350.7 278.6,350.1 288.1,350.9 297.7,348.3 307.2,348.8 316.8,346.8 326.3,333.2 335.9,338.1 345.4,345.5 355.0,340.8 364.5,338.6 374.1,346.4 383.6,349.1 393.2,342.5 402.7,344.6 412.3,328.5 421.8,333.5 431.4,335.3 440.9,333.7 450.5,329.7 460.0,303.8 469.6,312.1 479.1,324.5 488.7,307.5 498.2,334.6 507.8,305.0 517.3,327.2 526.9,291.3 536.4,280.8 546.0,312.0 555.5,274.3 565.1,310.6 574.6,278.6 584.2,289.4 593.7,302.7 603.3,282.7 612.8,295.4 622.4,294.7 631.9,281.8 641.5,288.6 651.0,204.4 660.6,209.8 670.1,252.0 679.7,259.6 689.2,222.7 698.8,287.3 708.3,249.4 717.9,256.6 727.4,247.1 737.0,276.5 746.5,248.3 756.1,250.1 765.6,326.2 775.2,257.4 784.7,278.6 794.3,298.1 803.8,301.5 813.4,295.0 822.9,249.3 832.5,236.8 842.0,268.2 851.6,247.8 861.1,221.2 870.7,237.3 880.2,233.2 889.8,220.0 899.3,232.2 908.9,206.5 918.4,113.9" fill="none" stroke="#5b9cf5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.35" filter="url(#ai-cc-glow)"/>
+  <polyline id="ai-cc-line" points="78.0,352.0 87.6,351.9 97.1,352.0 106.7,352.0 116.2,352.0 125.8,349.0 135.3,350.2 144.9,351.5 154.4,346.5 164.0,351.7 173.5,351.7 183.1,352.0 192.6,352.0 202.2,352.0 211.7,351.9 221.3,350.1 230.8,348.9 240.4,341.8 249.9,348.5 259.5,347.3 269.0,350.7 278.6,350.1 288.1,350.9 297.7,348.3 307.2,348.8 316.8,346.8 326.3,333.2 335.9,338.1 345.4,345.5 355.0,340.8 364.5,338.6 374.1,346.4 383.6,349.1 393.2,342.5 402.7,344.6 412.3,328.5 421.8,333.5 431.4,335.3 440.9,333.7 450.5,329.7 460.0,303.8 469.6,312.1 479.1,324.5 488.7,307.5 498.2,334.6 507.8,305.0 517.3,327.2 526.9,291.3 536.4,280.8 546.0,312.0 555.5,274.3 565.1,310.6 574.6,278.6 584.2,289.4 593.7,302.7 603.3,282.7 612.8,295.4 622.4,294.7 631.9,281.8 641.5,288.6 651.0,204.4 660.6,209.8 670.1,252.0 679.7,259.6 689.2,222.7 698.8,287.3 708.3,249.4 717.9,256.6 727.4,247.1 737.0,276.5 746.5,248.3 756.1,250.1 765.6,326.2 775.2,257.4 784.7,278.6 794.3,298.1 803.8,301.5 813.4,295.0 822.9,249.3 832.5,236.8 842.0,268.2 851.6,247.8 861.1,221.2 870.7,237.3 880.2,233.2 889.8,220.0 899.3,232.2 908.9,206.5 918.4,113.9" fill="none" stroke="#ccfbe5" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
   <g id="ai-cc-peak">
-    <circle cx="664.2" cy="130.6" r="4.2" fill="#0a0c10" stroke="#ccfbe5" stroke-width="1.6"/>
-    <text x="656.2" y="116.6" text-anchor="end" fill="#ccfbe5" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">3,329</text>
-    <text x="656.2" y="129.6" text-anchor="end" fill="#8fe6c4" font-size="10" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">AUG 29-31</text>
+    <circle cx="918.4" cy="113.9" r="4.2" fill="#0a0c10" stroke="#ccfbe5" stroke-width="1.6"/>
+    <text x="910.4" y="99.9" text-anchor="end" fill="#ccfbe5" font-size="12" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">5,371</text>
+    <text x="910.4" y="112.9" text-anchor="end" fill="#8fe6c4" font-size="10" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">NOV 21-23</text>
   </g>
-  <text x="78" y="404" id="ai-cc-footer" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">MARCH THROUGH 17 NOVEMBER 2026</text>
+  <text x="78" y="404" id="ai-cc-footer" fill="#9ca3af" font-size="11" font-family="JetBrains Mono, ui-monospace, Menlo, monospace">MARCH THROUGH 23 NOVEMBER 2026</text>
   <g id="ai-cc-hover" opacity="0" pointer-events="none">
     <line id="ai-cc-cursor-line" x1="78" y1="66" x2="78" y2="352" stroke="#8fbcff" stroke-opacity="0.55" stroke-width="1" stroke-dasharray="3 3"/>
     <circle id="ai-cc-cursor-halo" cx="78" cy="352" r="9" fill="#5b9cf5" fill-opacity="0.22"/>
@@ -482,22 +482,22 @@
             <span>Hover, drag, or use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> keys to inspect any window. Incomplete current bin is excluded so the trailing edge never reads artificially low.</span>
             <a class="ai-cc__dl" href="/agent-infrastructure/commits-per-3-days.json" download="fleet-commits-per-3-days.json">Download JSON</a>
           </figcaption>
-          <script type="application/json" id="ai-commit-chart-data">{"measured_at":"2026-11-20T00:54:42Z","ref":"origin/main","commits_on_ref":90535,"start_date":"2026-03-02","bin_days":3,"definition":"committer time, America/New_York calendar day, three-day bins from 2026-03-02","bins":87,"commits_in_series":88411,"series":[0,2,0,0,0,67,41,11,123,6,6,0,0,1,2,43,69,231,80,105,30,43,25,83,73,117,424,313,146,253,302,126,65,214,166,530,418,377,412,504,1087,899,620,1004,393,1061,559,1369,1605,903,1752,934,1656,1413,1112,1564,1276,1293,1583,1429,3329,3208,2255,2085,2916,1460,2315,2151,2366,1704,2340,2298,582,2133,1656,1216,1138,1286,2317,2599,1891,2350,2950,2588,2679,2977,2702],"series_1d":[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,56,8,10,23,9,0,2,47,63,13,2,4,0,4,2,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,43,15,47,7,38,93,100,30,22,28,18,45,42,26,0,4,31,7,5,21,4,0,21,6,56,42,31,0,0,72,45,127,136,161,143,42,128,0,33,113,78,99,76,79,61,162,92,15,19,37,0,28,48,66,100,10,96,60,190,68,272,160,107,151,214,110,53,158,58,196,155,70,279,266,453,368,308,488,103,101,231,288,224,356,424,261,95,37,377,585,99,188,78,293,336,597,436,566,531,508,368,69,466,706,748,298,288,311,335,516,719,421,457,436,520,402,443,267,589,424,551,346,638,292,396,374,523,447,363,773,542,477,410,339,1107,1883,345,1371,1492,950,821,484,377,368,1340,1092,804,1020,618,666,176,832,881,602,761,1125,265,443,1056,867,811,529,364,587,905,848,1195,550,553,3,326,253,850,675,608,476,617,563,507,351,358,416,370,352,254,529,503,801,558,958,845,877,877,616,652,623,483,741,1126,1023,937,990,851,938,799,840,759,1080,1003,933,1041,972,1026,704],"captions":{"through":"17 November 2026","peak_value":3329,"peak_index":60,"peak_short":"AUG 29-31","svg_aria":"Commits per 3 days, March through 17 November 2026. Peak 3,329 from 29 August to 31 August.","svg_footer":"MARCH THROUGH 17 NOVEMBER 2026","page_img_alt":"Commits per three days, March through 17 November 2026. Fleet workload. Peak 3,329 from 29 August to 31 August.","social_alt":"Fleet commits per three days, March through 17 November 2026. Peak 3,329 from 29 August to 31 August.","readme_line":"Commits per three days, March through 17 November 2026. The series is fleet workload. Peak 3,329 from 29 August to 31 August.","sitemap_title":"Fleet commits per three days, March through 17 November 2026"}}</script>
+          <script type="application/json" id="ai-commit-chart-data">{"measured_at":"2026-11-25T11:42:21Z","ref":"origin/main","commits_on_ref":98727,"start_date":"2026-03-02","bin_days":3,"definition":"committer time, America/New_York calendar day, three-day bins from 2026-03-02","bins":89,"commits_in_series":97063,"series":[0,2,0,0,0,67,41,11,123,6,6,0,0,1,2,43,69,231,80,105,30,43,25,83,73,117,424,313,146,253,302,126,65,214,166,530,418,377,412,504,1087,899,620,1004,393,1061,559,1369,1605,903,1752,934,1656,1413,1112,1564,1276,1293,1583,1429,3329,3208,2255,2085,2916,1460,2315,2151,2366,1704,2340,2298,582,2133,1656,1216,1138,1286,2317,2599,1891,2350,2950,2588,2679,2977,2702,3281,5371],"series_1d":[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,56,8,10,23,9,0,2,47,63,13,2,4,0,4,2,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,43,15,47,7,38,93,100,30,22,28,18,45,42,26,0,4,31,7,5,21,4,0,21,6,56,42,31,0,0,72,45,127,136,161,143,42,128,0,33,113,78,99,76,79,61,162,92,15,19,37,0,28,48,66,100,10,96,60,190,68,272,160,107,151,214,110,53,158,58,196,155,70,279,266,453,368,308,488,103,101,231,288,224,356,424,261,95,37,377,585,99,188,78,293,336,597,436,566,531,508,368,69,466,706,748,298,288,311,335,516,719,421,457,436,520,402,443,267,589,424,551,346,638,292,396,374,523,447,363,773,542,477,410,339,1107,1883,345,1371,1492,950,821,484,377,368,1340,1092,804,1020,618,666,176,832,881,602,761,1125,265,443,1056,867,811,529,364,587,905,848,1195,550,553,3,326,253,850,675,608,476,617,563,507,351,358,416,370,352,254,529,503,801,558,958,845,877,877,616,652,623,483,741,1126,1023,937,990,851,938,799,840,759,1080,1003,933,1041,972,1026,704,955,1413,913,1909,1747,1715],"captions":{"through":"23 November 2026","peak_value":5371,"peak_index":88,"peak_short":"NOV 21-23","svg_aria":"Commits per 3 days, March through 23 November 2026. Peak 5,371 from 21 November to 23 November.","svg_footer":"MARCH THROUGH 23 NOVEMBER 2026","page_img_alt":"Commits per three days, March through 23 November 2026. Fleet workload. Peak 5,371 from 21 November to 23 November.","social_alt":"Fleet commits per three days, March through 23 November 2026. Peak 5,371 from 21 November to 23 November.","readme_line":"Commits per three days, March through 23 November 2026. The series is fleet workload. Peak 5,371 from 21 November to 23 November.","sitemap_title":"Fleet commits per three days, March through 23 November 2026"}}</script>
         </figure>
 <!-- commit-chart:figure END -->
         <details class="ai-method">
           <summary>Definitions, counting rules, and prior values</summary>
           <div class="ai-table-wrap">
             <table class="ai-table ai-table--scale">
-              <caption>Measured 2026-09-30; the commits row was measured 2026-11-19, the advisory warnings row was measured 2026-11-19, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-18, the hard-gate attempts row was measured 2026-11-21 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
+              <caption>Measured 2026-09-30; the commits row was measured 2026-11-25, the advisory warnings row was measured 2026-11-25, the skill library row was measured 2026-11-15, the concurrency row was measured 2026-11-18, the hard-gate attempts row was measured 2026-11-21 over both machines, and the pre-commit gate and queue rows were measured 2026-09-21. These figures drift, so their producers are rerun and the values are never retyped. Bracketed values are what this page carried on 2026-08-24.</caption>
               <thead>
                 <tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How it is counted</th></tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Commits</th><td class="ai-val">over 90,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose so the published floor stays valid between refreshes <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
+                <tr><th scope="row">Commits</th><td class="ai-val">over 98,000</td><td class="ai-how">Since 2026-03-05, on the mainline branch. Floored to the thousand on purpose so the published floor stays valid between refreshes <span class="ai-class-gloss">[was over 26,000]</span></td></tr>
                 <tr><th scope="row">Concurrent sessions</th><td class="ai-val">18; peak 57</td><td class="ai-how">Sessions whose activity intervals overlap in clock time, over a 30-day window, with a 10-minute idle gap. Re-measured 2026-11-18 across both hosts: median 13, typical busy overlap 18 (75th percentile), 90th percentile 25, peak 57 on 2026-11-14. The claim of 12 to 36 concurrent agents, set 2026-11-03, is supported at both ends: the typical overlap of 18 is at least 12, and the peak of 57 exceeds 36. The claim of 12 to 55 before it, set 2026-09-26 on the 2026-09-28 reading (typical overlap 14, peak 61 on 2026-09-05), failed its high end at every weekly re-verify from 2026-10-11. The earlier claim of 16 to 43 was not supported by the 2026-09-21 reading, whose typical overlap of 12 was below 16. <span class="ai-class-gloss">[was 11 to 43 writing-hours in seven days]</span></td></tr>
                 <tr><th scope="row">Pre-commit gate</th><td class="ai-val">192 checks</td><td class="ai-how">175 top-level plus 17 sub-checks; 51 hard-fail, of which 2 cannot be suppressed at all <span class="ai-class-gloss">[was 132, 31 hard-fail]</span></td></tr>
-                <tr><th scope="row">Advisory warnings</th><td class="ai-val">89,425</td><td class="ai-how">Across 41 classes over 132 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
+                <tr><th scope="row">Advisory warnings</th><td class="ai-val">98,695</td><td class="ai-how">Across 45 classes over 138 days of observation <span class="ai-class-gloss">[was 13,701 across 27 classes]</span></td></tr>
                 <tr><th scope="row">Attempts at a hard gate</th><td class="ai-val">20,776</td><td class="ai-how">Calls that reached an armed gate across the 16 classes that carry one, on both of the fleet's machines, through 2026-11-21. 20,729 refused, 47 overridden with the documented escape <span class="ai-class-gloss">[was 2,596 reached, 2,547 refused, on one machine through 2026-09-21]</span></td></tr>
                 <tr><th scope="row">Unowned-work queue</th><td class="ai-val">2,515 open</td><td class="ai-how">Findings filed with no owner since the queue opened 2026-07-27: 5,329 filed, 2,814 closed <span class="ai-class-gloss">[was 1,140 open]</span></td></tr>
                 <tr><th scope="row">Skill library</th><td class="ai-val">79</td><td class="ai-how">Every skill directory under the program skill tree at origin/main. None load at session start <span class="ai-class-gloss">[was 72]</span></td></tr>
