@@ -10024,7 +10024,7 @@
 
       if(curAdv === 'classes'){
         sumEl.innerHTML =
-          '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 89,425 across 41 classes</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Top-6 warning coverage</span><span class="b4-stat__val">21,698 of 24,166 (90%)</span><span class="b4-stat__sub">73-day study; fleet-wide total now 98,695 across 45 classes</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Highest-volume repeat rate</span><span class="b4-stat__val">84% saturation</span><span class="b4-stat__sub">Pipe-exit misread (13,975 firings across 2,260 workspaces)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Warning alone not enough</span><span class="b4-stat__val">3 of 6 (&gt;60% repeat)</span><span class="b4-stat__sub">Pipe-exit (84%), edit-running-script (69%), recursive-delete (64%)</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Classes consistent with teaching</span><span class="b4-stat__val">2 of 6 (~30% repeat)</span><span class="b4-stat__sub">Ancestry-as-landedness (32%), destructive-probe check (29%)</span></div>';
@@ -11520,11 +11520,11 @@
           url: '/resume/ai-governance-infrastructure/',
           pdf: '/resumes/Zukowski_Resume_AI_Governance_Infrastructure.pdf?v=20261009',
           mandate: 'AI safety/governance teams, multi-agent runtime builders & enterprise AI risk leads',
-          proof: '82 USPTO patent applications (72 families) · 90,000+ fleet commits · 99.77% gate hold',
+          proof: '82 USPTO patent applications (72 families) · 98,000+ fleet commits · 99.77% gate hold',
           frameworks: 'CLII-AI, MVEP-AI, Lease Coordination & Outcome-Graded Safeguards',
           bars: [
-            { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '18 typical / 57 peak concurrent agents', note: 'Built production operating layer across 90,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
-            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '89,425 advisory firings · 20,729 of 20,776 gate attempts refused', note: 'Measured an 84% workspace repeat rate on the top advisory warning vs a 99.77% hold rate on armed hard gates' },
+            { name: 'Multi-agent runtime coordination, staging isolation & lease recovery', pct: 98, val: '18 typical / 57 peak concurrent agents', note: 'Built production operating layer across 98,000+ commits, 192 pre-commit checks, and 33 canonical state files' },
+            { name: 'Outcome measurement of advisories vs armed hard gates', pct: 96, val: '98,695 advisory firings · 20,729 of 20,776 gate attempts refused', note: 'Measured an 84% workspace repeat rate on the top advisory warning vs a 99.77% hold rate on armed hard gates' },
             { name: 'Intellectual property & international AI supervisory policy', pct: 94, val: '82 USPTO filings · FSB AI consultation', note: '72 patent families covering provenance, verifiers, and fleet governance; Frontiers in Blockchain publication' }
           ]
         },
@@ -11757,7 +11757,7 @@
         sumEl.innerHTML =
           '<div class="b4-stat"><span class="b4-stat__label">USPTO applications</span><span class="b4-stat__val">82 provisional filings</span><span class="b4-stat__sub">Filed in 2026 across 72 distinct patent families</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">Largest problem area</span><span class="b4-stat__val">Fleet governance (20)</span><span class="b4-stat__sub">Includes 64/179,067 (operator-controlled perimeter and outward-act governance)</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">90,000+ fleet commits</span><span class="b4-stat__sub">18 typical / 57 peak concurrent sessions; 99.77% gate hold</span></div>' +
+          '<div class="b4-stat"><span class="b4-stat__label">Production validation</span><span class="b4-stat__val">98,000+ fleet commits</span><span class="b4-stat__sub">18 typical / 57 peak concurrent sessions; 99.77% gate hold</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">On-chain &amp; DePIN families</span><span class="b4-stat__val">6 attribution filings</span><span class="b4-stat__sub">Reputation recovery threshold &amp; control-attribution interlock</span></div>';
         var arRows = [
           { name: 'Area 5: Fleet governance (64/111,059 to 64/206,134)', pct: 100, val: '20 filings (24.4%)', note: 'Operator-controlled perimeter and outward-act governance, signing identity and decision cards, contained host operations, and budget and credit controls' },
@@ -11822,7 +11822,7 @@
         { cat: 'feeds', pct: 92, name: 'GENIUS Act rulemaking tracker (/trackers/genius-act/genius-act.json)', badge: 'JSON · 14 rulemakings', note: 'Every implementing rulemaking under the GENIUS Act with regulation ID number, Federal Register citation, comment window, and status' },
         { cat: 'feeds', pct: 95, name: 'MVEP scorecard & composite rating (/data/mvep/*.csv)', badge: '2 CSVs · 154 cells + 14 ratings', note: 'Exhibit 1 (11 rows x 14 products) and Exhibit 3 non-compensatory composite ratings mirrored from mvep-replication' },
         { cat: 'feeds', pct: 90, name: 'Patent portfolio registry (/patents/patents.json)', badge: 'JSON · 82 filings · 72 families', note: 'All 82 USPTO provisional serial numbers and descriptions grouped across the 8 technical problem areas' },
-        { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 87 3d bins + 261 1d bins', note: '88,411 commits in series (90,535 on ref) from March 2 through November 17, 2026 in America/New_York time' },
+        { cat: 'feeds', pct: 94, name: 'Fleet commit series (/agent-infrastructure/commits-per-3-days.json)', badge: 'JSON · 89 3d bins + 267 1d bins', note: '97,063 commits in series (98,727 on ref) from March 2 through November 23, 2026 in America/New_York time' },
         { cat: 'feeds', pct: 85, name: 'Compiled comment letters packet (/letters/all-letters.pdf)', badge: 'PDF · Bookmarked compilation', note: 'All 32 federal comment letters assembled in filing order with cover table of contents and PDF outline bookmarks' },
         { cat: 'feeds', pct: 82, name: 'Syndication feeds (/letters/feed.xml & /notes/feed.xml)', badge: 'Atom XML · 2 feeds', note: 'Subscribe to new regulatory filings and dated status/event notes' },
         { cat: 'tracka', pct: 100, name: 'Routing the Dollar replication (GitHub v43-post-conference + #a1-routing-explorer)', badge: 'SSRN 6267698 · $60.6T panel', note: '157-week 9-chain panel, 51-address Ethereum gateway registry, Johansen conditional randomization null, and SVB/BUSD scripts' },
@@ -12062,7 +12062,7 @@
     { cat: 'Hub', title: 'Federal Comment Letter Program (32 Letters, 26 Dockets, 172 Asks)', url: '/letters/', kw: 'letters occ fdic fincen ofac treasury sec cftc ncua fed fsb' },
     { cat: 'Hub', title: '172-Recommendation Index (Filterable Table & CSV Export)', url: '/letters/recommendations/', kw: 'recommendations asks table csv filter topic agency' },
     { cat: 'Tracker', title: 'GENIUS Act Rulemaking Tracker (14 Implementing Actions)', url: '/trackers/genius-act/', kw: 'genius act s 1582 pub l 119-27 january 18 2027 effective date tracker' },
-    { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 90000 commits 20729 hard gates 89425 advisories worktrees leases' },
+    { cat: 'Hub', title: 'Agent Infrastructure: Operating Layer for Concurrent AI Fleets', url: '/agent-infrastructure/', kw: 'ai agents fleet 98000 commits 20729 hard gates 98695 advisories worktrees leases' },
     { cat: 'Hub', title: 'Patent-Pending Systems (82 USPTO Applications across 72 Families)', url: '/patents/', kw: 'patents uspto 82 applications 72 families 64/180,865 leases provenance' },
     { cat: 'Hub', title: 'Data & Code Catalog (JSON/CSV Feeds & Replication Repositories)', url: '/data/', kw: 'data code github replication json csv atom feeds' },
     { cat: 'Hub', title: 'Notes (Dated Rulemaking & Market-Structure Dispatches)', url: '/notes/', kw: 'notes october 2026 sec treasury genius act status' },
@@ -12091,7 +12091,7 @@
     { cat: 'Explorer', title: 'Interactive MVEP 14-Product Scorecard & Self-Assessment Tool', url: '/frameworks/#mvep-scorecard', kw: 'mvep interactive scorecard calculator 14 products' },
     { cat: 'Explorer', title: 'Interactive 19-Gateway CLII Sensitivity & Weighting Explorer', url: '/frameworks/#clii-explorer', kw: 'clii 19 gateways circle coinbase tether binance curve 3pool' },
     { cat: 'Explorer', title: 'Interactive Tokenized Dollar Regime Classifier (TDRC): which layer dominates, the app or the issuer', url: '/frameworks/#tdrc-simulator', kw: 'tdrc controlscore issuerscore app layer issuer reserve interest' },
-    { cat: 'Explorer', title: 'Interactive Fleet Commits Chart (87 3-Day Bins, 90,000+ Commits)', url: '/agent-infrastructure/#ai-commit-chart', kw: 'commit chart 79 bins 3329 peak' },
+    { cat: 'Explorer', title: 'Interactive Fleet Commits Chart (89 3-Day Bins, 98,000+ Commits)', url: '/agent-infrastructure/#ai-commit-chart', kw: 'commit chart 89 bins 5371 peak' },
 
     { cat: 'Resume', title: 'Resume Profile: Policy & Market Infrastructure', url: '/resume/policy/', kw: 'policy resume central bank fed occ fdic sec cftc' },
     { cat: 'Resume', title: 'Resume Profile: Asset Management & Tokenization', url: '/resume/asset-management/', kw: 'asset management resume borderless $500m 250 investments layerzero' },
@@ -12528,12 +12528,12 @@
           '<div class="b4-stat"><span class="b4-stat__label">1. Research program</span><span class="b4-stat__val">9 SSRN papers</span><span class="b4-stat__sub">One also peer-reviewed (Frontiers in Blockchain), plus 1 memo &amp; 6 briefings</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">2. Diligence frameworks</span><span class="b4-stat__val">13 frameworks</span><span class="b4-stat__sub">MVEP, CLII, TDRC, 3CRD, MGCPT, and eight more, plus the CLII-AI and MVEP-AI extensions</span></div>' +
           '<div class="b4-stat"><span class="b4-stat__label">3. Regulatory engagement</span><span class="b4-stat__val">32 federal letters (+FSB)</span><span class="b4-stat__sub">172 recommendations across 26 dockets and 10 federal agencies</span></div>' +
-          '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">82 USPTO applications</span><span class="b4-stat__sub">Across 72 patent families · 90,000+ commits · 99.77% gate hold</span></div>';
+          '<div class="b4-stat"><span class="b4-stat__label">4. Agent fleet &amp; IP</span><span class="b4-stat__val">82 USPTO applications</span><span class="b4-stat__sub">Across 72 patent families · 98,000+ commits · 99.77% gate hold</span></div>';
         var pRows = [
           { name: 'Pillar 1: Empirical Research (/research/): Track A (Programmable Money) & Track B (Tokenomics & DePIN)', pct: 100, val: '9 SSRN papers + 1 memo & 6 briefings', note: 'Covers $60.6T stablecoin transfers across 9 chains, 14 tokenized dollar products, 20 insolvency regimes, x402 facilitators, and 52 DAO protocols' },
           { name: 'Pillar 2: Buyer-Side Diagnostic Frameworks (/frameworks/ & /overview/)', pct: 94, val: '13 frameworks', note: 'CLII scores where regulatory obligations attach. MVEP grades whether the product stays equivalent under stress' },
           { name: 'Pillar 3: Federal & International Rulemaking Program (/letters/ & /trackers/genius-act/)', pct: 92, val: '32 federal comment letters · 172 asks', note: 'Applies MVEP, CLII, 3CRD, and MGCPT across OCC, FDIC, FinCEN, Treasury, Federal Reserve, SEC, CFTC, NCUA, and FSB dockets' },
-          { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '82 USPTO filings across 72 families', note: 'Production coordination layer validated across 90,000+ commits, 89,425 advisory firings, and 20,729 hard-gate stops' }
+          { name: 'Pillar 4: Multi-Agent Runtime & Patent Portfolio (/agent-infrastructure/ & /patents/)', pct: 96, val: '82 USPTO filings across 72 families', note: 'Production coordination layer validated across 98,000+ commits, 98,695 advisory firings, and 20,729 hard-gate stops' }
         ];
         barsEl.innerHTML = readingList(pRows);
       }
