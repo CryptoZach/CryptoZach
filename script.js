@@ -11468,7 +11468,7 @@
           url: '/resume/policy/',
           pdf: '/resumes/Zukowski_Resume_Policy.pdf?v=20261009',
           mandate: 'Central banks, regulatory agencies, clearinghouses & financial-stability teams',
-          proof: 'Paper prepared for the FRBNY Dollar Conference + 32 federal letters (172 recs across 9 agencies)',
+          proof: 'Paper prepared for the FRBNY Dollar Conference + 32 federal letters (172 recs across 10 agencies)',
           frameworks: 'CLII, MVEP, 3CRD, MGCPT & TDRC',
           bars: [
             { name: 'Regulatory rulemaking & supervisory comment architecture', pct: 98, val: '32 federal letters + FSB AI response', note: 'Covers OCC, FDIC, FinCEN, Treasury, Federal Reserve Board, SEC, CFTC, and NCUA dockets' },
@@ -11603,8 +11603,8 @@
         if(!sumEl || !barsEl) return;
         if(curLens === 'agency'){
           sumEl.innerHTML =
-            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">32 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to November 4, 2026 across 26 dockets</span></div>' +
-            '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">9 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Federal comment letters</span><span class="b4-stat__val">32 letters (+1 FSB)</span><span class="b4-stat__sub">Filed April 10 to November 23, 2026 across 26 dockets</span></div>' +
+            '<div class="b4-stat"><span class="b4-stat__label">Recipient agencies</span><span class="b4-stat__val">10 federal agencies</span><span class="b4-stat__sub">FDIC, FinCEN, OFAC, OCC, Treasury, SEC, NCUA, Fed, CFTC, IRS</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Numbered recommendations</span><span class="b4-stat__val">172 concrete asks</span><span class="b4-stat__sub">Every ask indexed with statutory &amp; empirical citations</span></div>' +
             '<div class="b4-stat"><span class="b4-stat__label">Initial 10-day sprint</span><span class="b4-stat__val">8 letters (Apr 10 to 20)</span><span class="b4-stat__sub">7 rulemakings across 6 docket IDs and 6 agencies</span></div>';
           var aRows = [

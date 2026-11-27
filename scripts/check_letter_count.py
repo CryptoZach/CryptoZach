@@ -166,6 +166,19 @@ AGENCY_PATTERNS = [
         r"letters?" + SEP + r"(?:across|to)" + SEP + COUNT_TOKEN + SEP + r"(?:federal\s+)?agencies\b",
         re.I,
     ),
+    # Seven more forms, none of which the three above read, so all seven still said nine after the
+    # tenth agency's letter page published (2026-11-24):
+    # the letters hub's og:title and twitter:title, "thirty-two letters, nine agencies";
+    re.compile(r"\bletters?,\s+" + COUNT_TOKEN + r"\s+(?:federal\s+)?agencies\b", re.I),
+    # the explorer kickers, "26 dockets \u00b7 9 agencies" and "172 numbered asks across 13 topics &amp; 9 agencies";
+    re.compile(r"\bdockets?\s*(?:\u00b7|&middot;|&#183;)\s*" + COUNT_TOKEN + r"\s+(?:federal\s+)?agencies\b", re.I),
+    re.compile(r"\btopics\s+(?:&amp;|&)\s+" + COUNT_TOKEN + r"\s+(?:federal\s+)?agencies\b", re.I),
+    # the agency lens labels, "By recipient agency (9 federal + FSB)" and "By recipient agency (9 agencies)";
+    re.compile(r"\brecipient\s+agency\s+\(" + COUNT_TOKEN + r"\s+(?:federal\s+\+\s+FSB|agencies)\)", re.I),
+    # and in script.js the letters explorer's agency stat and the resume role comparator's proof line,
+    # '<span class="b4-stat__val">9 federal agencies</span>' and "(172 recs across 9 agencies)".
+    re.compile(r'class="b4-stat__val">' + COUNT_TOKEN + r"\s+federal\s+agencies<", re.I),
+    re.compile(r"\brecs\s+across\s+" + COUNT_TOKEN + r"\s+(?:federal\s+)?agencies\b", re.I),
 ]
 
 # Recommendation total patterns (group 'n').
